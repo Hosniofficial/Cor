@@ -1,0 +1,120 @@
+<?php
+// Database connection helper for Elkaisar Backend
+function getDB() {
+    static $pdo = null;
+    if ($pdo === null) {
+        $host = '127.0.0.1';
+        $port = 3306;
+        $db   = 'elkaisar_db';
+        $user = 'root';
+        $pass = '';
+        $dsn  = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        try {
+            $pdo = new PDO($dsn, $user, $pass, $options);
+        } catch (\PDOException $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['state' => 'error', 'msg' => 'DB Connection failed: ' . $e->getMessage()]);
+            exit;
+        }
+    }
+    return $pdo;
+}
+
+// Function to initialize a fresh player from scratch
+function createFreshPlayer($name = 'قيصر الشرق') {
+    $db = getDB();
+
+    // 1. Create Player
+    $stmt = $db->prepare("INSERT INTO `player` (`name`, `prestige`, `honor`, `gold`, `avatar`, `p_token`) VALUES (?, 0, 0, 1000, 1, ?)");
+    $token = bin2hex(random_bytes(16));
+    $stmt->execute([$name, $token]);
+    $playerId = (int)$db->lastInsertId();
+
+    // 2. Create Player State
+    $stmt = $db->prepare("INSERT INTO `player_state` (`id_player`, `motiv`, `peace`) VALUES (?, ?, ?)");
+    $stmt->execute([$playerId, time() + 86400 * 7, time() + 86400 * 7]); // 7 days peace protection for beginners
+
+    // 3. Create Player Education (all 0)
+    $stmt = $db->prepare("INSERT INTO `player_edu` (`id_player`) VALUES (?)");
+    $stmt->execute([$playerId]);
+
+    // 4. Create Initial City
+    $randX = rand(50, 450);
+    $randY = rand(50, 450);
+    $stmt = $db->prepare("INSERT INTO `city` (
+        `id_player`, `x`, `y`, `name`, `lvl`,
+        `food`, `wood`, `stone`, `metal`, `coin`,
+        `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`
+    ) VALUES (
+        ?, ?, ?, 'المدينة 1', 1,
+        10000, 10000, 10000, 10000, 20000,
+        100, 100, 200, 100, 100, ?
+    )");
+    $stmt->execute([$playerId, $randX, $randY, time()]);
+    $cityId = (int)$db->lastInsertId();
+
+    // 5. Default starter buildings
+    $starterBuildings = [
+        'palace'        => ['type' => 12, 'lvl' => 1],
+        'market'        => ['type' => 14, 'lvl' => 1],
+        'farm'          => ['type' => 16, 'lvl' => 1],
+        'wood'          => ['type' => 15, 'lvl' => 1],
+        'mine'          => ['type' => 17, 'lvl' => 1],
+        'stone'         => ['type' => 18, 'lvl' => 1],
+        'wall'          => ['type' => 13, 'lvl' => 0],
+        'seaport'       => ['type' => 19, 'lvl' => 0],
+        'lighthouse'    => ['type' => 20, 'lvl' => 0],
+        'light_house_1' => ['type' => 1,  'lvl' => 1], // Cottage 1
+    ];
+
+    $allPlaces = [
+        'palace', 'wall', 'seaport', 'market', 'wood', 'farm', 'mine', 'lighthouse', 'stone',
+        'light_house_1', 'light_house_2', 'light_house_3', 'light_house_4', 'light_house_5',
+        'light_house_6', 'light_house_7', 'light_house_8', 'light_house_9', 'light_house_10',
+        'under_palace_1', 'under_palace_2', 'under_palace_3', 'under_palace_4', 'under_palace_5',
+        'under_palace_6', 'under_palace_7', 'under_palace_8', 'under_palace_9', 'under_palace_10',
+        'under_palace_11', 'under_palace_12',
+        'above_palace_1', 'above_palace_2', 'above_palace_3', 'above_palace_4', 'above_palace_5', 'above_palace_6',
+        'hill_1', 'hill_2', 'hill_3', 'hill_4', 'hill_5', 'hill_6', 'hill_7', 'hill_8', 'hill_9',
+        'hill_10', 'hill_11', 'hill_12',
+        'under_wall_1', 'under_wall_2', 'under_wall_3', 'under_wall_4', 'under_wall_5', 'under_wall_6',
+        'under_wall_7', 'under_wall_8', 'under_wall_9', 'under_wall_10', 'under_wall_11', 'under_wall_12',
+        'around_wood_1', 'around_wood_2', 'around_wood_3'
+    ];
+
+    $bStmt = $db->prepare("INSERT INTO `city_building` (`id_city`, `place`, `type`, `lvl`) VALUES (?, ?, ?, ?)");
+    foreach ($allPlaces as $place) {
+        $type = isset($starterBuildings[$place]) ? $starterBuildings[$place]['type'] : 0;
+        $lvl  = isset($starterBuildings[$place]) ? $starterBuildings[$place]['lvl'] : 0;
+        $bStmt->execute([$cityId, $place, $type, $lvl]);
+    }
+
+    // 6. Starter Hero
+    $hStmt = $db->prepare("INSERT INTO `city_hero` (`id_city`, `id_player`, `name`, `lvl`, `power`, `power_max`, `avatar`) VALUES (?, ?, 'القائد الأول', 1, 50, 50, 1)");
+    $hStmt->execute([$cityId, $playerId]);
+
+    // 7. Starter Items (beginner gifts)
+    $starterItems = [
+        ['id_item' => 'beginner_back_1', 'amount' => 1],
+        ['id_item' => 'bread',           'amount' => 10],
+        ['id_item' => 'wheat_1',         'amount' => 5],
+        ['id_item' => 'wood_1',          'amount' => 5],
+        ['id_item' => 'stone_1',         'amount' => 5],
+        ['id_item' => 'trumpet',         'amount' => 10],
+    ];
+    $iStmt = $db->prepare("INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?)");
+    foreach ($starterItems as $item) {
+        $iStmt->execute([$playerId, $item['id_item'], $item['amount']]);
+    }
+
+    return [
+        'playerId' => $playerId,
+        'cityId'   => $cityId,
+        'token'    => $token
+    ];
+}

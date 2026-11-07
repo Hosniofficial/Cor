@@ -1,0 +1,5 @@
+node_modules/
+*.log
+app.elkaisar.com/api.log
+.DS_Store
+Thumbs.db
