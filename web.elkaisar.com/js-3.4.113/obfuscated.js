@@ -44205,13 +44205,17 @@ LuckWheel.show = function() {
 
     $("body").append(content);
 
+    // Keep gates closed initially - icons are covered and hidden!
+    $("#luck-wheel").attr("data-gate-open", "false");
+    $("#luck-wheel .cell .left-gate").css("background-position-x", "0px");
+    $("#luck-wheel .cell .right-gate").css("background-position-x", "0px");
+    $("#luck-wheel ul li h1").hide();
+
     // No spoiler hover - keeps wheel contents a surprise
     $(document).off("mouseenter mouseleave", "#luck-wheel .cell");
 
     $("#luck-wheel").animate({ top: "80px" }, 150, "linear", function() {
-        $(this).animate({ top: "100px" }, 100, "linear", function() {
-            LuckWheel.openGates();
-        });
+        $(this).animate({ top: "100px" }, 100, "linear");
     });
 };
 
@@ -44232,18 +44236,18 @@ LuckWheel.hide = function() {
 
 LuckWheel.openGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "true");
-    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "-32px" }, 400, "linear");
-    $.when.apply($, [$("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "32px" }, 400, "linear")]).then(function() {
-        $("#luck-wheel ul li h1").show();
+    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "-32px" }, 350, "linear");
+    $.when.apply($, [$("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "32px" }, 350, "linear")]).then(function() {
+        $("#luck-wheel ul li h1").fadeIn(150);
         if (typeof call_back === "function") call_back();
     });
 };
 
 LuckWheel.closeGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "false");
-    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "0px" }, 300, "linear");
-    $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "0px" }, 300, "linear", function() {
-        $("#luck-wheel ul li h1").hide();
+    $("#luck-wheel ul li h1").hide();
+    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear");
+    $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear", function() {
         if (typeof call_back === "function") call_back();
     });
 };
@@ -44343,7 +44347,6 @@ LuckWheel.spinWheel = function() {
     LuckWheel.stopRequested = false;
     $("#start-wheel button").text("إيقاف");
     $("#luck-wheel .control .title").html("<span>جاري تدوير دولاب الحظ...</span>");
-    LuckWheel.closeGates();
 
     LuckWheel.playLuck(requestedSpins).done(function(data) {
         if (!isJson(data)) {
@@ -44351,7 +44354,6 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
-            LuckWheel.openGates();
             return;
         }
 
@@ -44365,7 +44367,6 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
-            LuckWheel.openGates();
             return;
         }
 
@@ -44525,9 +44526,13 @@ $(document).on("click", "#start-wheel", function() {
     }
 
     $(".pulse").css({ animation: "", opacity: 0 });
-    LuckWheel.closeGates(function() {
+    if ($("#luck-wheel").attr("data-gate-open") === "true") {
+        LuckWheel.closeGates(function() {
+            LuckWheel.spinWheel();
+        });
+    } else {
         LuckWheel.spinWheel();
-    });
+    }
 });
 
 
