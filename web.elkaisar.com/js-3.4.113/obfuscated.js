@@ -10297,6 +10297,81 @@ function building_lvl_lable(x, y, place) {
     return BuildingOnFloor[place].LvlImage;
 }
 
+
+function building_hammer_animate(BuildingPlace) {
+    if (typeof isUpgradingNow === "function" && !isUpgradingNow(BuildingPlace))
+        return;
+
+    if (!BuildingOnFloor || !BuildingOnFloor[BuildingPlace] || !Elkaisar.GE || !Elkaisar.GE.CityScene)
+        return;
+
+    var x = BuildingOnFloor[BuildingPlace].x;
+    var y = BuildingOnFloor[BuildingPlace].y;
+    var x_1 = x - 25;
+    var x_2 = x + 20;
+    var y_1 = y - 10;
+    var y_2 = y;
+    if (BuildingOnFloor[BuildingPlace].BuildingAni) {
+        for (var ii in BuildingOnFloor[BuildingPlace].BuildingAni) {
+            if (BuildingOnFloor[BuildingPlace].BuildingAni[ii] && BuildingOnFloor[BuildingPlace].BuildingAni[ii].destroy)
+                BuildingOnFloor[BuildingPlace].BuildingAni[ii].destroy();
+            delete BuildingOnFloor[BuildingPlace].BuildingAni[ii];
+        }
+    }
+    BuildingOnFloor[BuildingPlace].BuildingAni = [];
+
+    if (BuildingPlace === "palace") {
+        x_1 = x + 25;
+        x_2 = x + 80;
+        y_1 = y + 5;
+        y_2 = y;
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.image(x + 55, y + 55, "UpgradingPalaceSupD").setOrigin(0, 0).setDepth(3));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.image(x + 55, y + 55, "UpgradingPalaceSupU").setOrigin(0, 0).setDepth(1));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 165, y + 120, "UpgradingLaborR").play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 200, y + 100, "UpgradingLaborR").play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 70, y + 120, "UpgradingLaborL").play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+
+    } else if (BuildingPlace === "wall") {
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(1.5 * X_GRID, 3.25 * Y_GRID, "UpgradingHammer").play("UpgradingHammer.A", Math.random() * 500).setOrigin(0, 0).setDepth(10));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(0.5 * X_GRID, 4.25 * Y_GRID, "UpgradingHammer").play("UpgradingHammer.A", Math.random() * 500).setOrigin(0, 0).setDepth(10));
+        x_2 = 3.5 * X_GRID;
+        y_2 = 1.25 * Y_GRID;
+    } else if (BuildingPlace === "farm") {
+        x_1 = x + 0.5 * X_GRID;
+        x_2 = x + X_GRID;
+        y_1 = y + Y_GRID;
+        y_2 = y + 0.5 * Y_GRID;
+    } else if (BuildingPlace === "mine") {
+        x_1 = x - 25 + X_GRID;
+        x_2 = x + 20 + X_GRID;
+        y_1 = y - 10 + Y_GRID;
+        y_2 = y + Y_GRID;
+    } else if (BuildingPlace === "stone") {
+        x_1 = x - 25 + 0.5 * X_GRID;
+        x_2 = x + 20 + 0.5 * X_GRID;
+        y_1 = y - 10 + 0.5 * Y_GRID;
+        y_2 = y + 0.5 * Y_GRID;
+    } else if (BuildingPlace == "wood") {
+
+    } else {
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x, y + 60, "UpgradingLaborL").play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 45, y + 80, "UpgradingLaborL").play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 120, y + 60, "UpgradingLaborR").play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x + 80, y + 80, "UpgradingLaborR").play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0, 0).setDepth(5));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.image(x, y, "UpgradingSupportsD").setOrigin(0, 0).setDepth(4));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.image(x, y, "UpgradingSupportsU").setOrigin(0, 0).setDepth(3));
+    }
+
+    if (BuildingPlace !== "wall") {
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x_1, y_1, "UpgradingHammer").play("UpgradingHammer.A", Math.random() * 500).setFlipX(true).setOrigin(0, 0).setDepth(10));
+        BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x_1, y_1, "UpgradingHammer").play("UpgradingHammer.A", Math.random() * 500).setFlipX(true).setOrigin(0, 0).setDepth(10));
+    }
+
+    BuildingOnFloor[BuildingPlace].BuildingAni.push(Elkaisar.GE.CityScene.add.sprite(x_2, y_2, "UpgradingHammer").play("UpgradingHammer.A", Math.random() * 500).setOrigin(0, 0).setDepth(10));
+
+    return;
+}
+
 var Check = true;
 
 Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
