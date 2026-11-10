@@ -3066,8 +3066,6 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var floor_height = 400;
         this.ConstructingHammer = null;
 
-        Elkaisar.GE.ConfigCityAnims();
-        fillCityWithBuilding();
         this.input.mousePointer.motionFactor = 0.5;
         this.input.pointer1.motionFactor = 0.5;
 
@@ -3080,12 +3078,14 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         this.cityBackdrop = this.add.tileSprite(500, 200, 4000, 3000, 'city_backdrop').setOrigin(0.5, 0.5).setDepth(-10);
 
         var cityLvl = Number(Elkaisar.CurrentCity && Elkaisar.CurrentCity.City ? Elkaisar.CurrentCity.City.lvl : 0);
-        var bgKey = "city_floor";
+        var bgKey = "town_bg_0";
         if (cityLvl > 2) bgKey = "town_bg_3";
         else if (cityLvl > 1) bgKey = "town_bg_2";
         else if (cityLvl > 0) bgKey = "town_bg_1";
-        else bgKey = "town_bg_0";
         this.cityBackground = this.add.image(0, 0, bgKey).setOrigin(0, 0).setDepth(0);
+
+        Elkaisar.GE.ConfigCityAnims();
+        fillCityWithBuilding();
 
         this.Scrolling = {};
         var This = this;
@@ -10502,13 +10502,13 @@ Elkaisar.GE.TextConfig = {
 };
 
 function fillCityWithBuilding() {
-    if (Elkaisar.GE.CityScene && Elkaisar.GE.CityScene.cityBackground) {
+    if (Elkaisar.GE.CityScene && Elkaisar.GE.CityScene.cityBackground && Elkaisar.GE.CityScene.cityBackground.scene && Elkaisar.GE.CityScene.cityBackground.scene.sys && typeof Elkaisar.GE.CityScene.cityBackground.setTexture === "function") {
         var cLvl = Number(Elkaisar.CurrentCity && Elkaisar.CurrentCity.City ? Elkaisar.CurrentCity.City.lvl : 0);
         var curBgKey = "town_bg_0";
         if (cLvl > 2) curBgKey = "town_bg_3";
         else if (cLvl > 1) curBgKey = "town_bg_2";
         else if (cLvl > 0) curBgKey = "town_bg_1";
-        Elkaisar.GE.CityScene.cityBackground.setTexture(curBgKey);
+        try { Elkaisar.GE.CityScene.cityBackground.setTexture(curBgKey); } catch(e) {}
     }
     for (var prop in BuildingOnFloor) {
         BuildingOnFloor[prop].destroy();
