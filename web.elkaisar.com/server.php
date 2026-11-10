@@ -34,8 +34,15 @@ $cStmt->execute([$playerId]);
 $liveCity = $cStmt->fetch();
 
 if (!$liveCity) {
-    $randX = rand(50, 450);
-    $randY = rand(50, 450);
+    try {
+        $coordinates = findAvailableWorldCoordinates($db);
+    } catch (RuntimeException $error) {
+        error_log('[Game] Starter city placement failed: ' . $error->getMessage());
+        http_response_code(503);
+        exit('تعذر العثور على موقع أرض صالح للمدينة. حاول مرة أخرى لاحقاً.');
+    }
+    $randX = $coordinates['x'];
+    $randY = $coordinates['y'];
     $cityName = mb_substr($livePlayer['name'], 0, 38, 'UTF-8') . ' - العاصمة';
     $cityCreatedAt = time();
     $db->prepare("INSERT INTO `city` (`id_player`, `x`, `y`, `name`, `lvl`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`) VALUES (?, ?, ?, ?, 1, 10000, 10000, 10000, 10000, 20000, 100, 100, 100, 100, 100, ?, ?)")->execute([$playerId, $randX, $randY, $cityName, $cityCreatedAt, $cityCreatedAt]);
@@ -185,7 +192,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                         </div>
                     </div>
                 </div>
-                <div class="mid" style="position: absolute;right: 50%;margin-right: -150px;">
+                <div class="mid">
                     <div id="server-name">
                         <div class="name"><?php echo htmlspecialchars($selectedServer['name'], ENT_QUOTES, 'UTF-8'); ?></div>
                         <div class="time"></div>
@@ -225,7 +232,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
             <div class="fire-tail"></div>
         </div>
         <div id="PlayerTeamWrapper">
-            <button class="NoTeamIcon"></button>
+            <button class="NoTeamIcon" title="خريطة العالم"></button>
         </div>
         <div class="profile" id="player-profile">
             <div id="p-provile-slider">

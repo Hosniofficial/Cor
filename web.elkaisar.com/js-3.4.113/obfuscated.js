@@ -3074,11 +3074,8 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var minCityZoom = 1;
         var centerCityCam = function() {
             var winW = cam.width || window.innerWidth;
-            var winH = cam.height || window.innerHeight;
-            var fitZoom = Math.min(winW / floor_width, winH / floor_height);
-            fitZoom = Math.max(1, Math.min(fitZoom, 1.6));
-            minCityZoom = fitZoom;
-            cam.setZoom(fitZoom);
+            minCityZoom = Math.max(1, winW / floor_width);
+            cam.setZoom(minCityZoom);
             cam.centerOn(floor_width / 2, floor_height / 2);
         };
         centerCityCam();
@@ -3146,7 +3143,8 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         });
 
         this.input.on('wheel', function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
-            var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.1 : -0.1), minCityZoom, 2.2);
+            var maxCityZoom = Math.max(minCityZoom, 2.2);
+            var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.1 : -0.1), minCityZoom, maxCityZoom);
             cam.setZoom(nextZoom);
             cam.centerOn(floor_width / 2, floor_height / 2);
         });
@@ -8528,10 +8526,54 @@ $(document).on("mousedown", "#ArenaChallangeBtnWrapper", function(e) {
 
 
 
-$(document).keydown(function(event) {
-    var keyCode = (event.keyCode ? event.keyCode : event.which);
-    if (keyCode == 13) {
-        $('.enter').last().trigger('click');
+$(document).on("keydown", function(event) {
+    var key = event.key;
+    var keyCode = event.keyCode || event.which;
+
+    if (key === "Escape" || keyCode === 27) {
+        var closeButton = $(
+            ".close-alert:visible, .close-alert_container:visible, " +
+            "#close-over-lay:visible, #Box-mid .box-close button:visible, " +
+            ".close_RB img:visible, #smallMap_close img:visible, " +
+            ".close_use_menu:visible, .close_select_menu:visible, .close_dialog:visible"
+        ).last();
+
+        if (closeButton.length) {
+            closeButton.trigger("click");
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        return;
+    }
+
+    if ((key !== "Enter" && keyCode !== 13) || event.isComposing ||
+        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+        return;
+    }
+
+    var target = $(event.target);
+    if (target.is("textarea, [contenteditable='true'], #input-chat input, .private-chat-input")) {
+        return;
+    }
+
+    var activeDialog = $(
+        "#over_lay_alert:visible, #over_lay:visible, #alert_container:visible, " +
+        "#dialg_box:visible, #Box-mid:visible"
+    ).filter(function() {
+        return $(this).find(".enter:visible").length > 0;
+    }).last();
+
+    if (!activeDialog.length || (target.is("input, select, button, a") && !target.closest(activeDialog).length)) {
+        return;
+    }
+
+    if (target.is("button, a")) {
+        return;
+    }
+
+    var confirmButton = activeDialog.find(".enter:visible").last();
+    if (confirmButton.length && !confirmButton.is(":disabled")) {
+        confirmButton.trigger("click");
         event.preventDefault();
         event.stopPropagation();
     }
@@ -28635,11 +28677,10 @@ Dominant.dialogBox = function() {
 Dominant.armyCapital = function() {
     $.ajax({
 
-        url: "api/dominant.php",
+        url: `${API_URL}/api/ADominant/getArmyCapitalDominant`,
         data: {
-
-            GET_ARMY_CAPITAL_DOMINANT: true
-
+            token: Elkaisar.Config.OuthToken,
+            server: Elkaisar.Config.idServer
         },
         type: 'GET',
         beforeSend: function(xhr) {
@@ -28649,9 +28690,13 @@ Dominant.armyCapital = function() {
 
             if (isJson(data)) {
                 var jsonData = JSON.parse(data);
-                console.log(jsonData)
             } else {
-                alert(data);
+                alert_box.failMessage("تعذر تحميل بيانات العواصم");
+                return;
+            }
+
+            if (jsonData.state !== "ok" || !Array.isArray(jsonData.unit)) {
+                alert_box.failMessage("تعذر تحميل بيانات العواصم");
                 return;
             }
 
@@ -28690,8 +28735,8 @@ Dominant.armyCapital = function() {
                     list += `<div class="tr">
                                 <div class="td_1" style="width:25%">${jsonData.unit[iii].title}</div>
                                 <div class="td_2" style="width:20%">[${jsonData.unit[iii].x} , ${jsonData.unit[iii].y}]</div>
-                                <div class="td_3" style="width:30%">----</div>
-                                <div class="td_4" style="width:10%">----</div>
+                                <div class="td_3" style="width:30%">${jsonData.dominanceDataAvailable === false ? "بيانات السيطرة غير متاحة" : "----"}</div>
+                                <div class="td_4" style="width:10%">${jsonData.dominanceDataAvailable === false ? "غير متاح" : "----"}</div>
                                 <div class="td_5" style="width:15%">
                                     <button class="full-btn-3x open-world-unit"  data-x-coord="${jsonData.unit[iii].x}" data-y-coord="${jsonData.unit[iii].y}">${Translate.Button.MenuList.View[UserLag.language]}</button>
                                 </div>
@@ -28710,7 +28755,7 @@ Dominant.armyCapital = function() {
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-
+            alert_box.failMessage("تعذر تحميل بيانات العواصم");
         }
 
     });
@@ -31870,6 +31915,14 @@ var campDB = {
     showDialogBox: function(x_coord, y_coord) {
 
         var unit = WorldUnit.getWorldUnit(x_coord, y_coord);
+        var typeData = unit && unit.ut !== undefined && Elkaisar.World.UnitTypeData
+            ? Elkaisar.World.UnitTypeData[unit.ut]
+            : null;
+        if (!unit || unit.l === undefined || unit.l === null || !typeData || typeof typeData.Title !== "string") {
+            alert_box.failMessage("بيانات الوحدة غير متاحة حاليا، أعد المحاولة");
+            return;
+        }
+
         var lvl = unit.l;
         var type = unit.ut;
         var now_date = new Date();
@@ -31921,6 +31974,11 @@ var campDB = {
     armyContainer: function(x_coord, y_coord) {
 
         var unit = WorldUnit.getWorldUnit(x_coord, y_coord);
+        if (!unit || unit.l === undefined || unit.l === null || unit.ut === undefined || unit.ut === null
+            || !Elkaisar.World.UnitTypeData || !Elkaisar.World.UnitTypeData[unit.ut]) {
+            return `<div class="camp-data">بيانات الوحدة غير متاحة حاليا</div>`;
+        }
+
         var lvl = unit.l;
         var type = unit.ut;
 
@@ -32086,17 +32144,16 @@ var campDB = {
                     </div>`;
         }
 
-        var renew_time = 0;
-        try {
-            var unitKey = (unit && unit.t !== undefined && Elkaisar.World.UnitData && Elkaisar.World.UnitData[unit.t]) ? unit.t : (unit && unit.ut !== undefined ? unit.ut : null);
-            if (unitKey !== null && Elkaisar.World.UnitData && Elkaisar.World.UnitData[unitKey] && typeof Elkaisar.World.UnitData[unitKey].timeNextRest === "function") {
-                var nextRest = Elkaisar.World.UnitData[unitKey].timeNextRest();
-                if (nextRest && typeof nextRest.getTime === "function") {
-                    renew_time = nextRest.getTime();
-                }
+        var renewTime = null;
+        var unitKey = unit.t !== undefined && Elkaisar.World.UnitData && Elkaisar.World.UnitData[unit.t]
+            ? unit.t
+            : unit.ut;
+        var unitData = Elkaisar.World.UnitData && Elkaisar.World.UnitData[unitKey];
+        if (unitData && typeof unitData.timeNextRest === "function") {
+            var nextRest = unitData.timeNextRest();
+            if (nextRest && typeof nextRest.getTime === "function" && Number.isFinite(nextRest.getTime())) {
+                renewTime = nextRest.getTime();
             }
-        } catch (e) {
-            renew_time = 0;
         }
 
         var uTypeData = (Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[type]) ? Elkaisar.World.UnitTypeData[type] : {};
@@ -32154,7 +32211,7 @@ var campDB = {
                         <div class="refresh_time">
                             <div class="pull-R" >
                                 <h1>وقت اعادة التعيين</h1>
-                                <h2 class="time_counter  rtl attack_time_reset"  time-end="${renew_time/1000}"></h2>
+                                <h2 class="${renewTime === null ? "rtl" : "time_counter rtl attack_time_reset"}" ${renewTime === null ? "" : `time-end="${renewTime / 1000}"`}>${renewTime === null ? "غير متاح" : ""}</h2>
                             </div>
                             <div class="pull-L">
                                 <h1>المستوى</h1>
@@ -34658,290 +34715,182 @@ $(document).on("click", ".close_RB img", function() {
 
 
 
-$(document)['on']('click', '#smallMap-icon img', function() {
-    var CityIcons = '';
-    for (var idCity in Elkaisar['DPlayer']['City']) {
-        CityIcons += `<lable type="18" style="background-image: url(images/world/map-icon/myCity.png); width:20px; height:20px; left: ${Elkaisar.DPlayer.City[idCity].City.x}px; top: ${Elkaisar.DPlayer.City[idCity].City.y}px"></lable>'`;
-    }
-    var Map = `'<div id="smallMap">
-                        <img src="images/world/smallMap.jpg"/>
-                        <div id="smallMap_close">
-                            <img src="images/btns/close_b.png"/>
-                        </div>
-                        <div class="overMap">
-                            <div id="CURRENT_CURSOR_COORDS"></div>
-                            <lable type="${ WUT_CAMP_ASIANA }" style="background-image: url(images/world/ratterCastle.png); left: 78px; top: 300px"></lable>
-                            <lable type="${ WUT_CAMP_BRITONS }" style="background-image: url(images/world/ratterCastle.png); left: 88px; top: 444px"></lable>
-                            <lable type="${ WUT_CAMP_CARTHAGE }" style="background-image: url(images/world/ratterCastle.png); left: 106px;top: 19px"></lable>
-                            <lable type="${ WUT_CAMP_EGYPT }" style="background-image: url(images/world/ratterCastle.png); left: 136px;top: 160px"></lable>
-                            <lable type="${ WUT_CAMP_GAULS }" style="background-image: url(images/world/ratterCastle.png); left: 246px;top: 111px"></lable>
-                            <lable type="${ WUT_CAMP_HISPANIA }" style="background-image: url(images/world/ratterCastle.png); left: 266px;top: 245px"></lable>
-                            <lable type="${ WUT_CAMP_ITALIA }" style="background-image: url(images/world/ratterCastle.png); left: 316px;top: 450px"></lable>
-                            <lable type="${ WUT_CAMP_MACEDON }" style="background-image: url(images/world/ratterCastle.png); left: 392px;top: 213px"></lable>
-                            <lable type="${ WUT_CAMP_PARTHIA }" style="background-image: url(images/world/ratterCastle.png); left: 407px;top: 66px"></lable>
-                            <lable type="${ WUT_CAMP_REICH }" style="background-image: url(images/world/ratterCastle.png); left: 427px;top: 337px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 20px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 20px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 20px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 20px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 60px;top: 100px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 60px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 60px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 100px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 100px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 100px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 100px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 140px;top: 100px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 140px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 140px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 180px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 180px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 180px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 180px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 220px;top: 100px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 220px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 220px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 260px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 260px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 260px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 260px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 300px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 300px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 340px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 340px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 340px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 340px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 380px;top: 100px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 380px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 380px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 420px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 420px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 420px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 420px;top: 470px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 460px;top: 100px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 460px;top: 230px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 460px;top: 390px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 490px;top: 30px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 490px;top: 170px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 490px;top: 310px"></lable>
-                            <lable type="${ WUT_MONAWRAT }" style="background-image: url(images/world/npcCastle.png); left: 490px;top: 470px"></lable>
-   
-    
-    
-    
-    
 
-    
-    
-                            <lable type="${ WUT_FRONT_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 464px;top:  93px"></lable>
-                            <lable type="${ WUT_FRONT_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 463px;top:  86px"></lable>
-                            <lable type="${ WUT_FRONT_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 447px;top:  72px"></lable>
-                            <lable type="${ WUT_FRONT_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 450px;top:  69px"></lable>
-                            <lable type="${ WUT_FRONT_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 432px;top:  52px"></lable>
-                            <lable type="${ WUT_FRONT_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 434px;top:  56px"></lable>
-                            <lable type="${ WUT_FRONT_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 417px;top:  39px"></lable>
-                            <lable type="${ WUT_FRONT_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 412px;top:  37px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 470px;top:  76px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 473px;top:  72px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 458px;top:  62px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 456px;top:  58px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 445px;top:  48px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 442px;top:  47px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 427px;top:  33px"></lable>
-                            <lable type="${ WUT_ARMY_LIGHT_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 431px;top:  30px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 475px;top:  57px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 479px;top:  60px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 467px;top:  47px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 465px;top:  49px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 453px;top:  37px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 457px;top:  36px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 446px;top:  28px"></lable>
-                            <lable type="${ WUT_ARMY_HEAVY_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 441px;top:  23px"></lable>
-                            <lable type="${ WUT_GUARD_SQUAD }" style="background-image: url(images/world/map-icon/dr.png); left: 480px;top:  42px"></lable>
-                            <lable type="${ WUT_GUARD_BAND }" style="background-image: url(images/world/map-icon/dr.png); left: 475px;top:  35px"></lable>
-                            <lable type="${ WUT_GUARD_SQUADRON }" style="background-image: url(images/world/map-icon/dr.png); left: 464px;top:  26px"></lable>
-                            <lable type="${ WUT_GUARD_DIVISION }" style="background-image: url(images/world/map-icon/dr.png); left: 458px;top:  20px"></lable>
-                            <lable type="${ WUT_BRAVE_THUNDER }" style="background-image: url(images/world/map-icon/dr.png); left: 478px;top:  21px"></lable>
- 
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 44px;top:  465px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 353px;top:  233px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 284px;top:  141px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 281px;top:  299px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 264px;top:  458px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 367px;top:  87px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 122px;top:  154px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 74px; top:  33px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 74px; top:  326px"></lable>
-                            <lable type="49" style="background-image: url(images/world/map-icon/p33.png); left: 472px;top:  379px"></lable>
-    
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 363px;top: 76px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 354px;top: 233px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 59px;top:  456px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 467px;top: 370px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 282px;top: 297px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 77px;top:  33px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 262px;top: 459px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 261px;top: 137px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 136px;top: 158px"></lable>
-                            <lable type="50" style="background-image: url(images/world/map-icon/p33.png); left: 75px;top:  325px"></lable>
-    
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 474px;top:  378px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 135px;top:  157px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 352px;top:  237px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 286px;top:  296px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 259px;top:  136px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 286px;top:  296px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 135px;top:  157px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 259px;top:  136px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 260px;top:  458px"></lable>
-                            <lable type="51" style="background-image: url(images/world/map-icon/p33.png); left: 474px;top:  378px"></lable>
-    
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 66px; top:  470px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 220px;top:  463px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 187px;top:  493px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 133px;top:  410px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 58px; top:  452px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 136px;top:  450px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 50px; top:  433px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 150px;top:  433px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 44px; top:  472px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 159px;top:  408px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 32px; top:  495px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 28px; top:  489px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 24px; top:  429px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 11px; top:  400px"></lable>
-                            <lable type="52" style="background-image: url(images/world/map-icon/p33.png); left: 79px; top:  490px"></lable>
-    
-    
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 1px;   top:  380px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 16px;  top:  380px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 47px;  top:  486px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 57px;  top:  410px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 64px;  top:  470px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 73px;  top:  483px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 81px;  top:  425px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 86px;  top:  429px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 104px; top:  469px"></lable>
-                            <lable type="53" style="background-image: url(images/world/map-icon/p33.png); left: 109px; top:  440px"></lable>
-    
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 40px;  top:  412px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 67px;  top:  395px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 80px;  top:  469px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 83px;  top:  418px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 85px;  top:  428px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 85px;  top:  461px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 95px;  top:  418px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 99px;  top:  392px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 120px; top:  450px"></lable>
-                            <lable type="54" style="background-image: url(images/world/map-icon/p33.png); left: 132px; top:  448px"></lable>
-    
-                            <lable type="55" style="background-image: url(images/world/map-icon/p33.png); left: 80px;  top:  460px"></lable>
-                            <lable type="55" style="background-image: url(images/world/map-icon/p33.png); left: 88px;  top:  448px"></lable>
-                            <lable type="55" style="background-image: url(images/world/map-icon/p33.png); left: 90px;  top:  476px"></lable>
-                            <lable type="55" style="background-image: url(images/world/map-icon/p33.png); left: 94px;  top:  463px"></lable>
-                            <lable type="55" style="background-image: url(images/world/map-icon/p33.png); left: 104px; top:  483px"></lable>
-    
-                            <lable type="56" style="background-image: url(images/world/map-icon/p33.png); left: 103px; top:  447px"></lable>
-                            
-                            <lable type="100" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 235px; top:  125px"></lable>
-                            <lable type="101" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 140px; top:  170px"></lable>
-                            <lable type="102" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 400px; top:  230px"></lable>
-                            <lable type="103" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 255px; top:  266px"></lable>
-                            <lable type="104" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 80px;  top:  280px"></lable>
-                            <lable type="105" style="background-image: url(images/world/map-icon/army-capital.png); width:15px; height:15px; left: 400px; top:  340px"></lable>
-    
-                            <lable type="${ WUT_SEA_CITY_1 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 36px; top:  77px"></lable>
-                            <lable type="${ WUT_SEA_CITY_2 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 53px; top:  147px"></lable>
-                            <lable type="${ WUT_SEA_CITY_3 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 20px; top:  357px"></lable>
-                            <lable type="${ WUT_SEA_CITY_4 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 146px; top:  396px"></lable>
-                            <lable type="${ WUT_SEA_CITY_5 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 336px;  top:  356px"></lable>
-                            <lable type="${ WUT_SEA_CITY_6 }" style="background-image: url(images/world/seaCity_1.png); width:15px; height:15px; left: 493px; top:  287px"></lable>
-                            
-                            
-                            <lable type="125" style="background-image: url(images/world/map-icon/arena.png); width:15px; height:15px; left: 249px; top:  247px"></lable>
-    
-                            <lable type="130" style="background-image: url(images/world/map-icon/matchNpc.png); left: 300px; top:  100px"></lable>
-                            <lable type="131" style="background-image: url(images/world/map-icon/matchNpc.png); left: 300px; top:   90px"></lable>
-                            <lable type="132" style="background-image: url(images/world/map-icon/matchNpc.png); left: 300px; top:   80px"></lable>
-                            <lable type="134" style="background-image: url(images/world/map-icon/occupy.png); left: 280px; top:  100px"></lable>
-                            <lable type="135" style="background-image: url(images/world/map-icon/occupy.png); left: 280px; top:   90px"></lable>
-                            <lable type="136" style="background-image: url(images/world/map-icon/occupy.png); left: 280px; top:   80px"></lable>
-    
-                            <lable type="150" style="background-image: url(images/world/map-icon/npcBlue.png); left: 320px; top:  410px"></lable>
-                            <lable type="151" style="background-image: url(images/world/map-icon/npcBlue.png); left: 330px; top:   410px"></lable>
-                            <lable type="152" style="background-image: url(images/world/map-icon/npcBlue.png); left: 340px; top:   410px"></lable>
-                            <lable type="153" style="background-image: url(images/world/map-icon/ratterCastle1.png); left: 320px; top:  420px"></lable>
-                            <lable type="154" style="background-image: url(images/world/map-icon/ratterCastle1.png); left: 330px; top:   420px"></lable>
-                            <lable type="155" style="background-image: url(images/world/map-icon/ratterCastle1.png); left: 340px; top:   420px"></lable>
-    
-                            
-                            ${ CityIcons }
-                            
-                        </div>
-                    </div>`;
-    if ($('#smallMap')['length'] > 0x0) {} else
-        $('body')['append'](Map);
-    CURRENT_CURSOR_COORDS = $('#CURRENT_CURSOR_COORDS');
-});
+Elkaisar.World.SpecialUnits = [[1,380,102,1],[11,400,101,1],[16,380,102,1],[20,30,70,11],[20,170,70,11],[20,310,70,11],[20,357,233,8],[20,470,70,11],[24,429,101,1],[28,486,101,1],[32,495,101,1],[36,77,231,5],[40,412,103,1],[44,465,98,1],[44,472,101,1],[45,287,226,0],[47,486,102,1],[50,433,101,1],[53,147,232,6],[57,410,102,1],[58,452,101,1],[59,456,99,1],[60,100,70,11],[60,230,70,11],[60,390,70,11],[62,452,100,1],[64,470,102,1],[66,470,101,1],[67,395,103,1],[72,327,100,1],[73,483,102,1],[74,33,98,1],[74,326,98,1],[75,325,99,1],[77,33,99,1],[78,300,76,11],[79,490,101,1],[80,280,154,1],[80,460,104,1],[80,469,103,1],[81,425,102,1],[83,418,103,1],[85,428,103,1],[85,461,103,1],[86,429,102,1],[88,444,79,12],[88,448,104,11],[90,39,100,1],[90,476,104,1],[94,463,104,1],[95,418,103,1],[99,392,103,1],[100,30,70,11],[100,170,70,11],[100,310,70,11],[100,470,70,11],[103,447,105,1],[104,469,102,1],[104,483,104,1],[106,19,71,11],[109,440,102,1],[115,27,225,0],[120,450,103,1],[122,154,98,1],[128,139,224,7],[132,448,103,1],[133,410,101,1],[135,157,100,1],[136,158,99,1],[136,160,74,11],[136,450,101,1],[140,100,70,11],[140,170,151,1],[140,230,70,12],[140,390,70,11],[146,396,234,7],[150,433,101,1],[159,408,101,1],[180,30,70,11],[180,170,70,11],[180,310,70,11],[180,470,70,11],[187,493,101,1],[220,100,70,11],[220,230,70,12],[220,390,70,11],[220,463,101,1],[233,246,220,0],[235,125,150,1],[246,111,72,11],[249,247,177,1],[249,249,175,1],[249,251,176,1],[255,266,153,1],[257,129,223,10],[259,136,100,1],[260,30,70,11],[260,170,70,11],[260,310,70,11],[260,458,100,1],[260,470,70,11],[261,137,99,1],[262,459,99,1],[264,458,98,1],[266,245,77,22],[280,80,186,0],[280,90,185,0],[280,100,184,8],[281,299,98,1],[282,297,99,1],[286,296,100,1],[300,80,182,0],[300,90,181,0],[300,100,180,11],[300,230,70,11],[300,390,70,11],[316,450,80,29],[320,410,200,1],[320,420,203,1],[330,410,201,17],[330,420,204,1],[336,356,235,0],[340,30,70,11],[340,170,70,11],[340,310,70,11],[340,410,202,1],[340,420,205,1],[340,470,70,11],[352,237,100,1],[353,233,98,1],[354,233,99,1],[360,196,221,9],[363,76,99,1],[367,87,98,1],[371,79,100,1],[376,36,227,0],[380,100,70,11],[380,230,70,11],[380,390,70,11],[392,213,75,11],[400,230,152,1],[400,340,155,1],[406,317,222,0],[407,66,73,11],[412,37,84,1],[417,39,84,1],[420,30,70,11],[420,170,70,11],[420,310,70,21],[420,470,70,11],[427,33,88,1],[427,337,78,11],[431,30,88,1],[432,52,83,1],[434,56,83,1],[442,47,87,1],[445,48,87,1],[446,28,92,1],[450,69,82,1],[453,37,91,1],[456,58,86,1],[457,36,91,1],[458,20,96,1],[458,62,86,1],[460,100,70,11],[460,230,70,11],[460,390,70,11],[463,86,81,1],[464,26,95,1],[464,93,81,1],[465,49,90,1],[467,47,90,1],[467,370,99,1],[470,76,85,1],[472,379,98,1],[473,72,85,1],[474,378,100,1],[475,35,94,1],[475,57,89,2],[478,21,97,1],[479,60,89,1],[480,42,93,1],[490,30,70,11],[490,170,70,11],[490,310,70,11],[490,470,70,11],[493,287,236,10]];
 
+Elkaisar.World.OpenSmallMap = function() {
+    $("#smallMap").remove();
 
-
-
-$(document).on("mouseover", ".overMap lable", function() {
-
-    var type = parseInt($(this).attr("type"));
-    var x_coord = parseInt($(this).css("left").replace("px", ""));
-    var y_coord = parseInt($(this).css("top").replace("px", ""));
-
-
-    $.ajax({
-        url: `${API_URL}/api/AWorld/refreshWorldUnitLvl`,
-        type: 'GET',
-        data: {
-            xCoord: x_coord,
-            yCoord: y_coord,
-            server: Elkaisar.Config.idServer,
-            token: Elkaisar.Config.OuthToken
-        },
-        beforeSend: function(xhr) {
-
-        },
-        success: function(data, textStatus, jqXHR) {
-
-            if (!Elkaisar.LBase.isJson(data))
-                return Elkaisar.LBase.Error(data);
-            var JsonObject = JSON.parse(data);
-
-            WorldUnit.getWorldUnit(x_coord, y_coord).l = JsonObject.l;
-
-            var tooltip = `<div class="map-tooltip" style="left:${x_coord + 15}px; top: ${y_coord + 15}px">
-                                    <div class="tt-header">
-                                        <div class="coords">
-                                           [ ${getArabicNumbers(y_coord) /*هى المفروض بالعكس بس العربى بيعكس يعنى الى بيظهر هنا هو الاكس*/} , ${getArabicNumbers(x_coord)}]  
-                                        </div>
-                                    </div>
-                                    <div class="tt-title">
-                                           ${WorldUtil.tooltipHeader(x_coord, y_coord)}
-                                    </div>
-                                    <div class="tt-desc">
-                                        ${WorldUtil.getDesc(WorldUnit.getWorldUnit(x_coord, y_coord).ut, x_coord, y_coord) }
-                                    </div>
-                                </div>`;
-            $(".map-tooltip").remove();
-            $(".overMap").append(tooltip);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-
+    // 1. Player Cities
+    var cityHtml = "";
+    var currentCityId = (Elkaisar.CurrentCity && Elkaisar.CurrentCity.City) ? Elkaisar.CurrentCity.City.id_city : null;
+    var cityCount = 0;
+    if (Elkaisar.DPlayer && Elkaisar.DPlayer.City) {
+        for (var idCity in Elkaisar.DPlayer.City) {
+            var c = Elkaisar.DPlayer.City[idCity];
+            if (!c || !c.City) continue;
+            cityCount++;
+            var isCurrent = (currentCityId == idCity);
+            cityHtml += '<lable class="city-dot filter-city ' + (isCurrent ? 'current-player-city' : 'other-player-city') + '" ' +
+                'type="18" data-cat="city" data-name="' + (c.City.name || 'مدينتي') + '" ' +
+                'data-x="' + c.City.x + '" data-y="' + c.City.y + '" ' +
+                'style="background-image: url(images/world/map-icon/myCity.png); left: ' + c.City.x + 'px; top: ' + c.City.y + 'px"></lable>';
         }
-    });
+    }
+
+    // 2. Special Units (Camps, Gangs, Capitals, Arenas)
+    var unitsHtml = "";
+    var counts = { camp: 0, gang: 0, capital: 0, arena: 0 };
+    var specialList = Elkaisar.World.SpecialUnits || [];
+    for (var i = 0; i < specialList.length; i++) {
+        var u = specialList[i];
+        var x = u[0], y = u[1], ut = u[2], lvl = u[3];
+        var cat = "other";
+        var icon = "";
+        var cls = "";
+
+        if (ut === 70) {
+            cat = "camp";
+            icon = "images/world/npcCastle.png";
+            cls = "dot-camp filter-camp";
+            counts.camp++;
+        } else if (ut >= 71 && ut <= 104) {
+            cat = "gang";
+            icon = "images/world/ratterCastle.png";
+            cls = "dot-gang filter-gang";
+            counts.gang++;
+        } else if ((ut >= 150 && ut <= 155) || ut === 105) {
+            cat = "capital";
+            icon = "images/world/map-icon/army-capital.png";
+            cls = "dot-capital filter-capital";
+            counts.capital++;
+        } else {
+            cat = "arena";
+            icon = "images/world/map-icon/arena.png";
+            cls = "dot-arena filter-arena";
+            counts.arena++;
+        }
+
+        var title = (Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[ut]) ? Elkaisar.World.UnitTypeData[ut].Title : ("وحدة " + ut);
+        unitsHtml += '<lable class="' + cls + '" data-cat="' + cat + '" data-ut="' + ut + '" data-lvl="' + lvl + '" data-name="' + title + '" ' +
+            'data-x="' + x + '" data-y="' + y + '" style="background-image: url(' + icon + '); left: ' + x + 'px; top: ' + y + 'px"></lable>';
+    }
+
+    // 3. Legend Panel
+    var legendHtml = '<div id="smallMap_legend">' +
+        '<div class="legend-title">دليل الخريطة</div>' +
+        '<div class="legend-item" data-filter="filter-city" title="إظهار / إخفاء مدن اللاعب">' +
+            '<div class="legend-item-left">' +
+                '<span class="legend-icon" style="background-image: url(images/world/map-icon/myCity.png);"></span>' +
+                '<span>مدنك</span>' +
+            '</div>' +
+            '<span class="legend-count">(' + cityCount + ')</span>' +
+        '</div>' +
+        '<div class="legend-item" data-filter="filter-capital" title="إظهار / إخفاء عواصم الجيوش">' +
+            '<div class="legend-item-left">' +
+                '<span class="legend-icon" style="background-image: url(images/world/map-icon/army-capital.png);"></span>' +
+                '<span>عواصم الجيوش</span>' +
+            '</div>' +
+            '<span class="legend-count">(' + counts.capital + ')</span>' +
+        '</div>' +
+        '<div class="legend-item" data-filter="filter-camp" title="إظهار / إخفاء معسكرات ومناورات التدريب">' +
+            '<div class="legend-item-left">' +
+                '<span class="legend-icon" style="background-image: url(images/world/npcCastle.png);"></span>' +
+                '<span>معسكرات ومناورات</span>' +
+            '</div>' +
+            '<span class="legend-count">(' + counts.camp + ')</span>' +
+        '</div>' +
+        '<div class="legend-item" data-filter="filter-gang" title="إظهار / إخفاء العصابات واللصوص ومقرات التمرد">' +
+            '<div class="legend-item-left">' +
+                '<span class="legend-icon" style="background-image: url(images/world/ratterCastle.png);"></span>' +
+                '<span>عصابات ولصوص</span>' +
+            '</div>' +
+            '<span class="legend-count">(' + counts.gang + ')</span>' +
+        '</div>' +
+        '<div class="legend-item" data-filter="filter-arena" title="إظهار / إخفاء الحلبات والقلاع">' +
+            '<div class="legend-item-left">' +
+                '<span class="legend-icon" style="background-image: url(images/world/map-icon/arena.png);"></span>' +
+                '<span>حلبات وقلاع خاصة</span>' +
+            '</div>' +
+            '<span class="legend-count">(' + counts.arena + ')</span>' +
+        '</div>' +
+        '<div class="legend-tip">' +
+            'اضغط على أي نقطة بالخريطة للانتقال إليها مباشرة، أو انقر على البنود أعلاه لإظهارها/إخفائها.' +
+        '</div>' +
+    '</div>';
+
+    var mapHtml = '<div id="smallMap">' +
+        '<img src="images/world/smallMap.jpg"/>' +
+        '<div id="smallMap_close">' +
+            '<img src="images/btns/close_b.png" title="إغلاق الخريطة"/>' +
+        '</div>' +
+        '<div class="overMap">' +
+            '<div id="CURRENT_CURSOR_COORDS"></div>' +
+            unitsHtml +
+            cityHtml +
+        '</div>' +
+        legendHtml +
+    '</div>';
+
+    $("body").append(mapHtml);
+    CURRENT_CURSOR_COORDS = $("#CURRENT_CURSOR_COORDS");
+};
+
+$(document).on("click", "#smallMap-icon, #smallMap-icon img", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    Elkaisar.World.OpenSmallMap();
 });
 
-$(document).on("mouseout", ".overMap lable", function() {
+$(document).on("click", "#smallMap_legend .legend-item", function(e) {
+    e.stopPropagation();
+    var filter = $(this).attr("data-filter");
+    var target = $(".overMap ." + filter);
+    if ($(this).hasClass("filter-disabled")) {
+        $(this).removeClass("filter-disabled");
+        target.show();
+        $(this).css("opacity", "1");
+    } else {
+        $(this).addClass("filter-disabled");
+        target.hide();
+        $(this).css("opacity", "0.35");
+    }
+});
+
+$(document).on("mouseover", ".overMap lable, .overMap .map-dot", function(e) {
+    e.stopPropagation();
+    var x = parseInt($(this).css("left"));
+    var y = parseInt($(this).css("top"));
+    var ut = parseInt($(this).attr("data-ut") || $(this).attr("type") || 0);
+    var lvl = $(this).attr("data-lvl") || "";
+    var title = $(this).attr("data-name") || "";
+    if (!title && Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[ut]) {
+        title = Elkaisar.World.UnitTypeData[ut].Title;
+    }
+    if (!lvl && Elkaisar.worldAllUnits && Elkaisar.worldAllUnits[x * 500 + y]) {
+        lvl = Elkaisar.worldAllUnits[x * 500 + y].l;
+    }
+    var lvlStr = (lvl && lvl > 0 && ut !== 18) ? " (مستوى " + getArabicNumbers(lvl) + ")" : "";
+    var tooltip = '<div class="map-tooltip" style="left:' + Math.min(380, x + 15) + 'px; top: ' + Math.min(430, y + 15) + 'px; pointer-events: none; z-index: 9999;">' +
+        '<div class="tt-header">' +
+            '<div class="coords">[ ' + getArabicNumbers(x) + ' , ' + getArabicNumbers(y) + ' ]</div>' +
+        '</div>' +
+        '<div class="tt-title">' + (title || "نقطة على الخريطة") + lvlStr + '</div>' +
+        '<div class="tt-desc" style="color: #ffd700; font-size: 11px;">اضغط بالماوس للذهاب مباشرة</div>' +
+    '</div>';
+    $(".map-tooltip").remove();
+    $(".overMap").append(tooltip);
+});
+
+$(document).on("mouseout", ".overMap lable, .overMap .map-dot", function() {
     $(".map-tooltip").remove();
 });
+
 $(document).on("click", "#smallMap_close img", function() {
     $("#smallMap").remove();
 });
+
+
 $(document).on("mouseleave", "#cr-stage canvas", function() {
     Crafty("UnitToolTip").each(function() {
         this.destroy()
@@ -36206,14 +36155,22 @@ $(document).on("mouseout", "#smallMap .overMap", function() {
 
 $(document).on("click", "#smallMap .overMap", function(evt) {
 
-    var x = Math.floor(evt.pageX - $(this).offset().left);
-    var y = Math.floor(evt.pageY - $(this).offset().top);
+    var offset = $(this).offset();
+    var x = Math.floor(evt.pageX - offset.left);
+    var y = Math.floor(evt.pageY - offset.top);
+    if (x < 0) x = 0; if (x > 499) x = 499;
+    if (y < 0) y = 0; if (y > 499) y = 499;
+
+    if ($("#WorldCity").attr("data-view") === "city") {
+        $("#WorldCity").trigger("click");
+    }
 
     $("#x_coord-input input").val(x);
     $("#y_coord-input input").val(y);
 
+    $("#nav-btn button, #nav-btn .full-btn").trigger("click");
 
-    $("#nav-btn button").trigger("click");
+    $("#smallMap").remove();
 
 });
 
@@ -49692,6 +49649,12 @@ BattelField.getBattel = function(id_battel) {
     return null;
 };
 var GodGate = {};
+GodGate.rankEffect = {
+    gate_1: {},
+    gate_2: {},
+    gate_3: {},
+    gate_4: {}
+};
 
 GodGate.pointTotxt = {
 
@@ -49837,10 +49800,30 @@ $(document).on("PlayerReady", "html", function() {
 
         },
         success: function(data, textStatus, jqXHR) {
-            GodGate.rankEffect = JSON.parse(data);
+            if (!isJson(data)) {
+                console.error("[GodGate] Invalid rank effect response");
+                return;
+            }
+
+            var rankEffect = JSON.parse(data);
+            var gateKeys = ["gate_1", "gate_2", "gate_3", "gate_4"];
+            var hasAllGates = rankEffect && gateKeys.every(function(gate) {
+                return rankEffect[gate] && typeof rankEffect[gate] === "object" && !Array.isArray(rankEffect[gate]);
+            });
+            if (!hasAllGates || (rankEffect.state !== undefined && rankEffect.state !== "ok")) {
+                console.error("[GodGate] Incomplete rank effect response");
+                return;
+            }
+
+            GodGate.rankEffect = {
+                gate_1: rankEffect.gate_1,
+                gate_2: rankEffect.gate_2,
+                gate_3: rankEffect.gate_3,
+                gate_4: rankEffect.gate_4
+            };
         },
         error: function(jqXHR, textStatus, errorThrown) {
-
+            console.error("[GodGate] Failed to load rank effects", textStatus, errorThrown);
         }
 
     });
@@ -50295,8 +50278,12 @@ GodGate.rank = function(gate, offset) {
             for (var iii = 0; iii < 10; iii++) {
 
                 if (jsonData[iii]) {
-                    let Key = GodGate.rankEffect ? Object.keys(GodGate.rankEffect[gate]) : [];
-                    let GR = Key.length ? GodGate.rankEffect[gate][Key[0]] : null;;
+                    var gateEffect = GodGate.rankEffect && GodGate.rankEffect[gate]
+                        && typeof GodGate.rankEffect[gate] === "object"
+                        ? GodGate.rankEffect[gate]
+                        : {};
+                    let Key = Object.keys(gateEffect);
+                    let GR = Key.length ? gateEffect[Key[0]] : null;;
 
                     list += `
                             <div class="tr" data-rank="1">
@@ -50314,7 +50301,11 @@ GodGate.rank = function(gate, offset) {
                 }
 
             }
-            let Key = GodGate.rankEffect ? Object.keys(GodGate.rankEffect[gate]) : [];
+            var gateEffect = GodGate.rankEffect && GodGate.rankEffect[gate]
+                && typeof GodGate.rankEffect[gate] === "object"
+                ? GodGate.rankEffect[gate]
+                : {};
+            let Key = Object.keys(gateEffect);
             var content = ` <div class="content rank-list">
                                 <div class="th">
                                     <div class="td_1 ellipsis" style="width: 18%">${Translate.Title.TH.Ranking[UserLag.language]}</div>
@@ -53909,18 +53900,17 @@ Elkaisar.Team.changeTeamRelationBox = function() {
     return army_content;
 };
 
-$(document).on("click", "#PlayerTeamWrapper button", function() {
-    $("#select_from").remove();
-    if (Elkaisar.Team.PlayerTeam.Team)
-        dialogBoxShow(Elkaisar.Team.DialogBox(), function() {
-            Elkaisar.Team.TeamHomePage();
-        });
-    else {
-        dialogBoxShow(Elkaisar.Team.noTeamJoin());
-        Elkaisar.Team.getPlayerTeam().done(function() {
-            $("#select_from").replaceWith(Elkaisar.Team.noTeamJoin());
-        });
+$(document).on("click", "#PlayerTeamWrapper button, .NoTeamIcon", function(e) {
+    if ($(this).hasClass("NoTeamIcon") || !Elkaisar.Team || !Elkaisar.Team.PlayerTeam || !Elkaisar.Team.PlayerTeam.Team) {
+        e.preventDefault();
+        e.stopPropagation();
+        Elkaisar.World.OpenSmallMap();
+        return;
     }
+    $("#select_from").remove();
+    dialogBoxShow(Elkaisar.Team.DialogBox(), function() {
+        Elkaisar.Team.TeamHomePage();
+    });
 });
 
 $(document).on("click", "#CreatNewTeam", function() {
