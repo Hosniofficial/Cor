@@ -3070,16 +3070,22 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         this.input.pointer1.motionFactor = 0.5;
 
         var cam = this.cameras.main;
-        cam.setZoom(1);
-        // Authentic Call of Roma: City view is perfectly centered in viewport with fixed camera
+        var scaleManager = this.scale;
+        var minCityZoom = 1;
         var centerCityCam = function() {
-            var offsetX = cam.width > 1000 ? Math.floor((cam.width - 1000) / 2) : 0;
-            var offsetY = cam.height > 450 ? Math.max(0, Math.floor((cam.height - 400 - 120) / 2)) : 0;
-            cam.scrollX = -offsetX;
-            cam.scrollY = -offsetY;
+            var winW = cam.width || window.innerWidth;
+            var winH = cam.height || window.innerHeight;
+            var fitZoom = Math.min(winW / floor_width, winH / floor_height);
+            fitZoom = Math.max(1, Math.min(fitZoom, 1.6));
+            minCityZoom = fitZoom;
+            cam.setZoom(fitZoom);
+            cam.centerOn(floor_width / 2, floor_height / 2);
         };
         centerCityCam();
-        this.scale.on('resize', centerCityCam);
+        scaleManager.on('resize', centerCityCam);
+        this.events.once('shutdown', function() {
+            scaleManager.off('resize', centerCityCam);
+        });
 
         // Infinite seamless Roman stone backdrop around the city so no black borders appear
         this.cityBackdrop = this.add.tileSprite(500, 200, 4000, 3000, 'city_backdrop').setOrigin(0.5, 0.5).setDepth(-10);
@@ -3094,7 +3100,6 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         Elkaisar.GE.ConfigCityAnims();
         fillCityWithBuilding();
 
-        this.Scrolling = {};
         var This = this;
         var downObj;
         this.input.on('gameobjectdown', function(p, obj, E) {
@@ -3108,24 +3113,6 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
                 return;
             Obj.emit("click", Obj, P, E);
             E.stopPropagation();
-        });
-
-        this.input.on('pointerdown', function(p) {
-            This.Scrolling.movingSpeed = 0;
-        });
-        this.input.on('pointerup', function(p) {
-            This.Scrolling.isBeingDragged = false;
-            This.Scrolling.DeltaTime = p.downTime - p.upTime;
-            This.Scrolling.Distance = Phaser.Math.Distance.Between(p.downX, p.downY, p.upX, p.upY);
-            This.Scrolling.Angle = Phaser.Math.Angle.Between(p.downX, p.downY, p.upX, p.upY);
-            This.Scrolling.movingSpeed = This.Scrolling.Distance * 10 / This.Scrolling.DeltaTime;
-            This.input.stopPropagation();
-        });
-
-        this.input.on('pointermove', function(p) {
-            // Fixed camera like Call of Roma: no dragging city floor away
-            if (!p.isDown)
-                return;
         });
 
         this.input.on('gameobjectover', function(Pointer, GameObject, Event) {
@@ -3159,40 +3146,10 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         });
 
         this.input.on('wheel', function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
-            if (deltaY < 0) {
-                if (cam.zoom >= 2.2)
-                    return cam.zoom = 2.2;
-                cam.zoom += 0.1;
-            } else {
-                if (cam.zoom <= 0.8)
-                    return cam.zoom = 0.8;
-                cam.zoom -= 0.1;
-            }
+            var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.1 : -0.1), minCityZoom, 2.2);
+            cam.setZoom(nextZoom);
+            cam.centerOn(floor_width / 2, floor_height / 2);
         });
-
-        var winW = cam.width || window.innerWidth;
-        var winH = cam.height || window.innerHeight;
-        var fitZoom = Math.min(winW / 1000, winH / 400);
-        if (fitZoom < 1.0) fitZoom = 1.0;
-        if (fitZoom > 1.6) fitZoom = 1.6;
-        cam.setZoom(fitZoom);
-        cam.centerOn(500, 200);
-
-        var controlConfig = {
-            camera: this.cameras.main,
-            left: this.input.keyboard.addKey('left'),
-            right: this.input.keyboard.addKey('right'),
-            up: this.input.keyboard.addKey('up'),
-            down: this.input.keyboard.addKey('down'),
-            acceleration: 0.06,
-            drag: 0.0005,
-            maxSpeed: 1.0
-        };
-
-        this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
-    },
-    update: function(time, delta) {
-        this.controls.update(delta);
     }
 });
 
@@ -46924,20 +46881,12 @@ $("#WorldCity").click(function() {
             $("#y_coord-input input").val(curCity.y);
         }
 
-        var showCityIndicator = function() {
-            if (curCity) {
-                Animation.currentUnitArrow.put(curCity.x, curCity.y);
-            }
-        };
-
         if (!Elkaisar.World.Map.CityFound) {
             Elkaisar.World.Map.getWorldCity().done(function() {
                 Elkaisar.GE.CityScene.scene.start("World");
-                setTimeout(showCityIndicator, 150);
             });
         } else {
             Elkaisar.GE.CityScene.scene.start("World");
-            setTimeout(showCityIndicator, 150);
         }
 
         $(this).attr("data-view", "world");
@@ -46948,8 +46897,7 @@ $("#WorldCity").click(function() {
         $(".nav-to-city").fadeIn();
         setTimeout(function() {
             Elkaisar.World.Map.RefreshWorld();
-            showCityIndicator();
-        }, 1000);
+        }, 500);
     }
 
 });
@@ -47091,29 +47039,20 @@ $("#nav-btn .full-btn").click(function() {
             return;
         }
 
-        if (Animation.currentUnitArrow.tween) {
-            Animation.currentUnitArrow.tween.remove();
-        }
-
-        Animation.currentUnitArrow.arrow.setVisible(true);
-        Animation.currentUnitArrow.arrow.setDepth(999999);
-        Animation.currentUnitArrow.arrow.setPosition(currentCenterX, currentCenterY - 20);
+        // Hide arrow completely while traveling across the map
+        Animation.currentUnitArrow.hide();
 
         const duration = Math.min(Math.max(Dist / 2, 1000), 2800);
         var lastScrollTime = 0;
 
         cam.pan(targetWorldX, targetWorldY, duration, "Quad.easeInOut", true, function(camera, progress, x, y) {
-            var curCenterX = camera.scrollX + camera.width / 2;
-            var curCenterY = camera.scrollY + camera.height / 2;
-
-            Animation.currentUnitArrow.arrow.setPosition(curCenterX, curCenterY - 20);
-
             var now = Date.now();
             if (now - lastScrollTime > 50) {
                 lastScrollTime = now;
                 Elkaisar.World.Map.Scroll(false);
             }
 
+            // Arrow ONLY reappears upon reaching target coordinates
             if (progress >= 1) {
                 Animation.currentUnitArrow.put(x_coord, y_coord);
                 Elkaisar.World.Map.Scroll(true);
@@ -47767,28 +47706,43 @@ Animation.cityColonizerFlag = function() {
 
 };
 
-Animation.currentUnitArrow = {};
-
-Animation.currentUnitArrow.arrow = {};
-Animation.currentUnitArrow.x = 0;
-Animation.currentUnitArrow.y = 0;
-Animation.currentUnitArrow.z = 0;
-
-
+Animation.currentUnitArrow = {
+    arrow: null,
+    tween: null,
+    x: 0,
+    y: 0,
+    z: 0
+};
 
 Animation.currentUnitArrow.add = function() {
+    if (Animation.currentUnitArrow.tween) {
+        try { Animation.currentUnitArrow.tween.remove(); } catch(e) {}
+        Animation.currentUnitArrow.tween = null;
+    }
+    if (Animation.currentUnitArrow.arrow && typeof Animation.currentUnitArrow.arrow.destroy === "function") {
+        try { Animation.currentUnitArrow.arrow.destroy(); } catch(e) {}
+    }
+    Animation.currentUnitArrow.arrow = null;
+    if (Elkaisar.GE.WorldScene && Elkaisar.GE.WorldScene.add) {
+        Animation.currentUnitArrow.arrow = Elkaisar.GE.WorldScene.add.image(0, 0, "arrow").setDepth(0).setVisible(false);
+    }
+};
 
-    Animation.currentUnitArrow.arrow = Elkaisar.GE.WorldScene.add.image(0, 0, "arrow").setDepth(0).setVisible(false);
-    return;
-
-
+Animation.currentUnitArrow.hide = function() {
+    if (Animation.currentUnitArrow.tween) {
+        try { Animation.currentUnitArrow.tween.remove(); } catch(e) {}
+        Animation.currentUnitArrow.tween = null;
+    }
+    if (Animation.currentUnitArrow.arrow && typeof Animation.currentUnitArrow.arrow.setVisible === "function") {
+        Animation.currentUnitArrow.arrow.setVisible(false);
+    }
 };
 
 Animation.currentUnitArrow.put = function(x, y) {
-
-    if (!Animation.currentUnitArrow.arrow || typeof Animation.currentUnitArrow.arrow.setVisible !== "function" || !Animation.currentUnitArrow.arrow.scene) {
+    if (!Animation.currentUnitArrow.arrow || !Animation.currentUnitArrow.arrow.scene || typeof Animation.currentUnitArrow.arrow.setVisible !== "function") {
         Animation.currentUnitArrow.add();
     }
+    if (!Animation.currentUnitArrow.arrow) return;
 
     Animation.currentUnitArrow.x = Elkaisar.World.Map.posX(x, y) + 50;
     Animation.currentUnitArrow.y = Elkaisar.World.Map.posY(x, y) + 5;
@@ -47797,51 +47751,24 @@ Animation.currentUnitArrow.put = function(x, y) {
     Animation.currentUnitArrow.arrow.setPosition(Animation.currentUnitArrow.x, Animation.currentUnitArrow.y);
     Animation.currentUnitArrow.arrow.setDepth(Animation.currentUnitArrow.z);
 
-
-    if (Animation.currentUnitArrow.tween)
-        Animation.currentUnitArrow.tween.remove();
-
-    Animation.currentUnitArrow.tween = Elkaisar.GE.WorldScene.tweens.add({
-        targets: Animation.currentUnitArrow.arrow,
-        x: Animation.currentUnitArrow.arrow.x,
-        y: Animation.currentUnitArrow.arrow.y + 30,
-        ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-        repeat: -1,
-        duration: 1000,
-        yoyo: true,
-        onYoyo: function() {},
-        onRepeat: function() {}
-    });
-
-
-    return;
-    if (!$.isEmptyObject(Animation.currentUnitArrow.arrow)) {
-        Animation.currentUnitArrow.arrow.setPosition(Animation.currentUnitArrow.x, Animation.currentUnitArrow.y).setDepth(Animation.currentUnitArrow.z);
-    } else {
-
-        Animation.currentUnitArrow.arrow =
-            Elkaisar.GE.WorldScene.add.image(Animation.currentUnitArrow.x, Animation.currentUnitArrow.y).setDepth(Animation.currentUnitArrow.z);
-
-        Crafty.e("2D, Canvas, Tween, arrow")
-            .attr({
-                x: Animation.currentUnitArrow.x,
-                y: Animation.currentUnitArrow.y,
-                z: Animation.currentUnitArrow.z
-            })
-            .tween({
-                y: Animation.currentUnitArrow.y + 30
-            }, 1000, "easeInOutQuad")
-            .bind("TweenEnd", function() {
-                this.tween({
-                    y: Animation.currentUnitArrow.y + (dir ? 30 : 0)
-                }, 1000, "easeInOutQuad");
-                dir = 1 - dir;
-            });
-
+    if (Animation.currentUnitArrow.tween) {
+        try { Animation.currentUnitArrow.tween.remove(); } catch(e) {}
+        Animation.currentUnitArrow.tween = null;
     }
 
-
+    if (Elkaisar.GE.WorldScene && Elkaisar.GE.WorldScene.tweens) {
+        Animation.currentUnitArrow.tween = Elkaisar.GE.WorldScene.tweens.add({
+            targets: Animation.currentUnitArrow.arrow,
+            x: Animation.currentUnitArrow.arrow.x,
+            y: Animation.currentUnitArrow.arrow.y + 30,
+            ease: 'Linear',
+            repeat: -1,
+            duration: 1000,
+            yoyo: true
+        });
+    }
 };
+
 Elkaisar.Equip.getPlayerEquip = function() {
 
     return $.ajax({
