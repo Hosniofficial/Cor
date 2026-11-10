@@ -38,6 +38,12 @@ if (preg_match('#^/(?:api|home/HLogIn)/.+\.html$#i', $uri) === 1) {
     $uri = substr($uri, 0, -5);
 }
 
+if ($uri === '/api/dominant.php' || $uri === '/api/dominant') {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['state' => 'ok', 'type' => 'domain', 'unit' => []], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 if (strpos($uri, '/api/') === 0
     || strpos($uri, '/World/') === 0
     || strpos($uri, '/Chat/') === 0
