@@ -1560,7 +1560,32 @@ select[name=tasks] {
     height: 40%;
     margin-top: 10px;
     font-size: 13px;
-    overflow: hidden
+    overflow-y: auto;
+}
+
+.matrial-trade-show .equipment-power-title {
+    display: block;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.matrial-trade-show .equipment-power-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px 8px;
+}
+
+.matrial-trade-show .equipment-power-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.matrial-trade-show .equipment-power-feature {
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .matrial-show .confim-btn input {

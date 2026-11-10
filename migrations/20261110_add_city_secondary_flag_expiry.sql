@@ -1,0 +1,2 @@
+ALTER TABLE `city`
+    ADD COLUMN `flag_expires_at` INT UNSIGNED NOT NULL DEFAULT 0 AFTER `flag`;

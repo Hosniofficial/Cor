@@ -10,7 +10,7 @@
     position: fixed;
     left: 200px;
     bottom: 212px;
-    z-index: 100;
+    z-index: 9;
 }
 
 #PlayerTeamWrapper .slog {

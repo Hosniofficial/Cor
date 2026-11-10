@@ -3,6 +3,11 @@
 
 class TimedTaskController {
     public static function handle($uri, $db) {
+        if (preg_match('~^/api/ATimedTask/~', $uri)) {
+            $player = requireAuthenticatedPlayer($db);
+            requirePlayerOwnedCity($db, $player);
+        }
+
         switch ($uri) {
             case '/api/ATimedTask/getCityBuildingTasks':
                 self::getCityBuildingTasks($db);

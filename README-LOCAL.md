@@ -1,96 +1,28 @@
-# قيصر الشرق — Local Development Setup
+# تشغيل المشروع محلياً
 
-## ما يحتاجه المشروع للتشغيل
+## المتطلبات
 
-| المتطلب | الإصدار | الغرض |
-|---------|---------|-------|
-| **PHP** | 8.x | يخدم ملفات الـ web + API |
-| **Node.js** | 18+ | WebSocket server |
-| **ws** package | مثبت تلقائياً | مكتبة WebSocket لـ Node |
+- XAMPP: MySQL وPHP 8.x.
+- Node.js 18 أو أحدث، وحزم المشروع الموجودة في `node_modules`.
 
----
+## التشغيل
 
-## طريقة التشغيل السريع
+من جذر المشروع شغّل `start-servers.bat`. يبدأ المشغّل الواجهة وAPI وWebSocket على عناوين loopback، ويفتح اللعبة:
 
-**شغّل الملف:**
-```
-start-servers.bat
-```
+- اللعبة ولوحة الإدارة: <http://localhost:8082/>
+- API: <http://localhost:8092/>
+- WebSocket: `ws://localhost:8081`
 
-ده هيفتح 3 نوافذ:
-1. PHP server على port **8080** (web.elkaisar.com)
-2. PHP server على port **8090** (app.elkaisar.com API)
-3. Node.js server على port **8081** (ws.elkaisar.com WebSocket)
+قاعدة التشغيل هي `elkaisar_prod_ready_20261109`. بيانات دخول الإدارة المحلية سُلّمت للمستخدم في المحادثة ولم تُحفظ في ملفات المشروع. لإيقاف الخدمات أغلق نوافذها الثلاث.
 
-ثم يفتح المتصفح على: **http://localhost:8080/local-server.php**
+لتشغيل النسخة المنفصلة للاختبارات، شغّل `start-servers.bat test` بدلاً من ذلك؛ سيستخدم قاعدة `elkaisar_test`.
 
----
+## قاعدة البيانات
 
-## البنية الكاملة
+ملفات الترحيل موجودة في `migrations/`. ملف `database/elkaisar_prod_ready_20261109.sql` يحتوي المخطط فقط (41 جدولاً)، بلا حسابات أو بيانات لعب. كل حساب جديد يبدأ بمدينة «العاصمة 1». النسخة الكاملة الحالية موجودة في `database/backups/` وتتضمن بيانات الإدارة؛ لا تشاركها.
 
-```
-web.elkaisar.com (2)/
-├── web.elkaisar.com/          ← الـ frontend (HTML + CSS + JS)
-│   ├── server.php             ← نسخة production (تشير لـ elkaisar.com)
-│   ├── local-server.php       ← نسخة local dev (تشير لـ localhost)
-│   ├── router.php             ← PHP router للـ built-in server
-│   ├── css-3.4.113/           ← CSS files
-│   ├── js-3.4.113/            ← JS files (obfuscated.js هو الكود الرئيسي)
-│   └── images/                ← الصور والأصول
-│
-├── app.elkaisar.com/          ← الـ API server (JSON responses)
-│   ├── router.php             ← PHP router
-│   ├── api/                   ← API endpoints (كل .html هو JSON response)
-│   │   ├── APlayer/           ← Player APIs
-│   │   ├── ACity/             ← City APIs
-│   │   ├── AWorld/            ← World map APIs
-│   │   └── ...               ← باقي الـ endpoints
-│   ├── home/HLogIn/           ← Login endpoint
-│   └── js-0.0.24/json/        ← Static JSON data files
-│
-├── ws.elkaisar.com8081/       ← WebSocket API data
-│   └── api/                   ← WS API endpoints
-│       ├── ATeam/
-│       ├── AWorld/
-│       └── ...
-│
-├── ws-server.js               ← Node.js WebSocket + HTTP server
-├── start-servers.bat          ← تشغيل كل الـ servers دفعة واحدة
-└── node_modules/ws/           ← مكتبة WebSocket
-```
+الملف المحلي `ssl-cert.pfx` غير متعقب حالياً ويستخدمه `gen-pem.js` للفحص الاختياري فقط. سبق أن وُجد في تاريخ Git؛ لا تستخدمه للإنتاج، ودوّر الشهادة إذا كانت حقيقية أو استُخدمت خارج التطوير.
 
----
+## تنبيه
 
-## URLs المهمة
-
-| URL | الوظيفة |
-|-----|---------|
-| `http://localhost:8080/local-server.php` | 🎮 اللعبة (للـ local dev) |
-| `http://localhost:8090/api/APlayer/getPlayerState` | Player state API |
-| `http://localhost:8090/home/HLogIn/playerEnterServerWeb` | Login API |
-| `http://localhost:8081/api/AWorld/getWorldCity` | World map data |
-| `ws://localhost:8081` | WebSocket connection |
-
----
-
-## الفرق بين server.php و local-server.php
-
-| | `server.php` | `local-server.php` |
-|--|--|--|
-| BASE_URL | `https://web.elkaisar.com` | `http://localhost:8080` |
-| API_URL | `https://app.elkaisar.com` | `http://localhost:8090` |
-| WS_HOST | `ws.elkaisar.com` | `localhost` |
-| WS_PORT | `8081` | `8081` |
-
----
-
-## ملاحظات مهمة
-
-> **WebSocket**: الـ JS يتصل بـ `ws://localhost:8081` في الـ local mode.
-> الـ WS server يقبل الاتصالات ويرسل acknowledgment لكل message.
-
-> **API Routing**: كل ملف `.html` في مجلد `api/` يحتوي على JSON response ثابت.
-> مثلاً: `GET /api/APlayer/getPlayerState` → يقرأ `api/APlayer/getPlayerState.html`
-
-> **CORS**: الـ router.php بتاع الـ app server بيضيف `Access-Control-Allow-Origin: *`
-> علشان الـ browser يقدر يعمل requests من port 8080 لـ port 8090.
+هذا إعداد تطوير محلي، وليس نشراً للإنتاج. لا تفتح منافذ الخدمات للعامة؛ يلزم قبل النشر إعداد TLS والأسرار وقاعدة إنتاج مرحلية واختبارات استعادة.

@@ -1,26 +1,22 @@
-// Generate PEM files from PFX for Node.js HTTPS/WSS
-// Run once: node gen-pem.js
+// Validate the local PFX configuration for Node.js TLS.
+// Run with ELKAISAR_TLS_PASSPHRASE set in the environment.
 
 const fs   = require('fs');
 const path = require('path');
 const BASE = __dirname;
 
-// Use Node.js crypto to load the PFX
-// Node 22 supports loading PFX directly via tls
 const tls  = require('tls');
 
-// Read PFX
+const passphrase = process.env.ELKAISAR_TLS_PASSPHRASE;
+if (!passphrase) {
+    throw new Error('Set ELKAISAR_TLS_PASSPHRASE in the environment');
+}
+
 const pfxBuf = fs.readFileSync(path.join(BASE, 'ssl-cert.pfx'));
 
-// Create a secure context from PFX to extract key/cert
-const ctx = tls.createSecureContext({
+tls.createSecureContext({
     pfx: pfxBuf,
-    passphrase: 'password'
+    passphrase,
 });
 
-// Unfortunately Node doesn't expose PEM extraction directly from PFX in older APIs
-// Use the forge-like approach via built-in crypto
-// Actually let's just use the PFX directly in ws-server - Node supports it natively!
-
-console.log('PFX file exists:', fs.existsSync(path.join(BASE, 'ssl-cert.pfx')));
-console.log('Done - ws-server.js will use ssl-cert.pfx directly');
+console.log('PFX TLS context validated.');

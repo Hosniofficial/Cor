@@ -1,9 +1,12 @@
 <?php
-// QuestController.php - Handles quests list, progression, and claiming quest rewards
-
-require_once __DIR__ . '/../services/ProductionService.php';
+// QuestController.php - Reads quest status and grants quest rewards.
 
 class QuestController {
+    private static function getDailyResetTimestamp(): int {
+        $cairoTime = new DateTimeImmutable('now', new DateTimeZone('Africa/Cairo'));
+        return $cairoTime->setTime(0, 0)->getTimestamp();
+    }
+
     public static function handle($uri, $db) {
         switch ($uri) {
             case '/api/APlayerQuest/getPlayerQuest':
@@ -16,13 +19,36 @@ class QuestController {
         return false;
     }
 
+    private static function resolvePlayerId($db) {
+        $player = requireAuthenticatedPlayer($db);
+        return (int)$player['id_player'];
+    }
+
     public static function getPlayerQuest($db) {
-        $stmt = $db->query("SELECT id_player FROM player ORDER BY id_player ASC LIMIT 1");
-        $playerId = (int)$stmt->fetchColumn() ?: 1;
+        $playerId = self::resolvePlayerId($db);
 
         // Load base quest definitions
         $questFile = __DIR__ . '/../js-0.0.24/json/questBase.json';
         $quests = file_exists($questFile) ? json_decode(file_get_contents($questFile), true) : [];
+
+        // Daily quests reset at midnight in Cairo, regardless of the server timezone.
+        $todayMidnight = self::getDailyResetTimestamp();
+        $refreshQuests = [];
+        if (is_array($quests)) {
+            foreach ($quests as $qId => $qData) {
+                if (!empty($qData['refresh'])) {
+                    $refreshQuests[] = (string)$qId;
+                }
+            }
+        }
+
+        if (!empty($refreshQuests)) {
+            // Reset daily quests that were claimed on a previous day or have time_done = 0
+            $placeholders = implode(',', array_fill(0, count($refreshQuests), '?'));
+            $resetParams = array_merge([$playerId, $todayMidnight], $refreshQuests);
+            $db->prepare("UPDATE `player_quest` SET `done` = 0 WHERE `id_player` = ? AND `time_done` < ? AND `id_quest` IN ($placeholders)")
+               ->execute($resetParams);
+        }
 
         // Fetch done quests from MySQL
         $stmt = $db->prepare("SELECT id_quest, done FROM player_quest WHERE id_player = ?");
@@ -44,95 +70,228 @@ class QuestController {
     }
 
     public static function acceptQuest($db) {
-        $cityId  = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 1;
-        $idQuest = isset($_REQUEST['idQuest']) ? trim($_REQUEST['idQuest']) : '';
-
-        $stmt = $db->query("SELECT id_player FROM player ORDER BY id_player ASC LIMIT 1");
-        $playerId = (int)$stmt->fetchColumn() ?: 1;
-
-        if (empty($idQuest)) {
+        $player = requireAuthenticatedPlayer($db);
+        $playerId = (int)$player['id_player'];
+        $questId = $_POST['idQuest'] ?? $_GET['idQuest'] ?? '';
+        $cityId = $_POST['idCity'] ?? $_GET['idCity'] ?? 0;
+        if (!is_string($questId) || $questId === '' || !is_scalar($cityId) || (int)$cityId <= 0) {
+            http_response_code(400);
             sendJson(['state' => 'error_1']);
         }
 
-        // Check if already completed in DB
-        $stmt = $db->prepare("SELECT done FROM player_quest WHERE id_player = ? AND id_quest = ?");
-        $stmt->execute([$playerId, $idQuest]);
-        $isDone = (int)$stmt->fetchColumn();
-        if ($isDone === 1) {
-            sendJson(['state' => 'error_2']); // Already completed
-        }
-
-        // Load quest definitions to grant real rewards and deduct requirements
         $questFile = __DIR__ . '/../js-0.0.24/json/questBase.json';
-        $quests = file_exists($questFile) ? json_decode(file_get_contents($questFile), true) : [];
-        $questData = isset($quests[$idQuest]) ? $quests[$idQuest] : null;
+        $questData = json_decode((string)file_get_contents($questFile), true);
+        if (!is_array($questData) || !isset($questData[$questId]) || !is_array($questData[$questId])) {
+            sendJson(['state' => 'error_1']);
+        }
+        $quest = $questData[$questId];
+        $daily = !empty($quest['refresh']);
+        $now = time();
+        $todayMidnight = self::getDailyResetTimestamp();
+        $result = ['state' => 'error_4'];
 
-        if (!$questData) {
-            // Fallback: mark as done
-            $up = $db->prepare("INSERT INTO `player_quest` (`id_player`, `id_quest`, `done`) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE `done` = 1");
-            $up->execute([$playerId, $idQuest]);
-            sendJson(['state' => 'ok']);
+        $db->beginTransaction();
+        try {
+            $cityStmt = $db->prepare('SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ? FOR UPDATE');
+            $cityStmt->execute([(int)$cityId, $playerId]);
+            $city = $cityStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$city) {
+                $db->rollBack();
+                http_response_code(403);
+                sendJson(['state' => 'error_auth']);
+            }
+
+            $playerStmt = $db->prepare('SELECT * FROM `player` WHERE `id_player` = ? FOR UPDATE');
+            $playerStmt->execute([$playerId]);
+            $player = $playerStmt->fetch(PDO::FETCH_ASSOC);
+
+            $db->prepare(
+                'INSERT IGNORE INTO `player_quest` (`id_player`, `id_quest`, `done`, `time_done`) VALUES (?, ?, 0, 0)'
+            )->execute([$playerId, $questId]);
+            $questStateStmt = $db->prepare(
+                'SELECT `done`, `time_done` FROM `player_quest` WHERE `id_player` = ? AND `id_quest` = ? FOR UPDATE'
+            );
+            $questStateStmt->execute([$playerId, $questId]);
+            $questState = $questStateStmt->fetch(PDO::FETCH_ASSOC);
+
+            $alreadyClaimedToday = (int)$questState['done'] === 1
+                && (!$daily || (int)$questState['time_done'] >= $todayMidnight);
+            if ($alreadyClaimedToday) {
+                $db->rollBack();
+                sendJson(['state' => 'error_2']);
+            }
+
+            if (!self::checkShowConditions($db, $playerId, $quest['showCond'] ?? [])) {
+                $db->rollBack();
+                sendJson(['state' => 'error_1']);
+            }
+            if (!self::checkRequirements($db, $player, $city, $quest['ListOfNeed'] ?? [])) {
+                $db->rollBack();
+                sendJson(['state' => 'error_4']);
+            }
+            if (!self::isValidRewardList($quest['Reword'] ?? null)) {
+                throw new RuntimeException("Invalid reward definition for quest {$questId}");
+            }
+
+            foreach ($quest['Reword'] as $reward) {
+                self::grantReward($db, $playerId, (int)$cityId, $reward);
+            }
+
+            $db->prepare(
+                'UPDATE `player_quest` SET `done` = 1, `time_done` = ? WHERE `id_player` = ? AND `id_quest` = ?'
+            )->execute([$now, $playerId, $questId]);
+            $db->commit();
+            $result = ['state' => 'ok'];
+        } catch (Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $e;
         }
 
-        // 1. Deduct needed resources/items if required by quest
-        if (!empty($questData['ListOfNeed'])) {
-            foreach ($questData['ListOfNeed'] as $need) {
-                $nType = $need['type'] ?? '';
-                $nAmt  = (int)($need['amount'] ?? 0);
-                if ($nType === 'resource' && $nAmt > 0) {
-                    $resKey = $need['resourceType'] ?? '';
-                    if (in_array($resKey, ['food', 'wood', 'stone', 'metal', 'coin'])) {
-                        $db->prepare("UPDATE `city` SET `{$resKey}` = GREATEST(0, `{$resKey}` - ?) WHERE `id_city` = ?")->execute([$nAmt, $cityId]);
-                    }
-                } elseif ($nType === 'item' && $nAmt > 0) {
-                    $itemKey = $need['item'] ?? '';
-                    if (!empty($itemKey)) {
-                        $db->prepare("UPDATE `player_item` SET `amount` = GREATEST(0, `amount` - ?) WHERE `id_player` = ? AND `id_item` = ?")->execute([$nAmt, $playerId, $itemKey]);
-                    }
-                }
+        sendJson($result);
+    }
+
+    private static function checkShowConditions(PDO $db, int $playerId, array $conditions): bool {
+        foreach ($conditions as $condition) {
+            if (($condition['type'] ?? '') !== 'quest' || empty($condition['id_quest'])) {
+                return false;
+            }
+            $stmt = $db->prepare(
+                'SELECT `done`, `time_done` FROM `player_quest` WHERE `id_player` = ? AND `id_quest` = ?'
+            );
+            $stmt->execute([$playerId, (string)$condition['id_quest']]);
+            $state = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$state || (int)$state['done'] !== 1) {
+                return false;
             }
         }
+        return true;
+    }
 
-        // 2. Grant rewards
-        if (!empty($questData['Reword'])) {
-            foreach ($questData['Reword'] as $r) {
-                $rType = $r['type'] ?? '';
-                $amount = (int)($r['amount'] ?? 0);
-
-                if ($rType === 'resource' && $amount > 0) {
-                    $resKey = $r['resourceType'] ?? '';
-                    if (in_array($resKey, ['food', 'wood', 'stone', 'metal', 'coin'])) {
-                        $db->prepare("UPDATE `city` SET `{$resKey}` = LEAST(`{$resKey}_cap`, `{$resKey}` + ?) WHERE `id_city` = ?")->execute([$amount, $cityId]);
-                    }
-                } elseif ($rType === 'item' && $amount > 0) {
-                    $itemKey = $r['item'] ?? '';
-                    if (!empty($itemKey)) {
-                        $db->prepare("INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `amount` = `amount` + VALUES(`amount`)")->execute([$playerId, $itemKey, $amount]);
-                    }
-                } elseif ($rType === 'population' && $amount > 0) {
-                    $db->prepare("UPDATE `city` SET `pop` = LEAST(`pop_max`, `pop` + ?) WHERE `id_city` = ?")->execute([$amount, $cityId]);
-                } elseif ($rType === 'prestige' && $amount > 0) {
-                    $db->prepare("UPDATE `player` SET `prestige` = `prestige` + ? WHERE `id_player` = ?")->execute([$amount, $playerId]);
-                } elseif ($rType === 'gold' && $amount > 0) {
-                    $db->prepare("UPDATE `player` SET `gold` = `gold` + ? WHERE `id_player` = ?")->execute([$amount, $playerId]);
-                } elseif ($rType === 'promotion') {
-                    $db->prepare("UPDATE `player` SET `porm` = `porm` + 1 WHERE `id_player` = ?")->execute([$playerId]);
-                } elseif ($rType === 'jop' && $amount > 0) {
-                    $jopFor = $r['jop_for'] ?? $r['jopFor'] ?? '';
-                    if ($jopFor === 'farm') $jopFor = 'food';
-                    if ($jopFor === 'mine') $jopFor = 'metal';
-                    if (in_array($jopFor, ['food', 'wood', 'stone', 'metal'])) {
-                        $db->prepare("UPDATE `city_jop` SET `{$jopFor}` = `{$jopFor}` + ? WHERE `id_city` = ?")->execute([$amount, $cityId]);
-                        ProductionService::recalculateCityProduction($db, $cityId);
-                    }
+    private static function checkRequirements(PDO $db, array $player, array $city, array $requirements): bool {
+        $state = null;
+        foreach ($requirements as $requirement) {
+            $type = $requirement['type'] ?? '';
+            $amount = (int)($requirement['amount'] ?? 0);
+            if ($type === 'building') {
+                $stmt = $db->prepare('SELECT MAX(`lvl`) FROM `city_building` WHERE `id_city` = ? AND `type` = ?');
+                $stmt->execute([(int)$city['id_city'], (int)($requirement['buildingType'] ?? 0)]);
+                if ((int)$stmt->fetchColumn() < (int)($requirement['lvl'] ?? 0)) {
+                    return false;
                 }
+            } elseif ($type === 'promotion') {
+                if ((int)$player['porm'] < (int)($requirement['promotion'] ?? 0)) {
+                    return false;
+                }
+            } elseif ($type === 'prestige') {
+                if ((int)$player['prestige'] < $amount) {
+                    return false;
+                }
+            } elseif ($type === 'item') {
+                $stmt = $db->prepare('SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = ?');
+                $stmt->execute([(int)$player['id_player'], (string)($requirement['item'] ?? '')]);
+                if ((int)$stmt->fetchColumn() < $amount) {
+                    return false;
+                }
+            } elseif ($type === 'resource') {
+                $resource = $requirement['resourceType'] ?? '';
+                if (!in_array($resource, ['food', 'wood', 'stone', 'metal', 'coin'], true)
+                    || (int)$city[$resource] < $amount) {
+                    return false;
+                }
+            } elseif ($type === 'population') {
+                if ((int)$city['pop'] < $amount) {
+                    return false;
+                }
+            } elseif ($type === 'playerState') {
+                $stateFor = $requirement['stateFor'] ?? '';
+                if (!in_array($stateFor, ['motiv', 'peace', 'medical', 'wheat', 'stone', 'metal', 'coin', 'wood', 'attack_10', 'defence_10'], true)) {
+                    return false;
+                }
+                if ($state === null) {
+                    $stmt = $db->prepare('SELECT * FROM `player_state` WHERE `id_player` = ?');
+                    $stmt->execute([(int)$player['id_player']]);
+                    $state = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+                }
+                if ((int)($state[$stateFor] ?? 0) < time()) {
+                    return false;
+                }
+            } else {
+                return false;
             }
         }
+        return true;
+    }
 
-        // 3. Mark quest as done in MySQL
-        $up = $db->prepare("INSERT INTO `player_quest` (`id_player`, `id_quest`, `done`) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE `done` = 1");
-        $up->execute([$playerId, $idQuest]);
+    private static function isValidRewardList($rewards): bool {
+        if (!is_array($rewards)) {
+            return false;
+        }
+        foreach ($rewards as $reward) {
+            $type = $reward['type'] ?? '';
+            $amount = (int)($reward['amount'] ?? 0);
+            if ($type === 'promotion') {
+                continue;
+            }
+            if ($amount < 0) {
+                return false;
+            }
+            if ($type === 'resource' && in_array($reward['resourceType'] ?? '', ['food', 'wood', 'stone', 'metal', 'coin'], true)) {
+                continue;
+            }
+            if ($type === 'item' && !empty($reward['item']) && strlen((string)$reward['item']) <= 60) {
+                continue;
+            }
+            if ($type === 'population') {
+                continue;
+            }
+            if ($type === 'jop' && in_array($reward['jop_for'] ?? $reward['jopFor'] ?? '', ['food', 'wood', 'stone', 'metal'], true)) {
+                continue;
+            }
+            if ($type === 'equip' && !empty($reward['equip']) && !empty($reward['part'])
+                && strlen((string)$reward['equip']) <= 50 && strlen((string)$reward['part']) <= 50) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
 
-        sendJson(['state' => 'ok']);
+    private static function grantReward(PDO $db, int $playerId, int $cityId, array $reward): void {
+        $type = $reward['type'];
+        $amount = (int)($reward['amount'] ?? 0);
+        if ($type === 'resource') {
+            $resource = $reward['resourceType'];
+            $db->prepare("UPDATE `city` SET `$resource` = `$resource` + ? WHERE `id_city` = ? AND `id_player` = ?")
+                ->execute([$amount, $cityId, $playerId]);
+        } elseif ($type === 'item') {
+            $db->prepare(
+                'INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?) ' .
+                'ON DUPLICATE KEY UPDATE `amount` = `amount` + VALUES(`amount`)'
+            )->execute([$playerId, (string)$reward['item'], $amount]);
+        } elseif ($type === 'population') {
+            $db->prepare('UPDATE `city` SET `pop` = `pop` + ? WHERE `id_city` = ? AND `id_player` = ?')
+                ->execute([$amount, $cityId, $playerId]);
+        } elseif ($type === 'prestige') {
+            $db->prepare('UPDATE `player` SET `prestige` = `prestige` + ? WHERE `id_player` = ?')
+                ->execute([$amount, $playerId]);
+        } elseif ($type === 'jop') {
+            $job = $reward['jop_for'] ?? $reward['jopFor'];
+            $db->prepare(
+                'INSERT IGNORE INTO `city_jop` (`id_city`, `id_player`, `food`, `wood`, `stone`, `metal`) VALUES (?, ?, 0, 0, 0, 0)'
+            )->execute([$cityId, $playerId]);
+            $db->prepare("UPDATE `city_jop` SET `$job` = `$job` + ? WHERE `id_city` = ? AND `id_player` = ?")
+                ->execute([$amount, $cityId, $playerId]);
+        } elseif ($type === 'equip') {
+            $stmt = $db->prepare(
+                'INSERT INTO `player_equip` (`id_player`, `id_hero`, `type`, `part`, `lvl`, `on_hero`) VALUES (?, 0, ?, ?, ?, 0)'
+            );
+            for ($i = 0; $i < $amount; $i++) {
+                $stmt->execute([$playerId, (string)$reward['equip'], (string)$reward['part'], max(1, (int)($reward['lvl'] ?? 1))]);
+            }
+        } elseif ($type === 'promotion') {
+            $db->prepare('UPDATE `player` SET `porm` = `porm` + 1 WHERE `id_player` = ?')->execute([$playerId]);
+        }
     }
 }
