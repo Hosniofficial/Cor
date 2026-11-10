@@ -547,6 +547,7 @@
     position: absolute;
     background-position: center;
     background-size: auto 100%;
+    overflow: hidden;
 }
 
 #luck-wheel ul .corner {
@@ -554,6 +555,7 @@
     height: 64px;
     border-radius: 50%;
     position: absolute;
+    overflow: hidden;
 }
 
 #luck-wheel ul li .left-gate {
@@ -563,7 +565,8 @@
     border-top-left-radius: 25px;
     background-image: url(../images/tools/gete-left.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    background-position: 0px 0px;
 }
 
 #luck-wheel ul li .right-gate {
@@ -573,7 +576,8 @@
     border-top-right-radius: 25px;
     background-image: url(../images/tools/gate-right.png);
     background-repeat: no-repeat;
-    background-size: 100%
+    background-size: 100% 100%;
+    background-position: 0px 0px;
 }
 
 #luck-wheel ul .corner .left-gate {
@@ -581,7 +585,8 @@
     border-top-left-radius: 32px;
     background-image: url(../images/tools/gate-left-lion.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    background-position: 0px 0px;
 }
 
 #luck-wheel ul li h1 {
@@ -598,7 +603,9 @@
     border-bottom-right-radius: 32px;
     border-top-right-radius: 32px;
     background-image: url(../images/tools/gate-right-lion.png);
-    background-size: 100%
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0px 0px;
 }
 
 #luck-wheel ul .cell .pulse {
