@@ -341,9 +341,9 @@ class WorldController {
                 sendJson(['state' => 'error_2', 'msg' => 'لا توجد موارد كافية لبناء المدينة']);
             }
 
-            // 7. Insert new city record
+            // 7. Insert new city record with initial expansion lvl = 0
             $insStmt = $db->prepare("INSERT INTO city (id_player, name, x, y, lvl, food, wood, stone, metal, coin, food_cap, wood_cap, stone_cap, metal_cap, coin_cap, pop, pop_max, pop_cap, loy, dis_loy, taxs, helper, pop_LSS)
-                                     VALUES (?, ?, ?, ?, 1, 10000, 10000, 10000, 10000, 10000, 100000, 100000, 100000, 100000, 100000, 100, 100, 100, 100, 0, 10, 0, ?)");
+                                     VALUES (?, ?, ?, ?, 0, 10000, 10000, 10000, 10000, 10000, 100000, 100000, 100000, 100000, 100000, 100, 100, 100, 100, 0, 10, 0, ?)");
             $insStmt->execute([$idPlayer, $cityName, $xCoord, $yCoord, time()]);
             $newCityId = (int)$db->lastInsertId();
 
@@ -425,17 +425,21 @@ class WorldController {
     }
 
     public static function refreshWorldUnitLvl($db) {
-        $x = filter_input(INPUT_GET, 'xCoord', FILTER_VALIDATE_INT);
-        $y = filter_input(INPUT_GET, 'yCoord', FILTER_VALIDATE_INT);
-        if ($x === null || $y === null || $x === false || $y === false) {
-            $x = filter_input(INPUT_POST, 'xCoord', FILTER_VALIDATE_INT);
-            $y = filter_input(INPUT_POST, 'yCoord', FILTER_VALIDATE_INT);
+        $x = filter_var($_REQUEST['xCoord'] ?? null, FILTER_VALIDATE_INT);
+        $y = filter_var($_REQUEST['yCoord'] ?? null, FILTER_VALIDATE_INT);
+        if ($x === false || $y === false || $x === null || $y === null || $x < 0 || $x > 499 || $y < 0 || $y > 499) {
+            http_response_code(400);
+            sendJson(['state' => 'error_invalid_coordinates']);
+            return;
         }
-        $x = (int)($x ?? 0);
-        $y = (int)($y ?? 0);
 
-        $unitType = (int)(filter_input(INPUT_GET, 'unitType', FILTER_VALIDATE_INT) ?? filter_input(INPUT_POST, 'unitType', FILTER_VALIDATE_INT) ?? 0);
-        $reqLvl = (int)(filter_input(INPUT_GET, 'lvl', FILTER_VALIDATE_INT) ?? filter_input(INPUT_POST, 'lvl', FILTER_VALIDATE_INT) ?? 0);
+        $unitType = filter_var($_REQUEST['unitType'] ?? null, FILTER_VALIDATE_INT);
+        $reqLvl = filter_var($_REQUEST['lvl'] ?? null, FILTER_VALIDATE_INT);
+        if ($unitType === false || $reqLvl === false || $unitType === null || $reqLvl === null) {
+            http_response_code(400);
+            sendJson(['state' => 'error_invalid_world_unit']);
+            return;
+        }
 
         // Check city_barray first to see if this tile is colonized/occupied
         $barStmt = $db->prepare("SELECT Type, lvl FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1");
@@ -443,60 +447,57 @@ class WorldController {
         $barRow = $barStmt->fetch(PDO::FETCH_ASSOC);
 
         if ($barRow) {
-            if (!empty($barRow['Type'])) $unitType = (int)$barRow['Type'];
-            if (!empty($barRow['lvl'])) $reqLvl = (int)$barRow['lvl'];
+            $unitType = (int)$barRow['Type'];
+            $reqLvl = (int)$barRow['lvl'];
         }
 
-        if ($reqLvl <= 0) {
-            $reqLvl = 1;
+        $unitDataPath = __DIR__ . '/../js-3.4.113/json/worldUnitData.json';
+        $unitArmyPath = __DIR__ . '/../js-3.4.113/json/UnitArmy.json';
+        static $cachedUnitData = null;
+        static $cachedUnitArmy = null;
+        if ($cachedUnitData === null || $cachedUnitArmy === null) {
+            $rawUnitData = is_readable($unitDataPath) ? file_get_contents($unitDataPath) : false;
+            $rawUnitArmy = is_readable($unitArmyPath) ? file_get_contents($unitArmyPath) : false;
+            $cachedUnitData = $rawUnitData === false ? null : json_decode($rawUnitData, true);
+            $cachedUnitArmy = $rawUnitArmy === false ? null : json_decode($rawUnitArmy, true);
         }
 
-        // Load unit armies from UnitArmy.json
-        $unitArmyPath = dirname(__DIR__, 2) . '/web.elkaisar.com/js-3.4.113/json/UnitArmy.json';
-        $armyData = [];
-        if (file_exists($unitArmyPath)) {
-            static $cachedUnitArmy = null;
-            if ($cachedUnitArmy === null) {
-                $rawArmy = file_get_contents($unitArmyPath);
-                $cachedUnitArmy = json_decode($rawArmy, true) ?: [];
-            }
-            if (isset($cachedUnitArmy[(string)$unitType][(string)$reqLvl])) {
-                $armyData = $cachedUnitArmy[(string)$unitType][(string)$reqLvl];
-            } elseif (isset($cachedUnitArmy[$unitType][$reqLvl])) {
-                $armyData = $cachedUnitArmy[$unitType][$reqLvl];
-            }
+        if (!is_array($cachedUnitData) || !is_array($cachedUnitArmy)) {
+            error_log('[WorldController] World unit army data is unavailable or invalid');
+            http_response_code(500);
+            sendJson(['state' => 'error_world_unit_data_unavailable']);
+            return;
         }
 
-        // Build hero representation for defending armies
-        $heroList = [];
-        if (!empty($armyData)) {
-            $heroList[] = [
-                'id_hero' => 0,
-                'name' => 'قائد الحامية',
-                'avatar' => 'hero_1',
-                'lvl' => $reqLvl,
-                'f_1_type' => 1,
-                'f_1_num' => (int)($armyData['army_a'] ?? $armyData['1'] ?? 0),
-                'f_2_type' => 2,
-                'f_2_num' => (int)($armyData['army_b'] ?? $armyData['2'] ?? 0),
-                'f_3_type' => 3,
-                'f_3_num' => (int)($armyData['army_c'] ?? $armyData['3'] ?? 0),
-                'b_1_type' => 4,
-                'b_1_num' => (int)($armyData['army_d'] ?? $armyData['4'] ?? 0),
-                'b_2_type' => 5,
-                'b_2_num' => (int)($armyData['army_e'] ?? $armyData['5'] ?? 0),
-                'b_3_type' => 6,
-                'b_3_num' => (int)($armyData['army_f'] ?? $armyData['6'] ?? 0),
-            ];
+        $unitTypeKey = (string)$unitType;
+        $levelKey = (string)$reqLvl;
+        if ($unitType <= 0 || $reqLvl <= 0 || !isset($cachedUnitData[$unitTypeKey])) {
+            http_response_code(404);
+            sendJson(['state' => 'error_world_unit_not_found']);
+            return;
         }
+        $unitTypeData = $cachedUnitData[$unitTypeKey];
+        if (isset($unitTypeData['maxLvl']) && $reqLvl > (int)$unitTypeData['maxLvl']) {
+            http_response_code(404);
+            sendJson(['state' => 'error_world_unit_level_not_found']);
+            return;
+        }
+
+        $armyData = $cachedUnitArmy[$unitTypeKey][$levelKey] ?? [];
+        $army = [
+            'army_a' => (int)($armyData['army_a'] ?? $armyData['1'] ?? 0),
+            'army_b' => (int)($armyData['army_b'] ?? $armyData['2'] ?? 0),
+            'army_c' => (int)($armyData['army_c'] ?? $armyData['3'] ?? 0),
+            'army_d' => (int)($armyData['army_d'] ?? $armyData['4'] ?? 0),
+            'army_e' => (int)($armyData['army_e'] ?? $armyData['5'] ?? 0),
+            'army_f' => (int)($armyData['army_f'] ?? $armyData['6'] ?? 0),
+        ];
 
         sendJson([
             'state' => 'ok',
             'l' => $reqLvl,
             'ut' => $unitType,
-            't' => 0,
-            'lo' => 0,
-            'hero' => $heroList,
+            'army' => $army,
             'equip' => []
         ]);
     }

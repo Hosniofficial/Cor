@@ -45,7 +45,7 @@ if (!$liveCity) {
     $randY = $coordinates['y'];
     $cityName = mb_substr($livePlayer['name'], 0, 38, 'UTF-8') . ' - العاصمة';
     $cityCreatedAt = time();
-    $db->prepare("INSERT INTO `city` (`id_player`, `x`, `y`, `name`, `lvl`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`) VALUES (?, ?, ?, ?, 1, 10000, 10000, 10000, 10000, 20000, 100, 100, 100, 100, 100, ?, ?)")->execute([$playerId, $randX, $randY, $cityName, $cityCreatedAt, $cityCreatedAt]);
+    $db->prepare("INSERT INTO `city` (`id_player`, `x`, `y`, `name`, `lvl`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`) VALUES (?, ?, ?, ?, 0, 10000, 10000, 10000, 10000, 20000, 100, 100, 100, 100, 100, ?, ?)")->execute([$playerId, $randX, $randY, $cityName, $cityCreatedAt, $cityCreatedAt]);
     $liveCity = ['id_city' => (int)$db->lastInsertId(), 'name' => $cityName, 'x' => $randX, 'y' => $randY];
 }
 
@@ -512,7 +512,6 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
         <script type="text/javascript" src="js-3.4.113/message.js"></script>
         <script type="text/javascript" src="js-3.4.113/quest.js"></script>
         <script type="text/javascript" src="js-3.4.113/lastUtil.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/luck_wheel.js"></script>
         <script type="text/javascript" src="js-3.4.113/tools/market.js"></script>
         <script type="text/javascript" src="js-3.4.113/tools/palace.js"></script>
         <script type="text/javascript" src="js-3.4.113/tools/spy.js"></script>
