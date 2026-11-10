@@ -2,6 +2,7 @@
 // router.php - Lightweight modular front controller for app.elkaisar.com
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/PlayerAuth.php';
 require_once __DIR__ . '/services/ProductionService.php';
 require_once __DIR__ . '/services/TaskService.php';
 
@@ -14,6 +15,12 @@ require_once __DIR__ . '/controllers/TimedTaskController.php';
 require_once __DIR__ . '/controllers/QuestController.php';
 require_once __DIR__ . '/controllers/WorldController.php';
 require_once __DIR__ . '/controllers/RankingController.php';
+require_once __DIR__ . '/controllers/ItemController.php';
+require_once __DIR__ . '/controllers/GuildController.php';
+require_once __DIR__ . '/controllers/MarketController.php';
+require_once __DIR__ . '/controllers/ArenaController.php';
+require_once __DIR__ . '/controllers/GodGateController.php';
+require_once __DIR__ . '/controllers/TeamController.php';
 
 // CORS Headers
 header('Access-Control-Allow-Origin: *');
@@ -27,20 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/');
-
-// Log incoming requests for debugging
-file_put_contents(__DIR__ . '/api.log', date('Y-m-d H:i:s') . " [" . $_SERVER['REQUEST_METHOD'] . "] " . $uri . " | POST: " . json_encode($_POST) . " | GET: " . json_encode($_GET) . "\n", FILE_APPEND);
-
-// Response helper
-if (!function_exists('sendJson')) {
-    function sendJson($data) {
-        header('Content-Type: text/plain; charset=utf-8');
-        echo is_string($data) ? $data : json_encode($data, JSON_UNESCAPED_UNICODE);
-        exit;
-    }
+if (preg_match('#^/(?:api|home/HLogIn)/.+\.html$#i', $uri) === 1) {
+    $uri = substr($uri, 0, -5);
 }
 
-$db = getDB();
+if (strpos($uri, '/api/') === 0
+    || strpos($uri, '/World/') === 0
+    || strpos($uri, '/Chat/') === 0
+    || strpos($uri, '/Battel/') === 0
+    || $uri === '/home/HLogIn/playerEnterServerWeb') {
+    $db = getDB();
+    requireAuthenticatedPlayer($db);
+}
+
+// Battle & Battle Report API Forwarding
+if ($uri === '/api/battelReport.php' || $uri === '/api/battelReport') {
+    require_once __DIR__ . '/../web.elkaisar.com/api/battelReport.php';
+    exit;
+}
+if ($uri === '/api/battel.php' || $uri === '/api/battel') {
+    require_once __DIR__ . '/../web.elkaisar.com/api/battel.php';
+    exit;
+}
+
+error_log(sprintf('[API] %s %s', $_SERVER['REQUEST_METHOD'], $uri));
+
+$db = isset($db) ? $db : getDB();
 
 // Automatically process any due tasks on each request
 TaskService::processCompletedTasks($db);
@@ -55,6 +74,12 @@ $controllers = [
     QuestController::class,
     WorldController::class,
     RankingController::class,
+    ItemController::class,
+    GuildController::class,
+    MarketController::class,
+    ArenaController::class,
+    GodGateController::class,
+    TeamController::class,
 ];
 
 foreach ($controllers as $ctrl) {
@@ -67,8 +92,12 @@ foreach ($controllers as $ctrl) {
 // Static Files & Legacy HTML Fallback
 // ─────────────────────────────────────────────────────────────────────────────
 
-$file = __DIR__ . $uri;
-if (file_exists($file) && !is_dir($file)) {
+$documentRoot = realpath(__DIR__);
+$file = realpath($documentRoot . DIRECTORY_SEPARATOR . ltrim($uri, '/\\'));
+$isInsideDocumentRoot = $file !== false
+    && str_starts_with(strtolower($file), strtolower($documentRoot . DIRECTORY_SEPARATOR));
+
+if ($isInsideDocumentRoot && is_file($file)) {
     $ext = pathinfo($file, PATHINFO_EXTENSION);
     $mimeTypes = [
         'json' => 'application/json; charset=utf-8',
@@ -77,9 +106,18 @@ if (file_exists($file) && !is_dir($file)) {
         'html' => 'text/plain; charset=utf-8',
         'png'  => 'image/png',
         'jpg'  => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'gif'  => 'image/gif',
+        'svg'  => 'image/svg+xml',
+        'webp' => 'image/webp',
+        'ico'  => 'image/x-icon',
     ];
-    $ct = isset($mimeTypes[$ext]) ? $mimeTypes[$ext] : 'text/plain; charset=utf-8';
-    header('Content-Type: ' . $ct);
+    if (!isset($mimeTypes[$ext])) {
+        http_response_code(404);
+        exit;
+    }
+
+    header('Content-Type: ' . $mimeTypes[$ext]);
     readfile($file);
     exit;
 }

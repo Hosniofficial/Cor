@@ -9,7 +9,30 @@ $db = getDB();
 
 // 1. Return player's cities
 if (isset($_POST['get_city']) || isset($_GET['get_city'])) {
-    $idPlayer = isset($_POST['id_player']) ? (int)$_POST['id_player'] : (isset($_GET['id_player']) ? (int)$_GET['id_player'] : 1);
+    $token = $_POST['token'] ?? $_GET['token'] ?? '';
+    if (!is_string($token) || $token === '') {
+        http_response_code(401);
+        echo json_encode(['state' => 'error_auth']);
+        exit;
+    }
+
+    $playerStmt = $db->prepare("SELECT id_player FROM `player` WHERE `p_token` = ? LIMIT 1");
+    $playerStmt->execute([$token]);
+    $idPlayer = (int)$playerStmt->fetchColumn();
+    if ($idPlayer <= 0) {
+        http_response_code(401);
+        echo json_encode(['state' => 'error_auth']);
+        exit;
+    }
+
+    $requestedPlayerId = $_POST['id_player'] ?? $_GET['id_player'] ?? $idPlayer;
+    $requestedPlayerId = filter_var($requestedPlayerId, FILTER_VALIDATE_INT);
+    if ($requestedPlayerId === false || $requestedPlayerId !== $idPlayer) {
+        http_response_code(403);
+        echo json_encode(['state' => 'error_player_owner']);
+        exit;
+    }
+
     $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_player` = ?");
     $stmt->execute([$idPlayer]);
     $cities = $stmt->fetchAll();
@@ -24,16 +47,21 @@ if (isset($_POST['get_city']) || isset($_GET['get_city'])) {
 
 // 2. Server Data
 if (isset($_GET['SERVER_DATA'])) {
-    $stmt = $db->query("SELECT count(*) as p_count FROM `player`");
+    $stmt   = $db->query("SELECT count(*) FROM `player`");
     $pCount = (int)$stmt->fetchColumn();
-    $cStmt = $db->query("SELECT count(*) as c_count FROM `city`");
+    $cStmt  = $db->query("SELECT count(*) FROM `city`");
     $cCount = (int)$cStmt->fetchColumn();
+    $gStmt  = $db->query("SELECT count(*) FROM `guild`");
+    $gCount = (int)$gStmt->fetchColumn();
+    $hStmt  = $db->query("SELECT count(*) FROM `city_hero`");
+    $hCount = (int)$hStmt->fetchColumn();
+
     echo json_encode([
         'id'          => 1,
-        'player_num'  => $pCount,
-        'guild_num'   => 0,
-        'city_num'    => $cCount,
-        'hero_num'    => 1,
+        'player_num'  => max(1, $pCount),
+        'guild_num'   => max(1, $gCount),
+        'city_num'    => max(1, $cCount),
+        'hero_num'    => max(1, $hCount),
         'open_status' => 1,
         'under_main'  => 0,
         'port'        => '8082'

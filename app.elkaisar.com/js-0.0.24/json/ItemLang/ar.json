@@ -267,7 +267,7 @@
     },
     "sparta_stab": {
         "image": "images/items/item017.jpg",
-        "name": "طعة اسبارتا",
+        "name": "طعنة اسبارتا",
         "req": [],
         "use": "once",  
         "gold": 10,
@@ -997,7 +997,7 @@
     },
     "spartans_relics": {
         "image": "images/items/spartansRelics.jpg",
-        "name": "قلادة سبارطا",
+        "name": "قلادة اسبارتا",
         "req": [],
         "use": "none",  
         "gold": 0,
@@ -1220,7 +1220,7 @@
     },
     "bronze_bar": {
         "image": "images/items/BronzeBar.jpg",
-        "name": "السبيكة البرنزية",
+        "name": "السبيكة البرونزية",
         "req": [],
         "use": "none",  
         "gold": 0,
@@ -1275,7 +1275,7 @@
     },
     "medium_glory_stone": {
         "image": "images/items/MediumGloryStone.jpg",
-        "name": "احجار المجد الوسطى",
+        "name": "احجار الشرف الوسطي",
         "req": [],
         "use": "none",  
         "gold": 0,
@@ -1286,7 +1286,7 @@
     },
     "low_glory_stone": {
         "image": "images/items/LowGloryStone.jpg",
-        "name": "احجار الشرف الصغرى",
+        "name": "احجار الشرف الصغري",
         "req": [],
         "use": "none",  
         "gold": 0,
@@ -1608,7 +1608,7 @@
     },
     "archit_c": {
         "image": "images/items/item030.jpg",
-        "name": "المخطوطات المعمارية",
+        "name": "مخطوطات معمارية",
         "req": [],
         "use": "once",
         "gold": 20,
@@ -1963,7 +1963,7 @@
     },
     "wood_1": {
         "image": "images/items/item045.jpg",
-        "name": "نصب فنس",
+        "name": "نصب فينس",
         "req": [],
         "use": "once",   
         "gold": 8,
@@ -2007,7 +2007,7 @@
     },
     "coin_1": {
         "image": "images/items/item051.jpg",
-        "name": "نصب مركرى",
+        "name": "نصب مركزي",
         "req": [],
         "use": "once",
         "gold": 45,
@@ -2018,7 +2018,7 @@
     },
     "coin_7": {
         "image": "images/items/item052.jpg",
-        "name": "تمثال مركرى",
+        "name": "تمثال مركزي",
         "req": [],
         "use": "once",
         "gold": 280,
@@ -2052,7 +2052,7 @@
     },
     "wood_box": {
         "image": "images/items/item069.jpg",
-        "name": "صندوق خشبى",
+        "name": "صندوق خشبي",
         "req": [],
         "use": "Box",
         "gold": 140,
@@ -2063,7 +2063,7 @@
     },
     "golden_box": {
         "image": "images/items/item070.jpg",
-        "name": "صندوق حلى",
+        "name": "صندوق حلي",
         "req": [],
         "use": "Box",
         "gold": 240,

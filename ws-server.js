@@ -4,13 +4,43 @@
 const http   = require('http');
 const fs     = require('fs');
 const path   = require('path');
-const url    = require('url');
 const mysql  = require('./node_modules/mysql2/promise');
 const { WebSocketServer } = require('./node_modules/ws');
 
 const PORT    = 8081;
+const API_PORT = Number(process.env.ELKAISAR_API_PORT || 8092);
 const API_DIR = path.join(__dirname, 'ws.elkaisar.com8081');
 const JSON_DIR = path.join(__dirname, 'app.elkaisar.com', 'js-0.0.24', 'json');
+if (!Number.isInteger(API_PORT) || API_PORT < 1 || API_PORT > 65535) {
+    throw new Error('ELKAISAR_API_PORT must be between 1 and 65535');
+}
+const ENVIRONMENT = (process.env.ELKAISAR_ENV || 'development').toLowerCase();
+if (!['development', 'test', 'production'].includes(ENVIRONMENT)) {
+    throw new Error('ELKAISAR_ENV must be development, test, or production');
+}
+const IS_PRODUCTION = ENVIRONMENT === 'production';
+
+function getDatabaseSetting(name, developmentDefault) {
+    const value = process.env[name];
+    if (value !== undefined && value.trim() !== '') {
+        return value;
+    }
+    if (IS_PRODUCTION) {
+        throw new Error(`Missing required database setting: ${name}`);
+    }
+    return developmentDefault;
+}
+
+const DB_CONFIG = {
+    host: getDatabaseSetting('ELKAISAR_DB_HOST', '127.0.0.1'),
+    port: Number(getDatabaseSetting('ELKAISAR_DB_PORT', '3306')),
+    user: getDatabaseSetting('ELKAISAR_DB_USER', 'root'),
+    password: getDatabaseSetting('ELKAISAR_DB_PASSWORD', ''),
+    database: getDatabaseSetting('ELKAISAR_DB_NAME', 'elkaisar_prod_ready_20261109'),
+};
+if (!Number.isInteger(DB_CONFIG.port) || DB_CONFIG.port < 1 || DB_CONFIG.port > 65535) {
+    throw new Error('ELKAISAR_DB_PORT must be between 1 and 65535');
+}
 
 const MIME = {
     '.html': 'text/plain; charset=utf-8',
@@ -59,33 +89,34 @@ try {
 // 1d. Prize Drop Rules (6,030 loot rules)
 let prizeData = { Win: [] };
 try {
-    prizeData = JSON.parse(fs.readFileSync(path.join(__dirname, 'app.elkaisar.com', 'api', 'AWorld', 'getWorldUnitPrize.html'), 'utf8'));
+    prizeData = JSON.parse(fs.readFileSync(path.join(__dirname, 'app.elkaisar.com', 'data', 'world-unit-prizes.json'), 'utf8'));
 } catch (e) {
-    console.error('[Asset Error] Failed to load getWorldUnitPrize.html:', e.message);
+    console.error('[Asset Error] Failed to load world-unit-prizes.json:', e.message);
 }
 
 // 1e. Equipment Power Stats (330 equipment items with full combat attributes)
 const equipPowerMap = new Map();
 try {
-    const rawEquip = JSON.parse(fs.readFileSync(path.join(__dirname, 'app.elkaisar.com', 'api', 'APlayerEquip', 'getEquipPower.html'), 'utf8'));
+    const rawEquip = JSON.parse(fs.readFileSync(path.join(__dirname, 'app.elkaisar.com', 'data', 'equipment-power.json'), 'utf8'));
     for (const eq of rawEquip) {
         equipPowerMap.set(`${eq.equip}_${eq.part}_${eq.lvl}`, eq);
     }
 } catch (e) {
-    console.error('[Asset Error] Failed to load getEquipPower.html:', e.message);
+    console.error('[Asset Error] Failed to load equipment-power.json:', e.message);
 }
 
 console.log(`[WS-Server] ✅ Assets loaded in ${Date.now() - tStart} ms! (${worldUnits.size} map tiles, ${prizeData.Win.length} drop rules, ${equipPowerMap.size} equipment stats)`);
 
-// ── Soldier Stats Definition ─────────────────────────────────────────────────
+// ── Soldier Stats Definition (Authentic stats matching obfuscated.js) ─────────────
 const SOL_STATS = [
     { att: 0,   hp: 0 },
-    { att: 15,  hp: 20 },  // 1: مشاة خفيف (light infantry)
-    { att: 45,  hp: 40 },  // 2: فرسان (cavalry)
-    { att: 60,  hp: 120 }, // 3: مدرعين (heavy infantry)
-    { att: 40,  hp: 18 },  // 4: رماة أقواس (archers)
-    { att: 80,  hp: 30 },  // 5: مقاليع (catapults)
-    { att: 160, hp: 50 }   // 6: منجنيق (ballistas)
+    { att: 8,   hp: 60 },   // 1: مشاة (army_a)
+    { att: 30,  hp: 250 },  // 2: فرسان (army_b)
+    { att: 25,  hp: 400 },  // 3: مدرعين (army_c)
+    { att: 9,   hp: 45 },   // 4: رماة (army_d)
+    { att: 19,  hp: 100 },  // 5: مقاليع (army_e)
+    { att: 40,  hp: 600 },  // 6: منجنيق (army_f)
+    { att: 10,  hp: 80 }    // 7: جواسيس (spies)
 ];
 
 // MySQL Connection Pool
@@ -93,11 +124,7 @@ let dbPool = null;
 async function getDb() {
     if (!dbPool) {
         dbPool = mysql.createPool({
-            host: '127.0.0.1',
-            port: 3306,
-            user: 'root',
-            password: '',
-            database: 'elkaisar_db',
+            ...DB_CONFIG,
             waitForConnections: true,
             connectionLimit: 10,
         });
@@ -118,10 +145,10 @@ function proxyToApi(req, res) {
     setCors(res);
     const proxyReq = http.request({
         hostname: '127.0.0.1',
-        port: 8090,
+        port: API_PORT,
         path: req.url,
         method: req.method,
-        headers: { ...req.headers, host: '127.0.0.1:8090' }
+        headers: { ...req.headers, host: `127.0.0.1:${API_PORT}` }
     }, (proxyRes) => {
         setCors(res);
         res.writeHead(proxyRes.statusCode, proxyRes.headers);
@@ -140,15 +167,18 @@ async function handleHttp(req, res) {
     setCors(res);
     if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
 
-    const parsed  = url.parse(req.url, true);
-    const uriPath = parsed.pathname.replace(/\/+$/, '');
+    const requestUrl = new URL(req.url, 'http://localhost');
+    const uriPath = requestUrl.pathname.replace(/\/+$/, '');
 
     // 1. Dynamic World Map Cities from MySQL (Only real players' cities!)
     if (uriPath === '/api/AWorld/getWorldCity') {
         try {
             const db = await getDb();
             const [rows] = await db.query(
-                "SELECT c.id_city AS ic, c.id_player AS ip, c.x, c.y, c.lvl AS l, c.flag AS f, p.id_guild AS ig " +
+                "SELECT c.id_city AS ic, c.id_player AS ip, c.x, c.y, c.lvl AS l, " +
+                "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag ELSE '0' END AS f, " +
+                "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag_expires_at ELSE 0 END AS fe, " +
+                "p.id_guild AS ig " +
                 "FROM city c JOIN player p ON c.id_player = p.id_player"
             );
             const cities = rows.map(r => ({
@@ -158,7 +188,8 @@ async function handleHttp(req, res) {
                 x:  Number(r.x),
                 y:  Number(r.y),
                 l:  Number(r.l),
-                f:  String(r.f || "0")
+                f:  String(r.f || "0"),
+                fe: Number(r.fe) || 0
             }));
             res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
             res.end(JSON.stringify(cities));
@@ -168,21 +199,21 @@ async function handleHttp(req, res) {
         }
     }
 
-    // 2. Proxy Hero Army, Equipment & Battle Endpoints directly to PHP API on port 8090
-    if (uriPath.startsWith('/api/AHeroArmy/') || uriPath.startsWith('/api/AHeroEquip/') || uriPath.startsWith('/api/APlayerEquip/') || uriPath.startsWith('/api/ABattelRunning/') || uriPath.startsWith('/api/ACityBarrary/') || uriPath.startsWith('/api/AWorld/')) {
-        return proxyToApi(req, res);
-    }
-
-    // 3. Exact file from ws.elkaisar.com8081
+    // 2. Exact file from ws.elkaisar.com8081
     let filePath = path.join(API_DIR, uriPath);
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
         return serveFile(filePath, res);
     }
 
-    // 4. File with .html appended
+    // 3. File with .html appended
     filePath = path.join(API_DIR, uriPath + '.html');
     if (fs.existsSync(filePath)) {
         return serveFile(filePath, res);
+    }
+
+    // 4. Proxy all dynamic API and auth calls directly to the PHP API server
+    if (uriPath.startsWith('/api/') || uriPath.startsWith('/home/')) {
+        return proxyToApi(req, res);
     }
 
     // 5. Default fallback for missing WS endpoints
@@ -199,10 +230,10 @@ function serveFile(filePath, res) {
 
 // ── WebSocket Handler ────────────────────────────────────────────────────────
 function handleWs(ws, req) {
-    const parsed   = url.parse(req.url, true);
-    const idPlayer = parsed.query.idPlayer;
-    const token    = parsed.query.token;
-    const serverId = parsed.query.server;
+    const requestUrl = new URL(req.url, 'ws://localhost');
+    const idPlayer = requestUrl.searchParams.get('idPlayer');
+    const token    = requestUrl.searchParams.get('token');
+    const serverId = requestUrl.searchParams.get('server');
 
     console.log(`[WS] Player connected: idPlayer=${idPlayer}`);
 
@@ -211,7 +242,38 @@ function handleWs(ws, req) {
     ws.on('message', async (raw) => {
         try {
             const msg = JSON.parse(raw.toString());
-            console.log('[WS] Handled action:', msg.url || msg.action || msg);
+            const action = typeof msg.url === 'string'
+                ? msg.url
+                : typeof msg.action === 'string' ? msg.action : 'message';
+            console.log('[WS] Handled action:', action.slice(0, 100));
+
+            if (msg.url === 'World/refreshCityFlag') {
+                const cityId = Number(msg.data && msg.data.idCity);
+                if (!idPlayer || !Number.isSafeInteger(cityId) || cityId <= 0) return;
+
+                const db = await getDb();
+                const [rows] = await db.query(
+                    "SELECT c.x, c.y, CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag ELSE '0' END AS f, " +
+                    "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag_expires_at ELSE 0 END AS fe " +
+                    "FROM city c WHERE c.id_city = ? AND c.id_player = ? LIMIT 1",
+                    [cityId, idPlayer]
+                );
+                if (!rows.length) return;
+
+                const city = rows[0];
+                const update = JSON.stringify({
+                    classPath: 'Base.refreshCityFlag',
+                    data: {
+                        x: Number(city.x),
+                        y: Number(city.y),
+                        f: String(city.f || '0'),
+                        fe: Number(city.fe) || 0
+                    }
+                });
+                for (const client of clients.values()) {
+                    if (client.readyState === 1) client.send(update);
+                }
+            }
 
             // 1. Broadcast chat messages
             if (msg.url === 'Chat/sendMsg') {
@@ -339,12 +401,16 @@ function handleWs(ws, req) {
                                 attPower += (SOL_STATS[t].att * 0.6 + SOL_STATS[t].hp * 0.4) * n;
                             }
                         }
-                        const heroBonus = 1.0 + ((hero.power || 50) + (hero.point_b || 0)) / 100.0;
+                        const totalBravery = (parseInt(hero.point_b, 10) || 0) + (parseInt(hero.point_b_plus, 10) || 0);
+                        const heroBonus = 1.0 + ((hero.power || 50) + totalBravery) / 100.0;
                         attPower *= heroBonus;
 
-                        // 1b. Hero Equipment Combat Bonus (Weapons, Armor, Horses, Rings)
+                        // 1b. Hero Equipment Combat Bonus (Primary & Secondary Gear)
                         let eqAtt = 0;
                         let eqVit = 0;
+                        let eqDmg = 0;
+                        let eqBrk = 0;
+                        let eqStr = 0;
                         try {
                             const [hEquips] = await battleDb.query("SELECT * FROM player_equip WHERE id_hero = ? AND on_hero = 1", [idHero]);
                             for (const eq of (hEquips || [])) {
@@ -352,10 +418,13 @@ function handleWs(ws, req) {
                                 if (ep) {
                                     eqAtt += (ep.attack || 0);
                                     eqVit += (ep.vitality || 0);
+                                    eqDmg += (ep.damage || 0);
+                                    eqBrk += (ep.break || 0);
+                                    eqStr += (ep.strike || 0);
                                 }
                             }
                         } catch (e) { }
-                        attPower += (eqAtt * 1.5 + eqVit * 0.8);
+                        attPower += (eqAtt * 1.5 + eqVit * 0.8 + eqDmg * 2.0 + eqBrk * 1.5 + eqStr * 1.0);
 
                         // 2. Fetch or Calculate Defender Army
                         let defenderTroops = {};
@@ -374,7 +443,7 @@ function handleWs(ws, req) {
                             defenderTroops = { 1: Math.max(10, unitLvl * 20), 4: Math.max(5, unitLvl * 10) };
                         }
 
-                        // 3. Calculate Defender Combat Power
+                        // 3. Calculate Defender Combat Power (with Enemy Commander Equipment)
                         let defPower = 0;
                         for (const [type, num] of Object.entries(defenderTroops)) {
                             const t = parseInt(type, 10);
@@ -384,6 +453,17 @@ function handleWs(ws, req) {
                             }
                         }
                         defPower *= (1.0 + unitLvl * 0.05);
+
+                        // Enemy commander equipment & power boost
+                        let enemyEquipBonus = 0;
+                        if (unitType >= 97 && unitType <= 105) {
+                            enemyEquipBonus = unitLvl * 300; // Carthaginian Elite gear
+                        } else if (unitType >= 70 && unitType <= 96) {
+                            enemyEquipBonus = unitLvl * 150; // Legion / Roman military gear
+                        } else if (unitType >= 150 && unitType <= 236) {
+                            enemyEquipBonus = unitLvl * 600; // God & Emperor War gear
+                        }
+                        defPower += enemyEquipBonus;
 
                         // 4. Compare Power & Determine Victory vs Defeat
                         const ratio = attPower / Math.max(1, defPower);
@@ -423,9 +503,20 @@ function handleWs(ws, req) {
                             clashFallenRate = Math.min(0.95, 0.65 + (1.0 - ratio) * 0.30);
                         }
 
+                        // Hospital & Medicine Calculation (Base 10% up to 60%)
+                        let medicineLvl = 0;
+                        try {
+                            const [pEdu] = await battleDb.query("SELECT medicine FROM player_edu WHERE id_player = ?", [player.id_player]);
+                            if (pEdu && pEdu[0]) medicineLvl = parseInt(pEdu[0].medicine, 10) || 0;
+                        } catch (e) { }
+                        const woundedRate = Math.min(0.60, 0.10 + (medicineLvl * 0.05));
+                        const woundedTroops = { army_a: 0, army_b: 0, army_c: 0, army_d: 0, army_e: 0, army_f: 0 };
+                        const solTypeToCol = { 1: 'army_a', 2: 'army_b', 3: 'army_c', 4: 'army_d', 5: 'army_e', 6: 'army_f' };
+
                         let totalFallen = 0;
                         let totalRecovered = 0;
                         let totalPermanentLoss = 0;
+                        let totalWounded = 0;
 
                         for (const s of slots) {
                             const num = parseInt(army[s + '_num'], 10) || 0;
@@ -442,10 +533,29 @@ function handleWs(ws, req) {
                                 totalRecovered += recovered;
                                 totalPermanentLoss += permanentLoss;
 
+                                // Wounded to City Hospital
+                                const woundedCount = Math.floor(permanentLoss * woundedRate);
+                                if (woundedCount > 0 && solTypeToCol[type]) {
+                                    woundedTroops[solTypeToCol[type]] += woundedCount;
+                                    totalWounded += woundedCount;
+                                }
+
                                 const remaining = Math.max(0, num - permanentLoss);
                                 const newType = remaining > 0 ? type : 0;
                                 await battleDb.query(`UPDATE hero_army SET ${s}_num = ?, ${s}_type = ? WHERE id_hero = ?`, [remaining, newType, idHero]);
                             }
+                        }
+
+                        // Store wounded in City Hospital
+                        if (totalWounded > 0) {
+                            await battleDb.query(
+                                `INSERT INTO city_wounded (id_city, army_a, army_b, army_c, army_d, army_e, army_f)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?)
+                                 ON DUPLICATE KEY UPDATE
+                                 army_a = army_a + VALUES(army_a), army_b = army_b + VALUES(army_b), army_c = army_c + VALUES(army_c),
+                                 army_d = army_d + VALUES(army_d), army_e = army_e + VALUES(army_e), army_f = army_f + VALUES(army_f)`,
+                                [city.id_city, woundedTroops.army_a, woundedTroops.army_b, woundedTroops.army_c, woundedTroops.army_d, woundedTroops.army_e, woundedTroops.army_f]
+                            );
                         }
 
                         await battleDb.query("UPDATE world_battel SET state = ? WHERE id_battel = ?", [isVictory ? 'won' : 'lost', battelId]);
@@ -459,11 +569,55 @@ function handleWs(ws, req) {
                                 [loot, loot, loot, loot, loot * 2, city.id_city]
                             );
 
-                            // 6b. Hero EXP & Player Prestige
-                            const expGain = Math.max(50, Math.min(50000, Math.floor(defPower * 0.15)));
-                            const prestigeGain = Math.max(10, Math.min(1000, Math.floor(unitLvl * 10)));
+                            // 6b. Hero EXP & Player Prestige by Target Category & Hero Wisdom
+                            const heroRows = await battleDb.query("SELECT * FROM city_hero WHERE id_hero = ?", [idHero]);
+                            const heroData = (heroRows && heroRows[0]) ? heroRows[0] : {};
+                            const wisdom = parseInt(heroData.point_b, 10) || 0;
+                            const wisdomMultiplier = 1.0 + (wisdom * 0.001);
+
+                            let baseExp = 0;
+                            let prestigeGain = 0;
+                            let honorGained = 0;
+
+                            if (unitType >= 97 && unitType <= 105) {
+                                // Carthage Gangs & Rebels (عصابات قرطاجية وقطاع طرق)
+                                baseExp = unitLvl * 4500 + Math.floor(Math.random() * 1500 + 500) + Math.floor(defPower * 0.25);
+                                honorGained = unitLvl * 150 + Math.floor(defPower * 0.08) + Math.floor(Math.random() * 100 + 50);
+                                prestigeGain = Math.max(50, unitLvl * 25);
+                            } else if (unitType >= 70 && unitType <= 96) {
+                                // Maneuvers & Camps (مناورات ومعسكرات)
+                                baseExp = unitLvl * 2800 + Math.floor(Math.random() * 700 + 300) + Math.floor(defPower * 0.20);
+                                honorGained = unitLvl * 90 + Math.floor(defPower * 0.05) + Math.floor(Math.random() * 60 + 20);
+                                prestigeGain = Math.max(30, unitLvl * 18);
+                            } else if (unitType >= 1 && unitType <= 59) {
+                                // Wilds (البراري)
+                                baseExp = unitLvl * 750 + Math.floor(Math.random() * 300 + 100) + Math.floor(defPower * 0.12);
+                                honorGained = unitLvl * 40 + Math.floor(defPower * 0.03) + Math.floor(Math.random() * 40 + 10);
+                                prestigeGain = Math.max(10, unitLvl * 10);
+                                // Bonus Domination Honor when colonizing / occupying wild (استيلاء)
+                                if (attackTask === 1) { // BATTEL_TASK_DOMINATE
+                                    honorGained += (unitLvl * 50) + 50;
+                                    prestigeGain += (unitLvl * 15);
+                                }
+                            } else if (unitType >= 150 && unitType <= 236) {
+                                // Capitals, Arenas & Fortresses (قلاع وعواصم وميادين الحرب)
+                                baseExp = unitLvl * 6000 + Math.floor(Math.random() * 2000 + 1000) + Math.floor(defPower * 0.30);
+                                honorGained = unitLvl * 220 + Math.floor(defPower * 0.10) + Math.floor(Math.random() * 150 + 100);
+                                prestigeGain = Math.max(100, unitLvl * 35);
+                            } else {
+                                // PvP / City
+                                baseExp = Math.max(500, Math.floor(defPower * 0.25));
+                                honorGained = Math.max(100, Math.floor(defPower * 0.15));
+                                prestigeGain = Math.max(20, unitLvl * 15);
+                            }
+
+                            const expGain = Math.floor(baseExp * wisdomMultiplier);
                             await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = LEAST(power_max, power + 5) WHERE id_hero = ?", [expGain, idHero]);
-                            await battleDb.query("UPDATE player SET prestige = prestige + ? WHERE id_player = ?", [prestigeGain, player.id_player]);
+                            await battleDb.query("UPDATE player SET prestige = prestige + ?, honor = honor + ? WHERE id_player = ?", [prestigeGain, honorGained, player.id_player]);
+
+                            if (player.id_guild > 0) {
+                                await battleDb.query("UPDATE guild SET prestige = prestige + ?, honor = honor + ? WHERE id_guild = ?", [prestigeGain, honorGained, player.id_guild]);
+                            }
 
                             // 6c. Prize Drop Tables Evaluation
                             const droppedItems = [];
@@ -481,42 +635,103 @@ function handleWs(ws, req) {
                                 }
                             }
 
-                            // 6d. Colonize Wild if attackTask is conquer (0) and target is wild
-                            if (attackTask === 0 && unitType >= 1 && unitType <= 59) {
-                                await battleDb.query(
-                                    "INSERT INTO city_barray (id_city, id_player, x_coord, y_coord, Type, lvl) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id_city = VALUES(id_city), id_player = VALUES(id_player), Type = VALUES(Type), lvl = VALUES(lvl)",
-                                    [city.id_city, player.id_player, xCoord, yCoord, unitType, unitLvl]
-                                );
+                            // 6d. Direct Hero Equipment Drop Chance (From Elite Camps, Gangs, Arenas)
+                            const droppedEquip = [];
+                            let equipDropChance = 0;
+                            let possibleEquipTypes = [];
+                            if (unitType >= 97 && unitType <= 105 && unitLvl >= 3) {
+                                equipDropChance = 0.25; // 25% on Carthage & Gangs lvl 3+
+                                possibleEquipTypes = ['mili', 'peace', 'victory', 'mars'];
+                            } else if (unitType >= 70 && unitType <= 96 && unitLvl >= 3) {
+                                equipDropChance = 0.18; // 18% on Camps & Maneuvers lvl 3+
+                                possibleEquipTypes = ['loy', 'sparta', 'lion'];
+                            } else if (unitType >= 150 && unitType <= 236) {
+                                equipDropChance = 0.40; // 40% on Arenas & Fortresses
+                                possibleEquipTypes = ['fearless', 'thunder', 'holy', 'neptune', 'thor'];
                             }
 
-                            // 6e. Send Client Completion Messages
+                            if (possibleEquipTypes.length > 0 && Math.random() < equipDropChance) {
+                                const parts = ['sword', 'shield', 'helmet', 'armor', 'boot', 'belt'];
+                                const eqType = possibleEquipTypes[Math.floor(Math.random() * possibleEquipTypes.length)];
+                                const eqPart = parts[Math.floor(Math.random() * parts.length)];
+                                const eqLvl = Math.max(1, Math.min(10, unitLvl));
+                                await battleDb.query(
+                                    "INSERT INTO player_equip (id_player, id_hero, type, part, lvl, on_hero) VALUES (?, 0, ?, ?, ?, 0)",
+                                    [player.id_player, eqType, eqPart, eqLvl]
+                                );
+                                droppedEquip.push({ type: eqType, part: eqPart, lvl: eqLvl });
+                            }
+
+                            // 6e. Colonize / Dominate Wild (استيلاء على البرية)
+                            let dominated = false;
+                            if (attackTask === 1 && unitType >= 1 && unitType <= 59) {
+                                const [pBuilding] = await battleDb.query("SELECT lvl FROM city_building WHERE id_city = ? AND type = 10 LIMIT 1", [city.id_city]);
+                                const palaceLvl = (pBuilding && pBuilding[0]) ? parseInt(pBuilding[0].lvl, 10) : 1;
+                                const maxWilds = Math.max(1, palaceLvl);
+
+                                const [curBarray] = await battleDb.query("SELECT COUNT(*) as cnt FROM city_barray WHERE id_city = ?", [city.id_city]);
+                                const curWildCount = (curBarray && curBarray[0]) ? parseInt(curBarray[0].cnt, 10) : 0;
+
+                                if (curWildCount < maxWilds) {
+                                    await battleDb.query(
+                                        "INSERT INTO city_barray (id_city, id_player, x_coord, y_coord, Type, lvl) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id_city = VALUES(id_city), id_player = VALUES(id_player), Type = VALUES(Type), lvl = VALUES(lvl)",
+                                        [city.id_city, player.id_player, xCoord, yCoord, unitType, unitLvl]
+                                    );
+                                    dominated = true;
+                                }
+                            }
+
+                            // 6f. Send Client Completion Messages
                             if (ws.readyState === 1) {
                                 ws.send(JSON.stringify({
                                     classPath: 'Battel.battel',
                                     task: 'finish',
                                     result: 'win',
                                     id_battel: battelId,
-                                    Battel: { id_battel: battelId }
+                                    Battel: { id_battel: battelId, task: attackTask }
                                 }));
                                 ws.send(JSON.stringify({
                                     classPath: 'Battel.Finished',
                                     id_battel: battelId,
-                                    Battel: { id_battel: battelId }
+                                    Battel: { id_battel: battelId, task: attackTask },
+                                    Player: { Honor: honorGained },
+                                    ItemPrize: droppedItems.map(d => ({ Item: d.prize, amount: d.amount }))
+                                }));
+                                ws.send(JSON.stringify({
+                                    classPath: 'Battel.ended',
+                                    id_battel: battelId,
+                                    Battel: {
+                                        id_battel: battelId,
+                                        task: attackTask,
+                                        x_coord: xCoord,
+                                        y_coord: yCoord
+                                    },
+                                    sideWin: 1, // SideAttack
+                                    ItemPrize: droppedItems.map(d => ({ Item: d.prize, amount: d.amount })),
+                                    Player: {
+                                        Honor: honorGained
+                                    }
                                 }));
 
                                 const itemsSummary = droppedItems.length > 0 
                                     ? ` + غنائم أدوات (${droppedItems.map(d => d.prize + ' ×' + d.amount).join('، ')})` 
                                     : '';
+                                const equipSummary = droppedEquip.length > 0
+                                    ? ` + عتاد بطل نخبوي غنيمة [${droppedEquip.map(e => `${e.type} ${e.part} مستوى ${e.lvl}`).join(', ')}]`
+                                    : '';
+                                const woundedSummary = totalWounded > 0
+                                    ? ` + تم نقل [${totalWounded}] جريح إلى مشفى المدينة`
+                                    : '';
                                 const lossReport = recoveryRate > 0 
-                                    ? `سقط في المعركة [${totalFallen}] جندي، تم علاج واستعادة [${totalRecovered}]، والخسائر الفعلية [${totalPermanentLoss}] جندي فقط (${Math.round((1 - recoveryRate) * 100)}%)`
-                                    : `الخسائر: [${totalPermanentLoss} جندي] (خسارة كاملة 100% في معارك اللاعبين الحقيقيين)`;
+                                    ? `سقط في المعركة [${totalFallen}] جندي، استعاد البطل فوراً [${totalRecovered}]، والخسائر [${totalPermanentLoss}] جندي (${Math.round((1 - recoveryRate) * 100)}%)`
+                                    : `الخسائر: [${totalPermanentLoss} جندي] (إبادة كاملة 100% في حرب ضد لاعبين)`;
 
                                 ws.send(JSON.stringify({
                                     classPath: 'Chat.WorldMsg',
                                     data: {
                                         id_player: 0,
                                         name: 'النظام الحربي',
-                                        msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}، الغنائم: [${loot * 5} موارد]${itemsSummary}!`,
+                                        msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، الغنائم: [${loot * 5} موارد، +${honorGained} شرف، +${prestigeGain} برستيج]${itemsSummary}${equipSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}`,
                                         time: Math.floor(Date.now() / 1000)
                                     }
                                 }));
@@ -524,7 +739,13 @@ function handleWs(ws, req) {
 
                         } else {
                             // ── DEFEAT RESOLUTION ──
-                            await battleDb.query("UPDATE city_hero SET power = GREATEST(0, power - 25) WHERE id_hero = ?", [idHero]);
+                            const heroRows = await battleDb.query("SELECT * FROM city_hero WHERE id_hero = ?", [idHero]);
+                            const heroData = (heroRows && heroRows[0]) ? heroRows[0] : {};
+                            const wisdom = parseInt(heroData.point_b, 10) || 0;
+                            const wisdomMultiplier = 1.0 + (wisdom * 0.001);
+                            const partialExp = Math.max(50, Math.floor(defPower * 0.05 * wisdomMultiplier));
+
+                            await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = GREATEST(0, power - 25) WHERE id_hero = ?", [partialExp, idHero]);
 
                             if (ws.readyState === 1) {
                                 ws.send(JSON.stringify({
@@ -598,7 +819,7 @@ const wss = new WebSocketServer({ server });
 
 wss.on('connection', handleWs);
 
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, '127.0.0.1', () => {
     console.log(`[WS-Server] ✅ Listening on port ${PORT}`);
     console.log(`[WS-Server] WebSocket: ws://localhost:${PORT}`);
     console.log(`[WS-Server] Full Combat Simulator, Army Casualties, Real Loot Tables Active!`);

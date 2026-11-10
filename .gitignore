@@ -3,3 +3,13 @@ node_modules/
 app.elkaisar.com/api.log
 .DS_Store
 Thumbs.db
+
+# Local secrets and database snapshots
+.env
+.env.*
+!.env.example
+/elkaisar_db_utf8.sql
+/elkaisar_db_full.sql
+/elkaisar_db-before-migration-*.sql
+/database/backups/
+/ssl-cert.pfx

@@ -1,10 +1,123 @@
+<?php
+// web.elkaisar.com/server.php - Live Authenticated Game Session
+require_once __DIR__ . '/session.php';
+$servers = require __DIR__ . '/game-servers.php';
+$selectedServerId = (int)($_SESSION['selected_server_id'] ?? 0);
+if ($selectedServerId <= 0 || empty($servers[$selectedServerId]['available'])) {
+    unset($_SESSION['selected_server_id']);
+    header('Location: profile.php');
+    exit;
+}
+$selectedServer = $servers[$selectedServerId];
+require_once __DIR__ . '/../app.elkaisar.com/db.php';
+$db = getDB();
+
+$playerId = (int)($_SESSION['player_id'] ?? 0);
+if ($playerId <= 0) {
+    header('Location: login.php');
+    exit;
+}
+
+$stmt = $db->prepare("SELECT * FROM `player` WHERE `id_player` = ? LIMIT 1");
+$stmt->execute([$playerId]);
+$livePlayer = $stmt->fetch();
+
+if (!$livePlayer) {
+    $_SESSION = [];
+    header('Location: login.php');
+    exit;
+}
+
+// Fetch player's active/primary city
+$cStmt = $db->prepare("SELECT * FROM `city` WHERE `id_player` = ? ORDER BY `id_city` ASC LIMIT 1");
+$cStmt->execute([$playerId]);
+$liveCity = $cStmt->fetch();
+
+if (!$liveCity) {
+    $randX = rand(50, 450);
+    $randY = rand(50, 450);
+    $cityName = mb_substr($livePlayer['name'], 0, 38, 'UTF-8') . ' - العاصمة';
+    $cityCreatedAt = time();
+    $db->prepare("INSERT INTO `city` (`id_player`, `x`, `y`, `name`, `lvl`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`) VALUES (?, ?, ?, ?, 1, 10000, 10000, 10000, 10000, 20000, 100, 100, 100, 100, 100, ?, ?)")->execute([$playerId, $randX, $randY, $cityName, $cityCreatedAt, $cityCreatedAt]);
+    $liveCity = ['id_city' => (int)$db->lastInsertId(), 'name' => $cityName, 'x' => $randX, 'y' => $randY];
+}
+
+// Fetch player guild info
+$gStmt = $db->prepare("SELECT g.id_guild, g.name AS guild_name, g.name, gm.rank, gm.prize_share FROM guild g JOIN guild_member gm ON g.id_guild = gm.id_guild WHERE gm.id_player = ?");
+$gStmt->execute([$playerId]);
+$liveGuild = $gStmt->fetch(PDO::FETCH_ASSOC);
+$livePlayer['guild_data'] = $liveGuild ?: false;
+
+$liveFullGuild = null;
+if (!empty($liveGuild)) {
+    $fgStmt = $db->prepare("SELECT * FROM guild WHERE id_guild = ?");
+    $fgStmt->execute([(int)$liveGuild['id_guild']]);
+    $fg = $fgStmt->fetch(PDO::FETCH_ASSOC);
+    if ($fg) {
+        $lStmt = $db->prepare("SELECT name FROM player WHERE id_player = ? LIMIT 1");
+        $lStmt->execute([(int)$fg['id_leader']]);
+        $ldrName = $lStmt->fetchColumn() ?: ($fg['leader_name'] ?? 'المدير');
+
+        $rStmt = $db->prepare("SELECT COUNT(*) + 1 FROM guild WHERE prestige > ?");
+        $rStmt->execute([(int)$fg['prestige']]);
+        $rnkG = (int)$rStmt->fetchColumn();
+
+        $liveFullGuild = [
+            'id_guild'          => (int)$fg['id_guild'],
+            'name'              => $fg['name'],
+            'id_leader'         => (int)$fg['id_leader'],
+            'leader_name'       => $ldrName,
+            'p_name'            => $ldrName,
+            'leaderName'        => $ldrName,
+            'rank_g'            => $rnkG,
+            'lvl'               => (int)$fg['lvl'],
+            'prestige'          => (int)$fg['prestige'],
+            'honor'             => (int)($fg['honor'] ?? 0),
+            'mem_num'           => (int)$fg['mem_num'],
+            'mem_max'           => (int)($fg['mem_max'] ?? ($fg['lvl'] * 10)),
+            'slog_top'          => preg_replace('/\D/', '', (string)$fg['slog_top']) ?: '1',
+            'slog_cnt'          => preg_replace('/\D/', '', (string)$fg['slog_cnt']) ?: '1',
+            'slog_btm'          => preg_replace('/\D/', '', (string)$fg['slog_btm']) ?: '1',
+            'word'              => $fg['word'] ?: 'مرحباً بكم في حلفنا',
+            'food'              => (int)($fg['food'] ?? 0),
+            'wood'              => (int)($fg['wood'] ?? 0),
+            'stone'             => (int)($fg['stone'] ?? 0),
+            'metal'             => (int)($fg['metal'] ?? 0),
+            'coin'              => (int)($fg['coin'] ?? 0),
+            'total_prize_share' => (int)($fg['total_prize_share'] ?? 10),
+        ];
+    }
+}
+
+$idPlayer = (int)$livePlayer['id_player'];
+$idCity   = (int)$liveCity['id_city'];
+$token    = $livePlayer['p_token'];
+$apiUrl = getenv('ELKAISAR_API_URL')
+    ?: 'http://' . ($_SERVER['SERVER_NAME'] ?? '127.0.0.1') . ':8092';
+$apiUrlJs = json_encode($apiUrl, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+
+// Check admin privileges
+$isAdmin = false;
+if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])) {
+    $isAdmin = true;
+} else {
+    $aStmt = $db->prepare("SELECT id_admin FROM `admin_user` WHERE `username` = ? OR `name` = ? LIMIT 1");
+    $aStmt->execute([$livePlayer['name'], $livePlayer['name']]);
+    if ($aStmt->fetchColumn()) {
+        $isAdmin = true;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>قيصر الشرق</title>
+        <title>Caesar of Arabs – قيصر العرب</title>
         <link rel="icon" type="image/png" href="images/favicon.png" sizes="128×128">
         <meta id="" name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css-3.4.113/reset-min.css"/>
         <link rel="stylesheet" href="css-3.4.113/fonts-min.css"/>
         <link rel="stylesheet" href="css-3.4.113/base.css"/>
@@ -54,6 +167,17 @@
                         <div class="wrapper-icon">
                             <div class="icon" id="OpenSettingsBox" style="background-image: url(images/btns/withBg/buttonOptions.png)"></div>
                         </div>
+                        <?php if ($isAdmin): ?>
+                        <div class="wrapper-icon" title="لوحة تحكم الإدارة">
+                            <a href="admin/index.php" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;font-size:16px;" title="👑 لوحة الإدارة">👑</a>
+                        </div>
+                        <?php endif; ?>
+                        <div class="wrapper-icon" title="الملف الشخصي">
+                            <a href="profile.php" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;font-size:15px;" title="الملف الشخصي">👤</a>
+                        </div>
+                        <div class="wrapper-icon" title="تسجيل الخروج">
+                            <a href="logout.php" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;font-size:15px;color:#ff6b6b;" onclick="return confirm('هل تريد بالتأكيد تسجيل الخروج؟');" title="🚪 تسجيل الخروج">🚪</a>
+                        </div>
                     </div>
                     <div class="right-half">
                         <div id="server-bing">
@@ -63,7 +187,7 @@
                 </div>
                 <div class="mid" style="position: absolute;right: 50%;margin-right: -150px;">
                     <div id="server-name">
-                        <div class="name">العقرب</div>
+                        <div class="name"><?php echo htmlspecialchars($selectedServer['name'], ENT_QUOTES, 'UTF-8'); ?></div>
                         <div class="time"></div>
                     </div>
                 </div>
@@ -78,8 +202,8 @@
             </div>
         </div>
         <div id="city-data">
-            <div class="name">1</div>
-            <div class="coords">[ 39 , 327 ]</div>
+            <div class="name"><?php echo htmlspecialchars($liveCity['name'], ENT_QUOTES, 'UTF-8'); ?></div>
+            <div class="coords">[ <?php echo (int)$liveCity['x']; ?> , <?php echo (int)$liveCity['y']; ?> ]</div>
         </div>
 
         <div id="luck-wheel-btn">
@@ -120,8 +244,7 @@
                     </div>
                 </div>
                 <div class="avatar-name">
-                    <h1> 
-                        P-75003-4b                    </h1>
+                    <h1><?php echo htmlspecialchars($livePlayer['name'], ENT_QUOTES, 'UTF-8'); ?></h1>
                 </div>
             </div>
             <div class="list_of_data">
@@ -220,7 +343,7 @@
                 </div>
                 <div id="hide-show" style="display: none">
                     <div id="nav-btn" class="flex">
-                        <input type="checkbox" id="FastNav" checked="true" style="margin-right: 10px;">
+                        <input type="checkbox" id="FastNav" style="margin-right: 10px;" title="انتقال سريع">
                         <button class="full-btn full-btn-3x" style="">اذهب الى </button>
                         
                     </div>
@@ -299,17 +422,17 @@
         </div>
         <div id="GameWindow"></div>
         <script>
-            var player             = {"id_user":75003,"id_player":204150,"user_group":0,"prestige":53,"honor":0,"gold":0,"avatar":0,"guild":null,"id_guild":null,"name":"P-75003-4b","lang":"ar","city_flag":"0","porm":0,"chat_panne":0,"online":1,"last_seen":1748935752,"panned":0,"p_token":"$2y$10$bcAqQg9hqnV.hY9G2BXBdeWgpskCE5gnA0speJn\/eukgApejrTyQa","rank":1354,"guild_data":false};
+            var player             = <?= json_encode($livePlayer, JSON_UNESCAPED_UNICODE) ?>;
             const  BASE_ASSET_BATH = "";
-            const  ID_PLAYER       = 204150;
-            var  TOKEN             = "364605-436946-766438-167248-962448";
-            const  SERVER_ID       = 1;
-            const  BASE_URL      = "https://web.elkaisar.com";
-            const  API_URL       = "https://app.elkaisar.com";
-            const  WS_PORT       = 8081;
-            const  WS_HOST       = "ws.elkaisar.com";
-            const  ID_FIRST_CITY = 2041491;
-            const  JS_VERSION    = "-3.4.113";
+            const  ID_PLAYER       = <?= $idPlayer ?>;
+            var  TOKEN             = <?= json_encode($token) ?>;
+            const  SERVER_ID       = <?= $selectedServerId ?>;
+            const  BASE_URL        = window.location.origin;
+            const  API_URL         = <?= $apiUrlJs ?>;
+            const  WS_PORT         = 8081;
+            const  WS_HOST         = window.location.hostname;
+            const  ID_FIRST_CITY   = <?= $idCity ?>;
+            const  JS_VERSION      = "-3.4.113";
             var PLAYER_NOTIF     = {"msg_in":0,"msg_diff":0,"msg_report":0,"spy_report":0,"battel_number":0,"hero_in_battel":0,"hero_back":0,"spy_task":0};
             var isMobile         = false; //initiate as false
 			var EXAMINE_PLAYER_MUTE = false;
@@ -404,7 +527,190 @@
             <script type="text/javascript" src="js-3.4.113/lib/jquery.nicescroll.min.js"></script>
             <script type="text/javascript" src="js-3.4.113/lib/jquery-ui.min.js"></script>
             <script type="text/javascript" src="js-3.4.113/lib/phaser.min.js"></script>
+
+        <!-- Compatibility & Bulletproofing Layer -->
+        <script>
+        (function() {
+            var liveCityData = <?php echo json_encode($liveCity, JSON_UNESCAPED_UNICODE); ?>;
+            var livePlayerData = <?php echo json_encode($livePlayer, JSON_UNESCAPED_UNICODE); ?>;
+            window.LIVE_GUILD_DATA = <?php echo json_encode($liveFullGuild, JSON_UNESCAPED_UNICODE); ?>;
+            window.LIVE_PLAYER_GUILD = <?php echo json_encode($liveGuild ?: null, JSON_UNESCAPED_UNICODE); ?>;
+
+            window.PLAYER_ALL_CITIES = [liveCityData];
+            if (window.LIVE_PLAYER_GUILD && window.player) {
+                window.player.guild_data = window.LIVE_PLAYER_GUILD;
+            }
+
+            // 0. Canvas 2D willReadFrequently optimization for Phaser
+            var _origGetContext = HTMLCanvasElement.prototype.getContext;
+            HTMLCanvasElement.prototype.getContext = function(type, attributes) {
+                if (type === '2d') {
+                    attributes = Object.assign({ willReadFrequently: true }, attributes);
+                }
+                return _origGetContext.call(this, type, attributes);
+            };
+
+            // Global Missing Image Warning Listener (captures all 404/broken images with their exact path)
+            window.addEventListener('error', function(event) {
+                var target = event.target;
+                if (target && (target.tagName === 'IMG' || target instanceof HTMLImageElement)) {
+                    var missingSrc = target.src || target.getAttribute('src');
+                    console.warn('%c⚠️ [صورة غير موجودة - Missing Image]: ' + missingSrc, 'background: #b71c1c; color: #ffffff; padding: 3px 8px; font-weight: bold; font-size: 11px; border-radius: 3px;');
+                }
+            }, true);
+
+            // 1. Bulletproof JSON.parse
+            var _origParse = JSON.parse;
+            JSON.parse = function(val, reviver) {
+                if (typeof val === 'object' && val !== null) return val;
+                return _origParse(val, reviver);
+            };
+
+            // 2. Global isJson validator
+            window.isJson = function(str) {
+                if (typeof str === 'object' && str !== null) return true;
+                try {
+                    _origParse(str);
+                    return true;
+                } catch(e) {
+                    return false;
+                }
+            };
+
+            // Use plain HTTP transports when the game page itself is served over HTTP.
+            if (window.location.protocol !== 'https:' && window.jQuery) {
+                window.jQuery.ajaxPrefilter(function(options) {
+                    if (typeof options.url === 'string') {
+                        options.url = options.url.replace(
+                            /^https:\/\/([^/?#]+:8081)(?=\/|[?#]|$)/i,
+                            'http://$1'
+                        );
+                    }
+                });
+            }
+
+            var _origWebSocket = window.WebSocket;
+            window.WebSocket = function(url, protocols) {
+                if (typeof url === 'string' && window.location.protocol !== 'https:') {
+                    url = url.replace(
+                        /^wss:\/\/([^/?#]+:8081)(?=[/?#]|$)/i,
+                        'ws://$1'
+                    );
+                }
+                return protocols ? new _origWebSocket(url, protocols) : new _origWebSocket(url);
+            };
+            window.WebSocket.prototype = _origWebSocket.prototype;
+
+            // 4. Clean alert handler (suppress [object Object] and raw HTML pages)
+            var _origAlert = window.alert;
+            window.alert = function(msg) {
+                if (typeof msg === 'object' && msg !== null) {
+                    console.warn('[DEV alert suppressed]:', msg);
+                    return;
+                }
+                if (typeof msg === 'string' && (msg.indexOf('<!DOCTYPE') !== -1 || msg.indexOf('<html') !== -1 || msg.indexOf('<?php') !== -1)) {
+                    console.warn('[HTML alert suppressed]:', msg);
+                    return;
+                }
+                console.log('[DEV alert]:', msg);
+                _origAlert(msg);
+            };
+
+            // 5. Safe Proxy for PLAYER_QUEST_DONE
+            var _playerQuestDone = {};
+            Object.defineProperty(window, 'PLAYER_QUEST_DONE', {
+                get: function() { return _playerQuestDone; },
+                set: function(val) {
+                    _playerQuestDone = new Proxy(val || {}, {
+                        get: function(target, prop) {
+                            if (prop in target) return target[prop];
+                            return 0;
+                        }
+                    });
+                },
+                configurable: true,
+                enumerable: true
+            });
+            window.PLAYER_QUEST_DONE = {};
+
+            $(document).on("PlayerReady", function() {
+                if (window.Elkaisar) {
+                    if (!Elkaisar.CurrentCity) Elkaisar.CurrentCity = {};
+                    Elkaisar.CurrentCity.City = liveCityData;
+                    window.PLAYER_ALL_CITIES = [liveCityData];
+
+                    if (window.LIVE_PLAYER_GUILD) {
+                        Elkaisar.DPlayer.GuildData = window.LIVE_PLAYER_GUILD;
+                        if (window.player) window.player.guild_data = window.LIVE_PLAYER_GUILD;
+                    }
+                    if (window.LIVE_GUILD_DATA) {
+                        Elkaisar.Guild.GuildData = Object.assign({}, window.LIVE_GUILD_DATA, Elkaisar.Guild.GuildData);
+                        Elkaisar.Guild.LeaderName = window.LIVE_GUILD_DATA.leaderName || window.LIVE_GUILD_DATA.p_name;
+                        Elkaisar.Guild.Allay = Elkaisar.Guild.Allay || [];
+                        Elkaisar.Guild.prizeShare = window.LIVE_PLAYER_GUILD ? window.LIVE_PLAYER_GUILD.prize_share : 10;
+                    }
+                }
+            });
+        })();
+        </script>
+
             <script type="text/javascript" src="js-3.4.113/obfuscated.js"></script>
+
+        <!-- Post-Engine Bulletproofing & Guard Rails -->
+        <script>
+        (function() {
+            // Guard Building.calResource
+            if (window.Building && Building.calResource) {
+                ['food', 'wood', 'stone', 'metal'].forEach(function(r) {
+                    Building.calResource[r] = function(type, lvl) {
+                        if (!window.BUILDING_JSON_DATA || !BUILDING_JSON_DATA[type] || !BUILDING_JSON_DATA[type]["lvl_req"] || !BUILDING_JSON_DATA[type]["lvl_req"][lvl]) {
+                            return 0;
+                        }
+                        return lvl < 30 ? (BUILDING_JSON_DATA[type]["lvl_req"][lvl][r] || 0) : "--";
+                    };
+                });
+            }
+            // Guard getArabicNumbers
+            var _origGetArabicNumbers = window.getArabicNumbers;
+            window.getArabicNumbers = function(str) {
+                if (str === undefined || str === null || (typeof str === 'number' && isNaN(str)) || str === 'NaN') {
+                    return '0';
+                }
+                return _origGetArabicNumbers ? _origGetArabicNumbers(str) : str;
+            };
+
+            // Guard and Enhance Guild Data
+            if (window.Elkaisar && window.Elkaisar.Guild) {
+                if (window.LIVE_GUILD_DATA) {
+                    Elkaisar.Guild.GuildData = Object.assign({}, window.LIVE_GUILD_DATA, Elkaisar.Guild.GuildData);
+                    Elkaisar.Guild.LeaderName = window.LIVE_GUILD_DATA.leaderName || window.LIVE_GUILD_DATA.p_name;
+                    Elkaisar.Guild.Allay = Elkaisar.Guild.Allay || [];
+                    Elkaisar.Guild.prizeShare = window.LIVE_PLAYER_GUILD ? window.LIVE_PLAYER_GUILD.prize_share : 10;
+                }
+                if (window.LIVE_PLAYER_GUILD) {
+                    Elkaisar.DPlayer.GuildData = window.LIVE_PLAYER_GUILD;
+                    if (window.player) window.player.guild_data = window.LIVE_PLAYER_GUILD;
+                }
+
+                // Auto-refresh open guild views when new guild data arrives
+                if (window.Guild && Guild.getGuildData) {
+                    var _origGetGuildData = Guild.getGuildData;
+                    Guild.getGuildData = function() {
+                        var p = _origGetGuildData.apply(this, arguments);
+                        if (p && p.done) {
+                            p.done(function() {
+                                if ($("#guild-guild_data").length > 0) {
+                                    var updatedHtml = Guild.content_forGuild_data();
+                                    $("#guild-guild_data").replaceWith(updatedHtml);
+                                }
+                            });
+                        }
+                        return p;
+                    };
+                }
+            }
+        })();
+        </script>
         
           </body>
 </html>

@@ -10,6 +10,7 @@ class PlayerController {
             case '/api/APlayer/getPlayerState':
                 self::getPlayerState($db);
                 return true;
+            case '/api/APlayer/getPlayerInfo':
             case '/api/APlayer/refreshPlayerData':
                 self::refreshPlayerData($db);
                 return true;
@@ -31,19 +32,25 @@ class PlayerController {
             case '/api/APlayerEquip/getEquipPower':
                 self::getEquipPower();
                 return true;
+            case '/api/APlayer/changePlayerName':
+                self::changePlayerName($db);
+                return true;
+            case '/api/APlayer/getAllNotif':
+                sendJson([]);
+                return true;
+            case '/api/APlayer/chatPann':
+                sendJson(['state' => 'ok']);
+                return true;
         }
         return false;
     }
 
+    public static function resolvePlayer($db) {
+        return requireAuthenticatedPlayer($db);
+    }
+
     public static function playerEnterServerWeb($db) {
-        $stmt = $db->query("SELECT * FROM `player` ORDER BY `id_player` ASC LIMIT 1");
-        $player = $stmt->fetch();
-        if (!$player) {
-            $fresh = createFreshPlayer('البطل سيزر');
-            $stmt = $db->prepare("SELECT * FROM `player` WHERE `id_player` = ?");
-            $stmt->execute([$fresh['playerId']]);
-            $player = $stmt->fetch();
-        }
+        $player = self::resolvePlayer($db);
 
         // Get player's cities
         $cStmt = $db->prepare("SELECT `id_city` FROM `city` WHERE `id_player` = ?");
@@ -97,61 +104,119 @@ class PlayerController {
     }
 
     public static function getPlayerState($db) {
-        $stmt = $db->query("SELECT * FROM `player_state` ORDER BY `id_player` ASC LIMIT 1");
+        $p = self::resolvePlayer($db);
+        $idPlayer = (int)$p['id_player'];
+        $stmt = $db->prepare("SELECT * FROM `player_state` WHERE `id_player` = ? LIMIT 1");
+        $stmt->execute([$idPlayer]);
         $state = $stmt->fetch();
         if ($state) {
             foreach ($state as $k => $v) { $state[$k] = (int)$v; }
             sendJson($state);
+            return;
         }
         sendJson(['state' => 'ok']);
     }
 
     public static function refreshPlayerData($db) {
-        $stmt = $db->query("SELECT * FROM `player` ORDER BY `id_player` ASC LIMIT 1");
-        $p = $stmt->fetch();
+        $p = self::resolvePlayer($db);
         if ($p) {
             $p['id_player'] = (int)$p['id_player'];
             $p['prestige']  = (int)$p['prestige'];
             $p['gold']      = (int)$p['gold'];
             $p['honor']     = (int)$p['honor'];
             sendJson($p);
+            return;
         }
         sendJson(['state' => 'error']);
     }
 
     public static function playLuckWheel($db) {
         $prizes = [
-            ['Prize' => 'speeder_15', 'amount' => 2],
-            ['Prize' => 'food', 'amount' => 50000],
-            ['Prize' => 'speeder_60', 'amount' => 1],
-            ['Prize' => 'wood', 'amount' => 50000],
-            ['Prize' => 'gold_10', 'amount' => 1],
-            ['Prize' => 'stone', 'amount' => 50000],
-            ['Prize' => 'coin', 'amount' => 100000],
-            ['Prize' => 'metal', 'amount' => 50000],
-            ['Prize' => 'speeder_15', 'amount' => 1],
-            ['Prize' => 'food', 'amount' => 100000],
-            ['Prize' => 'trade_carvan', 'amount' => 1],
-            ['Prize' => 'wood', 'amount' => 100000],
-            ['Prize' => 'gold_50', 'amount' => 1],
-            ['Prize' => 'stone', 'amount' => 100000],
-            ['Prize' => 'coin', 'amount' => 200000],
-            ['Prize' => 'metal', 'amount' => 100000],
-            ['Prize' => 'speaker', 'amount' => 5],
-            ['Prize' => 'necklace_1', 'amount' => 1],
-            ['Prize' => 'necklace_2', 'amount' => 1],
-            ['Prize' => 'necklace_3', 'amount' => 1]
+            ['Prize' => 'archit_a',    'amount' => 2, 'weight' => 350,  'rate' => '3.5%'],
+            ['Prize' => 'food_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'archit_b',    'amount' => 1, 'weight' => 250,  'rate' => '2.5%'],
+            ['Prize' => 'wood_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'gold_10',     'amount' => 1, 'weight' => 30,   'rate' => '0.3%'],
+            ['Prize' => 'stone_c',     'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'coin_d',      'amount' => 1, 'weight' => 800,  'rate' => '8.0%'],
+            ['Prize' => 'metal_c',     'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'archit_c',    'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
+            ['Prize' => 'food_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'shopping_car','amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
+            ['Prize' => 'wood_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'gold_25',     'amount' => 1, 'weight' => 15,   'rate' => '0.15%'],
+            ['Prize' => 'stone_d',     'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'trumpet',     'amount' => 5, 'weight' => 500,  'rate' => '5.0%'],
+            ['Prize' => 'metal_d',     'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'peace',       'amount' => 1, 'weight' => 5,    'rate' => '0.05%'],
+            ['Prize' => 'necklace_1',  'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
+            ['Prize' => 'necklace_2',  'amount' => 1, 'weight' => 100,  'rate' => '1.0%'],
+            ['Prize' => 'necklace_3',  'amount' => 1, 'weight' => 50,   'rate' => '0.5%']
         ];
-        $winIndex = rand(0, 19);
+
+        // Resolve player
+        $player = self::resolvePlayer($db);
+        $idPlayer = (int)$player['id_player'];
+
+        $db->beginTransaction();
+        try {
+            $itemDebit = $db->prepare(
+                "UPDATE `player_item` SET `amount` = `amount` - 1
+                 WHERE `id_player` = ? AND `id_item` = 'luck_play' AND `amount` > 0"
+            );
+            $itemDebit->execute([$idPlayer]);
+
+            if ($itemDebit->rowCount() !== 1) {
+                $goldDebit = $db->prepare(
+                    'UPDATE `player` SET `gold` = `gold` - 5 WHERE `id_player` = ? AND `gold` >= 5'
+                );
+                $goldDebit->execute([$idPlayer]);
+                if ($goldDebit->rowCount() !== 1) {
+                    $db->rollBack();
+                    sendJson(['state' => 'error_no_matrial']);
+                }
+            }
+
+            $totalWeight = array_sum(array_column($prizes, 'weight'));
+            $rand = random_int(1, $totalWeight);
+            $cumulative = 0;
+            $winIndex = 0;
+            foreach ($prizes as $idx => $prize) {
+                $cumulative += $prize['weight'];
+                if ($rand <= $cumulative) {
+                    $winIndex = $idx;
+                    break;
+                }
+            }
+            $wonPrize = $prizes[$winIndex];
+
+            $rewardStmt = $db->prepare(
+                'INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?)
+                 ON DUPLICATE KEY UPDATE `amount` = `amount` + VALUES(`amount`)'
+            );
+            $rewardStmt->execute([$idPlayer, $wonPrize['Prize'], $wonPrize['amount']]);
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            error_log('[PlayerController] Luck wheel transaction failed: ' . $error->getMessage());
+            throw $error;
+        }
+
         sendJson([
             'state'    => 'ok',
             'winIndex' => $winIndex,
             'Prize'    => $prizes
         ]);
+        return;
     }
 
     public static function getPlayerEduLvl($db) {
-        $stmt = $db->query("SELECT * FROM `player_edu` ORDER BY `id_player` ASC LIMIT 1");
+        $p = self::resolvePlayer($db);
+        $idPlayer = (int)$p['id_player'];
+        $stmt = $db->prepare("SELECT * FROM `player_edu` WHERE `id_player` = ? LIMIT 1");
+        $stmt->execute([$idPlayer]);
         $edu = $stmt->fetch();
         if ($edu) {
             foreach ($edu as $k => $v) { $edu[$k] = (int)$v; }
@@ -160,13 +225,58 @@ class PlayerController {
         sendJson(['state' => 'ok']);
     }
 
-    public static function upgradeStudyLvl($db) {
-        $cityId  = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 1;
-        $idStudy = isset($_REQUEST['idStudy']) ? trim($_REQUEST['idStudy']) : '';
+    private static $eduReqs = null;
 
+    public static function getStudyRequirements($studyName, $lvl) {
+        if (self::$eduReqs === null) {
+            $candidates = [
+                __DIR__ . '/../js-3.4.113/json/education.json',
+                dirname(__DIR__) . '/js-3.4.113/json/education.json',
+                dirname(__DIR__, 2) . '/web.elkaisar.com/js-3.4.113/json/education.json'
+            ];
+            self::$eduReqs = [];
+            foreach ($candidates as $cand) {
+                if (file_exists($cand)) {
+                    self::$eduReqs = json_decode(file_get_contents($cand), true) ?: [];
+                    break;
+                }
+            }
+        }
+
+        if (isset(self::$eduReqs[$studyName])) {
+            $s = self::$eduReqs[$studyName];
+            $lvlReq = $s['lvl_req'][$lvl - 1] ?? null;
+            $timeReq = $s['time_req'][$lvl - 1] ?? ($lvl * 60);
+            if ($lvlReq) {
+                return [
+                    'food'  => (int)($lvlReq['food']  ?? 0),
+                    'wood'  => (int)($lvlReq['wood']  ?? 0),
+                    'stone' => (int)($lvlReq['stone'] ?? 0),
+                    'metal' => (int)($lvlReq['metal'] ?? 0),
+                    'coin'  => (int)($lvlReq['coin']  ?? 0),
+                    'time'  => max(15, (int)$timeReq)
+                ];
+            }
+        }
+        return null;
+    }
+
+    public static function upgradeStudyLvl($db) {
+        $cityId  = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
+        if ($cityId <= 0) {
+            sendJson(['state' => 'error_city']);
+        }
+        $idStudy = isset($_REQUEST['idStudy']) ? trim($_REQUEST['idStudy']) : (isset($_REQUEST['study']) ? trim($_REQUEST['study']) : '');
+
+        $player = self::resolvePlayer($db);
         $stmt = $db->prepare("SELECT c.id_player FROM city c WHERE c.id_city = ?");
         $stmt->execute([$cityId]);
-        $playerId = (int)$stmt->fetchColumn() ?: 1;
+        $cityPlayerId = (int)$stmt->fetchColumn();
+        if ($cityPlayerId !== (int)$player['id_player']) {
+            http_response_code(403);
+            sendJson(['state' => 'error_city_owner']);
+        }
+        $playerId = $cityPlayerId;
 
         $stmt = $db->prepare("SELECT * FROM player_edu WHERE id_player = ?");
         $stmt->execute([$playerId]);
@@ -174,12 +284,77 @@ class PlayerController {
         $currLvl = isset($edu[$idStudy]) ? (int)$edu[$idStudy] : 0;
         $nextLvl = $currLvl + 1;
 
-        $duration = max(30, min(600, $nextLvl * 60));
+        if ($nextLvl > 30) {
+            sendJson(['state' => 'error_max_lvl', 'msg' => 'الدراسة وصلت للحد الأقصى']);
+            return;
+        }
+
+        $req = self::getStudyRequirements($idStudy, $nextLvl);
+        $costFood  = (int)($req['food']  ?? 0);
+        $costWood  = (int)($req['wood']  ?? 0);
+        $costStone = (int)($req['stone'] ?? 0);
+        $costMetal = (int)($req['metal'] ?? 0);
+        $costCoin  = (int)($req['coin']  ?? ($nextLvl * 500));
+        $duration  = (int)($req['time']  ?? ($nextLvl * 60));
+
+        // 1. Building Prerequisite: Academy (type 9) for military studies, University (type 8) for civil studies
+        $academyStudies = ['infantry', 'riding', 'army', 'spying', 'leader', 'safe', 'medicine', 'logistic', 'navigating', 'supplying'];
+        $reqBType = in_array($idStudy, $academyStudies, true) ? 9 : 8;
+
+        $bStmt = $db->prepare("SELECT MAX(lvl) FROM city_building WHERE id_city = ? AND type = ?");
+        $bStmt->execute([$cityId, $reqBType]);
+        $hasBLvl = (int)$bStmt->fetchColumn();
+        if ($hasBLvl < $nextLvl) {
+            sendJson(['state' => 'error_cond', 'msg' => "تتطلب الدراسة مستوى مبنى التعليم {$nextLvl} على الأقل"]);
+            return;
+        }
+
+        // 2. Law Items Prerequisite for advanced levels
+        if ($nextLvl >= 25) {
+            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_3'")->fetchColumn();
+            if ($hasLaw <= 0) {
+                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 25 وجود قانون روماني (law_3)']);
+                return;
+            }
+            ItemController::deductPlayerItem($db, $playerId, 'law_3', 1);
+        } elseif ($nextLvl >= 20) {
+            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_2'")->fetchColumn();
+            if ($hasLaw <= 0) {
+                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 20 وجود جدول الثاني عشر (law_2)']);
+                return;
+            }
+            ItemController::deductPlayerItem($db, $playerId, 'law_2', 1);
+        } elseif ($nextLvl >= 10) {
+            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_1'")->fetchColumn();
+            if ($hasLaw <= 0) {
+                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 10 وجود قانون دراكو (law_1)']);
+                return;
+            }
+            ItemController::deductPlayerItem($db, $playerId, 'law_1', 1);
+        }
+
+        // 3. Resource Check
+        $cStmt = $db->prepare("SELECT * FROM city WHERE id_city = ?");
+        $cStmt->execute([$cityId]);
+        $city = $cStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ((int)$city['food'] < $costFood || (int)$city['wood'] < $costWood || (int)$city['stone'] < $costStone || (int)$city['metal'] < $costMetal || (int)$city['coin'] < $costCoin) {
+            sendJson(['state' => 'error_res', 'msg' => 'الموارد المتوفرة بالمدينة غير كافية للبحث']);
+            return;
+        }
+
+        // Deduct authentic resources
+        $db->prepare("UPDATE `city` SET 
+            `food`  = GREATEST(0, `food`  - ?), 
+            `wood`  = GREATEST(0, `wood`  - ?), 
+            `stone` = GREATEST(0, `stone` - ?), 
+            `metal` = GREATEST(0, `metal` - ?), 
+            `coin`  = GREATEST(0, `coin`  - ?) 
+            WHERE `id_city` = ?")
+           ->execute([$costFood, $costWood, $costStone, $costMetal, $costCoin, $cityId]);
+
         $now = time();
         $arrive = $now + $duration;
-
-        $stmt = $db->prepare("UPDATE `city` SET `coin` = GREATEST(0, `coin` - 500), `food` = GREATEST(0, `food` - 300) WHERE `id_city` = ?");
-        $stmt->execute([$cityId]);
 
         $stmt = $db->prepare("INSERT INTO `timed_task` (`id_city`, `id_player`, `task_type`, `item_id`, `lvl_to`, `start_time`, `time_arrive`, `details`) VALUES (?, ?, 'study', ?, ?, ?, ?, ?)");
         $stmt->execute([$cityId, $playerId, $idStudy, $nextLvl, $now, $arrive, json_encode(['study_in' => 'academy'])]);
@@ -209,7 +384,10 @@ class PlayerController {
     }
 
     public static function getPlayerItems($db) {
-        $stmt = $db->query("SELECT * FROM `player_item` ORDER BY `id_item` ASC");
+        $p = self::resolvePlayer($db);
+        $idPlayer = (int)$p['id_player'];
+        $stmt = $db->prepare("SELECT * FROM `player_item` WHERE `id_player` = ? ORDER BY `id_item` ASC");
+        $stmt->execute([$idPlayer]);
         $items = $stmt->fetchAll() ?: [];
         foreach ($items as &$it) {
             $it['id_player'] = (int)$it['id_player'];
@@ -219,8 +397,8 @@ class PlayerController {
     }
 
     public static function getPlayerEquip($db) {
-        $stmt = $db->query("SELECT id_player FROM player ORDER BY id_player ASC LIMIT 1");
-        $idPlayer = (int)$stmt->fetchColumn() ?: 1;
+        $p = self::resolvePlayer($db);
+        $idPlayer = (int)$p['id_player'];
         $eqStmt = $db->prepare("SELECT id_equip, id_player, id_hero, type, part, lvl, on_hero FROM player_equip WHERE id_player = ?");
         $eqStmt->execute([$idPlayer]);
         $equips = $eqStmt->fetchAll() ?: [];
@@ -235,12 +413,32 @@ class PlayerController {
     }
 
     public static function getEquipPower() {
-        $file = __DIR__ . '/../api/APlayerEquip/getEquipPower.html';
-        if (file_exists($file)) {
-            header('Content-Type: text/plain; charset=utf-8');
-            echo file_get_contents($file);
-            exit;
+        $file = __DIR__ . '/../data/equipment-power.json';
+        if (!is_file($file) || !is_readable($file)) {
+            error_log('[PlayerController] Equipment power data is unavailable');
+            http_response_code(500);
+            sendJson(['state' => 'error', 'msg' => 'Equipment power data is unavailable']);
         }
-        sendJson([]);
+
+        header('Content-Type: text/plain; charset=utf-8');
+        readfile($file);
+        exit;
+    }
+
+    public static function changePlayerName($db) {
+        $newName = normalizeGameDisplayName($_REQUEST['NewName'] ?? null);
+        if ($newName === null) {
+            sendJson(['state' => 'error_name']);
+        }
+        $player = self::resolvePlayer($db);
+        $idPlayer = (int)$player['id_player'];
+
+        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $idPlayer AND id_item = 'change_player_name'")->fetchColumn();
+        if ($hasItem > 0) {
+            ItemController::deductPlayerItem($db, $idPlayer, 'change_player_name', 1);
+        }
+
+        $db->prepare("UPDATE player SET name = ? WHERE id_player = ?")->execute([$newName, $idPlayer]);
+        sendJson(['state' => 'ok', 'name' => $newName]);
     }
 }
