@@ -3070,9 +3070,16 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         this.input.pointer1.motionFactor = 0.5;
 
         var cam = this.cameras.main;
-        var b_w = Math.max(floor_width, cam.width || 1000);
-        var b_h = Math.max(floor_height, cam.height || 600);
-        cam.setBounds(0, 0, b_w, b_h);
+        cam.setZoom(1);
+        // Authentic Call of Roma: City view is perfectly centered in viewport with fixed camera
+        var centerCityCam = function() {
+            var offsetX = cam.width > 1000 ? Math.floor((cam.width - 1000) / 2) : 0;
+            var offsetY = cam.height > 450 ? Math.max(0, Math.floor((cam.height - 400 - 120) / 2)) : 0;
+            cam.scrollX = -offsetX;
+            cam.scrollY = -offsetY;
+        };
+        centerCityCam();
+        this.scale.on('resize', centerCityCam);
 
         // Infinite seamless Roman stone backdrop around the city so no black borders appear
         this.cityBackdrop = this.add.tileSprite(500, 200, 4000, 3000, 'city_backdrop').setOrigin(0.5, 0.5).setDepth(-10);
@@ -3116,11 +3123,9 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         });
 
         this.input.on('pointermove', function(p) {
+            // Fixed camera like Call of Roma: no dragging city floor away
             if (!p.isDown)
                 return;
-            This.Scrolling.isBeingDragged = true;
-            cam.scrollX -= (p.x - p.prevPosition.x) / cam.zoom;
-            cam.scrollY -= (p.y - p.prevPosition.y) / cam.zoom;
         });
 
         this.input.on('gameobjectover', function(Pointer, GameObject, Event) {
