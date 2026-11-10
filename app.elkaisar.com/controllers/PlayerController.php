@@ -132,27 +132,29 @@ class PlayerController {
 
     public static function playLuckWheel($db) {
         $prizes = [
-            ['Prize' => 'archit_a',    'amount' => 2, 'weight' => 350,  'rate' => '3.5%'],
-            ['Prize' => 'food_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'archit_b',    'amount' => 1, 'weight' => 250,  'rate' => '2.5%'],
-            ['Prize' => 'wood_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'gold_10',     'amount' => 1, 'weight' => 30,   'rate' => '0.3%'],
-            ['Prize' => 'stone_c',     'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'coin_d',      'amount' => 1, 'weight' => 800,  'rate' => '8.0%'],
-            ['Prize' => 'metal_c',     'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'archit_c',    'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
-            ['Prize' => 'food_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'shopping_car','amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
-            ['Prize' => 'wood_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'gold_25',     'amount' => 1, 'weight' => 15,   'rate' => '0.15%'],
-            ['Prize' => 'stone_d',     'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'trumpet',     'amount' => 5, 'weight' => 500,  'rate' => '5.0%'],
-            ['Prize' => 'metal_d',     'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'peace',       'amount' => 1, 'weight' => 5,    'rate' => '0.05%'],
-            ['Prize' => 'necklace_1',  'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
-            ['Prize' => 'necklace_2',  'amount' => 1, 'weight' => 100,  'rate' => '1.0%'],
-            ['Prize' => 'necklace_3',  'amount' => 1, 'weight' => 50,   'rate' => '0.5%']
+            ['Prize' => 'peace',        'amount' => 1, 'weight' => 5,    'rate' => '0.05%'],
+            ['Prize' => 'food_c',       'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'archit_b',     'amount' => 1, 'weight' => 250,  'rate' => '2.5%'],
+            ['Prize' => 'wood_c',       'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'shopping_car', 'amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
+            ['Prize' => 'gold_25',      'amount' => 1, 'weight' => 15,   'rate' => '0.15%'],
+            ['Prize' => 'coin_d',       'amount' => 1, 'weight' => 800,  'rate' => '8.0%'],
+            ['Prize' => 'metal_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'archit_c',     'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
+            ['Prize' => 'food_d',       'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'gold_10',      'amount' => 1, 'weight' => 30,   'rate' => '0.3%'],
+            ['Prize' => 'wood_d',       'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'stone_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'stone_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'trumpet',      'amount' => 5, 'weight' => 500,  'rate' => '5.0%'],
+            ['Prize' => 'archit_a',     'amount' => 2, 'weight' => 350,  'rate' => '3.5%'],
+            ['Prize' => 'metal_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'necklace_1',   'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
+            ['Prize' => 'necklace_2',   'amount' => 1, 'weight' => 100,  'rate' => '1.0%'],
+            ['Prize' => 'necklace_3',   'amount' => 1, 'weight' => 50,   'rate' => '0.5%']
         ];
+
+        $amount = max(1, min(100, (int)($_POST['amount'] ?? 1)));
 
         // Resolve player
         $player = self::resolvePlayer($db);
@@ -160,41 +162,64 @@ class PlayerController {
 
         $db->beginTransaction();
         try {
-            $itemDebit = $db->prepare(
-                "UPDATE `player_item` SET `amount` = `amount` - 1
-                 WHERE `id_player` = ? AND `id_item` = 'luck_play' AND `amount` > 0"
-            );
-            $itemDebit->execute([$idPlayer]);
+            // Check available tickets
+            $itemStmt = $db->prepare("SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = 'luck_play' FOR UPDATE");
+            $itemStmt->execute([$idPlayer]);
+            $itemRow = $itemStmt->fetch();
+            $currentTickets = $itemRow ? (int)$itemRow['amount'] : 0;
 
-            if ($itemDebit->rowCount() !== 1) {
-                $goldDebit = $db->prepare(
-                    'UPDATE `player` SET `gold` = `gold` - 5 WHERE `id_player` = ? AND `gold` >= 5'
-                );
-                $goldDebit->execute([$idPlayer]);
-                if ($goldDebit->rowCount() !== 1) {
+            $ticketsToDeduct = min($currentTickets, $amount);
+            $remainingSpins = $amount - $ticketsToDeduct;
+            $goldNeeded = $remainingSpins * 5;
+
+            // Check gold if tickets aren't enough
+            if ($goldNeeded > 0) {
+                $pStmt = $db->prepare("SELECT `gold` FROM `player` WHERE `id_player` = ? FOR UPDATE");
+                $pStmt->execute([$idPlayer]);
+                $pRow = $pStmt->fetch();
+                $currentGold = $pRow ? (int)$pRow['gold'] : 0;
+
+                if ($currentGold < $goldNeeded) {
                     $db->rollBack();
                     sendJson(['state' => 'error_no_matrial']);
+                    return;
                 }
+
+                // Deduct gold
+                $db->prepare("UPDATE `player` SET `gold` = `gold` - ? WHERE `id_player` = ?")->execute([$goldNeeded, $idPlayer]);
             }
 
+            // Deduct tickets
+            if ($ticketsToDeduct > 0) {
+                $db->prepare("UPDATE `player_item` SET `amount` = `amount` - ? WHERE `id_player` = ? AND `id_item` = 'luck_play'")->execute([$ticketsToDeduct, $idPlayer]);
+            }
+
+            // Draw prizes
             $totalWeight = array_sum(array_column($prizes, 'weight'));
-            $rand = random_int(1, $totalWeight);
-            $cumulative = 0;
-            $winIndex = 0;
-            foreach ($prizes as $idx => $prize) {
-                $cumulative += $prize['weight'];
-                if ($rand <= $cumulative) {
-                    $winIndex = $idx;
-                    break;
-                }
-            }
-            $wonPrize = $prizes[$winIndex];
-
+            $winIndices = [];
+            $wonPrizes = [];
             $rewardStmt = $db->prepare(
                 'INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?)
                  ON DUPLICATE KEY UPDATE `amount` = `amount` + VALUES(`amount`)'
             );
-            $rewardStmt->execute([$idPlayer, $wonPrize['Prize'], $wonPrize['amount']]);
+
+            for ($spin = 0; $spin < $amount; $spin++) {
+                $rand = random_int(1, $totalWeight);
+                $cumulative = 0;
+                $winIndex = 0;
+                foreach ($prizes as $idx => $prize) {
+                    $cumulative += $prize['weight'];
+                    if ($rand <= $cumulative) {
+                        $winIndex = $idx;
+                        break;
+                    }
+                }
+                $winIndices[] = $winIndex;
+                $wonPrize = $prizes[$winIndex];
+                $wonPrizes[] = $wonPrize;
+                $rewardStmt->execute([$idPlayer, $wonPrize['Prize'], $wonPrize['amount']]);
+            }
+
             $db->commit();
         } catch (Throwable $error) {
             if ($db->inTransaction()) {
@@ -205,9 +230,14 @@ class PlayerController {
         }
 
         sendJson([
-            'state'    => 'ok',
-            'winIndex' => $winIndex,
-            'Prize'    => $prizes
+            'state'        => 'ok',
+            'winIndex'     => $winIndices[count($winIndices) - 1],
+            'winIndices'   => $winIndices,
+            'wonPrizes'    => $wonPrizes,
+            'amount'       => $amount,
+            'usedTickets'  => $ticketsToDeduct,
+            'usedGold'     => $goldNeeded,
+            'Prize'        => $prizes
         ]);
         return;
     }

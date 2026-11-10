@@ -43999,462 +43999,415 @@ $(document).on("PlayerReady", "html", function() {
 
 });
 var MATIAL_FOR_LUCK_WHEEL = [
-    { Prize: "archit_a", amount: 2, rate: "3.5%" },
-    { Prize: "food_c", amount: 1, rate: "12.0%" },
-    { Prize: "archit_b", amount: 1, rate: "2.5%" },
-    { Prize: "wood_c", amount: 1, rate: "12.0%" },
-    { Prize: "gold_10", amount: 1, rate: "0.3%" },
-    { Prize: "stone_c", amount: 1, rate: "12.0%" },
-    { Prize: "coin_d", amount: 1, rate: "8.0%" },
-    { Prize: "metal_c", amount: 1, rate: "12.0%" },
-    { Prize: "archit_c", amount: 1, rate: "1.5%" },
-    { Prize: "food_d", amount: 1, rate: "6.0%" },
-    { Prize: "shopping_car", amount: 1, rate: "4.0%" },
-    { Prize: "wood_d", amount: 1, rate: "6.0%" },
-    { Prize: "gold_25", amount: 1, rate: "0.15%" },
-    { Prize: "stone_d", amount: 1, rate: "6.0%" },
-    { Prize: "trumpet", amount: 5, rate: "5.0%" },
-    { Prize: "metal_d", amount: 1, rate: "6.0%" },
-    { Prize: "peace", amount: 1, rate: "0.05%" },
-    { Prize: "necklace_1", amount: 1, rate: "1.5%" },
-    { Prize: "necklace_2", amount: 1, rate: "1.0%" },
-    { Prize: "necklace_3", amount: 1, rate: "0.5%" }
+    { Prize: "peace",        amount: 1, rate: "0.05%" },
+    { Prize: "food_c",       amount: 1, rate: "12.0%" },
+    { Prize: "archit_b",     amount: 1, rate: "2.5%"  },
+    { Prize: "wood_c",       amount: 1, rate: "12.0%" },
+    { Prize: "shopping_car", amount: 1, rate: "4.0%"  },
+    { Prize: "gold_25",      amount: 1, rate: "0.15%" },
+    { Prize: "coin_d",       amount: 1, rate: "8.0%"  },
+    { Prize: "metal_c",      amount: 1, rate: "12.0%" },
+    { Prize: "archit_c",     amount: 1, rate: "1.5%"  },
+    { Prize: "food_d",       amount: 1, rate: "6.0%"  },
+    { Prize: "gold_10",      amount: 1, rate: "0.3%"  },
+    { Prize: "wood_d",       amount: 1, rate: "6.0%"  },
+    { Prize: "stone_c",      amount: 1, rate: "12.0%" },
+    { Prize: "stone_d",      amount: 1, rate: "6.0%"  },
+    { Prize: "trumpet",      amount: 5, rate: "5.0%"  },
+    { Prize: "archit_a",     amount: 2, rate: "3.5%"  },
+    { Prize: "metal_d",      amount: 1, rate: "6.0%"  },
+    { Prize: "necklace_1",   amount: 1, rate: "1.5%"  },
+    { Prize: "necklace_2",   amount: 1, rate: "1.0%"  },
+    { Prize: "necklace_3",   amount: 1, rate: "0.5%"  }
 ];
 
-var LuckWheel = {};
-
-LuckWheel.holes = function() {
-
-    return `<ul>
-                <li class="cell corner" style="left: 50%; margin-top: 13px; margin-left: -32px;
-                    background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[0]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[0]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[0]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left: 313px; top: 30.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[1]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[1]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[1]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left: 375px; top: 62.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[2]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[2]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[2]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left: 425px; top: 112.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[3]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[3]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[3]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right: 32px; top: 175.8px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[4]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[4]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[4]["amount"]}</h1>
-                </li>
-                <li class="cell corner" style="right: 13px; top: 237.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[5]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[5]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[5]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right:32px; top: 312px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[6]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[6]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[6]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left:425px; top: 375.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[7]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[7]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[7]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left: 375.5px; top: 425px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[8]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[8]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[8]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left: 313.5px; top: 457.2px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[9]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[9]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[9]["amount"]}</h1>
-                </li>
-                <li class="cell corner" style="left: 50%;bottom: 13.5px; margin-left: -32px ;background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[10]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[10]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[10]["amount"]}</h1>
-                </li>
-
-                <li class="cell" style="right: 313.5px; top: 457.2px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[11]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[11]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[11]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right: 375.5px; top: 425px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[12]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[12]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[12]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right:425px; top: 375.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[13]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[13]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[13]["amount"]}</h1>
-                </li>
-                <li class="cell" style="left:32px; top: 312px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[14]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[14]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[14]["amount"]}</h1>
-                </li>
-                <li class="cell corner" style="left: 13px; top: 237.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[15]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[15]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[15]["amount"]}</h1>
-                </li>
-
-
-                <li class="cell" style="left: 31.5px; top: 175.7px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[16]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[16]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[16]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right: 425.5px; top: 112.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[17]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[17]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[17]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right: 375px; top: 62.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[18]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[18]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[18]["amount"]}</h1>
-                </li>
-                <li class="cell" style="right: 313.5px; top: 30.5px; background-image: url(${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[19]["Prize"]].image})"
-                    data-matrial-name="${MATIAL_FOR_LUCK_WHEEL[19]["Prize"]}">
-                    <div class="left-gate pull-L"></div>
-                    <div class="right-gate pull-R"></div>
-                    <div class="pulse"></div>
-                    <h1>${MATIAL_FOR_LUCK_WHEEL[19]["amount"]}</h1>
-                </li>
-
-
-
-            </ul>`;
-
+var LuckWheel = {
+    isSpinning: false,
+    stopRequested: false,
+    currentTimers: []
 };
 
+LuckWheel.clearAllTimers = function() {
+    for (var i = 0; i < LuckWheel.currentTimers.length; i++) {
+        clearTimeout(LuckWheel.currentTimers[i]);
+    }
+    LuckWheel.currentTimers = [];
+};
+
+LuckWheel.holes = function() {
+    var getItemImg = function(key) {
+        if (Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[key]) {
+            return Elkaisar.BaseData.Items[key].image;
+        }
+        return "images/items/luck_play.png";
+    };
+
+    return '<ul>' +
+        '<li class="cell corner" style="left: 50%; margin-top: 13px; margin-left: -32px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[0]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[0]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[0]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 313px; top: 30.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[1]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[1]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[1]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 375px; top: 62.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[2]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[2]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[2]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 425px; top: 112.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[3]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[3]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[3]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 32px; top: 175.8px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[4]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[4]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[4]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell corner" style="right: 13px; top: 237.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[5]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[5]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[5]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right:32px; top: 312px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[6]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[6]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[6]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left:425px; top: 375.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[7]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[7]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[7]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 375.5px; top: 425px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[8]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[8]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[8]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 313.5px; top: 457.2px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[9]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[9]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[9]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell corner" style="left: 50%; top: 463px; margin-left: -32px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[10]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[10]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[10]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 313.5px; top: 457.2px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[11]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[11]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[11]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 375.5px; top: 425px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[12]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[12]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[12]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right:425px; top: 375.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[13]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[13]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[13]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left:32px; top: 312px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[14]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[14]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[14]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell corner" style="left: 13px; top: 237.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[15]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[15]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[15]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="left: 31.5px; top: 175.7px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[16]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[16]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[16]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 425.5px; top: 112.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[17]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[17]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[17]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 375px; top: 62.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[18]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[18]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[18]["amount"] + '</h1>' +
+        '</li>' +
+        '<li class="cell" style="right: 313.5px; top: 30.5px; background-image: url(' + getItemImg(MATIAL_FOR_LUCK_WHEEL[19]["Prize"]) + ')" data-matrial-name="' + MATIAL_FOR_LUCK_WHEEL[19]["Prize"] + '">' +
+            '<div class="left-gate pull-L"></div><div class="right-gate pull-R"></div><div class="pulse"></div><h1>' + MATIAL_FOR_LUCK_WHEEL[19]["amount"] + '</h1>' +
+        '</li>' +
+    '</ul>';
+};
 
 LuckWheel.show = function() {
+    var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
+    var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
+    var maxSpins = ticketCount + Math.floor(goldCount / 5);
+    if (maxSpins < 1) maxSpins = 1;
 
+    var ticketImg = (Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items["luck_play"]) ? Elkaisar.BaseData.Items["luck_play"].image : "images/items/luck_play.png";
 
-
-    var content = `  <div id="luck-wheel-over-lay">
-                        <div id="luck-wheel" data-gate-open="false">
-                            <div class="holes">
-                                ${this.holes()}
-                            </div>
-                            <div class="control">
-                                <button id="hide-luck-wheel"></button>
-                                <div class="title font-2" style="font-size: 13px; line-height: 20px;">
-                                       ضع المؤشر على الجوائز لمعرفة نسب الحظ
-                                </div>
-                                <h1 id="playeLuckTitle"> دولاب الحظ:${Matrial.getPlayerAmount("luck_play")} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: ${Elkaisar.DPlayer.Player.gold}</h1>
-
-                                <div class="image-frame">
-                                    <img src="${Elkaisar.BaseData.Items["luck_play"].image}"/>
-                                </div>
-                                <div class="input-number">
-                                    <input class="only_num input"  type="text" max="${Matrial.getPlayerAmount("luck_play") + Math.floor(Elkaisar.DPlayer.Player.gold / 5)}" step="1" min="0" value="1"/>
-                                </div>
-                                <div id="start-wheel">
-                                    <button class="font-2">
-                                        بدء 
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+    var content = '<div id="luck-wheel-over-lay">' +
+        '<div id="luck-wheel" data-gate-open="false">' +
+            '<div class="holes">' +
+                this.holes() +
+            '</div>' +
+            '<div class="control">' +
+                '<button id="hide-luck-wheel" title="إغلاق"></button>' +
+                '<div class="title font-2" style="font-size: 13px; line-height: 20px;">' +
+                    'ضع المؤشر على الجوائز لمعرفة نسب الحظ' +
+                '</div>' +
+                '<h1 id="playeLuckTitle">تذاكر الدولاب: ' + ticketCount + ' &nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: ' + goldCount + '</h1>' +
+                '<div class="image-frame">' +
+                    '<img src="' + ticketImg + '"/>' +
+                '</div>' +
+                '<div class="input-number" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px;">' +
+                    '<span style="color: #ffd700; font-size: 12px;">عدد الدورات:</span>' +
+                    '<input class="only_num input" type="text" max="' + maxSpins + '" step="1" min="1" value="1" style="width: 60px; text-align: center;"/>' +
+                '</div>' +
+                '<div class="fast-spin-wrapper" style="text-align: center; margin-top: 4px;">' +
+                    '<label style="color: #e6ca9e; font-size: 11px; cursor: pointer; user-select: none;">' +
+                        '<input type="checkbox" id="fast-spin-checkbox"/> الوضع السريع (فوري)' +
+                    '</label>' +
+                '</div>' +
+                '<div id="start-wheel" style="margin-top: 8px;">' +
+                    '<button class="font-2" style="cursor: pointer;">بدء</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
 
     $("body").append(content);
+
     $(document).off("mouseenter mouseleave", "#luck-wheel .cell").on("mouseenter", "#luck-wheel .cell", function() {
         var idx = $(this).index();
         var p = MATIAL_FOR_LUCK_WHEEL[idx];
         if (p && typeof Elkaisar !== "undefined" && Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[p.Prize]) {
             var it = Elkaisar.BaseData.Items[p.Prize];
-            $("#luck-wheel .control .title").html(`<span style="color:#fff;">${it.name} &times; ${p.amount}</span><br><span style="color:#ffeb3b; font-size:12px;">نسبة الحظ الحقيقية: ${p.rate}</span>`);
+            $("#luck-wheel .control .title").html('<span style="color:#fff;">' + it.name + ' &times; ' + p.amount + '</span><br><span style="color:#ffeb3b; font-size:12px;">نسبة الحظ: ' + p.rate + '</span>');
             $("#luck-wheel .control .image-frame img").attr("src", it.image);
         }
     }).on("mouseleave", "#luck-wheel .cell", function() {
         $("#luck-wheel .control .title").html("ضع المؤشر على الجوائز لمعرفة نسب الحظ");
     });
-    $("#luck-wheel").animate({
-        top: "80px"
-    }, 150, "linear", function() {
-        $(this).animate({
-            top: "100px"
-        }, 100, "linear");
+
+    $("#luck-wheel").animate({ top: "80px" }, 150, "linear", function() {
+        $(this).animate({ top: "100px" }, 100, "linear");
     });
 };
 
-
-/*
- * 
- * hide luck wheel
- * 
- */
 LuckWheel.hide = function() {
+    LuckWheel.clearAllTimers();
+    LuckWheel.isSpinning = false;
+    LuckWheel.stopRequested = false;
 
-    $("#luck-wheel").animate({
-        top: "70px"
-    }, 200, "linear", function() {
-        $(this).animate({
-            top: "60%"
-        }, 180, "linear", function() {
-            $("#luck-wheel-btn").animate({
-                bottom: "213px"
-            }, 180, "linear");
-            $(this).animate({
-                top: "100%"
-            }, 100, "linear", function() {
+    $("#luck-wheel").animate({ top: "70px" }, 200, "linear", function() {
+        $(this).animate({ top: "60%" }, 180, "linear", function() {
+            $("#luck-wheel-btn").animate({ bottom: "213px" }, 180, "linear");
+            $(this).animate({ top: "100%" }, 100, "linear", function() {
                 $("#luck-wheel-over-lay").remove();
             });
         });
     });
-
 };
 
-
-/*
- * 
- *LucLuckWheel open gates 
- * 
- */
 LuckWheel.openGates = function(call_back) {
-
-    $('#luck-wheel').attr("data-gate-open", "true");
-
-    $('#luck-wheel .cell .left-gate').animate({
-        'background-position-x': '-32px'
-    }, 500, 'linear');
-
-    $.when.apply($, [$('#luck-wheel .cell .right-gate').animate({
-        'background-position-x': '32px'
-    }, 500, 'linear')]).then(function() {
-        // all complete
-        $('#luck-wheel ul li h1').show();
-        call_back();
+    $("#luck-wheel").attr("data-gate-open", "true");
+    $("#luck-wheel .cell .left-gate").animate({ "background-position-x": "-32px" }, 400, "linear");
+    $.when.apply($, [$("#luck-wheel .cell .right-gate").animate({ "background-position-x": "32px" }, 400, "linear")]).then(function() {
+        $("#luck-wheel ul li h1").show();
+        if (typeof call_back === "function") call_back();
     });
-
 };
 
-/*
- * 
- *LucLuckWheel open gates 
- * 
- */
 LuckWheel.closeGates = function() {
-
-    $('#luck-wheel').attr("data-gate-open", "false");
-    $('#luck-wheel .cell .left-gate').animate({
-        'background-position-x': '0px'
-    }, 500, 'linear');
-    $('#luck-wheel .cell .right-gate').animate({
-        'background-position-x': '0px'
-    }, 500, 'linear', function() {
-        $('#luck-wheel ul li h1').hide();
+    $("#luck-wheel").attr("data-gate-open", "false");
+    $("#luck-wheel .cell .left-gate").animate({ "background-position-x": "0px" }, 300, "linear");
+    $("#luck-wheel .cell .right-gate").animate({ "background-position-x": "0px" }, 300, "linear", function() {
+        $("#luck-wheel ul li h1").hide();
     });
-
-
 };
 
 $(document).on("click", "#hide-luck-wheel", function() {
-
     LuckWheel.hide();
-
 });
-
 
 $("#luck-wheel-btn").click(function() {
-    $(this).animate({
-        bottom: '180px'
-    }, 250, 'linear', function() {
+    $(this).animate({ bottom: "180px" }, 250, "linear", function() {
         LuckWheel.show();
     });
-
 });
 
-
-LuckWheel.playLuck = function() {
-
+LuckWheel.playLuck = function(amount) {
     return $.ajax({
-        url: `${API_URL}/api/APlayer/playLuckWheel`,
-        type: 'POST',
+        url: API_URL + "/api/APlayer/playLuckWheel",
+        type: "POST",
         data: {
             token: Elkaisar.Config.OuthToken,
-            server: Elkaisar.Config.idServer
-        },
-        beforeSend: function(xhr) {
-
-        },
-        success: function(data, textStatus, jqXHR) {
-
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-
+            server: Elkaisar.Config.idServer,
+            amount: amount || 1
         }
     });
-
 };
 
 LuckWheel.spinWheel = function() {
+    var requestedSpins = parseInt($("#luck-wheel .input-number input").val()) || 1;
+    var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
+    var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
+    var totalAvailable = ticketCount + Math.floor(goldCount / 5);
 
-    LuckWheel.playLuck().done(function(data) {
+    if (requestedSpins > totalAvailable) requestedSpins = Math.max(1, totalAvailable);
 
-        if (isJson(data)) {
-            var jsonData = JSON.parse(data);
-        } else {
-            alert(data);
+    LuckWheel.isSpinning = true;
+    LuckWheel.stopRequested = false;
+    $("#start-wheel button").text("إيقاف");
+
+    LuckWheel.playLuck(requestedSpins).done(function(data) {
+        if (!isJson(data)) {
+            alert_box.confirmDialog("حدث خطأ في الاتصال بالسيرفر", function() {});
+            LuckWheel.isSpinning = false;
+            $("#start-wheel button").text("بدء").prop("disabled", false);
             return;
         }
 
+        var jsonData = JSON.parse(data);
+        if (jsonData.state !== "ok") {
+            if (jsonData.state === "error_no_matrial") {
+                alert_box.confirmDialog("لا يوجد لديك عدد كافٍ من تذاكر دولاب الحظ أو الذهب (تكلفة الدورة: 1 تذكرة أو 5 ذهب).", function() {});
+            } else {
+                alert_box.confirmDialog("تعذر بدء دولاب الحظ: " + (jsonData.state || "خطأ غير معروف"), function() {});
+            }
+            LuckWheel.isSpinning = false;
+            $("#start-wheel button").text("بدء").prop("disabled", false);
+            return;
+        }
 
-        MATIAL_FOR_LUCK_WHEEL = jsonData.Prize;
-        $("#luck-wheel .holes").html(LuckWheel.holes());
+        // Update prizes array if provided
+        if (jsonData.Prize) {
+            MATIAL_FOR_LUCK_WHEEL = jsonData.Prize;
+        }
+
+        // Deduct inventory items and gold
+        if (jsonData.usedTickets) {
+            Matrial.takeFrom("luck_play", jsonData.usedTickets);
+        }
+        if (jsonData.usedGold && Elkaisar.DPlayer && Elkaisar.DPlayer.Player) {
+            Elkaisar.DPlayer.Player.gold -= jsonData.usedGold;
+            $("#player_gold").html(Elkaisar.DPlayer.Player.gold);
+        }
+
+        // Refresh player header counters
+        var newTicketCount = Matrial.getPlayerAmount("luck_play") || 0;
+        var newGoldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? Elkaisar.DPlayer.Player.gold : 0;
+        $("#playeLuckTitle").html("تذاكر الدولاب: " + newTicketCount + " &nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: " + newGoldCount);
+
+        var isFastMode = $("#fast-spin-checkbox").is(":checked") || (requestedSpins > 1);
+
         LuckWheel.openGates(function() {
-
             var all_pulses = $("#luck-wheel ul li .pulse");
-            var cell = jsonData.winIndex;
+            var finalWinIndex = jsonData.winIndex;
             var element_to = $("#luck-wheel .control .image-frame img");
             var title_to = $("#luck-wheel .control .title");
 
-            Matrial.takeFrom("luck_play", 1);
-            Matrial.givePlayer(MATIAL_FOR_LUCK_WHEEL[jsonData.winIndex].Prize, MATIAL_FOR_LUCK_WHEEL[jsonData.winIndex].amount);
-            $("#playeLuckTitle").replaceWith(`<h1 id="playeLuckTitle"> دولاب الحظ:${Matrial.getPlayerAmount("luck_play")} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: ${Elkaisar.DPlayer.Player.gold}</h1>`)
+            // Fast Mode / Multi-spin instant resolution
+            if (isFastMode) {
+                all_pulses.css({ opacity: 0, animation: "" });
+                var winCell = $("#luck-wheel ul li.cell").eq(finalWinIndex);
+                winCell.find(".pulse").css({
+                    "-webkit-animation": "pulse 1s infinite linear",
+                    animation: "pulse 1s infinite linear",
+                    opacity: 1
+                });
 
-            for (var iii = 0; iii <= 20 + cell; iii++) {
+                var lastPrize = MATIAL_FOR_LUCK_WHEEL[finalWinIndex];
+                if (lastPrize && Elkaisar.BaseData && Elkaisar.BaseData.Items[lastPrize.Prize]) {
+                    var it = Elkaisar.BaseData.Items[lastPrize.Prize];
+                    $(element_to).attr("src", it.image);
+                    $(title_to).html(it.name + " &times; " + lastPrize.amount);
+                }
 
-                LuckWheel.sequanceTimer(iii, all_pulses[iii % 20], 20 + cell, element_to, title_to);
+                // Announce all rewards
+                if (jsonData.wonPrizes && jsonData.wonPrizes.length > 1) {
+                    var summaryMsg = "لقد حصلت على " + jsonData.wonPrizes.length + " جوائز من دولاب الحظ!";
+                    alert_box.systemChatMessage(summaryMsg);
+                    alert_box.confirmDialog("مبروك! لقد أكملت " + jsonData.wonPrizes.length + " دورات في دولاب الحظ بنجاح. تفقّد حقيبتك لرؤية الجوائز.", function() {});
+                } else {
+                    var msg = "لقد تحصلت على " + lastPrize.amount + " &times; " + Elkaisar.BaseData.Items[lastPrize.Prize].name + " من دولاب الحظ";
+                    alert_box.systemChatMessage(msg);
+                }
 
+                LuckWheel.isSpinning = false;
+                $("#start-wheel button").text("بدء").prop("disabled", false);
+                return;
             }
 
+            // Normal Animated Spin (Acceleration -> Deceleration -> Final Prize)
+            LuckWheel.clearAllTimers();
+            var totalSteps = 20 + finalWinIndex;
+            var currentStep = 0;
+
+            function runStep() {
+                if (LuckWheel.stopRequested || currentStep >= totalSteps) {
+                    // Final Stop on Winning Cell
+                    all_pulses.css({ opacity: 0, animation: "" });
+                    var winCell = $("#luck-wheel ul li.cell").eq(finalWinIndex);
+                    winCell.find(".pulse").css({
+                        "-webkit-animation": "pulse 1s infinite linear",
+                        animation: "pulse 1s infinite linear",
+                        opacity: 1
+                    });
+
+                    var won = MATIAL_FOR_LUCK_WHEEL[finalWinIndex];
+                    if (won && Elkaisar.BaseData && Elkaisar.BaseData.Items[won.Prize]) {
+                        var it = Elkaisar.BaseData.Items[won.Prize];
+                        $(element_to).attr("src", it.image);
+                        $(title_to).html(it.name + " &times; " + won.amount);
+                        var msg = "لقد تحصلت على " + won.amount + " &times; " + it.name + " من دولاب الحظ";
+                        alert_box.systemChatMessage(msg);
+                    }
+
+                    LuckWheel.isSpinning = false;
+                    LuckWheel.stopRequested = false;
+                    $("#start-wheel button").text("بدء").prop("disabled", false);
+                    return;
+                }
+
+                var cellIndex = currentStep % 20;
+                all_pulses.css({ opacity: 0, animation: "" });
+                $(all_pulses[cellIndex]).css({ opacity: 1 });
+
+                var p = MATIAL_FOR_LUCK_WHEEL[cellIndex];
+                if (p && Elkaisar.BaseData && Elkaisar.BaseData.Items[p.Prize]) {
+                    var it = Elkaisar.BaseData.Items[p.Prize];
+                    $(element_to).attr("src", it.image);
+                    $(title_to).html(it.name);
+                }
+
+                // Compute delay: accelerate (step < 8), cruise (8 <= step < totalSteps - 8), decelerate (step >= totalSteps - 8)
+                var delay = 50;
+                if (currentStep < 8) {
+                    delay = 200 - (currentStep * 18);
+                } else if (currentStep >= totalSteps - 8) {
+                    var remaining = totalSteps - currentStep;
+                    delay = 250 - (remaining * 22);
+                }
+
+                currentStep++;
+                var t = setTimeout(runStep, Math.max(35, delay));
+                LuckWheel.currentTimers.push(t);
+            }
+
+            runStep();
         });
-
-
+    }).fail(function() {
+        alert_box.confirmDialog("حدث خطأ أثناء الاتصال بالسيرفر", function() {});
+        LuckWheel.isSpinning = false;
+        $("#start-wheel button").text("بدء").prop("disabled", false);
     });
-
-
 };
 
 $(document).on("click", "#start-wheel", function() {
+    // If currently spinning, act as Stop button
+    if (LuckWheel.isSpinning) {
+        LuckWheel.stopRequested = true;
+        $(this).find("button").prop("disabled", true);
+        return;
+    }
 
+    var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
+    var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
+    var totalAvailable = ticketCount + Math.floor(goldCount / 5);
 
-    if (Number(Matrial.getPlayerAmount("luck_play")) < 1) {
-
-        alert_box.confirmDialog("لا يوجد لديك  عدد كافى من دولاب الحظ يمكنك شراء دولاب الحظ من مول المواد", function() {
-
-            $('#hide-luck-wheel').click();
+    if (totalAvailable < 1) {
+        alert_box.confirmDialog("لا يوجد لديك عدد كافٍ من تذاكر دولاب الحظ أو الذهب (تكلفة الدورة: 1 تذكرة أو 5 ذهب). هل تريد التوجه إلى المتجر؟", function() {
+            $("#hide-luck-wheel").click();
             setTimeout(function() {
                 $(".menu-list[data-show='matrial']").click();
                 $("#dialg_box .left-nav li[head_title='mall-box']").click();
             }, 500);
-
         });
         return;
-
     }
-
-
-
-    $(this).prop("disabled", true);
-
 
     if ($("#luck-wheel").attr("data-gate-open") === "false") {
-
         LuckWheel.spinWheel();
-
-    } else if ($("#luck-wheel").attr("data-gate-open") === "true") {
-
-        $(".pulse").css({
-            "-webkit-animation": "",
-            animation: "",
-            opacity: 0
-        });
+    } else {
+        $(".pulse").css({ animation: "", opacity: 0 });
         LuckWheel.closeGates();
-        LuckWheel.spinWheel();
-
-
+        setTimeout(function() {
+            LuckWheel.spinWheel();
+        }, 350);
     }
-
-
-
 });
 
-LuckWheel.sequanceTimer = function(index, element, last, element_to, title_to) {
 
-    setTimeout(function() {
-        if (index === last) {
-            $(element).css({
-                "-webkit-animation": "pulse 1s infinite linear",
-                animation: "pulse 1s infinite linear",
-                opacity: 1
-            });
-
-            var message = `لقد تحصلت على ${MATIAL_FOR_LUCK_WHEEL[last - 20].amount} &times; ${Elkaisar.BaseData.Items[MATIAL_FOR_LUCK_WHEEL[last - 20].Prize].name} من دولاب الحظ`;
-            alert_box.systemChatMessage(message);
-            /*  u  disable the button*/
-            $("#start-wheel").prop("disabled", false);
-
-        } else {
-            $(element).css({
-                opacity: 1
-            }).animate({
-                opacity: 0
-            }, 1500, "linear");
-        }
-
-
-        var bg = $(element).parent("li").css('background-image');
-        bg = bg.replace('url(', '').replace(')', '').replace(/\"/gi, "");
-        $(element_to).attr("src", bg);
-        $(title_to).html(Elkaisar.BaseData.Items[$(element).parent("li").attr("data-matrial-name")].name);
-
-    }, ((300 - Math.floor(200 * Math.exp(-(Math.pow((index - 20) / 20, 2))))) * index));
-
-}; /* global Elkaisar.CurrentCity.City, BUILDING_TYPS, city_building */
 var MY_MARKET_OFFERS_LIST = [];
 var MY_MARKET_TRADING_LIST = [];
 var MARKET_DEAL_LIST;
