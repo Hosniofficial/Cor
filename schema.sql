@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `player` (
     `name` VARCHAR(50) NOT NULL,
     `prestige` INT NOT NULL DEFAULT 0,
     `honor` INT NOT NULL DEFAULT 0,
-    `gold` INT NOT NULL DEFAULT 100,
+    `gold` INT NOT NULL DEFAULT 50,
     `avatar` INT NOT NULL DEFAULT 1,
     `guild` VARCHAR(50) DEFAULT NULL,
     `id_guild` INT DEFAULT NULL,
