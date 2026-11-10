@@ -10393,14 +10393,20 @@ Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
         .setOrigin(0, 0)
         .setDepth(depth)
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, function(p, x_pos, y_pos, event) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             if (event && event.stopPropagation) event.stopPropagation();
             buildingClick(BuildingPlace);
         })
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             if (event && event.stopPropagation) event.stopPropagation();
             buildingClick(BuildingPlace);
         })
-        .on("click", function() {
+        .on("click", function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick(BuildingPlace);
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10417,7 +10423,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(150)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("palace");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10433,7 +10441,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(200)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wall");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10445,7 +10455,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(350)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("farm");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10457,7 +10469,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(90)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("mine");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10469,7 +10483,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(70)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("stone");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10481,7 +10497,9 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive({ useHandCursor: true })
         .setOrigin(0, 0)
         .setDepth(220)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function() {
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+            if ($("#luck-wheel-over-lay").length > 0) return;
+            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wood");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -16706,14 +16724,12 @@ function upgradeBenefits(type, lvl) {
 
 
 function buildingClick(place, fast) {
+    if ($("#luck-wheel-over-lay").length > 0) return;
     if (!fast) {
         fast = false;
     }
-    //if (Elkaisar.GE.CityScene.Scrolling.isBeingDragged) {
     if (place)
         Building.showDialogBox(place, fast);
-
-    //}
 }
 
 
@@ -44162,6 +44178,10 @@ LuckWheel.holes = function() {
 };
 
 LuckWheel.show = function() {
+    if (typeof Elkaisar !== "undefined" && Elkaisar.GE && Elkaisar.GE.Game && Elkaisar.GE.Game.input) {
+        Elkaisar.GE.Game.input.enabled = false;
+    }
+
     var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
     var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
     var maxSpins = ticketCount + Math.floor(goldCount / 5);
@@ -44224,6 +44244,10 @@ LuckWheel.hide = function() {
     LuckWheel.isSpinning = false;
     LuckWheel.stopRequested = false;
 
+    if (typeof Elkaisar !== "undefined" && Elkaisar.GE && Elkaisar.GE.Game && Elkaisar.GE.Game.input) {
+        Elkaisar.GE.Game.input.enabled = true;
+    }
+
     $("#luck-wheel").animate({ top: "70px" }, 200, "linear", function() {
         $(this).animate({ top: "60%" }, 180, "linear", function() {
             $("#luck-wheel-btn").animate({ bottom: "213px" }, 180, "linear");
@@ -44256,7 +44280,19 @@ $(document).on("click", "#hide-luck-wheel", function() {
     LuckWheel.hide();
 });
 
-$("#luck-wheel-btn").click(function() {
+$(document).on("click mousedown mouseup pointerdown pointerup", "#luck-wheel-over-lay, #luck-wheel", function(e) {
+    e.stopPropagation();
+});
+
+$(document).on("mousedown mouseup pointerdown pointerup", "#luck-wheel-btn", function(e) {
+    e.stopPropagation();
+});
+
+$("#luck-wheel-btn").off("click").on("click", function(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     $(this).animate({ bottom: "180px" }, 250, "linear", function() {
         LuckWheel.show();
     });

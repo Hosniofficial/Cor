@@ -1872,7 +1872,7 @@ textarea {
 }
 
 body #luck-wheel-over-lay {
-    z-index: 10000;
+    z-index: 999999 !important;
     backdrop-filter: blur(2px);
 }
 
