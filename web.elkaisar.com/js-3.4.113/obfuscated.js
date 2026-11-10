@@ -32086,7 +32086,25 @@ var campDB = {
                     </div>`;
         }
 
-        var renew_time = Elkaisar.World.UnitData[unit.t].timeNextRest().getTime();
+        var renew_time = 0;
+        try {
+            var unitKey = (unit && unit.t !== undefined && Elkaisar.World.UnitData && Elkaisar.World.UnitData[unit.t]) ? unit.t : (unit && unit.ut !== undefined ? unit.ut : null);
+            if (unitKey !== null && Elkaisar.World.UnitData && Elkaisar.World.UnitData[unitKey] && typeof Elkaisar.World.UnitData[unitKey].timeNextRest === "function") {
+                var nextRest = Elkaisar.World.UnitData[unitKey].timeNextRest();
+                if (nextRest && typeof nextRest.getTime === "function") {
+                    renew_time = nextRest.getTime();
+                }
+            }
+        } catch (e) {
+            renew_time = 0;
+        }
+
+        var uTypeData = (Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[type]) ? Elkaisar.World.UnitTypeData[type] : {};
+        var maxLvl = uTypeData.maxLvl !== undefined ? Number(uTypeData.maxLvl) : 10;
+        var heroLvlVal = uTypeData.heroLvl ? uTypeData.heroLvl : getArabicNumbers(5 + (Number(lvl) * 5));
+        var heroNumVal = uTypeData.heroNum ? uTypeData.heroNum : getArabicNumbers(Number(lvl) % 10 === 0 ? 3 : 1);
+        var techLvlVal = uTypeData.techLvl ? uTypeData.techLvl : getArabicNumbers(Math.floor(Number(lvl) / 10) * 2 + 2);
+
         return `<div class="camp-data">
                     <div class="left pull-L blue-ribbon">
                         <table id="camp-army-table">
@@ -32094,45 +32112,42 @@ var campDB = {
                                 <td>
                                     <img src="images/tech/soldier_1.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_a"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type , lvl ,"army_a") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type , lvl ,"army_a") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_2.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_b"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_b") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_b") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_3.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_c"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_c") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_c") : "0"}
                                     </h1>
                                 </td>
-
                             </tr>
                             <tr>
                                 <td>
                                     <img src="images/tech/soldier_4.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_d"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_d") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_d") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_5.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_e"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_e") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_e") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_6.jpg"/>
                                     <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_f"))}">
-                                        ${lvl <= Elkaisar.World.UnitTypeData[type].maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_f") : "0"}
+                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_f") : "0"}
                                     </h1>
                                 </td>
-
                             </tr>
-
                         </table>
                     </div>
                     <div class="right pull-R">
@@ -32143,20 +32158,20 @@ var campDB = {
                             </div>
                             <div class="pull-L">
                                 <h1>المستوى</h1>
-                                <h3><span>${Math.min(lvl , Elkaisar.World.UnitTypeData[type].maxLvl)}/</span>${Elkaisar.World.UnitTypeData[type].maxLvl}</h3>
+                                <h3><span>${Math.min(Number(lvl), maxLvl)}/</span>${maxLvl}</h3>
                             </div>
                         </div>
                         <table border="1">
                             <tr>
-                                <td>${Elkaisar.World.UnitTypeData[type].heroLvl ? Elkaisar.World.UnitTypeData[type].heroLvl :getArabicNumbers(5+(lvl*5))}</td>
+                                <td>${heroLvlVal}</td>
                                 <td>مستوى البطل</td>
                             </tr>
                             <tr>
-                                <td>${Elkaisar.World.UnitTypeData[type].heroNum ? Elkaisar.World.UnitTypeData[type].heroNum : getArabicNumbers( lvl%10 === 0? 3 : 1)}</td>
+                                <td>${heroNumVal}</td>
                                 <td>عدد الابطال</td>
                             </tr>
                             <tr>
-                                <td>${Elkaisar.World.UnitTypeData[type].techLvl ? Elkaisar.World.UnitTypeData[type].techLvl :  getArabicNumbers(Math.floor(lvl/10)*2+2)}</td>
+                                <td>${techLvlVal}</td>
                                 <td>مستوى الدراسة</td>
                             </tr>
                         </table>
