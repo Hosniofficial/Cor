@@ -94,7 +94,7 @@ function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
         `food`, `wood`, `stone`, `metal`, `coin`,
         `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`
     ) VALUES (
-        ?, ?, ?, ?, 1,
+        ?, ?, ?, ?, 0,
         10000, 10000, 10000, 10000, 10000,
         100, 100, 200, 100, 100, ?, ?
     )");
