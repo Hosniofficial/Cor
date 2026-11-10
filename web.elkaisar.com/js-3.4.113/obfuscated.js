@@ -44070,6 +44070,25 @@ LuckWheel.clearAllTimers = function() {
     LuckWheel.currentTimers = [];
 };
 
+LuckWheel.updateCells = function(prizeList) {
+    if (!Array.isArray(prizeList) || !prizeList.length) return;
+    MATIAL_FOR_LUCK_WHEEL = prizeList;
+    var getItemImg = function(key) {
+        if (Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[key]) {
+            return Elkaisar.BaseData.Items[key].image;
+        }
+        return "images/items/luck_play.png";
+    };
+    $("#luck-wheel ul li.cell").each(function(i) {
+        var p = prizeList[i];
+        if (p) {
+            $(this).css("background-image", "url(" + getItemImg(p.Prize) + ")");
+            $(this).attr("data-matrial-name", p.Prize);
+            $(this).find("h1").text(p.amount);
+        }
+    });
+};
+
 LuckWheel.holes = function() {
     var getItemImg = function(key) {
         if (Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[key]) {
@@ -44158,7 +44177,7 @@ LuckWheel.show = function() {
             '<div class="control">' +
                 '<button id="hide-luck-wheel" title="إغلاق"></button>' +
                 '<div class="title font-2">' +
-                    '<span>ضع المؤشر على الجوائز لمعرفة نسب الحظ</span>' +
+                    '<span>اضغط بدء لتشغيل دولاب الحظ</span>' +
                 '</div>' +
                 '<h1 id="playeLuckTitle">' +
                     '<span class="wheel-stat"><span class="wheel-stat-lbl">التذاكر:</span> <span class="wheel-stat-val ticket-val">' + ticketCount + '</span></span>' +
@@ -44186,20 +44205,13 @@ LuckWheel.show = function() {
 
     $("body").append(content);
 
-    $(document).off("mouseenter mouseleave", "#luck-wheel .cell").on("mouseenter", "#luck-wheel .cell", function() {
-        var idx = $(this).index();
-        var p = MATIAL_FOR_LUCK_WHEEL[idx];
-        if (p && typeof Elkaisar !== "undefined" && Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[p.Prize]) {
-            var it = Elkaisar.BaseData.Items[p.Prize];
-            $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + it.name + ' &times; ' + p.amount + '</span><span class="wheel-prize-rate">نسبة الحظ: ' + p.rate + '</span>');
-            $("#luck-wheel .control .image-frame img").attr("src", it.image);
-        }
-    }).on("mouseleave", "#luck-wheel .cell", function() {
-        $("#luck-wheel .control .title").html("<span>ضع المؤشر على الجوائز لمعرفة نسب الحظ</span>");
-    });
+    // No spoiler hover - keeps wheel contents a surprise
+    $(document).off("mouseenter mouseleave", "#luck-wheel .cell");
 
     $("#luck-wheel").animate({ top: "80px" }, 150, "linear", function() {
-        $(this).animate({ top: "100px" }, 100, "linear");
+        $(this).animate({ top: "100px" }, 100, "linear", function() {
+            LuckWheel.openGates();
+        });
     });
 };
 
@@ -44220,18 +44232,19 @@ LuckWheel.hide = function() {
 
 LuckWheel.openGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "true");
-    $("#luck-wheel .cell .left-gate").animate({ "background-position-x": "-32px" }, 400, "linear");
-    $.when.apply($, [$("#luck-wheel .cell .right-gate").animate({ "background-position-x": "32px" }, 400, "linear")]).then(function() {
+    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "-32px" }, 400, "linear");
+    $.when.apply($, [$("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "32px" }, 400, "linear")]).then(function() {
         $("#luck-wheel ul li h1").show();
         if (typeof call_back === "function") call_back();
     });
 };
 
-LuckWheel.closeGates = function() {
+LuckWheel.closeGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "false");
-    $("#luck-wheel .cell .left-gate").animate({ "background-position-x": "0px" }, 300, "linear");
-    $("#luck-wheel .cell .right-gate").animate({ "background-position-x": "0px" }, 300, "linear", function() {
+    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "0px" }, 300, "linear");
+    $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "0px" }, 300, "linear", function() {
         $("#luck-wheel ul li h1").hide();
+        if (typeof call_back === "function") call_back();
     });
 };
 
@@ -44329,6 +44342,8 @@ LuckWheel.spinWheel = function() {
     LuckWheel.isSpinning = true;
     LuckWheel.stopRequested = false;
     $("#start-wheel button").text("إيقاف");
+    $("#luck-wheel .control .title").html("<span>جاري تدوير دولاب الحظ...</span>");
+    LuckWheel.closeGates();
 
     LuckWheel.playLuck(requestedSpins).done(function(data) {
         if (!isJson(data)) {
@@ -44336,6 +44351,7 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
+            LuckWheel.openGates();
             return;
         }
 
@@ -44349,12 +44365,13 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
+            LuckWheel.openGates();
             return;
         }
 
-        // Update prizes array if provided
+        // Update prizes array and update DOM cells while gates are closed!
         if (jsonData.Prize) {
-            MATIAL_FOR_LUCK_WHEEL = jsonData.Prize;
+            LuckWheel.updateCells(jsonData.Prize);
         }
 
         // Deduct inventory items and gold
@@ -44375,6 +44392,7 @@ LuckWheel.spinWheel = function() {
             '<span class="wheel-stat"><span class="wheel-stat-lbl">الذهب:</span> <span class="wheel-stat-val gold-val">' + newGoldCount + '</span></span>'
         );
 
+        // Open gates to reveal new randomized items, then spin!
         LuckWheel.openGates(function() {
             var winIndices = Array.isArray(jsonData.winIndices) && jsonData.winIndices.length
                 ? jsonData.winIndices
@@ -44457,15 +44475,6 @@ LuckWheel.spinWheel = function() {
                     allPulses.css({ opacity: 0, animation: "" });
                     $(allPulses[cellIndex]).css({ opacity: 1 });
 
-                    var prize = MATIAL_FOR_LUCK_WHEEL[cellIndex];
-                    var prizeItem = prize && Elkaisar.BaseData && Elkaisar.BaseData.Items
-                        ? Elkaisar.BaseData.Items[prize.Prize]
-                        : null;
-                    if (prizeItem) {
-                        $("#luck-wheel .control .image-frame img").attr("src", prizeItem.image);
-                        $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + escapeHtml(prizeItem.name) + '</span>');
-                    }
-
                     var delay = 20;
                     if (currentStep < 8) {
                         delay = 260 - currentStep * 30;
@@ -44488,6 +44497,7 @@ LuckWheel.spinWheel = function() {
         LuckWheel.isSpinning = false;
         LuckWheel.stopRequested = false;
         $("#start-wheel button").text("بدء").prop("disabled", false);
+        LuckWheel.openGates();
     });
 };
 
@@ -44514,15 +44524,10 @@ $(document).on("click", "#start-wheel", function() {
         return;
     }
 
-    if ($("#luck-wheel").attr("data-gate-open") === "false") {
+    $(".pulse").css({ animation: "", opacity: 0 });
+    LuckWheel.closeGates(function() {
         LuckWheel.spinWheel();
-    } else {
-        $(".pulse").css({ animation: "", opacity: 0 });
-        LuckWheel.closeGates();
-        setTimeout(function() {
-            LuckWheel.spinWheel();
-        }, 350);
-    }
+    });
 });
 
 
