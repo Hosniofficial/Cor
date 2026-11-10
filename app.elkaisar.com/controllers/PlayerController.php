@@ -130,29 +130,91 @@ class PlayerController {
         sendJson(['state' => 'error']);
     }
 
-    public static function playLuckWheel($db) {
-        $prizes = [
-            ['Prize' => 'peace',        'amount' => 1, 'weight' => 5,    'rate' => '0.05%'],
-            ['Prize' => 'food_c',       'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'archit_b',     'amount' => 1, 'weight' => 250,  'rate' => '2.5%'],
-            ['Prize' => 'wood_c',       'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'shopping_car', 'amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
-            ['Prize' => 'gold_25',      'amount' => 1, 'weight' => 15,   'rate' => '0.15%'],
-            ['Prize' => 'coin_d',       'amount' => 1, 'weight' => 800,  'rate' => '8.0%'],
-            ['Prize' => 'metal_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'archit_c',     'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
-            ['Prize' => 'food_d',       'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'gold_10',      'amount' => 1, 'weight' => 30,   'rate' => '0.3%'],
-            ['Prize' => 'wood_d',       'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'stone_c',      'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
-            ['Prize' => 'stone_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'trumpet',      'amount' => 5, 'weight' => 500,  'rate' => '5.0%'],
-            ['Prize' => 'archit_a',     'amount' => 2, 'weight' => 350,  'rate' => '3.5%'],
-            ['Prize' => 'metal_d',      'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
-            ['Prize' => 'necklace_1',   'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
-            ['Prize' => 'necklace_2',   'amount' => 1, 'weight' => 100,  'rate' => '1.0%'],
-            ['Prize' => 'necklace_3',   'amount' => 1, 'weight' => 50,   'rate' => '0.5%']
+    public static function generateLuckWheelPrizes() {
+        // Grand Prize Tier (Corner 0 - Top center)
+        $corner0Pool = [
+            ['Prize' => 'peace',               'amount' => 1, 'weight' => 15,  'rate' => '0.15%'],
+            ['Prize' => 'ceaser_eagle',        'amount' => 1, 'weight' => 20,  'rate' => '0.20%'],
+            ['Prize' => 'expan_plan',          'amount' => 1, 'weight' => 25,  'rate' => '0.25%'],
+            ['Prize' => 'golden_box',          'amount' => 1, 'weight' => 30,  'rate' => '0.30%'],
+            ['Prize' => 'golden_supply_crate', 'amount' => 1, 'weight' => 25,  'rate' => '0.25%'],
+            ['Prize' => 'gold_bar',            'amount' => 1, 'weight' => 20,  'rate' => '0.20%'],
+            ['Prize' => 'archit_a',            'amount' => 3, 'weight' => 40,  'rate' => '0.40%']
         ];
+
+        // Rare Prize Tier (Corner 5 - Right corner)
+        $corner5Pool = [
+            ['Prize' => 'necklace_3',    'amount' => 1, 'weight' => 50,  'rate' => '0.50%'],
+            ['Prize' => 'retreat_point', 'amount' => 1, 'weight' => 100, 'rate' => '1.00%'],
+            ['Prize' => 'random_move',   'amount' => 1, 'weight' => 150, 'rate' => '1.50%'],
+            ['Prize' => 'rec_letter',    'amount' => 2, 'weight' => 120, 'rate' => '1.20%'],
+            ['Prize' => 'motiv_60',      'amount' => 1, 'weight' => 80,  'rate' => '0.80%'],
+            ['Prize' => 'gold_bar_piece','amount' => 1, 'weight' => 60,  'rate' => '0.60%']
+        ];
+
+        // Rare Prize Tier (Corner 10 - Bottom center)
+        $corner10Pool = [
+            ['Prize' => 'necklace_2',   'amount' => 1, 'weight' => 100, 'rate' => '1.00%'],
+            ['Prize' => 'certain_move', 'amount' => 1, 'weight' => 60,  'rate' => '0.60%'],
+            ['Prize' => 'medal_gold',   'amount' => 1, 'weight' => 80,  'rate' => '0.80%'],
+            ['Prize' => 'bread',        'amount' => 2, 'weight' => 150, 'rate' => '1.50%'],
+            ['Prize' => 'change_name',  'amount' => 1, 'weight' => 70,  'rate' => '0.70%'],
+            ['Prize' => 'flag',         'amount' => 1, 'weight' => 100, 'rate' => '1.00%']
+        ];
+
+        // Rare Prize Tier (Corner 15 - Left corner)
+        $corner15Pool = [
+            ['Prize' => 'necklace_1',   'amount' => 1, 'weight' => 150, 'rate' => '1.50%'],
+            ['Prize' => 'hero_train',   'amount' => 2, 'weight' => 200, 'rate' => '2.00%'],
+            ['Prize' => 'hammer',       'amount' => 2, 'weight' => 250, 'rate' => '2.50%'],
+            ['Prize' => 'archit_a',     'amount' => 1, 'weight' => 180, 'rate' => '1.80%'],
+            ['Prize' => 'trumpet',      'amount' => 5, 'weight' => 300, 'rate' => '3.00%'],
+            ['Prize' => 'wood_box',     'amount' => 2, 'weight' => 220, 'rate' => '2.20%']
+        ];
+
+        // Dynamic Pool for Border Cells (16 positions)
+        $borderPool = [
+            ['Prize' => 'food_c',         'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'wood_c',         'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'stone_c',        'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'metal_c',        'amount' => 1, 'weight' => 1200, 'rate' => '12.0%'],
+            ['Prize' => 'food_d',         'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'wood_d',         'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'stone_d',        'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'metal_d',        'amount' => 1, 'weight' => 600,  'rate' => '6.0%'],
+            ['Prize' => 'food_b',         'amount' => 1, 'weight' => 300,  'rate' => '3.0%'],
+            ['Prize' => 'wood_b',         'amount' => 1, 'weight' => 300,  'rate' => '3.0%'],
+            ['Prize' => 'stone_b',        'amount' => 1, 'weight' => 300,  'rate' => '3.0%'],
+            ['Prize' => 'metal_b',        'amount' => 1, 'weight' => 300,  'rate' => '3.0%'],
+            ['Prize' => 'coin_d',         'amount' => 1, 'weight' => 800,  'rate' => '8.0%'],
+            ['Prize' => 'coin_c',         'amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
+            ['Prize' => 'archit_b',       'amount' => 1, 'weight' => 250,  'rate' => '2.5%'],
+            ['Prize' => 'archit_c',       'amount' => 1, 'weight' => 150,  'rate' => '1.5%'],
+            ['Prize' => 'archit_d',       'amount' => 2, 'weight' => 400,  'rate' => '4.0%'],
+            ['Prize' => 'shopping_car',   'amount' => 1, 'weight' => 400,  'rate' => '4.0%'],
+            ['Prize' => 'trumpet',        'amount' => 2, 'weight' => 350,  'rate' => '3.5%'],
+            ['Prize' => 'spies',          'amount' => 2, 'weight' => 300,  'rate' => '3.0%'],
+            ['Prize' => 'repel_trumpet_1','amount' => 1, 'weight' => 200,  'rate' => '2.0%'],
+            ['Prize' => 'power_bright',   'amount' => 1, 'weight' => 250,  'rate' => '2.5%']
+        ];
+
+        $prizes = array_fill(0, 20, null);
+        $prizes[0]  = $corner0Pool[array_rand($corner0Pool)];
+        $prizes[5]  = $corner5Pool[array_rand($corner5Pool)];
+        $prizes[10] = $corner10Pool[array_rand($corner10Pool)];
+        $prizes[15] = $corner15Pool[array_rand($corner15Pool)];
+
+        shuffle($borderPool);
+        $borderIndices = [1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19];
+        foreach ($borderIndices as $k => $idx) {
+            $prizes[$idx] = $borderPool[$k % count($borderPool)];
+        }
+
+        return $prizes;
+    }
+
+    public static function playLuckWheel($db) {
+        $prizes = self::generateLuckWheelPrizes();
 
         $amount = max(1, min(100, (int)($_POST['amount'] ?? 1)));
 
