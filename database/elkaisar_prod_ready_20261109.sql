@@ -679,7 +679,7 @@ CREATE TABLE `player` (
   `name` varchar(50) NOT NULL,
   `prestige` int(11) NOT NULL DEFAULT 0,
   `honor` int(11) NOT NULL DEFAULT 0,
-  `gold` int(11) NOT NULL DEFAULT 100,
+  `gold` int(11) NOT NULL DEFAULT 50,
   `avatar` int(11) NOT NULL DEFAULT 1,
   `guild` varchar(50) DEFAULT NULL,
   `id_guild` int(11) DEFAULT NULL,

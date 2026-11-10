@@ -66,6 +66,50 @@ function getDB() {
     return $pdo;
 }
 
+function findAvailableWorldCoordinates($db) {
+    static $blockedTiles = null;
+    if ($blockedTiles === null) {
+        $worldMapPath = __DIR__ . '/../web.elkaisar.com/js-3.4.113/json/WorldBarrary.json';
+        if (!is_readable($worldMapPath)) {
+            throw new RuntimeException('World map data is unavailable for city placement');
+        }
+
+        $worldMap = json_decode(file_get_contents($worldMapPath), true);
+        if (!is_string($worldMap)) {
+            throw new RuntimeException('World map data is invalid for city placement');
+        }
+
+        $blockedTiles = [];
+        foreach (explode(',', $worldMap) as $entry) {
+            $fields = explode('_', $entry, 3);
+            if (count($fields) === 3 && (int)$fields[2] > 0) {
+                $blockedTiles[$fields[0] . '_' . $fields[1]] = true;
+            }
+        }
+    }
+
+    $occupiedStmt = $db->prepare(
+        'SELECT 1 FROM `city` WHERE `x` = ? AND `y` = ?
+         UNION ALL
+         SELECT 1 FROM `city_barray` WHERE `x_coord` = ? AND `y_coord` = ?
+         LIMIT 1'
+    );
+    for ($attempt = 0; $attempt < 500; $attempt++) {
+        $x = random_int(50, 450);
+        $y = random_int(50, 450);
+        if (isset($blockedTiles[$x . '_' . $y])) {
+            continue;
+        }
+
+        $occupiedStmt->execute([$x, $y, $x, $y]);
+        if (!$occupiedStmt->fetchColumn()) {
+            return ['x' => $x, 'y' => $y];
+        }
+    }
+
+    throw new RuntimeException('No unoccupied land tile is available for city placement');
+}
+
 // Function to initialize a fresh player from scratch
 function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
     $db = getDB();
@@ -73,7 +117,7 @@ function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
     $cityName = 'العاصمة 1';
 
     // 1. Create Player
-    $stmt = $db->prepare("INSERT INTO `player` (`name`, `prestige`, `honor`, `gold`, `avatar`, `p_token`) VALUES (?, 100, 0, 100, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO `player` (`name`, `prestige`, `honor`, `gold`, `avatar`, `p_token`) VALUES (?, 100, 0, 50, ?, ?)");
     $token = bin2hex(random_bytes(16));
     $stmt->execute([$name, $avatar, $token]);
     $playerId = (int)$db->lastInsertId();
@@ -87,8 +131,9 @@ function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
     $stmt->execute([$playerId]);
 
     // 4. Create Initial City
-    $randX = rand(50, 450);
-    $randY = rand(50, 450);
+    $coordinates = findAvailableWorldCoordinates($db);
+    $randX = $coordinates['x'];
+    $randY = $coordinates['y'];
     $stmt = $db->prepare("INSERT INTO `city` (
         `id_player`, `x`, `y`, `name`, `lvl`,
         `food`, `wood`, `stone`, `metal`, `coin`,
