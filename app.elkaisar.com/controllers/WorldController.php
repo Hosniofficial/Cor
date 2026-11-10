@@ -20,6 +20,11 @@ class WorldController {
             case '/api/AWorld/getWorldUnitPrize':
                 self::getWorldUnitPrize();
                 return true;
+            case '/api/ADominant/getArmyCapitalDominant':
+            case '/api/dominant.php':
+            case '/api/dominant':
+                self::getArmyCapitalDominant();
+                return true;
             case '/api/ABattelRunning/getUnitBattel':
                 sendJson([]);
                 return true;
@@ -45,7 +50,11 @@ class WorldController {
             case '/api/AWorldUnit/supportByHero':
             case '/api/AWorldUnit/transHero':
             case '/api/AWorldUnit/plundePrize':
+                sendJson(['state' => 'ok']);
+                return true;
             case '/api/AWorld/refreshWorldUnitLvl':
+                self::refreshWorldUnitLvl($db);
+                return true;
             case '/api/AWorld/getWorldUnitRank':
             case '/api/AWorld/getGuildAttackQue':
             case '/api/ABattel/joinBattel':
@@ -88,6 +97,72 @@ class WorldController {
         header('Content-Type: text/plain; charset=utf-8');
         readfile($file);
         exit;
+    }
+
+    public static function getArmyCapitalDominant() {
+        $dataDirectory = __DIR__ . '/../../web.elkaisar.com/js-3.4.113/json/';
+        $worldFile = $dataDirectory . 'WorldBarrary.json';
+        $unitFile = $dataDirectory . 'worldUnitData.json';
+
+        if (!is_readable($worldFile) || !is_readable($unitFile)) {
+            error_log('[WorldController] Army capital source data is unavailable');
+            http_response_code(500);
+            sendJson(['state' => 'error', 'msg' => 'Army capital source data is unavailable']);
+        }
+
+        $worldData = json_decode(file_get_contents($worldFile), true);
+        $unitData = json_decode(file_get_contents($unitFile), true);
+        if (!is_string($worldData) || !is_array($unitData)) {
+            error_log('[WorldController] Army capital source data is invalid');
+            http_response_code(500);
+            sendJson(['state' => 'error', 'msg' => 'Army capital source data is invalid']);
+        }
+
+        $capitalTypes = [150, 151, 152, 153, 154, 155, 105];
+        $capitalByType = [];
+        foreach (explode(',', $worldData) as $record) {
+            $fields = explode('_', $record);
+            if (count($fields) !== 6) {
+                continue;
+            }
+
+            $type = (int)$fields[2];
+            if (!in_array($type, $capitalTypes, true)) {
+                continue;
+            }
+
+            $capitalByType[$type] = [
+                'x' => (int)$fields[0],
+                'y' => (int)$fields[1],
+            ];
+        }
+
+        $capitals = [];
+        foreach ($capitalTypes as $type) {
+            if (!isset($capitalByType[$type], $unitData[$type])
+                || !is_array($unitData[$type])
+                || !isset($unitData[$type]['Title'])
+                || !is_string($unitData[$type]['Title'])) {
+                error_log('[WorldController] Army capital data is incomplete for type ' . $type);
+                http_response_code(500);
+                sendJson(['state' => 'error', 'msg' => 'Army capital data is incomplete']);
+            }
+
+            $capitals[] = [
+                'title' => $unitData[$type]['Title'],
+                'x' => $capitalByType[$type]['x'],
+                'y' => $capitalByType[$type]['y'],
+                'type' => $type,
+                'rank' => [],
+            ];
+        }
+
+        sendJson([
+            'state' => 'ok',
+            'type' => 'domain',
+            'dominanceDataAvailable' => false,
+            'unit' => $capitals,
+        ]);
     }
 
     public static function getCityData($db) {
@@ -347,5 +422,82 @@ class WorldController {
         $db->prepare("UPDATE city_hero SET in_city = 1 WHERE id_hero = ? AND id_player = ?")->execute([$idHero, (int)$player['id_player']]);
         $db->prepare("UPDATE world_battel SET state = 'aborted' WHERE id_hero = ? AND id_player = ? AND state = 'marching'")->execute([$idHero, (int)$player['id_player']]);
         sendJson(['state' => 'ok']);
+    }
+
+    public static function refreshWorldUnitLvl($db) {
+        $x = filter_input(INPUT_GET, 'xCoord', FILTER_VALIDATE_INT);
+        $y = filter_input(INPUT_GET, 'yCoord', FILTER_VALIDATE_INT);
+        if ($x === null || $y === null || $x === false || $y === false) {
+            $x = filter_input(INPUT_POST, 'xCoord', FILTER_VALIDATE_INT);
+            $y = filter_input(INPUT_POST, 'yCoord', FILTER_VALIDATE_INT);
+        }
+        $x = (int)($x ?? 0);
+        $y = (int)($y ?? 0);
+
+        $unitType = (int)(filter_input(INPUT_GET, 'unitType', FILTER_VALIDATE_INT) ?? filter_input(INPUT_POST, 'unitType', FILTER_VALIDATE_INT) ?? 0);
+        $reqLvl = (int)(filter_input(INPUT_GET, 'lvl', FILTER_VALIDATE_INT) ?? filter_input(INPUT_POST, 'lvl', FILTER_VALIDATE_INT) ?? 0);
+
+        // Check city_barray first to see if this tile is colonized/occupied
+        $barStmt = $db->prepare("SELECT Type, lvl FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1");
+        $barStmt->execute([$x, $y]);
+        $barRow = $barStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($barRow) {
+            if (!empty($barRow['Type'])) $unitType = (int)$barRow['Type'];
+            if (!empty($barRow['lvl'])) $reqLvl = (int)$barRow['lvl'];
+        }
+
+        if ($reqLvl <= 0) {
+            $reqLvl = 1;
+        }
+
+        // Load unit armies from UnitArmy.json
+        $unitArmyPath = dirname(__DIR__, 2) . '/web.elkaisar.com/js-3.4.113/json/UnitArmy.json';
+        $armyData = [];
+        if (file_exists($unitArmyPath)) {
+            static $cachedUnitArmy = null;
+            if ($cachedUnitArmy === null) {
+                $rawArmy = file_get_contents($unitArmyPath);
+                $cachedUnitArmy = json_decode($rawArmy, true) ?: [];
+            }
+            if (isset($cachedUnitArmy[(string)$unitType][(string)$reqLvl])) {
+                $armyData = $cachedUnitArmy[(string)$unitType][(string)$reqLvl];
+            } elseif (isset($cachedUnitArmy[$unitType][$reqLvl])) {
+                $armyData = $cachedUnitArmy[$unitType][$reqLvl];
+            }
+        }
+
+        // Build hero representation for defending armies
+        $heroList = [];
+        if (!empty($armyData)) {
+            $heroList[] = [
+                'id_hero' => 0,
+                'name' => 'قائد الحامية',
+                'avatar' => 'hero_1',
+                'lvl' => $reqLvl,
+                'f_1_type' => 1,
+                'f_1_num' => (int)($armyData['army_a'] ?? $armyData['1'] ?? 0),
+                'f_2_type' => 2,
+                'f_2_num' => (int)($armyData['army_b'] ?? $armyData['2'] ?? 0),
+                'f_3_type' => 3,
+                'f_3_num' => (int)($armyData['army_c'] ?? $armyData['3'] ?? 0),
+                'b_1_type' => 4,
+                'b_1_num' => (int)($armyData['army_d'] ?? $armyData['4'] ?? 0),
+                'b_2_type' => 5,
+                'b_2_num' => (int)($armyData['army_e'] ?? $armyData['5'] ?? 0),
+                'b_3_type' => 6,
+                'b_3_num' => (int)($armyData['army_f'] ?? $armyData['6'] ?? 0),
+            ];
+        }
+
+        sendJson([
+            'state' => 'ok',
+            'l' => $reqLvl,
+            'ut' => $unitType,
+            't' => 0,
+            'lo' => 0,
+            'hero' => $heroList,
+            'equip' => []
+        ]);
     }
 }
