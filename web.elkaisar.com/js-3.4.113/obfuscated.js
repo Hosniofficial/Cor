@@ -31974,7 +31974,7 @@ var campDB = {
         }
     },
 
-    armyContainer: function(x_coord, y_coord) {
+    armyContainer: function(x_coord, y_coord, armyData) {
 
         var unit = WorldUnit.getWorldUnit(x_coord, y_coord);
         if (!unit || unit.l === undefined || unit.l === null || unit.ut === undefined || unit.ut === null
@@ -31984,6 +31984,12 @@ var campDB = {
 
         var lvl = unit.l;
         var type = unit.ut;
+        var armyAmount = function(armyType) {
+            if (armyData && armyData[armyType] !== undefined) {
+                return Number(armyData[armyType]) || 0;
+            }
+            return campDB.getArmyAmountForUnit(type, lvl, armyType);
+        };
 
 
         if (WorldUnit.isArmyCapital(type) ||
@@ -32171,40 +32177,40 @@ var campDB = {
                             <tr>
                                 <td>
                                     <img src="images/tech/soldier_1.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_a"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type , lvl ,"army_a") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_a"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_a") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_2.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_b"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_b") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_b"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_b") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_3.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_c"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_c") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_c"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_c") : "0"}
                                     </h1>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <img src="images/tech/soldier_4.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_d"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_d") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_d"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_d") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_5.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_e"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_e") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_e"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_e") : "0"}
                                     </h1>
                                 </td>
                                 <td>
                                     <img src="images/tech/soldier_6.jpg"/>
-                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(this.getArmyAmountForUnit(type ,lvl ,"army_f"))}">
-                                        ${Number(lvl) <= maxLvl ? this.getArmyAmountForUnit(type ,lvl ,"army_f") : "0"}
+                                    <h1 class="army_count stroke ellipsis ${Fixed.getArmyAmountColor(armyAmount("army_f"))}">
+                                        ${Number(lvl) <= maxLvl ? armyAmount("army_f") : "0"}
                                     </h1>
                                 </td>
                             </tr>
@@ -32333,10 +32339,10 @@ var campDB = {
             return `<div class="attakBtns four-btn-camp">
                         <div class="container">
                             <div class="attck_start pull-L" id="attack_camp">
-                                <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter"> انشاء</button>
+                                <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter" disabled="disabled"> انشاء</button>
                             </div>
                             <div class="attack_join pull-R">
-                                <button id="JOIN_ATTACK"  data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> انضمام</button>
+                                <button id="JOIN_ATTACK"  data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x" disabled="disabled"> انضمام</button>
                             </div>
                             <div class="request-order pull-L">
                                 <button id="REQUEST_ORDER" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> طلب</button>
@@ -32351,7 +32357,7 @@ var campDB = {
         return `<div class="attakBtns">
                     <div class="container">
                         <div class="attck_start pull-L" id="attack_camp">
-                            <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter"> انشاء</button>
+                            <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter" disabled="disabled"> انشاء</button>
                         </div>
                         <div class="attack_join pull-R">
                             <button id="JOIN_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> انضمام</button>
@@ -35834,26 +35840,31 @@ Elkaisar.World.Map.OnOtherUnitClicked = function(Unit) {
 
         if (isJson(data)) {
             var jsonData = JSON.parse(data);
+            if (jsonData.state !== "ok" || !jsonData.army) {
+                alert_box.failMessage("تعذر تحميل بيانات جيوش الهدف");
+                return;
+            }
             if (jsonData.l !== undefined) Unit.l = Number(jsonData.l);
             if (jsonData.ut !== undefined) Unit.ut = Number(jsonData.ut);
         } else {
-            alert(data);
+            alert_box.failMessage("استجابة غير صالحة من الخادم عند تحميل جيوش الهدف");
             return;
         }
         campDB.equipRow(jsonData.equip || []);
-        campDB.armyRow(jsonData.hero || []);
 
-        $('#lvlChangableUnit')['html'](campDB['armyContainer'](Unit.x, Unit.y));
+        $('#lvlChangableUnit')['html'](campDB['armyContainer'](Unit.x, Unit.y, jsonData.army));
 
         var maxLvl = (Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[Unit.ut]) ? Elkaisar.World.UnitTypeData[Unit.ut].maxLvl : 50;
         if (Number(Unit.l) > Number(maxLvl)) {
             return;
-        } else if (Number(jsonData.lo) === 1) {
+        } else if (Number(Unit.lo) === 1) {
             return;
         } else {
             $("#JOIN_ATTACK").removeAttr("disabled");
             $("#START_ATTACK").removeAttr("disabled");
         }
+    }).fail(function() {
+        alert_box.failMessage("تعذر الاتصال بالخادم لتحميل جيوش الهدف");
     });
 }
 
@@ -44146,24 +44157,28 @@ LuckWheel.show = function() {
             '</div>' +
             '<div class="control">' +
                 '<button id="hide-luck-wheel" title="إغلاق"></button>' +
-                '<div class="title font-2" style="font-size: 13px; line-height: 20px;">' +
-                    'ضع المؤشر على الجوائز لمعرفة نسب الحظ' +
+                '<div class="title font-2">' +
+                    '<span>ضع المؤشر على الجوائز لمعرفة نسب الحظ</span>' +
                 '</div>' +
-                '<h1 id="playeLuckTitle">تذاكر الدولاب: ' + ticketCount + ' &nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: ' + goldCount + '</h1>' +
+                '<h1 id="playeLuckTitle">' +
+                    '<span class="wheel-stat"><span class="wheel-stat-lbl">التذاكر:</span> <span class="wheel-stat-val ticket-val">' + ticketCount + '</span></span>' +
+                    '<span class="wheel-stat-sep">&nbsp;|&nbsp;</span>' +
+                    '<span class="wheel-stat"><span class="wheel-stat-lbl">الذهب:</span> <span class="wheel-stat-val gold-val">' + goldCount + '</span></span>' +
+                '</h1>' +
                 '<div class="image-frame">' +
                     '<img src="' + ticketImg + '"/>' +
                 '</div>' +
-                '<div class="input-number" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px;">' +
-                    '<span style="color: #ffd700; font-size: 12px;">عدد الدورات:</span>' +
-                    '<input class="only_num input" type="text" max="' + maxSpins + '" step="1" min="1" value="1" style="width: 60px; text-align: center;"/>' +
+                '<div class="input-number">' +
+                    '<span>عدد الدورات:</span>' +
+                    '<input class="only_num input" type="text" max="' + maxSpins + '" step="1" min="1" value="1"/>' +
                 '</div>' +
-                '<div class="fast-spin-wrapper" style="text-align: center; margin-top: 4px;">' +
-                    '<label style="color: #e6ca9e; font-size: 11px; cursor: pointer; user-select: none;">' +
+                '<div class="fast-spin-wrapper">' +
+                    '<label>' +
                         '<input type="checkbox" id="fast-spin-checkbox"/> الوضع السريع (فوري)' +
                     '</label>' +
                 '</div>' +
-                '<div id="start-wheel" style="margin-top: 8px;">' +
-                    '<button class="font-2" style="cursor: pointer;">بدء</button>' +
+                '<div id="start-wheel">' +
+                    '<button class="font-2">بدء</button>' +
                 '</div>' +
             '</div>' +
         '</div>' +
@@ -44176,11 +44191,11 @@ LuckWheel.show = function() {
         var p = MATIAL_FOR_LUCK_WHEEL[idx];
         if (p && typeof Elkaisar !== "undefined" && Elkaisar.BaseData && Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[p.Prize]) {
             var it = Elkaisar.BaseData.Items[p.Prize];
-            $("#luck-wheel .control .title").html('<span style="color:#fff;">' + it.name + ' &times; ' + p.amount + '</span><br><span style="color:#ffeb3b; font-size:12px;">نسبة الحظ: ' + p.rate + '</span>');
+            $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + it.name + ' &times; ' + p.amount + '</span><span class="wheel-prize-rate">نسبة الحظ: ' + p.rate + '</span>');
             $("#luck-wheel .control .image-frame img").attr("src", it.image);
         }
     }).on("mouseleave", "#luck-wheel .cell", function() {
-        $("#luck-wheel .control .title").html("ضع المؤشر على الجوائز لمعرفة نسب الحظ");
+        $("#luck-wheel .control .title").html("<span>ضع المؤشر على الجوائز لمعرفة نسب الحظ</span>");
     });
 
     $("#luck-wheel").animate({ top: "80px" }, 150, "linear", function() {
@@ -44260,7 +44275,7 @@ LuckWheel.showResult = function(jsonData, showSummary) {
 
     if (lastItem) {
         $("#luck-wheel .control .image-frame img").attr("src", lastItem.image);
-        $("#luck-wheel .control .title").html(escapeHtml(lastItem.name) + " &times; " + lastPrize.amount);
+        $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + escapeHtml(lastItem.name) + ' &times; ' + lastPrize.amount + '</span>');
     }
 
     if (showSummary && jsonData.wonPrizes && jsonData.wonPrizes.length > 1) {
@@ -44354,7 +44369,11 @@ LuckWheel.spinWheel = function() {
         // Refresh player header counters
         var newTicketCount = Matrial.getPlayerAmount("luck_play") || 0;
         var newGoldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? Elkaisar.DPlayer.Player.gold : 0;
-        $("#playeLuckTitle").html("تذاكر الدولاب: " + newTicketCount + " &nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: " + newGoldCount);
+        $("#playeLuckTitle").html(
+            '<span class="wheel-stat"><span class="wheel-stat-lbl">التذاكر:</span> <span class="wheel-stat-val ticket-val">' + newTicketCount + '</span></span>' +
+            '<span class="wheel-stat-sep">&nbsp;|&nbsp;</span>' +
+            '<span class="wheel-stat"><span class="wheel-stat-lbl">الذهب:</span> <span class="wheel-stat-val gold-val">' + newGoldCount + '</span></span>'
+        );
 
         LuckWheel.openGates(function() {
             var winIndices = Array.isArray(jsonData.winIndices) && jsonData.winIndices.length
@@ -44403,7 +44422,7 @@ LuckWheel.spinWheel = function() {
                             : null;
                         if (won && item) {
                             $("#luck-wheel .control .image-frame img").attr("src", item.image);
-                            $("#luck-wheel .control .title").html(escapeHtml(item.name) + " &times; " + won.amount);
+                            $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + escapeHtml(item.name) + ' &times; ' + won.amount + '</span>');
                         }
                         var announcedPrize = jsonData.wonPrizes && jsonData.wonPrizes[currentSpinIndex]
                             ? jsonData.wonPrizes[currentSpinIndex]
@@ -44444,7 +44463,7 @@ LuckWheel.spinWheel = function() {
                         : null;
                     if (prizeItem) {
                         $("#luck-wheel .control .image-frame img").attr("src", prizeItem.image);
-                        $("#luck-wheel .control .title").html(escapeHtml(prizeItem.name));
+                        $("#luck-wheel .control .title").html('<span class="wheel-prize-name">' + escapeHtml(prizeItem.name) + '</span>');
                     }
 
                     var delay = 20;

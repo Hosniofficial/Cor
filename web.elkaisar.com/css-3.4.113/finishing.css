@@ -620,10 +620,17 @@
 #luck-wheel .control {
     width: 60%;
     margin: auto;
-    height: 60%;
-    top: 18%;
-    left: 20%;
+    height: auto;
+    top: 50%;
+    left: 50%;
     position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 0 12px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    z-index: 2;
 }
 
 #hide-luck-wheel {
@@ -636,26 +643,91 @@
 
 #luck-wheel .control .title {
     width: 98%;
-    margin: auto;
-    height: 50px;
+    margin: 0 auto 6px auto;
+    min-height: 48px;
+    height: auto;
     background-image: url(../images/tools/title-red.png), url(../images/tools/title-background.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: auto, 100%;
+    background-size: 100% 100%, 100% 100%;
     text-align: center;
     font-weight: bold;
-    color: white;
-    line-height: 44px;
-    font-size: 16px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    text-shadow: 0 1px 3px #000, 0 0 3px #000;
 }
 
-#luck-wheel .control h1 {
-    height: 25px;
-    text-align: center;
+#luck-wheel .control .title .wheel-prize-name {
+    color: #ffffff;
+    font-size: 15px;
     font-weight: bold;
-    color: white;
-    line-height: 25px;
-    font-size: 16px;
+    text-shadow: 0 1px 3px #000, 0 0 4px #000;
+}
+
+#luck-wheel .control .title .wheel-prize-rate {
+    color: #ffeb3b;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+    margin-top: 2px;
+}
+
+#luck-wheel .control h1,
+#luck-wheel #playeLuckTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+    margin: 6px auto;
+    padding: 5px 8px;
+    border: 1px solid #c99846;
+    border-radius: 4px;
+    background: rgba(18, 10, 5, 0.85);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.4);
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+    color: #ffffff;
+}
+
+#luck-wheel .wheel-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#luck-wheel .wheel-stat-lbl {
+    color: #f7e6c4;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#luck-wheel .wheel-stat-val.ticket-val {
+    color: #50ff70;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+}
+
+#luck-wheel .wheel-stat-val.gold-val {
+    color: #ffd700;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+}
+
+#luck-wheel .wheel-stat-sep {
+    color: #8f6834;
+    font-weight: normal;
 }
 
 #luck-wheel .control .image-frame {
@@ -671,24 +743,91 @@
     margin-top: 23px;
 }
 
+#luck-wheel .control .input-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+#luck-wheel .control .input-number span {
+    color: #ffe066;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+}
+
 #luck-wheel .control .input-number input {
-    padding: 0px 5px;
-    font-size: 14px;
-    width: 100px;
-    margin: auto;
-    display: block;
-    margin-top: 10px;
+    box-sizing: border-box;
+    width: 65px;
+    height: 28px;
+    padding: 0 4px;
+    border: 1px solid #c99846;
+    border-radius: 4px;
+    background: #1c0e06;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 1px 2px #000;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+#luck-wheel .fast-spin-wrapper {
+    text-align: center;
+    margin-top: 4px;
+}
+
+#luck-wheel .fast-spin-wrapper label {
+    color: #fff4d4;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    text-shadow: 0 1px 2px #000, 0 0 3px #000;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#luck-wheel .fast-spin-wrapper input[type="checkbox"] {
+    accent-color: #c99846;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
 }
 
 #start-wheel button {
     height: 42px;
     width: 134px;
-    margin: auto;
+    margin: 6px auto 0 auto;
     background-color: transparent;
     background-image: url(../images/tools/start-wheel.png);
-    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    color: #ffffff;
     display: block;
-    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 40px;
+    text-align: center;
+    text-shadow: 0 1px 3px #000, 0 0 4px #000;
+    border: none;
+    cursor: pointer;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+#start-wheel button:hover:not(:disabled) {
+    filter: brightness(1.15) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+    transform: scale(1.02);
+}
+
+#start-wheel button:disabled {
+    filter: grayscale(0.8) opacity(0.7);
+    cursor: not-allowed;
 }
 
 #luck-wheel-btn {
