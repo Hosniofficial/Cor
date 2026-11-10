@@ -31642,13 +31642,14 @@ var WorldUnit = {
     },
 
     refreshUnitData: function(x, y) {
-
-
+        var currentUnit = WorldUnit.getWorldUnit(x, y) || {};
         return $.ajax({
             url: `${API_URL}/api/AWorld/refreshWorldUnitLvl`,
             data: {
                 xCoord: x,
                 yCoord: y,
+                unitType: currentUnit.ut || 0,
+                lvl: currentUnit.l || 1,
                 server: Elkaisar.Config.idServer,
                 token: Elkaisar.Config.OuthToken
             },
@@ -31659,10 +31660,12 @@ var WorldUnit = {
                 if (!Elkaisar.LBase.isJson(data))
                     return Elkaisar.LBase.Error(data);
                 var jsonData = JSON.parse(data);
-                WorldUnit.getWorldUnit(x, y).l = jsonData.l;
-                WorldUnit.getWorldUnit(x, y).t = jsonData.t;
-                WorldUnit.getWorldUnit(x, y).ut = jsonData.ut;
-
+                var u = WorldUnit.getWorldUnit(x, y);
+                if (u) {
+                    if (jsonData.l !== undefined) u.l = Number(jsonData.l);
+                    if (jsonData.t !== undefined) u.t = jsonData.t;
+                    if (jsonData.ut !== undefined) u.ut = jsonData.ut;
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
@@ -32348,10 +32351,10 @@ var campDB = {
         return `<div class="attakBtns">
                     <div class="container">
                         <div class="attck_start pull-L" id="attack_camp">
-                            <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter" disabled='disabled' > انشاء</button>
+                            <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter"> انشاء</button>
                         </div>
                         <div class="attack_join pull-R">
-                            <button id="JOIN_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x" disabled='disabled' > انضمام</button>
+                            <button id="JOIN_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> انضمام</button>
                         </div>
                     </div>
                 </div>`;
@@ -34909,32 +34912,58 @@ $(document).on("click", "#START_ATTACK", function() {
     var x_coord = parseInt($(this).attr("data-x-coord"));
     var y_coord = parseInt($(this).attr("data-y-coord"));
     var Unit = WorldUnit.getWorldUnit(x_coord, y_coord);
+    if (!Unit) return;
     var type = Unit.ut;
     var lvl = Unit.l;
+
+    if (!Elkaisar.World.UnitData.isAttackable(type)) {
+        var camp = Elkaisar.World.UnitTypeData[type];
+        if (camp) {
+            if (Number(Elkaisar.DPlayer.Player.porm) < Number(camp.reqProm)) {
+                var promTitle = (Elkaisar.BaseData.Promotion && Elkaisar.BaseData.Promotion[camp.reqProm]) ? Elkaisar.BaseData.Promotion[camp.reqProm].Title : camp.reqProm;
+                alert_box.failMessage("رتبتك غير كافية للهجوم على هذا الهدف (الرتبة المطلوبة: " + promTitle + ")");
+                return;
+            }
+            for (var mat in camp.MakeReq) {
+                var itemKey = camp.MakeReq[mat].Item;
+                var itemReq = camp.MakeReq[mat].amount;
+                if (Matrial.getPlayerAmount(itemKey) < itemReq) {
+                    var itemName = (Elkaisar.BaseData.Items && Elkaisar.BaseData.Items[itemKey]) ? Elkaisar.BaseData.Items[itemKey].name : itemKey;
+                    alert_box.failMessage("لا تمتلك تصريح الهجوم المطلوب: " + itemName);
+                    return;
+                }
+            }
+        }
+        alert_box.failMessage("متطلبات الهجوم على هذا الهدف غير مكتملة");
+        return;
+    }
 
     var battel = {
         x_coord: x_coord,
         y_coord: y_coord,
-        ar_title: Elkaisar.World.UnitTypeData[type].Title,
+        ar_title: (Elkaisar.World.UnitTypeData[type] ? Elkaisar.World.UnitTypeData[type].Title : "هدف"),
         task: BATTEL_TYPES_CONST.ATTACK,
         task_title: "هجوم",
         time: calAttakTime(),
         type: type
     };
 
-    var hero_object;
-
+    var foundHero = false;
     for (var iii in Elkaisar.DPlayer.Heros) {
         if (Elkaisar.DPlayer.Heros[iii].Hero.id_city != Elkaisar.CurrentCity.City.id_city)
             continue;
         if (Elkaisar.DPlayer.Heros[iii].Hero.in_city == 1 && Elkaisar.DPlayer.Heros[iii].Hero.console == 0) {
             Elkaisar.CurrentHero = Elkaisar.DPlayer.Heros[iii];
             army.getCurrentArmy(Elkaisar.CurrentHero);
+            foundHero = true;
             break;
         }
     }
 
-
+    if (!foundHero || !Elkaisar.CurrentHero || !Elkaisar.CurrentHero.Hero) {
+        alert_box.failMessage("لا يوجد بطل متاح في هذه المدينة (تأكد من وجود بطل غير معين كقنصل وداخل المدينة)!");
+        return;
+    }
 
     $("#dialg_box").remove();
 
@@ -35805,19 +35834,19 @@ Elkaisar.World.Map.OnOtherUnitClicked = function(Unit) {
 
         if (isJson(data)) {
             var jsonData = JSON.parse(data);
-            Unit.l = jsonData.l;
+            if (jsonData.l !== undefined) Unit.l = Number(jsonData.l);
+            if (jsonData.ut !== undefined) Unit.ut = Number(jsonData.ut);
         } else {
             alert(data);
             return;
         }
-        campDB.equipRow(jsonData.equip);
-        campDB.armyRow(jsonData.hero);
+        campDB.equipRow(jsonData.equip || []);
+        campDB.armyRow(jsonData.hero || []);
 
         $('#lvlChangableUnit')['html'](campDB['armyContainer'](Unit.x, Unit.y));
 
-        if (Number(jsonData.l) > Elkaisar.World.UnitTypeData[Unit.ut].maxLvl) {
-            return;
-        } else if (!Elkaisar.World.UnitData.isAttackable(Unit.ut)) {
+        var maxLvl = (Elkaisar.World.UnitTypeData && Elkaisar.World.UnitTypeData[Unit.ut]) ? Elkaisar.World.UnitTypeData[Unit.ut].maxLvl : 50;
+        if (Number(Unit.l) > Number(maxLvl)) {
             return;
         } else if (Number(jsonData.lo) === 1) {
             return;
@@ -35825,10 +35854,6 @@ Elkaisar.World.Map.OnOtherUnitClicked = function(Unit) {
             $("#JOIN_ATTACK").removeAttr("disabled");
             $("#START_ATTACK").removeAttr("disabled");
         }
-
-
-
-
     });
 }
 
@@ -44217,13 +44242,74 @@ LuckWheel.playLuck = function(amount) {
     });
 };
 
+LuckWheel.showResult = function(jsonData, showSummary) {
+    LuckWheel.clearAllTimers();
+    var finalWinIndex = Number(jsonData.winIndex);
+    var lastPrize = MATIAL_FOR_LUCK_WHEEL[finalWinIndex];
+    var lastItem = lastPrize && Elkaisar.BaseData && Elkaisar.BaseData.Items
+        ? Elkaisar.BaseData.Items[lastPrize.Prize]
+        : null;
+    var allPulses = $("#luck-wheel ul li .pulse");
+
+    allPulses.css({ opacity: 0, animation: "" });
+    $("#luck-wheel ul li.cell").eq(finalWinIndex).find(".pulse").css({
+        "-webkit-animation": "pulse 1s infinite linear",
+        animation: "pulse 1s infinite linear",
+        opacity: 1
+    });
+
+    if (lastItem) {
+        $("#luck-wheel .control .image-frame img").attr("src", lastItem.image);
+        $("#luck-wheel .control .title").html(escapeHtml(lastItem.name) + " &times; " + lastPrize.amount);
+    }
+
+    if (showSummary && jsonData.wonPrizes && jsonData.wonPrizes.length > 1) {
+        var prizeTotals = Object.create(null);
+        jsonData.wonPrizes.forEach(function(prize) {
+            if (!prize || !prize.Prize) return;
+            var item = Elkaisar.BaseData && Elkaisar.BaseData.Items
+                ? Elkaisar.BaseData.Items[prize.Prize]
+                : null;
+            if (!prizeTotals[prize.Prize]) {
+                prizeTotals[prize.Prize] = {
+                    name: item ? item.name : prize.Prize,
+                    image: item ? item.image : "",
+                    amount: 0
+                };
+            }
+            prizeTotals[prize.Prize].amount += Number(prize.amount) || 0;
+        });
+
+        var summaryRows = Object.keys(prizeTotals).map(function(key) {
+            var prize = prizeTotals[key];
+            var image = prize.image
+                ? '<img src="' + escapeHtml(prize.image) + '" alt="" style="width:24px;height:24px;vertical-align:middle;margin-left:6px;">'
+                : "";
+            return '<li>' + image + escapeHtml(prize.name) + ' &times; ' + prize.amount + '</li>';
+        }).join("");
+        var summaryMsg = "مبروك! إليك ملخص جوائز " + jsonData.wonPrizes.length +
+            " دورات:<ul class=\"luck-wheel-prize-summary\" style=\"list-style:none;max-height:78px;overflow-y:auto;text-align:right;padding:4px 12px;margin:6px auto 0;\">" +
+            summaryRows + "</ul>";
+        alert_box.systemChatMessage("حصلت على " + jsonData.wonPrizes.length + " جوائز من دولاب الحظ");
+        alert_box.confirmDialog(summaryMsg, function() {});
+    } else if (showSummary && lastPrize) {
+        alert_box.systemChatMessage("لقد تحصلت على " + lastPrize.amount + " &times; " +
+            (lastItem ? lastItem.name : lastPrize.Prize) + " من دولاب الحظ");
+    }
+};
+
 LuckWheel.spinWheel = function() {
-    var requestedSpins = parseInt($("#luck-wheel .input-number input").val()) || 1;
+    var spinCountInput = $("#luck-wheel .input-number input");
+    var requestedSpins = Math.max(1, parseInt(spinCountInput.val(), 10) || 1);
+    var skipAnimation = $("#fast-spin-checkbox").is(":checked");
     var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
     var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
     var totalAvailable = ticketCount + Math.floor(goldCount / 5);
 
-    if (requestedSpins > totalAvailable) requestedSpins = Math.max(1, totalAvailable);
+    if (requestedSpins > totalAvailable) {
+        requestedSpins = totalAvailable;
+        spinCountInput.val(requestedSpins);
+    }
 
     LuckWheel.isSpinning = true;
     LuckWheel.stopRequested = false;
@@ -44233,6 +44319,7 @@ LuckWheel.spinWheel = function() {
         if (!isJson(data)) {
             alert_box.confirmDialog("حدث خطأ في الاتصال بالسيرفر", function() {});
             LuckWheel.isSpinning = false;
+            LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
             return;
         }
@@ -44245,6 +44332,7 @@ LuckWheel.spinWheel = function() {
                 alert_box.confirmDialog("تعذر بدء دولاب الحظ: " + (jsonData.state || "خطأ غير معروف"), function() {});
             }
             LuckWheel.isSpinning = false;
+            LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
             return;
         }
@@ -44260,7 +44348,7 @@ LuckWheel.spinWheel = function() {
         }
         if (jsonData.usedGold && Elkaisar.DPlayer && Elkaisar.DPlayer.Player) {
             Elkaisar.DPlayer.Player.gold -= jsonData.usedGold;
-            $("#player_gold").html(Elkaisar.DPlayer.Player.gold);
+            $("#player_gold span").html(Elkaisar.DPlayer.Player.gold);
         }
 
         // Refresh player header counters
@@ -44268,107 +44356,118 @@ LuckWheel.spinWheel = function() {
         var newGoldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? Elkaisar.DPlayer.Player.gold : 0;
         $("#playeLuckTitle").html("تذاكر الدولاب: " + newTicketCount + " &nbsp;&nbsp;&nbsp;&nbsp; كمية الذهب: " + newGoldCount);
 
-        var isFastMode = $("#fast-spin-checkbox").is(":checked") || (requestedSpins > 1);
-
         LuckWheel.openGates(function() {
-            var all_pulses = $("#luck-wheel ul li .pulse");
-            var finalWinIndex = jsonData.winIndex;
-            var element_to = $("#luck-wheel .control .image-frame img");
-            var title_to = $("#luck-wheel .control .title");
+            var winIndices = Array.isArray(jsonData.winIndices) && jsonData.winIndices.length
+                ? jsonData.winIndices
+                : [jsonData.winIndex];
 
-            // Fast Mode / Multi-spin instant resolution
-            if (isFastMode) {
-                all_pulses.css({ opacity: 0, animation: "" });
-                var winCell = $("#luck-wheel ul li.cell").eq(finalWinIndex);
-                winCell.find(".pulse").css({
-                    "-webkit-animation": "pulse 1s infinite linear",
-                    animation: "pulse 1s infinite linear",
-                    opacity: 1
-                });
-
-                var lastPrize = MATIAL_FOR_LUCK_WHEEL[finalWinIndex];
-                if (lastPrize && Elkaisar.BaseData && Elkaisar.BaseData.Items[lastPrize.Prize]) {
-                    var it = Elkaisar.BaseData.Items[lastPrize.Prize];
-                    $(element_to).attr("src", it.image);
-                    $(title_to).html(it.name + " &times; " + lastPrize.amount);
-                }
-
-                // Announce all rewards
-                if (jsonData.wonPrizes && jsonData.wonPrizes.length > 1) {
-                    var summaryMsg = "لقد حصلت على " + jsonData.wonPrizes.length + " جوائز من دولاب الحظ!";
-                    alert_box.systemChatMessage(summaryMsg);
-                    alert_box.confirmDialog("مبروك! لقد أكملت " + jsonData.wonPrizes.length + " دورات في دولاب الحظ بنجاح. تفقّد حقيبتك لرؤية الجوائز.", function() {});
-                } else {
-                    var msg = "لقد تحصلت على " + lastPrize.amount + " &times; " + Elkaisar.BaseData.Items[lastPrize.Prize].name + " من دولاب الحظ";
-                    alert_box.systemChatMessage(msg);
-                }
-
+            if (skipAnimation || LuckWheel.stopRequested) {
+                LuckWheel.showResult(jsonData, true);
                 LuckWheel.isSpinning = false;
+                LuckWheel.stopRequested = false;
                 $("#start-wheel button").text("بدء").prop("disabled", false);
                 return;
             }
 
-            // Normal Animated Spin (Acceleration -> Deceleration -> Final Prize)
             LuckWheel.clearAllTimers();
-            var totalSteps = 20 + finalWinIndex;
-            var currentStep = 0;
+            var allPulses = $("#luck-wheel ul li .pulse");
+            var currentSpinIndex = 0;
+            var startCellIndex = 19;
 
-            function runStep() {
-                if (LuckWheel.stopRequested || currentStep >= totalSteps) {
-                    // Final Stop on Winning Cell
-                    all_pulses.css({ opacity: 0, animation: "" });
-                    var winCell = $("#luck-wheel ul li.cell").eq(finalWinIndex);
-                    winCell.find(".pulse").css({
-                        "-webkit-animation": "pulse 1s infinite linear",
-                        animation: "pulse 1s infinite linear",
-                        opacity: 1
-                    });
+            function animateSpin() {
+                var targetIndex = Number(winIndices[currentSpinIndex]);
+                var distanceToTarget = (targetIndex - startCellIndex + 20) % 20;
+                var totalSteps = 20 + distanceToTarget;
+                var currentStep = 0;
 
-                    var won = MATIAL_FOR_LUCK_WHEEL[finalWinIndex];
-                    if (won && Elkaisar.BaseData && Elkaisar.BaseData.Items[won.Prize]) {
-                        var it = Elkaisar.BaseData.Items[won.Prize];
-                        $(element_to).attr("src", it.image);
-                        $(title_to).html(it.name + " &times; " + won.amount);
-                        var msg = "لقد تحصلت على " + won.amount + " &times; " + it.name + " من دولاب الحظ";
-                        alert_box.systemChatMessage(msg);
+                function runStep() {
+                    if (LuckWheel.stopRequested) {
+                        LuckWheel.showResult(jsonData, true);
+                        LuckWheel.isSpinning = false;
+                        LuckWheel.stopRequested = false;
+                        $("#start-wheel button").text("بدء").prop("disabled", false);
+                        return;
                     }
 
-                    LuckWheel.isSpinning = false;
-                    LuckWheel.stopRequested = false;
-                    $("#start-wheel button").text("بدء").prop("disabled", false);
-                    return;
+                    if (currentStep >= totalSteps) {
+                        allPulses.css({ opacity: 0, animation: "" });
+                        $("#luck-wheel ul li.cell").eq(targetIndex).find(".pulse").css({
+                            "-webkit-animation": "pulse 1s infinite linear",
+                            animation: "pulse 1s infinite linear",
+                            opacity: 1
+                        });
+
+                        var won = MATIAL_FOR_LUCK_WHEEL[targetIndex];
+                        var item = won && Elkaisar.BaseData && Elkaisar.BaseData.Items
+                            ? Elkaisar.BaseData.Items[won.Prize]
+                            : null;
+                        if (won && item) {
+                            $("#luck-wheel .control .image-frame img").attr("src", item.image);
+                            $("#luck-wheel .control .title").html(escapeHtml(item.name) + " &times; " + won.amount);
+                        }
+                        var announcedPrize = jsonData.wonPrizes && jsonData.wonPrizes[currentSpinIndex]
+                            ? jsonData.wonPrizes[currentSpinIndex]
+                            : won;
+                        var announcedItem = announcedPrize && Elkaisar.BaseData && Elkaisar.BaseData.Items
+                            ? Elkaisar.BaseData.Items[announcedPrize.Prize]
+                            : null;
+                        if (announcedPrize) {
+                            alert_box.systemChatMessage("لقد تحصلت على " + announcedPrize.amount + " &times; " +
+                                (announcedItem ? announcedItem.name : announcedPrize.Prize) + " من دولاب الحظ");
+                        }
+
+                        currentSpinIndex++;
+                        if (currentSpinIndex >= winIndices.length) {
+                            LuckWheel.showResult(jsonData, false);
+                            LuckWheel.isSpinning = false;
+                            LuckWheel.stopRequested = false;
+                            $("#start-wheel button").text("بدء").prop("disabled", false);
+                            return;
+                        }
+
+                        startCellIndex = targetIndex;
+                        var nextSpinTimer = setTimeout(function() {
+                            allPulses.css({ opacity: 0, animation: "" });
+                            animateSpin();
+                        }, 1600);
+                        LuckWheel.currentTimers.push(nextSpinTimer);
+                        return;
+                    }
+
+                    var cellIndex = (startCellIndex + currentStep + 1) % 20;
+                    allPulses.css({ opacity: 0, animation: "" });
+                    $(allPulses[cellIndex]).css({ opacity: 1 });
+
+                    var prize = MATIAL_FOR_LUCK_WHEEL[cellIndex];
+                    var prizeItem = prize && Elkaisar.BaseData && Elkaisar.BaseData.Items
+                        ? Elkaisar.BaseData.Items[prize.Prize]
+                        : null;
+                    if (prizeItem) {
+                        $("#luck-wheel .control .image-frame img").attr("src", prizeItem.image);
+                        $("#luck-wheel .control .title").html(escapeHtml(prizeItem.name));
+                    }
+
+                    var delay = 20;
+                    if (currentStep < 8) {
+                        delay = 260 - currentStep * 30;
+                    } else if (currentStep >= totalSteps - 8) {
+                        delay = 260 - (totalSteps - currentStep - 1) * 30;
+                    }
+
+                    currentStep++;
+                    var stepTimer = setTimeout(runStep, Math.max(20, delay));
+                    LuckWheel.currentTimers.push(stepTimer);
                 }
 
-                var cellIndex = currentStep % 20;
-                all_pulses.css({ opacity: 0, animation: "" });
-                $(all_pulses[cellIndex]).css({ opacity: 1 });
-
-                var p = MATIAL_FOR_LUCK_WHEEL[cellIndex];
-                if (p && Elkaisar.BaseData && Elkaisar.BaseData.Items[p.Prize]) {
-                    var it = Elkaisar.BaseData.Items[p.Prize];
-                    $(element_to).attr("src", it.image);
-                    $(title_to).html(it.name);
-                }
-
-                // Compute delay: accelerate (step < 8), cruise (8 <= step < totalSteps - 8), decelerate (step >= totalSteps - 8)
-                var delay = 50;
-                if (currentStep < 8) {
-                    delay = 200 - (currentStep * 18);
-                } else if (currentStep >= totalSteps - 8) {
-                    var remaining = totalSteps - currentStep;
-                    delay = 250 - (remaining * 22);
-                }
-
-                currentStep++;
-                var t = setTimeout(runStep, Math.max(35, delay));
-                LuckWheel.currentTimers.push(t);
+                runStep();
             }
 
-            runStep();
+            animateSpin();
         });
     }).fail(function() {
         alert_box.confirmDialog("حدث خطأ أثناء الاتصال بالسيرفر", function() {});
         LuckWheel.isSpinning = false;
+        LuckWheel.stopRequested = false;
         $("#start-wheel button").text("بدء").prop("disabled", false);
     });
 };
