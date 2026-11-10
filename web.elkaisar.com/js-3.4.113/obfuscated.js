@@ -10427,6 +10427,14 @@ Elkaisar.GE.TextConfig = {
 };
 
 function fillCityWithBuilding() {
+    if (Elkaisar.GE.CityScene && Elkaisar.GE.CityScene.cityBackground) {
+        var cLvl = Number(Elkaisar.CurrentCity && Elkaisar.CurrentCity.City ? Elkaisar.CurrentCity.City.lvl : 0);
+        var curBgKey = "town_bg_0";
+        if (cLvl > 2) curBgKey = "town_bg_3";
+        else if (cLvl > 1) curBgKey = "town_bg_2";
+        else if (cLvl > 0) curBgKey = "town_bg_1";
+        Elkaisar.GE.CityScene.cityBackground.setTexture(curBgKey);
+    }
     for (var prop in BuildingOnFloor) {
         BuildingOnFloor[prop].destroy();
         if (BuildingOnFloor[prop].LvlImage)
