@@ -13,6 +13,12 @@ const {
     getResetIntervalHours,
     isFixedDurationTarget
 } = require('./battle-mechanics');
+const {
+    allocateProportionally,
+    calculateArmyCasualties,
+    calculateArmyPower,
+    didBattleSideWin
+} = require('./battle-party');
 
 const PORT    = 8081;
 const API_PORT = Number(process.env.ELKAISAR_API_PORT || 8092);
@@ -250,28 +256,28 @@ async function creditCityResources(db, cityId, requested) {
     }
 }
 
+async function consumeUnitRequirements(connection, idPlayer, requirements) {
+    for (const requirement of requirements || []) {
+        const item = String(requirement.Item || '');
+        const amount = Number(requirement.amount);
+        if (!item || !Number.isSafeInteger(amount) || amount <= 0) {
+            throw new Error('Invalid world-unit item requirement');
+        }
+        const [result] = await connection.query(
+            'UPDATE player_item SET amount = amount - ? WHERE id_player = ? AND id_item = ? AND amount >= ?',
+            [amount, idPlayer, item, amount]
+        );
+        if (!result.affectedRows) {
+            const error = new Error('Insufficient world-unit item requirement');
+            error.code = 'INSUFFICIENT_WORLD_UNIT_ITEM';
+            throw error;
+        }
+    }
+}
+
 async function authenticateSocketPlayer(db, idPlayer, token) {
     if (!/^\d+$/.test(String(idPlayer || '')) || typeof token !== 'string' || token === '') {
         return false;
-    }
-
-    async function consumeUnitRequirements(connection, idPlayer, requirements) {
-        for (const requirement of requirements || []) {
-            const item = String(requirement.Item || '');
-            const amount = Number(requirement.amount);
-            if (!item || !Number.isSafeInteger(amount) || amount <= 0) {
-                throw new Error('Invalid world-unit item requirement');
-            }
-            const [result] = await connection.query(
-                'UPDATE player_item SET amount = amount - ? WHERE id_player = ? AND id_item = ? AND amount >= ?',
-                [amount, idPlayer, item, amount]
-            );
-            if (!result.affectedRows) {
-                const error = new Error('Insufficient world-unit item requirement');
-                error.code = 'INSUFFICIENT_WORLD_UNIT_ITEM';
-                throw error;
-            }
-        }
     }
 
     const [rows] = await db.query(
@@ -338,7 +344,7 @@ function sendToPlayer(idPlayer, message) {
 async function hasActiveBattleAt(db, xCoord, yCoord) {
     const [rows] = await db.query(
         "SELECT 1 FROM world_battel WHERE x_coord = ? AND y_coord = ? " +
-        "AND state = 'marching' AND time_arrive > UNIX_TIMESTAMP() LIMIT 1",
+        "AND state = 'marching' LIMIT 1",
         [xCoord, yCoord]
     );
     return rows.length > 0;
@@ -358,23 +364,56 @@ function reportArmySlots(army, remainingArmy, defenderTroops, isVictory) {
     }
 
     const defenderSlots = Object.fromEntries(slotNames.map(slot => [slot, { type: 0, pre: 0, cur: 0 }]));
-    Object.entries(defenderTroops).slice(0, slotNames.length).forEach(([type, count], index) => {
-        const amount = Math.max(0, Number(count) || 0);
+    Object.entries(defenderTroops).slice(0, slotNames.length).forEach(([type, troopCount], index) => {
+        const amount = Math.max(0, Number(
+            troopCount && typeof troopCount === 'object' ? troopCount.pre : troopCount
+        ) || 0);
         defenderSlots[slotNames[index]] = {
             type: Number(type) || 0,
             pre: amount,
-            cur: isVictory ? 0 : amount
+            cur: troopCount && typeof troopCount === 'object'
+                ? Math.max(0, Number(troopCount.cur) || 0)
+                : isVictory ? 0 : amount
         };
     });
 
     return { attackerSlots, defenderSlots };
 }
 
+function aggregateMemberArmy(members) {
+    const troops = {};
+    for (const member of members) {
+        for (const slot of ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3']) {
+            const type = Number(member.army[`${slot}_type`]) || 0;
+            const amount = Number(member.army[`${slot}_num`]) || 0;
+            if (!type || amount <= 0) continue;
+            const current = Number(member.remainingArmy && member.remainingArmy[slot]) || 0;
+            if (!troops[type]) troops[type] = { pre: 0, cur: 0 };
+            troops[type].pre += amount;
+            troops[type].cur += current;
+        }
+    }
+
+    const army = {};
+    const remainingArmy = {};
+    const entries = Object.entries(troops);
+    for (let index = 0; index < 6; index++) {
+        const slot = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'][index];
+        const [type, counts] = entries[index] || [0, { pre: 0, cur: 0 }];
+        army[`${slot}_type`] = Number(type);
+        army[`${slot}_num`] = counts.pre;
+        remainingArmy[slot] = counts.cur;
+    }
+    return { army, remainingArmy, troops };
+}
+
 async function saveWsBattleReport(db, details) {
     const {
         player, hero, battleId, xCoord, yCoord, unitType, unitLvl, attackTask,
         isVictory, expGained, honorGained, resourceLoot, itemLoot,
-        attackerSlots, defenderSlots
+        attackerSlots, defenderSlots, writeBattleLog = true,
+        logAttackerSlots = attackerSlots, logDefenderSlots = defenderSlots,
+        heroSide = 1, opponentName = `حامية الأعداء [مستوى ${unitLvl}]`
     } = details;
     const asReportHero = (slots, side, name, avatar, idPlayer, xp) => {
         const reportHero = { side, h_name: name, avatar, id_player: idPlayer, xp };
@@ -395,8 +434,8 @@ async function saveWsBattleReport(db, details) {
             side_win: isVictory ? 1 : 0
         },
         heros: [
-            asReportHero(attackerSlots, 1, hero.name || 'البطل سيزر', Number(hero.avatar) || 1, Number(player.id_player), expGained),
-            asReportHero(defenderSlots, 0, `حامية الأعداء [مستوى ${unitLvl}]`, 2, 0, 0)
+            asReportHero(attackerSlots, heroSide, hero.name || 'البطل سيزر', Number(hero.avatar) || 1, Number(player.id_player), expGained),
+            asReportHero(defenderSlots, 1 - heroSide, opponentName, 2, 0, 0)
         ],
         prize: {
             resource: resourceLoot,
@@ -416,6 +455,7 @@ async function saveWsBattleReport(db, details) {
     const finalizedDetail = JSON.stringify(reportDetail);
     await db.query("UPDATE report_player SET detail = ? WHERE id_report = ?", [finalizedDetail, insertResult.insertId]);
 
+    if (!writeBattleLog) return;
     const total = slots => Object.values(slots).reduce((sum, slot) => sum + slot.pre, 0);
     const remaining = slots => Object.values(slots).reduce((sum, slot) => sum + slot.cur, 0);
     await db.query(
@@ -426,8 +466,8 @@ async function saveWsBattleReport(db, details) {
             battleId,
             player.id_player,
             isVictory ? 'attacker' : 'defender',
-            Math.max(0, total(attackerSlots) - remaining(attackerSlots)),
-            Math.max(0, total(defenderSlots) - remaining(defenderSlots)),
+            Math.max(0, total(logAttackerSlots) - remaining(logAttackerSlots)),
+            Math.max(0, total(logDefenderSlots) - remaining(logDefenderSlots)),
             resourceLoot.food,
             resourceLoot.wood,
             resourceLoot.stone,
@@ -460,6 +500,11 @@ async function processDueHeroReturns() {
                 [battle.id_member]
             );
             if (!update.affectedRows) continue;
+
+            await connection.query(
+                "UPDATE world_battel SET state = 'returned' WHERE id_battel = ? AND id_hero = ? AND state IN ('won', 'lost')",
+                [battle.id_battel, battle.id_hero]
+            );
 
             const [activeBattles] = await connection.query(
                 "SELECT 1 FROM world_battel_member WHERE id_hero = ? AND id_member <> ? AND " +
@@ -551,6 +596,15 @@ async function advanceWorldUnitLevel(db, { xCoord, yCoord, unitType, unitSubtype
     let updatedLevel;
     try {
         await connection.beginTransaction();
+        const now = Math.floor(Date.now() / 1000);
+        const interval = getResetIntervalHours(unitSubtype);
+        const initialNextResetAt = interval ? getNextResetAt(unitSubtype, now) : 0;
+        await connection.query(
+            'INSERT IGNORE INTO world_unit_state ' +
+            '(x_coord, y_coord, unit_type, unit_subtype, base_lvl, current_lvl, max_lvl, next_reset_at) ' +
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [xCoord, yCoord, unitType, unitSubtype, baseLevel, baseLevel, maxLevel, initialNextResetAt]
+        );
         const [rows] = await connection.query(
             'SELECT unit_type, unit_subtype, base_lvl, current_lvl, max_lvl, next_reset_at ' +
             'FROM world_unit_state WHERE x_coord = ? AND y_coord = ? FOR UPDATE',
@@ -561,7 +615,6 @@ async function advanceWorldUnitLevel(db, { xCoord, yCoord, unitType, unitSubtype
             && Number(rows[0].unit_subtype) === Number(unitSubtype)
             ? rows[0]
             : null;
-        const now = Math.floor(Date.now() / 1000);
         const effectiveBaseLevel = current ? Number(current.base_lvl) : Number(baseLevel);
         const currentLevel = current
             ? (Number(current.next_reset_at) > 0 && Number(current.next_reset_at) <= now
@@ -569,18 +622,13 @@ async function advanceWorldUnitLevel(db, { xCoord, yCoord, unitType, unitSubtype
                 : Number(current.current_lvl))
             : Number(baseLevel);
         updatedLevel = Math.min(Number(maxLevel), currentLevel + 1);
-        const interval = getResetIntervalHours(unitSubtype);
         const nextResetAt = current && Number(current.next_reset_at) > now
             ? Number(current.next_reset_at)
-            : getNextResetAt(unitSubtype, now);
+            : initialNextResetAt;
         await connection.query(
-            'INSERT INTO world_unit_state ' +
-            '(x_coord, y_coord, unit_type, unit_subtype, base_lvl, current_lvl, max_lvl, next_reset_at) ' +
-            'VALUES (?, ?, ?, ?, ?, ?, ?, ?) ' +
-            'ON DUPLICATE KEY UPDATE unit_type = VALUES(unit_type), unit_subtype = VALUES(unit_subtype), ' +
-            'base_lvl = VALUES(base_lvl), current_lvl = VALUES(current_lvl), max_lvl = VALUES(max_lvl), ' +
-            'next_reset_at = VALUES(next_reset_at)',
-            [xCoord, yCoord, unitType, unitSubtype, effectiveBaseLevel, updatedLevel, maxLevel, interval ? nextResetAt : 0]
+            'UPDATE world_unit_state SET unit_type = ?, unit_subtype = ?, base_lvl = ?, current_lvl = ?, ' +
+            'max_lvl = ?, next_reset_at = ? WHERE x_coord = ? AND y_coord = ?',
+            [unitType, unitSubtype, effectiveBaseLevel, updatedLevel, maxLevel, nextResetAt, xCoord, yCoord]
         );
         await connection.commit();
     } catch (error) {
@@ -956,6 +1004,35 @@ function handleWs(ws, req) {
                 broadcast(update);
             }
 
+            if (msg.url === 'Battel/joined') {
+                if (!idPlayer || !token) return;
+                const idBattle = Number(msg.data && msg.data.idBattel);
+                if (!Number.isSafeInteger(idBattle) || idBattle <= 0) return;
+
+                const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+                const [rows] = await db.query(
+                    "SELECT b.id_battel, b.x_coord, b.y_coord, " +
+                    "(SELECT COUNT(*) FROM world_battel_member m WHERE m.id_battel = b.id_battel " +
+                    "AND m.side = 1 AND m.state IN ('marching', 'won', 'lost')) AS attackNum, " +
+                    "(SELECT COUNT(*) FROM world_battel_member m WHERE m.id_battel = b.id_battel " +
+                    "AND m.side = 0 AND m.state IN ('marching', 'won', 'lost')) AS defenceNum " +
+                    "FROM world_battel b WHERE b.id_battel = ? AND b.state = 'marching' " +
+                    "AND b.time_arrive > UNIX_TIMESTAMP() LIMIT 1",
+                    [idBattle]
+                );
+                if (!rows.length) return;
+                const battle = rows[0];
+                broadcast(JSON.stringify({
+                    classPath: 'World.Battel.ParticipantsUpdated',
+                    id_battel: Number(battle.id_battel),
+                    xCoord: Number(battle.x_coord),
+                    yCoord: Number(battle.y_coord),
+                    attackNum: Number(battle.attackNum),
+                    defenceNum: Number(battle.defenceNum)
+                }));
+            }
+
             // 1. Broadcast chat messages
             if (msg.url === 'Chat/sendMsg') {
                 const out = JSON.stringify({
@@ -1234,40 +1311,106 @@ function handleWs(ws, req) {
                         if (!bCheck[0] || bCheck[0].state === 'aborted') return;
 
                         // ── COMBAT RESOLUTION ENGINE ──
-                        // 1. Calculate Attacker Combat Power
-                        let attPower = 0;
                         const slots = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'];
-                        for (const s of slots) {
-                            const t = parseInt(army[s + '_type'], 10) || 0;
-                            const n = parseInt(army[s + '_num'], 10) || 0;
-                            if (t > 0 && n > 0 && SOL_STATS[t]) {
-                                attPower += (SOL_STATS[t].att * 0.6 + SOL_STATS[t].hp * 0.4) * n;
-                            }
+                        const [memberRows] = await battleDb.query(
+                            "SELECT m.id_member, m.id_player, m.id_city, m.id_hero, m.side, m.task, " +
+                            "m.x_city, m.y_city, m.return_duration, h.name AS hero_name, h.avatar AS hero_avatar, " +
+                            "h.power AS hero_power, h.power_max AS hero_power_max, h.point_b, h.point_b_plus, " +
+                            "p.name AS player_name, p.id_guild AS player_id_guild, p.city_flag, " +
+                            "c.name AS city_name, c.x AS city_x, c.y AS city_y " +
+                            "FROM world_battel_member m " +
+                            "JOIN city_hero h ON h.id_hero = m.id_hero AND h.id_player = m.id_player " +
+                            "JOIN player p ON p.id_player = m.id_player " +
+                            "JOIN city c ON c.id_city = m.id_city " +
+                            "WHERE m.id_battel = ? AND m.state = 'marching' " +
+                            "AND m.time_arrive <= (SELECT time_arrive FROM world_battel WHERE id_battel = ?) " +
+                            "ORDER BY m.id_member ASC",
+                            [battelId, battelId]
+                        );
+                        if (!memberRows.length) {
+                            throw new Error(`Battle ${battelId} has no arrived members`);
                         }
-                        const totalBravery = (parseInt(hero.point_b, 10) || 0) + (parseInt(hero.point_b_plus, 10) || 0);
-                        const heroBonus = 1.0 + ((hero.power || 50) + totalBravery) / 100.0;
-                        attPower *= heroBonus;
-
-                        // 1b. Hero Equipment Combat Bonus (Primary & Secondary Gear)
-                        let eqAtt = 0;
-                        let eqVit = 0;
-                        let eqDmg = 0;
-                        let eqBrk = 0;
-                        let eqStr = 0;
-                        try {
-                            const [hEquips] = await battleDb.query("SELECT * FROM player_equip WHERE id_hero = ? AND on_hero = 1", [idHero]);
-                            for (const eq of (hEquips || [])) {
-                                const ep = equipPowerMap.get(`${eq.type}_${eq.part}_${eq.lvl}`);
-                                if (ep) {
-                                    eqAtt += (ep.attack || 0);
-                                    eqVit += (ep.vitality || 0);
-                                    eqDmg += (ep.damage || 0);
-                                    eqBrk += (ep.break || 0);
-                                    eqStr += (ep.strike || 0);
-                                }
+                        const memberIds = memberRows.map(member => Number(member.id_hero));
+                        const memberPlaceholders = memberIds.map(() => '?').join(', ');
+                        const [memberArmies] = await battleDb.query(
+                            `SELECT * FROM hero_army WHERE id_hero IN (${memberPlaceholders})`,
+                            memberIds
+                        );
+                        const [memberEquips] = await battleDb.query(
+                            `SELECT * FROM player_equip WHERE on_hero = 1 AND id_hero IN (${memberPlaceholders})`,
+                            memberIds
+                        );
+                        const [memberEducation] = await battleDb.query(
+                            `SELECT id_player, medicine FROM player_edu WHERE id_player IN (${memberRows.map(() => '?').join(', ')})`,
+                            memberRows.map(member => Number(member.id_player))
+                        );
+                        const armiesByHero = new Map(memberArmies.map(memberArmy => [Number(memberArmy.id_hero), memberArmy]));
+                        const equipsByHero = new Map();
+                        for (const memberEquip of memberEquips) {
+                            const id = Number(memberEquip.id_hero);
+                            if (!equipsByHero.has(id)) equipsByHero.set(id, []);
+                            const bonus = equipPowerMap.get(`${memberEquip.type}_${memberEquip.part}_${memberEquip.lvl}`);
+                            if (bonus) equipsByHero.get(id).push(bonus);
+                        }
+                        const medicineByPlayer = new Map(memberEducation.map(education => [
+                            Number(education.id_player),
+                            Number(education.medicine) || 0
+                        ]));
+                        const battleMembers = memberRows.map(member => {
+                            const memberHero = {
+                                id_hero: Number(member.id_hero),
+                                id_player: Number(member.id_player),
+                                name: member.hero_name,
+                                avatar: Number(member.hero_avatar) || 1,
+                                power: Number(member.hero_power) || 0,
+                                power_max: Number(member.hero_power_max) || 0,
+                                point_b: Number(member.point_b) || 0,
+                                point_b_plus: Number(member.point_b_plus) || 0
+                            };
+                            const memberPlayer = {
+                                id_player: Number(member.id_player),
+                                name: member.player_name,
+                                id_guild: Number(member.player_id_guild) || 0,
+                                city_flag: member.city_flag
+                            };
+                            const memberCity = {
+                                id_city: Number(member.id_city),
+                                name: member.city_name,
+                                x: Number(member.city_x),
+                                y: Number(member.city_y)
+                            };
+                            const memberArmy = armiesByHero.get(memberHero.id_hero);
+                            if (!memberArmy) {
+                                throw new Error(`Battle ${battelId} is missing army for hero ${memberHero.id_hero}`);
                             }
-                        } catch (e) { }
-                        attPower += (eqAtt * 1.5 + eqVit * 0.8 + eqDmg * 2.0 + eqBrk * 1.5 + eqStr * 1.0);
+                            const memberData = {
+                                id_member: Number(member.id_member),
+                                side: Number(member.side),
+                                task: Number(member.task),
+                                returnDuration: Number(member.return_duration) || returnDuration,
+                                hero: memberHero,
+                                player: memberPlayer,
+                                city: memberCity,
+                                army: memberArmy,
+                                medicineLevel: medicineByPlayer.get(memberPlayer.id_player) || 0,
+                                expGained: 0,
+                                honorGained: 0,
+                                itemLoot: []
+                            };
+                            memberData.combatPower = calculateArmyPower(
+                                memberData.army,
+                                memberData.hero,
+                                SOL_STATS,
+                                equipsByHero.get(memberHero.id_hero) || []
+                            );
+                            return memberData;
+                        });
+                        const attackers = battleMembers.filter(member => member.side === 1);
+                        const joinedDefenders = battleMembers.filter(member => member.side === 0);
+                        if (!attackers.length) {
+                            throw new Error(`Battle ${battelId} has no attacking members`);
+                        }
+                        const attPower = attackers.reduce((total, member) => total + member.combatPower, 0);
 
                         // 2. Fetch or Calculate Defender Army
                         let defenderTroops = {};
@@ -1286,7 +1429,7 @@ function handleWs(ws, req) {
                             defenderTroops = { 1: Math.max(10, unitLvl * 20), 4: Math.max(5, unitLvl * 10) };
                         }
 
-                        // 3. Calculate Defender Combat Power (with Enemy Commander Equipment)
+                        // 3. Calculate Defender Combat Power (with joined defenders)
                         let defPower = 0;
                         for (const [type, num] of Object.entries(defenderTroops)) {
                             const t = parseInt(type, 10);
@@ -1296,6 +1439,7 @@ function handleWs(ws, req) {
                             }
                         }
                         defPower *= (1.0 + unitLvl * 0.05);
+                        defPower += joinedDefenders.reduce((total, member) => total + member.combatPower, 0);
 
                         // Enemy commander equipment & power boost
                         let enemyEquipBonus = 0;
@@ -1339,76 +1483,91 @@ function handleWs(ws, req) {
                             targetCategoryName = 'قلعة / ميدان تحدي';
                         }
 
-                        let clashFallenRate = 0;
-                        if (isVictory) {
-                            clashFallenRate = Math.min(0.50, Math.max(0.02, 0.40 / Math.sqrt(ratio)));
-                        } else {
-                            clashFallenRate = Math.min(0.95, 0.65 + (1.0 - ratio) * 0.30);
-                        }
-
-                        // Hospital & Medicine Calculation (Base 10% up to 60%)
-                        let medicineLvl = 0;
-                        try {
-                            const [pEdu] = await battleDb.query("SELECT medicine FROM player_edu WHERE id_player = ?", [player.id_player]);
-                            if (pEdu && pEdu[0]) medicineLvl = parseInt(pEdu[0].medicine, 10) || 0;
-                        } catch (e) { }
-                        const woundedRate = Math.min(0.60, 0.10 + (medicineLvl * 0.05));
-                        const woundedTroops = { army_a: 0, army_b: 0, army_c: 0, army_d: 0, army_e: 0, army_f: 0 };
                         const solTypeToCol = { 1: 'army_a', 2: 'army_b', 3: 'army_c', 4: 'army_d', 5: 'army_e', 6: 'army_f' };
-                        const remainingArmy = {};
-
-                        let totalFallen = 0;
-                        let totalRecovered = 0;
-                        let totalPermanentLoss = 0;
-                        let totalWounded = 0;
-
-                        for (const s of slots) {
-                            const num = parseInt(army[s + '_num'], 10) || 0;
-                            const type = parseInt(army[s + '_type'], 10) || 0;
-                            remainingArmy[s] = num;
-                            if (num > 0) {
-                                const rawFallen = isVictory 
-                                    ? Math.min(num, Math.ceil(num * clashFallenRate)) 
-                                    : Math.min(num, Math.max(1, Math.ceil(num * clashFallenRate)));
-                                
-                                const recovered = Math.floor(rawFallen * recoveryRate);
-                                const permanentLoss = rawFallen - recovered;
-
-                                totalFallen += rawFallen;
-                                totalRecovered += recovered;
-                                totalPermanentLoss += permanentLoss;
-
-                                // Wounded to City Hospital
-                                const woundedCount = Math.floor(permanentLoss * woundedRate);
-                                if (woundedCount > 0 && solTypeToCol[type]) {
-                                    woundedTroops[solTypeToCol[type]] += woundedCount;
-                                    totalWounded += woundedCount;
+                        const attackReport = aggregateMemberArmy(attackers);
+                        const defenderReport = aggregateMemberArmy(joinedDefenders);
+                        const opposingDefenseReport = Object.fromEntries(
+                            Object.entries(defenderTroops).map(([type, amount]) => [
+                                type,
+                                { pre: Number(amount) || 0, cur: isVictory ? 0 : Number(amount) || 0 }
+                            ])
+                        );
+                        for (const [type, counts] of Object.entries(defenderReport.troops)) {
+                            if (!opposingDefenseReport[type]) opposingDefenseReport[type] = { pre: 0, cur: 0 };
+                            opposingDefenseReport[type].pre += counts.pre;
+                            opposingDefenseReport[type].cur += counts.cur;
+                        }
+                        const casualtiesBySide = {
+                            0: { fallen: 0, recovered: 0, permanentLoss: 0, wounded: 0 },
+                            1: { fallen: 0, recovered: 0, permanentLoss: 0, wounded: 0 }
+                        };
+                        for (const member of battleMembers) {
+                            const memberIsAttacker = member.side === 1;
+                            const memberWon = didBattleSideWin(isVictory, member.side);
+                            const memberRatio = memberIsAttacker ? ratio : 1 / Math.max(ratio, Number.EPSILON);
+                            const memberLossRate = memberWon
+                                ? Math.min(0.50, Math.max(0.02, 0.40 / Math.sqrt(memberRatio)))
+                                : Math.min(0.95, 0.65 + (1.0 - memberRatio) * 0.30);
+                            const woundedRate = Math.min(0.60, 0.10 + member.medicineLevel * 0.05);
+                            const casualties = calculateArmyCasualties(
+                                member.army,
+                                memberLossRate,
+                                recoveryRate,
+                                woundedRate,
+                                memberWon
+                            );
+                            member.casualties = casualties;
+                            member.remainingArmy = {};
+                            for (const slot of slots) {
+                                const result = casualties.remainingArmy[slot];
+                                member.remainingArmy[slot] = result.amount;
+                                if (Number(member.army[`${slot}_num`]) > 0) {
+                                    await battleDb.query(
+                                        `UPDATE hero_army SET ${slot}_num = ?, ${slot}_type = ? WHERE id_hero = ?`,
+                                        [result.amount, result.type, member.hero.id_hero]
+                                    );
                                 }
+                            }
 
-                                const remaining = Math.max(0, num - permanentLoss);
-                                remainingArmy[s] = remaining;
-                                const newType = remaining > 0 ? type : 0;
-                                await battleDb.query(`UPDATE hero_army SET ${s}_num = ?, ${s}_type = ? WHERE id_hero = ?`, [remaining, newType, idHero]);
+                            for (const [type, amount] of Object.entries(casualties.wounded)) {
+                                const column = solTypeToCol[type];
+                                if (!column || amount <= 0) continue;
+                                if (!member.woundedTroops) {
+                                    member.woundedTroops = { army_a: 0, army_b: 0, army_c: 0, army_d: 0, army_e: 0, army_f: 0 };
+                                }
+                                member.woundedTroops[column] += amount;
+                            }
+
+                            for (const key of Object.keys(casualtiesBySide[member.side])) {
+                                casualtiesBySide[member.side][key] += casualties.totals[key];
                             }
                         }
-
-                        // Store wounded in City Hospital
-                        if (totalWounded > 0) {
+                        const hostMember = battleMembers.find(member => member.hero.id_hero === Number(idHero));
+                        if (!hostMember) {
+                            throw new Error(`Battle ${battelId} is missing the initiating hero`);
+                        }
+                        for (const member of battleMembers) {
+                            const wounded = member.woundedTroops || {};
+                            const woundedAmount = Object.values(wounded).reduce((sum, amount) => sum + amount, 0);
+                            if (!woundedAmount) continue;
                             await battleDb.query(
                                 `INSERT INTO city_wounded (id_city, army_a, army_b, army_c, army_d, army_e, army_f)
                                  VALUES (?, ?, ?, ?, ?, ?, ?)
                                  ON DUPLICATE KEY UPDATE
                                  army_a = army_a + VALUES(army_a), army_b = army_b + VALUES(army_b), army_c = army_c + VALUES(army_c),
                                  army_d = army_d + VALUES(army_d), army_e = army_e + VALUES(army_e), army_f = army_f + VALUES(army_f)`,
-                                [city.id_city, woundedTroops.army_a, woundedTroops.army_b, woundedTroops.army_c, woundedTroops.army_d, woundedTroops.army_e, woundedTroops.army_f]
+                                [
+                                    member.city.id_city,
+                                    wounded.army_a || 0,
+                                    wounded.army_b || 0,
+                                    wounded.army_c || 0,
+                                    wounded.army_d || 0,
+                                    wounded.army_e || 0,
+                                    wounded.army_f || 0
+                                ]
                             );
                         }
-
-                        const { attackerSlots, defenderSlots } = reportArmySlots(army, remainingArmy, defenderTroops, isVictory);
-                        let reportExpGained = 0;
-                        let reportHonorGained = 0;
-                        let reportResourceLoot = { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 };
-                        let reportItemLoot = [];
+                        const attackingCasualties = casualtiesBySide[1];
 
                         if (isVictory) {
                             // ── VICTORY RESOLUTION ──
@@ -1428,23 +1587,30 @@ function handleWs(ws, req) {
                             }
                             // 6a. Loot Resources
                             const loot = Math.min(100000, Math.max(2000, unitLvl * 3500));
-                            const creditedLoot = await creditCityResources(battleDb, city.id_city, {
+                            const lootPool = {
                                 food: loot,
                                 wood: loot,
                                 stone: loot,
                                 metal: loot,
                                 coin: loot * 2
-                            });
-                            reportResourceLoot = Object.fromEntries(
-                                Object.entries(reportResourceLoot).map(([resource]) => [resource, Number(creditedLoot[resource]) || 0])
+                            };
+                            for (const share of allocateProportionally(loot, attackers)) {
+                                share.member.resourceLoot = await creditCityResources(battleDb, share.member.city.id_city, {
+                                    food: share.amount,
+                                    wood: share.amount,
+                                    stone: share.amount,
+                                    metal: share.amount,
+                                    coin: share.amount * 2
+                                });
+                            }
+                            const creditedLoot = Object.fromEntries(
+                                Object.keys(lootPool).map(resource => [
+                                    resource,
+                                    attackers.reduce((total, member) => total + (Number(member.resourceLoot && member.resourceLoot[resource]) || 0), 0)
+                                ])
                             );
 
                             // 6b. Hero EXP & Player Prestige by Target Category & Hero Wisdom
-                            const heroRows = await battleDb.query("SELECT * FROM city_hero WHERE id_hero = ?", [idHero]);
-                            const heroData = (heroRows && heroRows[0]) ? heroRows[0] : {};
-                            const wisdom = parseInt(heroData.point_b, 10) || 0;
-                            const wisdomMultiplier = 1.0 + (wisdom * 0.001);
-
                             let baseExp = 0;
                             let prestigeGain = 0;
                             let honorGained = 0;
@@ -1481,14 +1647,33 @@ function handleWs(ws, req) {
                                 prestigeGain = Math.max(20, unitLvl * 15);
                             }
 
-                            const expGain = Math.floor(baseExp * wisdomMultiplier);
-                            reportExpGained = expGain;
-                            reportHonorGained = honorGained;
-                            await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = LEAST(power_max, power + 5) WHERE id_hero = ?", [expGain, idHero]);
-                            await battleDb.query("UPDATE player SET prestige = prestige + ?, honor = honor + ? WHERE id_player = ?", [prestigeGain, honorGained, player.id_player]);
-
-                            if (player.id_guild > 0) {
-                                await battleDb.query("UPDATE guild SET prestige = prestige + ?, honor = honor + ? WHERE id_guild = ?", [prestigeGain, honorGained, player.id_guild]);
+                            const expShares = allocateProportionally(baseExp, attackers);
+                            const honorShares = allocateProportionally(honorGained, attackers);
+                            const prestigeShares = allocateProportionally(prestigeGain, attackers);
+                            for (let index = 0; index < attackers.length; index++) {
+                                const member = attackers[index];
+                                const wisdomMultiplier = 1 + (Number(member.hero.point_b) || 0) * 0.001;
+                                member.expGained = Math.floor(expShares[index].amount * wisdomMultiplier);
+                                member.honorGained = honorShares[index].amount;
+                                member.prestigeGained = prestigeShares[index].amount;
+                                member.itemLoot = [];
+                                await battleDb.query(
+                                    "UPDATE city_hero SET exp = exp + ?, power = LEAST(power_max, power + 5) WHERE id_hero = ?",
+                                    [member.expGained, member.hero.id_hero]
+                                );
+                                await battleDb.query(
+                                    "UPDATE player SET prestige = prestige + ?, honor = honor + ? WHERE id_player = ?",
+                                    [member.prestigeGained, member.honorGained, member.player.id_player]
+                                );
+                                if (member.player.id_guild > 0) {
+                                    await battleDb.query(
+                                        "UPDATE guild SET prestige = prestige + ?, honor = honor + ? WHERE id_guild = ?",
+                                        [member.prestigeGained, member.honorGained, member.player.id_guild]
+                                    );
+                                }
+                            }
+                            for (const member of battleMembers) {
+                                if (!member.itemLoot) member.itemLoot = [];
                             }
 
                             // 6c. Prize Drop Tables Evaluation (with Dynamic Multipliers & Wilderness Luxuries)
@@ -1507,11 +1692,18 @@ function handleWs(ws, req) {
                                     const amt = Math.floor(Math.random() * (p.amount_max - p.amount_min + 1)) + p.amount_min;
                                     if (amt > 0) {
                                         droppedItems.push({ prize: p.prize, amount: amt });
-                                        await battleDb.query(
-                                            "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
-                                            [player.id_player, p.prize, amt]
-                                        );
                                     }
+                                }
+                            }
+                            for (const drop of droppedItems) {
+                                for (const share of allocateProportionally(drop.amount, attackers)) {
+                                    if (!share.amount) continue;
+                                    await battleDb.query(
+                                        "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
+                                        "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
+                                        [share.member.player.id_player, drop.prize, share.amount]
+                                    );
+                                    share.member.itemLoot.push({ prize: drop.prize, amount: share.amount });
                                 }
                             }
 
@@ -1536,20 +1728,18 @@ function handleWs(ws, req) {
                                 const eqType = possibleEquipTypes[Math.floor(Math.random() * possibleEquipTypes.length)];
                                 const eqPart = parts[Math.floor(Math.random() * parts.length)];
                                 const eqLvl = Math.max(1, Math.min(10, unitLvl));
+                                const equipRecipient = allocateProportionally(1, attackers)
+                                    .find(share => share.amount > 0).member;
                                 await battleDb.query(
                                     "INSERT INTO player_equip (id_player, id_hero, type, part, lvl, on_hero) VALUES (?, 0, ?, ?, ?, 0)",
-                                    [player.id_player, eqType, eqPart, eqLvl]
+                                    [equipRecipient.player.id_player, eqType, eqPart, eqLvl]
                                 );
                                 droppedEquip.push({ type: eqType, part: eqPart, lvl: eqLvl });
-                            }
-                            reportItemLoot = [
-                                ...droppedItems,
-                                ...droppedEquip.map(equip => ({
-                                    prize: `equip_${equip.type}_${equip.part}`,
+                                equipRecipient.itemLoot.push({
+                                    prize: `equip_${eqType}_${eqPart}`,
                                     amount: 1
-                                }))
-                            ];
-
+                                });
+                            }
                             // 6e. Colonize / Dominate Wild (استيلاء على البرية)
                             let dominated = false;
                             if (attackTask === 1 && unitType >= 1 && unitType <= 59) {
@@ -1590,12 +1780,12 @@ function handleWs(ws, req) {
                                 const equipSummary = droppedEquip.length > 0
                                     ? ` + عتاد بطل نخبوي غنيمة [${droppedEquip.map(e => `${e.type} ${e.part} مستوى ${e.lvl}`).join(', ')}]`
                                     : '';
-                                const woundedSummary = totalWounded > 0
-                                    ? ` + تم نقل [${totalWounded}] جريح إلى مشفى المدينة`
+                                const woundedSummary = attackingCasualties.wounded > 0
+                                    ? ` + تم نقل [${attackingCasualties.wounded}] جريح إلى مشفى المدينة`
                                     : '';
                                 const lossReport = recoveryRate > 0 
-                                    ? `سقط في المعركة [${totalFallen}] جندي، استعاد البطل فوراً [${totalRecovered}]، والخسائر [${totalPermanentLoss}] جندي (${Math.round((1 - recoveryRate) * 100)}%)`
-                                    : `الخسائر: [${totalPermanentLoss} جندي] (إبادة كاملة 100% في حرب ضد لاعبين)`;
+                                        ? `سقط في المعركة [${attackingCasualties.fallen}] جندي، استعاد المهاجمون [${attackingCasualties.recovered}]، أُرسل [${attackingCasualties.wounded}] للمشفى، والخسائر النهائية [${attackingCasualties.permanentLoss}] جندي`
+                                        : `الخسائر النهائية: [${attackingCasualties.permanentLoss} جندي] (100% في حرب ضد لاعبين)`;
 
                                 broadcast(JSON.stringify({
                                     classPath: 'Chat.WorldMsg',
@@ -1610,19 +1800,22 @@ function handleWs(ws, req) {
 
                         } else {
                             // ── DEFEAT RESOLUTION ──
-                            const heroRows = await battleDb.query("SELECT * FROM city_hero WHERE id_hero = ?", [idHero]);
-                            const heroData = (heroRows && heroRows[0]) ? heroRows[0] : {};
-                            const wisdom = parseInt(heroData.point_b, 10) || 0;
-                            const wisdomMultiplier = 1.0 + (wisdom * 0.001);
-                            const partialExp = Math.max(50, Math.floor(defPower * 0.05 * wisdomMultiplier));
-                            reportExpGained = partialExp;
-
-                            await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = GREATEST(0, power - 25) WHERE id_hero = ?", [partialExp, idHero]);
-
+                            const partialExp = Math.max(50, Math.floor(defPower * 0.05));
+                            const expShares = allocateProportionally(partialExp, attackers);
+                            for (let index = 0; index < attackers.length; index++) {
+                                const member = attackers[index];
+                                member.expGained = Math.floor(
+                                    expShares[index].amount * (1 + (Number(member.hero.point_b) || 0) * 0.001)
+                                );
+                                await battleDb.query(
+                                    "UPDATE city_hero SET exp = exp + ?, power = GREATEST(0, power - 25) WHERE id_hero = ?",
+                                    [member.expGained, member.hero.id_hero]
+                                );
+                            }
                             {
                                 const defeatLossReport = recoveryRate > 0 
-                                    ? `سقط [${totalFallen}] جندي، تم علاج واستعادة [${totalRecovered}]، وفُقد [${totalPermanentLoss}] جندي`
-                                    : `إبادة كاملة: فقدان [${totalPermanentLoss}] جندي 100% في حرب ضد لاعبين`;
+                                    ? `سقط [${attackingCasualties.fallen}] جندي، استُعيد [${attackingCasualties.recovered}]، أُرسل [${attackingCasualties.wounded}] للمشفى، والخسائر النهائية [${attackingCasualties.permanentLoss}] جندي`
+                                    : `إبادة كاملة: الخسائر النهائية [${attackingCasualties.permanentLoss}] جندي 100% في حرب ضد لاعبين`;
 
                                 broadcast(JSON.stringify({
                                     classPath: 'Chat.WorldMsg',
@@ -1636,26 +1829,53 @@ function handleWs(ws, req) {
                             }
                         }
 
-                        try {
-                            await saveWsBattleReport(battleDb, {
-                                player,
-                                hero,
-                                battleId: battelId,
-                                xCoord,
-                                yCoord,
-                                unitType,
-                                unitLvl,
-                                attackTask,
-                                isVictory,
-                                expGained: reportExpGained,
-                                honorGained: reportHonorGained,
-                                resourceLoot: reportResourceLoot,
-                                itemLoot: reportItemLoot,
-                                attackerSlots,
-                                defenderSlots
-                            });
-                        } catch (reportError) {
-                            console.error('[Battle Report Error]:', reportError.message);
+                        for (const member of battleMembers) {
+                            const memberWon = didBattleSideWin(isVictory, member.side);
+                            const opponentTroops = member.side === 1 ? opposingDefenseReport : attackReport.troops;
+                            const memberSlots = reportArmySlots(
+                                member.army,
+                                member.remainingArmy,
+                                opponentTroops,
+                                memberWon
+                            );
+                            try {
+                                await saveWsBattleReport(battleDb, {
+                                    player: member.player,
+                                    hero: member.hero,
+                                    battleId: battelId,
+                                    xCoord,
+                                    yCoord,
+                                    unitType,
+                                    unitLvl,
+                                    attackTask: member.task,
+                                    isVictory,
+                                    expGained: member.expGained,
+                                    honorGained: member.honorGained,
+                                    resourceLoot: member.resourceLoot || { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 },
+                                    itemLoot: member.itemLoot,
+                                    attackerSlots: memberSlots.attackerSlots,
+                                    defenderSlots: memberSlots.defenderSlots,
+                                    writeBattleLog: member.hero.id_hero === Number(idHero),
+                                    heroSide: member.side,
+                                    opponentName: member.side === 1
+                                        ? `حامية الأعداء [مستوى ${unitLvl}]`
+                                        : `قوات المهاجمين [${player.name}]`,
+                                    logAttackerSlots: reportArmySlots(
+                                        attackReport.army,
+                                        attackReport.remainingArmy,
+                                        opposingDefenseReport,
+                                        isVictory
+                                    ).attackerSlots,
+                                    logDefenderSlots: reportArmySlots(
+                                        attackReport.army,
+                                        attackReport.remainingArmy,
+                                        opposingDefenseReport,
+                                        isVictory
+                                    ).defenderSlots
+                                });
+                            } catch (reportError) {
+                                console.error(`[Battle Report Error] Hero ${member.hero.id_hero}:`, reportError.message);
+                            }
                         }
 
                         const returnAt = Math.floor(Date.now() / 1000) + returnDuration;
@@ -1664,23 +1884,26 @@ function handleWs(ws, req) {
                             [isVictory ? 'won' : 'lost', returnAt, battelId]
                         );
                         await battleDb.query(
-                            "UPDATE world_battel_member SET state = ?, time_back = ? WHERE id_battel = ? AND state = 'marching'",
-                            [isVictory ? 'won' : 'lost', returnAt, battelId]
+                            "UPDATE world_battel_member SET state = ?, time_back = UNIX_TIMESTAMP() + return_duration " +
+                            "WHERE id_battel = ? AND state = 'marching'",
+                            [isVictory ? 'won' : 'lost', battelId]
                         );
-                        sendToPlayer(idPlayer, JSON.stringify({
-                            classPath: 'Battel.Finished',
-                            id_battel: battelId,
-                            Battel: {
+                        for (const member of battleMembers) {
+                            sendToPlayer(member.player.id_player, JSON.stringify({
+                                classPath: 'Battel.Finished',
                                 id_battel: battelId,
-                                task: attackTask,
-                                id_player: Number(player.id_player),
-                                x_coord: xCoord,
-                                y_coord: yCoord
-                            },
-                            sideWin: isVictory ? 1 : 0,
-                            ItemPrize: reportItemLoot.map(item => ({ Item: item.prize, amount: item.amount })),
-                            Player: { Honor: reportHonorGained }
-                        }));
+                                Battel: {
+                                    id_battel: battelId,
+                                    task: member.task,
+                                    id_player: member.player.id_player,
+                                    x_coord: xCoord,
+                                    y_coord: yCoord
+                                },
+                                sideWin: didBattleSideWin(isVictory, member.side) ? 1 : 0,
+                                ItemPrize: member.itemLoot.map(item => ({ Item: item.prize, amount: item.amount })),
+                                Player: { Honor: member.honorGained }
+                            }));
+                        }
 
                         broadcast(JSON.stringify({
                             classPath: 'World.Battel.Ended',
@@ -1708,7 +1931,7 @@ function handleWs(ws, req) {
                     if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
                     const abortConnection = await db.getConnection();
                     let battle;
-                    let heroReturned = false;
+                    let returnedHeroes = [];
                     try {
                         await abortConnection.beginTransaction();
                         const [battles] = await abortConnection.query(
@@ -1726,11 +1949,24 @@ function handleWs(ws, req) {
                                 [battle.id_battel, idPlayer]
                             );
                             if (abortUpdate.affectedRows) {
-                                const [heroUpdate] = await abortConnection.query(
-                                    "UPDATE city_hero SET in_city = 1 WHERE id_hero = ? AND id_player = ? AND in_city = 0",
-                                    [battle.id_hero, idPlayer]
+                                const [members] = await abortConnection.query(
+                                    "SELECT id_hero, id_player, task, x_city, y_city FROM world_battel_member " +
+                                    "WHERE id_battel = ? AND state = 'marching' FOR UPDATE",
+                                    [battle.id_battel]
                                 );
-                                heroReturned = heroUpdate.affectedRows > 0;
+                                await abortConnection.query(
+                                    "UPDATE world_battel_member SET state = 'aborted' " +
+                                    "WHERE id_battel = ? AND state = 'marching'",
+                                    [battle.id_battel]
+                                );
+                                for (const member of members) {
+                                    const [heroUpdate] = await abortConnection.query(
+                                        "UPDATE city_hero SET in_city = 1 " +
+                                        "WHERE id_hero = ? AND id_player = ? AND in_city = 0",
+                                        [member.id_hero, member.id_player]
+                                    );
+                                    if (heroUpdate.affectedRows) returnedHeroes.push(member);
+                                }
                                 await abortConnection.commit();
                             } else {
                                 await abortConnection.rollback();
@@ -1758,15 +1994,15 @@ function handleWs(ws, req) {
                         id_battel: activeBattleId,
                         Battel: { id_battel: activeBattleId }
                     }));
-                    if (heroReturned) {
-                        sendToPlayer(idPlayer, JSON.stringify({
+                    for (const returnedHero of returnedHeroes) {
+                        sendToPlayer(returnedHero.id_player, JSON.stringify({
                             classPath: 'Hero.Back',
-                            idHero: Number(battle.id_hero),
+                            idHero: Number(returnedHero.id_hero),
                             inCity: 1,
-                            Task: Number(battle.task),
-                            task: Number(battle.task),
-                            xTo: Number(battle.x_city),
-                            yTo: Number(battle.y_city)
+                            Task: Number(returnedHero.task),
+                            task: Number(returnedHero.task),
+                            xTo: Number(returnedHero.x_city),
+                            yTo: Number(returnedHero.y_city)
                         }));
                     }
                     broadcast(JSON.stringify({
