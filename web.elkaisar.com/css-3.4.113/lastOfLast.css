@@ -2234,3 +2234,19 @@ body #luck-wheel-over-lay {
     padding-bottom: 25px !important;
 }
 
+/* Fullscreen GameWindow container and Phaser canvas */
+#GameWindow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+}
+#GameWindow canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+

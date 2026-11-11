@@ -2602,6 +2602,7 @@ Elkaisar.GE.LPreLoad = function() {
     Elkaisar.GE.LoadingScene.load.image('building_lvl_lable_3', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_3.png');
     Elkaisar.GE.LoadingScene.load.image('building_lvl_lable_4', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_4.png');
     Elkaisar.GE.LoadingScene.load.image('building_lvl_lable_5', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_5.png');
+    Elkaisar.GE.LoadingScene.load.image('building_level_badge', BASE_ASSET_BATH + 'images/city/building_levelBg.png');
 
     Elkaisar.GE.LoadingScene.load.image('MapIconAttack', BASE_ASSET_BATH + 'images/world/WorldFloorIcon/Attack.png');
     Elkaisar.GE.LoadingScene.load.image('MapIconOccupy', BASE_ASSET_BATH + 'images/world/WorldFloorIcon/Occupy.png');
@@ -3076,9 +3077,15 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var minCityZoom = 1;
         var centerCityCam = function() {
             var winW = cam.width || window.innerWidth;
-            minCityZoom = Math.min(1, Math.max(0.35, winW / floor_width));
+            var winH = cam.height || window.innerHeight;
+            // Authentic Call of Roma city dimensions: 1000 x 400
+            // Fit city to viewport to eliminate empty margins and match classic display
+            var zoomX = winW / floor_width;
+            var zoomY = (winH - 45) / floor_height;
+            minCityZoom = Math.max(zoomX, zoomY, 1.0);
             cam.setZoom(minCityZoom);
-            cam.centerOn(floor_width / 2, floor_height / 2);
+            var vertOffset = 20 / minCityZoom;
+            cam.centerOn(floor_width / 2, (floor_height / 2) - vertOffset);
         };
         centerCityCam();
         scaleManager.on('resize', centerCityCam);
@@ -3198,10 +3205,11 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         });
 
         this.input.on('wheel', function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
-            var maxCityZoom = Math.max(minCityZoom, 2.2);
-            var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.1 : -0.1), minCityZoom, maxCityZoom);
+            var maxCityZoom = Math.max(minCityZoom * 1.5, 2.5);
+            var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.08 : -0.08), minCityZoom, maxCityZoom);
             cam.setZoom(nextZoom);
-            cam.centerOn(floor_width / 2, floor_height / 2);
+            var vertOffset = 20 / nextZoom;
+            cam.centerOn(floor_width / 2, (floor_height / 2) - vertOffset);
         });
     }
 });
@@ -10326,32 +10334,42 @@ function building_lvl_lable(x, y, place) {
     if (lvl == 0)
         return;
 
-    var lable = "building_lvl_lable_1";
-    if (Elkaisar.City.getCity().BuildingLvl[place] > 20) {
-        lable = "building_lvl_lable_5";
-    } else if (Elkaisar.City.getCity().BuildingLvl[place] > 15) {
-        lable = "building_lvl_lable_4";
-    } else if (Elkaisar.City.getCity().BuildingLvl[place] > 10) {
-        lable = "building_lvl_lable_3";
-    } else if (Elkaisar.City.getCity().BuildingLvl[place] > 5) {
-        lable = "building_lvl_lable_2";
-    }
-
     var baseDepth = (BuildingOnFloor[place] && BuildingOnFloor[place].depth) ? BuildingOnFloor[place].depth : 100;
 
-    BuildingOnFloor[place].LvlText = Elkaisar.GE.CityScene.add.text(x + 48, y + 4, lvl, {
+    // Authentic Call of Roma: badge placed cleanly at front base of building
+    var isFixed = (place === "palace" || place === "wall" || place === "farm" || place === "mine" || place === "stone" || place === "wood");
+    var badgeX = isFixed ? x : (x + 64);
+    var badgeY = isFixed ? y : (y + 32);
+
+    if (place === "palace") {
+        badgeX = 416 + 128;
+        badgeY = 12 + 130;
+    }
+
+    if (BuildingOnFloor[place].LvlText && BuildingOnFloor[place].LvlText.destroy) {
+        BuildingOnFloor[place].LvlText.destroy();
+    }
+    if (BuildingOnFloor[place].LvlImage && BuildingOnFloor[place].LvlImage.destroy) {
+        BuildingOnFloor[place].LvlImage.destroy();
+    }
+
+    var badgeKey = (Elkaisar.GE.CityScene && Elkaisar.GE.CityScene.textures && Elkaisar.GE.CityScene.textures.exists('building_level_badge'))
+        ? 'building_level_badge'
+        : 'building_lvl_lable_2';
+
+    BuildingOnFloor[place].LvlImage = Elkaisar.GE.CityScene.add.image(badgeX, badgeY, badgeKey)
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(20, 22)
+        .setDepth(baseDepth + 4);
+
+    BuildingOnFloor[place].LvlText = Elkaisar.GE.CityScene.add.text(badgeX, badgeY, lvl, {
         color: '#FFFFFF',
         stroke: '#000000',
-        strokeThickness: 3,
+        strokeThickness: 2,
         fontStyle: "bold",
         align: "center",
-        fontSize: 12,
-        fixedWidth: 26,
-        fixedHeight: 20
-    }).setOrigin(0, 0).setDepth(baseDepth + 5);
-
-    BuildingOnFloor[place].LvlImage = Elkaisar.GE.CityScene.add.image(x + 48, y, lable)
-        .setOrigin(0, 0).setDisplaySize(26, 26).setDepth(baseDepth + 4);
+        fontSize: 10
+    }).setOrigin(0.5, 0.5).setDepth(baseDepth + 5);
 
     return BuildingOnFloor[place].LvlImage;
 }
