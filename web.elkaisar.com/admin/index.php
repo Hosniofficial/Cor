@@ -799,6 +799,10 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
         <a class="menu-item" data-tab="tab-sanctions"><i class="fa-solid fa-gavel"></i> العقوبات والحظر</a>
 
         <?php if ($currentUser['role'] === 'super_admin' || $currentUser['role'] === 'admin'): ?>
+        <div class="menu-label">إدارة السيرفر الحية (LiveOps)</div>
+        <a class="menu-item" data-tab="tab-server-config"><i class="fa-solid fa-sliders"></i> إعدادات السيرفر والمعسكرات</a>
+        <a class="menu-item" data-tab="tab-live-events"><i class="fa-solid fa-calendar-star"></i> الفعاليات ومضاعفات الرفاهية</a>
+
         <div class="menu-label">الإدارة والرقابة</div>
         <a class="menu-item" data-tab="tab-staff"><i class="fa-solid fa-user-gear"></i> المشرفين والصلاحيات</a>
         <?php endif; ?>
@@ -1202,6 +1206,239 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
             </div>
         </div>
 
+        <?php if ($currentUser['role'] === 'super_admin' || $currentUser['role'] === 'admin'): ?>
+        <!-- ========================================== -->
+        <!-- TAB 7: LIVE SERVER CONFIGURATION (LIVEOPS) -->
+        <!-- ========================================== -->
+        <div class="tab-pane" id="tab-server-config">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 1.4rem; color: var(--gold-bright); font-weight: 800;"><i class="fa-solid fa-sliders"></i> إدارة إعدادات السيرفر والمعسكرات الحية</h2>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">التحكم الفوري في مفاصل اللعبة دون الحاجة لإعادة تشغيل السيرفر أو عمل Deploy جديد</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="fetchServerConfigs()"><i class="fa-solid fa-rotate"></i> استرجاع الإعدادات</button>
+                    <button class="btn btn-primary" onclick="saveAllServerConfigs()"><i class="fa-solid fa-floppy-disk"></i> حفظ وتطبيق فوري</button>
+                </div>
+            </div>
+
+            <!-- Quick Action Cards: Instant Reset & Marquee -->
+            <div class="two-col" style="margin-bottom: 20px;">
+                <div class="card" style="border-right: 4px solid var(--ruby-bright);">
+                    <div class="card-header">
+                        <div class="card-title" style="color: var(--ruby-bright);"><i class="fa-solid fa-bolt"></i> إجراء فوري: تصفير ورسيت المعسكرات الآن</div>
+                    </div>
+                    <div class="card-body">
+                        <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.88rem;">
+                            يؤدي هذا الزر إلى تصفير فوري لمستويات جميع المعسكرات والمناورات وعصابات التمرد وتجديد عدد هجمات اللاعبين وإشعار الجميع بالسيرفر فوراً.
+                        </p>
+                        <button class="btn btn-danger" style="width: 100%; height: 42px;" onclick="executeTriggerCampReset()">
+                            <i class="fa-solid fa-arrows-rotate"></i> تصفير وإعادة تعيين المعسكرات في السيرفر الآن
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-right: 4px solid var(--gold-main);">
+                    <div class="card-header">
+                        <div class="card-title" style="color: var(--gold-bright);"><i class="fa-solid fa-bullhorn"></i> بث إعلان عاجل أعلى الشاشة (Marquee)</div>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                            <input type="text" id="live-banner-input" class="form-input" style="flex: 1;" placeholder="اكتب نص الإعلان العاجل الذي سيظهر لجميع اللاعبين...">
+                            <input type="color" id="live-banner-color-input" value="#dfba6b" style="width: 48px; height: 38px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-surface); cursor: pointer;" title="لون الخط">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; height: 42px;" onclick="executeBroadcastBanner()">
+                            <i class="fa-solid fa-paper-plane"></i> إرسال وبث الإعلان لجميع المتصلين فوراً
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Groups Grid -->
+            <div class="two-col">
+                <!-- Group 1: Camps & Resets -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-tent"></i> مواعيد المعسكرات وإعادة التعيين الدوري (ساعات)</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">فترة رسيت المعسكرات والمناورات (ساعات)</label>
+                            <input type="number" id="cfg-camp_reset_interval_hours" class="form-input" min="1" max="48" step="1">
+                            <small style="color: var(--text-muted);">افتراضياً 12 ساعة (عند 08:00 و 20:00 UTC)</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">فترة رسيت عصابات قرطاجة والساندرز (ساعات)</label>
+                            <input type="number" id="cfg-gang_reset_interval_hours" class="form-input" min="1" max="24" step="1">
+                            <small style="color: var(--text-muted);">افتراضياً كل 6 ساعات</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">فترة رسيت الفرق والكتائب واللصوص (ساعات)</label>
+                            <input type="number" id="cfg-squad_reset_interval_hours" class="form-input" min="1" max="24" step="1">
+                            <small style="color: var(--text-muted);">افتراضياً كل 4 ساعات</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الحد الأقصى لهجمات اللاعب على المعسكر</label>
+                            <input type="number" id="cfg-camp_max_attack_per_player" class="form-input" min="1" max="100" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Drops & Wilderness Luxuries -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-gem"></i> نسب السقوط والرفاهيات والعتاد</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">مضاعف سقوط أدوات الرفاهية بالبراري (Luxuries Multiplier)</label>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="range" id="cfg-wilderness_luxury_drop_multiplier-range" min="0.5" max="5.0" step="0.1" style="flex: 1;" oninput="document.getElementById('cfg-wilderness_luxury_drop_multiplier').value = this.value">
+                                <input type="number" id="cfg-wilderness_luxury_drop_multiplier" class="form-input" style="width: 80px;" min="0.5" max="10.0" step="0.1" oninput="document.getElementById('cfg-wilderness_luxury_drop_multiplier-range').value = this.value">
+                            </div>
+                            <small style="color: var(--text-muted);">يزيد فرص الحصول على الخبز والذهب والقلائد وخرائط الكنز من البراري (1.0 = عادي، 2.0 = مضاعف)</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف السقوط العام بالسيرفر (Global Drop Rate)</label>
+                            <input type="number" id="cfg-global_drop_rate_multiplier" class="form-input" min="0.1" max="10.0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">نسبة سقوط عتاد الأبطال من المعسكرات (%)</label>
+                            <input type="number" id="cfg-equipment_drop_chance_percent" class="form-input" min="1" max="100" step="1">
+                            <small style="color: var(--text-muted);">النسبة المئوية لفرصة سقوط عتاد نخبوي للبطل عند الانتصار على معسكرات المستوى 3+</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-col" style="margin-top: 20px;">
+                <!-- Group 3: Server Rates & Starter Economy -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-coins"></i> مضاعفات سرعة واقتصاد السيرفر</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">الذهب المبدئي للاعب الجديد</label>
+                            <input type="number" id="cfg-starter_player_gold" class="form-input" min="0" max="10000" step="5">
+                            <small style="color: var(--text-muted);">محدد حالياً بـ 50 ذهبة لكل لاعب مسجل جديد</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مدة حماية المبتدئين (ساعات)</label>
+                            <input type="number" id="cfg-starter_protection_hours" class="form-input" min="0" max="720" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف سرعة سير الجيوش (March Speed)</label>
+                            <input type="number" id="cfg-march_speed_multiplier" class="form-input" min="0.5" max="10.0" step="0.5">
+                            <small style="color: var(--text-muted);">1.0 = عادي، 2.0 = الجيوش تقطع المسافة بنصف الوقت</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف إنتاج الموارد بالمدن</label>
+                            <input type="number" id="cfg-resource_production_multiplier" class="form-input" min="0.5" max="20.0" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف سرعة البناء والترقية</label>
+                            <input type="number" id="cfg-building_speed_multiplier" class="form-input" min="0.5" max="20.0" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف سرعة الأبحاث والدراسات</label>
+                            <input type="number" id="cfg-study_speed_multiplier" class="form-input" min="0.5" max="20.0" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">مضاعف سرعة تجنيد القوات بالثكنات</label>
+                            <input type="number" id="cfg-recruit_speed_multiplier" class="form-input" min="0.5" max="20.0" step="0.5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 4: Battle Rules & Maintenance -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-shield-halved"></i> قواعد المعارك وحالة السيرفر</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">مهلة معارك المعسكرات والمناورات (ثواني)</label>
+                            <input type="number" id="cfg-camp_rally_duration_sec" class="form-input" min="10" max="1800" step="10">
+                            <small style="color: var(--text-muted);">المدة الثابتة لمعركة المعسكر لانضمام الحلفاء (افتراضياً 120 ثانية)</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">الحد الأدنى لزمن الهجوم على مدن اللاعبين (ثواني)</label>
+                            <input type="number" id="cfg-city_attack_min_duration_sec" class="form-input" min="60" max="3600" step="60">
+                            <small style="color: var(--text-muted);">لمنع المباغتة (افتراضياً 900 ثانية = 15 دقيقة)</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">نسبة إسعاف ونقل الجرحى للمشفى (0.1 - 1.0)</label>
+                            <input type="number" id="cfg-wounded_recovery_rate" class="form-input" min="0.1" max="1.0" step="0.05">
+                            <small style="color: var(--text-muted);">0.70 تعني نقل 70% من خسائر الجيش لمشفى المدينة</small>
+                        </div>
+
+                        <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+
+                        <div class="form-group">
+                            <label class="form-label">وضع الصيانة العامة للسيرفر (Maintenance Mode)</label>
+                            <select id="cfg-maintenance_mode" class="form-select">
+                                <option value="false">معطل - السيرفر متاح لجميع اللاعبين</option>
+                                <option value="true">مفعل - السيرفر مغلق ومحصور للمشرفين فقط</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">رسالة الصيانة المعروضة للاعبين</label>
+                            <textarea id="cfg-maintenance_message" class="form-input" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">الهدنة العامة بالسيرفر (Server-wide Truce)</label>
+                            <select id="cfg-server_truce_active" class="form-select">
+                                <option value="false">معطلة - الهجوم على مدن اللاعبين متاح طبيعياً</option>
+                                <option value="true">مفعلة - تعطيل الهجوم على مدن اللاعبين في المناسبات</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 8: SCHEDULED EVENTS & HAPPY HOURS -->
+        <!-- ========================================== -->
+        <div class="tab-pane" id="tab-live-events">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 1.4rem; color: var(--gold-bright); font-weight: 800;"><i class="fa-solid fa-calendar-star"></i> إدارة الفعاليات ومضاعفات الرفاهية المجدولة</h2>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">جدولة ساعات السعادة ومضاعفات السقوط التلقائية في عطلة نهاية الأسبوع والمناسبات</p>
+                </div>
+                <button class="btn btn-primary" onclick="openCreateEventModal()"><i class="fa-solid fa-plus"></i> جدولة فعالية جديدة</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-clock"></i> قائمة الفعاليات المجدولة والنشطة</div>
+                    <button class="btn btn-secondary btn-sm" onclick="fetchServerEvents()"><i class="fa-solid fa-rotate"></i> تحديث</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>عنوان الفعالية</th>
+                                <th>نوع الفعالية</th>
+                                <th>المضاعف</th>
+                                <th>وقت البدء</th>
+                                <th>وقت الانتهاء</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-tbody">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
     </div>
 </main>
 
@@ -1444,6 +1681,55 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
     </div>
 </div>
 
+<!-- EVENT CREATION / EDITING MODAL -->
+<div class="modal-overlay" id="event-modal">
+    <div class="modal-box modal-sm">
+        <div class="modal-head">
+            <h3 id="event-modal-title"><i class="fa-solid fa-calendar-plus"></i> جدولة فعالية جديدة</h3>
+            <button class="modal-close-btn" onclick="closeModal('event-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="event-id">
+            <div class="form-group">
+                <label class="form-label">عنوان الفعالية</label>
+                <input type="text" id="event-title" class="form-input" placeholder="مثلاً: عطلة نهاية الأسبوع - مضاعفة الرفاهية بالبراري">
+            </div>
+            <div class="form-group">
+                <label class="form-label">نوع الفعالية</label>
+                <select id="event-type" class="form-select">
+                    <option value="luxury_drop_boost">مضاعفة أدوات الرفاهية في البراري (Luxury Boost)</option>
+                    <option value="global_drop_boost">مضاعفة السقوط العام بالسيرفر (Global Drop Boost)</option>
+                    <option value="speed_boost">مضاعفة سرعة سير الجيوش (Speed Boost)</option>
+                    <option value="truce">هدنة عامة بالسيرفر (Server Truce)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">قيمة المضاعف</label>
+                <input type="number" id="event-multiplier" class="form-input" min="1.0" max="10.0" step="0.5" value="2.0">
+            </div>
+            <div class="form-group">
+                <label class="form-label">تاريخ ووقت البدء</label>
+                <input type="datetime-local" id="event-time-start" class="form-input">
+            </div>
+            <div class="form-group">
+                <label class="form-label">تاريخ ووقت الانتهاء</label>
+                <input type="datetime-local" id="event-time-end" class="form-input">
+            </div>
+            <div class="form-group">
+                <label class="form-label">الحالة</label>
+                <select id="event-active" class="form-select">
+                    <option value="1">مفعلة</option>
+                    <option value="0">معطلة مؤقتاً</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary" onclick="closeModal('event-modal')">إلغاء</button>
+            <button class="btn btn-primary" onclick="saveServerEventSubmit()"><i class="fa-solid fa-check"></i> حفظ الفعالية</button>
+        </div>
+    </div>
+</div>
+
 <!-- حاوية التنبيهات العائمة (Toast Shelf) -->
 <div id="toast-shelf"></div>
 
@@ -1503,6 +1789,8 @@ function switchNav(tabId) {
         'tab-players': 'دليل إدارة اللاعبين',
         'tab-quick-grant': 'منح الموارد والمعدات',
         'tab-sanctions': 'العقوبات والحظر والرقابة',
+        'tab-server-config': 'إعدادات السيرفر والمعسكرات الحية (LiveOps)',
+        'tab-live-events': 'إدارة الفعاليات ومضاعفات الرفاهية المجدولة',
         'tab-staff': 'المشرفين والصلاحيات الإدارية',
         'tab-logs': 'سجل العمليات الإدارية (Audit Logs)'
     };
@@ -1516,6 +1804,8 @@ function switchNav(tabId) {
     // Lazy loads
     if (tabId === 'tab-players') fetchPlayers(1);
     if (tabId === 'tab-sanctions') fetchActiveSanctions();
+    if (tabId === 'tab-server-config') fetchServerConfigs();
+    if (tabId === 'tab-live-events') fetchServerEvents();
     if (tabId === 'tab-staff') fetchStaffList();
     if (tabId === 'tab-logs') fetchAuditLogs(1);
 }
@@ -2414,6 +2704,293 @@ async function fetchAuditLogs(page = 1) {
         }
     } catch(e) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--ruby-bright);">خطأ أثناء تحميل السجلات</td></tr>';
+    }
+}
+
+// ==========================================
+// 10. LiveOps & Dynamic Server Config JS
+// ==========================================
+let currentLoadedConfigs = {};
+
+async function fetchServerConfigs() {
+    try {
+        const res = await fetch('api.php?action=get_server_configs');
+        const json = await res.json();
+        if (json.state === 'ok') {
+            currentLoadedConfigs = json.data.configs;
+            for (const [key, item] of Object.entries(currentLoadedConfigs)) {
+                const el = document.getElementById(`cfg-${key}`);
+                if (el) {
+                    el.value = item.value;
+                }
+                const rangeEl = document.getElementById(`cfg-${key}-range`);
+                if (rangeEl) {
+                    rangeEl.value = item.value;
+                }
+            }
+            if (currentLoadedConfigs['live_banner_text']) {
+                const bEl = document.getElementById('live-banner-input');
+                if (bEl) bEl.value = currentLoadedConfigs['live_banner_text'].value;
+            }
+            if (currentLoadedConfigs['live_banner_color']) {
+                const cEl = document.getElementById('live-banner-color-input');
+                if (cEl) cEl.value = currentLoadedConfigs['live_banner_color'].value;
+            }
+        } else {
+            notify(json.message || 'فشل جلب إعدادات السيرفر', 'error');
+        }
+    } catch (e) {
+        notify('خطأ في الاتصال أثناء جلب إعدادات السيرفر', 'error');
+    }
+}
+
+async function saveAllServerConfigs() {
+    const configKeys = [
+        'camp_reset_interval_hours',
+        'gang_reset_interval_hours',
+        'squad_reset_interval_hours',
+        'camp_max_attack_per_player',
+        'wilderness_luxury_drop_multiplier',
+        'global_drop_rate_multiplier',
+        'equipment_drop_chance_percent',
+        'starter_player_gold',
+        'starter_protection_hours',
+        'resource_production_multiplier',
+        'march_speed_multiplier',
+        'building_speed_multiplier',
+        'study_speed_multiplier',
+        'recruit_speed_multiplier',
+        'camp_rally_duration_sec',
+        'city_attack_min_duration_sec',
+        'wounded_recovery_rate',
+        'maintenance_mode',
+        'maintenance_message',
+        'server_truce_active'
+    ];
+
+    const formData = new FormData();
+    formData.append('action', 'save_server_configs');
+    formData.append('csrf_token', adminCsrfToken);
+
+    for (const key of configKeys) {
+        const el = document.getElementById(`cfg-${key}`);
+        if (el) {
+            formData.append(`configs[${key}]`, el.value);
+        }
+    }
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.state === 'ok') {
+            notify('تم حفظ وتطبيق كافة إعدادات السيرفر حياً بنجاح! تم تحديث محرك اللعبة بدون الحاجة لـ Deploy.', 'success');
+            fetchServerConfigs();
+        } else {
+            notify(json.message || 'حدث خطأ أثناء الحفظ', 'error');
+        }
+    } catch (e) {
+        notify('خطأ في الاتصال أثناء حفظ الإعدادات', 'error');
+    }
+}
+
+async function executeTriggerCampReset() {
+    if (!confirm('هل أنت متأكد من رغبتك في تصفير وإعادة تعيين جميع المعسكرات والمناورات وعصابات التمرد في السيرفر الآن؟')) {
+        return;
+    }
+    const formData = new FormData();
+    formData.append('action', 'trigger_camp_reset');
+    formData.append('csrf_token', adminCsrfToken);
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.state === 'ok') {
+            notify('تم إرسال أمر تصفير المعسكرات بنجاح وإشعار اللاعبين!', 'success');
+        } else {
+            notify(json.message || 'فشل تنفيذ الإجراء', 'error');
+        }
+    } catch (e) {
+        notify('خطأ في الاتصال أثناء تنفيذ التصفير', 'error');
+    }
+}
+
+async function executeBroadcastBanner() {
+    const text = document.getElementById('live-banner-input').value.trim();
+    const color = document.getElementById('live-banner-color-input').value;
+    if (!text) {
+        notify('يرجى كتابة نص الإعلان أولاً', 'error');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('action', 'broadcast_banner');
+    formData.append('csrf_token', adminCsrfToken);
+    formData.append('text', text);
+    formData.append('color', color);
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.state === 'ok') {
+            notify('تم بث الإعلان العاجل لجميع المتصلين بنجاح!', 'success');
+        } else {
+            notify(json.message || 'فشل بث الإعلان', 'error');
+        }
+    } catch (e) {
+        notify('خطأ في الاتصال أثناء بث الإعلان', 'error');
+    }
+}
+
+// ── Scheduled Events Management ──
+async function fetchServerEvents() {
+    const tbody = document.getElementById('events-tbody');
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل الفعاليات...</td></tr>';
+
+    try {
+        const res = await fetch('api.php?action=get_server_events');
+        const json = await res.json();
+        if (json.state === 'ok') {
+            const events = json.data.events;
+            if (events.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">لا توجد أي فعاليات مجدولة حالياً. انقر على "جدولة فعالية جديدة" لإضافة فعالية.</td></tr>';
+                return;
+            }
+
+            const now = Math.floor(Date.now() / 1000);
+            tbody.innerHTML = events.map(ev => {
+                const isRunning = Number(ev.is_active) === 1 && now >= Number(ev.time_start) && now <= Number(ev.time_end);
+                const isEnded = now > Number(ev.time_end);
+                const startDate = new Date(Number(ev.time_start) * 1000).toLocaleString('ar-EG');
+                const endDate = new Date(Number(ev.time_end) * 1000).toLocaleString('ar-EG');
+
+                let statusBadge = '<span class="pill pill-ruby">معطلة</span>';
+                if (isRunning) {
+                    statusBadge = '<span class="pill pill-emerald"><i class="fa-solid fa-bolt"></i> نشطة الآن</span>';
+                } else if (isEnded) {
+                    statusBadge = '<span class="pill" style="background: rgba(255,255,255,0.1); color: #aaa;">منتهية</span>';
+                } else if (Number(ev.is_active) === 1) {
+                    statusBadge = '<span class="pill pill-amber">قادمة مجدولة</span>';
+                }
+
+                return `
+                    <tr>
+                        <td><strong>#${ev.id_event}</strong></td>
+                        <td><strong style="color: var(--gold-bright);">${ev.title}</strong></td>
+                        <td><code style="color: var(--sky);">${ev.event_type}</code></td>
+                        <td><span class="pill pill-amber">×${ev.multiplier}</span></td>
+                        <td>${startDate}</td>
+                        <td>${endDate}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="btn btn-secondary btn-sm" onclick='editServerEvent(${JSON.stringify(ev)})'><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteServerEvent(${ev.id_event})"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    } catch(e) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--ruby-bright);">خطأ أثناء تحميل الفعاليات</td></tr>';
+    }
+}
+
+function openCreateEventModal() {
+    document.getElementById('event-id').value = '';
+    document.getElementById('event-title').value = '';
+    document.getElementById('event-multiplier').value = '2.0';
+    document.getElementById('event-active').value = '1';
+
+    // Format current time and tomorrow
+    const now = new Date();
+    const tomorrow = new Date(now.getTime() + 86400000);
+    const toLocalISO = (d) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+
+    document.getElementById('event-time-start').value = toLocalISO(now);
+    document.getElementById('event-time-end').value = toLocalISO(tomorrow);
+    document.getElementById('event-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus"></i> جدولة فعالية جديدة';
+    openModal('event-modal');
+}
+
+function editServerEvent(ev) {
+    document.getElementById('event-id').value = ev.id_event;
+    document.getElementById('event-title').value = ev.title;
+    document.getElementById('event-type').value = ev.event_type;
+    document.getElementById('event-multiplier').value = ev.multiplier;
+    document.getElementById('event-active').value = ev.is_active;
+
+    const toLocalISO = (sec) => new Date(Number(sec) * 1000 - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+    document.getElementById('event-time-start').value = toLocalISO(ev.time_start);
+    document.getElementById('event-time-end').value = toLocalISO(ev.time_end);
+
+    document.getElementById('event-modal-title').innerHTML = '<i class="fa-solid fa-pen"></i> تعديل فعالية مجدولة';
+    openModal('event-modal');
+}
+
+async function saveServerEventSubmit() {
+    const id = document.getElementById('event-id').value;
+    const title = document.getElementById('event-title').value.trim();
+    const type = document.getElementById('event-type').value;
+    const multiplier = document.getElementById('event-multiplier').value;
+    const startStr = document.getElementById('event-time-start').value;
+    const endStr = document.getElementById('event-time-end').value;
+    const active = document.getElementById('event-active').value;
+
+    if (!title) {
+        notify('يرجى إدخال عنوان الفعالية', 'error');
+        return;
+    }
+    if (!startStr || !endStr) {
+        notify('يرجى تحديد تاريخ البدء والانتهاء', 'error');
+        return;
+    }
+
+    const timeStart = Math.floor(new Date(startStr).getTime() / 1000);
+    const timeEnd = Math.floor(new Date(endStr).getTime() / 1000);
+
+    const formData = new FormData();
+    formData.append('action', 'save_server_event');
+    formData.append('csrf_token', adminCsrfToken);
+    if (id) formData.append('id_event', id);
+    formData.append('title', title);
+    formData.append('event_type', type);
+    formData.append('multiplier', multiplier);
+    formData.append('time_start', timeStart);
+    formData.append('time_end', timeEnd);
+    formData.append('is_active', active);
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.state === 'ok') {
+            notify(json.message || 'تم حفظ الفعالية بنجاح!', 'success');
+            closeModal('event-modal');
+            fetchServerEvents();
+        } else {
+            notify(json.message || 'فشل حفظ الفعالية', 'error');
+        }
+    } catch(e) {
+        notify('خطأ في الاتصال أثناء حفظ الفعالية', 'error');
+    }
+}
+
+async function deleteServerEvent(id) {
+    if (!confirm('هل أنت متأكد من حذف هذه الفعالية المجدولة؟')) return;
+    const formData = new FormData();
+    formData.append('action', 'delete_server_event');
+    formData.append('csrf_token', adminCsrfToken);
+    formData.append('id_event', id);
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.state === 'ok') {
+            notify('تم حذف الفعالية بنجاح', 'success');
+            fetchServerEvents();
+        } else {
+            notify(json.message || 'فشل الحذف', 'error');
+        }
+    } catch(e) {
+        notify('خطأ في الاتصال أثناء الحذف', 'error');
     }
 }
 

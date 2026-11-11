@@ -11,6 +11,8 @@ $readOnlyActions = [
     'get_player_details',
     'get_admins',
     'get_logs',
+    'get_server_configs',
+    'get_server_events',
 ];
 $isReadOnlyAction = in_array($action, $readOnlyActions, true);
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? '';
@@ -941,6 +943,159 @@ switch ($action) {
             'page'        => $page,
             'total_pages' => ceil($total / $limit)
         ]);
+        break;
+
+    // ==========================================
+    // 10. LiveOps & Dynamic Server Configuration
+    // ==========================================
+    case 'get_server_configs':
+        requirePermission('view_logs');
+        require_once __DIR__ . '/../../app.elkaisar.com/services/ServerConfigService.php';
+        $configs = ServerConfigService::loadAll($db, true);
+        $events = ServerConfigService::getActiveEvents($db);
+
+        // Group by category
+        $grouped = [
+            'camps'   => [],
+            'drops'   => [],
+            'economy' => [],
+            'battle'  => [],
+            'system'  => []
+        ];
+        foreach ($configs as $k => $c) {
+            $cat = $c['category'];
+            if (!isset($grouped[$cat])) $grouped[$cat] = [];
+            $grouped[$cat][$k] = $c;
+        }
+
+        jsonSuccess([
+            'configs' => $configs,
+            'grouped' => $grouped,
+            'events'  => $events
+        ]);
+        break;
+
+    case 'save_server_configs':
+        requirePermission('manage_admins');
+        require_once __DIR__ . '/../../app.elkaisar.com/services/ServerConfigService.php';
+        $updates = $_POST['configs'] ?? [];
+        if (!is_array($updates) || empty($updates)) {
+            jsonError('لم يتم إرسال أي إعدادات للتحديث');
+        }
+
+        $currentUser = getAdminUser();
+        $adminId = $currentUser ? (int)$currentUser['id_admin'] : 0;
+        $updatedCount = 0;
+
+        foreach ($updates as $k => $v) {
+            ServerConfigService::set($db, $k, $v, $adminId);
+            $updatedCount++;
+        }
+
+        logAdminAction('update_server_config', 'system', 0, 'Server Config', "تحديث $updatedCount من إعدادات السيرفر الحية");
+
+        // Notify Node.js WebSocket server via local IPC endpoint
+        try {
+            $ch = curl_init('http://127.0.0.1:8081/api/internal/reload_config');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
+            curl_exec($ch);
+            curl_close($ch);
+        } catch (Exception $e) {
+            // Non-blocking
+        }
+
+        jsonSuccess(['updated_count' => $updatedCount], 'تم حفظ إعدادات السيرفر وتطبيقها حياً بنجاح');
+        break;
+
+    case 'trigger_camp_reset':
+        requirePermission('manage_admins');
+        logAdminAction('trigger_camp_reset', 'world', 0, 'World Units', "إعادة تعيين وتصفير فوري لجميع معسكرات ومناورات السيرفر");
+
+        $notified = false;
+        try {
+            $ch = curl_init('http://127.0.0.1:8081/api/internal/reset_camps');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1500);
+            $res = curl_exec($ch);
+            curl_close($ch);
+            if ($res) $notified = true;
+        } catch (Exception $e) {}
+
+        jsonSuccess(['ws_notified' => $notified], 'تم إرسال أمر إعادة تعيين المعسكرات وتصفيرها على مستوى السيرفر كاملاً بنجاح');
+        break;
+
+    case 'broadcast_banner':
+        requirePermission('manage_admins');
+        $text = trim($_POST['text'] ?? '');
+        $color = trim($_POST['color'] ?? '#dfba6b');
+        if (empty($text)) {
+            jsonError('يرجى كتابة نص الإعلان أولاً');
+        }
+
+        require_once __DIR__ . '/../../app.elkaisar.com/services/ServerConfigService.php';
+        $currentUser = getAdminUser();
+        $adminId = $currentUser ? (int)$currentUser['id_admin'] : 0;
+        ServerConfigService::set($db, 'live_banner_text', $text, $adminId);
+        ServerConfigService::set($db, 'live_banner_color', $color, $adminId);
+
+        logAdminAction('broadcast_banner', 'system', 0, 'World Broadcast', "بث إعلان عاجل: $text");
+
+        // Notify WS to broadcast immediately
+        try {
+            $ch = curl_init('http://127.0.0.1:8081/api/internal/broadcast_banner');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['text' => $text, 'color' => $color]));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1000);
+            curl_exec($ch);
+            curl_close($ch);
+        } catch (Exception $e) {}
+
+        jsonSuccess([], 'تم بث الإعلان العاجل لجميع اللاعبين المتصلين بنجاح');
+        break;
+
+    case 'get_server_events':
+        requirePermission('view_logs');
+        $stmt = $db->query("SELECT * FROM `server_events` ORDER BY `id_event` DESC");
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        jsonSuccess(['events' => $events]);
+        break;
+
+    case 'save_server_event':
+        requirePermission('manage_admins');
+        $idEvent = (int)($_POST['id_event'] ?? 0);
+        $title = trim($_POST['title'] ?? '');
+        $eventType = trim($_POST['event_type'] ?? 'luxury_drop_boost');
+        $multiplier = (float)($_POST['multiplier'] ?? 1.5);
+        $timeStart = (int)($_POST['time_start'] ?? time());
+        $timeEnd = (int)($_POST['time_end'] ?? (time() + 86400));
+        $isActive = !empty($_POST['is_active']) ? 1 : 0;
+
+        if (empty($title)) {
+            jsonError('يرجى تحديد عنوان الفعالية');
+        }
+
+        if ($idEvent > 0) {
+            $stmt = $db->prepare("UPDATE `server_events` SET `title` = ?, `event_type` = ?, `multiplier` = ?, `time_start` = ?, `time_end` = ?, `is_active` = ? WHERE `id_event` = ?");
+            $stmt->execute([$title, $eventType, $multiplier, $timeStart, $timeEnd, $isActive, $idEvent]);
+            logAdminAction('edit_server_event', 'event', $idEvent, $title, "تعديل فعالية: $title");
+            jsonSuccess([], 'تم تحديث الفعالية بنجاح');
+        } else {
+            $stmt = $db->prepare("INSERT INTO `server_events` (`title`, `event_type`, `multiplier`, `time_start`, `time_end`, `is_active`) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$title, $eventType, $multiplier, $timeStart, $timeEnd, $isActive]);
+            $insId = (int)$db->lastInsertId();
+            logAdminAction('create_server_event', 'event', $insId, $title, "إنشاء فعالية جديدة: $title");
+            jsonSuccess(['id_event' => $insId], 'تم إنشاء وجدولة الفعالية بنجاح');
+        }
+        break;
+
+    case 'delete_server_event':
+        requirePermission('manage_admins');
+        $idEvent = (int)($_POST['id_event'] ?? 0);
+        $db->prepare("DELETE FROM `server_events` WHERE `id_event` = ?")->execute([$idEvent]);
+        logAdminAction('delete_server_event', 'event', $idEvent, "Event #$idEvent", "حذف فعالية مجدولة");
+        jsonSuccess([], 'تم حذف الفعالية بنجاح');
         break;
 
     default:
