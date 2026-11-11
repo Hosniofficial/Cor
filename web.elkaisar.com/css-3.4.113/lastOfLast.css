@@ -2146,9 +2146,9 @@ body #luck-wheel-over-lay {
 
     #chat-box {
         width: min(580px, calc(100vw - 16px));
-        left: 50%;
-        margin-left: 0;
-        transform: translateX(-50%);
+        left: calc(50% - 18px) !important;
+        margin-left: 0 !important;
+        transform: translateX(-50%) !important;
         bottom: 0;
     }
 
@@ -2171,8 +2171,7 @@ body #luck-wheel-over-lay {
     #godGateBtnWrapper,
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
-    #PlayerTeamWrapper,
-    #luck-wheel-btn {
+    #PlayerTeamWrapper {
         bottom: 160px !important;
         top: auto !important;
         transform: scale(.78);
@@ -2197,7 +2196,13 @@ body #luck-wheel-over-lay {
     }
 
     #luck-wheel-btn {
-        left: 210px !important;
+        bottom: 156px !important;
+        top: auto !important;
+        left: 212px !important;
+        transform: scale(0.96) !important;
+        transform-origin: bottom left;
+        z-index: 10 !important;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) !important;
     }
 }
 
@@ -2215,10 +2220,14 @@ body #luck-wheel-over-lay {
     #godGateBtnWrapper,
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
-    #PlayerTeamWrapper,
-    #luck-wheel-btn {
+    #PlayerTeamWrapper {
         bottom: 144px !important;
         transform: scale(.70);
+    }
+
+    #luck-wheel-btn {
+        bottom: 142px !important;
+        transform: scale(0.86) !important;
     }
 
     #menu-bar .mid {
@@ -2264,10 +2273,14 @@ body #luck-wheel-over-lay {
     #godGateBtnWrapper,
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
-    #PlayerTeamWrapper,
-    #luck-wheel-btn {
+    #PlayerTeamWrapper {
         bottom: 134px !important;
         transform: scale(.65);
+    }
+
+    #luck-wheel-btn {
+        bottom: 132px !important;
+        transform: scale(0.80) !important;
     }
 }
 
@@ -2299,5 +2312,10 @@ body #luck-wheel-over-lay {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+#luck-wheel-btn {
+    transform: scale(1.10);
+    transform-origin: bottom left;
 }
 

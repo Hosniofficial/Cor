@@ -3117,7 +3117,7 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         this.input.on('gameobjectup', function(P, Obj, E) {
             var pressedObj = downObj;
             downObj = null;
-            if (P.downElement !== Elkaisar.GE.Game.canvas || P.getDuration() > 250 || Obj !== pressedObj)
+            if (P.downElement !== Elkaisar.GE.Game.canvas || P.getDuration() > 400 || Obj !== pressedObj)
                 return;
             Obj.emit("click", Obj, P, E);
             E.stopPropagation();
@@ -9991,16 +9991,15 @@ var BuildingConstData = [{
             return lvl * 3 * 60;
         },
         getHitArea: function() {
-            if (Number(Elkaisar.City.getCity().BuildingLvl.wall) >= 10) {
-                return [510, 3, 1, 256, 5, 388, 576, 104, 609, 11];
-            } else if (Number(Elkaisar.City.getCity().BuildingLvl.wall) >= 8) {
-                return [598, 11, 588, 92, 9, 391, 7, 299, 267, 161, 259, 150, 295, 130, 323, 133, 560, 12];
-            } else if (Number(Elkaisar.City.getCity().BuildingLvl.wall) >= 4) {
-                return [559, 37, 4, 328, 26, 391, 565, 136, 577, 53];
-            } else if (Number(Elkaisar.City.getCity().BuildingLvl.wall) >= 1) {
-                return [5, 342, 564, 51, 579, 39, 596, 51, 560, 122, 41, 392];
+            var wallLvl = Number(Elkaisar.City.getCity().BuildingLvl.wall);
+            if (wallLvl >= 10) {
+                return [0, 40, 0, 150, 172, 235, 285, 290, 440, 290, 440, 200, 285, 165, 215, 105, 172, 35, 130, 105];
+            } else if (wallLvl >= 8) {
+                return [0, 45, 0, 150, 172, 235, 285, 290, 430, 290, 430, 205, 285, 170, 210, 110, 172, 40, 135, 110];
+            } else if (wallLvl >= 4) {
+                return [0, 50, 0, 150, 172, 235, 285, 290, 420, 290, 420, 210, 285, 175, 205, 115, 172, 45, 140, 115];
             } else {
-                return [564, 92, 1, 369, 22, 389, 565, 120];
+                return [0, 60, 0, 150, 172, 235, 285, 290, 410, 290, 410, 215, 285, 180, 172, 150];
             }
         },
         sprit_name: "wall_1",
@@ -10360,7 +10359,12 @@ function building_lvl_lable(x, y, place) {
     BuildingOnFloor[place].LvlImage = Elkaisar.GE.CityScene.add.image(badgeX, badgeY, badgeKey)
         .setOrigin(0.5, 0.5)
         .setDisplaySize(20, 22)
-        .setDepth(baseDepth + 4);
+        .setDepth(baseDepth + 4)
+        .setInteractive({ useHandCursor: true })
+        .on("click", function() {
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            buildingClick(place);
+        });
 
     BuildingOnFloor[place].LvlText = Elkaisar.GE.CityScene.add.text(badgeX, badgeY, lvl, {
         color: '#FFFFFF',
@@ -10381,15 +10385,6 @@ function cityBuildingInteractiveConfig(buildingType) {
         ? constData.getHitArea()
         : (constData ? constData.hitArea : null);
     if (Array.isArray(hitArea) && hitArea.length >= 6) {
-        if (Number(buildingType) === BUILDING_TYPS.WALL && constData.getSpriteName) {
-            var wallTexture = Elkaisar.GE.Game.textures.get(constData.getSpriteName());
-            var wallImage = wallTexture && wallTexture.getSourceImage();
-            if (wallImage) {
-                hitArea = hitArea.map(function(coordinate, index) {
-                    return coordinate * (index % 2 === 0 ? wallImage.width / 640 : wallImage.height / 400);
-                });
-            }
-        }
         config.hitArea = new Phaser.Geom.Polygon(hitArea);
         config.hitAreaCallback = Phaser.Geom.Polygon.Contains;
     }
@@ -10529,9 +10524,11 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.WALL))
         .setOrigin(0, 0)
         .setDepth(200)
-        .on("click", function(p) {
+        .on("click", function(obj, p, event) {
             if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
-            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
+            var pointer = p || obj;
+            var evt = (pointer && pointer.event) || event;
+            if (evt && evt.target && evt.target.tagName && evt.target.tagName !== "CANVAS") return;
             buildingClick("wall");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -16822,8 +16819,16 @@ function upgradeBenefits(type, lvl) {
 
 
 
+var _lastBuildingClickTime = 0;
+var _lastBuildingClickPlace = null;
 function buildingClick(place, fast) {
-    if ($("#luck-wheel-over-lay").length > 0) return;
+    if ($("#luck-wheel-over-lay:visible").length > 0) return;
+    var now = Date.now();
+    if (place === _lastBuildingClickPlace && (now - _lastBuildingClickTime) < 300) {
+        return;
+    }
+    _lastBuildingClickTime = now;
+    _lastBuildingClickPlace = place;
     if (!fast) {
         fast = false;
     }
