@@ -2133,17 +2133,17 @@ body #luck-wheel-over-lay {
 
 @media (max-width: 760px), (max-height: 650px) {
     #player-profile {
-        transform: scale(.62);
+        transform: scale(.78);
         transform-origin: bottom left;
     }
 
     #city-profile {
-        transform: scale(.62);
+        transform: scale(.78);
         transform-origin: bottom right;
     }
 
     #chat-box {
-        width: min(520px, calc(100vw - 16px));
+        width: min(580px, calc(100vw - 16px));
         left: 50%;
         margin-left: 0;
         transform: translateX(-50%);
@@ -2151,37 +2151,66 @@ body #luck-wheel-over-lay {
     }
 
     #chat-area {
-        height: 56px;
+        height: 85px;
     }
 
     #input-area {
-        height: 34px;
+        height: 38px;
     }
 
     #city_col {
         top: 48px;
         bottom: auto;
-        transform: scale(.62);
+        transform: scale(.78);
         transform-origin: top right;
     }
 
+    #godGateBtnWrapper,
+    #helpGateBtnWrapper,
+    #ArenaChallangeBtnWrapper,
+    #PlayerTeamWrapper,
     #luck-wheel-btn {
-        top: 100px;
-        bottom: auto;
-        left: calc(50% + 10px);
+        bottom: 160px !important;
+        top: auto !important;
+        transform: scale(.78);
+        transform-origin: bottom left;
+        z-index: 10 !important;
+    }
+
+    #godGateBtnWrapper {
+        left: 5px !important;
+    }
+
+    #helpGateBtnWrapper {
+        left: 58px !important;
+    }
+
+    #ArenaChallangeBtnWrapper {
+        left: 108px !important;
     }
 
     #PlayerTeamWrapper {
-        top: 100px;
-        bottom: auto;
-        left: calc(50% - 90px);
+        left: 158px !important;
+    }
+
+    #luck-wheel-btn {
+        left: 210px !important;
     }
 }
 
 @media (max-width: 600px) {
     #player-profile,
     #city-profile {
-        transform: scale(.54);
+        transform: scale(.70);
+    }
+
+    #godGateBtnWrapper,
+    #helpGateBtnWrapper,
+    #ArenaChallangeBtnWrapper,
+    #PlayerTeamWrapper,
+    #luck-wheel-btn {
+        bottom: 144px !important;
+        transform: scale(.70);
     }
 
     #menu-bar .mid {
@@ -2216,7 +2245,16 @@ body #luck-wheel-over-lay {
 @media (max-width: 460px) {
     #player-profile,
     #city-profile {
-        transform: scale(.45);
+        transform: scale(.65);
+    }
+
+    #godGateBtnWrapper,
+    #helpGateBtnWrapper,
+    #ArenaChallangeBtnWrapper,
+    #PlayerTeamWrapper,
+    #luck-wheel-btn {
+        bottom: 134px !important;
+        transform: scale(.65);
     }
 }
 
