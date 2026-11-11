@@ -43320,12 +43320,14 @@ $("#city-profile-slider img").click(function() {
 
         $(this).css("transform", "rotateZ(90deg)");
         $("#city-profile").css("right", "4px");
+        $("#city_col").show();
         $(this).removeClass("smalled");
 
     } else {
 
         $(this).css("transform", "rotateZ(-90deg)");
         $("#city-profile").css("right", (-425 * getCityHudScale()) + "px");
+        $("#city_col").hide();
         $(this).addClass("smalled");
     }
     // Crafty.audio.play("close_sound");
