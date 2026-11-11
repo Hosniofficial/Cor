@@ -2219,3 +2219,18 @@ body #luck-wheel-over-lay {
         transform: scale(.45);
     }
 }
+
+/* Empty slot building selection modal layout and scroll fix */
+.empty_place {
+    height: 405px !important;
+}
+.empty_place .left-content {
+    height: 385px !important;
+    max-height: 385px !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+}
+.empty_place ul.total {
+    padding-bottom: 25px !important;
+}
+
