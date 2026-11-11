@@ -45,7 +45,7 @@
     position: fixed;
     z-index: 10;
     right: 5px;
-    bottom: 250px;
+    bottom: 205px;
     width: 100px;
 }
 
@@ -2159,10 +2159,11 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        top: 48px;
-        bottom: auto;
+        bottom: 160px !important;
+        top: auto !important;
+        right: 5px !important;
         transform: scale(.78);
-        transform-origin: top right;
+        transform-origin: bottom right;
     }
 
     #godGateBtnWrapper,
@@ -2201,6 +2202,11 @@ body #luck-wheel-over-lay {
 @media (max-width: 600px) {
     #player-profile,
     #city-profile {
+        transform: scale(.70);
+    }
+
+    #city_col {
+        bottom: 144px !important;
         transform: scale(.70);
     }
 
@@ -2245,6 +2251,11 @@ body #luck-wheel-over-lay {
 @media (max-width: 460px) {
     #player-profile,
     #city-profile {
+        transform: scale(.65);
+    }
+
+    #city_col {
+        bottom: 134px !important;
         transform: scale(.65);
     }
 
