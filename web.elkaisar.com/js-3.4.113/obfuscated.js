@@ -43307,7 +43307,7 @@ $("#p-provile-slider img").click(function() {
     } else {
 
         $(this).css("transform", "rotateZ(90deg)");
-        $("#player-profile").css("left", (-380 * getCityHudScale()) + "px");
+        $("#player-profile").css("left", (-430 * getCityHudScale()) + "px");
         icons.hide();
         $(this).addClass("smalled");
     }
@@ -43326,7 +43326,7 @@ $("#city-profile-slider img").click(function() {
     } else {
 
         $(this).css("transform", "rotateZ(-90deg)");
-        $("#city-profile").css("right", (-425 * getCityHudScale()) + "px");
+        $("#city-profile").css("right", (-470 * getCityHudScale()) + "px");
         $("#city_col").hide();
         $(this).addClass("smalled");
     }

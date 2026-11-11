@@ -45,7 +45,7 @@
     position: fixed;
     z-index: 10;
     right: 5px;
-    bottom: 205px;
+    bottom: 225px;
     width: 100px;
 }
 
@@ -2133,11 +2133,13 @@ body #luck-wheel-over-lay {
 
 @media (max-width: 760px), (max-height: 650px) {
     #player-profile {
+        width: 425px;
         transform: scale(.78);
         transform-origin: bottom left;
     }
 
     #city-profile {
+        width: 465px;
         transform: scale(.78);
         transform-origin: bottom right;
     }
@@ -2159,7 +2161,7 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 160px !important;
+        bottom: 182px !important;
         top: auto !important;
         right: 5px !important;
         transform: scale(.78);
@@ -2206,7 +2208,7 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 144px !important;
+        bottom: 162px !important;
         transform: scale(.70);
     }
 
@@ -2255,7 +2257,7 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 134px !important;
+        bottom: 148px !important;
         transform: scale(.65);
     }
 
