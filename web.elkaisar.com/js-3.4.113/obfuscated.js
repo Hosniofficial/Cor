@@ -3076,7 +3076,7 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var minCityZoom = 1;
         var centerCityCam = function() {
             var winW = cam.width || window.innerWidth;
-            minCityZoom = Math.max(1, winW / floor_width);
+            minCityZoom = Math.min(1, Math.max(0.35, winW / floor_width));
             cam.setZoom(minCityZoom);
             cam.centerOn(floor_width / 2, floor_height / 2);
         };
@@ -3102,13 +3102,15 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var This = this;
         var downObj;
         this.input.on('gameobjectdown', function(p, obj, E) {
-            if (this.isMapDraging)
+            if (This.isMapDraging)
                 return;
             downObj = obj;
             E.stopPropagation();
         });
         this.input.on('gameobjectup', function(P, Obj, E) {
-            if (P.downElement !== Elkaisar.GE.Game.canvas || P.getDuration() > 250)
+            var pressedObj = downObj;
+            downObj = null;
+            if (P.downElement !== Elkaisar.GE.Game.canvas || P.getDuration() > 250 || Obj !== pressedObj)
                 return;
             Obj.emit("click", Obj, P, E);
             E.stopPropagation();
@@ -10352,6 +10354,27 @@ function building_lvl_lable(x, y, place) {
     return BuildingOnFloor[place].LvlImage;
 }
 
+function cityBuildingInteractiveConfig(buildingType) {
+    var config = { useHandCursor: true };
+    var constData = BuildingConstData[buildingType];
+    var hitArea = constData && typeof constData.getHitArea === "function"
+        ? constData.getHitArea()
+        : (constData ? constData.hitArea : null);
+    if (Array.isArray(hitArea) && hitArea.length >= 6) {
+        if (Number(buildingType) === BUILDING_TYPS.WALL && constData.getSpriteName) {
+            var wallTexture = Elkaisar.GE.Game.textures.get(constData.getSpriteName());
+            var wallImage = wallTexture && wallTexture.getSourceImage();
+            if (wallImage) {
+                hitArea = hitArea.map(function(coordinate, index) {
+                    return coordinate * (index % 2 === 0 ? wallImage.width / 640 : wallImage.height / 400);
+                });
+            }
+        }
+        config.hitArea = new Phaser.Geom.Polygon(hitArea);
+        config.hitAreaCallback = Phaser.Geom.Polygon.Contains;
+    }
+    return config;
+}
 
 function building_hammer_animate(BuildingPlace) {
     if (typeof isUpgradingNow === "function" && !isUpgradingNow(BuildingPlace))
@@ -10435,29 +10458,19 @@ Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
         : 0;
     var constData = BuildingConstData[bType];
     var spriteName = (constData && constData.sprit_name) ? constData.sprit_name : "no_building";
+    var interactiveConfig = cityBuildingInteractiveConfig(bType);
 
     var drawY = (bType && bType !== BUILDING_TYPS.SPACE) ? (y - 32) : y;
     var depth = Math.floor(y) + 20;
 
     BuildingOnFloor[BuildingPlace] = Elkaisar.GE.CityScene.add.image(x, drawY, spriteName)
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(interactiveConfig)
         .setOrigin(0, 0)
         .setDepth(depth)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, function(p, x_pos, y_pos, event) {
+        .on("click", function(p, x_pos, y_pos, event) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             if (event && event.stopPropagation) event.stopPropagation();
-            buildingClick(BuildingPlace);
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
-            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
-            if (event && event.stopPropagation) event.stopPropagation();
-            buildingClick(BuildingPlace);
-        })
-        .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
-            if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick(BuildingPlace);
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
@@ -10475,10 +10488,10 @@ Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
 Elkaisar.GE.AddCityFixedBuilding = function() {
 
     BuildingOnFloor.palace = Elkaisar.GE.CityScene.add.image(416, 12, "palace")
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.PALACE))
         .setOrigin(0, 0)
         .setDepth(150)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("palace");
@@ -10493,10 +10506,10 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         wallSprite = BuildingConstData[Elkaisar.City.getCity().BuildingType["wall"]].getSpriteName();
     }
     BuildingOnFloor.wall = Elkaisar.GE.CityScene.add.image(0, 110, wallSprite)
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.WALL))
         .setOrigin(0, 0)
         .setDepth(200)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wall");
@@ -10507,10 +10520,10 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
     building_hammer_animate("wall");
 
     BuildingOnFloor.farm = Elkaisar.GE.CityScene.add.image(0, 273, "farm")
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.FARM))
         .setOrigin(0, 0)
         .setDepth(350)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("farm");
@@ -10521,10 +10534,10 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
     building_hammer_animate("farm");
 
     BuildingOnFloor.mine = Elkaisar.GE.CityScene.add.image(810, 25, "mine")
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.MINE))
         .setOrigin(0, 0)
         .setDepth(90)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("mine");
@@ -10535,10 +10548,10 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
     building_hammer_animate("mine");
 
     BuildingOnFloor.stone = Elkaisar.GE.CityScene.add.image(600, 5, "stone")
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.STONE))
         .setOrigin(0, 0)
         .setDepth(70)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("stone");
@@ -10549,10 +10562,10 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
     building_hammer_animate("stone");
 
     BuildingOnFloor.wood = Elkaisar.GE.CityScene.add.image(860, 148, "wood")
-        .setInteractive({ useHandCursor: true })
+        .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.WOOD))
         .setOrigin(0, 0)
         .setDepth(220)
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p) {
+        .on("click", function(p) {
             if ($("#luck-wheel-over-lay").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wood");
@@ -31265,6 +31278,33 @@ Elkaisar.WsLib.World.Battel.Started = function(data) {
 
 }
 
+Elkaisar.WsLib.World.Battel.ParticipantsUpdated = function(data) {
+    const battleId = Number(data.id_battel);
+    const battleKey = Elkaisar.World.MapBattel.getBattleKey(data);
+    const mapBattle = Elkaisar.World.MapBattel.BattelList[battleKey];
+    if (mapBattle) {
+        mapBattle.attackNum = Number(data.attackNum) || 0;
+        mapBattle.defenceNum = Number(data.defenceNum) || 0;
+    }
+
+    const battles = Elkaisar.Battel.Battels || [];
+    for (const key in battles) {
+        if (Number(battles[key].id_battel) === battleId) {
+            battles[key].attackNum = Number(data.attackNum) || 0;
+            battles[key].defenceNum = Number(data.defenceNum) || 0;
+        }
+    }
+
+    const openBattleId = Number(
+        $("#JOIN_ATTACK_SIDE").attr("data-id-battel")
+        || $("#JOIN_DEFENCE_SIDE").attr("data-id-battel")
+    );
+    if (openBattleId === battleId) {
+        $(".attack-side .joined-num").html(Number(data.attackNum) || 0);
+        $(".defense-side .joined-num").html(Number(data.defenceNum) || 0);
+    }
+}
+
 Elkaisar.WsLib.World.Battel.Ended = function(data) {
     var world_unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
     if (world_unit && !data.stillActive) {
@@ -36744,6 +36784,12 @@ function battelStart() {
                     Hero['heroAttackProc']();
                     PLAYER_NOTIF['hero_in_battel'] = Number(PLAYER_NOTIF['hero_in_battel']) + 0x1, city_profile['refresh_hero_view']();
                     var Battel = JsonObject['Battel'];
+                    if (ws.readyState === 1) {
+                        ws.send(JSON.stringify({
+                            url: 'Battel/joined',
+                            data: { idBattel: Number(battel_data['id_battel']) }
+                        }));
+                    }
 
                     var found = false;
                     for (var iii in Elkaisar['Battel']['Battels']) {
@@ -43194,18 +43240,32 @@ function isUpgradingNow(place) {
 
 
 
+function getCityHudScale() {
+    if (!window.matchMedia("(max-width: 760px), (max-height: 650px)").matches)
+        return 1;
+    if (window.innerWidth <= 460)
+        return 0.45;
+    return window.innerWidth <= 600 ? 0.54 : 0.62;
+}
+
+function getCityHudChatBottom() {
+    if (!window.matchMedia("(max-width: 760px), (max-height: 650px)").matches)
+        return 0;
+    return window.innerWidth <= 460 ? 108 : 145;
+}
+
 $("#UPDOWN-chat img").click(function() {
 
     if ($(this).hasClass("smalled")) {
 
         $(this).css("transform", "rotateZ(180deg)");
-        $("#chat-box").css("bottom", "0px");
+        $("#chat-box").css("bottom", getCityHudChatBottom() + "px");
         $(this).removeClass("smalled");
 
     } else {
 
         $(this).css("transform", "rotateZ(0deg)");
-        $("#chat-box").css("bottom", "-220px");
+        $("#chat-box").css("bottom", (-Math.max($("#chat-box").outerHeight() - 22, 50)) + "px");
         $(this).addClass("smalled");
     }
     // Crafty.audio.play("close_sound");
@@ -43216,14 +43276,14 @@ $("#p-provile-slider img").click(function() {
 
         $(this).css("transform", "rotateZ(-90deg)");
         $("#player-profile").css("left", "0px");
-        $("#luck-wheel-btn").css("left", "310px");
+        $("#luck-wheel-btn").css("left", (310 * getCityHudScale()) + "px");
         $(this).removeClass("smalled");
 
     } else {
 
         $(this).css("transform", "rotateZ(90deg)");
-        $("#player-profile").css("left", "-380px");
-        $("#luck-wheel-btn").css("left", "-75px");
+        $("#player-profile").css("left", (-380 * getCityHudScale()) + "px");
+        $("#luck-wheel-btn").css("left", (-75 * getCityHudScale()) + "px");
         $(this).addClass("smalled");
     }
     //Crafty.audio.play("close_sound");
@@ -43240,7 +43300,7 @@ $("#city-profile-slider img").click(function() {
     } else {
 
         $(this).css("transform", "rotateZ(-90deg)");
-        $("#city-profile").css("right", "-425px");
+        $("#city-profile").css("right", (-425 * getCityHudScale()) + "px");
         $(this).addClass("smalled");
     }
     // Crafty.audio.play("close_sound");

@@ -368,10 +368,46 @@ CREATE TABLE IF NOT EXISTS `world_battel` (
     `time_start` INT NOT NULL DEFAULT 0,
     `time_arrive` INT NOT NULL DEFAULT 0,
     `time_back` INT NOT NULL DEFAULT 0,
+    `return_duration` INT NOT NULL DEFAULT 0,
     `state` VARCHAR(32) NOT NULL DEFAULT 'marching',
     KEY `idx_world_battel_return` (`state`, `time_back`),
     KEY `idx_world_battel_player_return` (`id_player`, `state`, `time_back`),
     KEY `idx_world_battel_hero_return` (`id_hero`, `state`, `time_back`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `world_battel_member` (
+    `id_member` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `id_battel` INT NOT NULL,
+    `id_player` INT NOT NULL,
+    `id_city` INT NOT NULL,
+    `id_hero` INT NOT NULL,
+    `side` TINYINT NOT NULL DEFAULT 1,
+    `task` INT NOT NULL DEFAULT 0,
+    `x_city` INT NOT NULL DEFAULT 0,
+    `y_city` INT NOT NULL DEFAULT 0,
+    `time_start` INT NOT NULL DEFAULT 0,
+    `time_arrive` INT NOT NULL DEFAULT 0,
+    `time_back` INT NOT NULL DEFAULT 0,
+    `return_duration` INT NOT NULL DEFAULT 0,
+    `state` VARCHAR(32) NOT NULL DEFAULT 'marching',
+    UNIQUE KEY `uq_world_battel_member_hero` (`id_battel`, `id_hero`),
+    KEY `idx_world_battel_member_arrival` (`id_battel`, `side`, `state`, `time_arrive`),
+    KEY `idx_world_battel_member_player` (`id_player`, `state`, `time_arrive`),
+    KEY `idx_world_battel_member_return` (`id_player`, `state`, `time_back`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `world_unit_state` (
+    `x_coord` SMALLINT NOT NULL,
+    `y_coord` SMALLINT NOT NULL,
+    `unit_type` SMALLINT NOT NULL,
+    `unit_subtype` SMALLINT NOT NULL DEFAULT 0,
+    `base_lvl` SMALLINT NOT NULL,
+    `current_lvl` SMALLINT NOT NULL,
+    `max_lvl` SMALLINT NOT NULL,
+    `next_reset_at` INT NOT NULL DEFAULT 0,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`x_coord`, `y_coord`),
+    KEY `idx_world_unit_state_reset` (`next_reset_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `god_gate_player` (

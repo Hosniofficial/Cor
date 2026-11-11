@@ -2130,3 +2130,92 @@ body #luck-wheel-over-lay {
         margin-left: 10px;
     }
 }
+
+@media (max-width: 760px), (max-height: 650px) {
+    #player-profile {
+        transform: scale(.62);
+        transform-origin: bottom left;
+    }
+
+    #city-profile {
+        transform: scale(.62);
+        transform-origin: bottom right;
+    }
+
+    #chat-box {
+        width: min(520px, calc(100vw - 16px));
+        left: 50%;
+        margin-left: 0;
+        transform: translateX(-50%);
+        bottom: 0;
+    }
+
+    #chat-area {
+        height: 56px;
+    }
+
+    #input-area {
+        height: 34px;
+    }
+
+    #city_col {
+        top: 48px;
+        bottom: auto;
+        transform: scale(.62);
+        transform-origin: top right;
+    }
+
+    #luck-wheel-btn {
+        top: 100px;
+        bottom: auto;
+        left: calc(50% + 10px);
+    }
+
+    #PlayerTeamWrapper {
+        top: 100px;
+        bottom: auto;
+        left: calc(50% - 90px);
+    }
+}
+
+@media (max-width: 600px) {
+    #player-profile,
+    #city-profile {
+        transform: scale(.54);
+    }
+
+    #menu-bar .mid {
+        display: none;
+    }
+
+    #menu-bar .right-content,
+    #menu-bar .right {
+        height: 45px;
+    }
+
+    #menu-bar .right-content ul {
+        margin-top: 0;
+    }
+
+    #menu-bar .right-content ul li {
+        flex-basis: 26px;
+        width: 26px;
+    }
+
+    #menu-bar .right-content ul li .image {
+        width: 26px;
+        height: 36px;
+        margin-top: 3px;
+    }
+
+    #menu-bar .right-content ul li .text {
+        display: none;
+    }
+}
+
+@media (max-width: 460px) {
+    #player-profile,
+    #city-profile {
+        transform: scale(.45);
+    }
+}
