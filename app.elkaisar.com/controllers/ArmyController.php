@@ -350,15 +350,34 @@ class ArmyController {
     }
 
     public static function cancelBatch($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $playerId = (int)$player['id_player'];
         $taskId = isset($_REQUEST['idTask']) ? (int)$_REQUEST['idTask'] : (isset($_REQUEST['idWorking']) ? (int)$_REQUEST['idWorking'] : 0);
         $cityId = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 1;
+        requirePlayerOwnedCity($db, $player, $cityId);
+        $refund = 0;
         if ($taskId > 0) {
-            $db->prepare("DELETE FROM timed_task WHERE id_task = ? AND id_city = ?")->execute([$taskId, $cityId]);
-            $db->prepare("UPDATE city SET food = LEAST(food_cap, food + 500) WHERE id_city = ?")->execute([$cityId]);
+            $db->beginTransaction();
+            try {
+                $delete = $db->prepare("DELETE FROM timed_task WHERE id_task = ? AND id_city = ?");
+                $delete->execute([$taskId, $cityId]);
+                if ($delete->rowCount() === 1) {
+                    $credited = ResourceService::creditCityUpToLimit($db, $cityId, $playerId, ['food' => 500]);
+                    $refund = $credited['food'] ?? 0;
+                }
+                $db->commit();
+            } catch (Throwable $error) {
+                if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                throw $error;
+            }
         }
-        $freshCity = $db->query("SELECT * FROM city WHERE id_city = $cityId")->fetch();
+        $freshStmt = $db->prepare("SELECT * FROM city WHERE id_city = ? AND id_player = ?");
+        $freshStmt->execute([$cityId, $playerId]);
+        $freshCity = $freshStmt->fetch();
         foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
-        sendJson(['state' => 'ok', 'City' => $freshCity, 'cityRes' => $freshCity]);
+        sendJson(['state' => 'ok', 'City' => $freshCity, 'cityRes' => $freshCity, 'refund' => ['food' => $refund]]);
     }
 
     public static function speedUpStudyTask($db) {

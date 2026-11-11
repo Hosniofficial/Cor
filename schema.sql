@@ -136,11 +136,11 @@ CREATE TABLE IF NOT EXISTS `city` (
     `pop` INT NOT NULL DEFAULT 900,
     `pop_LSS` INT NOT NULL DEFAULT 0,
     `pop_state` INT NOT NULL DEFAULT 0,
-    `coin` INT NOT NULL DEFAULT 100000,
-    `food` INT NOT NULL DEFAULT 50000,
-    `wood` INT NOT NULL DEFAULT 50000,
-    `stone` INT NOT NULL DEFAULT 50000,
-    `metal` INT NOT NULL DEFAULT 50000,
+    `coin` BIGINT NOT NULL DEFAULT 100000,
+    `food` BIGINT NOT NULL DEFAULT 50000,
+    `wood` BIGINT NOT NULL DEFAULT 50000,
+    `stone` BIGINT NOT NULL DEFAULT 50000,
+    `metal` BIGINT NOT NULL DEFAULT 50000,
     `coin_in` INT NOT NULL DEFAULT 100,
     `food_in` INT NOT NULL DEFAULT 100,
     `wood_in` INT NOT NULL DEFAULT 100,
@@ -202,9 +202,9 @@ CREATE TABLE IF NOT EXISTS `market_offer` (
     `id_city` INT NOT NULL,
     `offer_type` VARCHAR(10) NOT NULL,
     `res_type` VARCHAR(20) NOT NULL,
-    `amount` INT NOT NULL,
+    `amount` BIGINT NOT NULL,
     `price_per_unit` DECIMAL(10,4) NOT NULL,
-    `done` INT NOT NULL DEFAULT 0,
+    `done` BIGINT NOT NULL DEFAULT 0,
     `status` VARCHAR(20) NOT NULL DEFAULT 'active',
     `created_at` INT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `city_market_trans` (
     `id_city_from` INT NOT NULL,
     `id_city_to` INT NOT NULL,
     `resource` VARCHAR(20) NOT NULL,
-    `amount` INT NOT NULL,
+    `amount` BIGINT NOT NULL,
     `unit_price` DECIMAL(10,4) NOT NULL DEFAULT 0.0000,
     `time_start` INT NOT NULL,
     `time_arrive` INT NOT NULL,
@@ -367,7 +367,11 @@ CREATE TABLE IF NOT EXISTS `world_battel` (
     `y_coord` INT NOT NULL DEFAULT 0,
     `time_start` INT NOT NULL DEFAULT 0,
     `time_arrive` INT NOT NULL DEFAULT 0,
-    `state` VARCHAR(32) NOT NULL DEFAULT 'marching'
+    `time_back` INT NOT NULL DEFAULT 0,
+    `state` VARCHAR(32) NOT NULL DEFAULT 'marching',
+    KEY `idx_world_battel_return` (`state`, `time_back`),
+    KEY `idx_world_battel_player_return` (`id_player`, `state`, `time_back`),
+    KEY `idx_world_battel_hero_return` (`id_hero`, `state`, `time_back`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `god_gate_player` (

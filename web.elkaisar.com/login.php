@@ -11,6 +11,9 @@ if (empty($_SESSION['csrf_token'])) {
 }
 $csrfToken = htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8');
 $initialMode = ($_GET['mode'] ?? '') === 'register' ? 'register' : 'login';
+$sessionNotice = ($_GET['reason'] ?? '') === 'account_replaced'
+    ? 'تم فتح الحساب من جهاز آخر، لذلك تم إنهاء جلستك. سجّل الدخول للمتابعة.'
+    : '';
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -482,7 +485,7 @@ $initialMode = ($_GET['mode'] ?? '') === 'register' ? 'register' : 'login';
             <div class="ruby-gem-edge gem-edge-right-bottom" aria-hidden="true"></div>
 
             <!-- صندوق التنبيهات ورسائل التحقق -->
-            <div class="status-alert" id="authStatus" role="status" aria-live="polite"></div>
+            <div class="status-alert" id="authStatus" data-state="error" role="status" aria-live="polite"><?= htmlspecialchars($sessionNotice, ENT_QUOTES, 'UTF-8') ?></div>
 
             <!-- =========================
                  1. واجهة تسجيل الدخول (الصورة الأولى)

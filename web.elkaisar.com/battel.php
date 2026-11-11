@@ -108,7 +108,7 @@ $totalDefPost = array_sum(array_column($defenderSlots, 'post'));
 $totalDefLoss = max(0, $totalDefPre - $totalDefPost);
 
 $sideWin = $detail['general_data']['side_win'] ?? 'attacker';
-$isAttackerWon = ($sideWin === 'attacker');
+$isAttackerWon = ($sideWin === 'attacker' || (int)$sideWin === 1);
 
 $prizeRes = $detail['prize']['resource'] ?? [
     'food' => 50000, 'wood' => 40000, 'stone' => 30000, 'metal' => 20000, 'coin' => 10000

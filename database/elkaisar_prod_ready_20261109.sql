@@ -200,11 +200,11 @@ CREATE TABLE `city` (
   `pop` int(11) NOT NULL DEFAULT 900,
   `pop_LSS` int(11) NOT NULL DEFAULT 0,
   `pop_state` int(11) NOT NULL DEFAULT 0,
-  `coin` int(11) NOT NULL DEFAULT 100000,
-  `food` int(11) NOT NULL DEFAULT 50000,
-  `wood` int(11) NOT NULL DEFAULT 50000,
-  `stone` int(11) NOT NULL DEFAULT 50000,
-  `metal` int(11) NOT NULL DEFAULT 50000,
+  `coin` bigint(20) NOT NULL DEFAULT 100000,
+  `food` bigint(20) NOT NULL DEFAULT 50000,
+  `wood` bigint(20) NOT NULL DEFAULT 50000,
+  `stone` bigint(20) NOT NULL DEFAULT 50000,
+  `metal` bigint(20) NOT NULL DEFAULT 50000,
   `coin_in` int(11) NOT NULL DEFAULT 100,
   `food_in` int(11) NOT NULL DEFAULT 100,
   `wood_in` int(11) NOT NULL DEFAULT 100,
@@ -353,7 +353,7 @@ CREATE TABLE `city_market_trans` (
   `id_city_from` int(11) NOT NULL,
   `id_city_to` int(11) NOT NULL,
   `resource` varchar(20) NOT NULL,
-  `amount` int(11) NOT NULL,
+  `amount` bigint(20) NOT NULL,
   `unit_price` decimal(10,4) NOT NULL DEFAULT 0.0000,
   `time_start` int(11) NOT NULL,
   `time_arrive` int(11) NOT NULL,
@@ -597,9 +597,9 @@ CREATE TABLE `market_offer` (
   `id_city` int(11) NOT NULL,
   `offer_type` varchar(10) NOT NULL,
   `res_type` varchar(20) NOT NULL,
-  `amount` int(11) NOT NULL,
+  `amount` bigint(20) NOT NULL,
   `price_per_unit` decimal(10,4) NOT NULL,
-  `done` int(11) NOT NULL DEFAULT 0,
+  `done` bigint(20) NOT NULL DEFAULT 0,
   `status` varchar(20) NOT NULL DEFAULT 'active',
   `created_at` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_offer`)
@@ -962,8 +962,12 @@ CREATE TABLE `world_battel` (
   `y_coord` int(11) NOT NULL DEFAULT 0,
   `time_start` int(11) NOT NULL DEFAULT 0,
   `time_arrive` int(11) NOT NULL DEFAULT 0,
+  `time_back` int(11) NOT NULL DEFAULT 0,
   `state` varchar(32) NOT NULL DEFAULT 'marching',
-  PRIMARY KEY (`id_battel`)
+  PRIMARY KEY (`id_battel`),
+  KEY `idx_world_battel_return` (`state`,`time_back`),
+  KEY `idx_world_battel_player_return` (`id_player`,`state`,`time_back`),
+  KEY `idx_world_battel_hero_return` (`id_hero`,`state`,`time_back`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

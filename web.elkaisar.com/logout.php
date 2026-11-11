@@ -5,8 +5,15 @@ require_once __DIR__ . '/../app.elkaisar.com/db.php';
 
 if (!empty($_SESSION['player_id'])) {
     $db = getDB();
-    $uStmt = $db->prepare("UPDATE `player` SET `online` = 0 WHERE `id_player` = ?");
-    $uStmt->execute([(int)$_SESSION['player_id']]);
+    $gameToken = bin2hex(random_bytes(32));
+    $uStmt = $db->prepare(
+        "UPDATE `player` SET `online` = 0, `p_token` = ? WHERE `id_player` = ? AND `p_token` = ?"
+    );
+    $uStmt->execute([
+        $gameToken,
+        (int)$_SESSION['player_id'],
+        (string)($_SESSION['player_token'] ?? '')
+    ]);
 }
 
 $_SESSION = [];

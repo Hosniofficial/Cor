@@ -28,6 +28,20 @@ if (!$livePlayer) {
     exit;
 }
 
+if (!is_string($_SESSION['player_token'] ?? null)
+    || !hash_equals((string)$livePlayer['p_token'], $_SESSION['player_token'])) {
+    unset(
+        $_SESSION['player_id'],
+        $_SESSION['player_name'],
+        $_SESSION['user_group'],
+        $_SESSION['selected_server_id'],
+        $_SESSION['player_session_expires_at'],
+        $_SESSION['player_token']
+    );
+    header('Location: login.php?reason=account_replaced');
+    exit;
+}
+
 // Fetch player's active/primary city
 $cStmt = $db->prepare("SELECT * FROM `city` WHERE `id_player` = ? ORDER BY `id_city` ASC LIMIT 1");
 $cStmt->execute([$playerId]);
@@ -716,6 +730,32 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                 }
             }
         })();
+        </script>
+
+        <script>
+            let accountSessionEnded = false;
+            window.setInterval(async function() {
+                if (accountSessionEnded) return;
+
+                try {
+                    const response = await fetch('auth.php?action=check', {
+                        cache: 'no-store',
+                        credentials: 'same-origin'
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Session check failed: ${response.status}`);
+                    }
+
+                    const session = await response.json();
+                    if (!session.logged_in && session.reason === 'account_replaced') {
+                        accountSessionEnded = true;
+                        window.alert('تم فتح الحساب من جهاز آخر، لذلك تم إنهاء جلستك.');
+                        window.location.replace('login.php?reason=account_replaced');
+                    }
+                } catch (error) {
+                    console.error('Unable to verify the account session:', error);
+                }
+            }, 5000);
         </script>
         
           </body>

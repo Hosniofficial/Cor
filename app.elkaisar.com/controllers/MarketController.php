@@ -2,6 +2,43 @@
 // MarketController.php - Market offers, limited matching, and city resource transfers.
 
 class MarketController {
+    private static function parseUnitPriceScaled($value): ?int {
+        if (!is_string($value) && !is_int($value)) {
+            return null;
+        }
+        if (!preg_match('/\A(0|[1-9][0-9]{0,5})(?:\.([0-9]{1,4}))?\z/', (string)$value, $matches)) {
+            return null;
+        }
+        $fraction = str_pad($matches[2] ?? '', 4, '0');
+        $scaled = ((int)$matches[1] * 10000) + (int)$fraction;
+        return $scaled > 0 ? $scaled : null;
+    }
+
+    private static function calculateOfferValue(int $amount, int $unitPriceScaled, bool $roundUp): ?int {
+        if ($amount <= 0 || $unitPriceScaled <= 0
+            || $unitPriceScaled > intdiv(ResourceService::MAX_CITY_BALANCE * 10000, $amount)) {
+            return null;
+        }
+        $scaledValue = $amount * $unitPriceScaled;
+        return $roundUp
+            ? intdiv($scaledValue + 9999, 10000)
+            : intdiv($scaledValue, 10000);
+    }
+
+    private static function calculateFee(int $value): int {
+        return intdiv(($value * 75) + 9999, 10000);
+    }
+
+    private static function rejectResourceLimit(PDO $db, Throwable $error): void {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+        if ($error instanceof ResourceLimitException) {
+            sendJson(['state' => 'error_resource_limit', 'msg' => 'سيؤدي الطلب إلى تجاوز الحد الأقصى للموارد في المدينة']);
+        }
+        throw $error;
+    }
+
     public static function handle($uri, $db) {
         $marketUris = [
             '/api/ACityMarket/getOffersList',
@@ -149,13 +186,23 @@ class MarketController {
         $playerId = (int)$player['id_player'];
         $idCity = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
         requirePlayerOwnedCity($db, $player, $idCity);
-        $unitPrice = isset($_REQUEST['unitPrice']) ? (float)$_REQUEST['unitPrice'] : 1.0;
+        $unitPriceScaled = self::parseUnitPriceScaled($_REQUEST['unitPrice'] ?? '1');
         $resType = isset($_REQUEST['ResType']) ? trim($_REQUEST['ResType']) : 'food';
-        $amount = isset($_REQUEST['amount']) ? (int)$_REQUEST['amount'] : 1000;
+        $amount = ResourceService::parseAmount($_REQUEST['amount'] ?? '1000');
 
-        if (!in_array($resType, ['food', 'wood', 'stone', 'metal']) || $amount <= 0 || $unitPrice <= 0) {
+        if (!in_array($resType, ['food', 'wood', 'stone', 'metal'], true)
+            || $amount === null || $amount <= 0 || $unitPriceScaled === null) {
             sendJson(['state' => 'error_invalid_input', 'msg' => 'بيانات العرض غير صحيحة']);
             return;
+        }
+        $unitPrice = $unitPriceScaled / 10000;
+        $totalCost = self::calculateOfferValue($amount, $unitPriceScaled, true);
+        if ($totalCost === null) {
+            sendJson(['state' => 'error_trade_limit', 'msg' => 'قيمة العرض تتجاوز الحد المسموح']);
+        }
+        $fees = self::calculateFee($totalCost);
+        if ($totalCost + $fees > ResourceService::MAX_CITY_BALANCE) {
+            sendJson(['state' => 'error_trade_limit', 'msg' => 'قيمة العرض ورسومه تتجاوز الحد المسموح']);
         }
 
         $city = requirePlayerOwnedCity($db, $player, $idCity);
@@ -165,8 +212,6 @@ class MarketController {
             return;
         }
 
-        // Market commission fee: 0.75% of total offer value
-        $fees = (int)ceil($unitPrice * $amount * 0.75 / 100);
         if ((float)$city['coin'] < $fees) {
             sendJson(['state' => 'error_no_coin', 'msg' => 'لا يوجد لديك سسترسس كافى لدفع الرسوم']);
             return;
@@ -201,8 +246,16 @@ class MarketController {
                 $oldDone = (int)$bOffer['done'];
                 $bAvail = (int)$bOffer['amount'] - $oldDone;
                 $tradeAmt = min($remAmount, $bAvail);
-                $tradePrice = (float)$bOffer['price_per_unit'];
-                $earned = (int)floor($tradeAmt * $tradePrice);
+                $tradePriceScaled = self::parseUnitPriceScaled((string)$bOffer['price_per_unit']);
+                $earned = $tradePriceScaled === null
+                    ? null
+                    : self::calculateOfferValue($tradeAmt, $tradePriceScaled, false);
+                if ($earned === null) {
+                    throw new RuntimeException('Invalid price on active market offer');
+                }
+                if ($totalEarnedCoins > ResourceService::MAX_CITY_BALANCE - $earned) {
+                    throw new ResourceLimitException('Market seller coin balance limit reached');
+                }
 
                 // Update buyer offer
                 $newDone = $oldDone + $tradeAmt;
@@ -216,10 +269,8 @@ class MarketController {
                 // Deliver resources to buyer city
                 $buyerCityId = (int)$bOffer['id_city'];
                 if ($buyerCityId > 0) {
-                    $deliver = $db->prepare("UPDATE `city` SET `{$resType}` = `{$resType}` + ? WHERE `id_city` = ? AND `id_player` = ?");
-                    $deliver->execute([$tradeAmt, $buyerCityId, (int)$bOffer['id_player']]);
-                    if ($deliver->rowCount() !== 1) {
-                        throw new RuntimeException('Market buyer city is unavailable');
+                    if (!ResourceService::creditCity($db, $buyerCityId, (int)$bOffer['id_player'], [$resType => $tradeAmt])) {
+                        throw new ResourceLimitException('Market buyer resource balance limit reached');
                     }
                     $buyers[] = ['id_player' => (int)$bOffer['id_player'], 'amount' => $tradeAmt];
                 }
@@ -230,10 +281,8 @@ class MarketController {
 
             // Deliver earned coins from executed sales to seller city
             if ($totalEarnedCoins > 0) {
-                $credit = $db->prepare("UPDATE `city` SET `coin` = `coin` + ? WHERE `id_city` = ? AND `id_player` = ?");
-                $credit->execute([$totalEarnedCoins, $idCity, $playerId]);
-                if ($credit->rowCount() !== 1) {
-                    throw new RuntimeException('Market seller city is unavailable');
+                if (!ResourceService::creditCity($db, $idCity, $playerId, ['coin' => $totalEarnedCoins])) {
+                    throw new ResourceLimitException('Market seller coin balance limit reached');
                 }
             }
 
@@ -261,10 +310,7 @@ class MarketController {
                 'buyers'     => $buyers
             ]);
         } catch (Throwable $error) {
-            if ($db->inTransaction()) {
-                $db->rollBack();
-            }
-            throw $error;
+            self::rejectResourceLimit($db, $error);
         }
     }
 
@@ -273,19 +319,26 @@ class MarketController {
         $playerId = (int)$player['id_player'];
         $idCity = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
         requirePlayerOwnedCity($db, $player, $idCity);
-        $unitPrice = isset($_REQUEST['unitPrice']) ? (float)$_REQUEST['unitPrice'] : 1.0;
+        $unitPriceScaled = self::parseUnitPriceScaled($_REQUEST['unitPrice'] ?? '1');
         $resType = isset($_REQUEST['ResType']) ? trim($_REQUEST['ResType']) : 'food';
-        $amount = isset($_REQUEST['amount']) ? (int)$_REQUEST['amount'] : 1000;
+        $amount = ResourceService::parseAmount($_REQUEST['amount'] ?? '1000');
 
-        if (!in_array($resType, ['food', 'wood', 'stone', 'metal']) || $amount <= 0 || $unitPrice <= 0) {
+        if (!in_array($resType, ['food', 'wood', 'stone', 'metal'], true)
+            || $amount === null || $amount <= 0 || $unitPriceScaled === null) {
             sendJson(['state' => 'error_invalid_input', 'msg' => 'بيانات العرض غير صحيحة']);
             return;
         }
+        $unitPrice = $unitPriceScaled / 10000;
+        $totalCost = self::calculateOfferValue($amount, $unitPriceScaled, true);
+        if ($totalCost === null) {
+            sendJson(['state' => 'error_trade_limit', 'msg' => 'قيمة العرض تتجاوز الحد المسموح']);
+        }
+        $fees = self::calculateFee($totalCost);
+        if ($totalCost + $fees > ResourceService::MAX_CITY_BALANCE) {
+            sendJson(['state' => 'error_trade_limit', 'msg' => 'قيمة العرض ورسومه تتجاوز الحد المسموح']);
+        }
 
         $city = requirePlayerOwnedCity($db, $player, $idCity);
-
-        $totalCost = (int)ceil($unitPrice * $amount);
-        $fees = (int)ceil($totalCost * 0.75 / 100);
 
         if (!$city || (float)$city['coin'] < ($totalCost + $fees)) {
             sendJson(['state' => 'error_no_coin', 'msg' => 'عذرا ليس لديك سسترسس كافى!']);
@@ -322,8 +375,13 @@ class MarketController {
                 $oldDone = (int)$sOffer['done'];
                 $sAvail = (int)$sOffer['amount'] - $oldDone;
                 $tradeAmt = min($remAmount, $sAvail);
-                $actualPrice = (float)$sOffer['price_per_unit'];
-                $payout = (int)floor($tradeAmt * $actualPrice);
+                $actualPriceScaled = self::parseUnitPriceScaled((string)$sOffer['price_per_unit']);
+                $payout = $actualPriceScaled === null
+                    ? null
+                    : self::calculateOfferValue($tradeAmt, $actualPriceScaled, false);
+                if ($payout === null) {
+                    throw new RuntimeException('Invalid price on active market offer');
+                }
 
                 // Update seller offer
                 $newDone = $oldDone + $tradeAmt;
@@ -337,17 +395,23 @@ class MarketController {
                 // Pay seller city
                 $sellerCityId = (int)$sOffer['id_city'];
                 if ($sellerCityId > 0) {
-                    $payoutStmt = $db->prepare("UPDATE `city` SET `coin` = `coin` + ? WHERE `id_city` = ? AND `id_player` = ?");
-                    $payoutStmt->execute([$payout, $sellerCityId, (int)$sOffer['id_player']]);
-                    if ($payoutStmt->rowCount() !== 1) {
-                        throw new RuntimeException('Market seller city is unavailable');
+                    if (!ResourceService::creditCity($db, $sellerCityId, (int)$sOffer['id_player'], ['coin' => $payout])) {
+                        throw new ResourceLimitException('Market seller coin balance limit reached');
                     }
                     $sellers[] = ['id_player' => (int)$sOffer['id_player'], 'amount' => $tradeAmt];
                 }
 
                 // Refund difference if actual price was cheaper than buyer's maximum bid price
-                if ($unitPrice > $actualPrice) {
-                    $totalCoinRefund += (int)floor($tradeAmt * ($unitPrice - $actualPrice));
+                if ($unitPriceScaled > $actualPriceScaled) {
+                    $refund = self::calculateOfferValue(
+                        $tradeAmt,
+                        $unitPriceScaled - $actualPriceScaled,
+                        false
+                    );
+                    if ($refund === null || $totalCoinRefund > ResourceService::MAX_CITY_BALANCE - $refund) {
+                        throw new ResourceLimitException('Market price refund exceeds city balance limit');
+                    }
+                    $totalCoinRefund += $refund;
                 }
 
                 $totalResourceGained += $tradeAmt;
@@ -355,19 +419,15 @@ class MarketController {
             }
 
             // Deliver bought resources and price difference refunds to buyer city
-            $bonusRefundSql = ($totalCoinRefund > 0) ? ", `coin` = `coin` + $totalCoinRefund" : "";
+            $buyerCredits = [];
             if ($totalResourceGained > 0) {
-                $deliver = $db->prepare("UPDATE `city` SET `{$resType}` = `{$resType}` + ? {$bonusRefundSql} WHERE `id_city` = ? AND `id_player` = ?");
-                $deliver->execute([$totalResourceGained, $idCity, $playerId]);
-                if ($deliver->rowCount() !== 1) {
-                    throw new RuntimeException('Market buyer city is unavailable');
-                }
-            } elseif ($totalCoinRefund > 0) {
-                $refund = $db->prepare('UPDATE `city` SET `coin` = `coin` + ? WHERE `id_city` = ? AND `id_player` = ?');
-                $refund->execute([$totalCoinRefund, $idCity, $playerId]);
-                if ($refund->rowCount() !== 1) {
-                    throw new RuntimeException('Market buyer city is unavailable');
-                }
+                $buyerCredits[$resType] = $totalResourceGained;
+            }
+            if ($totalCoinRefund > 0) {
+                $buyerCredits['coin'] = $totalCoinRefund;
+            }
+            if ($buyerCredits && !ResourceService::creditCity($db, $idCity, $playerId, $buyerCredits)) {
+                throw new ResourceLimitException('Market buyer balance limit reached');
             }
 
             // If portion of buy offer remains unfulfilled, post it as active buy tender
@@ -394,10 +454,7 @@ class MarketController {
                 'seller'     => $sellers
             ]);
         } catch (Throwable $error) {
-            if ($db->inTransaction()) {
-                $db->rollBack();
-            }
-            throw $error;
+            self::rejectResourceLimit($db, $error);
         }
     }
 
@@ -427,23 +484,28 @@ class MarketController {
                 if ($delete->rowCount() === 1 && $unfulfilled > 0) {
                     if ($offer['offer_type'] === 'sell') {
                         // Refund remaining unsold resources
-                        $db->prepare("UPDATE `city` SET `{$res}` = `{$res}` + ? WHERE `id_city` = ? AND `id_player` = ?")
-                           ->execute([$unfulfilled, $idCity, $playerId]);
+                        if (!ResourceService::creditCity($db, $idCity, $playerId, [$res => $unfulfilled])) {
+                            throw new ResourceLimitException('Market resource refund exceeds city balance limit');
+                        }
                     } else {
                         // Refund remaining unspent coins
-                        $coins = (int)ceil($unfulfilled * (float)$offer['price_per_unit']);
-                        $db->prepare("UPDATE `city` SET `coin` = `coin` + ? WHERE `id_city` = ? AND `id_player` = ?")
-                           ->execute([$coins, $idCity, $playerId]);
+                        $priceScaled = self::parseUnitPriceScaled((string)$offer['price_per_unit']);
+                        $coins = $priceScaled === null
+                            ? null
+                            : self::calculateOfferValue($unfulfilled, $priceScaled, true);
+                        if ($coins === null) {
+                            throw new RuntimeException('Invalid price on active market offer');
+                        }
+                        if (!ResourceService::creditCity($db, $idCity, $playerId, ['coin' => $coins])) {
+                            throw new ResourceLimitException('Market coin refund exceeds city balance limit');
+                        }
                     }
                 }
             }
 
             $db->commit();
         } catch (Throwable $error) {
-            if ($db->inTransaction()) {
-                $db->rollBack();
-            }
-            throw $error;
+            self::rejectResourceLimit($db, $error);
         }
 
         $freshStmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?");
@@ -488,11 +550,14 @@ class MarketController {
         if ($idCityFrom === $idCityTo) {
             sendJson(['state' => 'error_invalid_input']);
         }
-        $food  = max(0, (int)($_REQUEST['food'] ?? 0));
-        $wood  = max(0, (int)($_REQUEST['wood'] ?? 0));
-        $stone = max(0, (int)($_REQUEST['stone'] ?? 0));
-        $metal = max(0, (int)($_REQUEST['metal'] ?? 0));
-        $coin  = max(0, (int)($_REQUEST['coin'] ?? 0));
+        $food = ResourceService::parseAmount($_REQUEST['food'] ?? '0');
+        $wood = ResourceService::parseAmount($_REQUEST['wood'] ?? '0');
+        $stone = ResourceService::parseAmount($_REQUEST['stone'] ?? '0');
+        $metal = ResourceService::parseAmount($_REQUEST['metal'] ?? '0');
+        $coin = ResourceService::parseAmount($_REQUEST['coin'] ?? '0');
+        if ($food === null || $wood === null || $stone === null || $metal === null || $coin === null) {
+            sendJson(['state' => 'error_invalid_input']);
+        }
 
         if ($food + $wood + $stone + $metal + $coin <= 0) {
             sendJson(['state' => 'error_invalid_input']);
@@ -507,11 +572,15 @@ class MarketController {
                 sendJson(['state' => 'error_not_enough_resources']);
             }
 
-            $deliver = $db->prepare("UPDATE `city` SET `food` = LEAST(`food_cap`, `food` + ?), `wood` = LEAST(`wood_cap`, `wood` + ?), `stone` = LEAST(`stone_cap`, `stone` + ?), `metal` = LEAST(`metal_cap`, `metal` + ?), `coin` = `coin` + ? WHERE `id_city` = ? AND `id_player` = ?");
-            $deliver->execute([$food, $wood, $stone, $metal, $coin, $idCityTo, (int)$player['id_player']]);
-            if ($deliver->rowCount() !== 1) {
+            if (!ResourceService::creditCity($db, $idCityTo, (int)$player['id_player'], [
+                'food' => $food,
+                'wood' => $wood,
+                'stone' => $stone,
+                'metal' => $metal,
+                'coin' => $coin
+            ])) {
                 $db->rollBack();
-                sendJson(['state' => 'error_invalid_city']);
+                sendJson(['state' => 'error_resource_limit', 'msg' => 'سيتجاوز النقل الحد الأقصى لموارد المدينة المستقبلة']);
             }
             $db->commit();
         } catch (Throwable $error) {

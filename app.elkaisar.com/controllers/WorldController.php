@@ -26,14 +26,16 @@ class WorldController {
                 self::getArmyCapitalDominant();
                 return true;
             case '/api/ABattelRunning/getUnitBattel':
-                sendJson([]);
+                self::getUnitBattel($db);
                 return true;
             case '/api/ADominant/getCityColonized':
             case '/api/ADominant/getCityColonizer':
                 sendJson([]);
                 return true;
-            case '/api/ABattelRunning/getGarrisonHeros':
             case '/api/ABattelRunning/getLeavingHero':
+                self::getLeavingHero($db);
+                return true;
+            case '/api/ABattelRunning/getGarrisonHeros':
             case '/api/ABattelRunning/getSpyRuning':
                 sendJson([]);
                 return true;
@@ -57,9 +59,15 @@ class WorldController {
                 return true;
             case '/api/AWorld/getWorldUnitRank':
             case '/api/AWorld/getGuildAttackQue':
-            case '/api/ABattel/joinBattel':
             case '/api/ABattel/applyForRoleInAttQue':
+                sendJson(['state' => 'ok']);
+                return true;
             case '/api/ABattelRuning/refreshBattelData':
+                self::refreshBattelData($db);
+                return true;
+            case '/api/ABattel/joinBattel':
+                sendJson(['state' => 'error_8_1']);
+                return true;
             case '/api/ADominant/abondonColonizedCity':
             case '/api/ADominant/fireColonizer':
                 sendJson(['state' => 'ok']);
@@ -215,15 +223,65 @@ class WorldController {
                             FROM world_battel b 
                             JOIN player p ON b.id_player = p.id_player 
                             JOIN city c ON b.id_city = c.id_city 
-                            WHERE b.time_arrive > UNIX_TIMESTAMP() 
+                            WHERE b.state = 'marching' AND b.time_arrive > UNIX_TIMESTAMP()
                             ORDER BY b.id_battel DESC");
         $rows = $stmt->fetchAll() ?: [];
         foreach ($rows as &$r) {
             foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_city', 'y_city', 'x_coord', 'y_coord', 'time_start', 'time_arrive'] as $col) {
                 if (isset($r[$col])) $r[$col] = (int)$r[$col];
             }
+            $r['attackNum'] = 1;
+            $r['defenceNum'] = 0;
         }
         sendJson($rows);
+    }
+
+    public static function getUnitBattel($db) {
+        $x = filter_var($_REQUEST['xCoord'] ?? null, FILTER_VALIDATE_INT);
+        $y = filter_var($_REQUEST['yCoord'] ?? null, FILTER_VALIDATE_INT);
+        if ($x === false || $y === false || $x === null || $y === null || $x < 0 || $x > 499 || $y < 0 || $y > 499) {
+            http_response_code(400);
+            sendJson(['state' => 'error_invalid_coordinates']);
+            return;
+        }
+
+        $stmt = $db->prepare("SELECT b.*, p.name AS PlayerName, c.name AS CityName
+                              FROM world_battel b
+                              JOIN player p ON p.id_player = b.id_player
+                              JOIN city c ON c.id_city = b.id_city
+                              WHERE b.x_coord = ? AND b.y_coord = ?
+                                AND b.state = 'marching' AND b.time_arrive > UNIX_TIMESTAMP()
+                              ORDER BY b.id_battel DESC");
+        $stmt->execute([$x, $y]);
+        $rows = $stmt->fetchAll() ?: [];
+        foreach ($rows as &$row) {
+            foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_city', 'y_city', 'x_coord', 'y_coord', 'time_start', 'time_arrive'] as $column) {
+                if (isset($row[$column])) $row[$column] = (int)$row[$column];
+            }
+            $row['attackNum'] = 1;
+            $row['defenceNum'] = 0;
+        }
+        sendJson($rows);
+    }
+
+    public static function refreshBattelData($db) {
+        $idBattle = filter_var($_REQUEST['idBattel'] ?? null, FILTER_VALIDATE_INT);
+        if ($idBattle === false || $idBattle === null || $idBattle <= 0) {
+            http_response_code(400);
+            sendJson(['state' => 'error_invalid_battle']);
+            return;
+        }
+
+        $stmt = $db->prepare("SELECT id_battel FROM world_battel
+                              WHERE id_battel = ? AND state = 'marching' AND time_arrive > UNIX_TIMESTAMP()
+                              LIMIT 1");
+        $stmt->execute([$idBattle]);
+        if (!$stmt->fetch()) {
+            http_response_code(404);
+            sendJson(['state' => 'error_battle_not_found']);
+            return;
+        }
+        sendJson(['state' => 'ok', 'attackNum' => 1, 'defenceNum' => 0]);
     }
 
     const MAX_CITIES = 10;
@@ -351,7 +409,7 @@ class WorldController {
             $standardPlaces = [
                 'above_palace_1', 'above_palace_2', 'above_palace_3', 'above_palace_4', 'above_palace_5', 'above_palace_6',
                 'around_wood_1', 'around_wood_2', 'around_wood_3',
-                'farm', 'wood', 'stone', 'mine', 'palace', 'wall', 'market', 'lighthouse', 'seaport',
+                'farm', 'wood', 'stone', 'mine', 'palace', 'wall', 'lighthouse', 'seaport',
                 'hill_1', 'hill_2', 'hill_3', 'hill_4', 'hill_5', 'hill_6', 'hill_7', 'hill_8', 'hill_9', 'hill_10', 'hill_11', 'hill_12',
                 'light_house_1', 'light_house_2', 'light_house_3', 'light_house_4', 'light_house_5', 'light_house_6', 'light_house_7', 'light_house_8', 'light_house_9', 'light_house_10',
                 'under_palace_1', 'under_palace_2', 'under_palace_3', 'under_palace_4', 'under_palace_5', 'under_palace_6', 'under_palace_7', 'under_palace_8', 'under_palace_9', 'under_palace_10', 'under_palace_11', 'under_palace_12',
@@ -368,7 +426,6 @@ class WorldController {
                 elseif ($place === 'wood')   { $type = 15; $lvl = 1; }
                 elseif ($place === 'stone')  { $type = 18; $lvl = 1; }
                 elseif ($place === 'mine')   { $type = 17; $lvl = 1; }
-                elseif ($place === 'market') { $type = 14; $lvl = 1; }
                 elseif ($place === 'lighthouse') { $type = 20; $lvl = 0; }
                 elseif ($place === 'seaport')    { $type = 19; $lvl = 0; }
                 $bIns->execute([$newCityId, $place, $type, $lvl]);
@@ -415,13 +472,41 @@ class WorldController {
         }
     }
 
+    public static function getLeavingHero($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $stmt = $db->prepare("SELECT b.id_battel, b.id_hero, b.task, b.x_city, b.y_city,
+                                     b.x_coord, b.y_coord, b.time_arrive AS time_end
+                              FROM world_battel b
+                              WHERE b.id_player = ? AND b.state = 'marching'
+                                AND b.time_arrive > UNIX_TIMESTAMP()
+                              ORDER BY b.time_arrive ASC");
+        $stmt->execute([(int)$player['id_player']]);
+        $rows = $stmt->fetchAll() ?: [];
+        foreach ($rows as &$row) {
+            foreach (['id_battel', 'id_hero', 'task', 'x_city', 'y_city', 'x_coord', 'y_coord', 'time_end'] as $column) {
+                $row[$column] = (int)$row[$column];
+            }
+        }
+        sendJson($rows);
+    }
+
     public static function getHeroBack($db) {
         $player = requireAuthenticatedPlayer($db);
-        $idHero = isset($_REQUEST['idHero']) ? (int)$_REQUEST['idHero'] : 0;
-        requirePlayerOwnedHero($db, $player, $idHero);
-        $db->prepare("UPDATE city_hero SET in_city = 1 WHERE id_hero = ? AND id_player = ?")->execute([$idHero, (int)$player['id_player']]);
-        $db->prepare("UPDATE world_battel SET state = 'aborted' WHERE id_hero = ? AND id_player = ? AND state = 'marching'")->execute([$idHero, (int)$player['id_player']]);
-        sendJson(['state' => 'ok']);
+        $stmt = $db->prepare("SELECT b.id_hero, b.task AS Task, b.x_coord AS xFrom,
+                                     b.y_coord AS yFrom, b.x_city AS xTo, b.y_city AS yTo,
+                                     b.time_back
+                              FROM world_battel b
+                              WHERE b.id_player = ? AND b.state IN ('won', 'lost')
+                                AND b.time_back > UNIX_TIMESTAMP()
+                              ORDER BY b.time_back ASC");
+        $stmt->execute([(int)$player['id_player']]);
+        $rows = $stmt->fetchAll() ?: [];
+        foreach ($rows as &$row) {
+            foreach (['id_hero', 'Task', 'xFrom', 'yFrom', 'xTo', 'yTo', 'time_back'] as $column) {
+                $row[$column] = (int)$row[$column];
+            }
+        }
+        sendJson($rows);
     }
 
     public static function refreshWorldUnitLvl($db) {
