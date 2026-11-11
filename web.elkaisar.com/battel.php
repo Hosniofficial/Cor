@@ -98,6 +98,16 @@ function extractSlots($heroData) {
 $attackerSlots = extractSlots($attackerHero);
 $defenderSlots = extractSlots($defenderHero);
 
+$sideWin = $detail['general_data']['side_win'] ?? 'attacker';
+$isAttackerWon = ($sideWin === 'attacker' || (int)$sideWin === 1);
+if ($isAttackerWon && (int)($defenderHero['id_player'] ?? -1) === 0) {
+    foreach ($defenderSlots as &$slot) {
+        $slot['post'] = 0;
+        $slot['loss'] = $slot['pre'];
+    }
+    unset($slot);
+}
+
 // Total counts
 $totalAtkPre  = array_sum(array_column($attackerSlots, 'pre'));
 $totalAtkPost = array_sum(array_column($attackerSlots, 'post'));
@@ -106,9 +116,6 @@ $totalAtkLoss = max(0, $totalAtkPre - $totalAtkPost);
 $totalDefPre  = array_sum(array_column($defenderSlots, 'pre'));
 $totalDefPost = array_sum(array_column($defenderSlots, 'post'));
 $totalDefLoss = max(0, $totalDefPre - $totalDefPost);
-
-$sideWin = $detail['general_data']['side_win'] ?? 'attacker';
-$isAttackerWon = ($sideWin === 'attacker' || (int)$sideWin === 1);
 
 $prizeRes = $detail['prize']['resource'] ?? [
     'food' => 50000, 'wood' => 40000, 'stone' => 30000, 'metal' => 20000, 'coin' => 10000

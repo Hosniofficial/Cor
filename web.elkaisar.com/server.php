@@ -674,7 +674,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
         })();
         </script>
 
-            <script type="text/javascript" src="js-3.4.113/obfuscated.js"></script>
+            <script type="text/javascript" src="js-3.4.113/obfuscated.js?v=<?= filemtime(__DIR__ . '/js-3.4.113/obfuscated.js') ?>"></script>
 
         <!-- Post-Engine Bulletproofing & Guard Rails -->
         <script>

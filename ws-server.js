@@ -264,7 +264,7 @@ async function hasActiveBattleAt(db, xCoord, yCoord) {
     return rows.length > 0;
 }
 
-function reportArmySlots(army, remainingArmy, defenderTroops) {
+function reportArmySlots(army, remainingArmy, defenderTroops, isVictory) {
     const slotNames = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'];
     const attackerSlots = {};
     for (const slot of slotNames) {
@@ -280,7 +280,11 @@ function reportArmySlots(army, remainingArmy, defenderTroops) {
     const defenderSlots = Object.fromEntries(slotNames.map(slot => [slot, { type: 0, pre: 0, cur: 0 }]));
     Object.entries(defenderTroops).slice(0, slotNames.length).forEach(([type, count], index) => {
         const amount = Math.max(0, Number(count) || 0);
-        defenderSlots[slotNames[index]] = { type: Number(type) || 0, pre: amount, cur: amount };
+        defenderSlots[slotNames[index]] = {
+            type: Number(type) || 0,
+            pre: amount,
+            cur: isVictory ? 0 : amount
+        };
     });
 
     return { attackerSlots, defenderSlots };
@@ -1095,7 +1099,7 @@ function handleWs(ws, req) {
                             );
                         }
 
-                        const { attackerSlots, defenderSlots } = reportArmySlots(army, remainingArmy, defenderTroops);
+                        const { attackerSlots, defenderSlots } = reportArmySlots(army, remainingArmy, defenderTroops, isVictory);
                         let reportExpGained = 0;
                         let reportHonorGained = 0;
                         let reportResourceLoot = { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 };
