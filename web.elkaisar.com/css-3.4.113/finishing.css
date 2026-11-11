@@ -847,7 +847,7 @@
     background-image: url(../images/tools/luck-wheel-track.png), url(../images/tools/luck-wheel-btn.png);
     background-repeat: no-repeat;
     background-position: center 6px, center;
-    z-index: 9999 !important;
+    z-index: 10 !important;
     cursor: pointer;
     transition: all 0.8s ease-in-out;
 }

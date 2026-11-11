@@ -16217,6 +16217,18 @@ var Building = {
                                             <div class="full-btn construct_building full-btn-2x" data-building="11">${Translate.Button.Building.Erect[UserLag.language]}</div>
                                         </li>`;
         }
+
+        if (!cityHasType(14)) {
+            content += `             <li>
+                                            <div class="img-inside-box">
+                                                <img src="images/building/building07.jpg" class="big-img">
+                                            </div> 
+                                            <div class="txt-inside-box">
+                                                <h2>السوق</h2>
+                                            </div>
+                                            <div class="full-btn construct_building full-btn-2x" data-building="14">${Translate.Button.Building.Erect[UserLag.language]}</div>
+                                        </li>`;
+        }
         content += '        </ul>' +
             '    </div>';
         return content;
@@ -41940,6 +41952,14 @@ function checkWinner(id_player, heros, side_win) {
 
 }
 
+function getBattleTroopLosses(pre, post, hero, detail) {
+    var sideWin = detail && detail.general_data ? detail.general_data.side_win : null;
+    var attackerWon = sideWin === "attacker" || Number(sideWin) === 1;
+    if (attackerWon && hero && Number(hero.side) === 0 && Number(hero.id_player) === 0) {
+        return Number(pre) || 0;
+    }
+    return Math.max(0, (Number(pre) || 0) - (Number(post) || 0));
+}
 
 //الملك ${detail.general_data.p_name} انشئ ${parseInt(detail.general_data.task) === 0 ? "غزو" : "استيلاء"} الى جبل [ ${getArabicNumbers(data_obj.y_coord)} , ${getArabicNumbers(data_obj.x_coord)} ]
 function getReportContent(detail, data_obj, offset) {
@@ -42007,7 +42027,7 @@ function getReportContent(detail, data_obj, offset) {
                     tr_1 += ` <li>
                                                              ${army_icon[detail["heros"][jjj][f_type]]}
                                                             <div class="pre-amount stroke">${getArabicNumbers(detail["heros"][jjj][f_pre])}</div>
-                                                            <div class="post-amount">${getArabicNumbers(detail["heros"][jjj][f_post])}</div>
+                                                             <div class="post-amount">${getArabicNumbers(getBattleTroopLosses(detail["heros"][jjj][f_pre], detail["heros"][jjj][f_post], detail["heros"][jjj], detail))}</div>
                                                         </li>`;
                 }
             }
@@ -42020,7 +42040,7 @@ function getReportContent(detail, data_obj, offset) {
                     tr_2 += ` <li>
                                                              ${army_icon[detail["heros"][jjj][b_type]]}
                                                             <div class="pre-amount stroke">${getArabicNumbers(detail["heros"][jjj][b_pre])}</div>
-                                                            <div class="post-amount">${getArabicNumbers(detail["heros"][jjj][b_post])}</div>
+                                                             <div class="post-amount">${getArabicNumbers(getBattleTroopLosses(detail["heros"][jjj][b_pre], detail["heros"][jjj][b_post], detail["heros"][jjj], detail))}</div>
                                                         </li>`;
                 }
             }
@@ -42065,7 +42085,7 @@ function getReportContent(detail, data_obj, offset) {
                     tr_1 += ` <li>
                                                              ${army_icon[detail["heros"][jjj][f_type]]}
                                                             <div class="pre-amount stroke">${getArabicNumbers(detail["heros"][jjj][f_pre])}</div>
-                                                            <div class="post-amount">${getArabicNumbers(detail["heros"][jjj][f_post])}</div>
+                                                            <div class="post-amount">${getArabicNumbers(getBattleTroopLosses(detail["heros"][jjj][f_pre], detail["heros"][jjj][f_post], detail["heros"][jjj], detail))}</div>
                                                         </li>`;
                 }
             }
@@ -42078,7 +42098,7 @@ function getReportContent(detail, data_obj, offset) {
                     tr_2 += ` <li>
                                                             ${army_icon[detail["heros"][jjj][b_type]]}
                                                             <div class="pre-amount stroke">${getArabicNumbers(detail["heros"][jjj][b_pre])}</div>
-                                                            <div class="post-amount">${getArabicNumbers(detail["heros"][jjj][b_post])}</div>
+                                                            <div class="post-amount">${getArabicNumbers(getBattleTroopLosses(detail["heros"][jjj][b_pre], detail["heros"][jjj][b_post], detail["heros"][jjj], detail))}</div>
                                                         </li>`;
                 }
             }
