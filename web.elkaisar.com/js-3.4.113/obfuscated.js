@@ -3065,6 +3065,8 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         var floor_width = 1000;
         var floor_height = 400;
         this.ConstructingHammer = null;
+        this.currentHoverPlace = null;
+        this.currentHoverSlot = null;
 
         this.input.mousePointer.motionFactor = 0.5;
         this.input.pointer1.motionFactor = 0.5;
@@ -3116,29 +3118,78 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
             if (Pointer.isDown)
                 return;
 
-            if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
-                This.ConstructingHammer.destroy();
-                This.ConstructingHammer = null;
-            }
+            var BuildingPlace = (GameObject && GameObject.data && typeof GameObject.data.get === "function")
+                ? GameObject.data.get("BuildingPlace")
+                : (GameObject ? GameObject.BuildingPlace : null);
+            if (!BuildingPlace)
+                return;
 
-            if (GameObject.data) {
-                const BuildingPlace = GameObject.data.get("BuildingPlace");
-                const bType = (Elkaisar.City.getCity().BuildingType && Elkaisar.City.getCity().BuildingType[BuildingPlace] !== undefined)
-                    ? Number(Elkaisar.City.getCity().BuildingType[BuildingPlace])
-                    : 0;
-                if (!bType || bType == BUILDING_TYPS.SPACE) {
-                    This.ConstructingHammer = This.add.image(GameObject.x, GameObject.y - 32, "ConstructingHammer")
-                        .setDepth(Math.floor(GameObject.y) + 30)
-                        .setOrigin(0, 0);
-                    This.ConstructingHammer.disableInteractive();
+            var bType = (Elkaisar.City.getCity().BuildingType && Elkaisar.City.getCity().BuildingType[BuildingPlace] !== undefined)
+                ? Number(Elkaisar.City.getCity().BuildingType[BuildingPlace])
+                : 0;
+
+            if (!bType || bType == BUILDING_TYPS.SPACE) {
+                if (This.currentHoverPlace === BuildingPlace && This.ConstructingHammer)
+                    return;
+
+                if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
+                    This.ConstructingHammer.destroy();
+                    This.ConstructingHammer = null;
                 }
+
+                This.currentHoverPlace = BuildingPlace;
+                This.currentHoverSlot = GameObject;
+
+                This.ConstructingHammer = This.add.image(GameObject.x, GameObject.y - 32, "ConstructingHammer")
+                    .setDepth(Math.floor(GameObject.y) + 35)
+                    .setOrigin(0, 0)
+                    .setInteractive({ useHandCursor: true });
+
+                This.ConstructingHammer.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
+                    if ($("#luck-wheel-over-lay").length > 0) return;
+                    if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
+                    if (event && event.stopPropagation) event.stopPropagation();
+                    buildingClick(BuildingPlace);
+                });
             }
         });
 
         this.input.on('gameobjectout', function(Pointer, GameObject, Event) {
-            if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
-                This.ConstructingHammer.destroy();
-                This.ConstructingHammer = null;
+            var place = (GameObject && GameObject.data && typeof GameObject.data.get === "function")
+                ? GameObject.data.get("BuildingPlace")
+                : (GameObject ? GameObject.BuildingPlace : null);
+
+            if (place && place === This.currentHoverPlace && GameObject !== This.ConstructingHammer) {
+                var px = Pointer.worldX !== undefined ? Pointer.worldX : Pointer.x;
+                var py = Pointer.worldY !== undefined ? Pointer.worldY : Pointer.y;
+                var gx = GameObject.x;
+                var gy = GameObject.y;
+                if (px >= gx && px <= gx + 128 && py >= gy - 32 && py <= gy + 64) {
+                    return;
+                }
+                if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
+                    This.ConstructingHammer.destroy();
+                    This.ConstructingHammer = null;
+                }
+                This.currentHoverPlace = null;
+                This.currentHoverSlot = null;
+            }
+        });
+
+        this.input.on('pointermove', function(p) {
+            if (This.currentHoverSlot && This.ConstructingHammer) {
+                var px = p.worldX !== undefined ? p.worldX : p.x;
+                var py = p.worldY !== undefined ? p.worldY : p.y;
+                var gx = This.currentHoverSlot.x;
+                var gy = This.currentHoverSlot.y;
+                if (px < gx - 8 || px > gx + 136 || py < gy - 38 || py > gy + 70) {
+                    if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
+                        This.ConstructingHammer.destroy();
+                        This.ConstructingHammer = null;
+                    }
+                    This.currentHoverPlace = null;
+                    This.currentHoverSlot = null;
+                }
             }
         });
 
@@ -10411,6 +10462,10 @@ Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
         .on(Phaser.Input.Events.GAMEOBJECT_OUT, MouseOutBuilding);
+
+    BuildingOnFloor[BuildingPlace].BuildingPlace = BuildingPlace;
+    BuildingOnFloor[BuildingPlace].setDataEnabled();
+    BuildingOnFloor[BuildingPlace].data.set("BuildingPlace", BuildingPlace);
 
     BuildingOnFloor[BuildingPlace].Lable = building_lvl_lable(x, y, BuildingPlace);
     building_hammer_animate(BuildingPlace);
