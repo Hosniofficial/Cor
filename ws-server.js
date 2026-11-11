@@ -6,6 +6,13 @@ const fs     = require('fs');
 const path   = require('path');
 const mysql  = require('./node_modules/mysql2/promise');
 const { WebSocketServer } = require('./node_modules/ws');
+const {
+    getMarchDuration,
+    getNextResetAt,
+    getReturnDuration,
+    getResetIntervalHours,
+    isFixedDurationTarget
+} = require('./battle-mechanics');
 
 const PORT    = 8081;
 const API_PORT = Number(process.env.ELKAISAR_API_PORT || 8092);
@@ -63,7 +70,12 @@ try {
     for (const e of entries) {
         const p = e.split('_');
         if (p.length >= 4) {
-            worldUnits.set(p[0] + '_' + p[1], { ut: parseInt(p[2], 10), l: parseInt(p[3], 10) });
+            worldUnits.set(p[0] + '_' + p[1], {
+                ut: parseInt(p[2], 10),
+                l: parseInt(p[3], 10),
+                baseL: parseInt(p[3], 10),
+                t: parseInt(p[5], 10) || 0
+            });
         }
     }
 } catch (e) {
@@ -138,6 +150,55 @@ const REPLACED_SESSION_CODE = 4001;
 const REPLACED_SESSION_REASON = 'ACCOUNT_LOGIN_ELSEWHERE';
 const MAX_CITY_RESOURCE_BALANCE = 1000000000000;
 
+// ── LiveOps Dynamic Server Configuration Cache ───────────────────────────────
+let liveServerConfig = {
+    camp_reset_interval_hours: 12,
+    gang_reset_interval_hours: 6,
+    squad_reset_interval_hours: 4,
+    camp_max_attack_per_player: 10,
+    wilderness_luxury_drop_multiplier: 1.0,
+    global_drop_rate_multiplier: 1.0,
+    equipment_drop_chance_percent: 25,
+    starter_player_gold: 50,
+    starter_protection_hours: 168,
+    resource_production_multiplier: 1.0,
+    march_speed_multiplier: 1.0,
+    building_speed_multiplier: 1.0,
+    study_speed_multiplier: 1.0,
+    recruit_speed_multiplier: 1.0,
+    camp_rally_duration_sec: 120,
+    city_attack_min_duration_sec: 900,
+    wounded_recovery_rate: 0.70,
+    maintenance_mode: false,
+    maintenance_message: 'السيرفر حالياً في وضع الصيانة الدورية لتحديث الأنظمة. سنعود قريباً!',
+    server_truce_active: false,
+    live_banner_text: '',
+    live_banner_color: '#dfba6b'
+};
+
+async function reloadLiveServerConfig() {
+    try {
+        const db = await getDb();
+        const [rows] = await db.query("SELECT config_key, config_value, value_type FROM server_config");
+        for (const r of rows) {
+            let val = r.config_value;
+            if (r.value_type === 'number') {
+                val = val.includes('.') ? parseFloat(val) : parseInt(val, 10);
+            } else if (r.value_type === 'boolean') {
+                val = val === 'true' || val === '1';
+            }
+            liveServerConfig[r.config_key] = val;
+        }
+        console.log(`[LiveOps] ✅ Dynamic configs refreshed from database (${rows.length} keys active).`);
+    } catch (e) {
+        console.error('[LiveOps Error] Failed to refresh server_config:', e.message);
+    }
+}
+
+// Initial load and periodic background sync every 60 seconds
+reloadLiveServerConfig();
+setInterval(reloadLiveServerConfig, 60000);
+
 async function creditCityResources(db, cityId, requested) {
     const resources = Object.entries(requested);
     for (const [resource, amount] of resources) {
@@ -192,6 +253,25 @@ async function creditCityResources(db, cityId, requested) {
 async function authenticateSocketPlayer(db, idPlayer, token) {
     if (!/^\d+$/.test(String(idPlayer || '')) || typeof token !== 'string' || token === '') {
         return false;
+    }
+
+    async function consumeUnitRequirements(connection, idPlayer, requirements) {
+        for (const requirement of requirements || []) {
+            const item = String(requirement.Item || '');
+            const amount = Number(requirement.amount);
+            if (!item || !Number.isSafeInteger(amount) || amount <= 0) {
+                throw new Error('Invalid world-unit item requirement');
+            }
+            const [result] = await connection.query(
+                'UPDATE player_item SET amount = amount - ? WHERE id_player = ? AND id_item = ? AND amount >= ?',
+                [amount, idPlayer, item, amount]
+            );
+            if (!result.affectedRows) {
+                const error = new Error('Insufficient world-unit item requirement');
+                error.code = 'INSUFFICIENT_WORLD_UNIT_ITEM';
+                throw error;
+            }
+        }
     }
 
     const [rows] = await db.query(
@@ -369,23 +449,23 @@ async function processDueHeroReturns() {
         connection = await db.getConnection();
         await connection.beginTransaction();
         const [dueBattles] = await connection.query(
-            "SELECT id_battel, id_player, id_hero, task, x_city, y_city " +
-            "FROM world_battel WHERE state IN ('won', 'lost') AND time_back <= UNIX_TIMESTAMP() " +
+            "SELECT id_member, id_battel, id_player, id_hero, task, x_city, y_city " +
+            "FROM world_battel_member WHERE state IN ('won', 'lost') AND time_back <= UNIX_TIMESTAMP() " +
             "ORDER BY time_back ASC LIMIT 25 FOR UPDATE"
         );
         const returned = [];
         for (const battle of dueBattles) {
             const [update] = await connection.query(
-                "UPDATE world_battel SET state = 'returned' WHERE id_battel = ? AND state IN ('won', 'lost')",
-                [battle.id_battel]
+                "UPDATE world_battel_member SET state = 'returned' WHERE id_member = ? AND state IN ('won', 'lost')",
+                [battle.id_member]
             );
             if (!update.affectedRows) continue;
 
             const [activeBattles] = await connection.query(
-                "SELECT 1 FROM world_battel WHERE id_hero = ? AND id_battel <> ? AND " +
+                "SELECT 1 FROM world_battel_member WHERE id_hero = ? AND id_member <> ? AND " +
                 "((state = 'marching' AND time_arrive > UNIX_TIMESTAMP()) OR " +
                 "(state IN ('won', 'lost') AND time_back > UNIX_TIMESTAMP())) LIMIT 1",
-                [battle.id_hero, battle.id_battel]
+                [battle.id_hero, battle.id_member]
             );
             if (activeBattles.length) continue;
 
@@ -419,6 +499,106 @@ async function processDueHeroReturns() {
     } finally {
         if (connection) connection.release();
         processingHeroReturns = false;
+    }
+}
+
+let processingWorldUnitResets = false;
+async function processDueWorldUnitResets() {
+    if (processingWorldUnitResets) return;
+    processingWorldUnitResets = true;
+    try {
+        const db = await getDb();
+        const now = Math.floor(Date.now() / 1000);
+        const [units] = await db.query(
+            'SELECT x_coord, y_coord, unit_type, unit_subtype, base_lvl FROM world_unit_state ' +
+            'WHERE next_reset_at > 0 AND next_reset_at <= ? ORDER BY next_reset_at ASC LIMIT 100',
+            [now]
+        );
+        for (const unit of units) {
+            const nextResetAt = getNextResetAt(unit.unit_subtype, now);
+            const [result] = await db.query(
+                'UPDATE world_unit_state SET current_lvl = base_lvl, next_reset_at = ? ' +
+                'WHERE x_coord = ? AND y_coord = ? AND unit_type = ? AND next_reset_at <= ?',
+                [nextResetAt, unit.x_coord, unit.y_coord, unit.unit_type, now]
+            );
+            if (!result.affectedRows) continue;
+
+            const mapUnit = worldUnits.get(`${unit.x_coord}_${unit.y_coord}`);
+            if (!mapUnit || Number(mapUnit.ut) !== Number(unit.unit_type)) continue;
+            mapUnit.l = Number(unit.base_lvl);
+            broadcast(JSON.stringify({
+                classPath: 'World.RefereshWorldUnit',
+                data: {
+                    WorldUnits: [{
+                        x: Number(unit.x_coord),
+                        y: Number(unit.y_coord),
+                        t: Number(unit.unit_subtype),
+                        ut: Number(unit.unit_type),
+                        l: Number(unit.base_lvl)
+                    }]
+                }
+            }));
+        }
+    } catch (error) {
+        console.error('[World Unit Reset Error]:', error.message);
+    } finally {
+        processingWorldUnitResets = false;
+    }
+}
+
+async function advanceWorldUnitLevel(db, { xCoord, yCoord, unitType, unitSubtype, baseLevel, maxLevel }) {
+    const connection = await db.getConnection();
+    let updatedLevel;
+    try {
+        await connection.beginTransaction();
+        const [rows] = await connection.query(
+            'SELECT unit_type, unit_subtype, base_lvl, current_lvl, max_lvl, next_reset_at ' +
+            'FROM world_unit_state WHERE x_coord = ? AND y_coord = ? FOR UPDATE',
+            [xCoord, yCoord]
+        );
+        const current = rows[0]
+            && Number(rows[0].unit_type) === Number(unitType)
+            && Number(rows[0].unit_subtype) === Number(unitSubtype)
+            ? rows[0]
+            : null;
+        const now = Math.floor(Date.now() / 1000);
+        const effectiveBaseLevel = current ? Number(current.base_lvl) : Number(baseLevel);
+        const currentLevel = current
+            ? (Number(current.next_reset_at) > 0 && Number(current.next_reset_at) <= now
+                ? effectiveBaseLevel
+                : Number(current.current_lvl))
+            : Number(baseLevel);
+        updatedLevel = Math.min(Number(maxLevel), currentLevel + 1);
+        const interval = getResetIntervalHours(unitSubtype);
+        const nextResetAt = current && Number(current.next_reset_at) > now
+            ? Number(current.next_reset_at)
+            : getNextResetAt(unitSubtype, now);
+        await connection.query(
+            'INSERT INTO world_unit_state ' +
+            '(x_coord, y_coord, unit_type, unit_subtype, base_lvl, current_lvl, max_lvl, next_reset_at) ' +
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?) ' +
+            'ON DUPLICATE KEY UPDATE unit_type = VALUES(unit_type), unit_subtype = VALUES(unit_subtype), ' +
+            'base_lvl = VALUES(base_lvl), current_lvl = VALUES(current_lvl), max_lvl = VALUES(max_lvl), ' +
+            'next_reset_at = VALUES(next_reset_at)',
+            [xCoord, yCoord, unitType, unitSubtype, effectiveBaseLevel, updatedLevel, maxLevel, interval ? nextResetAt : 0]
+        );
+        await connection.commit();
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+
+    const mapUnit = worldUnits.get(`${xCoord}_${yCoord}`);
+    if (mapUnit && Number(mapUnit.ut) === Number(unitType)) {
+        mapUnit.l = updatedLevel;
+        broadcast(JSON.stringify({
+            classPath: 'World.RefereshWorldUnit',
+            data: {
+                WorldUnits: [{ x: xCoord, y: yCoord, t: unitSubtype, ut: unitType, l: updatedLevel }]
+            }
+        }));
     }
 }
 
@@ -456,6 +636,46 @@ async function handleHttp(req, res) {
 
     const requestUrl = new URL(req.url, 'http://localhost');
     const uriPath = requestUrl.pathname.replace(/\/+$/, '');
+
+    // 0. LiveOps Internal Endpoints (From Admin Panel)
+    if (uriPath === '/api/internal/reload_config') {
+        await reloadLiveServerConfig();
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ state: 'ok', msg: 'Config reloaded' }));
+        return;
+    }
+    if (uriPath === '/api/internal/reset_camps') {
+        broadcast(JSON.stringify({
+            classPath: 'Chat.WorldMsg',
+            data: {
+                id_player: 0,
+                name: 'القيادة العسكرية',
+                msg: '🚩 تم تجديد وإعادة تعيين جميع المعسكرات والمناورات وعصابات التمرد على مستوى السيرفر كاملاً! استعدوا للقتال!',
+                time: Math.floor(Date.now() / 1000)
+            }
+        }));
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ state: 'ok', msg: 'Camps reset broadcasted' }));
+        return;
+    }
+    if (uriPath === '/api/internal/broadcast_banner') {
+        let body = '';
+        req.on('data', chunk => { body += chunk; });
+        req.on('end', () => {
+            const params = new URLSearchParams(body);
+            const text = params.get('text') || '';
+            const color = params.get('color') || '#dfba6b';
+            broadcast(JSON.stringify({
+                classPath: 'World.MarqueeBanner',
+                text: text,
+                color: color,
+                time: Math.floor(Date.now() / 1000)
+            }));
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ state: 'ok' }));
+        });
+        return;
+    }
 
     // 1. Dynamic World Map Cities from MySQL (Only real players' cities!)
     if (uriPath === '/api/AWorld/getWorldCity') {
@@ -765,12 +985,17 @@ function handleWs(ws, req) {
                 const yCoord = parseInt(data.yCoord, 10);
                 const idHero = parseInt(data.idHero, 10);
                 const attackTask = parseInt(data.attackTask, 10) || 0;
+                if (![xCoord, yCoord, idHero].every(Number.isSafeInteger)
+                    || xCoord < 0 || xCoord >= 500 || yCoord < 0 || yCoord >= 500 || idHero <= 0) {
+                    ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'in_attackable' }));
+                    return;
+                }
 
                 // 2a. Check Hero & Troops
                 const [hArmy] = await db.query("SELECT * FROM hero_army WHERE id_hero = ?", [idHero]);
                 const army = hArmy[0] || {};
-                const totalTroops = (army.f_1_num || 0) + (army.f_2_num || 0) + (army.f_3_num || 0) +
-                                    (army.b_1_num || 0) + (army.b_2_num || 0) + (army.b_3_num || 0);
+                const totalTroops = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3']
+                    .reduce((sum, slot) => sum + (Number(army[`${slot}_num`]) || 0), 0);
 
                 if (totalTroops <= 0) {
                     ws.send(JSON.stringify({
@@ -791,9 +1016,13 @@ function handleWs(ws, req) {
                 }
 
                 const [cRows] = await db.query("SELECT * FROM city WHERE id_city = ?", [hero.id_city]);
-                const city = cRows[0] || { x: 444, y: 154, name: 'المدينة 1', id_city: 1, id_player: 1 };
+                const city = cRows[0];
+                if (!city) {
+                    ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'hero_cant_used' }));
+                    return;
+                }
                 const [pRows] = await db.query("SELECT * FROM player WHERE id_player = ?", [city.id_player]);
-                const player = pRows[0] || { name: 'البطل سيزر', id_player: 1 };
+                const player = pRows[0];
                 if (Number(city.id_player) !== Number(idPlayer)) {
                     ws.send(JSON.stringify({
                         classPath: 'Battel.StartFailed',
@@ -806,23 +1035,89 @@ function handleWs(ws, req) {
                 const [targetCityRows] = await db.query("SELECT * FROM city WHERE x = ? AND y = ?", [xCoord, yCoord]);
                 let unitType = 0;
                 let unitLvl = 1;
+                let unitSubtype = 0;
+                let isBarray = false;
                 let unitTitle = 'أرض منبسطة';
 
                 if (targetCityRows.length > 0) {
+                    if (Number(targetCityRows[0].id_player) === Number(idPlayer)) {
+                        ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'in_attackable' }));
+                        return;
+                    }
                     unitType = 60; // Player City (PvP)
                     unitLvl = targetCityRows[0].lvl || 10;
                     unitTitle = `مدينة [${targetCityRows[0].name}]`;
                 } else {
                     const targetKey = `${xCoord}_${yCoord}`;
-                    const mapUnit = worldUnits.get(targetKey) || { ut: 0, l: 1 };
+                    const [barrayRows] = await db.query(
+                        'SELECT Type, lvl, id_player FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1',
+                        [xCoord, yCoord]
+                    );
+                    const mapUnit = barrayRows.length
+                        ? { ut: Number(barrayRows[0].Type), l: Number(barrayRows[0].lvl), t: 0, idPlayer: Number(barrayRows[0].id_player) }
+                        : worldUnits.get(targetKey) || { ut: 0, l: 1, t: 0 };
+                    isBarray = barrayRows.length > 0;
+                    if (mapUnit.idPlayer === Number(idPlayer)) {
+                        ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'in_attackable' }));
+                        return;
+                    }
                     unitType = mapUnit.ut;
                     unitLvl = Math.max(1, mapUnit.l || 1);
+                    unitSubtype = mapUnit.t || 0;
+                    if (!isBarray && unitType) {
+                        const [stateRows] = await db.query(
+                            'SELECT unit_type, unit_subtype, base_lvl, current_lvl, next_reset_at FROM world_unit_state WHERE x_coord = ? AND y_coord = ? LIMIT 1',
+                            [xCoord, yCoord]
+                        );
+                        const state = stateRows[0];
+                        if (state && Number(state.unit_type) === Number(unitType)
+                            && Number(state.unit_subtype) === Number(unitSubtype)) {
+                            unitLvl = Number(state.next_reset_at) > 0 && Number(state.next_reset_at) <= Math.floor(Date.now() / 1000)
+                                ? Number(state.base_lvl)
+                                : Number(state.current_lvl);
+                        }
+                    }
                     unitTitle = (unitData[unitType] && unitData[unitType].Title) ? unitData[unitType].Title : (unitType === 0 ? 'أرض منبسطة' : 'برية');
                 }
+                if (!unitType) {
+                    ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'in_attackable' }));
+                    return;
+                }
 
-                // 2c. Calculate March Duration
-                const dist = Math.hypot(xCoord - city.x, yCoord - city.y);
-                const marchDuration = Math.max(10, Math.min(60, Math.ceil(dist * 0.4)));
+                // 2c. Calculate March Duration using dynamic configs & authentic rally logic
+                const speedMult = Math.max(0.1, Number(liveServerConfig.march_speed_multiplier) || 1.0);
+                if (unitType === 60 && liveServerConfig.server_truce_active) {
+                    ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'in_attackable', msg: 'السيرفر حالياً في هدنة عامة، لا يمكن الهجوم على مدن اللاعبين!' }));
+                    return;
+                }
+                const unitTypeData = unitData[unitType] || {};
+                if ((Number(unitTypeData.reqProm) || 0) > (Number(player.porm) || 0)
+                    || (Number(unitTypeData.reqFitness) || 0) > (Number(hero.power) || 0)) {
+                    ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'hero_cant_used' }));
+                    return;
+                }
+                const calculatedDuration = getMarchDuration({
+                    x1: city.x,
+                    y1: city.y,
+                    x2: xCoord,
+                    y2: yCoord,
+                    army,
+                    unitType,
+                    isCity: false
+                });
+                const configuredDuration = unitType === 60
+                    ? Math.max(Number(liveServerConfig.city_attack_min_duration_sec) || 900, calculatedDuration)
+                    : isFixedDurationTarget(unitType) && unitType !== 177
+                        ? (Number(liveServerConfig.camp_rally_duration_sec) || calculatedDuration)
+                        : calculatedDuration;
+                const marchDuration = Math.max(1, Math.ceil(configuredDuration / speedMult));
+                const returnDuration = getReturnDuration({
+                    x1: city.x,
+                    y1: city.y,
+                    x2: xCoord,
+                    y2: yCoord,
+                    army
+                });
                 const now = Math.floor(Date.now() / 1000);
                 const arrive = now + marchDuration;
 
@@ -831,26 +1126,36 @@ function handleWs(ws, req) {
                 let ins;
                 try {
                     await launchConnection.beginTransaction();
+                    await consumeUnitRequirements(launchConnection, idPlayer, unitTypeData.MakeReq);
                     const [heroUpdate] = await launchConnection.query(
                         "UPDATE city_hero SET in_city = 0 WHERE id_hero = ? AND id_player = ? AND in_city = 1",
                         [idHero, idPlayer]
                     );
                     if (!heroUpdate.affectedRows) {
-                        await launchConnection.rollback();
-                        ws.send(JSON.stringify({
-                            classPath: 'Battel.StartFailed',
-                            state: 'hero_cant_used'
-                        }));
-                        return;
+                        const error = new Error('Hero is not available in city');
+                        error.code = 'HERO_NOT_AVAILABLE';
+                        throw error;
                     }
                     [ins] = await launchConnection.query(
-                        "INSERT INTO world_battel (id_player, id_city, id_hero, task, x_city, y_city, x_coord, y_coord, time_start, time_arrive, time_back, state) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'marching')",
-                        [player.id_player, city.id_city, idHero, attackTask, city.x, city.y, xCoord, yCoord, now, arrive]
+                        "INSERT INTO world_battel (id_player, id_city, id_hero, task, x_city, y_city, x_coord, y_coord, time_start, time_arrive, time_back, return_duration, state) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'marching')",
+                        [player.id_player, city.id_city, idHero, attackTask, city.x, city.y, xCoord, yCoord, now, arrive, returnDuration]
+                    );
+                    await launchConnection.query(
+                        "INSERT INTO world_battel_member (id_battel, id_player, id_city, id_hero, side, task, x_city, y_city, time_start, time_arrive, return_duration, state) " +
+                        "VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, 'marching')",
+                        [ins.insertId, player.id_player, city.id_city, idHero, attackTask, city.x, city.y, now, arrive, returnDuration]
                     );
                     await launchConnection.commit();
                 } catch (error) {
                     await launchConnection.rollback();
+                    if (error.code === 'INSUFFICIENT_WORLD_UNIT_ITEM' || error.code === 'HERO_NOT_AVAILABLE') {
+                        ws.send(JSON.stringify({
+                            classPath: 'Battel.StartFailed',
+                            state: error.code === 'INSUFFICIENT_WORLD_UNIT_ITEM' ? 'no_enough_mat' : 'hero_cant_used'
+                        }));
+                        return;
+                    }
                     throw error;
                 } finally {
                     launchConnection.release();
@@ -1107,6 +1412,20 @@ function handleWs(ws, req) {
 
                         if (isVictory) {
                             // ── VICTORY RESOLUTION ──
+                            if (!targetCityRows.length && !isBarray && unitTypeData.lvlChange === true
+                                && Number(unitTypeData.maxLvl) > unitLvl) {
+                                const baseUnit = worldUnits.get(`${xCoord}_${yCoord}`);
+                                if (baseUnit) {
+                                    await advanceWorldUnitLevel(battleDb, {
+                                        xCoord,
+                                        yCoord,
+                                        unitType,
+                                        unitSubtype,
+                                        baseLevel: Number(baseUnit.baseL) || unitLvl,
+                                        maxLevel: Number(unitTypeData.maxLvl)
+                                    });
+                                }
+                            }
                             // 6a. Loot Resources
                             const loot = Math.min(100000, Math.max(2000, unitLvl * 3500));
                             const creditedLoot = await creditCityResources(battleDb, city.id_city, {
@@ -1172,11 +1491,19 @@ function handleWs(ws, req) {
                                 await battleDb.query("UPDATE guild SET prestige = prestige + ?, honor = honor + ? WHERE id_guild = ?", [prestigeGain, honorGained, player.id_guild]);
                             }
 
-                            // 6c. Prize Drop Tables Evaluation
+                            // 6c. Prize Drop Tables Evaluation (with Dynamic Multipliers & Wilderness Luxuries)
                             const droppedItems = [];
                             const winPrizes = prizeData.Win ? prizeData.Win.filter(x => x.unitType == unitType && x.lvl == unitLvl) : [];
+                            const globalMult = Math.max(0.1, Number(liveServerConfig.global_drop_rate_multiplier) || 1.0);
+                            const luxuryMult = Math.max(0.1, Number(liveServerConfig.wilderness_luxury_drop_multiplier) || 1.0);
+                            const luxuryKeys = ['luxury_1', 'luxury_2', 'bread', 'necklace_1', 'necklace_2', 'necklace_3', 'necklace_4', 'necklace_5', 't_map'];
+
                             for (const p of winPrizes) {
-                                if (Math.random() * 1000 <= p.win_rate) {
+                                let effectiveRate = p.win_rate * globalMult;
+                                if (luxuryKeys.includes(p.prize)) {
+                                    effectiveRate *= luxuryMult;
+                                }
+                                if (Math.random() * 1000 <= effectiveRate) {
                                     const amt = Math.floor(Math.random() * (p.amount_max - p.amount_min + 1)) + p.amount_min;
                                     if (amt > 0) {
                                         droppedItems.push({ prize: p.prize, amount: amt });
@@ -1192,14 +1519,15 @@ function handleWs(ws, req) {
                             const droppedEquip = [];
                             let equipDropChance = 0;
                             let possibleEquipTypes = [];
+                            const customEquipChance = (Number(liveServerConfig.equipment_drop_chance_percent) || 25) / 100;
                             if (unitType >= 97 && unitType <= 105 && unitLvl >= 3) {
-                                equipDropChance = 0.25; // 25% on Carthage & Gangs lvl 3+
+                                equipDropChance = customEquipChance; // e.g. 25% on Carthage & Gangs lvl 3+
                                 possibleEquipTypes = ['mili', 'peace', 'victory', 'mars'];
                             } else if (unitType >= 70 && unitType <= 96 && unitLvl >= 3) {
-                                equipDropChance = 0.18; // 18% on Camps & Maneuvers lvl 3+
+                                equipDropChance = customEquipChance * 0.8; // e.g. on Camps & Maneuvers lvl 3+
                                 possibleEquipTypes = ['loy', 'sparta', 'lion'];
                             } else if (unitType >= 150 && unitType <= 236) {
-                                equipDropChance = 0.40; // 40% on Arenas & Fortresses
+                                equipDropChance = Math.min(1.0, customEquipChance * 1.5); // on Arenas & Fortresses
                                 possibleEquipTypes = ['fearless', 'thunder', 'holy', 'neptune', 'thor'];
                             }
 
@@ -1330,9 +1658,14 @@ function handleWs(ws, req) {
                             console.error('[Battle Report Error]:', reportError.message);
                         }
 
+                        const returnAt = Math.floor(Date.now() / 1000) + returnDuration;
                         await battleDb.query(
                             "UPDATE world_battel SET state = ?, time_back = ? WHERE id_battel = ? AND state = 'marching'",
-                            [isVictory ? 'won' : 'lost', Math.floor(Date.now() / 1000) + marchDuration, battelId]
+                            [isVictory ? 'won' : 'lost', returnAt, battelId]
+                        );
+                        await battleDb.query(
+                            "UPDATE world_battel_member SET state = ?, time_back = ? WHERE id_battel = ? AND state = 'marching'",
+                            [isVictory ? 'won' : 'lost', returnAt, battelId]
                         );
                         sendToPlayer(idPlayer, JSON.stringify({
                             classPath: 'Battel.Finished',
@@ -1495,6 +1828,8 @@ sessionCheckTimer.unref();
 
 const heroReturnTimer = setInterval(processDueHeroReturns, 1000);
 heroReturnTimer.unref();
+const worldUnitResetTimer = setInterval(processDueWorldUnitResets, 60000);
+worldUnitResetTimer.unref();
 
 server.listen(PORT, '127.0.0.1', () => {
     console.log(`[WS-Server] ✅ Listening on port ${PORT}`);
