@@ -3119,6 +3119,8 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
         this.input.on('gameobjectover', function(Pointer, GameObject, Event) {
             if (Pointer.isDown)
                 return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0)
+                return;
 
             var BuildingPlace = (GameObject && GameObject.data && typeof GameObject.data.get === "function")
                 ? GameObject.data.get("BuildingPlace")
@@ -3148,7 +3150,7 @@ Elkaisar.GE.CCityScene = new Phaser.Class({
                     .setInteractive({ useHandCursor: true });
 
                 This.ConstructingHammer.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
-                    if ($("#luck-wheel-over-lay").length > 0) return;
+                    if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
                     if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
                     if (event && event.stopPropagation) event.stopPropagation();
                     buildingClick(BuildingPlace);
@@ -9628,7 +9630,7 @@ var BuildingConstData = [{
         icon: "images/building/building01.jpg",
         nav_bar: [],
         sprit_name: "no_building",
-        hitArea: [83, 46, 4, 84, 83, 120, 155, 85]
+        hitArea: [64, 0, 128, 32, 64, 64, 0, 32]
     },
     {
         image: "images/city/_B1.png", // كوخ1
@@ -10468,7 +10470,7 @@ Elkaisar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
         .setOrigin(0, 0)
         .setDepth(depth)
         .on("click", function(p, x_pos, y_pos, event) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             if (event && event.stopPropagation) event.stopPropagation();
             buildingClick(BuildingPlace);
@@ -10492,7 +10494,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(150)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("palace");
         })
@@ -10510,7 +10512,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(200)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wall");
         })
@@ -10524,7 +10526,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(350)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("farm");
         })
@@ -10538,7 +10540,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(90)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("mine");
         })
@@ -10552,7 +10554,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(70)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("stone");
         })
@@ -10566,7 +10568,7 @@ Elkaisar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(220)
         .on("click", function(p) {
-            if ($("#luck-wheel-over-lay").length > 0) return;
+            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wood");
         })
@@ -17118,6 +17120,8 @@ $(document).on("click", "#job-typs td", function() {
  */
 
 $(document).on("click", ".construct_building", function() {
+    var $btn = $(this);
+    if ($btn.data("busy")) return;
 
     var building_place = $(".for_building_box").attr("data-building-place");
     var building_type = Number($(".for_building_box").attr("data-building-type"));
@@ -17135,6 +17139,7 @@ $(document).on("click", ".construct_building", function() {
         return;
 
     } else {
+        $btn.data("busy", true).css("pointer-events", "none");
 
         $.ajax({
 
@@ -17149,6 +17154,9 @@ $(document).on("click", ".construct_building", function() {
 
             },
             type: 'POST',
+            complete: function() {
+                $btn.data("busy", false).css("pointer-events", "auto");
+            },
             success: function(data, textStatus, jqXHR) {
 
                 if (!Elkaisar.LBase.isJson(data))
