@@ -43270,14 +43270,12 @@ function getCityHudScale() {
     if (!window.matchMedia("(max-width: 760px), (max-height: 650px)").matches)
         return 1;
     if (window.innerWidth <= 460)
-        return 0.45;
-    return window.innerWidth <= 600 ? 0.54 : 0.62;
+        return 0.65;
+    return window.innerWidth <= 600 ? 0.70 : 0.78;
 }
 
 function getCityHudChatBottom() {
-    if (!window.matchMedia("(max-width: 760px), (max-height: 650px)").matches)
-        return 0;
-    return window.innerWidth <= 460 ? 108 : 145;
+    return 0;
 }
 
 $("#UPDOWN-chat img").click(function() {
@@ -43285,7 +43283,7 @@ $("#UPDOWN-chat img").click(function() {
     if ($(this).hasClass("smalled")) {
 
         $(this).css("transform", "rotateZ(180deg)");
-        $("#chat-box").css("bottom", getCityHudChatBottom() + "px");
+        $("#chat-box").css("bottom", "0px");
         $(this).removeClass("smalled");
 
     } else {
@@ -43298,18 +43296,19 @@ $("#UPDOWN-chat img").click(function() {
 });
 $("#p-provile-slider img").click(function() {
 
+    var icons = $("#godGateBtnWrapper, #helpGateBtnWrapper, #ArenaChallangeBtnWrapper, #PlayerTeamWrapper, #luck-wheel-btn");
     if ($(this).hasClass("smalled")) {
 
         $(this).css("transform", "rotateZ(-90deg)");
         $("#player-profile").css("left", "0px");
-        $("#luck-wheel-btn").css("left", (310 * getCityHudScale()) + "px");
+        icons.show();
         $(this).removeClass("smalled");
 
     } else {
 
         $(this).css("transform", "rotateZ(90deg)");
         $("#player-profile").css("left", (-380 * getCityHudScale()) + "px");
-        $("#luck-wheel-btn").css("left", (-75 * getCityHudScale()) + "px");
+        icons.hide();
         $(this).addClass("smalled");
     }
     //Crafty.audio.play("close_sound");
