@@ -150,7 +150,6 @@ function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
     // 5. Default starter buildings
     $starterBuildings = [
         'palace'        => ['type' => 12, 'lvl' => 1],
-        'market'        => ['type' => 14, 'lvl' => 1],
         'farm'          => ['type' => 16, 'lvl' => 1],
         'wood'          => ['type' => 15, 'lvl' => 1],
         'mine'          => ['type' => 17, 'lvl' => 1],
@@ -162,7 +161,7 @@ function createFreshPlayer($name = 'قيصر الشرق', $avatar = 1) {
     ];
 
     $allPlaces = [
-        'palace', 'wall', 'seaport', 'market', 'wood', 'farm', 'mine', 'lighthouse', 'stone',
+        'palace', 'wall', 'seaport', 'wood', 'farm', 'mine', 'lighthouse', 'stone',
         'light_house_1', 'light_house_2', 'light_house_3', 'light_house_4', 'light_house_5',
         'light_house_6', 'light_house_7', 'light_house_8', 'light_house_9', 'light_house_10',
         'under_palace_1', 'under_palace_2', 'under_palace_3', 'under_palace_4', 'under_palace_5',

@@ -348,7 +348,10 @@ class ItemController {
         $player = self::getPlayer($db);
         $playerId = (int)$player['id_player'];
         $item = isset($_REQUEST['Item']) ? trim($_REQUEST['Item']) : '';
-        $amount = isset($_REQUEST['amount']) ? max(1, (int)$_REQUEST['amount']) : 1;
+        $amount = ResourceService::parseAmount($_REQUEST['amount'] ?? '1');
+        if ($amount === null || $amount <= 0 || $amount > 1000000) {
+            sendJson(['state' => 'error_invalid_amount']);
+        }
         $idCity = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
         if ($idCity <= 0) {
             $cStmt = $db->prepare("SELECT * FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1");
@@ -434,7 +437,6 @@ class ItemController {
             case 'useStone':
             case 'useMetal':
             case 'useCoin':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $col = strtolower(str_replace('use', '', $action));
                 if ($col === 'wheat') $rField = 'food';
                 elseif ($col === 'coin') $rField = 'coin';
@@ -443,17 +445,37 @@ class ItemController {
                 // Check if this is an instant resource tier pack (e.g. food_a..e, wood_a..e, stone_a..e, metal_a..e, coin_a..e)
                 if (preg_match('/^(food|wood|stone|metal|coin)_([a-d])$/', $item, $m)) {
                     $tierVals = ['a' => 1500, 'b' => 5000, 'c' => 100000, 'd' => 350000];
-                    $resType = $m[1] === 'wheat' ? 'food' : $m[1];
+                    $resType = $m[1];
                     $addVal = $tierVals[$m[2]] * $amount;
-                    $db->prepare("UPDATE city SET `$resType` = `$resType` + ? WHERE id_city = ?")->execute([$addVal, $idCity]);
                 } else {
                     // Statue item (wheat_1/7, wood_1/7, stone_1/7, metal_1/7, coin_1/7)
                     $duration = (strpos($item, '_7') !== false) ? 86400 * 7 * $amount : 86400 * $amount;
-                    $stmt = $db->prepare("UPDATE player_state SET `$col` = GREATEST(`$col`, ?) + ? WHERE id_player = ?");
-                    $stmt->execute([$now, $duration, $playerId]);
-
                     $resBoost = (strpos($item, '_7') !== false ? 100000 : 10000) * $amount;
-                    $db->prepare("UPDATE city SET `$rField` = `$rField` + ? WHERE id_city = ?")->execute([$resBoost, $idCity]);
+                    $addVal = $resBoost;
+                    $resType = $rField;
+                }
+
+                $db->beginTransaction();
+                try {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    if (!ResourceService::creditCity($db, $idCity, $playerId, [$resType => $addVal])) {
+                        throw new ResourceLimitException('Resource item would exceed the city balance limit');
+                    }
+                    if (!preg_match('/^(food|wood|stone|metal|coin)_([a-d])$/', $item)) {
+                        $stmt = $db->prepare("UPDATE player_state SET `$col` = GREATEST(`$col`, ?) + ? WHERE id_player = ?");
+                        $stmt->execute([$now, $duration, $playerId]);
+                    }
+                    $db->commit();
+                } catch (ResourceLimitException $error) {
+                    if ($db->inTransaction()) {
+                        $db->rollBack();
+                    }
+                    sendJson(['state' => 'error_resource_limit', 'msg' => 'ستتجاوز مكافأة العنصر الحد الأقصى لموارد المدينة']);
+                } catch (Throwable $error) {
+                    if ($db->inTransaction()) {
+                        $db->rollBack();
+                    }
+                    throw $error;
                 }
 
                 $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
@@ -589,13 +611,28 @@ class ItemController {
             default:
                 // Instant Resource Packs (food_a..e, wood_a..e, stone_a..e, metal_a..e, coin_a..e)
                 if (preg_match('/^(food|wood|stone|metal|coin)_([a-d])$/', $item, $m)) {
-                    self::deductPlayerItem($db, $playerId, $item, $amount);
                     $resType = $m[1];
                     $tier = $m[2];
                     $tierValues = ['a' => 1500, 'b' => 5000, 'c' => 100000, 'd' => 350000];
                     $gain = $tierValues[$tier] * $amount;
-                    $capField = $resType . '_cap';
-                    $db->prepare("UPDATE city SET `$resType` = LEAST(`$capField`, `$resType` + ?) WHERE id_city = ?")->execute([$gain, $idCity]);
+                    $db->beginTransaction();
+                    try {
+                        self::deductPlayerItem($db, $playerId, $item, $amount);
+                        if (!ResourceService::creditCity($db, $idCity, $playerId, [$resType => $gain])) {
+                            throw new ResourceLimitException('Resource pack would exceed the city balance limit');
+                        }
+                        $db->commit();
+                    } catch (ResourceLimitException $error) {
+                        if ($db->inTransaction()) {
+                            $db->rollBack();
+                        }
+                        sendJson(['state' => 'error_resource_limit', 'msg' => 'ستتجاوز الحزمة الحد الأقصى لموارد المدينة']);
+                    } catch (Throwable $error) {
+                        if ($db->inTransaction()) {
+                            $db->rollBack();
+                        }
+                        throw $error;
+                    }
                     $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch(PDO::FETCH_ASSOC);
                     foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
                     sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
@@ -664,7 +701,10 @@ class ItemController {
         $item = isset($_REQUEST['Item'])
             ? trim($_REQUEST['Item'])
             : (isset($_REQUEST['idItem']) ? trim($_REQUEST['idItem']) : '');
-        $amount = isset($_REQUEST['amount']) ? max(1, (int)$_REQUEST['amount']) : 1;
+        $amount = ResourceService::parseAmount($_REQUEST['amount'] ?? '1');
+        if ($amount === null || $amount <= 0 || $amount > 1000000) {
+            sendJson(['state' => 'error_invalid_amount']);
+        }
         $idCity = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
         if ($idCity <= 0) {
             $cStmt = $db->prepare("SELECT * FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1");
@@ -677,17 +717,15 @@ class ItemController {
             if (!preg_match('/^(food|wood|stone|metal|coin)_([a-d])$/', $item, $matches)) {
                 sendJson(['state' => 'error_invalid_item']);
             }
-            if (!isset($_REQUEST['amount']) || filter_var($_REQUEST['amount'], FILTER_VALIDATE_INT, [
-                'options' => ['min_range' => 1],
-            ]) === false) {
+            $amount = ResourceService::parseAmount($_REQUEST['amount'] ?? null);
+            if ($amount === null || $amount <= 0) {
                 sendJson(['state' => 'error_invalid_amount']);
             }
 
-            $amount = (int)$_REQUEST['amount'];
             $resource = $matches[1];
             $tierValues = ['a' => 1500, 'b' => 5000, 'c' => 100000, 'd' => 350000];
             $gainPerPack = $tierValues[$matches[2]];
-            $maxResource = 2147483647;
+            $maxResource = ResourceService::MAX_CITY_BALANCE;
 
             $db->beginTransaction();
             try {
@@ -721,9 +759,10 @@ class ItemController {
                      WHERE `id_player` = ? AND `id_item` = ? AND `amount` <= 0'
                 )->execute([$playerId, $item]);
 
-                $db->prepare(
-                    "UPDATE `city` SET `$resource` = `$resource` + ? WHERE `id_city` = ? AND `id_player` = ?"
-                )->execute([$gain, $idCity, $playerId]);
+                if (!ResourceService::creditCity($db, $idCity, $playerId, [$resource => $gain])) {
+                    $db->rollBack();
+                    sendJson(['state' => 'error_resource_limit']);
+                }
                 $db->commit();
             } catch (Throwable $error) {
                 if ($db->inTransaction()) {
@@ -744,8 +783,6 @@ class ItemController {
             return;
         }
 
-        self::deductPlayerItem($db, $playerId, $item, $amount);
-
         // 1. Hero Recruitment Packs (tagned_3p to tagned_8p)
         if ($action === 'useHeroPacks' || strpos($item, 'tagned_') === 0) {
             $potential = 3;
@@ -764,8 +801,6 @@ class ItemController {
             $curHeroes = (int)$hCountStmt->fetchColumn();
 
             if ($curHeroes >= $maxHeroes) {
-                // Return item back
-                self::addPlayerItem($db, $playerId, $item, $amount);
                 sendJson(['state' => 'error_1', 'msg' => 'قصر المدينة ممتلئ، طور القصر لتجنيد المزيد من الأبطال']);
                 return;
             }
@@ -778,11 +813,6 @@ class ItemController {
             $pC = 30 + ($potential * 5);
             $pExtra = 25 + ($potential * 5);
 
-            $insHero = $db->prepare("INSERT INTO city_hero (id_city, id_player, name, lvl, ultra_p, exp, loyal, power, power_max, avatar, in_city, point_a, point_b, point_c, points)
-                                     VALUES (?, ?, ?, 10, ?, 0, 95, 100, 100, ?, 1, ?, ?, ?, ?)");
-            $insHero->execute([$idCity, $playerId, $hName, $potential, rand(1, 10), $pA, $pB, $pC, $pExtra]);
-            $newHeroId = (int)$db->lastInsertId();
-
             $db->exec("CREATE TABLE IF NOT EXISTS `hero_medal` (
                 `id_hero` int(11) NOT NULL,
                 `id_player` int(11) NOT NULL,
@@ -794,7 +824,21 @@ class ItemController {
                 KEY `id_player` (`id_player`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
-            $db->prepare("INSERT IGNORE INTO `hero_medal` (`id_hero`, `id_player`) VALUES (?, ?)")->execute([$newHeroId, $playerId]);
+            $db->beginTransaction();
+            try {
+                self::deductPlayerItem($db, $playerId, $item, $amount);
+                $insHero = $db->prepare("INSERT INTO city_hero (id_city, id_player, name, lvl, ultra_p, exp, loyal, power, power_max, avatar, in_city, point_a, point_b, point_c, points)
+                                         VALUES (?, ?, ?, 10, ?, 0, 95, 100, 100, ?, 1, ?, ?, ?, ?)");
+                $insHero->execute([$idCity, $playerId, $hName, $potential, rand(1, 10), $pA, $pB, $pC, $pExtra]);
+                $newHeroId = (int)$db->lastInsertId();
+                $db->prepare("INSERT IGNORE INTO `hero_medal` (`id_hero`, `id_player`) VALUES (?, ?)")->execute([$newHeroId, $playerId]);
+                $db->commit();
+            } catch (Throwable $error) {
+                if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                throw $error;
+            }
 
             sendJson(['state' => 'ok', 'msg' => "تم تجنيد البطل $hName بنجاح برتبة $potential نجوم"]);
             return;
@@ -802,15 +846,25 @@ class ItemController {
 
         // 2. Army Box (useArmyBox)
         if ($action === 'useArmyBox' || $item === 'army_box') {
-            $db->prepare("UPDATE city SET 
-                `army_a` = `army_a` + ?, 
-                `army_b` = `army_b` + ?, 
-                `army_c` = `army_c` + ?, 
-                `army_d` = `army_d` + ?, 
-                `army_e` = `army_e` + ?, 
-                `army_f` = `army_f` + ? 
-                WHERE id_city = ?")
-               ->execute([2000 * $amount, 1000 * $amount, 1500 * $amount, 800 * $amount, 200 * $amount, 100 * $amount, $idCity]);
+            $db->beginTransaction();
+            try {
+                self::deductPlayerItem($db, $playerId, $item, $amount);
+                $db->prepare("UPDATE city SET
+                    `army_a` = `army_a` + ?,
+                    `army_b` = `army_b` + ?,
+                    `army_c` = `army_c` + ?,
+                    `army_d` = `army_d` + ?,
+                    `army_e` = `army_e` + ?,
+                    `army_f` = `army_f` + ?
+                    WHERE id_city = ? AND id_player = ?")
+                   ->execute([2000 * $amount, 1000 * $amount, 1500 * $amount, 800 * $amount, 200 * $amount, 100 * $amount, $idCity, $playerId]);
+                $db->commit();
+            } catch (Throwable $error) {
+                if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                throw $error;
+            }
 
             $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch(PDO::FETCH_ASSOC);
             foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
@@ -922,15 +976,32 @@ class ItemController {
             ];
         }
 
-        // Grant items to player inventory
-        foreach ($giftItems as $g) {
-            self::addPlayerItem($db, $playerId, $g['Item'], $g['amount']);
-        }
+        $db->beginTransaction();
+        try {
+            self::deductPlayerItem($db, $playerId, $item, $amount);
 
-        // Also credit 100,000 resources to city
-        $resAmt = 100000 * $amount;
-        $db->prepare("UPDATE city SET food = LEAST(food_cap, food + ?), wood = LEAST(wood_cap, wood + ?), stone = LEAST(stone_cap, stone + ?), metal = LEAST(metal_cap, metal + ?), coin = LEAST(coin_cap, coin + ?) WHERE id_city = ?")
-           ->execute([$resAmt, $resAmt, $resAmt, $resAmt, $resAmt, $idCity]);
+            foreach ($giftItems as $g) {
+                self::addPlayerItem($db, $playerId, $g['Item'], $g['amount']);
+            }
+
+            $resAmt = 100000 * $amount;
+            if (!ResourceService::creditCity($db, $idCity, $playerId, [
+                'food' => $resAmt,
+                'wood' => $resAmt,
+                'stone' => $resAmt,
+                'metal' => $resAmt,
+                'coin' => $resAmt
+            ])) {
+                $db->rollBack();
+                sendJson(['state' => 'error_resource_limit', 'msg' => 'ستتجاوز مكافأة الصندوق الحد الأقصى للموارد']);
+            }
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
 
         $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch(PDO::FETCH_ASSOC);
         foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }

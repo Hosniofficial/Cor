@@ -52,9 +52,13 @@ if ($action === 'guest_login') {
         $player = $stmt->fetch();
     }
 
+    $gameToken = bin2hex(random_bytes(32));
+    $db->prepare('UPDATE `player` SET `p_token` = ? WHERE `id_player` = ?')
+        ->execute([$gameToken, (int)$player['id_player']]);
     session_regenerate_id(true);
     unset($_SESSION['selected_server_id']);
     $_SESSION['player_id'] = (int)$player['id_player'];
+    $_SESSION['player_token'] = $gameToken;
     $_SESSION['player_name'] = $player['name'];
     $_SESSION['player_session_expires_at'] = time() + ELKAISAR_SESSION_TTL;
     respondAuth([
@@ -94,9 +98,13 @@ if ($action === 'login') {
     }
 
     clearAuthRateLimit($db, 'player_login', $rateLimitIdentity);
+    $gameToken = bin2hex(random_bytes(32));
+    $db->prepare('UPDATE `player` SET `p_token` = ? WHERE `id_player` = ?')
+        ->execute([$gameToken, (int)$user['id_player']]);
     session_regenerate_id(true);
     unset($_SESSION['selected_server_id']);
     $_SESSION['player_id'] = (int)$user['id_player'];
+    $_SESSION['player_token'] = $gameToken;
     $_SESSION['player_name'] = $user['player_name'];
     $_SESSION['user_group'] = (int)$user['user_group'];
     $_SESSION['player_session_expires_at'] = time() + ELKAISAR_SESSION_TTL;
@@ -176,6 +184,12 @@ if ($action === 'register') {
         }
         error_log('[Auth] Account registration failed: ' . $error->getMessage());
         respondAuth(['state' => 'error', 'message' => 'تعذر إنشاء الحساب حالياً. حاول مرة أخرى لاحقاً.'], 500);
+    } catch (RuntimeException $error) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+        error_log('[Auth] Starter city placement failed: ' . $error->getMessage());
+        respondAuth(['state' => 'error', 'message' => 'تعذر العثور على موقع صالح للمدينة. حاول مرة أخرى لاحقاً.'], 503);
     }
 
     respondAuth([
@@ -190,14 +204,27 @@ if ($action === 'check') {
     $playerId = (int)($_SESSION['player_id'] ?? 0);
     if ($playerId > 0) {
         $stmt = getDB()->prepare(
-            'SELECT `id_player`, `name`, `user_group`, `avatar`, `gold`, `prestige`
+            'SELECT `id_player`, `name`, `user_group`, `avatar`, `gold`, `prestige`, `p_token`
              FROM `player` WHERE `id_player` = ?'
         );
         $stmt->execute([$playerId]);
         $player = $stmt->fetch();
-        if ($player) {
+        $sessionToken = $_SESSION['player_token'] ?? '';
+        if ($player && is_string($sessionToken) && $sessionToken !== ''
+            && hash_equals((string)$player['p_token'], $sessionToken)) {
+            unset($player['p_token']);
             respondAuth(['logged_in' => true, 'player' => $player]);
         }
+
+        unset(
+            $_SESSION['player_id'],
+            $_SESSION['player_name'],
+            $_SESSION['user_group'],
+            $_SESSION['selected_server_id'],
+            $_SESSION['player_session_expires_at'],
+            $_SESSION['player_token']
+        );
+        respondAuth(['logged_in' => false, 'reason' => 'account_replaced']);
     }
     respondAuth(['logged_in' => false]);
 }

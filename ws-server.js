@@ -132,8 +132,291 @@ async function getDb() {
     return dbPool;
 }
 
-// Connected clients: idPlayer -> ws
+// Connected clients: idPlayer -> Set<ws>
 const clients = new Map();
+const REPLACED_SESSION_CODE = 4001;
+const REPLACED_SESSION_REASON = 'ACCOUNT_LOGIN_ELSEWHERE';
+const MAX_CITY_RESOURCE_BALANCE = 1000000000000;
+
+async function creditCityResources(db, cityId, requested) {
+    const resources = Object.entries(requested);
+    for (const [resource, amount] of resources) {
+        if (!['food', 'wood', 'stone', 'metal', 'coin'].includes(resource)
+            || !Number.isSafeInteger(amount) || amount < 0
+            || amount > MAX_CITY_RESOURCE_BALANCE) {
+            throw new Error('Invalid city resource credit');
+        }
+    }
+    const credits = resources.filter(([, amount]) => amount > 0);
+    if (credits.length === 0) return {};
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+        const columns = credits.map(([resource]) => `\`${resource}\``).join(', ');
+        const [rows] = await connection.query(
+            `SELECT ${columns} FROM city WHERE id_city = ? FOR UPDATE`,
+            [cityId]
+        );
+        if (!rows.length) throw new Error('Resource recipient city not found');
+
+        const credited = {};
+        const setClauses = [];
+        const params = [];
+        for (const [resource, requestedAmount] of credits) {
+            const current = Number(rows[0][resource]);
+            const amount = Math.min(requestedAmount, Math.max(0, MAX_CITY_RESOURCE_BALANCE - current));
+            credited[resource] = amount;
+            if (amount > 0) {
+                setClauses.push(`\`${resource}\` = \`${resource}\` + ?`);
+                params.push(amount);
+            }
+        }
+
+        if (setClauses.length) {
+            await connection.query(
+                `UPDATE city SET ${setClauses.join(', ')} WHERE id_city = ?`,
+                [...params, cityId]
+            );
+        }
+        await connection.commit();
+        return credited;
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+}
+
+async function authenticateSocketPlayer(db, idPlayer, token) {
+    if (!/^\d+$/.test(String(idPlayer || '')) || typeof token !== 'string' || token === '') {
+        return false;
+    }
+
+    const [rows] = await db.query(
+        'SELECT id_player FROM player WHERE id_player = ? AND p_token = ? LIMIT 1',
+        [idPlayer, token]
+    );
+    return rows.length === 1;
+}
+
+function closeReplacedSession(ws) {
+    if (ws.readyState === 1) {
+        ws.close(REPLACED_SESSION_CODE, REPLACED_SESSION_REASON);
+    }
+}
+
+async function closeSessionsWithStaleTokens() {
+    if (clients.size === 0) return;
+
+    const db = await getDb();
+    const playerIds = Array.from(clients.keys());
+    for (let offset = 0; offset < playerIds.length; offset += 500) {
+        const batch = playerIds.slice(offset, offset + 500);
+        const placeholders = batch.map(() => '?').join(', ');
+        const [rows] = await db.query(
+            `SELECT id_player, p_token FROM player WHERE id_player IN (${placeholders})`,
+            batch
+        );
+        const currentTokens = new Map(rows.map(row => [String(row.id_player), String(row.p_token)]));
+
+        for (const idPlayer of batch) {
+            const playerClients = clients.get(idPlayer);
+            if (!playerClients) continue;
+
+            const currentToken = currentTokens.get(idPlayer);
+            for (const client of playerClients) {
+                if (!currentToken || client.playerToken !== currentToken) {
+                    closeReplacedSession(client);
+                }
+            }
+        }
+    }
+}
+
+function broadcast(message, excludedPlayerId) {
+    for (const [playerId, playerClients] of clients.entries()) {
+        if (excludedPlayerId && playerId === String(excludedPlayerId)) continue;
+        for (const client of playerClients) {
+            if (client.readyState === 1) client.send(message);
+        }
+    }
+}
+
+function getPlayerClients(idPlayer) {
+    const playerClients = clients.get(String(idPlayer));
+    return playerClients ? Array.from(playerClients).filter(client => client.readyState === 1) : [];
+}
+
+function sendToPlayer(idPlayer, message) {
+    for (const client of getPlayerClients(idPlayer)) {
+        client.send(message);
+    }
+}
+
+async function hasActiveBattleAt(db, xCoord, yCoord) {
+    const [rows] = await db.query(
+        "SELECT 1 FROM world_battel WHERE x_coord = ? AND y_coord = ? " +
+        "AND state = 'marching' AND time_arrive > UNIX_TIMESTAMP() LIMIT 1",
+        [xCoord, yCoord]
+    );
+    return rows.length > 0;
+}
+
+function reportArmySlots(army, remainingArmy, defenderTroops) {
+    const slotNames = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'];
+    const attackerSlots = {};
+    for (const slot of slotNames) {
+        const type = Number(army[`${slot}_type`]) || 0;
+        const pre = Number(army[`${slot}_num`]) || 0;
+        attackerSlots[slot] = {
+            type,
+            pre,
+            cur: Number(remainingArmy[slot]) || 0
+        };
+    }
+
+    const defenderSlots = Object.fromEntries(slotNames.map(slot => [slot, { type: 0, pre: 0, cur: 0 }]));
+    Object.entries(defenderTroops).slice(0, slotNames.length).forEach(([type, count], index) => {
+        const amount = Math.max(0, Number(count) || 0);
+        defenderSlots[slotNames[index]] = { type: Number(type) || 0, pre: amount, cur: amount };
+    });
+
+    return { attackerSlots, defenderSlots };
+}
+
+async function saveWsBattleReport(db, details) {
+    const {
+        player, hero, battleId, xCoord, yCoord, unitType, unitLvl, attackTask,
+        isVictory, expGained, honorGained, resourceLoot, itemLoot,
+        attackerSlots, defenderSlots
+    } = details;
+    const asReportHero = (slots, side, name, avatar, idPlayer, xp) => {
+        const reportHero = { side, h_name: name, avatar, id_player: idPlayer, xp };
+        for (const slot of ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3']) {
+            reportHero[`${slot}_type`] = String(slots[slot].type);
+            reportHero[`${slot}_pre`] = String(slots[slot].pre);
+            reportHero[`${slot}_post`] = String(slots[slot].cur);
+        }
+        return reportHero;
+    };
+    const reportDetail = {
+        encId: '0',
+        general_data: {
+            p_name: player.name,
+            task: attackTask,
+            lvl: unitLvl,
+            round_num: 1,
+            side_win: isVictory ? 1 : 0
+        },
+        heros: [
+            asReportHero(attackerSlots, 1, hero.name || 'البطل سيزر', Number(hero.avatar) || 1, Number(player.id_player), expGained),
+            asReportHero(defenderSlots, 0, `حامية الأعداء [مستوى ${unitLvl}]`, 2, 0, 0)
+        ],
+        prize: {
+            resource: resourceLoot,
+            matrial: itemLoot,
+            honor: honorGained
+        },
+        rounds: ['تم حسم نتيجة المعركة بناءً على قوة الجيشين.'],
+        rounds_log: ['تم حسم نتيجة المعركة بناءً على قوة الجيشين.']
+    };
+    const detailJson = JSON.stringify(reportDetail);
+    const [insertResult] = await db.query(
+        "INSERT INTO report_player (id_player, x, y, t, lvl, type, seen, detail, time_stamp) " +
+        "VALUES (?, ?, ?, ?, ?, 1, 0, ?, NOW())",
+        [player.id_player, xCoord, yCoord, unitType, unitLvl, detailJson]
+    );
+    reportDetail.encId = String(insertResult.insertId);
+    const finalizedDetail = JSON.stringify(reportDetail);
+    await db.query("UPDATE report_player SET detail = ? WHERE id_report = ?", [finalizedDetail, insertResult.insertId]);
+
+    const total = slots => Object.values(slots).reduce((sum, slot) => sum + slot.pre, 0);
+    const remaining = slots => Object.values(slots).reduce((sum, slot) => sum + slot.cur, 0);
+    await db.query(
+        "INSERT INTO battel_log (id_world_battel, attacker_id, defender_id, winner, atk_losses, def_losses, " +
+        "loot_food, loot_wood, loot_stone, loot_metal, loot_coin, honor_gained, detail) " +
+        "VALUES (?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            battleId,
+            player.id_player,
+            isVictory ? 'attacker' : 'defender',
+            Math.max(0, total(attackerSlots) - remaining(attackerSlots)),
+            Math.max(0, total(defenderSlots) - remaining(defenderSlots)),
+            resourceLoot.food,
+            resourceLoot.wood,
+            resourceLoot.stone,
+            resourceLoot.metal,
+            resourceLoot.coin,
+            honorGained,
+            finalizedDetail
+        ]
+    );
+}
+
+let processingHeroReturns = false;
+async function processDueHeroReturns() {
+    if (processingHeroReturns) return;
+    processingHeroReturns = true;
+    let connection;
+    try {
+        const db = await getDb();
+        connection = await db.getConnection();
+        await connection.beginTransaction();
+        const [dueBattles] = await connection.query(
+            "SELECT id_battel, id_player, id_hero, task, x_city, y_city " +
+            "FROM world_battel WHERE state IN ('won', 'lost') AND time_back <= UNIX_TIMESTAMP() " +
+            "ORDER BY time_back ASC LIMIT 25 FOR UPDATE"
+        );
+        const returned = [];
+        for (const battle of dueBattles) {
+            const [update] = await connection.query(
+                "UPDATE world_battel SET state = 'returned' WHERE id_battel = ? AND state IN ('won', 'lost')",
+                [battle.id_battel]
+            );
+            if (!update.affectedRows) continue;
+
+            const [activeBattles] = await connection.query(
+                "SELECT 1 FROM world_battel WHERE id_hero = ? AND id_battel <> ? AND " +
+                "((state = 'marching' AND time_arrive > UNIX_TIMESTAMP()) OR " +
+                "(state IN ('won', 'lost') AND time_back > UNIX_TIMESTAMP())) LIMIT 1",
+                [battle.id_hero, battle.id_battel]
+            );
+            if (activeBattles.length) continue;
+
+            const [heroUpdate] = await connection.query(
+                "UPDATE city_hero SET in_city = 1 WHERE id_hero = ? AND id_player = ? AND in_city = 0",
+                [battle.id_hero, battle.id_player]
+            );
+            if (heroUpdate.affectedRows) returned.push(battle);
+        }
+        await connection.commit();
+        for (const battle of returned) {
+            sendToPlayer(battle.id_player, JSON.stringify({
+                classPath: 'Hero.Back',
+                idHero: Number(battle.id_hero),
+                inCity: 1,
+                Task: Number(battle.task),
+                task: Number(battle.task),
+                xTo: Number(battle.x_city),
+                yTo: Number(battle.y_city)
+            }));
+        }
+    } catch (error) {
+        if (connection) {
+            try {
+                await connection.rollback();
+            } catch (rollbackError) {
+                console.error('[Hero Return Rollback Error]:', rollbackError.message);
+            }
+        }
+        console.error('[Hero Return Processor Error]:', error.message);
+    } finally {
+        if (connection) connection.release();
+        processingHeroReturns = false;
+    }
+}
 
 function setCors(res) {
     res.setHeader('Access-Control-Allow-Origin' , '*');
@@ -196,6 +479,9 @@ async function handleHttp(req, res) {
             return;
         } catch (e) {
             console.error('[WS-Server DB Error]:', e.message);
+            res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+            res.end(JSON.stringify({ state: 'error', msg: 'World city data is unavailable' }));
+            return;
         }
     }
 
@@ -235,17 +521,157 @@ function handleWs(ws, req) {
     const token    = requestUrl.searchParams.get('token');
     const serverId = requestUrl.searchParams.get('server');
 
-    console.log(`[WS] Player connected: idPlayer=${idPlayer}`);
-
-    if (idPlayer) clients.set(String(idPlayer), ws);
+    const authentication = (async () => {
+        const db = await getDb();
+        if (!await authenticateSocketPlayer(db, idPlayer, token)) {
+            if (ws.readyState === 1) ws.close(1008, 'Unauthorized');
+            return false;
+        }
+        if (ws.readyState === 1) {
+            ws.playerToken = token;
+            const playerClients = clients.get(String(idPlayer)) || new Set();
+            playerClients.add(ws);
+            clients.set(String(idPlayer), playerClients);
+            console.log(`[WS] Player connected: idPlayer=${idPlayer}`);
+        }
+        return ws.readyState === 1;
+    })().catch(error => {
+        console.error('[WS Authentication Error]:', error.message);
+        if (ws.readyState === 1) ws.close(1011, 'Authentication unavailable');
+        return false;
+    });
 
     ws.on('message', async (raw) => {
         try {
+            if (!await authentication) return;
+            if (!await authenticateSocketPlayer(await getDb(), idPlayer, token)) {
+                closeReplacedSession(ws);
+                return;
+            }
             const msg = JSON.parse(raw.toString());
             const action = typeof msg.url === 'string'
                 ? msg.url
                 : typeof msg.action === 'string' ? msg.action : 'message';
             console.log('[WS] Handled action:', action.slice(0, 100));
+
+            if (msg.url === 'World/getWorldCityColonized') {
+                const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+
+                const [rows] = await db.query(
+                    'SELECT b.x_coord AS x, b.y_coord AS y, p.city_flag, p.id_guild, p.id_player ' +
+                    'FROM city_barray b ' +
+                    'JOIN city c ON c.id_city = b.id_city ' +
+                    'JOIN player p ON p.id_player = b.id_player'
+                );
+                ws.send(JSON.stringify({
+                    classPath: 'Base.worldCityColonized',
+                    data: {
+                        City: rows.map(city => ({
+                            x: Number(city.x),
+                            y: Number(city.y),
+                            city_flag: String(city.city_flag || '0'),
+                            id_guild: city.id_guild ? Number(city.id_guild) : null,
+                            id_player: Number(city.id_player)
+                        }))
+                    }
+                }));
+            }
+
+            if (msg.url === 'World/refreshWorldCityColonization') {
+                const data = msg.data || {};
+                const xCoord = Number(data.xCoord);
+                const yCoord = Number(data.yCoord);
+                if (
+                    !Number.isInteger(xCoord) || xCoord < 0 || xCoord >= 500 ||
+                    !Number.isInteger(yCoord) || yCoord < 0 || yCoord >= 500
+                ) return;
+
+                const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+                const [rows] = await db.query(
+                    'SELECT b.x_coord AS x, b.y_coord AS y, p.city_flag, p.id_guild, p.id_player ' +
+                    'FROM city_barray b ' +
+                    'JOIN city c ON c.id_city = b.id_city ' +
+                    'JOIN player p ON p.id_player = b.id_player ' +
+                    'WHERE b.x_coord = ? AND b.y_coord = ? LIMIT 1',
+                    [xCoord, yCoord]
+                );
+                const colonized = rows.length > 0;
+                const update = JSON.stringify({
+                    classPath: 'Base.refreshWorldCityColonization',
+                    data: colonized ? {
+                        xCoord,
+                        yCoord,
+                        colonized: true,
+                        city_flag: String(rows[0].city_flag || '0'),
+                        id_guild: rows[0].id_guild ? Number(rows[0].id_guild) : null,
+                        id_player: Number(rows[0].id_player)
+                    } : {
+                        xCoord,
+                        yCoord,
+                        colonized: false
+                    }
+                });
+                broadcast(update);
+            }
+
+            if (msg.url === 'World/getWorldFireUnit') {
+                const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+
+                const [rows] = await db.query(
+                    "SELECT x_coord, y_coord FROM world_battel " +
+                    "WHERE state = 'marching' AND time_arrive > UNIX_TIMESTAMP()"
+                );
+                const units = {};
+                for (const battle of rows) {
+                    const x = Number(battle.x_coord);
+                    const y = Number(battle.y_coord);
+                    if (Number.isInteger(x) && x >= 0 && x < 500 && Number.isInteger(y) && y >= 0 && y < 500) {
+                        units[x * 500 + y] = 1;
+                    }
+                }
+                ws.send(JSON.stringify({
+                    classPath: 'Base.WorldFireUnit',
+                    data: { Units: units }
+                }));
+            }
+
+            if (msg.url === 'Battel/getAllWorldBattels') {
+                const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+
+                const [rows] = await db.query(
+                    "SELECT b.id_battel, b.id_player, p.id_guild, p.name AS PlayerName, c.name AS CityName, " +
+                    "b.x_city, b.y_city, b.x_coord, b.y_coord, b.task, b.time_start, b.time_arrive " +
+                    "FROM world_battel b " +
+                    "JOIN player p ON p.id_player = b.id_player " +
+                    "JOIN city c ON c.id_city = b.id_city " +
+                    "WHERE b.state = 'marching' AND b.time_arrive > UNIX_TIMESTAMP() " +
+                    "ORDER BY b.id_battel DESC"
+                );
+                ws.send(JSON.stringify({
+                    classPath: 'Base.Ack',
+                    ReqId: Number(msg.data && msg.data.ReqId),
+                    Res: rows.map(battle => ({
+                        id_battel: Number(battle.id_battel),
+                        idPlayer: Number(battle.id_player),
+                        idGuild: battle.id_guild ? Number(battle.id_guild) : null,
+                        PlayerName: battle.PlayerName,
+                        CityName: battle.CityName,
+                        xCity: Number(battle.x_city),
+                        yCity: Number(battle.y_city),
+                        xCoord: Number(battle.x_coord),
+                        yCoord: Number(battle.y_coord),
+                        task: Number(battle.task),
+                        timeStart: Number(battle.time_start),
+                        timeEnd: Number(battle.time_arrive),
+                        attackNum: 1,
+                        defenceNum: 0
+                    }))
+                }));
+            }
 
             if (msg.url === 'World/refreshCityFlag') {
                 const cityId = Number(msg.data && msg.data.idCity);
@@ -270,9 +696,40 @@ function handleWs(ws, req) {
                         fe: Number(city.fe) || 0
                     }
                 });
-                for (const client of clients.values()) {
-                    if (client.readyState === 1) client.send(update);
-                }
+                broadcast(update);
+            }
+
+            if (msg.url === 'World/refreshWorldCitiesForPlayers') {
+                const cityId = Number(msg.data && msg.data.idCity);
+                if (!idPlayer || !token || !Number.isSafeInteger(cityId) || cityId <= 0) return;
+
+                const db = await getDb();
+                const [rows] = await db.query(
+                    "SELECT c.x AS xCoord, c.y AS yCoord, c.id_city AS idCity, c.id_player AS idPlayer, " +
+                    "c.lvl AS CityLvl, COALESCE(p.id_guild, 0) AS idGuild, " +
+                    "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag ELSE '0' END AS CityFlag, " +
+                    "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag_expires_at ELSE 0 END AS CityFlagExpiresAt " +
+                    "FROM city c JOIN player p ON p.id_player = c.id_player " +
+                    "WHERE c.id_city = ? AND c.id_player = ? AND p.p_token = ? LIMIT 1",
+                    [cityId, idPlayer, token]
+                );
+                if (!rows.length) return;
+
+                const city = rows[0];
+                const update = JSON.stringify({
+                    classPath: 'Base.refreshWorldCitiesForPlayers',
+                    data: {
+                        xCoord: Number(city.xCoord),
+                        yCoord: Number(city.yCoord),
+                        idCity: Number(city.idCity),
+                        idPlayer: Number(city.idPlayer),
+                        idGuild: city.idGuild ? Number(city.idGuild) : null,
+                        CityLvl: Number(city.CityLvl),
+                        CityFlag: String(city.CityFlag || '0'),
+                        CityFlagExpiresAt: Number(city.CityFlagExpiresAt) || 0
+                    }
+                });
+                broadcast(update);
             }
 
             // 1. Broadcast chat messages
@@ -286,14 +743,19 @@ function handleWs(ws, req) {
                         time: Math.floor(Date.now() / 1000)
                     }
                 });
-                for (const client of clients.values()) {
-                    if (client.readyState === 1) client.send(out);
-                }
+                broadcast(out);
             }
 
             // 2. Battle March Initiation (Battel/start)
             if (msg.url === 'Battel/start') {
                 const db = await getDb();
+                if (!await authenticateSocketPlayer(db, idPlayer, token)) {
+                    ws.send(JSON.stringify({
+                        classPath: 'Battel.StartFailed',
+                        state: 'hero_cant_used'
+                    }));
+                    return;
+                }
                 const data = msg.data || {};
                 const xCoord = parseInt(data.xCoord, 10);
                 const yCoord = parseInt(data.yCoord, 10);
@@ -316,7 +778,7 @@ function handleWs(ws, req) {
 
                 const [hRows] = await db.query("SELECT * FROM city_hero WHERE id_hero = ?", [idHero]);
                 const hero = hRows[0];
-                if (!hero) {
+                if (!hero || Number(hero.id_player) !== Number(idPlayer)) {
                     ws.send(JSON.stringify({
                         classPath: 'Battel.StartFailed',
                         state: 'hero_cant_used'
@@ -328,6 +790,13 @@ function handleWs(ws, req) {
                 const city = cRows[0] || { x: 444, y: 154, name: 'المدينة 1', id_city: 1, id_player: 1 };
                 const [pRows] = await db.query("SELECT * FROM player WHERE id_player = ?", [city.id_player]);
                 const player = pRows[0] || { name: 'البطل سيزر', id_player: 1 };
+                if (Number(city.id_player) !== Number(idPlayer)) {
+                    ws.send(JSON.stringify({
+                        classPath: 'Battel.StartFailed',
+                        state: 'hero_cant_used'
+                    }));
+                    return;
+                }
 
                 // 2b. Identify Target Unit Type and Level (Check Player Cities first, then World Units)
                 const [targetCityRows] = await db.query("SELECT * FROM city WHERE x = ? AND y = ?", [xCoord, yCoord]);
@@ -354,14 +823,38 @@ function handleWs(ws, req) {
                 const arrive = now + marchDuration;
 
                 // 2d. Insert into world_battel
-                const [ins] = await db.query(
-                    "INSERT INTO world_battel (id_player, id_city, id_hero, task, x_city, y_city, x_coord, y_coord, time_start, time_arrive, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'marching')",
-                    [player.id_player, city.id_city, idHero, attackTask, city.x, city.y, xCoord, yCoord, now, arrive]
-                );
+                const launchConnection = await db.getConnection();
+                let ins;
+                try {
+                    await launchConnection.beginTransaction();
+                    const [heroUpdate] = await launchConnection.query(
+                        "UPDATE city_hero SET in_city = 0 WHERE id_hero = ? AND id_player = ? AND in_city = 1",
+                        [idHero, idPlayer]
+                    );
+                    if (!heroUpdate.affectedRows) {
+                        await launchConnection.rollback();
+                        ws.send(JSON.stringify({
+                            classPath: 'Battel.StartFailed',
+                            state: 'hero_cant_used'
+                        }));
+                        return;
+                    }
+                    [ins] = await launchConnection.query(
+                        "INSERT INTO world_battel (id_player, id_city, id_hero, task, x_city, y_city, x_coord, y_coord, time_start, time_arrive, time_back, state) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'marching')",
+                        [player.id_player, city.id_city, idHero, attackTask, city.x, city.y, xCoord, yCoord, now, arrive]
+                    );
+                    await launchConnection.commit();
+                } catch (error) {
+                    await launchConnection.rollback();
+                    throw error;
+                } finally {
+                    launchConnection.release();
+                }
                 const battelId = ins.insertId;
 
                 // 2e. Send Battel.Started with countdown
-                ws.send(JSON.stringify({
+                sendToPlayer(idPlayer, JSON.stringify({
                     classPath: 'Battel.Started',
                     id_battel: battelId,
                     Battel: {
@@ -376,10 +869,51 @@ function handleWs(ws, req) {
                         task: attackTask,
                         time_start: now,
                         time_arrive: arrive,
-                        time_end: arrive
+                        time_end: arrive,
+                        attackNum: 1,
+                        defenceNum: 0
                     },
+                    xCoord,
+                    yCoord,
+                    xCity: Number(city.x),
+                    yCity: Number(city.y),
+                    idPlayer: Number(player.id_player),
+                    idGuild: player.id_guild ? Number(player.id_guild) : null,
+                    PlayerName: player.name,
+                    CityName: city.name,
+                    task: attackTask,
+                    timeStart: now,
+                    timeEnd: arrive,
                     StartingPrice: []
                 }));
+
+                broadcast(JSON.stringify({
+                    classPath: 'World.Battel.Started',
+                    id_battel: battelId,
+                    idPlayer: Number(player.id_player),
+                    idGuild: player.id_guild ? Number(player.id_guild) : null,
+                    PlayerName: player.name,
+                    CityName: city.name,
+                    xCoord,
+                    yCoord,
+                    xCity: Number(city.x),
+                    yCity: Number(city.y),
+                    task: attackTask,
+                    timeStart: now,
+                    timeEnd: arrive
+                }), idPlayer);
+
+                if (targetCityRows.length > 0) {
+                    sendToPlayer(targetCityRows[0].id_player, JSON.stringify({
+                        classPath: 'Battel.battel',
+                        task: 'YOUR_CITY_FIRE',
+                        city_name: targetCityRows[0].name,
+                        x_to: xCoord,
+                        y_to: yCoord,
+                        x_from: Number(city.x),
+                        y_from: Number(city.y)
+                    }));
+                }
 
                 // 2f. Battle Resolution Timer
                 setTimeout(async () => {
@@ -512,6 +1046,7 @@ function handleWs(ws, req) {
                         const woundedRate = Math.min(0.60, 0.10 + (medicineLvl * 0.05));
                         const woundedTroops = { army_a: 0, army_b: 0, army_c: 0, army_d: 0, army_e: 0, army_f: 0 };
                         const solTypeToCol = { 1: 'army_a', 2: 'army_b', 3: 'army_c', 4: 'army_d', 5: 'army_e', 6: 'army_f' };
+                        const remainingArmy = {};
 
                         let totalFallen = 0;
                         let totalRecovered = 0;
@@ -521,6 +1056,7 @@ function handleWs(ws, req) {
                         for (const s of slots) {
                             const num = parseInt(army[s + '_num'], 10) || 0;
                             const type = parseInt(army[s + '_type'], 10) || 0;
+                            remainingArmy[s] = num;
                             if (num > 0) {
                                 const rawFallen = isVictory 
                                     ? Math.min(num, Math.ceil(num * clashFallenRate)) 
@@ -541,6 +1077,7 @@ function handleWs(ws, req) {
                                 }
 
                                 const remaining = Math.max(0, num - permanentLoss);
+                                remainingArmy[s] = remaining;
                                 const newType = remaining > 0 ? type : 0;
                                 await battleDb.query(`UPDATE hero_army SET ${s}_num = ?, ${s}_type = ? WHERE id_hero = ?`, [remaining, newType, idHero]);
                             }
@@ -558,15 +1095,25 @@ function handleWs(ws, req) {
                             );
                         }
 
-                        await battleDb.query("UPDATE world_battel SET state = ? WHERE id_battel = ?", [isVictory ? 'won' : 'lost', battelId]);
+                        const { attackerSlots, defenderSlots } = reportArmySlots(army, remainingArmy, defenderTroops);
+                        let reportExpGained = 0;
+                        let reportHonorGained = 0;
+                        let reportResourceLoot = { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 };
+                        let reportItemLoot = [];
 
                         if (isVictory) {
                             // ── VICTORY RESOLUTION ──
                             // 6a. Loot Resources
                             const loot = Math.min(100000, Math.max(2000, unitLvl * 3500));
-                            await battleDb.query(
-                                "UPDATE city SET food = LEAST(food_cap, food + ?), wood = LEAST(wood_cap, wood + ?), stone = LEAST(stone_cap, stone + ?), metal = LEAST(metal_cap, metal + ?), coin = LEAST(coin_cap, coin + ?) WHERE id_city = ?",
-                                [loot, loot, loot, loot, loot * 2, city.id_city]
+                            const creditedLoot = await creditCityResources(battleDb, city.id_city, {
+                                food: loot,
+                                wood: loot,
+                                stone: loot,
+                                metal: loot,
+                                coin: loot * 2
+                            });
+                            reportResourceLoot = Object.fromEntries(
+                                Object.entries(reportResourceLoot).map(([resource]) => [resource, Number(creditedLoot[resource]) || 0])
                             );
 
                             // 6b. Hero EXP & Player Prestige by Target Category & Hero Wisdom
@@ -612,6 +1159,8 @@ function handleWs(ws, req) {
                             }
 
                             const expGain = Math.floor(baseExp * wisdomMultiplier);
+                            reportExpGained = expGain;
+                            reportHonorGained = honorGained;
                             await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = LEAST(power_max, power + 5) WHERE id_hero = ?", [expGain, idHero]);
                             await battleDb.query("UPDATE player SET prestige = prestige + ?, honor = honor + ? WHERE id_player = ?", [prestigeGain, honorGained, player.id_player]);
 
@@ -661,6 +1210,13 @@ function handleWs(ws, req) {
                                 );
                                 droppedEquip.push({ type: eqType, part: eqPart, lvl: eqLvl });
                             }
+                            reportItemLoot = [
+                                ...droppedItems,
+                                ...droppedEquip.map(equip => ({
+                                    prize: `equip_${equip.type}_${equip.part}`,
+                                    amount: 1
+                                }))
+                            ];
 
                             // 6e. Colonize / Dominate Wild (استيلاء على البرية)
                             let dominated = false;
@@ -680,39 +1236,22 @@ function handleWs(ws, req) {
                                     dominated = true;
                                 }
                             }
-
-                            // 6f. Send Client Completion Messages
-                            if (ws.readyState === 1) {
-                                ws.send(JSON.stringify({
-                                    classPath: 'Battel.battel',
-                                    task: 'finish',
-                                    result: 'win',
-                                    id_battel: battelId,
-                                    Battel: { id_battel: battelId, task: attackTask }
-                                }));
-                                ws.send(JSON.stringify({
-                                    classPath: 'Battel.Finished',
-                                    id_battel: battelId,
-                                    Battel: { id_battel: battelId, task: attackTask },
-                                    Player: { Honor: honorGained },
-                                    ItemPrize: droppedItems.map(d => ({ Item: d.prize, amount: d.amount }))
-                                }));
-                                ws.send(JSON.stringify({
-                                    classPath: 'Battel.ended',
-                                    id_battel: battelId,
-                                    Battel: {
-                                        id_battel: battelId,
-                                        task: attackTask,
-                                        x_coord: xCoord,
-                                        y_coord: yCoord
-                                    },
-                                    sideWin: 1, // SideAttack
-                                    ItemPrize: droppedItems.map(d => ({ Item: d.prize, amount: d.amount })),
-                                    Player: {
-                                        Honor: honorGained
+                            if (dominated) {
+                                broadcast(JSON.stringify({
+                                    classPath: 'Base.refreshWorldCityColonization',
+                                    data: {
+                                        xCoord,
+                                        yCoord,
+                                        colonized: true,
+                                        city_flag: String(player.city_flag || '0'),
+                                        id_guild: player.id_guild ? Number(player.id_guild) : null,
+                                        id_player: Number(player.id_player)
                                     }
                                 }));
+                            }
 
+                            // 6f. Send Client Completion Messages
+                            {
                                 const itemsSummary = droppedItems.length > 0 
                                     ? ` + غنائم أدوات (${droppedItems.map(d => d.prize + ' ×' + d.amount).join('، ')})` 
                                     : '';
@@ -726,12 +1265,12 @@ function handleWs(ws, req) {
                                     ? `سقط في المعركة [${totalFallen}] جندي، استعاد البطل فوراً [${totalRecovered}]، والخسائر [${totalPermanentLoss}] جندي (${Math.round((1 - recoveryRate) * 100)}%)`
                                     : `الخسائر: [${totalPermanentLoss} جندي] (إبادة كاملة 100% في حرب ضد لاعبين)`;
 
-                                ws.send(JSON.stringify({
+                                broadcast(JSON.stringify({
                                     classPath: 'Chat.WorldMsg',
                                     data: {
                                         id_player: 0,
                                         name: 'النظام الحربي',
-                                        msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، الغنائم: [${loot * 5} موارد، +${honorGained} شرف، +${prestigeGain} برستيج]${itemsSummary}${equipSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}`,
+                                        msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف، +${prestigeGain} برستيج${itemsSummary}${equipSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}`,
                                         time: Math.floor(Date.now() / 1000)
                                     }
                                 }));
@@ -744,28 +1283,16 @@ function handleWs(ws, req) {
                             const wisdom = parseInt(heroData.point_b, 10) || 0;
                             const wisdomMultiplier = 1.0 + (wisdom * 0.001);
                             const partialExp = Math.max(50, Math.floor(defPower * 0.05 * wisdomMultiplier));
+                            reportExpGained = partialExp;
 
                             await battleDb.query("UPDATE city_hero SET exp = exp + ?, power = GREATEST(0, power - 25) WHERE id_hero = ?", [partialExp, idHero]);
 
-                            if (ws.readyState === 1) {
-                                ws.send(JSON.stringify({
-                                    classPath: 'Battel.battel',
-                                    task: 'finish',
-                                    result: 'defeat',
-                                    id_battel: battelId,
-                                    Battel: { id_battel: battelId }
-                                }));
-                                ws.send(JSON.stringify({
-                                    classPath: 'Battel.Finished',
-                                    id_battel: battelId,
-                                    Battel: { id_battel: battelId }
-                                }));
-
+                            {
                                 const defeatLossReport = recoveryRate > 0 
                                     ? `سقط [${totalFallen}] جندي، تم علاج واستعادة [${totalRecovered}]، وفُقد [${totalPermanentLoss}] جندي`
                                     : `إبادة كاملة: فقدان [${totalPermanentLoss}] جندي 100% في حرب ضد لاعبين`;
 
-                                ws.send(JSON.stringify({
+                                broadcast(JSON.stringify({
                                     classPath: 'Chat.WorldMsg',
                                     data: {
                                         id_player: 0,
@@ -777,6 +1304,57 @@ function handleWs(ws, req) {
                             }
                         }
 
+                        try {
+                            await saveWsBattleReport(battleDb, {
+                                player,
+                                hero,
+                                battleId: battelId,
+                                xCoord,
+                                yCoord,
+                                unitType,
+                                unitLvl,
+                                attackTask,
+                                isVictory,
+                                expGained: reportExpGained,
+                                honorGained: reportHonorGained,
+                                resourceLoot: reportResourceLoot,
+                                itemLoot: reportItemLoot,
+                                attackerSlots,
+                                defenderSlots
+                            });
+                        } catch (reportError) {
+                            console.error('[Battle Report Error]:', reportError.message);
+                        }
+
+                        await battleDb.query(
+                            "UPDATE world_battel SET state = ?, time_back = ? WHERE id_battel = ? AND state = 'marching'",
+                            [isVictory ? 'won' : 'lost', Math.floor(Date.now() / 1000) + marchDuration, battelId]
+                        );
+                        sendToPlayer(idPlayer, JSON.stringify({
+                            classPath: 'Battel.Finished',
+                            id_battel: battelId,
+                            Battel: {
+                                id_battel: battelId,
+                                task: attackTask,
+                                id_player: Number(player.id_player),
+                                x_coord: xCoord,
+                                y_coord: yCoord
+                            },
+                            sideWin: isVictory ? 1 : 0,
+                            ItemPrize: reportItemLoot.map(item => ({ Item: item.prize, amount: item.amount })),
+                            Player: { Honor: reportHonorGained }
+                        }));
+
+                        broadcast(JSON.stringify({
+                            classPath: 'World.Battel.Ended',
+                            id_battel: battelId,
+                            xCoord,
+                            yCoord,
+                            xCity: Number(city.x),
+                            yCity: Number(city.y),
+                            stillActive: await hasActiveBattleAt(battleDb, xCoord, yCoord)
+                        }));
+
                     } catch (bErr) {
                         console.error('[Battle Resolution Error]:', bErr.message);
                     }
@@ -785,15 +1363,87 @@ function handleWs(ws, req) {
 
             // 3. Battle Abort (Battel/abort)
             if (msg.url === 'Battel/abort') {
-                const battelId = msg.data ? (msg.data.id_battel || msg.data.idBattel) : 0;
-                if (battelId) {
+                const abortData = msg.data || {};
+                const battelId = Number(abortData.id_battel || abortData.idBattel || 0);
+                const heroId = Number(abortData.idHero || 0);
+                if (battelId > 0 || heroId > 0) {
                     const db = await getDb();
-                    await db.query("UPDATE world_battel SET state = 'aborted' WHERE id_battel = ?", [battelId]);
-                    ws.send(JSON.stringify({
+                    if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
+                    const abortConnection = await db.getConnection();
+                    let battle;
+                    let heroReturned = false;
+                    try {
+                        await abortConnection.beginTransaction();
+                        const [battles] = await abortConnection.query(
+                            "SELECT id_battel, id_hero, task, x_city, y_city, x_coord, y_coord FROM world_battel " +
+                            "WHERE (? > 0 AND id_battel = ? OR ? > 0 AND id_hero = ?) " +
+                            "AND id_player = ? AND state = 'marching' AND time_arrive > UNIX_TIMESTAMP() LIMIT 1 FOR UPDATE",
+                            [battelId, battelId, heroId, heroId, idPlayer]
+                        );
+                        if (!battles.length) {
+                            await abortConnection.rollback();
+                        } else {
+                            battle = battles[0];
+                            const [abortUpdate] = await abortConnection.query(
+                                "UPDATE world_battel SET state = 'aborted' WHERE id_battel = ? AND id_player = ? AND state = 'marching'",
+                                [battle.id_battel, idPlayer]
+                            );
+                            if (abortUpdate.affectedRows) {
+                                const [heroUpdate] = await abortConnection.query(
+                                    "UPDATE city_hero SET in_city = 1 WHERE id_hero = ? AND id_player = ? AND in_city = 0",
+                                    [battle.id_hero, idPlayer]
+                                );
+                                heroReturned = heroUpdate.affectedRows > 0;
+                                await abortConnection.commit();
+                            } else {
+                                await abortConnection.rollback();
+                                battle = null;
+                            }
+                        }
+                    } catch (error) {
+                        await abortConnection.rollback();
+                        throw error;
+                    } finally {
+                        abortConnection.release();
+                    }
+                    if (!battle) {
+                        sendToPlayer(idPlayer, JSON.stringify({
+                            classPath: 'Battel.battel',
+                            task: 'aborted_fail',
+                            id_battel: battelId || 0
+                        }));
+                        return;
+                    }
+                    const activeBattleId = Number(battle.id_battel);
+                    sendToPlayer(idPlayer, JSON.stringify({
                         classPath: 'Battel.battel',
                         task: 'aborted',
-                        id_battel: battelId,
-                        Battel: { id_battel: battelId }
+                        id_battel: activeBattleId,
+                        Battel: { id_battel: activeBattleId }
+                    }));
+                    if (heroReturned) {
+                        sendToPlayer(idPlayer, JSON.stringify({
+                            classPath: 'Hero.Back',
+                            idHero: Number(battle.id_hero),
+                            inCity: 1,
+                            Task: Number(battle.task),
+                            task: Number(battle.task),
+                            xTo: Number(battle.x_city),
+                            yTo: Number(battle.y_city)
+                        }));
+                    }
+                    broadcast(JSON.stringify({
+                        classPath: 'World.Battel.Ended',
+                        id_battel: activeBattleId,
+                        xCoord: Number(battle.x_coord),
+                        yCoord: Number(battle.y_coord),
+                        xCity: Number(battle.x_city),
+                        yCity: Number(battle.y_city),
+                        stillActive: await hasActiveBattleAt(
+                            db,
+                            Number(battle.x_coord),
+                            Number(battle.y_coord)
+                        )
                     }));
                 }
             }
@@ -804,7 +1454,13 @@ function handleWs(ws, req) {
     });
 
     ws.on('close', () => {
-        if (idPlayer) clients.delete(String(idPlayer));
+        if (idPlayer) {
+            const playerClients = clients.get(String(idPlayer));
+            if (playerClients) {
+                playerClients.delete(ws);
+                if (playerClients.size === 0) clients.delete(String(idPlayer));
+            }
+        }
         console.log(`[WS] Disconnected: idPlayer=${idPlayer}`);
     });
 
@@ -819,10 +1475,27 @@ const wss = new WebSocketServer({ server });
 
 wss.on('connection', handleWs);
 
+let isCheckingSessions = false;
+const sessionCheckTimer = setInterval(async () => {
+    if (isCheckingSessions) return;
+    isCheckingSessions = true;
+    try {
+        await closeSessionsWithStaleTokens();
+    } catch (error) {
+        console.error('[WS Session Check Error]:', error.message);
+    } finally {
+        isCheckingSessions = false;
+    }
+}, 2000);
+sessionCheckTimer.unref();
+
+const heroReturnTimer = setInterval(processDueHeroReturns, 1000);
+heroReturnTimer.unref();
+
 server.listen(PORT, '127.0.0.1', () => {
     console.log(`[WS-Server] ✅ Listening on port ${PORT}`);
     console.log(`[WS-Server] WebSocket: ws://localhost:${PORT}`);
-    console.log(`[WS-Server] Full Combat Simulator, Army Casualties, Real Loot Tables Active!`);
+    console.log(`[WS-Server] Combat, reports, and persistent hero returns are active.`);
 });
 
 process.on('uncaughtException', (err) => {

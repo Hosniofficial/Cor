@@ -2,6 +2,7 @@
 // CityController.php - Handles city resources, buildings, palace, jobs, and city actions
 
 require_once __DIR__ . '/../services/ProductionService.php';
+require_once __DIR__ . '/../services/ResourceService.php';
 require_once __DIR__ . '/../services/TaskService.php';
 
 class CityController {
@@ -30,7 +31,7 @@ class CityController {
             case '/api/ACity/refreshCityBase':
             case '/api/ACity/getCityBase':
             case '/api/ACity/getCityData':
-                self::getCityBase($db);
+                self::getCityBase($db, $ownedCity);
                 return true;
             case '/api/ACityBuilding/getCityBuilding':
                 self::getCityBuilding($db);
@@ -70,7 +71,7 @@ class CityController {
                 self::getCityBarray($db);
                 return true;
             case '/api/ACityPalace/barryAbandon':
-                self::barryAbandon($db);
+                self::barryAbandon($db, $player);
                 return true;
             case '/api/ACityPalace/getCityGarrison':
                 self::getCityGarrison($db);
@@ -123,23 +124,28 @@ class CityController {
         return false;
     }
 
-    public static function getCityBase($db) {
-        $cityId = isset($_GET['idCity']) ? (int)$_GET['idCity'] : (isset($_POST['idCity']) ? (int)$_POST['idCity'] : 0);
-        if ($cityId > 0) {
-            $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ?");
-            $stmt->execute([$cityId]);
-        } else {
-            $stmt = $db->query("SELECT * FROM `city` ORDER BY `id_city` ASC LIMIT 1");
-        }
-        $city = $stmt->fetch();
+    public static function getCityBase($db, $ownedCity) {
+        $cityId = (int)$ownedCity['id_city'];
+        $playerId = (int)$ownedCity['id_player'];
+        $db->beginTransaction();
+        try {
+            $lockCity = $db->prepare(
+                'SELECT `id_city` FROM `city` WHERE `id_city` = ? AND `id_player` = ? FOR UPDATE'
+            );
+            $lockCity->execute([$cityId, $playerId]);
+            if ($lockCity->fetchColumn() === false) {
+                throw new RuntimeException('City resource recipient not found');
+            }
 
-        if ($city) {
-            $cityId = (int)$city['id_city'];
             ProductionService::recalculateCityProduction($db, $cityId);
-            $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ?");
-            $stmt->execute([$cityId]);
-            $city = $stmt->fetch();
-
+            $stmt = $db->prepare(
+                'SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ? FOR UPDATE'
+            );
+            $stmt->execute([$cityId, $playerId]);
+            $city = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$city) {
+                throw new RuntimeException('City resource recipient not found');
+            }
             $now = time();
             $elapsed = max(0, $now - (int)$city['LS']);
             if ($elapsed > 0) {
@@ -183,20 +189,45 @@ class CityController {
                 }
                 $city['LS'] = $now;
 
-                $uStmt = $db->prepare("UPDATE `city` SET `food` = ?, `wood` = ?, `stone` = ?, `metal` = ?, `coin` = ?, `LS` = ? WHERE `id_city` = ?");
-                $uStmt->execute([$city['food'], $city['wood'], $city['stone'], $city['metal'], $city['coin'], $now, $city['id_city']]);
+                $uStmt = $db->prepare(
+                    "UPDATE `city`
+                     SET `food` = ?, `wood` = ?, `stone` = ?, `metal` = ?, `coin` = ?, `LS` = ?
+                     WHERE `id_city` = ? AND `id_player` = ?"
+                );
+                $uStmt->execute([
+                    $city['food'],
+                    $city['wood'],
+                    $city['stone'],
+                    $city['metal'],
+                    $city['coin'],
+                    $now,
+                    $cityId,
+                    $playerId
+                ]);
 
                 // Check for food starvation / hero salary shortage and trigger desertion alerts
                 ProductionService::processStarvationAndDesertion($db, $city);
             }
+
+            $stmt = $db->prepare('SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?');
+            $stmt->execute([$cityId, $playerId]);
+            $city = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$city) {
+                throw new RuntimeException('City resource recipient not found after production update');
+            }
+            $db->commit();
 
             foreach ($city as $k => $v) {
                 if (is_numeric($v)) $city[$k] = (int)$v;
             }
             sendJson($city);
             return;
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
         }
-        sendJson(['state' => 'error']);
     }
 
     public static function getCityBuilding($db) {
@@ -692,61 +723,114 @@ class CityController {
     public static function expandCity($db) {
         $player = requireAuthenticatedPlayer($db);
         $playerId = (int)$player['id_player'];
-        $city = requirePlayerOwnedCity($db, $player);
-        $cityId = (int)$city['id_city'];
+        $requestedCity = requirePlayerOwnedCity($db, $player);
+        $cityId = (int)$requestedCity['id_city'];
 
-        $currentLvl = (int)($city['lvl'] ?? 0);
-        if ($currentLvl > 2) {
-            sendJson(['state' => 'error_max_lvl', 'msg' => 'المدينة في أقصى مستوى توسعة']);
-        }
-
-        // 1. Required Palace Level: (lvl + 1) * 4
-        $reqPalaceLvl = ($currentLvl + 1) * 4;
-        $pStmt = $db->prepare("SELECT COALESCE(MAX(lvl), 0) FROM city_building WHERE id_city = ? AND (place = 'palace' OR type = 12)");
-        $pStmt->execute([$cityId]);
-        $palaceLvl = (int)$pStmt->fetchColumn();
-        if ($palaceLvl < $reqPalaceLvl) {
-            sendJson(['state' => 'error_palace_lvl', 'msg' => 'مستوى القصر غير كافٍ لتوسيع المدينة']);
-        }
-
-        // 2. Required Expansion Plans: 2^lvl
-        $reqPlans = (int)pow(2, $currentLvl);
-        $itemStmt = $db->prepare("SELECT amount FROM player_item WHERE id_player = ? AND id_item = 'expan_plan'");
-        $itemStmt->execute([$playerId]);
-        $hasPlans = (int)$itemStmt->fetchColumn();
-        if ($hasPlans < $reqPlans) {
-            sendJson(['state' => 'error_item_lack', 'msg' => 'لا تمتلك مخططات توسعة كافية']);
-        }
-
-        // 3. Required Resources: (lvl + 1) * 3000
-        $reqRes = ($currentLvl + 1) * 3000;
-        if (
-            (float)$city['food'] < $reqRes ||
-            (float)$city['wood'] < $reqRes ||
-            (float)$city['stone'] < $reqRes ||
-            (float)$city['metal'] < $reqRes ||
-            (float)$city['coin'] < $reqRes
-        ) {
-            sendJson(['state' => 'error_resource_lack', 'msg' => 'الموارد غير كافية لتوسيع المدينة']);
-        }
-
-        // 4. Deduct plans
-        $db->prepare("UPDATE player_item SET amount = amount - ? WHERE id_player = ? AND id_item = 'expan_plan'")->execute([$reqPlans, $playerId]);
-        $db->prepare("DELETE FROM player_item WHERE id_player = ? AND id_item = 'expan_plan' AND amount <= 0")->execute([$playerId]);
-
-        // 5. Deduct resources and increment expansion level
-        $stmt = $db->prepare("UPDATE city SET lvl = lvl + 1, food = GREATEST(0, food - ?), wood = GREATEST(0, wood - ?), stone = GREATEST(0, stone - ?), metal = GREATEST(0, metal - ?), coin = GREATEST(0, coin - ?) WHERE id_city = ?");
-        $stmt->execute([$reqRes, $reqRes, $reqRes, $reqRes, $reqRes, $cityId]);
-
-        // 6. Recalculate production & fetch updated city
-        ProductionService::recalculateCityProduction($db, $cityId);
-        $cStmt = $db->prepare("SELECT * FROM city WHERE id_city = ?");
-        $cStmt->execute([$cityId]);
-        $updatedCity = $cStmt->fetch(PDO::FETCH_ASSOC) ?: [];
-        foreach ($updatedCity as $k => $v) {
-            if (is_numeric($v)) {
-                $updatedCity[$k] = (int)$v;
+        $db->beginTransaction();
+        try {
+            $cityStmt = $db->prepare("SELECT * FROM city WHERE id_city = ? AND id_player = ? FOR UPDATE");
+            $cityStmt->execute([$cityId, $playerId]);
+            $city = $cityStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$city) {
+                $db->rollBack();
+                http_response_code(403);
+                sendJson(['state' => 'error_auth']);
             }
+
+            $currentLvl = (int)$city['lvl'];
+            if ($currentLvl < 0 || $currentLvl >= 3) {
+                $db->rollBack();
+                sendJson(['state' => 'error_max_lvl', 'msg' => 'المدينة في أقصى مستوى توسعة']);
+            }
+
+            $palaceStmt = $db->prepare(
+                "SELECT lvl FROM city_building WHERE id_city = ? AND (place = 'palace' OR type = 12) FOR UPDATE"
+            );
+            $palaceStmt->execute([$cityId]);
+            $palaceLvls = $palaceStmt->fetchAll(PDO::FETCH_COLUMN);
+            $palaceLvl = $palaceLvls ? max(array_map('intval', $palaceLvls)) : 0;
+            $reqPalaceLvl = ($currentLvl + 1) * 4;
+            if ($palaceLvl < $reqPalaceLvl) {
+                $db->rollBack();
+                sendJson(['state' => 'error_palace_lvl', 'msg' => 'مستوى القصر غير كافٍ لتوسيع المدينة']);
+            }
+
+            $itemStmt = $db->prepare(
+                "SELECT amount FROM player_item WHERE id_player = ? AND id_item = 'expan_plan' FOR UPDATE"
+            );
+            $itemStmt->execute([$playerId]);
+            $hasPlans = (int)$itemStmt->fetchColumn();
+            $reqPlans = (int)pow(2, $currentLvl);
+            if ($hasPlans < $reqPlans) {
+                $db->rollBack();
+                sendJson(['state' => 'error_item_lack', 'msg' => 'لا تمتلك مخططات توسعة كافية']);
+            }
+
+            $reqRes = ($currentLvl + 1) * 3000;
+            if (
+                (float)$city['food'] < $reqRes ||
+                (float)$city['wood'] < $reqRes ||
+                (float)$city['stone'] < $reqRes ||
+                (float)$city['metal'] < $reqRes ||
+                (float)$city['coin'] < $reqRes
+            ) {
+                $db->rollBack();
+                sendJson(['state' => 'error_resource_lack', 'msg' => 'الموارد غير كافية لتوسيع المدينة']);
+            }
+
+            $deductPlansStmt = $db->prepare(
+                "UPDATE player_item SET amount = amount - ? WHERE id_player = ? AND id_item = 'expan_plan' AND amount >= ?"
+            );
+            $deductPlansStmt->execute([$reqPlans, $playerId, $reqPlans]);
+            if ($deductPlansStmt->rowCount() !== 1) {
+                $db->rollBack();
+                sendJson(['state' => 'error_item_lack', 'msg' => 'لا تمتلك مخططات توسعة كافية']);
+            }
+            $db->prepare(
+                "DELETE FROM player_item WHERE id_player = ? AND id_item = 'expan_plan' AND amount = 0"
+            )->execute([$playerId]);
+
+            $updateCityStmt = $db->prepare(
+                "UPDATE city
+                 SET lvl = lvl + 1,
+                     food = food - ?,
+                     wood = wood - ?,
+                     stone = stone - ?,
+                     metal = metal - ?,
+                     coin = coin - ?
+                 WHERE id_city = ? AND id_player = ? AND lvl = ?
+                   AND food >= ? AND wood >= ? AND stone >= ? AND metal >= ? AND coin >= ?"
+            );
+            $updateCityStmt->execute([
+                $reqRes, $reqRes, $reqRes, $reqRes, $reqRes,
+                $cityId, $playerId, $currentLvl,
+                $reqRes, $reqRes, $reqRes, $reqRes, $reqRes
+            ]);
+            if ($updateCityStmt->rowCount() !== 1) {
+                $db->rollBack();
+                sendJson(['state' => 'error_resource_lack', 'msg' => 'الموارد غير كافية لتوسيع المدينة']);
+            }
+
+            ProductionService::recalculateCityProduction($db, $cityId);
+            $updatedCityStmt = $db->prepare("SELECT * FROM city WHERE id_city = ? AND id_player = ?");
+            $updatedCityStmt->execute([$cityId, $playerId]);
+            $updatedCity = $updatedCityStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$updatedCity) {
+                throw new RuntimeException('Expanded city could not be reloaded');
+            }
+            foreach ($updatedCity as $key => $value) {
+                if (is_numeric($value)) {
+                    $updatedCity[$key] = (int)$value;
+                }
+            }
+
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            error_log('[CityController] City expansion failed: ' . $error->getMessage());
+            throw $error;
         }
 
         sendJson([
@@ -930,15 +1014,19 @@ class CityController {
         sendJson($rows);
     }
 
-    public static function barryAbandon($db) {
+    public static function barryAbandon($db, $player) {
         $x = isset($_REQUEST['xCoord']) ? (int)$_REQUEST['xCoord'] : 0;
         $y = isset($_REQUEST['yCoord']) ? (int)$_REQUEST['yCoord'] : 0;
-        $stmt = $db->prepare("SELECT id_city FROM city_barray WHERE x_coord = ? AND y_coord = ?");
-        $stmt->execute([$x, $y]);
+        $stmt = $db->prepare(
+            "SELECT id_city FROM city_barray WHERE x_coord = ? AND y_coord = ? AND id_player = ?"
+        );
+        $stmt->execute([$x, $y, (int)$player['id_player']]);
         $cityId = (int)$stmt->fetchColumn();
 
-        $del = $db->prepare("DELETE FROM city_barray WHERE x_coord = ? AND y_coord = ?");
-        $del->execute([$x, $y]);
+        $del = $db->prepare(
+            "DELETE FROM city_barray WHERE x_coord = ? AND y_coord = ? AND id_player = ?"
+        );
+        $del->execute([$x, $y, (int)$player['id_player']]);
 
         if ($cityId > 0) {
             ProductionService::recalculateCityProduction($db, $cityId);
@@ -999,18 +1087,39 @@ class CityController {
     }
 
     public static function cancelUpgradeing($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $playerId = (int)$player['id_player'];
         $cityId = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 1;
         $idWorking = isset($_REQUEST['idWorking']) ? (int)$_REQUEST['idWorking'] : 0;
+        requirePlayerOwnedCity($db, $player, $cityId);
 
-        $db->prepare("DELETE FROM timed_task WHERE id_task = ? AND id_city = ?")->execute([$idWorking, $cityId]);
+        $refund = [];
+        $db->beginTransaction();
+        try {
+            $delete = $db->prepare("DELETE FROM timed_task WHERE id_task = ? AND id_city = ?");
+            $delete->execute([$idWorking, $cityId]);
+            if ($delete->rowCount() === 1) {
+                $refund = ResourceService::creditCityUpToLimit($db, $cityId, $playerId, [
+                    'food' => 1000,
+                    'wood' => 1000,
+                    'stone' => 1000,
+                    'metal' => 1000
+                ]);
+            }
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
 
-        // Refund partial resources
-        $db->prepare("UPDATE city SET food = LEAST(food_cap, food + 1000), wood = LEAST(wood_cap, wood + 1000), stone = LEAST(stone_cap, stone + 1000), metal = LEAST(metal_cap, metal + 1000) WHERE id_city = ?")->execute([$cityId]);
-
-        $freshCity = $db->query("SELECT * FROM city WHERE id_city = $cityId")->fetch();
+        $freshStmt = $db->prepare("SELECT * FROM city WHERE id_city = ? AND id_player = ?");
+        $freshStmt->execute([$cityId, $playerId]);
+        $freshCity = $freshStmt->fetch();
         foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
 
-        sendJson(['state' => 'ok', 'City' => $freshCity, 'cityRes' => $freshCity]);
+        sendJson(['state' => 'ok', 'City' => $freshCity, 'cityRes' => $freshCity, 'refund' => $refund]);
     }
 
     public static function getCityStorage($db) {

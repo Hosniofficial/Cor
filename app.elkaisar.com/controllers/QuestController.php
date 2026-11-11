@@ -1,6 +1,8 @@
 <?php
 // QuestController.php - Reads quest status and grants quest rewards.
 
+require_once __DIR__ . '/../services/ResourceService.php';
+
 class QuestController {
     private static function getDailyResetTimestamp(): int {
         $cairoTime = new DateTimeImmutable('now', new DateTimeZone('Africa/Cairo'));
@@ -142,6 +144,14 @@ class QuestController {
             )->execute([$now, $playerId, $questId]);
             $db->commit();
             $result = ['state' => 'ok'];
+        } catch (ResourceLimitException $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            sendJson([
+                'state' => 'error_resource_limit',
+                'msg' => 'ستتجاوز مكافأة المهمة الحد الأقصى لموارد المدينة'
+            ]);
         } catch (Throwable $e) {
             if ($db->inTransaction()) {
                 $db->rollBack();
@@ -237,7 +247,12 @@ class QuestController {
             if ($amount < 0) {
                 return false;
             }
-            if ($type === 'resource' && in_array($reward['resourceType'] ?? '', ['food', 'wood', 'stone', 'metal', 'coin'], true)) {
+            if ($type === 'resource') {
+                if (!in_array($reward['resourceType'] ?? '', ResourceService::CITY_RESOURCES, true)
+                    || !is_int($reward['amount'] ?? null)
+                    || $reward['amount'] > ResourceService::MAX_CITY_BALANCE) {
+                    return false;
+                }
                 continue;
             }
             if ($type === 'item' && !empty($reward['item']) && strlen((string)$reward['item']) <= 60) {
@@ -263,8 +278,9 @@ class QuestController {
         $amount = (int)($reward['amount'] ?? 0);
         if ($type === 'resource') {
             $resource = $reward['resourceType'];
-            $db->prepare("UPDATE `city` SET `$resource` = `$resource` + ? WHERE `id_city` = ? AND `id_player` = ?")
-                ->execute([$amount, $cityId, $playerId]);
+            if (!ResourceService::creditCity($db, $cityId, $playerId, [$resource => $amount])) {
+                throw new ResourceLimitException('Quest resource reward exceeds city balance limit');
+            }
         } elseif ($type === 'item') {
             $db->prepare(
                 'INSERT INTO `player_item` (`id_player`, `id_item`, `amount`) VALUES (?, ?, ?) ' .

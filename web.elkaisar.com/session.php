@@ -23,7 +23,8 @@ if (!empty($_SESSION['player_id'])
         $_SESSION['player_name'],
         $_SESSION['user_group'],
         $_SESSION['selected_server_id'],
-        $_SESSION['player_session_expires_at']
+        $_SESSION['player_session_expires_at'],
+        $_SESSION['player_token']
     );
 }
 

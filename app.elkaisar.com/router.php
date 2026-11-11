@@ -4,6 +4,7 @@
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/PlayerAuth.php';
 require_once __DIR__ . '/services/ProductionService.php';
+require_once __DIR__ . '/services/ResourceService.php';
 require_once __DIR__ . '/services/TaskService.php';
 
 // Controllers
@@ -36,12 +37,6 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/');
 if (preg_match('#^/(?:api|home/HLogIn)/.+\.html$#i', $uri) === 1) {
     $uri = substr($uri, 0, -5);
-}
-
-if ($uri === '/api/dominant.php' || $uri === '/api/dominant') {
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(['state' => 'ok', 'type' => 'domain', 'unit' => []], JSON_UNESCAPED_UNICODE);
-    exit;
 }
 
 if (strpos($uri, '/api/') === 0

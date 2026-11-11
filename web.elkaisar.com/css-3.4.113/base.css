@@ -2719,9 +2719,3 @@ button:disabled {
     background-repeat: no-repeat;
     background-position-y: -60px;
 }
-
-@media only screen and (max-width: 1200px) {
-    #server-name {
-        display: none
-    }
-}

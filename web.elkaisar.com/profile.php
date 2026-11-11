@@ -56,7 +56,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 }
 
 $stmt = $db->prepare(
-    'SELECT ua.username, ua.email, ua.last_server_id, ua.last_server_entered_at, p.name AS player_name
+    'SELECT ua.username, ua.email, ua.last_server_id, ua.last_server_entered_at,
+            p.name AS player_name, p.p_token
      FROM `user_auth` ua
      JOIN `player` p ON p.id_player = ua.id_player
      WHERE ua.id_player = ?
@@ -65,9 +66,10 @@ $stmt = $db->prepare(
 );
 $stmt->execute([$playerId]);
 $account = $stmt->fetch();
-if (!$account) {
+if (!$account || !is_string($_SESSION['player_token'] ?? null)
+    || !hash_equals((string)$account['p_token'], $_SESSION['player_token'])) {
     $_SESSION = [];
-    header('Location: login.php');
+    header('Location: login.php?reason=account_replaced');
     exit;
 }
 
@@ -554,6 +556,28 @@ $lastEnteredAt = $account['last_server_entered_at']
         </div>
     </section>
 </main>
+
+<script>
+    const playerSessionCheck = async () => {
+        try {
+            const response = await fetch('auth.php?action=check', {
+                cache: 'no-store',
+                credentials: 'same-origin'
+            });
+            if (!response.ok) {
+                throw new Error(`Session check failed: ${response.status}`);
+            }
+            const session = await response.json();
+            if (!session.logged_in && session.reason === 'account_replaced') {
+                window.location.replace('login.php?reason=account_replaced');
+            }
+        } catch (error) {
+            console.error('Unable to verify the account session:', error);
+        }
+    };
+
+    window.setInterval(playerSessionCheck, 5000);
+</script>
 
 </body>
 </html>

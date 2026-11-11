@@ -10554,7 +10554,6 @@ function fillCityWithBuilding() {
     }
 
     Elkaisar.GE.AddCityFixedBuilding();
-    Elkaisar.GE.AddCityBuilding(745, 80, "market");
 
     // Authentic Call of Roma 20 Base Slots
     Elkaisar.GE.AddCityBuilding(416, 272, "under_palace_1");  // COR p: 0
@@ -29720,36 +29719,53 @@ WS_utile.onmessage = function(e) {
 
     console.log(e.data);
 
-    if (isJson(e.data)) {
-        var data = JSON.parse(e.data);
-    } else {
+    if (!isJson(e.data)) {
+        console.error("[WebSocket] Received a non-JSON message", e.data);
+        return;
+    }
 
-        alert(e.data);
-        console.log(e);
+    var data = JSON.parse(e.data);
+    if (!data || typeof data.classPath !== "string") {
+        console.error("[WebSocket] Received a message without classPath", data);
+        return;
     }
 
     var classPath = data.classPath.split(".");
-
-    if (!$.isArray(classPath)) {
-        alert_box.confirmMessage("برجاء تصوير الرسالة وارسالها الى فريق الدعم" + e.data);
+    var handler = Elkaisar.WsLib;
+    for (var i = 0; i < classPath.length; i++) {
+        if (!handler || !Object.prototype.hasOwnProperty.call(handler, classPath[i])) {
+            console.error("[WebSocket] No handler registered for " + data.classPath);
+            return;
+        }
+        handler = handler[classPath[i]];
     }
 
-    if (classPath.length === 2)
-        Elkaisar.WsLib[classPath[0]][classPath[1]](data);
-    else if (classPath.length === 3)
-        Elkaisar.WsLib[classPath[0]][classPath[1]][classPath[2]](data);
+    if (typeof handler !== "function") {
+        console.error("[WebSocket] Handler is not callable for " + data.classPath);
+        return;
+    }
+    handler(data);
 
 };
 
 WS_utile.onclose = function(event) {
 
-    alert_box.confirmMessage("انقطاع الاتصال");
+    var sessionReplaced = event && event.code === 4001
+        && event.reason === "ACCOUNT_LOGIN_ELSEWHERE";
+    alert_box.confirmMessage(sessionReplaced
+        ? "تم فتح الحساب من جهاز آخر، وتم إنهاء جلستك."
+        : "انقطاع الاتصال");
 
     $(".close-alert").remove();
     $(".confim-btn").off("click");
     $(".confim-btn").click(function() {
-        window.location.href = "https://www.elkaisar.com";
-        window.location.replace("https://www.elkaisar.com");
+        if (sessionReplaced) {
+            window.location.href = "/login.php?reason=account_replaced";
+            window.location.replace("/login.php?reason=account_replaced");
+        } else {
+            window.location.href = "https://www.elkaisar.com";
+            window.location.replace("https://www.elkaisar.com");
+        }
     });
 
 
@@ -29867,7 +29883,18 @@ WsBattel.effectedPlayer = function(battel) {
 
 
 
+var completedBattleNotifications = {};
 WsBattel.ended = function(data) {
+    if (!data || !data.Battel || !data.Battel.id_battel) {
+        console.error("[WebSocket] Invalid battle completion payload", data);
+        return;
+    }
+    var battleId = String(data.Battel.id_battel);
+    if (completedBattleNotifications[battleId]) return;
+    completedBattleNotifications[battleId] = true;
+    data.Player = data.Player || {};
+    data.Player.Honor = Number(data.Player.Honor) || 0;
+    data.ItemPrize = Array.isArray(data.ItemPrize) ? data.ItemPrize : [];
 
     for (var iii = 0; iii < Elkaisar.Battel.Battels.length; iii++) {
 
@@ -29885,7 +29912,7 @@ WsBattel.ended = function(data) {
     Battel.afterFininsh(data);
 
     PLAYER_NOTIF.msg_report = Number(PLAYER_NOTIF.msg_report) + 1;
-    PLAYER_NOTIF.battel_number = Number(PLAYER_NOTIF.battel_number) - 1;
+    PLAYER_NOTIF.battel_number = Math.max(0, (Number(PLAYER_NOTIF.battel_number) || 0) - 1);
     Fixed.refreshPlayerNotif();
 
 
@@ -30005,22 +30032,26 @@ $(document).on("PlayerReady", "html", function() {
 Elkaisar.WsLib.Chat = {};
 
 Elkaisar.WsLib.Chat.scrollChat = function() {
-    if ($("#msg-area").getNiceScroll(0).page.maxh - $("#msg-area").getNiceScroll(0).getScrollTop() < 15) {
+    var chatArea = $("#msg-area");
+    if (!chatArea.length || typeof chatArea.getNiceScroll !== "function") return;
+    var scroll = chatArea.getNiceScroll(0);
+    if (!scroll || !scroll.page || typeof scroll.getScrollTop !== "function" || typeof scroll.doScrollTop !== "function") return;
+    if (scroll.page.maxh - scroll.getScrollTop() < 15) {
         setTimeout(function() {
-            $("#msg-area").getNiceScroll(0).doScrollTop($("#msg-area").getNiceScroll(0).getContentSize().h, 0);
+            var contentSize = typeof scroll.getContentSize === "function" ? scroll.getContentSize() : null;
+            if (contentSize) scroll.doScrollTop(contentSize.h, 0);
         }, 100);
     }
 };
 
-
 Elkaisar.WsLib.Chat.WorldMsg = function(data) {
     Chat.worldMessage(data);
-    this.scrollChat();
+    Elkaisar.WsLib.Chat.scrollChat();
 };
 
 Elkaisar.WsLib.Chat.GuildMsg = function(data) {
     Chat.guildMessage(data);
-    this.scrollChat();
+    Elkaisar.WsLib.Chat.scrollChat();
 };
 
 
@@ -30034,7 +30065,7 @@ Elkaisar.WsLib.Chat.deleteMsg = function(data) {
             opacity: 1
         });
     });
-    this.scrollChat();
+    Elkaisar.WsLib.Chat.scrollChat();
 };
 
 Elkaisar.WsLib.Chat.banPlayer = function(data) {
@@ -30048,7 +30079,7 @@ Elkaisar.WsLib.Chat.banPlayer = function(data) {
     }
 
     $("#msg-area").append(msg);
-    this.scrollChat();
+    Elkaisar.WsLib.Chat.scrollChat();
 };
 
 
@@ -30091,8 +30122,7 @@ Elkaisar.WsLib.Chat.sendMsgImage = function(data) {
                         </div>
                     </div>`;
     $("#msg-area").append(msg);
-    this.scrollChat();
-
+    Elkaisar.WsLib.Chat.scrollChat();
 };
 
 Elkaisar.WsLib.Chat.QueenPrizeSent = function(data) {
@@ -30146,7 +30176,7 @@ Elkaisar.WsLib.Battel.battel = function(data) {
         }
 
         $('#dialg_box[type="reports"] .left-nav .selected').click();
-        PLAYER_NOTIF.battel_number--;
+        PLAYER_NOTIF.battel_number = Math.max(0, Number(PLAYER_NOTIF.battel_number) - 1);
         Fixed.refreshPlayerNotif();
         alert_box.succesMessage("تم سحب الابطال من المعركة بنجاح");
 
@@ -30201,6 +30231,10 @@ Elkaisar.WsLib.Battel.Finished = function(data) {
     WsBattel.ended(data);
 
 }
+
+Elkaisar.WsLib.Battel.ended = function(data) {
+    WsBattel.ended(data);
+};
 
 Elkaisar.WsLib.Battel.startAnnounce = function(data) {
     WsBattel.effectedPlayer(data);
@@ -30562,8 +30596,13 @@ Elkaisar.WsLib.Hero.Back = function(data) {
         HeroName = Hero['Hero']['name'];
     if (City && City['City'] && City['City']['name'])
         CityName = City['City']['name'];
-    PLAYER_NOTIF['hero_in_battel'] -= 1;
-    Hero['Hero']['in_city'] = data['inCity'];
+    PLAYER_NOTIF['hero_in_battel'] = Math.max(0, (Number(PLAYER_NOTIF['hero_in_battel']) || 0) - 1);
+    if (Hero && Hero['Hero'])
+        Hero['Hero']['in_city'] = data['inCity'];
+    else {
+        Fixed['refreshPlayerNotif']();
+        return;
+    }
     if (Number(data['Task']) === Elkaisar['BaseData']['BattelTasks']['BATTEL_TASK_SUPPLY'] || data['task'] == Elkaisar['BaseData']['BattelTasks']['BATTEL_TASK_HERO_TRANS']) {
         var idCity = Number(Elkaisar['CurrentCity']['City']['id_city']);
         var CityC = Elkaisar['City']['getCityByCoord'](data['xTo'], data['yTo']);
@@ -31003,15 +31042,53 @@ Elkaisar.WsLib.Base.worldCity = function(data) {
 
 Elkaisar.WsLib.Base.worldCityColonized = function(data) {
     var Unit;
+    for (var previousIndex in WORLD_COLONIZED_UNITS) {
+        var previousUnitIndex = WORLD_COLONIZED_UNITS[previousIndex];
+        var previousUnit = Elkaisar.worldAllUnits[previousUnitIndex];
+        if (previousUnit) {
+            previousUnit.CityColonized = false;
+            previousUnit.CityColonizerFlag = null;
+            previousUnit.ColonizerIdGuild = null;
+            previousUnit.ColonizerIdPlayer = null;
+        }
+    }
+
+    var colonizedUnits = [];
     for (var iii in data.City) {
 
         Unit = WorldUnit.getWorldUnit(data.City[iii].x, data.City[iii].y);
+        if (!Unit)
+            continue;
         Unit.CityColonizerFlag = data.City[iii].city_flag;
         Unit.CityColonized = true;
         Unit.ColonizerIdGuild = data.City[iii].id_guild;
         Unit.ColonizerIdPlayer = data.City[iii].id_player;
+        colonizedUnits.push(Number(data.City[iii].x) * 500 + Number(data.City[iii].y));
+    }
+    WORLD_COLONIZED_UNITS = colonizedUnits;
+    Elkaisar.World.Map.RefreshWorld();
+
+};
+
+var WORLD_COLONIZED_UNITS = [];
+Elkaisar.WsLib.Base.refreshWorldCityColonization = function(data) {
+    var unitIndex = Number(data.xCoord) * 500 + Number(data.yCoord);
+    var previousIndex = WORLD_COLONIZED_UNITS.indexOf(unitIndex);
+    if (data.colonized === true && previousIndex === -1) {
+        WORLD_COLONIZED_UNITS.push(unitIndex);
+    } else if (data.colonized !== true && previousIndex !== -1) {
+        WORLD_COLONIZED_UNITS.splice(previousIndex, 1);
     }
 
+    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
+    if (!Unit)
+        return;
+
+    Unit.CityColonized = data.colonized === true;
+    Unit.CityColonizerFlag = data.colonized ? data.city_flag : null;
+    Unit.ColonizerIdGuild = data.colonized ? data.id_guild : null;
+    Unit.ColonizerIdPlayer = data.colonized ? data.id_player : null;
+    WorldUnit.refreshUnitView(data.xCoord, data.yCoord);
 };
 
 
@@ -31019,6 +31096,8 @@ Elkaisar.WsLib.Base.refreshWorldCitiesForPlayers = function(data) {
     var Unit;
 
     Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
+    if (!Unit)
+        return;
     Unit.idGuild = data.idGuild;
     Unit.CityLvl = data.CityLvl;
     Unit.idCity = data.idCity;
@@ -31028,11 +31107,12 @@ Elkaisar.WsLib.Base.refreshWorldCitiesForPlayers = function(data) {
     else if (Unit.CityFlag !== data.CityFlag)
         Unit.CityFlagExpiresAt = 0;
     Unit.CityFlag = data.CityFlag;
-    Unit.ut = 0 + WUT_CITY_LVL_0;
-    Unit.l = 0;
-    Unit.t = 0 + 17;
+    Unit.ut = Number(data.CityLvl) + WUT_CITY_LVL_0;
+    Unit.l = Number(data.CityLvl);
+    Unit.t = Number(data.CityLvl) + 17;
     if (Unit.entite)
         Unit.entite.destroy();
+    Elkaisar.World.Map.DeletUnit(data.xCoord, data.yCoord);
     Elkaisar.World.Map.Scroll(true);
     Elkaisar.World.Map.RefreshWorld();
 
@@ -31049,12 +31129,36 @@ Elkaisar.WsLib.Base.refreshCityFlag = function(data) {
 
 
 Elkaisar['WsLib']['Base']['WorldFireUnit'] = function(data) {
-    var _0x96c110;
-    for (var ii in data['Units']) {
-        var xCoord = Math['floor'](ii / 500);
-        var yCoord = ii % 500;
-        WorldUnit['getWorldUnit'](xCoord, yCoord)['s'] = 1;
+    for (var previousIndex in WORLD_NUIT_ON_FIRE) {
+        var previousUnitIndex = WORLD_NUIT_ON_FIRE[previousIndex];
+        var previousUnit = Elkaisar.worldAllUnits[previousUnitIndex];
+        if (previousUnit) {
+            previousUnit.s = 0;
+            if (previousUnit.UnitFire) {
+                for (var fireIndex in previousUnit.UnitFire) {
+                    previousUnit.UnitFire[fireIndex].destroy();
+                }
+                previousUnit.UnitFire = [];
+            }
+            if (previousUnit.entite && previousUnit.entite.data)
+                previousUnit.entite.data.set("HasFire", false);
+        }
     }
+
+    var activeFires = [];
+    for (var ii in data['Units']) {
+        var unitIndex = Number(ii);
+        if (!Number.isInteger(unitIndex) || unitIndex < 0 || unitIndex >= 250000)
+            continue;
+        var xCoord = Math.floor(unitIndex / 500);
+        var yCoord = unitIndex % 500;
+        var unit = Elkaisar.worldAllUnits[unitIndex];
+        if (!unit)
+            continue;
+        unit.s = 1;
+        activeFires.push(unitIndex);
+    }
+    WORLD_NUIT_ON_FIRE = activeFires;
     Elkaisar['World']['Map']['Scroll'](false);
     Elkaisar['World']['Map']['RefreshWorld']();
 };
@@ -31085,15 +31189,21 @@ Elkaisar.WsLib.World.ResetLvl = function(data) {
 
 Elkaisar.WsLib.World.Battel.Started = function(data) {
     var world_unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
-    world_unit.s = 1;
-    Animation.fireWorldUnit(data.xCoord, data.yCoord);
+    if (world_unit) {
+        world_unit.s = 1;
+        Animation.fireWorldUnit(data.xCoord, data.yCoord);
+    }
+
     Elkaisar.World.MapBattel.newBattel(data);
 
 }
 
-
 Elkaisar.WsLib.World.Battel.Ended = function(data) {
     var world_unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
+    if (world_unit && !data.stillActive) {
+        world_unit.s = 0;
+        WorldUnit.refreshUnitView(data.xCoord, data.yCoord);
+    }
     Elkaisar.World.MapBattel.removeBattel(data);
 
 }
@@ -31891,6 +32001,22 @@ $(document).on("click", "#new-city-confirm button", function() {
                             Elkaisar.City.prepareCity(json_data.City.id_city);
                             Elkaisar.DPlayer.City[json_data.City.id_city].City = json_data.City;
                             Elkaisar.City.refreshBtnList();
+                            Elkaisar.WsLib.Base.refreshWorldCitiesForPlayers({
+                                xCoord: json_data.City.x,
+                                yCoord: json_data.City.y,
+                                idCity: json_data.City.id_city,
+                                idPlayer: json_data.City.id_player,
+                                idGuild: Elkaisar.DPlayer.Player.id_guild,
+                                CityLvl: json_data.City.lvl,
+                                CityFlag: json_data.City.flag || "0",
+                                CityFlagExpiresAt: Number(json_data.City.flag_expires_at) || 0
+                            });
+                            if (ws && ws.readyState === 1) {
+                                ws.send(JSON.stringify({
+                                    url: "World/refreshWorldCitiesForPlayers",
+                                    data: { idCity: json_data.City.id_city }
+                                }));
+                            }
                             $(".close_RB img").click();
                             $("#x_coord-input input").val(xCoord);
                             $("#y_coord-input input").val(yCoord);
@@ -35894,17 +36020,30 @@ Elkaisar.World.MapBattel = {};
 
 Elkaisar.World.MapBattel.BattelList = {};
 
+Elkaisar.World.MapBattel.getBattleKey = function(Battel) {
+    return Number(Battel.id_battel) > 0
+        ? `id:${Number(Battel.id_battel)}`
+        : `${Battel.xCity}.${Battel.yCity}-${Battel.xCoord}.${Battel.yCoord}`;
+};
 
 Elkaisar.World.MapBattel.getAllBattels = function() {
     WS_utile.Ack({
         url: "Battel/getAllWorldBattels",
         data: {},
         callBack: function(Res) {
-            if (Res && Res.length)
-                Elkaisar.World.MapBattel.BattelList = Res;
-            else
-                Elkaisar.World.MapBattel.BattelList = [];
+            for (var oldKey in Elkaisar.World.MapBattel.BattelList) {
+                Elkaisar.World.MapBattel.removeBattel(Elkaisar.World.MapBattel.BattelList[oldKey]);
+            }
+            Elkaisar.World.MapBattel.BattelList = {};
+            if (Res && Res.length) {
+                for (var iii = 0; iii < Res.length; iii++) {
+                    var battel = Res[iii];
+                    var battelKey = Elkaisar.World.MapBattel.getBattleKey(battel);
+                    Elkaisar.World.MapBattel.BattelList[battelKey] = battel;
+                }
+            }
 
+            Elkaisar.World.MapBattel.AddBattels();
             console.log(Res);
         }
     });
@@ -35912,18 +36051,21 @@ Elkaisar.World.MapBattel.getAllBattels = function() {
 
 
 Elkaisar.World.MapBattel.removeBattel = function(Battel) {
-    const BattelKey = `${Battel.xCity}.${Battel.yCity}-${Battel.xCoord}.${Battel.yCoord}`;
+    const BattelKey = Elkaisar.World.MapBattel.getBattleKey(Battel);
+    const currentBattle = Elkaisar.World.MapBattel.BattelList[BattelKey];
+    if (!currentBattle)
+        return;
 
-    if (Elkaisar.World.MapBattel.BattelList[BattelKey].Line)
-        Elkaisar.World.MapBattel.BattelList[BattelKey].Line.destroy();
-    if (Elkaisar.World.MapBattel.BattelList[BattelKey].GoSourceBtn)
-        Elkaisar.World.MapBattel.BattelList[BattelKey].GoSourceBtn.destroy();
-    if (Elkaisar.World.MapBattel.BattelList[BattelKey].GoDistBtn)
-        Elkaisar.World.MapBattel.BattelList[BattelKey].GoDistBtn.destroy();
-    if (Elkaisar.World.MapBattel.BattelList[BattelKey].GoHeroAvatarBtn)
-        Elkaisar.World.MapBattel.BattelList[BattelKey].GoHeroAvatarBtn.destroy();
-    if (Elkaisar.World.MapBattel.BattelList[BattelKey].TimeElapsed)
-        Elkaisar.World.MapBattel.BattelList[BattelKey].TimeElapsed.destroy();
+    if (currentBattle.Line)
+        currentBattle.Line.destroy();
+    if (currentBattle.GoSourceBtn)
+        currentBattle.GoSourceBtn.destroy();
+    if (currentBattle.GoDistBtn)
+        currentBattle.GoDistBtn.destroy();
+    if (currentBattle.GoHeroAvatarBtn)
+        currentBattle.GoHeroAvatarBtn.destroy();
+    if (currentBattle.TimeElapsed)
+        currentBattle.TimeElapsed.destroy();
 
     delete Elkaisar.World.MapBattel.BattelList[BattelKey];
 };
@@ -36104,7 +36246,7 @@ Elkaisar.World.MapBattel.BattelLineOver = function(OneBattel, x1, y1, x2, y2) {
 
 
 Elkaisar.World.MapBattel.newBattel = function(Battel) {
-    const BattelKey = `${Battel.xCity}.${Battel.yCity}-${Battel.xCoord}.${Battel.yCoord}`;
+    const BattelKey = Elkaisar.World.MapBattel.getBattleKey(Battel);
     Elkaisar.World.MapBattel.BattelList[BattelKey] = Battel;
     Elkaisar.World.MapBattel.AddBattels();
 
@@ -36856,8 +36998,12 @@ Battel = {
     },
 
     afterFininsh: function(Battel) {
-
-
+        if (!Battel || !Battel.Battel) {
+            console.error("[WebSocket] Invalid battle reward payload", Battel);
+            return;
+        }
+        Battel.Player = Battel.Player || {};
+        Battel.ItemPrize = Array.isArray(Battel.ItemPrize) ? Battel.ItemPrize : [];
 
         var hero_dialog = $("#dialg_box[type='hero'] .hero-profile");
 
@@ -36873,7 +37019,9 @@ Battel = {
             Matrial.givePlayer(Battel.ItemPrize[iii].Item, Battel.ItemPrize[iii].amount);
 
         }
-        Elkaisar.DPlayer.Player.honor = Number(Elkaisar.DPlayer.Player.honor) + Number(Battel.Player.Honor);
+        if (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) {
+            Elkaisar.DPlayer.Player.honor = (Number(Elkaisar.DPlayer.Player.honor) || 0) + (Number(Battel.Player.Honor) || 0);
+        }
 
 
         if (Number(Battel.Battel.task) === Elkaisar.BaseData.BattelTasks.BATTEL_TASK_DOMINATE) {
@@ -42931,6 +43079,8 @@ $(document).on("click", "#accept_quest", function() {
 
                 } else if (jsonData.state === "error_4") {
                     alert_box.failMessage("شروط المهمة غير مكتملة");
+                } else if (jsonData.state === "error_resource_limit") {
+                    alert_box.failMessage(jsonData.msg || "وصلت موارد المدينة إلى الحد الأقصى");
                 }
 
 
@@ -44075,6 +44225,7 @@ var MATIAL_FOR_LUCK_WHEEL = [
 
 var LuckWheel = {
     isSpinning: false,
+    isStarting: false,
     stopRequested: false,
     currentTimers: []
 };
@@ -44242,6 +44393,7 @@ LuckWheel.show = function() {
 LuckWheel.hide = function() {
     LuckWheel.clearAllTimers();
     LuckWheel.isSpinning = false;
+    LuckWheel.isStarting = false;
     LuckWheel.stopRequested = false;
 
     if (typeof Elkaisar !== "undefined" && Elkaisar.GE && Elkaisar.GE.Game && Elkaisar.GE.Game.input) {
@@ -44260,8 +44412,9 @@ LuckWheel.hide = function() {
 
 LuckWheel.openGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "true");
-    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "-32px" }, 350, "linear");
-    $.when.apply($, [$("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "32px" }, 350, "linear")]).then(function() {
+    var leftGates = $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "-32px" }, 350, "linear");
+    var rightGates = $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "32px" }, 350, "linear");
+    $.when(leftGates.promise(), rightGates.promise()).then(function() {
         $("#luck-wheel ul li h1").fadeIn(150);
         if (typeof call_back === "function") call_back();
     });
@@ -44270,8 +44423,9 @@ LuckWheel.openGates = function(call_back) {
 LuckWheel.closeGates = function(call_back) {
     $("#luck-wheel").attr("data-gate-open", "false");
     $("#luck-wheel ul li h1").hide();
-    $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear");
-    $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear", function() {
+    var leftGates = $("#luck-wheel .cell .left-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear");
+    var rightGates = $("#luck-wheel .cell .right-gate").stop(true).animate({ "background-position-x": "0px" }, 350, "linear");
+    $.when(leftGates.promise(), rightGates.promise()).then(function() {
         if (typeof call_back === "function") call_back();
     });
 };
@@ -44367,6 +44521,7 @@ LuckWheel.showResult = function(jsonData, showSummary) {
 };
 
 LuckWheel.spinWheel = function() {
+    LuckWheel.isStarting = false;
     var spinCountInput = $("#luck-wheel .input-number input");
     var requestedSpins = Math.max(1, parseInt(spinCountInput.val(), 10) || 1);
     var skipAnimation = $("#fast-spin-checkbox").is(":checked");
@@ -44390,6 +44545,7 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
+            LuckWheel.openGates();
             return;
         }
 
@@ -44403,6 +44559,7 @@ LuckWheel.spinWheel = function() {
             LuckWheel.isSpinning = false;
             LuckWheel.stopRequested = false;
             $("#start-wheel button").text("بدء").prop("disabled", false);
+            LuckWheel.openGates();
             return;
         }
 
@@ -44492,7 +44649,7 @@ LuckWheel.spinWheel = function() {
 
                         currentSpinIndex++;
                         if (currentSpinIndex >= winIndices.length) {
-                            LuckWheel.showResult(jsonData, false);
+                            LuckWheel.showResult(jsonData, winIndices.length > 1);
                             LuckWheel.isSpinning = false;
                             LuckWheel.stopRequested = false;
                             $("#start-wheel button").text("بدء").prop("disabled", false);
@@ -44501,6 +44658,13 @@ LuckWheel.spinWheel = function() {
 
                         startCellIndex = targetIndex;
                         var nextSpinTimer = setTimeout(function() {
+                            if (LuckWheel.stopRequested) {
+                                LuckWheel.showResult(jsonData, true);
+                                LuckWheel.isSpinning = false;
+                                LuckWheel.stopRequested = false;
+                                $("#start-wheel button").text("بدء").prop("disabled", false);
+                                return;
+                            }
                             allPulses.css({ opacity: 0, animation: "" });
                             animateSpin();
                         }, 1600);
@@ -44545,6 +44709,7 @@ $(document).on("click", "#start-wheel", function() {
         $(this).find("button").prop("disabled", true);
         return;
     }
+    if (LuckWheel.isStarting) return;
 
     var ticketCount = Matrial.getPlayerAmount("luck_play") || 0;
     var goldCount = (Elkaisar.DPlayer && Elkaisar.DPlayer.Player) ? (Elkaisar.DPlayer.Player.gold || 0) : 0;
@@ -44561,9 +44726,11 @@ $(document).on("click", "#start-wheel", function() {
         return;
     }
 
+    LuckWheel.isStarting = true;
     $(".pulse").css({ animation: "", opacity: 0 });
     if ($("#luck-wheel").attr("data-gate-open") === "true") {
         LuckWheel.closeGates(function() {
+            if (!LuckWheel.isStarting) return;
             LuckWheel.spinWheel();
         });
     } else {
@@ -46393,6 +46560,22 @@ $(document).on("click", "#expan-city button", function() {
 
                     Matrial.takeFrom("expan_plan", Math.pow(2, Elkaisar.CurrentCity.City.lvl));
                     Elkaisar.City.getCity(idCity).City = JsonObject.City;
+                    Elkaisar.WsLib.Base.refreshWorldCitiesForPlayers({
+                        xCoord: JsonObject.City.x,
+                        yCoord: JsonObject.City.y,
+                        idCity: JsonObject.City.id_city,
+                        idPlayer: JsonObject.City.id_player,
+                        idGuild: Elkaisar.DPlayer.Player.id_guild,
+                        CityLvl: JsonObject.City.lvl,
+                        CityFlag: JsonObject.City.flag || "0",
+                        CityFlagExpiresAt: Number(JsonObject.City.flag_expires_at) || 0
+                    });
+                    if (ws && ws.readyState === 1) {
+                        ws.send(JSON.stringify({
+                            url: "World/refreshWorldCitiesForPlayers",
+                            data: { idCity: JsonObject.City.id_city }
+                        }));
+                    }
                     fillCityWithBuilding();
 
                     $(".nav_bar .left-nav ul li").each(function() {
@@ -46456,6 +46639,7 @@ $(document).on("click", "#bar_list .abandon", function() {
         $.ajax({
             url: `${API_URL}/api/ACityPalace/barryAbandon`,
             data: {
+                idCity: idCity,
                 xCoord: x_coord,
                 yCoord: y_coord,
                 token: Elkaisar.Config.OuthToken,
@@ -46474,7 +46658,21 @@ $(document).on("click", "#bar_list .abandon", function() {
                     return;
                 }
 
+                if (!json_data || json_data.state !== "ok") {
+                    alert_box.failMessage(json_data && json_data.msg ? json_data.msg : "تعذر التخلي عن البرية");
+                    return;
+                }
+
                 alert_box.succesMessage("تم التخلى عن البرية بنجاح");
+                if (ws && ws.readyState === 1) {
+                    ws.send(JSON.stringify({
+                        url: "World/refreshWorldCityColonization",
+                        data: {
+                            xCoord: Number(x_coord),
+                            yCoord: Number(y_coord)
+                        }
+                    }));
+                }
                 list_.remove();
                 Elkaisar.City.getCityBase(idCity);
                 Elkaisar.City.getCityBarray(idCity).done(function() {
@@ -49529,8 +49727,8 @@ BattelField.battelModel = function(battel, list) {
         idBattel = battel.id_battel;
         x_coord = battel.x_coord;
         y_coord = battel.y_coord;
-        attackNum = battel.attackNum;
-        defenceNum = battel.defenceNum;
+        attackNum = Number(battel.attackNum) || 0;
+        defenceNum = Number(battel.defenceNum) || 0;
         hasBattel = true;
     }
 

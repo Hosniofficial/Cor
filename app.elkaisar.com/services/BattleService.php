@@ -577,11 +577,13 @@ class BattleService {
             'coin'  => (int)($baseLoot * 0.3) + rand(500, 3000)
         ];
 
-        // Add loot to player's city
-        $db->prepare("UPDATE `city` SET 
-            `food` = `food` + ?, `wood` = `wood` + ?, `stone` = `stone` + ?, `metal` = `metal` + ?, `coin` = `coin` + ? 
-            WHERE `id_city` = ?")
-           ->execute([$spoils['food'], $spoils['wood'], $spoils['stone'], $spoils['metal'], $spoils['coin'], $cityId]);
+        // Credit no more than the remaining balance headroom.
+        $spoils = ResourceService::creditCityUpToLimit(
+            $db,
+            $cityId,
+            $idPlayer,
+            $spoils
+        );
 
         // Drop items from the world-unit prize data file.
         $prizePathCandidates = [

@@ -14,13 +14,18 @@
 }
 
 #menu-bar .content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 45px;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
 
 #menu-bar .left {
-    width: 200px;
-    justify-content: space-between;
+    width: auto;
+    flex: 0 0 auto;
+    gap: 8px;
+    justify-content: flex-start;
     align-items: center;
     height: 45px;
 }
@@ -28,8 +33,18 @@
 #menu-bar .left .left-half,
 #menu-bar .left .right-half {
     height: 100%;
-    width: 50%;
-    justify-content: space-between
+    width: auto;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#menu-bar .left .left-half {
+    gap: 2px;
+}
+
+#menu-bar .left .right-half {
+    display: flex;
 }
 
 #menu-bar .right-content {
@@ -37,11 +52,22 @@
 }
 
 #server-bing {
-    width: 100px;
-    font-size: 16px;
+    width: 76px;
+    font-size: 13px;
     color: white;
     text-align: center;
     line-height: 45px;
+    white-space: nowrap;
+}
+
+#menu-bar .mid {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 50%;
+    width: 300px;
+    height: 52px;
+    transform: translateX(-50%);
 }
 
 #menu-bar .right-content ul li {
@@ -172,6 +198,13 @@
     flex-flow: row-reverse
 }
 
+#menu-bar .right {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
 .right-content ul li h1 {
     font-size: 12px;
     text-align: center;
@@ -189,6 +222,91 @@
     margin-left: -447px;
     top: 125px;
     z-index: 11;
+}
+
+@media only screen and (max-width: 1308px) {
+    #menu-bar .mid {
+        width: 165px;
+        height: 45px;
+    }
+
+    #server-name {
+        width: 165px;
+        height: 45px;
+    }
+
+    #server-name .name {
+        font-size: 17px;
+        line-height: 23px;
+    }
+
+    #server-name .time {
+        font-size: 12px;
+        line-height: 17px;
+    }
+}
+
+@media only screen and (min-width: 981px) and (max-width: 1172px) {
+    #menu-bar .mid {
+        left: 40%;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    #menu-bar .left {
+        gap: 3px;
+    }
+
+    #menu-bar .left .left-half {
+        gap: 0;
+    }
+
+    #menu-bar .left .wrapper-icon {
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+    }
+
+    #menu-bar .left .wrapper-icon .icon {
+        background-size: 28px 28px;
+    }
+
+    #server-bing {
+        width: 48px;
+        font-size: 10px;
+    }
+
+    #menu-bar .mid,
+    #server-name {
+        width: 132px;
+        height: 40px;
+    }
+
+    #server-name .name {
+        font-size: 14px;
+        line-height: 21px;
+    }
+
+    #server-name .time {
+        font-size: 10px;
+        line-height: 14px;
+    }
+
+    #menu-bar .right-content ul li {
+        flex: 0 0 32px;
+        width: 32px;
+    }
+
+    #menu-bar .right-content ul li .image {
+        width: 32px;
+        height: 44px;
+        margin-top: 8px;
+    }
+
+    #menu-bar .right-content ul li .text {
+        margin-top: -14px;
+        font-size: 9px;
+    }
 }
 
 #dialg_box::before,
