@@ -2198,7 +2198,7 @@ body #luck-wheel-over-lay {
     #luck-wheel-btn {
         bottom: 156px !important;
         top: auto !important;
-        left: 212px !important;
+        left: 218px !important;
         transform: scale(0.96) !important;
         transform-origin: bottom left;
         z-index: 10 !important;
