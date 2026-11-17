@@ -1,5 +1,7 @@
--- Elkaisar Database Schema
--- Select the target database in the mysql command instead of hard-coding it here.
+-- Canonical baseline schema for a new CAESER database.
+-- Use migrations/ to upgrade an existing database; CREATE IF NOT EXISTS does not
+-- add missing columns, indexes, or constraints to existing tables.
+-- Select the target database explicitly when importing this file.
 
 -- 1. Players
 CREATE TABLE IF NOT EXISTS `player` (
@@ -22,7 +24,9 @@ CREATE TABLE IF NOT EXISTS `player` (
     `p_token` VARCHAR(255) NOT NULL DEFAULT '',
     `rank` INT NOT NULL DEFAULT 1,
     `user_group` INT NOT NULL DEFAULT 0,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    KEY `idx_player_guild_honor` (`id_guild`, `honor`),
+    KEY `idx_player_ranking` (`prestige`, `honor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 1a. Account credentials and optional unique usernames (legacy accounts may not have one).
@@ -89,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `guild_member` (
     `prize_share` INT NOT NULL DEFAULT 0,
     PRIMARY KEY (`id_guild`, `id_player`),
     UNIQUE KEY `uq_guild_member_player` (`id_player`),
+    KEY `idx_guild_member_rank` (`id_guild`, `rank`),
     CONSTRAINT `fk_guild_member_guild` FOREIGN KEY (`id_guild`) REFERENCES `guild` (`id_guild`) ON DELETE CASCADE,
     CONSTRAINT `fk_guild_member_player` FOREIGN KEY (`id_player`) REFERENCES `player` (`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -123,6 +128,7 @@ CREATE TABLE IF NOT EXISTS `city` (
     `name` VARCHAR(50) NOT NULL DEFAULT 'العاصمة 1',
     `flag` VARCHAR(20) NOT NULL DEFAULT '',
     `flag_expires_at` INT UNSIGNED NOT NULL DEFAULT 0,
+    `flag_tag` VARCHAR(3) NOT NULL DEFAULT '',
     `lvl` INT NOT NULL DEFAULT 0,
     `console` INT DEFAULT NULL,
     `taxs` INT NOT NULL DEFAULT 10,
@@ -141,16 +147,16 @@ CREATE TABLE IF NOT EXISTS `city` (
     `wood` BIGINT NOT NULL DEFAULT 50000,
     `stone` BIGINT NOT NULL DEFAULT 50000,
     `metal` BIGINT NOT NULL DEFAULT 50000,
-    `coin_in` INT NOT NULL DEFAULT 100,
-    `food_in` INT NOT NULL DEFAULT 100,
-    `wood_in` INT NOT NULL DEFAULT 100,
-    `stone_in` INT NOT NULL DEFAULT 100,
-    `metal_in` INT NOT NULL DEFAULT 100,
-    `coin_out` INT NOT NULL DEFAULT 0,
-    `food_out` INT NOT NULL DEFAULT 0,
-    `wood_out` INT NOT NULL DEFAULT 0,
-    `stone_out` INT NOT NULL DEFAULT 0,
-    `metal_out` INT NOT NULL DEFAULT 0,
+    `coin_in` BIGINT NOT NULL DEFAULT 100,
+    `food_in` BIGINT NOT NULL DEFAULT 100,
+    `wood_in` BIGINT NOT NULL DEFAULT 100,
+    `stone_in` BIGINT NOT NULL DEFAULT 100,
+    `metal_in` BIGINT NOT NULL DEFAULT 100,
+    `coin_out` BIGINT NOT NULL DEFAULT 0,
+    `food_out` BIGINT NOT NULL DEFAULT 0,
+    `wood_out` BIGINT NOT NULL DEFAULT 0,
+    `stone_out` BIGINT NOT NULL DEFAULT 0,
+    `metal_out` BIGINT NOT NULL DEFAULT 0,
     `food_cap` INT NOT NULL DEFAULT 100000,
     `wood_cap` INT NOT NULL DEFAULT 100000,
     `stone_cap` INT NOT NULL DEFAULT 100000,
@@ -168,7 +174,35 @@ CREATE TABLE IF NOT EXISTS `city` (
     `wall_cap` INT NOT NULL DEFAULT 5000,
     `spies` INT NOT NULL DEFAULT 0,
     `LS` INT NOT NULL DEFAULT 0,
+    KEY `idx_city_coordinates` (`x`, `y`),
+    KEY `idx_city_ranking` (`lvl`, `pop`),
     FOREIGN KEY (`id_player`) REFERENCES `player`(`id_player`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `city_tributary` (
+    `id_city` INT NOT NULL PRIMARY KEY,
+    `id_sovereign_city` INT NOT NULL,
+    `colonized_at` INT NOT NULL,
+    `last_tribute_at` INT NOT NULL,
+    `food_remainder` INT UNSIGNED NOT NULL DEFAULT 0,
+    `wood_remainder` INT UNSIGNED NOT NULL DEFAULT 0,
+    `stone_remainder` INT UNSIGNED NOT NULL DEFAULT 0,
+    `metal_remainder` INT UNSIGNED NOT NULL DEFAULT 0,
+    KEY `idx_city_tributary_sovereign` (`id_sovereign_city`),
+    CONSTRAINT `fk_city_tributary_city`
+        FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`) ON DELETE CASCADE,
+    CONSTRAINT `fk_city_tributary_sovereign_city`
+        FOREIGN KEY (`id_sovereign_city`) REFERENCES `city` (`id_city`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `city_tributary_balance` (
+    `id_sovereign_city` INT NOT NULL PRIMARY KEY,
+    `food` BIGINT NOT NULL DEFAULT 0,
+    `wood` BIGINT NOT NULL DEFAULT 0,
+    `stone` BIGINT NOT NULL DEFAULT 0,
+    `metal` BIGINT NOT NULL DEFAULT 0,
+    CONSTRAINT `fk_city_tributary_balance_city`
+        FOREIGN KEY (`id_sovereign_city`) REFERENCES `city` (`id_city`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `city_barray` (
@@ -179,7 +213,8 @@ CREATE TABLE IF NOT EXISTS `city_barray` (
     `y_coord` INT NOT NULL,
     `Type` INT NOT NULL,
     `lvl` INT NOT NULL DEFAULT 1,
-    UNIQUE KEY `uq_city_barray_coord` (`x_coord`, `y_coord`)
+    UNIQUE KEY `uq_city_barray_coord` (`x_coord`, `y_coord`),
+    KEY `idx_city_barray_city` (`id_city`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `city_jop` (
@@ -206,7 +241,9 @@ CREATE TABLE IF NOT EXISTS `market_offer` (
     `price_per_unit` DECIMAL(10,4) NOT NULL,
     `done` BIGINT NOT NULL DEFAULT 0,
     `status` VARCHAR(20) NOT NULL DEFAULT 'active',
-    `created_at` INT NOT NULL DEFAULT 0
+    `created_at` INT NOT NULL DEFAULT 0,
+    KEY `idx_market_offer_city_status` (`id_city`, `status`, `id_offer`),
+    KEY `idx_market_offer_book` (`res_type`, `offer_type`, `status`, `price_per_unit`, `id_offer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `city_market_trans` (
@@ -219,7 +256,9 @@ CREATE TABLE IF NOT EXISTS `city_market_trans` (
     `unit_price` DECIMAL(10,4) NOT NULL DEFAULT 0.0000,
     `time_start` INT NOT NULL,
     `time_arrive` INT NOT NULL,
-    `status` VARCHAR(20) NOT NULL DEFAULT 'marching'
+    `status` VARCHAR(20) NOT NULL DEFAULT 'marching',
+    KEY `idx_city_market_trans_destination` (`id_city_to`, `status`, `time_arrive`),
+    KEY `idx_city_market_trans_origin` (`id_city_from`, `status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 6. City Buildings
@@ -268,8 +307,8 @@ CREATE TABLE IF NOT EXISTS `city_hero` (
     `ultra_p` INT NOT NULL DEFAULT 1,
     `exp` INT NOT NULL DEFAULT 0,
     `loyal` INT NOT NULL DEFAULT 70,
-    `power` INT NOT NULL DEFAULT 50,
-    `power_max` INT NOT NULL DEFAULT 50,
+    `power` INT NOT NULL DEFAULT 51,
+    `power_max` INT NOT NULL DEFAULT 51,
     `avatar` INT NOT NULL DEFAULT 1,
     `in_city` INT NOT NULL DEFAULT 1,
     `b_lvl` INT NOT NULL DEFAULT 1,
@@ -286,6 +325,10 @@ CREATE TABLE IF NOT EXISTS `city_hero` (
     `console` INT NOT NULL DEFAULT 0,
     `cap` INT NOT NULL DEFAULT 10000,
     `power_ls` INT NOT NULL DEFAULT 0,
+    KEY `idx_city_hero_deployment` (`id_city`, `id_player`, `in_city`),
+    KEY `idx_city_hero_order` (`id_city`, `ord`, `id_hero`),
+    KEY `idx_city_hero_player_level` (`id_player`, `lvl`),
+    KEY `idx_city_hero_ranking` (`lvl`),
     FOREIGN KEY (`id_city`) REFERENCES `city`(`id_city`) ON DELETE CASCADE,
     FOREIGN KEY (`id_player`) REFERENCES `player`(`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -355,6 +398,7 @@ CREATE TABLE IF NOT EXISTS `player_quest` (
     FOREIGN KEY (`id_player`) REFERENCES `player`(`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 11. World battles, garrisons, and map state
 CREATE TABLE IF NOT EXISTS `world_battel` (
     `id_battel` INT AUTO_INCREMENT PRIMARY KEY,
     `id_player` INT NOT NULL,
@@ -370,6 +414,8 @@ CREATE TABLE IF NOT EXISTS `world_battel` (
     `time_back` INT NOT NULL DEFAULT 0,
     `return_duration` INT NOT NULL DEFAULT 0,
     `state` VARCHAR(32) NOT NULL DEFAULT 'marching',
+    KEY `idx_world_battel_coordinates_state` (`x_coord`, `y_coord`, `state`),
+    KEY `idx_world_battel_state_arrival` (`state`, `time_arrive`, `id_battel`),
     KEY `idx_world_battel_return` (`state`, `time_back`),
     KEY `idx_world_battel_player_return` (`id_player`, `state`, `time_back`),
     KEY `idx_world_battel_hero_return` (`id_hero`, `state`, `time_back`)
@@ -393,7 +439,28 @@ CREATE TABLE IF NOT EXISTS `world_battel_member` (
     UNIQUE KEY `uq_world_battel_member_hero` (`id_battel`, `id_hero`),
     KEY `idx_world_battel_member_arrival` (`id_battel`, `side`, `state`, `time_arrive`),
     KEY `idx_world_battel_member_player` (`id_player`, `state`, `time_arrive`),
-    KEY `idx_world_battel_member_return` (`id_player`, `state`, `time_back`)
+    KEY `idx_world_battel_member_return` (`id_player`, `state`, `time_back`),
+    KEY `idx_world_battel_member_hero_state` (`id_hero`, `state`),
+    KEY `idx_world_battel_member_state_return` (`state`, `time_back`, `id_member`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `city_garrison` (
+    `id_hero` INT NOT NULL PRIMARY KEY,
+    `id_city` INT NOT NULL,
+    `id_player` INT NOT NULL,
+    `ord` INT NOT NULL DEFAULT 0,
+    `status` VARCHAR(16) NOT NULL DEFAULT 'stationed',
+    `time_arrive` INT NOT NULL DEFAULT 0,
+    `return_at` INT NOT NULL DEFAULT 0,
+    `battle_id` INT DEFAULT NULL,
+    KEY `idx_city_garrison_city_order` (`id_city`, `status`, `ord`, `id_hero`),
+    KEY `idx_city_garrison_player_status` (`id_player`, `status`, `return_at`),
+    KEY `idx_city_garrison_battle` (`battle_id`, `status`),
+    KEY `idx_city_garrison_status_arrival` (`status`, `time_arrive`),
+    KEY `idx_city_garrison_status_return` (`status`, `return_at`),
+    FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_hero`) REFERENCES `city_hero` (`id_hero`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_player`) REFERENCES `player` (`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `world_unit_state` (
@@ -410,6 +477,7 @@ CREATE TABLE IF NOT EXISTS `world_unit_state` (
     KEY `idx_world_unit_state_reset` (`next_reset_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 12. God Gate
 CREATE TABLE IF NOT EXISTS `god_gate_player` (
     `id_player` INT NOT NULL PRIMARY KEY,
     `gate_1` INT NOT NULL DEFAULT 0,
@@ -440,6 +508,7 @@ CREATE TABLE IF NOT EXISTS `god_gate` (
         FOREIGN KEY (`id_player`) REFERENCES `player` (`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 13. City wounded troops and storage settings
 CREATE TABLE IF NOT EXISTS `city_wounded` (
     `id_city` INT NOT NULL PRIMARY KEY,
     `army_a` INT NOT NULL DEFAULT 0,
@@ -458,7 +527,7 @@ CREATE TABLE IF NOT EXISTS `city_storage` (
     `metal_perc` INT NOT NULL DEFAULT 25
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 11. Timed Tasks (Building upgrades, training, etc.)
+-- 14. Timed Tasks (Building upgrades, training, etc.)
 CREATE TABLE IF NOT EXISTS `timed_task` (
     `id_task` INT AUTO_INCREMENT PRIMARY KEY,
     `id_city` INT NOT NULL,
@@ -469,11 +538,12 @@ CREATE TABLE IF NOT EXISTS `timed_task` (
     `start_time` INT NOT NULL,
     `time_arrive` INT NOT NULL,
     `details` TEXT DEFAULT NULL,
+    KEY `idx_timed_task_type_arrival` (`task_type`, `time_arrive`, `id_task`),
     FOREIGN KEY (`id_city`) REFERENCES `city`(`id_city`) ON DELETE CASCADE,
     FOREIGN KEY (`id_player`) REFERENCES `player`(`id_player`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Local message, report, and notification data used by the web client
+-- 15. Messages, reports, and notifications used by the web client
 CREATE TABLE IF NOT EXISTS `msg_income` (
     `id_msg` INT AUTO_INCREMENT PRIMARY KEY,
     `id_player` INT NOT NULL,
@@ -504,7 +574,8 @@ CREATE TABLE IF NOT EXISTS `msg_diff` (
     `body` MEDIUMTEXT NOT NULL,
     `seen` TINYINT(1) NOT NULL DEFAULT 0,
     `time_stamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    KEY `idx_msg_diff_player_seen` (`id_player`, `seen`)
+    KEY `idx_msg_diff_player_seen` (`id_player`, `seen`),
+    KEY `idx_msg_diff_player_time` (`id_player`, `time_stamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `report_player` (
@@ -537,7 +608,7 @@ CREATE TABLE IF NOT EXISTS `spy_report` (
     KEY `idx_spy_report_player_seen` (`id_player`, `seen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Runtime and administration tables required by the current application code.
+-- 16. Administration and shared runtime tables
 CREATE TABLE IF NOT EXISTS `admin_user` (
     `id_admin` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(50) NOT NULL,
@@ -578,6 +649,7 @@ CREATE TABLE IF NOT EXISTS `auth_rate_limit` (
     KEY `idx_auth_rate_limit_expiry` (`locked_until`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 17. Arena
 CREATE TABLE IF NOT EXISTS `arena_player` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `id_player` INT NOT NULL,
@@ -588,6 +660,7 @@ CREATE TABLE IF NOT EXISTS `arena_player` (
     `losses` INT NOT NULL DEFAULT 0,
     `hero_list` TEXT DEFAULT NULL,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY `idx_arena_player_rank` (`rank`, `points`, `id_player`),
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_player` (`id_player`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -605,6 +678,7 @@ CREATE TABLE IF NOT EXISTS `arena_history` (
     KEY `idx_defender` (`defender_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 18. Additional runtime tables
 CREATE TABLE IF NOT EXISTS `army_training` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `id_city` INT NOT NULL,
@@ -668,3 +742,62 @@ CREATE TABLE IF NOT EXISTS `player_resource_slot` (
     PRIMARY KEY (`id`),
     KEY `idx_player` (`id_player`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 19. LiveOps configuration and scheduled events
+CREATE TABLE IF NOT EXISTS `server_config` (
+    `config_key` VARCHAR(64) NOT NULL,
+    `category` VARCHAR(32) NOT NULL DEFAULT 'general',
+    `config_value` TEXT NOT NULL,
+    `value_type` ENUM('string', 'number', 'boolean', 'json') NOT NULL DEFAULT 'string',
+    `title_ar` VARCHAR(128) NOT NULL,
+    `description_ar` VARCHAR(255) NULL,
+    `updated_by` INT(11) NULL DEFAULT 0,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`config_key`),
+    KEY `idx_category` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `server_events` (
+    `id_event` INT(11) NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(128) NOT NULL,
+    `event_type` VARCHAR(32) NOT NULL,
+    `multiplier` DECIMAL(5,2) NOT NULL DEFAULT 1.00,
+    `time_start` INT(11) NOT NULL,
+    `time_end` INT(11) NOT NULL,
+    `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+    `extra_data` TEXT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_event`),
+    KEY `idx_active_window` (`is_active`, `time_start`, `time_end`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed defaults without overwriting existing server configuration.
+INSERT IGNORE INTO `server_config`
+    (`config_key`, `category`, `config_value`, `value_type`, `title_ar`, `description_ar`)
+VALUES
+    ('camp_reset_interval_hours', 'camps', '12', 'number', 'فترة رسيت المعسكرات والمناورات', NULL),
+    ('gang_reset_interval_hours', 'camps', '6', 'number', 'فترة رسيت العصابات', NULL),
+    ('squad_reset_interval_hours', 'camps', '4', 'number', 'فترة رسيت الفرق والكتائب', NULL),
+    ('wilderness_luxury_drop_multiplier', 'drops', '1.0', 'number', 'مضاعف الرفاهيات', NULL),
+    ('global_drop_rate_multiplier', 'drops', '1.0', 'number', 'مضاعف السقوط العام', NULL),
+    ('equipment_drop_chance_percent', 'drops', '25', 'number', 'نسبة سقوط العتاد', NULL),
+    ('starter_player_gold', 'economy', '50', 'number', 'ذهب اللاعب الجديد', NULL),
+    ('starter_protection_hours', 'economy', '168', 'number', 'حماية المبتدئين بالساعات', NULL),
+    ('starter_food', 'economy', '10000', 'number', 'الطعام المبدئي', NULL),
+    ('starter_wood', 'economy', '10000', 'number', 'الخشب المبدئي', NULL),
+    ('starter_stone', 'economy', '10000', 'number', 'الحجر المبدئي', NULL),
+    ('starter_metal', 'economy', '10000', 'number', 'الحديد المبدئي', NULL),
+    ('starter_coin', 'economy', '10000', 'number', 'العملات المبدئية', NULL),
+    ('resource_production_multiplier', 'economy', '1.0', 'number', 'مضاعف إنتاج الموارد', NULL),
+    ('march_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة المسير', NULL),
+    ('building_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة البناء', NULL),
+    ('study_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة الدراسات', NULL),
+    ('recruit_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة التجنيد', NULL),
+    ('camp_rally_duration_sec', 'battle', '120', 'number', 'مدة تجمع المعركة', NULL),
+    ('city_attack_min_duration_sec', 'battle', '900', 'number', 'أقل مدة هجوم مدينة', NULL),
+    ('wounded_recovery_rate', 'battle', '0.70', 'number', 'نسبة الجرحى', NULL),
+    ('maintenance_mode', 'system', 'false', 'boolean', 'وضع الصيانة', NULL),
+    ('maintenance_message', 'system', 'السيرفر حالياً في وضع الصيانة الدورية لتحديث الأنظمة. سنعود قريباً!', 'string', 'رسالة الصيانة', NULL),
+    ('server_truce_active', 'system', 'false', 'boolean', 'الهدنة العامة', NULL),
+    ('live_banner_text', 'system', '', 'string', 'نص الإعلان', NULL),
+    ('live_banner_color', 'system', '#dfba6b', 'string', 'لون الإعلان', NULL);

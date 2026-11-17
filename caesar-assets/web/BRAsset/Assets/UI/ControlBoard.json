@@ -1,0 +1,734 @@
+{
+  "ID": "b6b6e320-3310-417d-a5d2-3439813198a7",
+  "Version": "3.10.0.0",
+  "Name": "ControlBoard",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Tag": 10,
+        "Children": [
+          {
+            "FileData": {
+              "Type": "Normal",
+              "Path": "/BRAsset/Img/BattleReplay/BattleControl/bottom.png"
+            },
+            "BlendFunc": {
+              "Src": 1,
+              "Dst": 771
+            },
+            "AnchorPoint": {},
+            "Position": {
+              "X": 3.0,
+              "Y": 1.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.003,
+              "Y": 0.0067
+            },
+            "PreSize": {
+              "X": 0.994,
+              "Y": 0.62
+            },
+            "LeftMargin": 3.0,
+            "RightMargin": 3.0,
+            "TopMargin": 56.0,
+            "BottomMargin": 1.0,
+            "Tag": 12,
+            "ActionTag": 591187765,
+            "Size": {
+              "X": 994.0,
+              "Y": 93.0
+            },
+            "Name": "BG",
+            "ctype": "SpriteObjectData"
+          },
+          {
+            "AnchorPoint": {},
+            "Position": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": true,
+            "PrePosition": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "RightMargin": 1000.0,
+            "TopMargin": 150.0,
+            "Tag": 21,
+            "Children": [
+              {
+                "InnerNodeSize": {
+                  "Width": 260,
+                  "Height": 89
+                },
+                "ScrollDirectionType": "Vertical",
+                "ClipAble": false,
+                "BackColorAlpha": 102,
+                "ComboBoxIndex": 1,
+                "SingleColor": {
+                  "G": 150,
+                  "B": 100
+                },
+                "FirstColor": {
+                  "G": 150,
+                  "B": 100
+                },
+                "EndColor": {},
+                "ColorVector": {
+                  "ScaleY": 1.0
+                },
+                "TouchEnable": true,
+                "AnchorPoint": {},
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "RightMargin": -260.0,
+                "TopMargin": -89.0,
+                "Tag": 21,
+                "ActionTag": -1964427108,
+                "Size": {
+                  "X": 260.0,
+                  "Y": 89.0
+                },
+                "Name": "HeroList",
+                "ctype": "ScrollViewObjectData"
+              }
+            ],
+            "ActionTag": 821501385,
+            "Size": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "Name": "SideAttack",
+            "ctype": "SingleNodeObjectData"
+          },
+          {
+            "InnerNodeSize": {
+              "Width": 483,
+              "Height": 76
+            },
+            "ScrollDirectionType": "Vertical",
+            "ClipAble": false,
+            "BackColorAlpha": 153,
+            "ComboBoxIndex": 2,
+            "SingleColor": {
+              "G": 150,
+              "B": 100
+            },
+            "FirstColor": {
+              "G": 150,
+              "B": 100
+            },
+            "EndColor": {},
+            "ColorVector": {
+              "ScaleX": -0.5736,
+              "ScaleY": 0.8192
+            },
+            "Scale9Width": 1,
+            "Scale9Height": 1,
+            "TouchEnable": true,
+            "AnchorPoint": {},
+            "Position": {
+              "X": 261.0,
+              "Y": 0.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.261,
+              "Y": 0.0
+            },
+            "PreSize": {
+              "X": 0.483,
+              "Y": 0.5067
+            },
+            "LeftMargin": 261.0,
+            "RightMargin": 256.0,
+            "TopMargin": 74.0,
+            "Tag": 29,
+            "ActionTag": -1858886285,
+            "Size": {
+              "X": 483.0,
+              "Y": 76.0
+            },
+            "Name": "ChatArea",
+            "ctype": "ScrollViewObjectData"
+          },
+          {
+            "AnchorPoint": {},
+            "Position": {
+              "X": 260.0,
+              "Y": 75.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": true,
+            "PrePosition": {
+              "X": 0.26,
+              "Y": 0.5
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "LeftMargin": 260.0,
+            "RightMargin": 740.0,
+            "TopMargin": 75.0,
+            "BottomMargin": 75.0,
+            "Tag": 13,
+            "Children": [
+              {
+                "FileData": {
+                  "Type": "Normal",
+                  "Path": "/BRAsset/Img/BattleReplay/BattleControl/play_bg.png"
+                },
+                "Scale9OriginX": 159,
+                "Scale9OriginY": 5,
+                "Scale9Width": 165,
+                "Scale9Height": 8,
+                "AnchorPoint": {},
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "RightMargin": -483.0,
+                "TopMargin": -18.0,
+                "Tag": 14,
+                "Children": [
+                  {
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": true,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "RightMargin": 483.0,
+                    "TopMargin": 18.0,
+                    "Tag": 15,
+                    "Children": [
+                      {
+                        "FontSize": 14,
+                        "ButtonText": "",
+                        "TextColor": {
+                          "R": 65,
+                          "G": 65,
+                          "B": 70
+                        },
+                        "DisabledFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_back-Disabled.png"
+                        },
+                        "PressedFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_back-ClickDown.png"
+                        },
+                        "NormalFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_back-Normal.png"
+                        },
+                        "Scale9Enable": true,
+                        "Scale9OriginX": 15,
+                        "Scale9OriginY": 5,
+                        "Scale9Width": 1,
+                        "Scale9Height": 8,
+                        "OutlineColor": {
+                          "G": 0,
+                          "B": 0
+                        },
+                        "ShadowColor": {
+                          "R": 110,
+                          "G": 110,
+                          "B": 110
+                        },
+                        "ShadowOffsetX": 2.0,
+                        "ShadowOffsetY": -2.0,
+                        "TouchEnable": true,
+                        "AnchorPoint": {},
+                        "Position": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "Scale": {
+                          "ScaleX": 1.0,
+                          "ScaleY": 1.0
+                        },
+                        "CColor": {},
+                        "IconVisible": false,
+                        "PrePosition": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "PreSize": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "RightMargin": -31.0,
+                        "TopMargin": -18.0,
+                        "Tag": 16,
+                        "ActionTag": -1523196991,
+                        "Size": {
+                          "X": 31.0,
+                          "Y": 18.0
+                        },
+                        "Name": "BtnBack",
+                        "ctype": "ButtonObjectData"
+                      },
+                      {
+                        "FontSize": 14,
+                        "ButtonText": "",
+                        "TextColor": {
+                          "R": 65,
+                          "G": 65,
+                          "B": 70
+                        },
+                        "DisabledFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_stop-Disabled.png"
+                        },
+                        "PressedFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_stop-ClickDown.png"
+                        },
+                        "NormalFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_stop-Normal.png"
+                        },
+                        "Scale9Enable": true,
+                        "Scale9OriginX": 15,
+                        "Scale9OriginY": 5,
+                        "Scale9Width": 1,
+                        "Scale9Height": 8,
+                        "OutlineColor": {
+                          "G": 0,
+                          "B": 0
+                        },
+                        "ShadowColor": {
+                          "R": 110,
+                          "G": 110,
+                          "B": 110
+                        },
+                        "ShadowOffsetX": 2.0,
+                        "ShadowOffsetY": -2.0,
+                        "TouchEnable": true,
+                        "AnchorPoint": {},
+                        "Position": {
+                          "X": 31.0,
+                          "Y": 0.0
+                        },
+                        "Scale": {
+                          "ScaleX": 1.0,
+                          "ScaleY": 1.0
+                        },
+                        "CColor": {},
+                        "IconVisible": false,
+                        "PrePosition": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "PreSize": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "LeftMargin": 31.0,
+                        "RightMargin": -62.0,
+                        "TopMargin": -18.0,
+                        "Tag": 17,
+                        "ActionTag": 1849758266,
+                        "Size": {
+                          "X": 31.0,
+                          "Y": 18.0
+                        },
+                        "Name": "BtnPlay",
+                        "ctype": "ButtonObjectData"
+                      },
+                      {
+                        "FontSize": 14,
+                        "ButtonText": "",
+                        "TextColor": {
+                          "R": 65,
+                          "G": 65,
+                          "B": 70
+                        },
+                        "DisabledFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_next-Disabled.png"
+                        },
+                        "PressedFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_next-ClickDown.png"
+                        },
+                        "NormalFileData": {
+                          "Type": "Normal",
+                          "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_next-Normal.png",
+                          "Plist": ""
+                        },
+                        "Scale9Enable": true,
+                        "Scale9OriginX": 15,
+                        "Scale9OriginY": 5,
+                        "Scale9Width": 11,
+                        "Scale9Height": 8,
+                        "OutlineColor": {
+                          "G": 0,
+                          "B": 0
+                        },
+                        "ShadowColor": {
+                          "R": 110,
+                          "G": 110,
+                          "B": 110
+                        },
+                        "ShadowOffsetX": 2.0,
+                        "ShadowOffsetY": -2.0,
+                        "TouchEnable": true,
+                        "AnchorPoint": {},
+                        "Position": {
+                          "X": 62.0,
+                          "Y": 0.0
+                        },
+                        "Scale": {
+                          "ScaleX": 1.0,
+                          "ScaleY": 1.0
+                        },
+                        "CColor": {},
+                        "IconVisible": false,
+                        "PrePosition": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "PreSize": {
+                          "X": 0.0,
+                          "Y": 0.0
+                        },
+                        "LeftMargin": 62.0,
+                        "RightMargin": -103.0,
+                        "TopMargin": -18.0,
+                        "Tag": 18,
+                        "ActionTag": -741405298,
+                        "Size": {
+                          "X": 41.0,
+                          "Y": 18.0
+                        },
+                        "Name": "BtnNext",
+                        "ctype": "ButtonObjectData"
+                      }
+                    ],
+                    "ActionTag": -2048784882,
+                    "Size": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "Name": "BtnList",
+                    "ctype": "SingleNodeObjectData"
+                  },
+                  {
+                    "ProgressBarData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattelReport/jindu_1.png"
+                    },
+                    "BallNormalData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_huakuai-Normal.png"
+                    },
+                    "BallPressedData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_huakuai-ClickDown.png"
+                    },
+                    "BallDisabledData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_huakuai-ClickDown.png"
+                    },
+                    "PercentInfo": 54,
+                    "TouchEnable": true,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 110.0,
+                      "Y": 5.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.2277,
+                      "Y": 0.2778
+                    },
+                    "PreSize": {
+                      "X": 0.706,
+                      "Y": 0.5556
+                    },
+                    "LeftMargin": 110.0,
+                    "RightMargin": 32.0,
+                    "TopMargin": 3.0,
+                    "BottomMargin": 5.0,
+                    "Tag": 19,
+                    "ActionTag": -1035042927,
+                    "Size": {
+                      "X": 341.0,
+                      "Y": 10.0
+                    },
+                    "Name": "Progress",
+                    "ctype": "SliderObjectData"
+                  },
+                  {
+                    "FontSize": 14,
+                    "ButtonText": "",
+                    "TextColor": {
+                      "R": 65,
+                      "G": 65,
+                      "B": 70
+                    },
+                    "DisabledFileData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_big-MouseOver.png"
+                    },
+                    "PressedFileData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_big-ClickDown.png"
+                    },
+                    "NormalFileData": {
+                      "Type": "Normal",
+                      "Path": "/BRAsset/Img/BattleReplay/BattleControl/button_big-Normal.png"
+                    },
+                    "Scale9Enable": true,
+                    "Scale9OriginX": 8,
+                    "Scale9OriginY": 3,
+                    "Scale9Width": 10,
+                    "Scale9Height": 6,
+                    "OutlineColor": {
+                      "G": 0,
+                      "B": 0
+                    },
+                    "ShadowColor": {
+                      "R": 110,
+                      "G": 110,
+                      "B": 110
+                    },
+                    "ShadowOffsetX": 2.0,
+                    "ShadowOffsetY": -2.0,
+                    "TouchEnable": true,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 454.0,
+                      "Y": 3.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.94,
+                      "Y": 0.1667
+                    },
+                    "PreSize": {
+                      "X": 0.0538,
+                      "Y": 0.6667
+                    },
+                    "LeftMargin": 454.0,
+                    "RightMargin": 3.0,
+                    "TopMargin": 3.0,
+                    "BottomMargin": 3.0,
+                    "Tag": 20,
+                    "ActionTag": -1732532463,
+                    "Size": {
+                      "X": 26.0,
+                      "Y": 12.0
+                    },
+                    "Name": "BtnExpand",
+                    "ctype": "ButtonObjectData"
+                  }
+                ],
+                "ActionTag": 1388726385,
+                "Size": {
+                  "X": 483.0,
+                  "Y": 18.0
+                },
+                "Name": "PlayBG",
+                "ctype": "ImageViewObjectData"
+              }
+            ],
+            "ActionTag": 605389428,
+            "Size": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "Name": "PlayControl",
+            "ctype": "SingleNodeObjectData"
+          },
+          {
+            "AnchorPoint": {},
+            "Position": {
+              "X": 750.0,
+              "Y": 0.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": true,
+            "PrePosition": {
+              "X": 0.75,
+              "Y": 0.0
+            },
+            "PreSize": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "LeftMargin": 750.0,
+            "RightMargin": 250.0,
+            "TopMargin": 150.0,
+            "Tag": 22,
+            "Children": [
+              {
+                "InnerNodeSize": {
+                  "Width": 254,
+                  "Height": 89
+                },
+                "ScrollDirectionType": "Vertical",
+                "ClipAble": false,
+                "BackColorAlpha": 102,
+                "ComboBoxIndex": 1,
+                "SingleColor": {
+                  "G": 150,
+                  "B": 100
+                },
+                "FirstColor": {
+                  "G": 150,
+                  "B": 100
+                },
+                "EndColor": {},
+                "ColorVector": {
+                  "ScaleY": 1.0
+                },
+                "Scale9Width": 1,
+                "Scale9Height": 1,
+                "TouchEnable": true,
+                "AnchorPoint": {},
+                "Position": {
+                  "X": -4.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": false,
+                "PrePosition": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "LeftMargin": -4.0,
+                "RightMargin": -250.0,
+                "TopMargin": -89.0,
+                "Tag": 22,
+                "ActionTag": -970049402,
+                "Size": {
+                  "X": 254.0,
+                  "Y": 89.0
+                },
+                "Name": "HeroList",
+                "ctype": "ScrollViewObjectData"
+              }
+            ],
+            "ActionTag": -160641948,
+            "Size": {
+              "X": 0.0,
+              "Y": 0.0
+            },
+            "Name": "SideDefense",
+            "ctype": "SingleNodeObjectData"
+          }
+        ],
+        "Size": {
+          "X": 1000.0,
+          "Y": 150.0
+        },
+        "Name": "Layer",
+        "ctype": "LayerObjectData"
+      },
+      "UsedResources": [],
+      "ctype": "GameFileData"
+    }
+  },
+  "Type": "Layer"
+}

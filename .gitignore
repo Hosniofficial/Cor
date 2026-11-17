@@ -1,6 +1,6 @@
 node_modules/
 *.log
-app.elkaisar.com/api.log
+caesar-api/api.log
 .DS_Store
 Thumbs.db
 
@@ -12,4 +12,11 @@ Thumbs.db
 /elkaisar_db_full.sql
 /elkaisar_db-before-migration-*.sql
 /database/backups/
-/ssl-cert.pfx
+database/*.sql
+
+# Local TLS certificates and private keys
+*.pfx
+*.p12
+*.key
+*.pem
+*.crt

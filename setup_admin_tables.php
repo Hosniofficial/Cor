@@ -1,11 +1,11 @@
 <?php
-// setup_admin_tables.php
+// Admin bootstrap only; the game schema and incremental upgrades are managed separately.
 if (PHP_SAPI !== 'cli') {
     http_response_code(404);
     exit;
 }
 
-require_once __DIR__ . '/app.elkaisar.com/db.php';
+require_once __DIR__ . '/caesar-api/db.php';
 $db = getDB();
 
 $db->exec("
@@ -54,9 +54,9 @@ CREATE TABLE IF NOT EXISTS `auth_rate_limit` (
 ");
 
 // Create the first admin only when explicit credentials are provided.
-$username = trim((string)getenv('ELKAISAR_ADMIN_USERNAME'));
-$password = (string)getenv('ELKAISAR_ADMIN_PASSWORD');
-$resetExistingAdmin = getenv('ELKAISAR_ADMIN_RESET_EXISTING') === '1';
+$username = trim((string)getenv('CAESAR_ADMIN_USERNAME'));
+$password = (string)getenv('CAESAR_ADMIN_PASSWORD');
+$resetExistingAdmin = getenv('CAESAR_ADMIN_RESET_EXISTING') === '1';
 $stmt = $db->query("SELECT COUNT(*) FROM `admin_user`");
 $adminCount = (int)$stmt->fetchColumn();
 
@@ -90,11 +90,10 @@ if ($adminCount === 0 && $username !== '' && $password !== '') {
 } else {
     echo "Admin tables initialized. Existing admins: {$adminCount}.\n";
     if ($adminCount === 0) {
-        echo "Set ELKAISAR_ADMIN_USERNAME and ELKAISAR_ADMIN_PASSWORD to create the first admin.\n";
+        echo "Set CAESAR_ADMIN_USERNAME and CAESAR_ADMIN_PASSWORD to create the first admin.\n";
     } elseif ($username !== '' || $password !== '') {
-        echo "Set ELKAISAR_ADMIN_RESET_EXISTING=1 to explicitly reset an existing admin password.\n";
+        echo "Set CAESAR_ADMIN_RESET_EXISTING=1 to explicitly reset an existing admin password.\n";
     }
 }
 
-// Ensure player table has user_group and panned indices or default values
 echo "Admin tables initialized successfully.\n";

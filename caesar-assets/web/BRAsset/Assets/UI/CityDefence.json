@@ -1,0 +1,378 @@
+{
+  "ID": "5ab8ade1-9360-4f2a-aa23-697272e93d99",
+  "Version": "3.10.0.0",
+  "Name": "CityDefence",
+  "Content": {
+    "Content": {
+      "Animation": {
+        "Duration": 0,
+        "Speed": 1.0,
+        "Timelines": [],
+        "ctype": "TimelineActionData"
+      },
+      "AnimationList": [],
+      "ObjectData": {
+        "Tag": 8,
+        "Children": [
+          {
+            "FileData": {
+              "Type": "Normal",
+              "Path": "/BRAsset/Img/Troops/ZDbg.png"
+            },
+            "BlendFunc": {
+              "Src": 1,
+              "Dst": 771
+            },
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 64.9118,
+              "Y": 85.894
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.4993,
+              "Y": 0.5726
+            },
+            "PreSize": {
+              "X": 1.0,
+              "Y": 0.8533
+            },
+            "LeftMargin": -0.0882,
+            "RightMargin": 0.0882,
+            "TopMargin": 0.106,
+            "BottomMargin": 21.894,
+            "Tag": 9,
+            "Children": [
+              {
+                "AnchorPoint": {},
+                "Position": {
+                  "X": 60.0,
+                  "Y": 0.0
+                },
+                "Scale": {
+                  "ScaleX": 1.0,
+                  "ScaleY": 1.0
+                },
+                "CColor": {},
+                "IconVisible": true,
+                "PrePosition": {
+                  "X": 0.4615,
+                  "Y": 0.0
+                },
+                "PreSize": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "LeftMargin": 60.0,
+                "RightMargin": 70.0,
+                "TopMargin": 128.0,
+                "Tag": 11,
+                "Children": [
+                  {
+                    "IsCustomSize": true,
+                    "FontSize": 14,
+                    "LabelText": "1500021",
+                    "HorizontalAlignmentType": "HT_Center",
+                    "VerticalAlignmentType": "VT_Center",
+                    "OutlineColor": {
+                      "G": 0,
+                      "B": 0
+                    },
+                    "ShadowColor": {
+                      "R": 110,
+                      "G": 110,
+                      "B": 110
+                    },
+                    "ShadowOffsetX": 2.0,
+                    "ShadowOffsetY": -2.0,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 2.0,
+                      "Y": 8.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "LeftMargin": 2.0,
+                    "RightMargin": -67.0,
+                    "TopMargin": -31.0,
+                    "BottomMargin": 8.0,
+                    "Tag": 12,
+                    "ActionTag": -364257542,
+                    "Size": {
+                      "X": 65.0,
+                      "Y": 23.0
+                    },
+                    "Name": "Health_Wall",
+                    "ctype": "TextObjectData"
+                  },
+                  {
+                    "IsCustomSize": true,
+                    "FontSize": 12,
+                    "LabelText": "1600",
+                    "HorizontalAlignmentType": "HT_Center",
+                    "VerticalAlignmentType": "VT_Center",
+                    "OutlineColor": {
+                      "G": 0,
+                      "B": 0
+                    },
+                    "ShadowColor": {
+                      "R": 110,
+                      "G": 110,
+                      "B": 110
+                    },
+                    "ShadowOffsetX": 2.0,
+                    "ShadowOffsetY": -2.0,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 2.0,
+                      "Y": 38.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "LeftMargin": 2.0,
+                    "RightMargin": -67.0,
+                    "TopMargin": -61.0,
+                    "BottomMargin": 38.0,
+                    "Tag": 13,
+                    "ActionTag": 199008815,
+                    "Size": {
+                      "X": 65.0,
+                      "Y": 23.0
+                    },
+                    "Name": "Health_Trap",
+                    "ctype": "TextObjectData"
+                  },
+                  {
+                    "IsCustomSize": true,
+                    "FontSize": 12,
+                    "LabelText": "1600",
+                    "HorizontalAlignmentType": "HT_Center",
+                    "VerticalAlignmentType": "VT_Center",
+                    "OutlineColor": {
+                      "G": 0,
+                      "B": 0
+                    },
+                    "ShadowColor": {
+                      "R": 110,
+                      "G": 110,
+                      "B": 110
+                    },
+                    "ShadowOffsetX": 2.0,
+                    "ShadowOffsetY": -2.0,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 2.0,
+                      "Y": 68.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "LeftMargin": 2.0,
+                    "RightMargin": -67.0,
+                    "TopMargin": -91.0,
+                    "BottomMargin": 68.0,
+                    "Tag": 14,
+                    "ActionTag": -355837314,
+                    "Size": {
+                      "X": 65.0,
+                      "Y": 23.0
+                    },
+                    "Name": "health_Stone",
+                    "ctype": "TextObjectData"
+                  },
+                  {
+                    "IsCustomSize": true,
+                    "FontSize": 12,
+                    "LabelText": "1600",
+                    "HorizontalAlignmentType": "HT_Center",
+                    "VerticalAlignmentType": "VT_Center",
+                    "OutlineColor": {
+                      "G": 0,
+                      "B": 0
+                    },
+                    "ShadowColor": {
+                      "R": 110,
+                      "G": 110,
+                      "B": 110
+                    },
+                    "ShadowOffsetX": 2.0,
+                    "ShadowOffsetY": -2.0,
+                    "AnchorPoint": {},
+                    "Position": {
+                      "X": 2.0,
+                      "Y": 97.0
+                    },
+                    "Scale": {
+                      "ScaleX": 1.0,
+                      "ScaleY": 1.0
+                    },
+                    "CColor": {},
+                    "IconVisible": false,
+                    "PrePosition": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "PreSize": {
+                      "X": 0.0,
+                      "Y": 0.0
+                    },
+                    "LeftMargin": 2.0,
+                    "RightMargin": -67.0,
+                    "TopMargin": -120.0,
+                    "BottomMargin": 97.0,
+                    "Tag": 16,
+                    "ActionTag": 248911596,
+                    "Size": {
+                      "X": 65.0,
+                      "Y": 23.0
+                    },
+                    "Name": "health_Tower",
+                    "ctype": "TextObjectData"
+                  }
+                ],
+                "ActionTag": -1857471972,
+                "Size": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Name": "DefCount",
+                "ctype": "SingleNodeObjectData"
+              }
+            ],
+            "ActionTag": -1060140562,
+            "Size": {
+              "X": 130.0,
+              "Y": 128.0
+            },
+            "Name": "CityDef",
+            "ctype": "SpriteObjectData"
+          },
+          {
+            "FontSize": 12,
+            "ButtonText": "Show Result",
+            "TextColor": {
+              "R": 65,
+              "G": 65,
+              "B": 70
+            },
+            "DisabledFileData": {
+              "Type": "Normal",
+              "Path": "/Res/btns/global/full-btn-h-2x.png"
+            },
+            "PressedFileData": {
+              "Type": "Normal",
+              "Path": "/Res/btns/global/full-btn-a-2x.png"
+            },
+            "NormalFileData": {
+              "Type": "Normal",
+              "Path": "/Res/btns/global/full-btn-2x.png"
+            },
+            "Scale9Enable": true,
+            "Scale9OriginX": 15,
+            "Scale9OriginY": 11,
+            "Scale9Width": 54,
+            "Scale9Height": 4,
+            "OutlineColor": {
+              "G": 0,
+              "B": 0
+            },
+            "ShadowColor": {
+              "R": 110,
+              "G": 110,
+              "B": 110
+            },
+            "ShadowOffsetX": 2.0,
+            "ShadowOffsetY": -2.0,
+            "TouchEnable": true,
+            "AnchorPoint": {
+              "ScaleX": 0.5,
+              "ScaleY": 0.5
+            },
+            "Position": {
+              "X": 50.0,
+              "Y": 8.0
+            },
+            "Scale": {
+              "ScaleX": 1.0,
+              "ScaleY": 1.0
+            },
+            "CColor": {},
+            "IconVisible": false,
+            "PrePosition": {
+              "X": 0.3846,
+              "Y": 0.0533
+            },
+            "PreSize": {
+              "X": 0.6923,
+              "Y": 0.1333
+            },
+            "LeftMargin": 5.0,
+            "RightMargin": 35.0,
+            "TopMargin": 132.0,
+            "BottomMargin": -2.0,
+            "Tag": 10,
+            "ActionTag": 615029971,
+            "Size": {
+              "X": 90.0,
+              "Y": 20.0
+            },
+            "Name": "ShowResult",
+            "ctype": "ButtonObjectData"
+          }
+        ],
+        "Size": {
+          "X": 130.0,
+          "Y": 150.0
+        },
+        "Name": "Layer",
+        "ctype": "LayerObjectData"
+      },
+      "UsedResources": [],
+      "ctype": "GameFileData"
+    }
+  },
+  "Type": "Layer"
+}

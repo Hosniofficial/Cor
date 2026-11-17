@@ -1,5 +1,5 @@
 -- migrations/20261111_server_config_liveops.sql
--- LiveOps & Dynamic Server Configuration for Call of Rome / Elkaisar
+-- LiveOps & Dynamic Server Configuration for CAESER OF ARABS
 
 CREATE TABLE IF NOT EXISTS `server_config` (
   `config_key` VARCHAR(64) NOT NULL,
@@ -34,7 +34,6 @@ INSERT INTO `server_config` (`config_key`, `category`, `config_value`, `value_ty
 ('camp_reset_interval_hours', 'camps', '12', 'number', 'فترة رسيت المعسكرات والمناورات (ساعات)', 'تكرار إعادة تعيين وتصفير المعسكرات والمناورات وعواصم الجيوش بالـ UTC'),
 ('gang_reset_interval_hours', 'camps', '6', 'number', 'فترة رسيت عصابات قرطاجة والساندرز (ساعات)', 'تكرار إعادة تعيين عصابات قرطاجة والصاعقة الباسلة بالـ UTC'),
 ('squad_reset_interval_hours', 'camps', '4', 'number', 'فترة رسيت الفرق والكتائب واللصوص (ساعات)', 'تكرار إعادة تعيين كتائب وسرايا الجيش واللصوص بالـ UTC'),
-('camp_max_attack_per_player', 'camps', '10', 'number', 'الحد الأقصى لهجمات اللاعب على المعسكر', 'عدد الهجمات المسموح بها لكل لاعب على كل معسكر قبل إغلاقه حتى الرسيت القادم'),
 
 -- 2. Drop Rates & Wilderness Luxuries
 ('wilderness_luxury_drop_multiplier', 'drops', '1.0', 'number', 'مضاعف سقوط أدوات الرفاهية بالبراري', 'مضاعف نسبة الحصول على أدوات الرفاهية (الذهب، الخبز، الجواهر، الخرائط) من البراري'),
@@ -44,6 +43,11 @@ INSERT INTO `server_config` (`config_key`, `category`, `config_value`, `value_ty
 -- 3. Server Rates & Starter Economy
 ('starter_player_gold', 'economy', '50', 'number', 'الذهب المبدئي للاعب الجديد', 'رصيد الذهب الممنوح تلقائياً عند تسجيل لاعب جديد لأول مرة'),
 ('starter_protection_hours', 'economy', '168', 'number', 'مدة حماية المبتدئين (ساعات)', 'المدة التي تمنع الهجوم على مدينة اللاعب الجديد فور إنشائها (168 ساعة = 7 أيام)'),
+('starter_food', 'economy', '10000', 'number', 'الطعام المبدئي للاعب الجديد', 'كمية الطعام في المدينة الجديدة'),
+('starter_wood', 'economy', '10000', 'number', 'الخشب المبدئي للاعب الجديد', 'كمية الخشب في المدينة الجديدة'),
+('starter_stone', 'economy', '10000', 'number', 'الحجر المبدئي للاعب الجديد', 'كمية الحجر في المدينة الجديدة'),
+('starter_metal', 'economy', '10000', 'number', 'الحديد المبدئي للاعب الجديد', 'كمية الحديد في المدينة الجديدة'),
+('starter_coin', 'economy', '10000', 'number', 'العملات المبدئية للاعب الجديد', 'كمية العملات في المدينة الجديدة'),
 ('resource_production_multiplier', 'economy', '1.0', 'number', 'مضاعف إنتاج الموارد بالمدن', 'مضاعف سرعة إنتاج المزارع والمناجم ومقالع الأحجار ومناشر الخشب'),
 ('march_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة سير الجيوش', 'مضاعف تسريع تحرك الأبطال والجيوش على الخريطة (1.0 = عادي، 2.0 = ضعف السرعة)'),
 ('building_speed_multiplier', 'economy', '1.0', 'number', 'مضاعف سرعة البناء والترقية', 'مضاعف تسريع بناء وتطوير المباني بالمدن'),
