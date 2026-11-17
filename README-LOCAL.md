@@ -11,7 +11,7 @@
 - `caesar-api`: واجهات PHP والخدمات الخلفية.
 - `caesar-ws`: خادم WebSocket وواجهات HTTP الخاصة به.
 - `caesar-admin`: ملفات لوحة الإدارة، وتبقى متاحة محلياً تحت `/admin`.
-- `caesar-assets/web` و`caesar-assets/api`: أصول الواجهة وبيانات JSON؛ حزمة العميل الرئيسية هي `js-3.4.113/caesar-client.js`.
+- `caesar-assets/web` و`caesar-assets/api`: أصول الواجهة وبيانات JSON؛ حزمة العميل الرئيسية هي `js-3.4.113/caesar-client.js`. أصول إعادة عرض المعارك محفوظة في `caesar-assets/web/battle-replay`، لكن مسارات إعادة العرض القديمة غير مفعلة في بيئة التطوير.
 - `caesar-shared`: وحدات JavaScript المشتركة بين الخادم والاختبارات.
 - `database` و`migrations` و`tests`: ملفات التشغيل والاختبارات والترحيلات.
 

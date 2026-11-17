@@ -8,14 +8,25 @@ if ($uri === '/' || $uri === '') {
     exit;
 }
 
-// Cocos2d Battle Replay API & Page Routes
-if ($uri === '/GetBattle') {
-    require __DIR__ . '/GetBattle.php';
-    exit;
-}
-if (strpos($uri, '/BattleReplay/') === 0) {
-    require __DIR__ . '/battel.php';
-    exit;
+$disabledBattleReplayPrefixes = [
+    '/getbattle',
+    '/getbattle.php',
+    '/battlereplay',
+    '/battel.php',
+    '/battle-replay',
+    '/brasset',
+    '/res',
+    '/src',
+    '/cocos2d-html5',
+    '/css',
+    '/json',
+];
+$normalizedUri = strtolower($uri);
+foreach ($disabledBattleReplayPrefixes as $prefix) {
+    if ($normalizedUri === $prefix || strpos($normalizedUri, $prefix . '/') === 0) {
+        http_response_code(404);
+        exit;
+    }
 }
 
 $isAdminRequest = $uri === '/admin' || strpos($uri, '/admin/') === 0;

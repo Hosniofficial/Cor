@@ -8,6 +8,12 @@ $db = getDB();
 $player = requireAuthenticatedPlayer($db);
 $idPlayer = (int)$player['id_player'];
 
+if (isset($_GET['get_battle_replay']) || isset($_POST['get_battle_replay'])) {
+    http_response_code(404);
+    echo json_encode(['error' => 'not_found']);
+    exit;
+}
+
 // 1. Battle Reports List
 if (isset($_GET['get_report']) || isset($_POST['get_report'])) {
     $offset = max(0, (int)($_GET['offset'] ?? $_POST['offset'] ?? 0));
@@ -103,20 +109,6 @@ if (isset($_GET['spy_report_detail']) || isset($_POST['spy_report_detail'])) {
         'side'    => 'attacker',
         'content' => $content
     ], JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-// 5. Battle Replay (get_battle_replay)
-if (isset($_GET['get_battle_replay'])) {
-    $idReport = (int)($_GET['id_report'] ?? 0);
-    $stmt = $db->prepare("SELECT detail FROM report_player WHERE id_report=? AND id_player=?");
-    $stmt->execute([$idReport, $idPlayer]);
-    $detail = json_decode($stmt->fetchColumn(), true);
-    if ($detail && isset($detail['round_list'])) {
-        echo json_encode(['BattleReplay' => $detail], JSON_UNESCAPED_UNICODE);
-    } else {
-        echo json_encode(['error' => 'no_replay_data']);
-    }
     exit;
 }
 

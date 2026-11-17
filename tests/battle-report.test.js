@@ -194,7 +194,15 @@ test('battle report shows original losses and own-side injuries separately', () 
 
 test('battle replay shows troop deaths and falls back for older reports', () => {
     const replayBundle = fs.readFileSync(
-        path.join(__dirname, '..', 'caesar-assets', 'web', 'BRAsset', 'battle-replay.bundle.js'),
+        path.join(
+            __dirname,
+            '..',
+            'caesar-assets',
+            'web',
+            'battle-replay',
+            'BRAsset',
+            'battle-replay.bundle.js'
+        ),
         'utf8'
     );
     const lossExpression = 'lHero.dead?.[lPos] ?? Math.max(0, lHero.pre[lPos] - lHero.post[lPos])';

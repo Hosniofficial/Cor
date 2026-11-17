@@ -43384,24 +43384,12 @@ function getReportContent(detail, data_obj, offset) {
                                         عودة
                                     </button>
                                 </li>
-                                <li  style=" float: right; width: 120px; margin-right: 10px;">  
-                                    <button class="full-btn full-btn-3x full" id="show-battel-animated">
-                                        <a   href="battel.php?report=${detail.encId}&server=${SERVER_ID}" target="_blank">استعراض المعارك</a>
-                                    </button>
-                                </li>
-
                             </ul>  
                         </div>  
                     </div>
                 </div>`;
     return cont;
 }
-
-$(document).on("click", "#show-battel-animated", function() {
-
-    //alert_box.confirmMessage("هذة الخاصية غير متاحة الان");
-
-});
 
 /*<button class="full-btn full" id="msg-reply" data-id-player="${msg_data[0].id_from}" data-player-name="${msg_data[0].name}">  رد </button>*/
 

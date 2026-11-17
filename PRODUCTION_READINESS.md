@@ -78,7 +78,7 @@
 
 ## القيود الحالية
 
-- تم نقل الشفرة إلى `caesar-web`, `caesar-api`, `caesar-ws`, `caesar-admin`, `caesar-assets`, و`caesar-shared`. يلزم إعداد aliases للإنتاج للأصول ولوحة الإدارة.
+- تم نقل الشفرة إلى `caesar-web`, `caesar-api`, `caesar-ws`, `caesar-admin`, `caesar-assets`, و`caesar-shared`. يلزم إعداد aliases للإنتاج للأصول ولوحة الإدارة. أصول إعادة عرض المعارك محفوظة في `caesar-assets/web/battle-replay`، لكن لا يوجد مسار إعادة عرض مفعل حاليًا؛ يلزم تصميم مسار جديد واختباره قبل إتاحتها.
 - لم يتم توفير نطاقات الإنتاج أو إعداد reverse proxy؛ لذلك لا توجد قيم إنتاج فعلية لعناوين API وWebSocket أو CORS. بقيت الروابط الخارجية القديمة كما هي.
 - قاعدة `caesar_prod` نسخة MySQL محلية وليست قاعدة استضافة؛ لم يتم اختبار متصفح/حمل على بيئة مرحلية.
 - لا commit ولا push ولا نشر ضمن هذه المرحلة.
