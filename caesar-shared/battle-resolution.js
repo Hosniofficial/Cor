@@ -480,6 +480,24 @@ async function resolveBattle(context, dependencies) {
                 2: (unitLvl > 3 ? (unitLvl - 3) * 20 : 0),
                 3: (unitLvl > 5 ? (unitLvl - 5) * 15 : 0)
             };
+        } else if (unitType === 184) {
+            // Rebel Castle Small (184): Tens of thousands - infantry, cavalry, archers
+            defenderTroops = { 1: 40000 * unitLvl, 2: 20000 * unitLvl, 4: 30000 * unitLvl };
+        } else if (unitType === 185) {
+            // Rebel Castle Medium (185): Armored, catapults, ballistas
+            defenderTroops = { 1: 80000 * unitLvl, 2: 40000 * unitLvl, 3: 30000 * unitLvl, 4: 60000 * unitLvl, 5: 20000 * unitLvl };
+        } else if (unitType === 186) {
+            // Rebel Castle Large (186): Massive elite rebel army
+            defenderTroops = { 1: 250000 * unitLvl, 2: 150000 * unitLvl, 3: 100000 * unitLvl, 4: 180000 * unitLvl, 5: 60000 * unitLvl, 6: 40000 * unitLvl };
+        } else if (unitType === 180) {
+            // Queen City Small (180): Small Kingdom
+            defenderTroops = { 1: 80000 * unitLvl, 2: 40000 * unitLvl, 4: 60000 * unitLvl };
+        } else if (unitType === 181) {
+            // Queen City Medium (181): Medium Kingdom
+            defenderTroops = { 1: 150000 * unitLvl, 2: 80000 * unitLvl, 3: 50000 * unitLvl, 4: 120000 * unitLvl, 5: 40000 * unitLvl };
+        } else if (unitType === 182) {
+            // Queen City Large (182): Major Imperial Kingdom
+            defenderTroops = { 1: 400000 * unitLvl, 2: 250000 * unitLvl, 3: 200000 * unitLvl, 4: 300000 * unitLvl, 5: 150000 * unitLvl, 6: 100000 * unitLvl };
         } else {
             // Small defending force for level
             defenderTroops = { 1: Math.max(10, unitLvl * 20), 4: Math.max(5, unitLvl * 10) };
@@ -878,6 +896,61 @@ async function resolveBattle(context, dependencies) {
                     }
                 }));
             }
+
+            // 6e. Guild Dominance — Castles (184-186) & Queen Cities (180-182)
+            // After victory, record the winning guild as the dominant owner.
+            // Grants daily harvest rights and garrison defence to that guild.
+            let guildDominance = null;
+            const isGuildConquest = (unitType >= 180 && unitType <= 182)
+                || (unitType >= 184 && unitType <= 186);
+            const conquerorGuildId = Number(player.id_guild) || 0;
+            if (isGuildConquest && conquerorGuildId > 0) {
+                const now = Math.floor(Date.now() / 1000);
+                // Harvest amounts per unit type (food, wood, stone, metal, coin)
+                const harvestMap = {
+                    184: { food: 100000,    wood: 100000,    stone: 100000,    metal: 100000,   coin: 10000  },
+                    185: { food: 1000000,   wood: 1000000,   stone: 1000000,   metal: 100000,   coin: 100000 },
+                    186: { food: 10000000,  wood: 10000000,  stone: 10000000,  metal: 10000000, coin: 1000000},
+                    180: { food: 500000,    wood: 500000,    stone: 500000,    metal: 100000,   coin: 50000  },
+                    181: { food: 2000000,   wood: 2000000,   stone: 2000000,   metal: 500000,   coin: 200000 },
+                    182: { food: 8000000,   wood: 8000000,   stone: 8000000,   metal: 2000000,  coin: 800000 },
+                };
+                const dailyHarvest = harvestMap[unitType] || null;
+                await battleDb.query(
+                    `INSERT INTO guild_dominance
+                        (x_coord, y_coord, unit_type, unit_lvl, id_guild, id_player, conquered_at, last_harvest_at, daily_food, daily_wood, daily_stone, daily_metal, daily_coin)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?)
+                     ON DUPLICATE KEY UPDATE
+                        id_guild = VALUES(id_guild),
+                        id_player = VALUES(id_player),
+                        conquered_at = VALUES(conquered_at),
+                        last_harvest_at = 0,
+                        unit_lvl = VALUES(unit_lvl)`,
+                    [
+                        xCoord, yCoord, unitType, unitLvl,
+                        conquerorGuildId, Number(player.id_player), now,
+                        dailyHarvest ? dailyHarvest.food  : 0,
+                        dailyHarvest ? dailyHarvest.wood  : 0,
+                        dailyHarvest ? dailyHarvest.stone : 0,
+                        dailyHarvest ? dailyHarvest.metal : 0,
+                        dailyHarvest ? dailyHarvest.coin  : 0,
+                    ]
+                );
+                guildDominance = { guildId: conquerorGuildId, unitType, xCoord, yCoord };
+                broadcast(JSON.stringify({
+                    classPath: 'Guild.DominanceAcquired',
+                    data: {
+                        xCoord,
+                        yCoord,
+                        unitType,
+                        unitLvl,
+                        id_guild: conquerorGuildId,
+                        id_player: Number(player.id_player),
+                        city_flag: String(player.city_flag || '0'),
+                        daily_harvest: dailyHarvest
+                    }
+                }));
+            }
         
             // 6e. Send Client Completion Messages
             {
@@ -897,7 +970,7 @@ async function resolveBattle(context, dependencies) {
                         data: {
                             id_player: 0,
                             name: 'النظام الحربي',
-                            msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف${itemsSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}${cityColonization ? (cityColonization.subordinated ? ' أصبحت المدينة تابعة لمدينتك السيادية مع بقاء ملكيتها لصاحبها الأصلي.' : ` انخفض ولاء المدينة إلى ${cityColonization.loyalty}%.`) : ''}`,
+                            msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف${itemsSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}${guildDominance ? ` 🏰 استولى تحالف اللاعب على ${unitTitle} وأصبح يحق له الحصاد اليومي!` : ''}${cityColonization ? (cityColonization.subordinated ? ' أصبحت المدينة تابعة لمدينتك السيادية مع بقاء ملكيتها لصاحبها الأصلي.' : ` انخفض ولاء المدينة إلى ${cityColonization.loyalty}%.`) : ''}`,
                             time: Math.floor(Date.now() / 1000)
                         }
                     }));
@@ -906,17 +979,7 @@ async function resolveBattle(context, dependencies) {
         
         } else {
             // ── DEFEAT RESOLUTION ──
-            // The raw battle service rolls table prizes regardless of battle outcome.
-            for (const prize of matchingPrizes) {
-                const result = rollPrize(prize);
-                if (!result) continue;
-                await battleDb.query(
-                    "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
-                    "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
-                    [hostMember.player.id_player, result.prize, result.amount]
-                );
-                hostMember.itemLoot.push(result);
-            }
+            // Defeated attackers receive no victory spoils or table prize drops.
         }
         
         for (const member of battleMembers) {

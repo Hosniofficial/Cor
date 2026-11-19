@@ -21,9 +21,6 @@ class WorldController {
             case '/api/ABattelRunning/getBattels':
                 self::getBattels($db);
                 return true;
-            case '/api/AWorld/getWorldUnitPrize':
-                self::getWorldUnitPrize();
-                return true;
             case '/api/ADominant/getArmyCapitalDominant':
             case '/api/dominant.php':
             case '/api/dominant':
@@ -65,6 +62,10 @@ class WorldController {
             case '/api/AWorld/refreshWorldUnitLvl':
                 self::refreshWorldUnitLvl($db);
                 return true;
+            case '/api/AWorld/getUnitViewPrizes':
+            case '/api/AWorldUnit/getUnitViewPrizes':
+                self::getUnitViewPrizes();
+                return true;
             case '/api/AWorld/getWorldUnitRank':
             case '/api/AWorld/getGuildAttackQue':
             case '/api/ABattel/applyForRoleInAttQue':
@@ -79,6 +80,12 @@ class WorldController {
             case '/api/ADominant/abondonColonizedCity':
             case '/api/ADominant/fireColonizer':
                 sendJson(['state' => 'ok']);
+                return true;
+            case '/api/Guild/getGuildDominance':
+                self::getGuildDominance($db);
+                return true;
+            case '/api/Guild/harvestDominance':
+                self::harvestDominance($db);
                 return true;
             case '/Battel/abort':
             case '/api/Battel/abort':
@@ -102,25 +109,11 @@ class WorldController {
         return false;
     }
 
-    public static function getWorldUnitPrize() {
-        $file = dirname(__DIR__, 2) . '/caesar-assets/api/data/world-unit-prizes.json';
-        if (!is_file($file) || !is_readable($file)) {
-            error_log('[WorldController] World unit prize data is unavailable');
-            http_response_code(500);
-            sendJson(['state' => 'error', 'msg' => 'World unit prize data is unavailable']);
-        }
-
-        header('Content-Type: text/plain; charset=utf-8');
-        readfile($file);
-        exit;
-    }
-
     public static function getArmyCapitalDominant() {
-        $dataDirectory = __DIR__ . '/../../caesar-assets/web/js-3.4.113/json/';
-        $worldFile = $dataDirectory . 'WorldBarrary.json';
-        $unitFile = $dataDirectory . 'worldUnitData.json';
+        $worldFile = self::resolveJsonPath('WorldBarrary.json');
+        $unitFile = self::resolveJsonPath('worldUnitData.json');
 
-        if (!is_readable($worldFile) || !is_readable($unitFile)) {
+        if (!$worldFile || !is_readable($worldFile) || !$unitFile || !is_readable($unitFile)) {
             error_log('[WorldController] Army capital source data is unavailable');
             http_response_code(500);
             sendJson(['state' => 'error', 'msg' => 'Army capital source data is unavailable']);
@@ -242,11 +235,13 @@ class WorldController {
                             ORDER BY b.id_battel DESC");
         $rows = $stmt->fetchAll() ?: [];
         foreach ($rows as &$r) {
-            foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_city', 'y_city', 'x_coord', 'y_coord', 'time_start', 'time_arrive', 'battle_pending'] as $col) {
+            foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_coord', 'y_coord', 'time_start', 'time_arrive', 'battle_pending'] as $col) {
                 if (isset($r[$col])) $r[$col] = (int)$r[$col];
             }
-            $r['attackNum'] = (int)$r['attackNum'];
+            $r['attackNum']  = (int)$r['attackNum'];
             $r['defenceNum'] = (int)$r['defenceNum'];
+            // Strip origin coordinates — exposing x_city/y_city reveals troop movements to all players.
+            unset($r['x_city'], $r['y_city']);
         }
         sendJson($rows);
     }
@@ -277,11 +272,13 @@ class WorldController {
         $stmt->execute([$x, $y]);
         $rows = $stmt->fetchAll() ?: [];
         foreach ($rows as &$row) {
-            foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_city', 'y_city', 'x_coord', 'y_coord', 'time_start', 'time_arrive', 'battle_pending'] as $column) {
+            foreach (['id_battel', 'id_player', 'id_city', 'id_hero', 'task', 'x_coord', 'y_coord', 'time_start', 'time_arrive', 'battle_pending'] as $column) {
                 if (isset($row[$column])) $row[$column] = (int)$row[$column];
             }
-            $row['attackNum'] = (int)$row['attackNum'];
+            $row['attackNum']  = (int)$row['attackNum'];
             $row['defenceNum'] = (int)$row['defenceNum'];
+            // Strip origin coordinates — exposing x_city/y_city reveals troop movements to all players.
+            unset($row['x_city'], $row['y_city']);
         }
         sendJson($rows);
     }
@@ -321,8 +318,10 @@ class WorldController {
 
     private static function resolveJsonPath($filename) {
         $candidates = [
+            dirname(__DIR__, 2) . '/caesar-assets/api/js-0.0.24/json/' . $filename,
             dirname(__DIR__, 2) . '/caesar-assets/web/js-3.4.113/json/' . $filename,
             dirname(__DIR__, 2) . '/caesar-assets/api/js-3.4.113/json/' . $filename,
+            __DIR__ . '/../../caesar-assets/api/js-0.0.24/json/' . $filename,
             __DIR__ . '/../../caesar-assets/web/js-3.4.113/json/' . $filename,
             __DIR__ . '/../../caesar-assets/api/js-3.4.113/json/' . $filename,
             __DIR__ . '/../js-3.4.113/json/' . $filename,
@@ -338,7 +337,7 @@ class WorldController {
     private static function getStaticWorldUnit($x, $y) {
         static $units = null;
         if ($units === null) {
-            $path = self::resolveJsonPath('WorldBarrary.json') ?: (__DIR__ . '/../../caesar-assets/web/js-3.4.113/json/WorldBarrary.json');
+            $path = self::resolveJsonPath('WorldBarrary.json') ?: (__DIR__ . '/../../caesar-assets/api/js-0.0.24/json/WorldBarrary.json');
             $raw = is_readable($path) ? file_get_contents($path) : false;
             $map = $raw === false ? null : json_decode($raw, true);
             if (!is_string($map)) {
@@ -388,12 +387,19 @@ class WorldController {
         }
         $speed = $speeds ? min($speeds) : 900;
         $duration = max(1, (int)ceil($distance / $speed));
-        if ((int)$unitType === 177) $duration = 300;
-        elseif (((int)$unitType >= 70 && (int)$unitType <= 105)
-            || ((int)$unitType >= 150 && (int)$unitType <= 155)
-            || ((int)$unitType >= 175 && (int)$unitType <= 177)) {
+        $unitType = (int)$unitType;
+        if ($unitType === 177) {
+            $duration = 300;
+        } elseif ($unitType >= 184 && $unitType <= 186) {
+            $duration = 3600;
+        } elseif (($unitType >= 180 && $unitType <= 182) || ($unitType >= 231 && $unitType <= 236)) {
+            $duration = 900;
+        } elseif (($unitType >= 70 && $unitType <= 105)
+            || ($unitType >= 150 && $unitType <= 155)
+            || ($unitType >= 175 && $unitType <= 177)
+            || ($unitType >= 200 && $unitType <= 205)) {
             $duration = (int)($config['camp_rally_duration_sec'] ?? 120);
-        } elseif ($isCity) {
+        } elseif ($isCity || ($unitType >= 60 && $unitType <= 63)) {
             $duration = max((int)($config['city_attack_min_duration_sec'] ?? 900), $duration);
         }
         if ($applySpeedMultiplier) {
@@ -407,7 +413,8 @@ class WorldController {
         $unitType = (int)$unitType;
         $hasMaximumReturnDuration = ($unitType >= 70 && $unitType <= 105)
             || ($unitType >= 150 && $unitType <= 155)
-            || ($unitType >= 175 && $unitType <= 176);
+            || ($unitType >= 175 && $unitType <= 176)
+            || ($unitType >= 200 && $unitType <= 205);
         if (!$hasMaximumReturnDuration) {
             return $duration;
         }
@@ -810,8 +817,8 @@ class WorldController {
             }
 
             // 5c. Check WorldBarrary.json: ensure tile is empty (ut = 0)
-            $wbPath = __DIR__ . '/../../caesar-assets/web/js-3.4.113/json/WorldBarrary.json';
-            if (file_exists($wbPath)) {
+            $wbPath = self::resolveJsonPath('WorldBarrary.json');
+            if ($wbPath && file_exists($wbPath)) {
                 $wbContent = file_get_contents($wbPath);
                 if (preg_match('/(^|[,"]\s*)' . $xCoord . '_' . $yCoord . '_([1-9][0-9]*)/', $wbContent)) {
                     sendJson(['state' => 'error_3', 'msg' => 'المكان غير خالٍ (يوجد معلم جغرافي أو برية في هذا الموضع)']);
@@ -1217,5 +1224,165 @@ class WorldController {
             'army' => $army,
             'equip' => []
         ]);
+    }
+
+    public static function getUnitViewPrizes() {
+        $path = dirname(__DIR__, 2) . '/caesar-private/data/world-unit-prizes.json';
+        if (!file_exists($path) || !is_readable($path)) {
+            $path = __DIR__ . '/../../caesar-private/data/world-unit-prizes.json';
+        }
+        if (!file_exists($path) || !is_readable($path)) {
+            http_response_code(500);
+            sendJson(['state' => 'error_prize_data_unavailable']);
+            return;
+        }
+
+        $raw = file_get_contents($path);
+        $data = json_decode($raw, true);
+        if (!is_array($data)) {
+            http_response_code(500);
+            sendJson(['state' => 'error_invalid_prize_data']);
+            return;
+        }
+
+        $unitType = filter_var($_REQUEST['unitType'] ?? null, FILTER_VALIDATE_INT);
+        $lvl = filter_var($_REQUEST['lvl'] ?? null, FILTER_VALIDATE_INT);
+        $prizeFor = $_REQUEST['prizeFor'] ?? null;
+
+        $sanitize = function($list, $filterType = null, $filterLvl = null) {
+            $result = [];
+            if (!is_array($list)) return $result;
+            foreach ($list as $p) {
+                $uType = (int)($p['unitType'] ?? 0);
+                $pLvl = (int)($p['lvl'] ?? 0);
+                if ($filterType !== null && $uType !== $filterType) continue;
+                if ($filterLvl !== null && $pLvl !== $filterLvl) continue;
+                $result[] = [
+                    'unitType'   => $uType,
+                    'lvl'        => $pLvl,
+                    'prize'      => (string)($p['prize'] ?? ''),
+                    'amount_min' => (int)($p['amount_min'] ?? 1),
+                    'amount_max' => (int)($p['amount_max'] ?? 1),
+                ];
+            }
+            return $result;
+        };
+
+        if ($unitType !== null && $unitType !== false) {
+            $targetBucket = $prizeFor && isset($data[$prizeFor]) ? $prizeFor : 'Win';
+            $sanitized = $sanitize($data[$targetBucket] ?? [], (int)$unitType, $lvl !== false ? $lvl : null);
+            sendJson([
+                'state'    => 'ok',
+                'unitType' => (int)$unitType,
+                'prizeFor' => $targetBucket,
+                'prizes'   => $sanitized
+            ]);
+            return;
+        }
+
+        // Require unitType on demand to prevent bulk prize data dumps
+        http_response_code(400);
+        sendJson([
+            'state'    => 'error_unit_type_required',
+            'prizes'   => []
+        ]);
+    }
+
+    // ── Guild Dominance: get all dominated castles/queens ─────────────────────
+    public static function getGuildDominance($db) {
+        $idPlayer = (int)($_SESSION['id_player'] ?? 0);
+        if (!$idPlayer) { http_response_code(401); sendJson(['state' => 'not_logged_in']); return; }
+
+        // Fetch current guild
+        $stmt = $db->prepare("SELECT id_guild FROM player WHERE id_player = ? LIMIT 1");
+        $stmt->execute([$idPlayer]);
+        $row = $stmt->fetch();
+        $idGuild = (int)($row['id_guild'] ?? 0);
+
+        // All dominated units
+        $stmt2 = $db->prepare(
+            "SELECT gd.*, p.name AS player_name, g.name AS guild_name
+             FROM guild_dominance gd
+             LEFT JOIN player p ON p.id_player = gd.id_player
+             LEFT JOIN guild g  ON g.id_guild  = gd.id_guild
+             ORDER BY gd.unit_type, gd.conquered_at DESC"
+        );
+        $stmt2->execute();
+        $rows = $stmt2->fetchAll();
+
+        $units = [];
+        foreach ($rows as $r) {
+            $units[] = [
+                'x_coord'       => (int)$r['x_coord'],
+                'y_coord'       => (int)$r['y_coord'],
+                'unit_type'     => (int)$r['unit_type'],
+                'unit_lvl'      => (int)$r['unit_lvl'],
+                'id_guild'      => (int)$r['id_guild'],
+                'id_player'     => (int)$r['id_player'],
+                'guild_name'    => (string)($r['guild_name'] ?? ''),
+                'player_name'   => (string)($r['player_name'] ?? ''),
+                'conquered_at'  => (int)$r['conquered_at'],
+                'last_harvest_at' => (int)$r['last_harvest_at'],
+                'daily_food'    => (int)$r['daily_food'],
+                'daily_wood'    => (int)$r['daily_wood'],
+                'daily_stone'   => (int)$r['daily_stone'],
+                'daily_metal'   => (int)$r['daily_metal'],
+                'daily_coin'    => (int)$r['daily_coin'],
+                'can_harvest'   => ($idGuild > 0 && (int)$r['id_guild'] === $idGuild)
+                                    && (time() - (int)$r['last_harvest_at'] >= 86400),
+            ];
+        }
+        sendJson(['state' => 'ok', 'units' => $units, 'id_guild' => $idGuild]);
+    }
+
+    // ── Guild Dominance: harvest daily resources ───────────────────────────────
+    public static function harvestDominance($db) {
+        $idPlayer = (int)($_SESSION['id_player'] ?? 0);
+        if (!$idPlayer) { http_response_code(401); sendJson(['state' => 'not_logged_in']); return; }
+
+        $xCoord = (int)($_REQUEST['xCoord'] ?? 0);
+        $yCoord = (int)($_REQUEST['yCoord'] ?? 0);
+
+        // Lock the dominance row
+        $stmt = $db->prepare(
+            "SELECT gd.*, p.id_guild AS player_guild, c.id_city
+             FROM guild_dominance gd
+             JOIN player p ON p.id_player = ?
+             JOIN city c   ON c.id_player = ?
+             WHERE gd.x_coord = ? AND gd.y_coord = ?
+             FOR UPDATE"
+        );
+        $stmt->execute([$idPlayer, $idPlayer, $xCoord, $yCoord]);
+        $gd = $stmt->fetch();
+
+        if (!$gd) {
+            sendJson(['state' => 'not_dominated']); return;
+        }
+        if ((int)$gd['id_guild'] !== (int)$gd['player_guild'] || (int)$gd['player_guild'] === 0) {
+            sendJson(['state' => 'not_your_guild']); return;
+        }
+        $now = time();
+        if ($now - (int)$gd['last_harvest_at'] < 86400) {
+            $remaining = 86400 - ($now - (int)$gd['last_harvest_at']);
+            sendJson(['state' => 'harvest_cooldown', 'remaining_sec' => $remaining]); return;
+        }
+
+        // Credit resources to player city
+        $resources = [
+            'food'  => (int)$gd['daily_food'],
+            'wood'  => (int)$gd['daily_wood'],
+            'stone' => (int)$gd['daily_stone'],
+            'metal' => (int)$gd['daily_metal'],
+            'coin'  => (int)$gd['daily_coin'],
+        ];
+        $sets = implode(', ', array_map(fn($k) => "$k = $k + ?", array_keys($resources)));
+        $upd = $db->prepare("UPDATE city SET $sets WHERE id_city = ?");
+        $upd->execute([...(array_values($resources)), (int)$gd['id_city']]);
+
+        // Update harvest timestamp
+        $db->prepare("UPDATE guild_dominance SET last_harvest_at = ? WHERE x_coord = ? AND y_coord = ?")
+           ->execute([$now, $xCoord, $yCoord]);
+
+        sendJson(['state' => 'ok', 'harvested' => $resources]);
     }
 }
