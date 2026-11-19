@@ -17470,6 +17470,24 @@
       "win_rate": 50
     },
     {
+      "id_prize": 5823,
+      "unitType": 74,
+      "lvl": 4,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 75
+    },
+    {
+      "id_prize": 5825,
+      "unitType": 73,
+      "lvl": 4,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 75
+    },
+    {
       "id_prize": 5897,
       "unitType": 40,
       "lvl": 1,
@@ -33103,6 +33121,3228 @@
       "win_rate": 1000
     },
     {
+      "id_prize": 8149,
+      "unitType": 71,
+      "lvl": 1,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8150,
+      "unitType": 72,
+      "lvl": 1,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8151,
+      "unitType": 74,
+      "lvl": 1,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8152,
+      "unitType": 73,
+      "lvl": 1,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8153,
+      "unitType": 75,
+      "lvl": 1,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8154,
+      "unitType": 76,
+      "lvl": 1,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8157,
+      "unitType": 79,
+      "lvl": 1,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8159,
+      "unitType": 71,
+      "lvl": 2,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8160,
+      "unitType": 72,
+      "lvl": 2,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8161,
+      "unitType": 74,
+      "lvl": 2,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8162,
+      "unitType": 73,
+      "lvl": 2,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8163,
+      "unitType": 75,
+      "lvl": 2,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8164,
+      "unitType": 76,
+      "lvl": 2,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8168,
+      "unitType": 80,
+      "lvl": 2,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8169,
+      "unitType": 71,
+      "lvl": 3,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8170,
+      "unitType": 72,
+      "lvl": 3,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8171,
+      "unitType": 74,
+      "lvl": 3,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8172,
+      "unitType": 73,
+      "lvl": 3,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8173,
+      "unitType": 75,
+      "lvl": 3,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8174,
+      "unitType": 76,
+      "lvl": 3,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8177,
+      "unitType": 79,
+      "lvl": 3,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8178,
+      "unitType": 80,
+      "lvl": 3,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8179,
+      "unitType": 71,
+      "lvl": 4,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8180,
+      "unitType": 72,
+      "lvl": 4,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8181,
+      "unitType": 74,
+      "lvl": 4,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8182,
+      "unitType": 73,
+      "lvl": 4,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8183,
+      "unitType": 75,
+      "lvl": 4,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8184,
+      "unitType": 76,
+      "lvl": 4,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8187,
+      "unitType": 79,
+      "lvl": 4,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8189,
+      "unitType": 71,
+      "lvl": 5,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8190,
+      "unitType": 72,
+      "lvl": 5,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8191,
+      "unitType": 74,
+      "lvl": 5,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8192,
+      "unitType": 73,
+      "lvl": 5,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8193,
+      "unitType": 75,
+      "lvl": 5,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8194,
+      "unitType": 76,
+      "lvl": 5,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8199,
+      "unitType": 71,
+      "lvl": 6,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8200,
+      "unitType": 72,
+      "lvl": 6,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8201,
+      "unitType": 74,
+      "lvl": 6,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8202,
+      "unitType": 73,
+      "lvl": 6,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8203,
+      "unitType": 75,
+      "lvl": 6,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8204,
+      "unitType": 76,
+      "lvl": 6,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8206,
+      "unitType": 78,
+      "lvl": 6,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8207,
+      "unitType": 79,
+      "lvl": 6,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8208,
+      "unitType": 80,
+      "lvl": 6,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8209,
+      "unitType": 71,
+      "lvl": 7,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8210,
+      "unitType": 72,
+      "lvl": 7,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8211,
+      "unitType": 74,
+      "lvl": 7,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8212,
+      "unitType": 73,
+      "lvl": 7,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8213,
+      "unitType": 75,
+      "lvl": 7,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8214,
+      "unitType": 76,
+      "lvl": 7,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8218,
+      "unitType": 80,
+      "lvl": 7,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8219,
+      "unitType": 71,
+      "lvl": 8,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8220,
+      "unitType": 72,
+      "lvl": 8,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8221,
+      "unitType": 74,
+      "lvl": 8,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8222,
+      "unitType": 73,
+      "lvl": 8,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8223,
+      "unitType": 75,
+      "lvl": 8,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8224,
+      "unitType": 76,
+      "lvl": 8,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8225,
+      "unitType": 77,
+      "lvl": 8,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8227,
+      "unitType": 79,
+      "lvl": 8,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8228,
+      "unitType": 80,
+      "lvl": 8,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8229,
+      "unitType": 71,
+      "lvl": 9,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8230,
+      "unitType": 72,
+      "lvl": 9,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8231,
+      "unitType": 74,
+      "lvl": 9,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8232,
+      "unitType": 73,
+      "lvl": 9,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8233,
+      "unitType": 75,
+      "lvl": 9,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8234,
+      "unitType": 76,
+      "lvl": 9,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8238,
+      "unitType": 80,
+      "lvl": 9,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 8241,
+      "unitType": 74,
+      "lvl": 10,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8242,
+      "unitType": 73,
+      "lvl": 10,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8243,
+      "unitType": 75,
+      "lvl": 10,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8244,
+      "unitType": 76,
+      "lvl": 10,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8249,
+      "unitType": 71,
+      "lvl": 11,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8250,
+      "unitType": 72,
+      "lvl": 11,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8251,
+      "unitType": 74,
+      "lvl": 11,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8252,
+      "unitType": 73,
+      "lvl": 11,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8253,
+      "unitType": 75,
+      "lvl": 11,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8254,
+      "unitType": 76,
+      "lvl": 11,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8258,
+      "unitType": 80,
+      "lvl": 11,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8259,
+      "unitType": 71,
+      "lvl": 12,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8260,
+      "unitType": 72,
+      "lvl": 12,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8261,
+      "unitType": 74,
+      "lvl": 12,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8262,
+      "unitType": 73,
+      "lvl": 12,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8263,
+      "unitType": 75,
+      "lvl": 12,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8264,
+      "unitType": 76,
+      "lvl": 12,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8269,
+      "unitType": 71,
+      "lvl": 13,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8270,
+      "unitType": 72,
+      "lvl": 13,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8271,
+      "unitType": 74,
+      "lvl": 13,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8272,
+      "unitType": 73,
+      "lvl": 13,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8273,
+      "unitType": 75,
+      "lvl": 13,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8274,
+      "unitType": 76,
+      "lvl": 13,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8278,
+      "unitType": 80,
+      "lvl": 13,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8279,
+      "unitType": 71,
+      "lvl": 14,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8280,
+      "unitType": 72,
+      "lvl": 14,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8281,
+      "unitType": 74,
+      "lvl": 14,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8282,
+      "unitType": 73,
+      "lvl": 14,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8283,
+      "unitType": 75,
+      "lvl": 14,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8284,
+      "unitType": 76,
+      "lvl": 14,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8288,
+      "unitType": 80,
+      "lvl": 14,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8289,
+      "unitType": 71,
+      "lvl": 15,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8290,
+      "unitType": 72,
+      "lvl": 15,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8291,
+      "unitType": 74,
+      "lvl": 15,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8292,
+      "unitType": 73,
+      "lvl": 15,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8293,
+      "unitType": 75,
+      "lvl": 15,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8294,
+      "unitType": 76,
+      "lvl": 15,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8298,
+      "unitType": 80,
+      "lvl": 15,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8299,
+      "unitType": 71,
+      "lvl": 16,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8300,
+      "unitType": 72,
+      "lvl": 16,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8301,
+      "unitType": 74,
+      "lvl": 16,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8302,
+      "unitType": 73,
+      "lvl": 16,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8303,
+      "unitType": 75,
+      "lvl": 16,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8304,
+      "unitType": 76,
+      "lvl": 16,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8307,
+      "unitType": 79,
+      "lvl": 16,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8309,
+      "unitType": 71,
+      "lvl": 17,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8310,
+      "unitType": 72,
+      "lvl": 17,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8311,
+      "unitType": 74,
+      "lvl": 17,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8312,
+      "unitType": 73,
+      "lvl": 17,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8313,
+      "unitType": 75,
+      "lvl": 17,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8314,
+      "unitType": 76,
+      "lvl": 17,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8315,
+      "unitType": 77,
+      "lvl": 17,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8318,
+      "unitType": 80,
+      "lvl": 17,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8319,
+      "unitType": 71,
+      "lvl": 18,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8320,
+      "unitType": 72,
+      "lvl": 18,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8321,
+      "unitType": 74,
+      "lvl": 18,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8322,
+      "unitType": 73,
+      "lvl": 18,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8323,
+      "unitType": 75,
+      "lvl": 18,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8324,
+      "unitType": 76,
+      "lvl": 18,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8328,
+      "unitType": 80,
+      "lvl": 18,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8329,
+      "unitType": 71,
+      "lvl": 19,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8330,
+      "unitType": 72,
+      "lvl": 19,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8331,
+      "unitType": 74,
+      "lvl": 19,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8332,
+      "unitType": 73,
+      "lvl": 19,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8333,
+      "unitType": 75,
+      "lvl": 19,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8334,
+      "unitType": 76,
+      "lvl": 19,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8337,
+      "unitType": 79,
+      "lvl": 19,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 420
+    },
+    {
+      "id_prize": 8339,
+      "unitType": 71,
+      "lvl": 20,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8340,
+      "unitType": 72,
+      "lvl": 20,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8341,
+      "unitType": 74,
+      "lvl": 20,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8342,
+      "unitType": 73,
+      "lvl": 20,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8343,
+      "unitType": 75,
+      "lvl": 20,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8344,
+      "unitType": 76,
+      "lvl": 20,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8345,
+      "unitType": 77,
+      "lvl": 20,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8347,
+      "unitType": 79,
+      "lvl": 20,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8348,
+      "unitType": 80,
+      "lvl": 20,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8349,
+      "unitType": 71,
+      "lvl": 21,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8350,
+      "unitType": 72,
+      "lvl": 21,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8351,
+      "unitType": 74,
+      "lvl": 21,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8352,
+      "unitType": 73,
+      "lvl": 21,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8353,
+      "unitType": 75,
+      "lvl": 21,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8354,
+      "unitType": 76,
+      "lvl": 21,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8355,
+      "unitType": 77,
+      "lvl": 21,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8358,
+      "unitType": 80,
+      "lvl": 21,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8359,
+      "unitType": 71,
+      "lvl": 22,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8360,
+      "unitType": 72,
+      "lvl": 22,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8361,
+      "unitType": 74,
+      "lvl": 22,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8362,
+      "unitType": 73,
+      "lvl": 22,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8363,
+      "unitType": 75,
+      "lvl": 22,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8364,
+      "unitType": 76,
+      "lvl": 22,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8365,
+      "unitType": 77,
+      "lvl": 22,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8366,
+      "unitType": 78,
+      "lvl": 22,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8367,
+      "unitType": 79,
+      "lvl": 22,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8368,
+      "unitType": 80,
+      "lvl": 22,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8369,
+      "unitType": 71,
+      "lvl": 23,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8370,
+      "unitType": 72,
+      "lvl": 23,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8371,
+      "unitType": 74,
+      "lvl": 23,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8372,
+      "unitType": 73,
+      "lvl": 23,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8373,
+      "unitType": 75,
+      "lvl": 23,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8374,
+      "unitType": 76,
+      "lvl": 23,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8377,
+      "unitType": 79,
+      "lvl": 23,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8378,
+      "unitType": 80,
+      "lvl": 23,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8379,
+      "unitType": 71,
+      "lvl": 24,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8380,
+      "unitType": 72,
+      "lvl": 24,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8381,
+      "unitType": 74,
+      "lvl": 24,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8382,
+      "unitType": 73,
+      "lvl": 24,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8383,
+      "unitType": 75,
+      "lvl": 24,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8384,
+      "unitType": 76,
+      "lvl": 24,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8385,
+      "unitType": 77,
+      "lvl": 24,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8387,
+      "unitType": 79,
+      "lvl": 24,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8388,
+      "unitType": 80,
+      "lvl": 24,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8389,
+      "unitType": 71,
+      "lvl": 25,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8390,
+      "unitType": 72,
+      "lvl": 25,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8391,
+      "unitType": 74,
+      "lvl": 25,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8392,
+      "unitType": 73,
+      "lvl": 25,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8393,
+      "unitType": 75,
+      "lvl": 25,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8394,
+      "unitType": 76,
+      "lvl": 25,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8396,
+      "unitType": 78,
+      "lvl": 25,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8397,
+      "unitType": 79,
+      "lvl": 25,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8398,
+      "unitType": 80,
+      "lvl": 25,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8399,
+      "unitType": 71,
+      "lvl": 26,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8400,
+      "unitType": 72,
+      "lvl": 26,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8401,
+      "unitType": 74,
+      "lvl": 26,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8402,
+      "unitType": 73,
+      "lvl": 26,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8403,
+      "unitType": 75,
+      "lvl": 26,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8404,
+      "unitType": 76,
+      "lvl": 26,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8405,
+      "unitType": 77,
+      "lvl": 26,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8407,
+      "unitType": 79,
+      "lvl": 26,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8408,
+      "unitType": 80,
+      "lvl": 26,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8409,
+      "unitType": 71,
+      "lvl": 27,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8410,
+      "unitType": 72,
+      "lvl": 27,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8411,
+      "unitType": 74,
+      "lvl": 27,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8412,
+      "unitType": 73,
+      "lvl": 27,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8413,
+      "unitType": 75,
+      "lvl": 27,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8414,
+      "unitType": 76,
+      "lvl": 27,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8415,
+      "unitType": 77,
+      "lvl": 27,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8416,
+      "unitType": 78,
+      "lvl": 27,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8417,
+      "unitType": 79,
+      "lvl": 27,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8418,
+      "unitType": 80,
+      "lvl": 27,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8419,
+      "unitType": 71,
+      "lvl": 28,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8420,
+      "unitType": 72,
+      "lvl": 28,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8421,
+      "unitType": 74,
+      "lvl": 28,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8422,
+      "unitType": 73,
+      "lvl": 28,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8423,
+      "unitType": 75,
+      "lvl": 28,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8424,
+      "unitType": 76,
+      "lvl": 28,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8427,
+      "unitType": 79,
+      "lvl": 28,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8429,
+      "unitType": 71,
+      "lvl": 29,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8430,
+      "unitType": 72,
+      "lvl": 29,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8431,
+      "unitType": 74,
+      "lvl": 29,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8432,
+      "unitType": 73,
+      "lvl": 29,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8433,
+      "unitType": 75,
+      "lvl": 29,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8434,
+      "unitType": 76,
+      "lvl": 29,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8435,
+      "unitType": 77,
+      "lvl": 29,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8437,
+      "unitType": 79,
+      "lvl": 29,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 465
+    },
+    {
+      "id_prize": 8439,
+      "unitType": 71,
+      "lvl": 30,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8440,
+      "unitType": 72,
+      "lvl": 30,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8441,
+      "unitType": 74,
+      "lvl": 30,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8442,
+      "unitType": 73,
+      "lvl": 30,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8443,
+      "unitType": 75,
+      "lvl": 30,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8444,
+      "unitType": 76,
+      "lvl": 30,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8445,
+      "unitType": 77,
+      "lvl": 30,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8446,
+      "unitType": 78,
+      "lvl": 30,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8447,
+      "unitType": 79,
+      "lvl": 30,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8448,
+      "unitType": 80,
+      "lvl": 30,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 570
+    },
+    {
+      "id_prize": 8449,
+      "unitType": 71,
+      "lvl": 31,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8450,
+      "unitType": 72,
+      "lvl": 31,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8451,
+      "unitType": 74,
+      "lvl": 31,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8452,
+      "unitType": 73,
+      "lvl": 31,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8453,
+      "unitType": 75,
+      "lvl": 31,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8454,
+      "unitType": 76,
+      "lvl": 31,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8457,
+      "unitType": 79,
+      "lvl": 31,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8459,
+      "unitType": 71,
+      "lvl": 32,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8460,
+      "unitType": 72,
+      "lvl": 32,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8461,
+      "unitType": 74,
+      "lvl": 32,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8462,
+      "unitType": 73,
+      "lvl": 32,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8463,
+      "unitType": 75,
+      "lvl": 32,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8464,
+      "unitType": 76,
+      "lvl": 32,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8467,
+      "unitType": 79,
+      "lvl": 32,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8469,
+      "unitType": 71,
+      "lvl": 33,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8470,
+      "unitType": 72,
+      "lvl": 33,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8471,
+      "unitType": 74,
+      "lvl": 33,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8472,
+      "unitType": 73,
+      "lvl": 33,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8473,
+      "unitType": 75,
+      "lvl": 33,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8474,
+      "unitType": 76,
+      "lvl": 33,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8477,
+      "unitType": 79,
+      "lvl": 33,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8479,
+      "unitType": 71,
+      "lvl": 34,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8480,
+      "unitType": 72,
+      "lvl": 34,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8481,
+      "unitType": 74,
+      "lvl": 34,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8482,
+      "unitType": 73,
+      "lvl": 34,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8483,
+      "unitType": 75,
+      "lvl": 34,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8484,
+      "unitType": 76,
+      "lvl": 34,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8487,
+      "unitType": 79,
+      "lvl": 34,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8489,
+      "unitType": 71,
+      "lvl": 35,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8490,
+      "unitType": 72,
+      "lvl": 35,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8491,
+      "unitType": 74,
+      "lvl": 35,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8492,
+      "unitType": 73,
+      "lvl": 35,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8493,
+      "unitType": 75,
+      "lvl": 35,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8494,
+      "unitType": 76,
+      "lvl": 35,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8496,
+      "unitType": 78,
+      "lvl": 35,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8497,
+      "unitType": 79,
+      "lvl": 35,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8499,
+      "unitType": 71,
+      "lvl": 36,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8500,
+      "unitType": 72,
+      "lvl": 36,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8501,
+      "unitType": 74,
+      "lvl": 36,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8502,
+      "unitType": 73,
+      "lvl": 36,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8503,
+      "unitType": 75,
+      "lvl": 36,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8504,
+      "unitType": 76,
+      "lvl": 36,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8507,
+      "unitType": 79,
+      "lvl": 36,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8509,
+      "unitType": 71,
+      "lvl": 37,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8510,
+      "unitType": 72,
+      "lvl": 37,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8511,
+      "unitType": 74,
+      "lvl": 37,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8512,
+      "unitType": 73,
+      "lvl": 37,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8513,
+      "unitType": 75,
+      "lvl": 37,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8514,
+      "unitType": 76,
+      "lvl": 37,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8517,
+      "unitType": 79,
+      "lvl": 37,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8519,
+      "unitType": 71,
+      "lvl": 38,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8520,
+      "unitType": 72,
+      "lvl": 38,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8521,
+      "unitType": 74,
+      "lvl": 38,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8522,
+      "unitType": 73,
+      "lvl": 38,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8523,
+      "unitType": 75,
+      "lvl": 38,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8524,
+      "unitType": 76,
+      "lvl": 38,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8527,
+      "unitType": 79,
+      "lvl": 38,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8529,
+      "unitType": 71,
+      "lvl": 39,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8530,
+      "unitType": 72,
+      "lvl": 39,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8531,
+      "unitType": 74,
+      "lvl": 39,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8532,
+      "unitType": 73,
+      "lvl": 39,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8533,
+      "unitType": 75,
+      "lvl": 39,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8534,
+      "unitType": 76,
+      "lvl": 39,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8537,
+      "unitType": 79,
+      "lvl": 39,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 525
+    },
+    {
+      "id_prize": 8549,
+      "unitType": 71,
+      "lvl": 41,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8550,
+      "unitType": 72,
+      "lvl": 41,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8551,
+      "unitType": 74,
+      "lvl": 41,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8552,
+      "unitType": 73,
+      "lvl": 41,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8553,
+      "unitType": 75,
+      "lvl": 41,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8554,
+      "unitType": 76,
+      "lvl": 41,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8557,
+      "unitType": 79,
+      "lvl": 41,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8559,
+      "unitType": 71,
+      "lvl": 42,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8560,
+      "unitType": 72,
+      "lvl": 42,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8561,
+      "unitType": 74,
+      "lvl": 42,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8562,
+      "unitType": 73,
+      "lvl": 42,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8563,
+      "unitType": 75,
+      "lvl": 42,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8564,
+      "unitType": 76,
+      "lvl": 42,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8567,
+      "unitType": 79,
+      "lvl": 42,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8569,
+      "unitType": 71,
+      "lvl": 43,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8570,
+      "unitType": 72,
+      "lvl": 43,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8571,
+      "unitType": 74,
+      "lvl": 43,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8572,
+      "unitType": 73,
+      "lvl": 43,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8573,
+      "unitType": 75,
+      "lvl": 43,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8574,
+      "unitType": 76,
+      "lvl": 43,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8577,
+      "unitType": 79,
+      "lvl": 43,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8579,
+      "unitType": 71,
+      "lvl": 44,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8580,
+      "unitType": 72,
+      "lvl": 44,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8581,
+      "unitType": 74,
+      "lvl": 44,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8582,
+      "unitType": 73,
+      "lvl": 44,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8583,
+      "unitType": 75,
+      "lvl": 44,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8584,
+      "unitType": 76,
+      "lvl": 44,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8587,
+      "unitType": 79,
+      "lvl": 44,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8589,
+      "unitType": 71,
+      "lvl": 45,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8590,
+      "unitType": 72,
+      "lvl": 45,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8591,
+      "unitType": 74,
+      "lvl": 45,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8592,
+      "unitType": 73,
+      "lvl": 45,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8593,
+      "unitType": 75,
+      "lvl": 45,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8594,
+      "unitType": 76,
+      "lvl": 45,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8597,
+      "unitType": 79,
+      "lvl": 45,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8599,
+      "unitType": 71,
+      "lvl": 46,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8600,
+      "unitType": 72,
+      "lvl": 46,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8601,
+      "unitType": 74,
+      "lvl": 46,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8602,
+      "unitType": 73,
+      "lvl": 46,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8603,
+      "unitType": 75,
+      "lvl": 46,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8604,
+      "unitType": 76,
+      "lvl": 46,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8607,
+      "unitType": 79,
+      "lvl": 46,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8609,
+      "unitType": 71,
+      "lvl": 47,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8610,
+      "unitType": 72,
+      "lvl": 47,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8611,
+      "unitType": 74,
+      "lvl": 47,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8612,
+      "unitType": 73,
+      "lvl": 47,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8613,
+      "unitType": 75,
+      "lvl": 47,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8614,
+      "unitType": 76,
+      "lvl": 47,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8617,
+      "unitType": 79,
+      "lvl": 47,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8619,
+      "unitType": 71,
+      "lvl": 48,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8620,
+      "unitType": 72,
+      "lvl": 48,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8621,
+      "unitType": 74,
+      "lvl": 48,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8622,
+      "unitType": 73,
+      "lvl": 48,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8623,
+      "unitType": 75,
+      "lvl": 48,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8624,
+      "unitType": 76,
+      "lvl": 48,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8627,
+      "unitType": 79,
+      "lvl": 48,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8629,
+      "unitType": 71,
+      "lvl": 49,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8630,
+      "unitType": 72,
+      "lvl": 49,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8631,
+      "unitType": 74,
+      "lvl": 49,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8632,
+      "unitType": 73,
+      "lvl": 49,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8633,
+      "unitType": 75,
+      "lvl": 49,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8634,
+      "unitType": 76,
+      "lvl": 49,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
+      "id_prize": 8637,
+      "unitType": 79,
+      "lvl": 49,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 555
+    },
+    {
       "id_prize": 8702,
       "unitType": 220,
       "lvl": 1,
@@ -33121,87 +36361,6 @@
       "win_rate": 600
     },
     {
-      "id_prize": 8715,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 3,
-      "amount_max": 10,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 8719,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 3,
-      "amount_max": 10,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 8721,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "god_point_175",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 300
-    },
-    {
-      "id_prize": 8725,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "exp_hero_8",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 8730,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "exp_hero_30",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 8735,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "random_move",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 8761,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "god_point_5",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1200
-    },
-    {
-      "id_prize": 8763,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "god_point_5",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1200
-    },
-    {
-      "id_prize": 8769,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "god_point_5",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1200
-    },
-    {
       "id_prize": 8772,
       "unitType": 70,
       "lvl": 30,
@@ -33218,15 +36377,6 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 1500
-    },
-    {
-      "id_prize": 8793,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "god_point_175",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
     },
     {
       "id_prize": 8796,
@@ -33958,6 +37108,312 @@
       "win_rate": 167
     },
     {
+      "id_prize": 9531,
+      "unitType": 77,
+      "lvl": 1,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 9532,
+      "unitType": 77,
+      "lvl": 3,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9533,
+      "unitType": 77,
+      "lvl": 5,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9534,
+      "unitType": 77,
+      "lvl": 9,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9536,
+      "unitType": 77,
+      "lvl": 11,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9537,
+      "unitType": 77,
+      "lvl": 12,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9538,
+      "unitType": 77,
+      "lvl": 14,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9539,
+      "unitType": 77,
+      "lvl": 16,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9540,
+      "unitType": 77,
+      "lvl": 18,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9541,
+      "unitType": 78,
+      "lvl": 2,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9543,
+      "unitType": 78,
+      "lvl": 4,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9598,
+      "unitType": 78,
+      "lvl": 47,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9599,
+      "unitType": 78,
+      "lvl": 46,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9602,
+      "unitType": 78,
+      "lvl": 43,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9603,
+      "unitType": 78,
+      "lvl": 42,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9607,
+      "unitType": 78,
+      "lvl": 38,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9608,
+      "unitType": 78,
+      "lvl": 37,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9610,
+      "unitType": 78,
+      "lvl": 33,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9613,
+      "unitType": 78,
+      "lvl": 29,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9614,
+      "unitType": 78,
+      "lvl": 28,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9615,
+      "unitType": 78,
+      "lvl": 26,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9618,
+      "unitType": 78,
+      "lvl": 20,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 9622,
+      "unitType": 77,
+      "lvl": 49,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9624,
+      "unitType": 77,
+      "lvl": 47,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9625,
+      "unitType": 77,
+      "lvl": 46,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9627,
+      "unitType": 77,
+      "lvl": 44,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9630,
+      "unitType": 77,
+      "lvl": 39,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9632,
+      "unitType": 77,
+      "lvl": 37,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9637,
+      "unitType": 77,
+      "lvl": 32,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9638,
+      "unitType": 77,
+      "lvl": 31,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9639,
+      "unitType": 77,
+      "lvl": 28,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9642,
+      "unitType": 79,
+      "lvl": 12,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 167
+    },
+    {
+      "id_prize": 9645,
+      "unitType": 79,
+      "lvl": 21,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9647,
+      "unitType": 79,
+      "lvl": 50,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 500
+    },
+    {
       "id_prize": 9648,
       "unitType": 79,
       "lvl": 50,
@@ -33976,6 +37432,123 @@
       "win_rate": 1500
     },
     {
+      "id_prize": 9650,
+      "unitType": 79,
+      "lvl": 40,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 9653,
+      "unitType": 80,
+      "lvl": 40,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 9654,
+      "unitType": 80,
+      "lvl": 31,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9656,
+      "unitType": 80,
+      "lvl": 48,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9658,
+      "unitType": 80,
+      "lvl": 45,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9659,
+      "unitType": 80,
+      "lvl": 44,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9660,
+      "unitType": 80,
+      "lvl": 42,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9661,
+      "unitType": 80,
+      "lvl": 39,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9663,
+      "unitType": 80,
+      "lvl": 35,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9664,
+      "unitType": 80,
+      "lvl": 34,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9665,
+      "unitType": 80,
+      "lvl": 32,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9666,
+      "unitType": 80,
+      "lvl": 29,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9667,
+      "unitType": 80,
+      "lvl": 28,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
       "id_prize": 9678,
       "unitType": 81,
       "lvl": 33,
@@ -33992,6 +37565,60 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 75
+    },
+    {
+      "id_prize": 9736,
+      "unitType": 77,
+      "lvl": 50,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 675
+    },
+    {
+      "id_prize": 9737,
+      "unitType": 77,
+      "lvl": 40,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 9738,
+      "unitType": 78,
+      "lvl": 50,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 833
+    },
+    {
+      "id_prize": 9739,
+      "unitType": 78,
+      "lvl": 40,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 9741,
+      "unitType": 78,
+      "lvl": 13,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 9742,
+      "unitType": 78,
+      "lvl": 1,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
     },
     {
       "id_prize": 9753,
@@ -34678,6 +38305,132 @@
       "win_rate": 1500
     },
     {
+      "id_prize": 10400,
+      "unitType": 71,
+      "lvl": 10,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1050
+    },
+    {
+      "id_prize": 10401,
+      "unitType": 71,
+      "lvl": 40,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10402,
+      "unitType": 71,
+      "lvl": 50,
+      "prize": "flag_england",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10403,
+      "unitType": 72,
+      "lvl": 10,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10404,
+      "unitType": 72,
+      "lvl": 50,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10405,
+      "unitType": 72,
+      "lvl": 40,
+      "prize": "flag_germany",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10406,
+      "unitType": 73,
+      "lvl": 50,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10407,
+      "unitType": 73,
+      "lvl": 40,
+      "prize": "flag_magul",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10408,
+      "unitType": 74,
+      "lvl": 50,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10409,
+      "unitType": 74,
+      "lvl": 40,
+      "prize": "flag_france",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10410,
+      "unitType": 75,
+      "lvl": 50,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10411,
+      "unitType": 75,
+      "lvl": 40,
+      "prize": "flag_macdoni",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10412,
+      "unitType": 76,
+      "lvl": 50,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10413,
+      "unitType": 76,
+      "lvl": 40,
+      "prize": "flag_spain",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
       "id_prize": 10441,
       "unitType": 104,
       "lvl": 10,
@@ -34696,6 +38449,258 @@
       "win_rate": 750
     },
     {
+      "id_prize": 10443,
+      "unitType": 77,
+      "lvl": 48,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10444,
+      "unitType": 77,
+      "lvl": 45,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10445,
+      "unitType": 77,
+      "lvl": 43,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10446,
+      "unitType": 77,
+      "lvl": 41,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 833
+    },
+    {
+      "id_prize": 10447,
+      "unitType": 77,
+      "lvl": 38,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10448,
+      "unitType": 77,
+      "lvl": 36,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10449,
+      "unitType": 77,
+      "lvl": 34,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10450,
+      "unitType": 77,
+      "lvl": 33,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10452,
+      "unitType": 77,
+      "lvl": 35,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10453,
+      "unitType": 77,
+      "lvl": 42,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 999
+    },
+    {
+      "id_prize": 10454,
+      "unitType": 79,
+      "lvl": 2,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10455,
+      "unitType": 79,
+      "lvl": 5,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10456,
+      "unitType": 79,
+      "lvl": 7,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10457,
+      "unitType": 79,
+      "lvl": 9,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10458,
+      "unitType": 79,
+      "lvl": 10,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10459,
+      "unitType": 80,
+      "lvl": 1,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10460,
+      "unitType": 80,
+      "lvl": 4,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10461,
+      "unitType": 80,
+      "lvl": 5,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10462,
+      "unitType": 80,
+      "lvl": 10,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10463,
+      "unitType": 78,
+      "lvl": 3,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10464,
+      "unitType": 78,
+      "lvl": 7,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10465,
+      "unitType": 78,
+      "lvl": 9,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10466,
+      "unitType": 78,
+      "lvl": 10,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10467,
+      "unitType": 77,
+      "lvl": 2,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10468,
+      "unitType": 77,
+      "lvl": 4,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10469,
+      "unitType": 77,
+      "lvl": 6,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10470,
+      "unitType": 77,
+      "lvl": 7,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10471,
+      "unitType": 77,
+      "lvl": 10,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
       "id_prize": 10472,
       "unitType": 70,
       "lvl": 40,
@@ -34703,6 +38708,384 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 1667
+    },
+    {
+      "id_prize": 10486,
+      "unitType": 80,
+      "lvl": 12,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10487,
+      "unitType": 80,
+      "lvl": 16,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10488,
+      "unitType": 80,
+      "lvl": 19,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10489,
+      "unitType": 80,
+      "lvl": 50,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10490,
+      "unitType": 80,
+      "lvl": 49,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10491,
+      "unitType": 80,
+      "lvl": 47,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10492,
+      "unitType": 80,
+      "lvl": 46,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10493,
+      "unitType": 80,
+      "lvl": 43,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10494,
+      "unitType": 80,
+      "lvl": 41,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10495,
+      "unitType": 80,
+      "lvl": 38,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10496,
+      "unitType": 80,
+      "lvl": 37,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10497,
+      "unitType": 80,
+      "lvl": 36,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10498,
+      "unitType": 80,
+      "lvl": 33,
+      "prize": "flag_egypt",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10499,
+      "unitType": 79,
+      "lvl": 11,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10500,
+      "unitType": 79,
+      "lvl": 13,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10501,
+      "unitType": 79,
+      "lvl": 14,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10502,
+      "unitType": 79,
+      "lvl": 15,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10503,
+      "unitType": 79,
+      "lvl": 17,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10504,
+      "unitType": 79,
+      "lvl": 18,
+      "prize": "flag_cartaga",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10505,
+      "unitType": 78,
+      "lvl": 8,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10506,
+      "unitType": 78,
+      "lvl": 12,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10507,
+      "unitType": 78,
+      "lvl": 14,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10508,
+      "unitType": 78,
+      "lvl": 15,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10509,
+      "unitType": 78,
+      "lvl": 16,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10510,
+      "unitType": 78,
+      "lvl": 18,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10511,
+      "unitType": 78,
+      "lvl": 19,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 333
+    },
+    {
+      "id_prize": 10512,
+      "unitType": 78,
+      "lvl": 49,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10513,
+      "unitType": 78,
+      "lvl": 48,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10514,
+      "unitType": 78,
+      "lvl": 45,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10515,
+      "unitType": 78,
+      "lvl": 44,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 470
+    },
+    {
+      "id_prize": 10516,
+      "unitType": 78,
+      "lvl": 41,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10517,
+      "unitType": 78,
+      "lvl": 36,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10518,
+      "unitType": 78,
+      "lvl": 34,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10519,
+      "unitType": 78,
+      "lvl": 32,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10520,
+      "unitType": 78,
+      "lvl": 39,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10521,
+      "unitType": 78,
+      "lvl": 31,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10522,
+      "unitType": 78,
+      "lvl": 24,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 666
+    },
+    {
+      "id_prize": 10523,
+      "unitType": 78,
+      "lvl": 23,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10524,
+      "unitType": 78,
+      "lvl": 21,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10525,
+      "unitType": 78,
+      "lvl": 17,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10526,
+      "unitType": 78,
+      "lvl": 11,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
+    },
+    {
+      "id_prize": 10527,
+      "unitType": 78,
+      "lvl": 5,
+      "prize": "flag_greek",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 500
     },
     {
       "id_prize": 10561,
@@ -44344,24 +48727,6 @@
       "win_rate": 80
     },
     {
-      "id_prize": 13568,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 2,
-      "amount_max": 2,
-      "win_rate": 1000
-    },
-    {
-      "id_prize": 13569,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "god_point_75",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 300
-    },
-    {
       "id_prize": 13579,
       "unitType": 99,
       "lvl": 1,
@@ -49796,6 +54161,645 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 1000
+    },
+    {
+      "id_prize": 17501,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "god_point_75",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17502,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "exp_hero_8",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17503,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "medal_bronz",
+      "amount_min": 1,
+      "amount_max": 5,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17504,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17505,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "coin_c",
+      "amount_min": 2,
+      "amount_max": 4,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17506,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "army_all_1",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17507,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "archit_b",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17508,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "t_map",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17509,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "black_ore",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17510,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "gift_box",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17511,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "low_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17512,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "bronze_bar",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17513,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "luxury_7",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17514,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "god_point_175",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17515,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "exp_hero_30",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17516,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "medal_silver",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17517,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "flag_roma",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17518,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "army_all_2",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17519,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "wood_box",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17520,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "archit_c",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17521,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "hidden_box",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17522,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "marmlo_helmet",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17523,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "shopping_car",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17524,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "medium_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17525,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "silver_bar",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17526,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "random_move",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17527,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "god_point_750",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17528,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "exp_hero_30",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17529,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "medal_gold",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17530,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "flag_egypt",
+      "amount_min": 2,
+      "amount_max": 5,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17531,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "army_all_3",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17532,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "law_1",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17533,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "archit_d",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17534,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "marcus_scheme",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17535,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "black_ore",
+      "amount_min": 2,
+      "amount_max": 4,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17536,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "god_point_30",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17537,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "high_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17538,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "gold_bar",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17539,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "luxury_9",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17540,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 2,
+      "amount_max": 5,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17541,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "god_point_75",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17542,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "prestige_slogan",
+      "amount_min": 1,
+      "amount_max": 3,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17543,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "medal_bronz",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17544,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "exp_hero_8",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17545,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "archit_a",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17546,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "fruit",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17547,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "luxury_6",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17548,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "low_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17549,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "random_move",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17550,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 3,
+      "amount_max": 10,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17551,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "god_point_175",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17552,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "prestige_slogan",
+      "amount_min": 2,
+      "amount_max": 5,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17553,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "ceaser_eagle",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17554,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "retreat_point",
+      "amount_min": 2,
+      "amount_max": 8,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17555,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "archit_c",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17556,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "marcus_scheme",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17557,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "marmlo_helmet",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17558,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "medium_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17559,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "archim_b",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 17560,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 3,
+      "amount_max": 10,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17561,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "god_point_175",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17562,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "prestige_slogan",
+      "amount_min": 4,
+      "amount_max": 8,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 17563,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "exp_hero_100",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17564,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "god_point_750",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17565,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "medal_gold",
+      "amount_min": 1,
+      "amount_max": 2,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 17566,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "law_1",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17567,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "archit_d",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17568,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "march_prot",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17569,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "qulinds_shaft",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17570,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "high_glory_stone",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
+    },
+    {
+      "id_prize": 17571,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "gold_bar",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
     }
   ],
   "Lose": [
