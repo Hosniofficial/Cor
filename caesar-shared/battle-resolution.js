@@ -1,4 +1,11 @@
-const { transferBattleLoot } = require('./battle-loot');
+const {
+    calculateWildernessSpoils,
+    getWildernessResource,
+    getWildernessPrizeUnitType,
+    isPrizeDropSuccessful,
+    randomInteger: randomIntegerFromRange,
+    transferBattleLoot
+} = require('./battle-loot');
 const { getRomanCommanderName } = require('./battle-mechanics');
 
 const BATTLE_WRITE_BATCH_SIZE = 100;
@@ -259,6 +266,41 @@ async function enlistCityGarrisonDefenders(db, {
     return enlisted;
 }
 
+function shouldBroadcastBattleVictory(unitType, unitLvl, options = {}) {
+    const type = Number(unitType);
+    const lvl = Number(unitLvl);
+
+    // 1. War Statues (all levels): 200..202
+    if (type >= 200 && type <= 202) return true;
+
+    // 2. Castles / Fortresses (Small, Medium, Great: 184..186)
+    if (type >= 184 && type <= 186) return true;
+
+    // 3. Camps & Maneuvers (70..80): ONLY milestone levels 10, 20, 30, 40, 50
+    if (type >= 70 && type <= 80 && lvl >= 10 && lvl <= 50 && lvl % 10 === 0) return true;
+
+    // 4. Epic world targets:
+    // - Army Capitals: 150..155
+    // - Arenas & Battlefields: 175..177, 220..227
+    // - Queens: 180..182
+    // - Wolf Groups: 203..205
+    // - Resource Fortresses: 231..236
+    if ((type >= 150 && type <= 155) ||
+        (type >= 175 && type <= 177) ||
+        (type >= 180 && type <= 182) ||
+        (type >= 203 && type <= 205) ||
+        (type >= 220 && type <= 227) ||
+        (type >= 231 && type <= 236)) {
+        return true;
+    }
+
+    // 5. City Conquest / Subordination (when city is subordinated)
+    if (options && options.cityColonization && options.cityColonization.subordinated) return true;
+
+    // Exclude all wilderness (1..59), gangs (97..105), intermediate camps, and regular units
+    return false;
+}
+
 async function resolveBattle(context, dependencies) {
     const {
         battelId, idHero, battleStartTime, battleArrivalTime, returnDuration, unitType, unitSubtype, unitLvl, unitTitle,
@@ -275,6 +317,7 @@ async function resolveBattle(context, dependencies) {
         hasActiveBattleAt, publishBroadcast,
         publishToPlayer, saveWsBattleReport
     } = dependencies;
+    const randomInt = dependencies.randomInteger || randomIntegerFromRange;
     const pendingBroadcasts = [];
     const pendingPlayerMessages = [];
     const pendingBattleReports = [];
@@ -645,6 +688,39 @@ async function resolveBattle(context, dependencies) {
         await applySideRewards(joinedDefenders, !isVictory, averageAttackerPrestige);
         const honorGained = attackerRewards.reduce((sum, reward) => sum + reward.honorGained, 0);
 
+        const isWilderness = (unitType >= 1 && unitType <= 59) || Boolean(context.isBarray);
+        const isResourcePackItem = prizeKey =>
+            /^(food|wood|stone|metal|coin)_[a-e]$/.test(String(prizeKey || ''));
+        const prizeUt = isWilderness ? getWildernessPrizeUnitType(unitType, unitLvl) : unitType;
+        const useSubtypeMatch = isWilderness && unitSubtype;
+        const matchingPrizes = prizeData.Win
+            ? prizeData.Win.filter(prize => {
+                const matchesLvl = Number(prize.lvl) === Number(unitLvl);
+                const matchesType = Number(prize.unitType) === Number(unitType)
+                    || Number(prize.unitType) === Number(prizeUt)
+                    || (useSubtypeMatch && Number(prize.unitType) === Number(unitSubtype));
+                return matchesLvl && matchesType;
+            })
+            : [];
+        const eventMultipliers = liveServerConfig.event_multipliers || {};
+        const globalMult = Math.max(0.1, Number(liveServerConfig.global_drop_rate_multiplier) || 1.0)
+            * Math.max(1, Number(eventMultipliers.global) || 1);
+        const luxuryMult = Math.max(0.1, Number(liveServerConfig.wilderness_luxury_drop_multiplier) || 1.0)
+            * Math.max(1, Number(eventMultipliers.luxury) || 1);
+        const luxuryKeys = ['luxury_1', 'luxury_2', 'bread', 'necklace_1', 'necklace_2', 'necklace_3', 'necklace_4', 'necklace_5', 't_map'];
+
+        const rollPrize = prize => {
+            let effectiveRate = (Number(prize.win_rate) || 0) * globalMult;
+            if (luxuryKeys.includes(prize.prize)) {
+                effectiveRate *= luxuryMult;
+            }
+            if (!isPrizeDropSuccessful(effectiveRate, randomInt(0, 999) / 1000)) return null;
+            const minAmount = Number.isSafeInteger(prize.amount_min) ? prize.amount_min : 1;
+            const maxAmount = Number.isSafeInteger(prize.amount_max) ? prize.amount_max : minAmount;
+            const amount = randomInt(minAmount, maxAmount);
+            return amount > 0 ? { prize: prize.prize, amount } : null;
+        };
+
         let cityColonization = null;
         if (isVictory) {
             // ── VICTORY RESOLUTION ──
@@ -681,22 +757,39 @@ async function resolveBattle(context, dependencies) {
                     });
                 }
             }
-            // 6a. Loot Resources
-            const loot = !targetCityRows.length && unitType >= 1 && unitType <= 63
-                ? Math.min(100000, Math.max(2000, unitLvl * 3500))
-                : 0;
-            const wildernessLoot = {
-                food: loot,
-                wood: loot,
-                stone: loot,
-                metal: loot,
-                coin: loot * 2
-            };
+            // Participant rewards were applied from per-hero kill scores before branch-specific loot.
+            for (const member of battleMembers) {
+                if (!member.itemLoot) member.itemLoot = [];
+            }
+
+            const wildernessLoot = targetCityRows.length
+                ? {}
+                : calculateWildernessSpoils(unitLvl, unitType);
+
+            // ── Prize table lookup ───────────────────────────────────────────────────────
+            // wilderness uses a remapped unitType (prizeUt) to look up prizes by level;
+            // camps/battalions/statues use their own unitType directly.
+            // For wilderness, the map tile subtype (t) is a valid wilderness unitType (30-59),
+            // so matching it against the prize table is correct. For camps/battalions/statues,
+            // the subtype represents the underlying terrain (also 30-59) — matching it would
+            // incorrectly pull in wilderness prizes (food_a, wood_a, necklace_1, etc.).
+            // Only apply subtype matching for wilderness targets.
+
+            // ── Build droppedItems for host (used by wilderness & city paths) ─────────────
+            const droppedItems = [];
+            for (const p of matchingPrizes) {
+                // Skip resource packs for all wilderness targets — resources come via wildernessLoot.
+                if (isWilderness && isResourcePackItem(p.prize)) continue;
+                const result = rollPrize(p);
+                if (result) droppedItems.push(result);
+            }
+
             const { creditedLoot, cityUpdates } = await transferBattleLoot({
                 db: battleDb,
                 targetCity: targetCityRows[0] || null,
                 attackers,
                 wildernessLoot,
+                wildernessRecipient: hostMember,
                 creditCityResources
             });
             for (const update of cityUpdates) {
@@ -706,85 +799,51 @@ async function resolveBattle(context, dependencies) {
                     resources: update.resources
                 }));
             }
-        
-            // Participant rewards were applied from per-hero kill scores before branch-specific loot.
-            for (const member of battleMembers) {
-                if (!member.itemLoot) member.itemLoot = [];
-            }
-        
-            // 6c. Prize Drop Tables Evaluation (with Dynamic Multipliers & Wilderness Luxuries)
-            const droppedItems = [];
-            const winPrizes = prizeData.Win ? prizeData.Win.filter(x => x.unitType == unitType && x.lvl == unitLvl) : [];
-            const eventMultipliers = liveServerConfig.event_multipliers || {};
-            const globalMult = Math.max(0.1, Number(liveServerConfig.global_drop_rate_multiplier) || 1.0)
-                * Math.max(1, Number(eventMultipliers.global) || 1);
-            const luxuryMult = Math.max(0.1, Number(liveServerConfig.wilderness_luxury_drop_multiplier) || 1.0)
-                * Math.max(1, Number(eventMultipliers.luxury) || 1);
-            const luxuryKeys = ['luxury_1', 'luxury_2', 'bread', 'necklace_1', 'necklace_2', 'necklace_3', 'necklace_4', 'necklace_5', 't_map'];
-        
-            for (const p of winPrizes) {
-                let effectiveRate = Math.min(1000, Number(p.win_rate) * globalMult);
-                if (luxuryKeys.includes(p.prize)) {
-                    effectiveRate = Math.min(1000, effectiveRate * luxuryMult);
-                }
-                if (Math.random() * 1000 <= effectiveRate) {
-                    const amt = Math.floor(Math.random() * (p.amount_max - p.amount_min + 1)) + p.amount_min;
-                    if (amt > 0) {
-                        droppedItems.push({ prize: p.prize, amount: amt });
+
+            // 6c. Store non-resource item drops in the player inventory.
+            //
+            // ┌─────────────────┬──────────────────────────────────────────────────────┐
+            // │ Target type     │ Prize distribution                                   │
+            // ├─────────────────┼──────────────────────────────────────────────────────┤
+            // │ Wilderness 1-59 │ host only, from droppedItems (pre-rolled above)       │
+            // │ Barray          │ host only, from droppedItems (pack items filtered)    │
+            // │ City 60-63      │ host only, from droppedItems                          │
+            // │ Camp 70-96      │ EACH attacker gets an independent roll               │
+            // │ Battalion 70-105│ EACH attacker gets an independent roll               │
+            // │ Statue 150-236  │ EACH attacker gets an independent roll               │
+            // └─────────────────┴──────────────────────────────────────────────────────┘
+            const isCampOrStatue = !isWilderness && !targetCityRows.length;
+
+            if (isCampOrStatue) {
+                // Per-attacker independent prize rolls with pure raw probability.
+                // Guaranteed prizes (win_rate = 10000) are handled by the database.
+                for (const attacker of attackers) {
+                    if (!attacker.itemLoot) attacker.itemLoot = [];
+                    for (const p of matchingPrizes) {
+                        const result = rollPrize(p);
+                        if (!result) continue;
+                        await battleDb.query(
+                            "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
+                            "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
+                            [attacker.player.id_player, result.prize, result.amount]
+                        );
+                        attacker.itemLoot.push(result);
                     }
                 }
-            }
-            for (const drop of droppedItems) {
-                const prizeShares = unitData[unitType] && unitData[unitType].lvlChange === true
-                    ? [{ member: hostMember, amount: drop.amount }]
-                    : allocateProportionally(drop.amount, attackers);
-                for (const share of prizeShares) {
-                    if (!share.amount) continue;
+            } else {
+                // Wilderness, barray, or city: host only, using pre-rolled droppedItems.
+                for (const drop of droppedItems) {
+                    if (!drop.amount) continue;
                     await battleDb.query(
                         "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
-                        [share.member.player.id_player, drop.prize, share.amount]
+                        [hostMember.player.id_player, drop.prize, drop.amount]
                     );
-                    share.member.itemLoot.push({ prize: drop.prize, amount: share.amount });
+                    hostMember.itemLoot.push({ prize: drop.prize, amount: drop.amount });
                 }
             }
         
-            // 6d. Direct Hero Equipment Drop Chance (From Elite Camps, Gangs, Arenas)
-            const droppedEquip = [];
-            let equipDropChance = 0;
-            let possibleEquipTypes = [];
-            const customEquipChance = (Number(liveServerConfig.equipment_drop_chance_percent) || 25) / 100
-                * Math.max(1, Number(eventMultipliers.equipment) || 1);
-            if (unitType >= 97 && unitType <= 105 && unitLvl >= 3) {
-                equipDropChance = Math.min(1, customEquipChance); // e.g. 25% on Carthage & Gangs lvl 3+
-                possibleEquipTypes = ['mili', 'peace', 'victory', 'mars'];
-            } else if (unitType >= 70 && unitType <= 96 && unitLvl >= 3) {
-                equipDropChance = Math.min(1, customEquipChance * 0.8); // e.g. on Camps & Maneuvers lvl 3+
-                possibleEquipTypes = ['loy', 'sparta', 'lion'];
-            } else if (unitType >= 150 && unitType <= 236) {
-                equipDropChance = Math.min(1.0, customEquipChance * 1.5); // on Arenas & Fortresses
-                possibleEquipTypes = ['fearless', 'thunder', 'holy', 'neptune', 'thor'];
-            }
-        
-            if (possibleEquipTypes.length > 0 && Math.random() < equipDropChance) {
-                const parts = ['sword', 'shield', 'helmet', 'armor', 'boot', 'belt'];
-                const eqType = possibleEquipTypes[Math.floor(Math.random() * possibleEquipTypes.length)];
-                const eqPart = parts[Math.floor(Math.random() * parts.length)];
-                const eqLvl = Math.max(1, Math.min(10, unitLvl));
-                const equipRecipient = unitData[unitType] && unitData[unitType].lvlChange === true
-                    ? hostMember
-                    : allocateProportionally(1, attackers).find(share => share.amount > 0).member;
-                await battleDb.query(
-                    "INSERT INTO player_equip (id_player, id_hero, type, part, lvl, on_hero) VALUES (?, 0, ?, ?, ?, 0)",
-                    [equipRecipient.player.id_player, eqType, eqPart, eqLvl]
-                );
-                droppedEquip.push({ type: eqType, part: eqPart, lvl: eqLvl });
-                equipRecipient.itemLoot.push({
-                    prize: `equip_${eqType}_${eqPart}`,
-                    amount: 1
-                });
-            }
-            // 6e. Colonize / Dominate Wild (استيلاء على البرية)
+            // 6d. Colonize / Dominate Wild (استيلاء على البرية)
             let dominated = false;
             if (attackTask === 1 && unitType >= 1 && unitType <= 59) {
                 const [pBuilding] = await battleDb.query(
@@ -820,13 +879,10 @@ async function resolveBattle(context, dependencies) {
                 }));
             }
         
-            // 6f. Send Client Completion Messages
+            // 6e. Send Client Completion Messages
             {
                 const itemsSummary = droppedItems.length > 0 
                     ? ` + غنائم أدوات (${droppedItems.map(d => d.prize + ' ×' + d.amount).join('، ')})` 
-                    : '';
-                const equipSummary = droppedEquip.length > 0
-                    ? ` + عتاد بطل نخبوي غنيمة [${droppedEquip.map(e => `${e.type} ${e.part} مستوى ${e.lvl}`).join(', ')}]`
                     : '';
                 const woundedSummary = attackingCasualties.wounded > 0
                     ? ` + تم نقل [${attackingCasualties.wounded}] جريح إلى مشفى المدينة`
@@ -835,33 +891,31 @@ async function resolveBattle(context, dependencies) {
                         ? `سقط في المعركة [${attackingCasualties.fallen}] جندي، استعاد المهاجمون [${attackingCasualties.recovered}]، أُرسل [${attackingCasualties.wounded}] للمشفى، والخسائر النهائية [${attackingCasualties.permanentLoss}] جندي`
                         : `الخسائر النهائية: [${attackingCasualties.permanentLoss} جندي] (100% في حرب ضد لاعبين)`;
         
-                broadcast(JSON.stringify({
-                    classPath: 'Chat.WorldMsg',
-                    data: {
-                        id_player: 0,
-                        name: 'النظام الحربي',
-                        msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف${itemsSummary}${equipSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}${cityColonization ? (cityColonization.subordinated ? ' أصبحت المدينة تابعة لمدينتك السيادية مع بقاء ملكيتها لصاحبها الأصلي.' : ` انخفض ولاء المدينة إلى ${cityColonization.loyalty}%.`) : ''}`,
-                        time: Math.floor(Date.now() / 1000)
-                    }
-                }));
+                if (shouldBroadcastBattleVictory(unitType, unitLvl, { cityColonization })) {
+                    broadcast(JSON.stringify({
+                        classPath: 'Chat.WorldMsg',
+                        data: {
+                            id_player: 0,
+                            name: 'النظام الحربي',
+                            msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف${itemsSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}${cityColonization ? (cityColonization.subordinated ? ' أصبحت المدينة تابعة لمدينتك السيادية مع بقاء ملكيتها لصاحبها الأصلي.' : ` انخفض ولاء المدينة إلى ${cityColonization.loyalty}%.`) : ''}`,
+                            time: Math.floor(Date.now() / 1000)
+                        }
+                    }));
+                }
             }
         
         } else {
             // ── DEFEAT RESOLUTION ──
-            {
-                const defeatLossReport = recoveryRate > 0 
-                    ? `سقط [${attackingCasualties.fallen}] جندي، استُعيد [${attackingCasualties.recovered}]، أُرسل [${attackingCasualties.wounded}] للمشفى، والخسائر النهائية [${attackingCasualties.permanentLoss}] جندي`
-                    : `إبادة كاملة: الخسائر النهائية [${attackingCasualties.permanentLoss}] جندي 100% في حرب ضد لاعبين`;
-        
-                broadcast(JSON.stringify({
-                    classPath: 'Chat.WorldMsg',
-                    data: {
-                        id_player: 0,
-                        name: 'النظام الحربي',
-                        msg: `❌ هزيمة ساحقة! انهزم البطل [${hero.name}] أمام حامية [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${defeatLossReport} وعاد البطل جريحاً دون غنائم!`,
-                        time: Math.floor(Date.now() / 1000)
-                    }
-                }));
+            // The raw battle service rolls table prizes regardless of battle outcome.
+            for (const prize of matchingPrizes) {
+                const result = rollPrize(prize);
+                if (!result) continue;
+                await battleDb.query(
+                    "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
+                    "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
+                    [hostMember.player.id_player, result.prize, result.amount]
+                );
+                hostMember.itemLoot.push(result);
             }
         }
         
@@ -893,7 +947,14 @@ async function resolveBattle(context, dependencies) {
                 roundCount: combatResult.roundsCount,
                 roundsLog: combatResult.roundsLog,
                 killsByType: member.killsByType,
-                resourceLoot: member.resourceLoot || { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 },
+                resourceLoot: {
+                    food: 0,
+                    wood: 0,
+                    stone: 0,
+                    metal: 0,
+                    coin: 0,
+                    ...(member.resourceLoot || {})
+                },
                 itemLoot: member.itemLoot,
                 attackerSlots: memberSlots.attackerSlots,
                 defenderSlots: memberSlots.defenderSlots,
@@ -991,5 +1052,6 @@ module.exports = {
     applyCityConquest,
     calculateCityConquestLoyalty,
     enlistCityGarrisonDefenders,
-    resolveBattle
+    resolveBattle,
+    shouldBroadcastBattleVictory
 };
