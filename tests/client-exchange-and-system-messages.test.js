@@ -85,7 +85,7 @@ test('system event messages render troop icons, counts, and escaped names', () =
                 ],
                 Army: {
                     army_a: { image: 'images/tech/soldier01.jpg', ar_title: 'مشاة' },
-                    army_b: { image: 'images/tech/soldier02.jpg', ar_title: 'رماة' }
+                    army_b: { image: 'images/tech/soldier02.jpg', ar_title: 'فرسان' }
                 }
             }
         },
@@ -143,4 +143,94 @@ test('system event messages render troop icons, counts, and escaped names', () =
         context.renderSystemEventMessageBody('رسالة قديمة', 'موضوع آخر'),
         '<p class="selectable">legacy:رسالة قديمة</p>'
     );
+});
+
+test('battle report subject panel uses the exchange panel frame background', () => {
+    const reportStyles = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'lastStyle.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const reportPanel = reportStyles.match(
+        /\.for_report #reports_list\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(reportPanel, 'report subject panel should have a dedicated frame style');
+    assert.match(reportPanel[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(reportPanel[1], /background-size:\s*100%\s+100%/);
+    assert.match(reportPanel[1], /border:\s*6px\s+solid\s+transparent/);
+    assert.match(reportPanel[1], /background-clip:\s*border-box/);
+});
+
+test('guild information panel uses the exchange panel frame background', () => {
+    const styles = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'lastStyle.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const guildFrame = styles.match(
+        /#guild-guild_data\.for_guild \.left-content \.upper\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(guildFrame, 'guild information panel should use the frame background');
+    assert.match(guildFrame[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(guildFrame[1], /background-size:\s*100%\s+100%/);
+});
+
+test('quest details and guild relations panels use the exchange panel frame background', () => {
+    const styles = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'lastStyle.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const panels = styles.match(
+        /\.for_quest \.right-content,\s*\.for_guild \.right-content #rightofright\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(panels, 'quest details and guild relations panels should share a frame style');
+    assert.match(panels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(panels[1], /background-size:\s*100%\s+100%/);
+    assert.match(panels[1], /border:\s*6px\s+solid\s+transparent/);
+});
+
+test('battle report scrollbar is only initialized when its list overflows', () => {
+    let scrollInitializations = 0;
+    let scrollRemovals = 0;
+    let currentScroll;
+    const reportsList = {
+        0: { scrollHeight: 100, clientHeight: 100 },
+        length: 1,
+        getNiceScroll: () => currentScroll,
+        niceScroll: () => {
+            scrollInitializations++;
+            currentScroll = { remove: () => {
+                scrollRemovals++;
+                currentScroll = undefined;
+            } };
+        }
+    };
+    const context = {
+        $: selector => {
+            assert.equal(selector, '#reports_list');
+            return reportsList;
+        },
+        SCROLL_BAR_PROP: {}
+    };
+    vm.runInNewContext(
+        extractFunction(
+            'function refreshBattleReportListScroll() {',
+            '\n}\n\nBattelField.battelModel',
+            2
+        ),
+        context
+    );
+
+    context.refreshBattleReportListScroll();
+    assert.equal(scrollInitializations, 0);
+
+    reportsList[0].scrollHeight = 120;
+    context.refreshBattleReportListScroll();
+    assert.equal(scrollInitializations, 1);
+
+    reportsList[0].scrollHeight = 100;
+    context.refreshBattleReportListScroll();
+    assert.equal(scrollRemovals, 1);
+    assert.equal(scrollInitializations, 1);
 });

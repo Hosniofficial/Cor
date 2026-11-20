@@ -68,8 +68,10 @@ class WorldController {
                 return true;
             case '/api/AWorld/getWorldUnitRank':
             case '/api/AWorld/getGuildAttackQue':
+                self::getGuildAttackQue($db);
+                return true;
             case '/api/ABattel/applyForRoleInAttQue':
-                sendJson(['state' => 'ok']);
+                self::applyForRoleInAttQue($db);
                 return true;
             case '/api/ABattelRuning/refreshBattelData':
                 self::refreshBattelData($db);
@@ -371,6 +373,28 @@ class WorldController {
         return $unitData;
     }
 
+    private static function isGuildDominanceTarget(int $unitType): bool {
+        return ($unitType >= 180 && $unitType <= 182)
+            || ($unitType >= 184 && $unitType <= 186);
+    }
+
+    public static function canJoinGuildDefense(
+        int $unitType,
+        int $dominantGuildId,
+        int $attackingGuildId,
+        int $joiningGuildId
+    ): bool {
+        return self::isGuildDominanceTarget($unitType)
+            && $dominantGuildId > 0
+            && $attackingGuildId > 0
+            && $dominantGuildId !== $attackingGuildId
+            && $joiningGuildId === $dominantGuildId;
+    }
+
+    public static function getGuildDefenseJoinMarchDuration($x1, $y1, $x2, $y2, $army, $config): int {
+        return self::getJoinMarchDuration($x1, $y1, $x2, $y2, $army, 0, false, $config);
+    }
+
     public static function getJoinMarchDuration($x1, $y1, $x2, $y2, $army, $unitType, $isCity, $config, $applySpeedMultiplier = true) {
         $deltaX = abs((int)$x1 - (int)$x2);
         $deltaY = abs((int)$y1 - (int)$y2);
@@ -394,7 +418,11 @@ class WorldController {
             $duration = 3600;
         } elseif (($unitType >= 180 && $unitType <= 182) || ($unitType >= 231 && $unitType <= 236)) {
             $duration = 900;
-        } elseif (($unitType >= 70 && $unitType <= 105)
+        } elseif ($unitType >= 71 && $unitType <= 80) {
+            $campMinimum = max(120, (int)($config['camp_rally_duration_sec'] ?? 120));
+            $duration = max($duration, $campMinimum);
+        } elseif ($unitType === 70
+            || ($unitType >= 81 && $unitType <= 105)
             || ($unitType >= 150 && $unitType <= 155)
             || ($unitType >= 175 && $unitType <= 177)
             || ($unitType >= 200 && $unitType <= 205)) {
@@ -560,15 +588,38 @@ class WorldController {
                     return;
                 }
             } elseif (!$targetCity) {
-                $db->rollBack();
-                sendJson(['state' => 'error_5']);
-                return;
+                if (!self::isGuildDominanceTarget($unitType)) {
+                    $db->rollBack();
+                    sendJson(['state' => 'error_5']);
+                    return;
+                }
+                $dominanceStmt = $db->prepare(
+                    'SELECT gd.id_guild FROM guild_dominance gd ' .
+                    'JOIN guild_member gm ON gm.id_guild = gd.id_guild AND gm.id_player = ? ' .
+                    'WHERE gd.x_coord = ? AND gd.y_coord = ? FOR UPDATE'
+                );
+                $dominanceStmt->execute([
+                    $playerId,
+                    (int)$battle['x_coord'],
+                    (int)$battle['y_coord']
+                ]);
+                $dominantGuildId = (int)$dominanceStmt->fetchColumn();
+                if (!self::canJoinGuildDefense(
+                    $unitType,
+                    $dominantGuildId,
+                    (int)$battle['id_guild'],
+                    (int)$hero['id_guild']
+                )) {
+                    $db->rollBack();
+                    sendJson(['state' => 'error_5']);
+                    return;
+                }
             }
 
             $unitTypeData = $typeData[(string)$unitType] ?? [];
             $hero = HeroPowerService::recover($db, $hero, $now);
             $requiredPower = HeroPowerService::getRequiredPower(
-                (int)$battle['task'],
+                $side === 0 && !$targetCity ? 3 : (int)$battle['task'],
                 (int)($unitTypeData['reqFitness'] ?? 0)
             );
             if ((int)$hero['power'] < $requiredPower) {
@@ -588,16 +639,25 @@ class WorldController {
             foreach ($configStmt->fetchAll(PDO::FETCH_ASSOC) as $configRow) {
                 $config[$configRow['config_key']] = (float)$configRow['config_value'];
             }
-            $joinDuration = self::getJoinMarchDuration(
-                (int)$hero['x_city'],
-                (int)$hero['y_city'],
-                (int)$battle['x_coord'],
-                (int)$battle['y_coord'],
-                $army,
-                $unitType,
-                $unitType === 60,
-                $config
-            );
+            $joinDuration = $side === 0 && !$targetCity
+                ? self::getGuildDefenseJoinMarchDuration(
+                    (int)$hero['x_city'],
+                    (int)$hero['y_city'],
+                    (int)$battle['x_coord'],
+                    (int)$battle['y_coord'],
+                    $army,
+                    $config
+                )
+                : self::getJoinMarchDuration(
+                    (int)$hero['x_city'],
+                    (int)$hero['y_city'],
+                    (int)$battle['x_coord'],
+                    (int)$battle['y_coord'],
+                    $army,
+                    $unitType,
+                    $unitType === 60,
+                    $config
+                );
             if ($now + $joinDuration > (int)$battle['time_arrive']) {
                 $db->rollBack();
                 sendJson(['state' => 'error_2']);
@@ -1342,47 +1402,201 @@ class WorldController {
 
         $xCoord = (int)($_REQUEST['xCoord'] ?? 0);
         $yCoord = (int)($_REQUEST['yCoord'] ?? 0);
+        $db->beginTransaction();
+        try {
+            $stmt = $db->prepare(
+                "SELECT gd.*, p.id_guild AS player_guild
+                 FROM guild_dominance gd
+                 JOIN player p ON p.id_player = ?
+                 WHERE gd.x_coord = ? AND gd.y_coord = ?
+                 FOR UPDATE"
+            );
+            $stmt->execute([$idPlayer, $xCoord, $yCoord]);
+            $gd = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Lock the dominance row
-        $stmt = $db->prepare(
-            "SELECT gd.*, p.id_guild AS player_guild, c.id_city
-             FROM guild_dominance gd
-             JOIN player p ON p.id_player = ?
-             JOIN city c   ON c.id_player = ?
-             WHERE gd.x_coord = ? AND gd.y_coord = ?
-             FOR UPDATE"
-        );
-        $stmt->execute([$idPlayer, $idPlayer, $xCoord, $yCoord]);
-        $gd = $stmt->fetch();
+            if (!$gd) {
+                $db->rollBack();
+                sendJson(['state' => 'not_dominated']);
+                return;
+            }
+            if ((int)$gd['id_guild'] !== (int)$gd['player_guild'] || (int)$gd['player_guild'] === 0) {
+                $db->rollBack();
+                sendJson(['state' => 'not_your_guild']);
+                return;
+            }
 
-        if (!$gd) {
-            sendJson(['state' => 'not_dominated']); return;
+            $now = time();
+            if ($now - (int)$gd['last_harvest_at'] < 86400) {
+                $remaining = 86400 - ($now - (int)$gd['last_harvest_at']);
+                $db->rollBack();
+                sendJson(['state' => 'harvest_cooldown', 'remaining_sec' => $remaining]);
+                return;
+            }
+
+            $cityStmt = $db->prepare(
+                'SELECT id_city FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1 FOR UPDATE'
+            );
+            $cityStmt->execute([$idPlayer]);
+            $cityId = (int)$cityStmt->fetchColumn();
+            if ($cityId <= 0) {
+                $db->rollBack();
+                sendJson(['state' => 'no_city']);
+                return;
+            }
+
+            $resources = [
+                'food'  => (int)$gd['daily_food'],
+                'wood'  => (int)$gd['daily_wood'],
+                'stone' => (int)$gd['daily_stone'],
+                'metal' => (int)$gd['daily_metal'],
+                'coin'  => (int)$gd['daily_coin'],
+            ];
+            $sets = implode(', ', array_map(fn($key) => "$key = $key + ?", array_keys($resources)));
+            $db->prepare("UPDATE city SET $sets WHERE id_city = ? AND id_player = ?")
+                ->execute(array_merge(array_values($resources), [$cityId, $idPlayer]));
+            $db->prepare(
+                'UPDATE guild_dominance SET last_harvest_at = ? WHERE x_coord = ? AND y_coord = ?'
+            )->execute([$now, $xCoord, $yCoord]);
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) $db->rollBack();
+            throw $error;
         }
-        if ((int)$gd['id_guild'] !== (int)$gd['player_guild'] || (int)$gd['player_guild'] === 0) {
-            sendJson(['state' => 'not_your_guild']); return;
-        }
-        $now = time();
-        if ($now - (int)$gd['last_harvest_at'] < 86400) {
-            $remaining = 86400 - ($now - (int)$gd['last_harvest_at']);
-            sendJson(['state' => 'harvest_cooldown', 'remaining_sec' => $remaining]); return;
-        }
-
-        // Credit resources to player city
-        $resources = [
-            'food'  => (int)$gd['daily_food'],
-            'wood'  => (int)$gd['daily_wood'],
-            'stone' => (int)$gd['daily_stone'],
-            'metal' => (int)$gd['daily_metal'],
-            'coin'  => (int)$gd['daily_coin'],
-        ];
-        $sets = implode(', ', array_map(fn($k) => "$k = $k + ?", array_keys($resources)));
-        $upd = $db->prepare("UPDATE city SET $sets WHERE id_city = ?");
-        $upd->execute([...(array_values($resources)), (int)$gd['id_city']]);
-
-        // Update harvest timestamp
-        $db->prepare("UPDATE guild_dominance SET last_harvest_at = ? WHERE x_coord = ? AND y_coord = ?")
-           ->execute([$now, $xCoord, $yCoord]);
 
         sendJson(['state' => 'ok', 'harvested' => $resources]);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════════
+    // طابور هجوم القلاع (184-186)
+    // ══════════════════════════════════════════════════════════════════════════════
+
+    /**
+     * GET /api/AWorld/getGuildAttackQue
+     * يعيد قائمة طابور الهجوم الحالية للقلعة (حتى 10 أحلاف).
+     */
+    public static function getGuildAttackQue($db): void {
+        $xCoord = (int)($_GET['xCoord'] ?? 0);
+        $yCoord = (int)($_GET['yCoord'] ?? 0);
+        if (!$xCoord || !$yCoord) {
+            sendJson([]);
+            return;
+        }
+        $rows = $db->prepare(
+            'SELECT id_guild, guild_name, slot, time_start, time_end ' .
+            'FROM castle_attack_queue ' .
+            'WHERE x_coord = ? AND y_coord = ? ' .
+            'ORDER BY slot ASC LIMIT 10'
+        );
+        $rows->execute([$xCoord, $yCoord]);
+        $list = [];
+        foreach ($rows->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $list[] = [
+                'GuildName'  => $row['guild_name'],
+                'id_guild'   => (int)$row['id_guild'],
+                'slot'       => (int)$row['slot'],
+                'time_start' => (int)$row['time_start'],
+                'time_end'   => (int)$row['time_end'],
+            ];
+        }
+        sendJson($list);
+    }
+
+    /**
+     * POST /api/ABattel/applyForRoleInAttQue
+     * يسجل حلف اللاعب في طابور هجوم القلعة.
+     * الحد الأقصى 10 أحلاف. تُحسب النوافذ الزمنية بناءً على ترتيب الانضمام:
+     * كل حلف يحصل على 24 ساعة ابتداءً من الساعة 22:00 بعد (slot-1) أيام.
+     */
+    public static function applyForRoleInAttQue($db): void {
+        $token  = $_POST['token']  ?? '';
+        $server = $_POST['server'] ?? '';
+        $xCoord = (int)($_POST['xCoord'] ?? 0);
+        $yCoord = (int)($_POST['yCoord'] ?? 0);
+
+        if (!$token || !$xCoord || !$yCoord) {
+            sendJson(['state' => 'error_0']);
+            return;
+        }
+
+        // التحقق من اللاعب وحلفه ورتبته
+        $playerStmt = $db->prepare(
+            'SELECT p.id_player, p.id_guild, g.name AS guild_name, gm.rank AS guild_rank ' .
+            'FROM player p ' .
+            'JOIN guild_member gm ON gm.id_player = p.id_player ' .
+            'JOIN guild g ON g.id_guild = gm.id_guild ' .
+            'WHERE p.token = ? AND p.id_server = ? LIMIT 1'
+        );
+        $playerStmt->execute([$token, $server]);
+        $player = $playerStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$player || !$player['id_guild']) {
+            sendJson(['state' => 'error_3']); // ليس في حلف
+            return;
+        }
+        // شرط الرتبة: قسطور (3) أو أعلى
+        if ((int)$player['guild_rank'] < 3) {
+            sendJson(['state' => 'error_3']);
+            return;
+        }
+
+        $guildId   = (int)$player['id_guild'];
+        $guildName = $player['guild_name'];
+        $now       = time();
+
+        // التحقق من عدم وجود تسجيل مسبق لهذا الحلف
+        $existingStmt = $db->prepare(
+            'SELECT id FROM castle_attack_queue WHERE x_coord = ? AND y_coord = ? AND id_guild = ? LIMIT 1'
+        );
+        $existingStmt->execute([$xCoord, $yCoord, $guildId]);
+        if ($existingStmt->fetch()) {
+            sendJson(['state' => 'error_0']); // تم حجز دور بالفعل
+            return;
+        }
+
+        // حساب الدور التالي المتاح
+        $countStmt = $db->prepare(
+            'SELECT COUNT(*) AS cnt FROM castle_attack_queue WHERE x_coord = ? AND y_coord = ?'
+        );
+        $countStmt->execute([$xCoord, $yCoord]);
+        $count = (int)($countStmt->fetch(PDO::FETCH_ASSOC)['cnt'] ?? 0);
+
+        if ($count >= 10) {
+            sendJson(['state' => 'error_1']); // لا يوجد مكان خالى، أقصى عدد 10
+            return;
+        }
+
+        $slot = $count + 1;
+
+        // حساب النافذة الزمنية: الساعة 22:00 بتوقيت السيرفر + (slot-1) أيام
+        $todayAt22 = mktime(22, 0, 0);
+        if ($now >= $todayAt22) {
+            $todayAt22 += 86400; // إذا تجاوزنا 22:00 اليوم، ابدأ من الغد
+        }
+        $windowStart = $todayAt22 + ($slot - 1) * 86400;
+        $windowEnd   = $windowStart + 86400;
+
+        $db->prepare(
+            'INSERT INTO castle_attack_queue ' .
+            '(x_coord, y_coord, id_guild, guild_name, slot, time_start, time_end, applied_at) ' .
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        )->execute([$xCoord, $yCoord, $guildId, $guildName, $slot, $windowStart, $windowEnd, $now]);
+
+        // إعادة قائمة الطابور المحدثة
+        $queueStmt = $db->prepare(
+            'SELECT id_guild, guild_name, slot, time_start, time_end ' .
+            'FROM castle_attack_queue WHERE x_coord = ? AND y_coord = ? ORDER BY slot ASC LIMIT 10'
+        );
+        $queueStmt->execute([$xCoord, $yCoord]);
+        $queueList = [];
+        foreach ($queueStmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $queueList[] = [
+                'GuildName'  => $row['guild_name'],
+                'id_guild'   => (int)$row['id_guild'],
+                'slot'       => (int)$row['slot'],
+                'time_start' => (int)$row['time_start'],
+                'time_end'   => (int)$row['time_end'],
+            ];
+        }
+        sendJson(['state' => 'ok', 'QueueList' => $queueList]);
     }
 }

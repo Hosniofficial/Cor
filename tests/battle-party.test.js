@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const equipmentPowerData = require('../caesar-assets/api/data/equipment-power.json');
+const equipmentPowerData = require('../caesar-private/data/equipment-power.json');
 const {
     allocateProportionally,
     calculateArmyCasualties,
@@ -439,7 +439,7 @@ test('battle damage follows the hero formation slot order', () => {
     assert.equal(result.remainingAttackers[0].army.f_2, 9);
 });
 
-test('all numeric equipment combat attributes use the backend BattleService weights', () => {
+test('all numeric equipment combat attributes use server-defined weights', () => {
     const stats = [null, { att: 8, hp: 60 }];
     const simulate = (attackerEquipment = [], defenderEquipment = []) => {
         const attacker = {

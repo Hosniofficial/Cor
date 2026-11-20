@@ -8,25 +8,14 @@ if ($uri === '/' || $uri === '') {
     exit;
 }
 
-$disabledBattleReplayPrefixes = [
-    '/getbattle',
-    '/getbattle.php',
-    '/battlereplay',
-    '/battel.php',
-    '/battle-replay',
-    '/brasset',
-    '/res',
-    '/src',
-    '/cocos2d-html5',
-    '/css',
-    '/json',
-];
-$normalizedUri = strtolower($uri);
-foreach ($disabledBattleReplayPrefixes as $prefix) {
-    if ($normalizedUri === $prefix || strpos($normalizedUri, $prefix . '/') === 0) {
-        http_response_code(404);
-        exit;
-    }
+// Cocos2d Battle Replay API & Page Routes
+if ($uri === '/GetBattle' || $uri === '/GetBattle.php') {
+    require __DIR__ . '/GetBattle.php';
+    exit;
+}
+if (strpos($uri, '/BattleReplay/') === 0 || $uri === '/battel.php') {
+    require __DIR__ . '/battel.php';
+    exit;
 }
 
 $isAdminRequest = $uri === '/admin' || strpos($uri, '/admin/') === 0;
@@ -52,6 +41,12 @@ if (!$isInsideDocumentRoot && !$isAdminRequest) {
     $assetFile = $assetRoot === false
         ? false
         : realpath($assetRoot . DIRECTORY_SEPARATOR . ltrim($uri, '/\\'));
+    if ($assetFile === false && $assetRoot !== false) {
+        $replayCandidate = realpath($assetRoot . DIRECTORY_SEPARATOR . 'battle-replay' . DIRECTORY_SEPARATOR . ltrim($uri, '/\\'));
+        if ($replayCandidate !== false) {
+            $assetFile = $replayCandidate;
+        }
+    }
     if ($assetFile !== false
         && ($assetFile === $assetRoot
             || str_starts_with(strtolower($assetFile), strtolower($assetRoot . DIRECTORY_SEPARATOR)))) {

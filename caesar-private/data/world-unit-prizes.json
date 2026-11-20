@@ -36361,6 +36361,87 @@
       "win_rate": 600
     },
     {
+      "id_prize": 8715,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 3,
+      "amount_max": 10,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 8719,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 3,
+      "amount_max": 10,
+      "win_rate": 1500
+    },
+    {
+      "id_prize": 8721,
+      "unitType": 186,
+      "lvl": 1,
+      "prize": "god_point_175",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 300
+    },
+    {
+      "id_prize": 8725,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "exp_hero_8",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 750
+    },
+    {
+      "id_prize": 8730,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "exp_hero_30",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 8735,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "random_move",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 150
+    },
+    {
+      "id_prize": 8761,
+      "unitType": 180,
+      "lvl": 1,
+      "prize": "god_point_5",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1200
+    },
+    {
+      "id_prize": 8763,
+      "unitType": 181,
+      "lvl": 1,
+      "prize": "god_point_5",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1200
+    },
+    {
+      "id_prize": 8769,
+      "unitType": 182,
+      "lvl": 1,
+      "prize": "god_point_5",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 1200
+    },
+    {
       "id_prize": 8772,
       "unitType": 70,
       "lvl": 30,
@@ -36377,6 +36458,15 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 1500
+    },
+    {
+      "id_prize": 8793,
+      "unitType": 185,
+      "lvl": 1,
+      "prize": "god_point_175",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 375
     },
     {
       "id_prize": 8796,
@@ -48727,6 +48817,24 @@
       "win_rate": 80
     },
     {
+      "id_prize": 13568,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "bread",
+      "amount_min": 2,
+      "amount_max": 2,
+      "win_rate": 1000
+    },
+    {
+      "id_prize": 13569,
+      "unitType": 184,
+      "lvl": 1,
+      "prize": "god_point_75",
+      "amount_min": 1,
+      "amount_max": 1,
+      "win_rate": 300
+    },
+    {
       "id_prize": 13579,
       "unitType": 99,
       "lvl": 1,
@@ -54161,645 +54269,6 @@
       "amount_min": 1,
       "amount_max": 1,
       "win_rate": 1000
-    },
-    {
-      "id_prize": 17501,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "god_point_75",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17502,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "exp_hero_8",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17503,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "medal_bronz",
-      "amount_min": 1,
-      "amount_max": 5,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17504,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "flag_roma",
-      "amount_min": 1,
-      "amount_max": 3,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17505,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "coin_c",
-      "amount_min": 2,
-      "amount_max": 4,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17506,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "army_all_1",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17507,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "archit_b",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17508,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "t_map",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17509,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "black_ore",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17510,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "gift_box",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17511,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "low_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17512,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "bronze_bar",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17513,
-      "unitType": 180,
-      "lvl": 1,
-      "prize": "luxury_7",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17514,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "god_point_175",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17515,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "exp_hero_30",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17516,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "medal_silver",
-      "amount_min": 1,
-      "amount_max": 3,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17517,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "flag_roma",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17518,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "army_all_2",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17519,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "wood_box",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17520,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "archit_c",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17521,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "hidden_box",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17522,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "marmlo_helmet",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17523,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "shopping_car",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17524,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "medium_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17525,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "silver_bar",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17526,
-      "unitType": 181,
-      "lvl": 1,
-      "prize": "random_move",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17527,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "god_point_750",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17528,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "exp_hero_30",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17529,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "medal_gold",
-      "amount_min": 1,
-      "amount_max": 3,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17530,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "flag_egypt",
-      "amount_min": 2,
-      "amount_max": 5,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17531,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "army_all_3",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17532,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "law_1",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17533,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "archit_d",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17534,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "marcus_scheme",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17535,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "black_ore",
-      "amount_min": 2,
-      "amount_max": 4,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17536,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "god_point_30",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17537,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "high_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17538,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "gold_bar",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17539,
-      "unitType": 182,
-      "lvl": 1,
-      "prize": "luxury_9",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17540,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 2,
-      "amount_max": 5,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17541,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "god_point_75",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17542,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "prestige_slogan",
-      "amount_min": 1,
-      "amount_max": 3,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17543,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "medal_bronz",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17544,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "exp_hero_8",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17545,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "archit_a",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17546,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "fruit",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17547,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "luxury_6",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17548,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "low_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17549,
-      "unitType": 184,
-      "lvl": 1,
-      "prize": "random_move",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17550,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 3,
-      "amount_max": 10,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17551,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "god_point_175",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17552,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "prestige_slogan",
-      "amount_min": 2,
-      "amount_max": 5,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17553,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "ceaser_eagle",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17554,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "retreat_point",
-      "amount_min": 2,
-      "amount_max": 8,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17555,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "archit_c",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17556,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "marcus_scheme",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17557,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "marmlo_helmet",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17558,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "medium_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17559,
-      "unitType": 185,
-      "lvl": 1,
-      "prize": "archim_b",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
-    },
-    {
-      "id_prize": 17560,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "bread",
-      "amount_min": 3,
-      "amount_max": 10,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17561,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "god_point_175",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17562,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "prestige_slogan",
-      "amount_min": 4,
-      "amount_max": 8,
-      "win_rate": 1500
-    },
-    {
-      "id_prize": 17563,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "exp_hero_100",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17564,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "god_point_750",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17565,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "medal_gold",
-      "amount_min": 1,
-      "amount_max": 2,
-      "win_rate": 750
-    },
-    {
-      "id_prize": 17566,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "law_1",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17567,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "archit_d",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17568,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "march_prot",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17569,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "qulinds_shaft",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17570,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "high_glory_stone",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 375
-    },
-    {
-      "id_prize": 17571,
-      "unitType": 186,
-      "lvl": 1,
-      "prize": "gold_bar",
-      "amount_min": 1,
-      "amount_max": 1,
-      "win_rate": 150
     }
   ],
   "Lose": [

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
-test('battle reports hide non-wilderness resources and replace legacy garrison names', () => {
+test('battle reports show the terrain resource and replace legacy garrison names', () => {
     const clientSource = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
         'utf8'
@@ -21,6 +21,12 @@ test('battle reports hide non-wilderness resources and replace legacy garrison n
             BaseData: { HeroAvatar: [] }
         },
         Matrial: { image: () => '' },
+        Equipment: {
+            getImage: (type, part, level) =>
+                type === 'mili' && part === 'belt' ? '' : `images/equipment/${type}-${part}-${level}.png`,
+            getName: (type, part, level) =>
+                type === 'mili' && part === 'belt' ? '' : `${type} ${part} ${level}`
+        },
         army_icon: [],
         checkWinner: () => true,
         changeTimeFormat: value => `${value}s`,
@@ -41,8 +47,24 @@ test('battle reports hide non-wilderness resources and replace legacy garrison n
             { side: 0, h_name: 'حامية الأعداء [مستوى 2]', id_player: 0 }
         ],
         prize: {
-            resource: { food: 7000, wood: 7000, stone: 7000, metal: 7000, coin: 14000 },
-            matrial: [],
+            resource: { food: 0, wood: 0, stone: 123456, metal: 0, coin: 0 },
+            matrial: [
+                { prize: 'necklace_1', amount: 1 },
+                {
+                    prize: 'equip_loy_belt',
+                    amount: 1,
+                    equipmentType: 'loy',
+                    equipmentPart: 'belt',
+                    equipmentLevel: 3
+                },
+                {
+                    prize: 'equip_mili_belt',
+                    amount: 1,
+                    equipmentType: 'mili',
+                    equipmentPart: 'belt',
+                    equipmentLevel: 3
+                }
+            ],
             honor: 0
         }
     };
@@ -54,19 +76,30 @@ test('battle reports hide non-wilderness resources and replace legacy garrison n
     }, 0);
 
     assert.doesNotMatch(campReport, /class="resource-row"/);
-    assert.match(campReport, /القيصر /);
+    assert.doesNotMatch(campReport, /القيصر /);
+    assert.match(campReport, /أغسطس|تيبيريوس|كاليغولا|كلوديوس|نيرون|فسباسيان|تيطس|دوميتيان|نيرفا|تراجان|هادريان|أنطونينوس بيوس|ماركوس أوريليوس|كومودوس|سبتيميوس سيفيروس|قسطنطين/);
     assert.doesNotMatch(campReport, /حامية الأعداء \[مستوى 2\]/);
 
     const wildernessReport = context.getReportContent(detail, {
         x_coord: 37,
         y_coord: 92,
-        target_type: 30,
+        target_type: 44,
         time_stamp: '2026-11-12 13:36:30'
     }, 0);
     assert.match(wildernessReport, /class="resource-row"/);
+    assert.match(wildernessReport, /stone\.png"><span>\s*\+\s+123456/);
+    assert.match(wildernessReport, /food\.png"><span>\s*\+\s+0/);
+    assert.match(wildernessReport, /wood\.png"><span>\s*\+\s+0/);
+    assert.match(wildernessReport, /iron\.png"><span>\s*\+\s+0/);
+    assert.match(wildernessReport, /coin\.png"><span>\s*\+\s+0/);
+    assert.ok(wildernessReport.indexOf('class="resource-row"') < wildernessReport.indexOf('class="prize-row flex"'));
+    assert.match(wildernessReport, /class="amount stroke">1/);
+    assert.match(wildernessReport, /class="equip-unit" data-equi-type="loy" data-equi-part="belt" data-equi-lvl="3" src="images\/equipment\/loy-belt-3\.png" title="loy belt 3"/);
+    assert.match(wildernessReport, /<img src="images\/icons\/hero\/eq-bg\.png" title="equip_mili_belt">/);
+    assert.doesNotMatch(wildernessReport, /data-equi-type="mili"/);
 });
 
-test('battle report shows battle duration and expected hero return time when present', () => {
+test('battle report omits return duration timing and includes view battle button next to return button', () => {
     const clientSource = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
         'utf8'
@@ -94,6 +127,7 @@ test('battle report shows battle duration and expected hero return time when pre
     vm.runInNewContext(clientSource.slice(start, end + 2), context);
 
     const report = context.getReportContent({
+        encId: '12345',
         general_data: { p_name: 'Player', task: 0, lvl: 2, round_num: 1, side_win: 1 },
         heros: [{ side: 1, h_name: 'Hero', id_player: 1, avatar: 1, xp: 0 }],
         prize: { resource: {}, matrial: [], honor: 0 },
@@ -104,9 +138,10 @@ test('battle report shows battle duration and expected hero return time when pre
         }
     }, { x_coord: 37, y_coord: 92, target_type: 70, time_stamp: '2026-11-12 13:36:30' }, 0);
 
-    assert.match(report, /مدة المعركة: 9s/);
-    assert.match(report, /مدة العودة: 60s/);
-    assert.match(report, /موعد عودة البطل المتوقع:/);
+    assert.doesNotMatch(report, /مدة العودة|موعد عودة البطل|class="timing-row"/);
+    assert.match(report, /id="back_msg"[^>]*>[\s\S]*?عودة/);
+    assert.match(report, /id="view-battle-replay"[^>]*>[\s\S]*?عرض المعركة/);
+    assert.match(clientSource, /window\.open\("battel\.php\?report="/);
 });
 
 test('battle report troop counts display recorded deaths, not remaining troops', () => {
@@ -304,4 +339,16 @@ test('WebSocket battle reports store original loss counts and own injuries', asy
     assert.deepEqual(attackerBlocks.map(block => block.dead), [2, 1]);
     assert.deepEqual(defenderBlocks.map(block => block.unit), [5, 4]);
     assert.deepEqual(defenderBlocks.map(block => block.dead), [1, 1]);
+});
+
+test('battle report resource and prize rows use high contrast text and authentic Roman frame styling', () => {
+    const css = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'lastStyle.css'),
+        'utf8'
+    );
+    assert.match(css, /#battel_r_upper\s+\.resource-row\s*\{[^}]*background-image:[^}]*freg-top-left\.png/);
+    assert.match(css, /#battel_r_upper\s+\.resource-row\s+li\s*\{[^}]*color:\s*#ffffff\s*!important/);
+    assert.match(css, /#battel_r_upper\s+\.resource-row\s+li\s*\{[^}]*text-shadow:/);
+    assert.match(css, /\.prize-row\s*\{[^}]*background-image:[^}]*freg-top-left\.png/);
+    assert.match(css, /\.prize-row\s+li\s+\.amount\s*\{[^}]*color:\s*#ffffff/);
 });

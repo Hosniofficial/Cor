@@ -602,8 +602,7 @@
 #equip-blessing .up-wrapper .col-3 {
     width: 38%;
     height: 100%;
-    background-image: url(../images/skins/desc-rect.png);
-    background-size: 100% 100%;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 #equip-blessing .up-wrapper .col-2 {

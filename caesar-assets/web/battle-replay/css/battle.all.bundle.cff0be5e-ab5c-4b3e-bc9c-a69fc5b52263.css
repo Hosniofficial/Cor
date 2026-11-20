@@ -493,9 +493,7 @@ canvas {
   height: 63px;
   margin-top: 26px;
   margin-right: 14px;
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 110% auto;
-  background-position: -25px -25px;
+  background: url(../../images/background/paperCenter.jpg);
   color: #5e341b;
   border: solid 7px transparent;
   box-sizing: border-box;
@@ -1413,8 +1411,7 @@ select[name="tasks"] {
   text-align: center;
 }
 .matrial-show .mat_desc {
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 100% 100%;
+  background: url(../../images/background/paperCenter.jpg);
   min-height: 50px;
   text-align: right;
   width: 81.5%;
@@ -1649,9 +1646,7 @@ select[name="tasks"] {
 .study_req_tooltip .req_table {
   border: 5px solid transparent;
   border-top: 22px solid transparent;
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background: url(../../images/background/paperCenter.jpg);
 }
 
 .soldier {
@@ -1734,30 +1729,34 @@ button:disabled {
 .left-btn {
   width: 30px;
   height: 30px;
-  background-image: url(../Res/arrow/go-left-n.png);
-  background-size: auto 66%;
+  background-image: url(../Res/btns/left.png);
+  background-size: auto 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
 .left-btn:hover {
-  background-image: url(../Res/arrow/go-left-h.png);
+  background-image: url(../Res/btns/left.png);
+  filter: brightness(1.15);
 }
 .left-btn:active {
-  background-image: url(../Res/arrow/go-left-a.png);
+  background-image: url(../Res/btns/left.png);
+  filter: brightness(0.9);
 }
 .right-btn {
   width: 30px;
   height: 30px;
-  background-image: url(../Res/arrow/go-right-n.png);
-  background-size: auto 66%;
+  background-image: url(../Res/btns/right.png);
+  background-size: auto 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
 .right-btn:hover {
-  background-image: url(../Res/arrow/go-right-h.png);
+  background-image: url(../Res/btns/right.png);
+  filter: brightness(1.15);
 }
 .right-btn:active {
-  background-image: url(../Res/arrow/go-right-a.png);
+  background-image: url(../Res/btns/right.png);
+  filter: brightness(0.9);
 }
 .most-left-btn {
   width: 30px;
@@ -1885,32 +1884,36 @@ button:disabled {
   background-color: transparent;
 }
 .GO_L_1 {
-  background-image: url(../Res/arrow/go-left-n.png);
+  background-image: url(../Res/btns/left.png);
   background-position: center;
   background-repeat: no-repeat;
 }
 .GO_L_1:hover {
-  background-image: url(../Res/arrow/go-left-h.png);
+  background-image: url(../Res/btns/left.png);
+  filter: brightness(1.15);
   background-position: center;
   background-repeat: no-repeat;
 }
 .GO_L_1:active {
-  background-image: url(../Res/arrow/go-left-a.png);
+  background-image: url(../Res/btns/left.png);
+  filter: brightness(0.9);
   background-position: center;
   background-repeat: no-repeat;
 }
 .GO_R_1 {
-  background-image: url(../Res/arrow/go-right-n.png);
+  background-image: url(../Res/btns/right.png);
   background-position: center;
   background-repeat: no-repeat;
 }
 .GO_R_1:hover {
-  background-image: url(../Res/arrow/go-right-h.png);
+  background-image: url(../Res/btns/right.png);
+  filter: brightness(1.15);
   background-position: center;
   background-repeat: no-repeat;
 }
 .GO_R_1:active {
-  background-image: url(../Res/arrow/go-right-a.png);
+  background-image: url(../Res/btns/right.png);
+  filter: brightness(0.9);
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -2098,9 +2101,7 @@ button:disabled {
 }
 #order-hero {
   height: 53px;
-  background: url(../Res/skins/desc-rect.png);
-  background-size: 100% 105%;
-  background-position: center -3px;
+  background: url(../../images/background/paperCenter.jpg);
   overflow: auto;
 }
 #order-hero button {
@@ -2772,10 +2773,7 @@ button:disabled {
   background-size: 98% 100%;
 }
 .for_building_box .full {
-  background: url(../Res/skins/desc-rect.png);
-  background-size: 110% 110%;
-  background-position-x: -15px;
-  background-position-y: -15px;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .box_content .right-content {
   width: 71.5%;
@@ -2788,9 +2786,7 @@ button:disabled {
 .box_content .right-content .total_mat {
   width: 100%;
   height: 100%;
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: -18px;
-  background-size: 100% 106%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 
 .show-item-list {
@@ -2799,11 +2795,7 @@ button:disabled {
 
 .for_mat_trade .right-content .total {
   height: 352.8px;
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: 0%;
-  background-size: auto;
-  background-position-y: -18px;
-  background-size: 100% 106%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .for_mat_trade .left-content {
   background-image: url(../Res/icons/left-content.png);
@@ -2841,11 +2833,6 @@ button:disabled {
   margin-top: 6px;
 }
 
-.matrial_unit .border_up {
-  position: absolute;
-  width: 94px;
-  margin-left: 51px;
-}
 .matrial_unit .img-inside-box .big-img {
   width: 126px;
   height: 56px;
@@ -3175,11 +3162,7 @@ button:disabled {
 .for_report .right-content {
   width: 52%;
   direction: rtl;
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: 0%;
-  background-size: auto;
-  background-position-y: -18px;
-  background-size: 100% 94%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .th {
   height: 21px;
@@ -3383,11 +3366,7 @@ button:disabled {
 }
 .for_quest .right-content {
   width: 72%;
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: 0%;
-  background-size: auto;
-  background-position-y: -18px;
-  background-size: 100% 95.6%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .for_quest .quest {
   direction: rtl;
@@ -3671,23 +3650,10 @@ button:disabled {
   border: 1px solid #dddddd;
 }
 .matrial_unit {
-  background-image:
-    url(../Res/style/Corner-down-l.png), url(../Res/style/Corner-down-r.png),
-    url(../Res/style/Corner-up-l.png), url(../Res/style/Corner-up-r.png),
-    url(../Res/style/matrail_bg.png);
-  background-position:
-    left bottom,
-    right bottom,
-    left top,
-    right top,
-    center;
+  background-image: url(../Res/style/matrail_bg.png);
+  background-position: center;
   background-repeat: no-repeat;
-  background-size:
-    49px 50px,
-    49px 50px,
-    35px 50px,
-    35px 50px,
-    100% 100%;
+  background-size: 100% 100%;
 }
 .uni_tech ul li:first-child,
 .acad_tech ul li:first-child,
@@ -3705,19 +3671,9 @@ button:disabled {
 .empty_place ul li {
   display: inline-table;
   width: 19%;
-  background-image:
-    url(../Res/style/Corner-up-l.png), url(../Res/style/Corner-up-r.png),
-    url(../Res/style/Border-up.png), url(../Res/style/matrail_bg.png);
-  background-size:
-    35px 50px,
-    35px 50px,
-    auto 20px,
-    100% 85%;
-  background-position:
-    top left,
-    top right,
-    top center,
-    top center;
+  background-image: url(../Res/style/matrail_bg.png);
+  background-size: 100% 85%;
+  background-position: top center;
   background-repeat: no-repeat;
   margin-top: 8px;
 }
@@ -3917,9 +3873,7 @@ button:disabled {
 }
 
 #palace_content .right-content {
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: -18px;
-  background-size: 100% 106%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 #palace_content .left-content {
   background: url(../Res/icons/left-content.png);
@@ -4336,9 +4290,7 @@ body {
   background-position: bottom;
 }
 .world .camps .left-content {
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 100% 105%;
-  background-position: bottom;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .world .camps .camp_review tr:first-child td:first-child {
   width: 135px;
@@ -4400,8 +4352,7 @@ body {
 .overview {
   direction: rtl;
   height: 116px;
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 100% 100%;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .overview p {
   line-height: 15px;
@@ -4441,10 +4392,7 @@ body {
 .camp-data {
   width: 100%;
   height: 215px;
-  background-color: transparent;
-  background-image: url(../Res/skins/desc-rect.png);
-  background-size: 100% 106%;
-  background-position-y: -10px;
+  background: url(../../images/background/paperCenter.jpg);
 }
 .camp-data .right {
   width: 45%;
@@ -4685,7 +4633,7 @@ body {
   direction: rtl;
   padding: 0px 8px;
   line-height: 24px;
-  background: url(../Res/background/paperCenter.jpg);
+  background: url(../../images/background/paperCenter.jpg);
   box-shadow: 0px -3px 5px 4px rgba(0, 0, 0, 0.12);
   width: 0%;
   transition: all 0.3s linear;
@@ -4838,7 +4786,7 @@ body {
   direction: rtl;
   overflow-y: auto;
   padding: 0px 7px;
-  background: url(../Res/background/paperCenter.jpg);
+  background: url(../../images/background/paperCenter.jpg);
   border-top-right-radius: 36px;
   border-top-left-radius: 15px;
   -webkit-touch-callout: text; /* iOS Safari */
@@ -6113,12 +6061,7 @@ body {
     
 }
 .up_guild{
-    
-    background: url(../Res/skins/desc-rect.png);
-        background-position-y: 0%;
-        background-size: auto;
-    background-position-y: -18px;
-    background-size: 100% 106%;
+    background: url(../../images/background/paperCenter.jpg);
 }
 
 .up_guild .left-content , .up_guild .right-content{
@@ -6299,9 +6242,7 @@ body {
 #msg_diff_detail .left-content , 
 #msg_income_detail .left-content {
     
-   background: url(../Res/skins/desc-rect.png);
-    background-position-y: -18px;
-    background-size: 100% 106%;
+   background: url(../../images/background/paperCenter.jpg);
     
 }
 .for_msg .msg_body{
@@ -6668,8 +6609,7 @@ body {
 #wounded_list {
   width: 398px;
   margin: auto;
-  background: url(../Res/skins/desc-rect.png);
-  background-size: 100% 100%;
+  background: url(../../images/background/paperCenter.jpg);
   margin-top: 5px;
   padding-top: 24px;
   padding-bottom: 12px;
@@ -6738,10 +6678,7 @@ body {
   height: 235px;
 }
 #city-trade-center {
-  background: url(../Res/skins/desc-rect.png);
-  background-position-y: -18px;
-  background-size: 100% 106%;
-  background-repeat: no-repeat;
+  background: url(../../images/background/paperCenter.jpg);
 }
 
 #bar_list li div,
@@ -6960,8 +6897,7 @@ body {
   padding: 16px 13px;
 }
 #job-typs tr .fram {
-  background: url(../Res/skins/desc-rect.png);
-  background-size: 100% 100%;
+  background: url(../../images/background/paperCenter.jpg);
   padding-top: 4px;
   padding-bottom: 4px;
 }
@@ -8211,10 +8147,8 @@ body {
 #move-city-to .body-wrapper .content{
     width: 84%;
     height: 150px;
-    background-image: url(../Res/skins/desc-rect.png);
+    background: url(../../images/background/paperCenter.jpg);
     margin: auto;
-    background-position-y: -10px;
-    background-size: 100%  106%;
     margin-top: 5px;
 }
 
@@ -8699,47 +8633,47 @@ body {
     background-position: center; 
     background-repeat: no-repeat
 }
-.goRight{
-    background-image: url(../Res/arrow/go-right-n.png);
+.goRight {
+    background-image: url(../Res/btns/right.png);
     background-size: auto 100%;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
-.goRight:hover{background-image: url(../Res/arrow/go-right-h.png);}
-.goRight:active{background-image: url(../Res/arrow/go-right-a.png);}
-.goRight:disabled{background-image: url(../Res/arrow/go-right-d.png);}
+.goRight:hover { background-image: url(../Res/btns/right.png); filter: brightness(1.15); }
+.goRight:active { background-image: url(../Res/btns/right.png); filter: brightness(0.9); }
+.goRight:disabled { background-image: url(../Res/btns/right.png); filter: grayscale(100%) opacity(0.5); }
 
-.goLeft{
-    background-image: url(../Res/arrow/go-left-n.png);
+.goLeft {
+    background-image: url(../Res/btns/left.png);
     background-size: auto 100%;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
-.goLeft:hover{background-image: url(../Res/arrow/go-left-h.png);}
-.goLeft:active{background-image: url(../Res/arrow/go-left-a.png);}
-.goLeft:disabled{background-image: url(../Res/arrow/go-left-d.png);}
+.goLeft:hover { background-image: url(../Res/btns/left.png); filter: brightness(1.15); }
+.goLeft:active { background-image: url(../Res/btns/left.png); filter: brightness(0.9); }
+.goLeft:disabled { background-image: url(../Res/btns/left.png); filter: grayscale(100%) opacity(0.5); }
 
-.goDown{
-    background-image: url(../Res/arrow/go-right-n.png);
+.goDown {
+    background-image: url(../Res/btns/right.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
     transform: rotate(90deg);
 }
-.goDown:hover{background-image: url(../Res/arrow/go-right-h.png);}
-.goDown:active{background-image: url(../Res/arrow/go-right-a.png);}
-.goDown:disabled{background-image: url(../Res/arrow/go-right-d.png);}
+.goDown:hover { background-image: url(../Res/btns/right.png); filter: brightness(1.15); }
+.goDown:active { background-image: url(../Res/btns/right.png); filter: brightness(0.9); }
+.goDown:disabled { background-image: url(../Res/btns/right.png); filter: grayscale(100%) opacity(0.5); }
 
-.goUp{
-    background-image: url(../Res/arrow/go-left-n.png);
+.goUp {
+    background-image: url(../Res/btns/left.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
     transform: rotate(90deg);
 }
-.goUp:hover{background-image: url(../Res/arrow/go-left-h.png);}
-.goUp:active{background-image: url(../Res/arrow/go-left-a.png);}
-.goUp:disabled{background-image: url(../Res/arrow/go-left-d.png);}
+.goUp:hover { background-image: url(../Res/btns/left.png); filter: brightness(1.15); }
+.goUp:active { background-image: url(../Res/btns/left.png); filter: brightness(0.9); }
+.goUp:disabled { background-image: url(../Res/btns/left.png); filter: grayscale(100%) opacity(0.5); }
 
 
 #ArenaChallangeHome .heroControlBtns .content .btnBlock{
@@ -8924,5 +8858,3 @@ body {
     font-size: 14px;
     font-weight: bold;
 }
-
-/*# sourceMappingURL=battle.all.bundle.cff0be5e-ab5c-4b3e-bc9c-a69fc5b52263.css.map*/

@@ -39,16 +39,10 @@ if (!$reportRow) {
     $reportRow = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// If no report exists at all, run a real battle simulation with an existing player
 if (!$reportRow) {
-    require_once __DIR__ . '/../caesar-api/services/BattleService.php';
-    $firstPlayerId = (int)$db->query("SELECT id_player FROM `player` ORDER BY `id_player` ASC LIMIT 1")->fetchColumn() ?: 100000;
-    $sim = BattleService::executeBattle($db, $firstPlayerId);
-    if ($sim && !empty($sim['reportId'])) {
-        $stmt = $db->prepare("SELECT * FROM `report_player` WHERE `id_report` = ?");
-        $stmt->execute([$sim['reportId']]);
-        $reportRow = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    http_response_code(404);
+    echo json_encode(['state' => 'not_found', 'msg' => 'Battle report not found'], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 $detail = json_decode($reportRow['detail'] ?? '{}', true) ?: [];

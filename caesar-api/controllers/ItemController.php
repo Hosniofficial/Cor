@@ -172,7 +172,7 @@ class ItemController {
     }
 
     private static function loadItemPrices(): array {
-        $file = dirname(__DIR__, 2) . '/caesar-assets/api/data/item-prices.json';
+        $file = dirname(__DIR__, 2) . '/caesar-private/data/item-prices.json';
         $raw = is_file($file) && is_readable($file) ? file_get_contents($file) : false;
         $prices = $raw === false ? null : json_decode($raw, true);
         if (!is_array($prices) || !$prices) {
@@ -249,7 +249,7 @@ class ItemController {
     }
 
     private static function loadExchangeOffers(): array {
-        $file = dirname(__DIR__, 2) . '/caesar-assets/api/data/exchange-offers.json';
+        $file = dirname(__DIR__, 2) . '/caesar-private/data/exchange-offers.json';
         $raw = is_file($file) && is_readable($file) ? file_get_contents($file) : false;
         $offers = $raw === false ? null : json_decode($raw, true);
         if (!is_array($offers) || !$offers) {
@@ -357,6 +357,7 @@ class ItemController {
 
         foreach ($offers as $id => &$offer) {
             $offer['take_times'] = $usage[$id] ?? 0;
+            unset($offer['server_max'], $offer['server_take']);
         }
         unset($offer);
 
@@ -1078,21 +1079,16 @@ class ItemController {
                     ['Item' => 'beginner_back_8', 'amount' => 1]
                 ],
                 8 => [
-                    ['Item' => 'food_e', 'amount' => 1], ['Item' => 'wood_e', 'amount' => 1],
-                    ['Item' => 'stone_e', 'amount' => 1], ['Item' => 'archit_d', 'amount' => 2],
-                    ['Item' => 'archim_d', 'amount' => 2], ['Item' => 'tagned_4p', 'amount' => 1],
+                    ['Item' => 'archit_d', 'amount' => 2], ['Item' => 'archim_d', 'amount' => 2],
+                    ['Item' => 'tagned_4p', 'amount' => 1],
                     ['Item' => 'beginner_back_9', 'amount' => 1]
                 ],
                 9 => [
-                    ['Item' => 'food_e', 'amount' => 2], ['Item' => 'wood_e', 'amount' => 2],
-                    ['Item' => 'metal_e', 'amount' => 2], ['Item' => 'coin_e', 'amount' => 2],
                     ['Item' => 'gold_75', 'amount' => 1], ['Item' => 'train_acce_50', 'amount' => 3],
                     ['Item' => 'beginner_back_10', 'amount' => 1]
                 ],
                 10 => [
-                    ['Item' => 'food_e', 'amount' => 5], ['Item' => 'wood_e', 'amount' => 5],
-                    ['Item' => 'stone_e', 'amount' => 5], ['Item' => 'metal_e', 'amount' => 5],
-                    ['Item' => 'coin_e', 'amount' => 5], ['Item' => 'gold_100', 'amount' => 1],
+                    ['Item' => 'gold_100', 'amount' => 1],
                     ['Item' => 'tagned_5p', 'amount' => 1], ['Item' => 'sparta_stab', 'amount' => 5],
                     ['Item' => 'marmlo_helmet', 'amount' => 5], ['Item' => 'peace', 'amount' => 3]
                 ]

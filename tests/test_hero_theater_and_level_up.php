@@ -88,7 +88,7 @@ $db->exec("INSERT INTO player VALUES (7, 'player-token'), (8, 'other-token')");
 $db->exec('INSERT INTO city VALUES (3, 7, 5000), (4, 8, 5000)');
 $db->exec('INSERT INTO player_edu VALUES (7, 0)');
 $db->exec('INSERT INTO city_hero VALUES
-    (101, 3, 7, 1, 125, 0, 2, 52, 50),
+    (101, 3, 7, 1, 100, 0, 2, 52, 50),
     (102, 3, 7, 1, 125, 1, 6, 52, 50),
     (103, 3, 7, 1, 125, 8, 9, 52, 50),
     (104, 3, 7, 255, 2147483647, 0, 2, 560, 50),

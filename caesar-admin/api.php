@@ -1147,7 +1147,6 @@ switch ($action) {
         $allowedEventTypes = [
             'luxury_drop_boost',
             'global_drop_boost',
-            'equipment_drop_boost',
             'speed_boost',
             'truce'
         ];

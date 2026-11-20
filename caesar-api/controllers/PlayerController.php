@@ -33,11 +33,11 @@ class PlayerController {
             case '/api/APlayerEquip/getPlayerEquip':
                 self::getPlayerEquip($db);
                 return true;
-            case '/api/APlayerEquip/getEquipPower':
-                self::getEquipPower();
-                return true;
             case '/api/APlayer/changePlayerName':
                 self::changePlayerName($db);
+                return true;
+            case '/api/APlayer/changePlayerAvatar':
+                self::changePlayerAvatar($db);
                 return true;
             case '/api/APlayer/getAllNotif':
                 self::getAllNotif($db);
@@ -541,33 +541,71 @@ class PlayerController {
         sendJson($equips);
     }
 
-    public static function getEquipPower() {
-        $file = dirname(__DIR__, 2) . '/caesar-assets/api/data/equipment-power.json';
-        if (!is_file($file) || !is_readable($file)) {
-            error_log('[PlayerController] Equipment power data is unavailable');
-            http_response_code(500);
-            sendJson(['state' => 'error', 'msg' => 'Equipment power data is unavailable']);
-        }
-
-        header('Content-Type: text/plain; charset=utf-8');
-        readfile($file);
-        exit;
-    }
-
     public static function changePlayerName($db) {
         $newName = normalizeGameDisplayName($_REQUEST['NewName'] ?? null);
-        if ($newName === null) {
+        if ($newName === null || preg_match('/\A.{3,10}\z/us', $newName) !== 1) {
             sendJson(['state' => 'error_name']);
         }
         $player = self::resolvePlayer($db);
         $idPlayer = (int)$player['id_player'];
-
-        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $idPlayer AND id_item = 'change_player_name'")->fetchColumn();
-        if ($hasItem > 0) {
-            ItemController::deductPlayerItem($db, $idPlayer, 'change_player_name', 1);
+        if ($newName === (string)$player['name']) {
+            sendJson(['state' => 'error_same_name']);
         }
 
-        $db->prepare("UPDATE player SET name = ? WHERE id_player = ?")->execute([$newName, $idPlayer]);
+        $db->beginTransaction();
+        try {
+            $existingName = $db->prepare(
+                'SELECT `id_player` FROM `player` WHERE `name` = ? AND `id_player` <> ? LIMIT 1'
+            );
+            $existingName->execute([$newName, $idPlayer]);
+            if ($existingName->fetchColumn() !== false) {
+                $db->rollBack();
+                sendJson(['state' => 'error_2']);
+            }
+
+            $item = $db->prepare(
+                'UPDATE `player_item`
+                 SET `amount` = `amount` - 1
+                 WHERE `id_player` = ? AND `id_item` = ? AND `amount` >= 1'
+            );
+            $item->execute([$idPlayer, 'change_name']);
+            if ($item->rowCount() !== 1) {
+                $db->rollBack();
+                sendJson(['state' => 'error_no_item']);
+            }
+
+            $db->prepare(
+                'DELETE FROM `player_item`
+                 WHERE `id_player` = ? AND `id_item` = ? AND `amount` <= 0'
+            )->execute([$idPlayer, 'change_name']);
+            $db->prepare('UPDATE `player` SET `name` = ? WHERE `id_player` = ?')
+                ->execute([$newName, $idPlayer]);
+            $db->commit();
+        } catch (PDOException $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            if ($error->getCode() === '23000') {
+                sendJson(['state' => 'error_2']);
+            }
+            throw $error;
+        }
+
         sendJson(['state' => 'ok', 'name' => $newName]);
+    }
+
+    public static function changePlayerAvatar($db) {
+        $player = self::resolvePlayer($db);
+        $avatar = filter_var(
+            $_REQUEST['image_index'] ?? $_REQUEST['avatar'] ?? null,
+            FILTER_VALIDATE_INT
+        );
+        if ($avatar === false || $avatar === null || $avatar < 0 || $avatar > 19) {
+            sendJson(['state' => 'error_invalid_avatar']);
+        }
+
+        $db->prepare('UPDATE `player` SET `avatar` = ? WHERE `id_player` = ?')
+            ->execute([$avatar, (int)$player['id_player']]);
+        sendJson(['state' => 'ok', 'avatar' => $avatar]);
     }
 }

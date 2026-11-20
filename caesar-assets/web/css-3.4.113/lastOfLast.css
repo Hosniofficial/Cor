@@ -132,8 +132,7 @@
 #wounded_list {
     width: 398px;
     margin: auto;
-    background: url(../images/skins/desc-rect.png);
-    background-size: 100% 100%;
+    background: url(../images/background/paperCenter.jpg);
     margin-top: 5px;
     padding-top: 24px;
     padding-bottom: 12px;
@@ -216,10 +215,7 @@
 }
 
 #city-trade-center {
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: -18px;
-    background-size: 100% 106%;
-    background-repeat: no-repeat;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 #bar_list li div,
@@ -467,8 +463,7 @@
 }
 
 #job-typs tr .fram {
-    background: url(../images/skins/desc-rect.png);
-    background-size: 100% 100%;
+    background: url(../images/background/paperCenter.jpg);
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -647,6 +642,58 @@
     float: right !important;
 }
 
+
+#alert_head {
+    position: relative !important;
+}
+
+#dialg_box .nav_bar .nav_icon img.close_dialog,
+#dialg_box_two .nav_bar .nav_icon img.close_dialog,
+#dialg_box_two .nav_bar .nav_icon img.close_BF_dialog_box,
+.box_header .close_dialog,
+#unit_review .header .close_RB img,
+#unit_review .close_RB img,
+#select_from .head_bar > .close,
+#select_from .close,
+#alert_head .close-alert,
+#alert_head .close-alert_container,
+#alert_head .img-sml,
+#alert_container .close-alert,
+#matral-box-use .close-alert_container,
+.matrial-alert #alert_head .close-alert_container,
+.close-alert,
+.close-alert_container {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    left: auto;
+    bottom: auto;
+    width: 32px;
+    height: 31px;
+    margin: 0;
+    padding: 0;
+    z-index: 50;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.box_header .close_dialog img {
+    width: 32px;
+    height: 31px;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#dialg_box .nav_bar .nav_icon,
+#dialg_box_two .nav_bar .nav_icon {
+    margin-right: 36px;
+}
+
+#select_from .head_bar {
+    position: static;
+}
+
 #msg-navigator {
     height: 100%;
     width: 66px;
@@ -738,6 +785,7 @@
     width: 78%;
     margin: auto;
     margin-top: 40px;
+    background-color: #1a140f;
     border: 12.5px solid transparent;
     border-image: url(../images/background/border_a.png);
     border-image-slice: 30;
@@ -796,7 +844,8 @@
 }
 
 #rank-review .down {
-    background: url(../images/background/dialog_bg.jpg) 90% 90%;
+    background: url(../images/background/paperCenter.jpg) center / cover repeat;
+    background-color: #2b1d14;
     height: 170px;
 }
 
@@ -1009,7 +1058,7 @@
     height: 30px
 }
 
-#rank-review .down::after {
+#rank-review:not(.player-review) .down::after {
     content: " ";
     position: absolute;
     margin-top: 15px;
@@ -1023,6 +1072,11 @@
 
 .player-review .upper {
     padding: 0px !important;
+}
+
+.player-review .down {
+    background: url(../images/icons/left-content.png) center / 100% 100% no-repeat, url(../images/background/paperCenter.jpg) center / cover repeat;
+    background-color: #2b1d14;
 }
 
 .player-review .upper .left {
@@ -1120,6 +1174,73 @@
 
 .player-review .down .buttons .title {
     width: 65px;
+}
+
+.player-review .player-name #edit-player-name-btn {
+    width: 20px;
+    margin-right: 6px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.player-profile-name-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 12;
+    padding: 4px;
+    transform: translateX(-50%);
+    background: url("../images/background/profile_name.png") center / 100% 100% no-repeat;
+}
+
+.player-profile-name-form[hidden] {
+    display: none;
+}
+
+.player-profile-name-form input {
+    width: 125px;
+    height: 27px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.player-profile-name-form button {
+    height: 27px;
+    line-height: 27px;
+}
+
+#rank-review .down .player-profile-flag-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 95%;
+    height: 38px;
+    margin: auto;
+}
+
+#rank-review .down .player-profile-flag-row .li-d {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 150px;
+}
+
+#player-profile-flag-image {
+    width: 27px;
+    height: 20px;
+    object-fit: cover;
+}
+
+#rank-review .down .player-profile-flag-row #profile-change-flag {
+    width: 90px;
+    height: 28px;
+    line-height: 28px;
 }
 
 /*
@@ -2543,7 +2664,10 @@ button:disabled {
 .close_dialog:hover,
 .close-alert:hover,
 .box-close button:hover,
-#hide-luck-wheel:hover {
+#hide-luck-wheel:hover,
+#select_from .close:hover,
+#unit_review .close_RB img:hover,
+.close_BF_dialog_box:hover {
     filter: brightness(1.15);
     transform: scale(1.04);
 }
@@ -2551,7 +2675,10 @@ button:disabled {
 .close_dialog:active,
 .close-alert:active,
 .box-close button:active,
-#hide-luck-wheel:active {
+#hide-luck-wheel:active,
+#select_from .close:active,
+#unit_review .close_RB img:active,
+.close_BF_dialog_box:active {
     filter: brightness(0.9);
     transform: scale(0.96);
 }
@@ -3128,4 +3255,14 @@ button:disabled {
     height: 24px;
     object-fit: contain;
 }
+
+.upgrade_req_tooltip .req_table_container,
+.study_req_tooltip .req_table,
+.req_table_container {
+    background: url(../images/skins/palace.png) !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    padding: 25px 0px 10px 0px;
+}
+
 

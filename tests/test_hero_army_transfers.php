@@ -44,6 +44,22 @@ $db->exec('INSERT INTO hero_army (id_hero, id_player) VALUES (2, 7)');
 $db->exec('INSERT INTO player_edu VALUES (7, 0)');
 $db->exec('INSERT INTO hero_medal (id_hero) VALUES (1), (2)');
 
+$db->exec('UPDATE player_edu SET leader = 1 WHERE id_player = 7');
+$futureMedalExpiry = time() + 3600;
+$db->prepare('UPDATE hero_medal SET medal_ceasro = ?, ceaser_eagle = ? WHERE id_hero = 1')
+    ->execute([$futureMedalExpiry, $futureMedalExpiry]);
+$heroCapacity = HeroController::calculateHeroMaxCap($db, [
+    'id_hero' => 1,
+    'id_player' => 7,
+    'point_a' => 22,
+    'point_a_plus' => 0
+]);
+if ($heroCapacity !== 56320) {
+    throw new RuntimeException('Leadership capacity should apply the rounded politics buff, study, and full-cap eagle bonus');
+}
+$db->exec('UPDATE player_edu SET leader = 0 WHERE id_player = 7');
+$db->exec('UPDATE hero_medal SET medal_ceasro = 0, ceaser_eagle = 0 WHERE id_hero = 1');
+
 function moveHeroArmy(PDO $db, int $fromHero, int $toHero, string $fromPlace, string $toPlace, int $amount): array {
     $_REQUEST = [
         'idCity' => 3,

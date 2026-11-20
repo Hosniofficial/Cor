@@ -489,6 +489,10 @@ function calculateKillBasedRewards({
         let honorGained = isVictory
             ? Math.floor(playerKillScore / 2)
             : Math.floor(playerKillScore / 4);
+        if (targetType >= 1 && targetType <= 59) {
+            const maxKillHonor = targetLvl * 50;
+            honorGained = Math.min(honorGained, maxKillHonor);
+        }
         if (isVictory && members.some(member => member.task === 1) && targetType >= 1 && targetType <= 59) {
             honorGained += targetLvl * 50 + 50;
         }

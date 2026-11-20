@@ -2930,6 +2930,7 @@ Caesar.GE.CLoadingScene = new Phaser.Class({
                                                  }*/
                     });
 
+                    Caesar['Contribute']['getList']();
                     $('html')['trigger']('PlayerReady');
 
                     },
@@ -4270,7 +4271,7 @@ const THINGS_TO_LOAD = {
         'images/btns/global/full-btn-a-2x.png', 'images/btns/global/full-btn-h-2x.png',
         'images/btn-small/speed-up.png', 'images/btn-small/speed-up-active.png',
         'images/btn-small/speed-up-hover.png', 'images/skins/palace.png',
-        'images/skins/desc-rect.png', 'images/skins/table-rect.png',
+        'images/skins/table-rect.png',
         'images/tools/luck_wheel.png', 'images/tools/image-frame.png',
         'images/tools/gete-left.png', 'images/tools/gate-right.png',
         'images/tools/gate-left-lion.png', 'images/tools/gate-right-lion.png',
@@ -11307,8 +11308,9 @@ alert_box.jopFireEmployee = function(place) {
 };
 
 alert_box.alert3X2 = function(title, content) {
+    $(".alert3x2-overlay").remove();
 
-    var content = ` <div id="over_lay">
+    var content = ` <div id="over_lay" class="alert3x2-overlay">
                         <div id="overview-palace-bg">
                             <div class="header">
                                 <div class="right">
@@ -11331,7 +11333,7 @@ alert_box.alert3X2 = function(title, content) {
 
     $("body").append(content);
     $("#close-over-lay").click(function() {
-        $("#over_lay").remove();
+        $(this).closest(".alert3x2-overlay").remove();
     });
 };
 
@@ -11404,7 +11406,7 @@ alert_box.heroReviewDetail = function(hero) {
                                     
                             </div>
                             <div class="row row-3">
-                                <div class="pull-L col-1">الجنود- الفيلق</div>                       
+                                <div class="pull-L col-1">الفيلق</div>
                                 <div class="pull-L col-2">
                                     <div class="over-text">${getHeroCapById(hero.Hero.id_hero) +"/"+ getHeroMaxCap(hero)}</div>
                                     <div class="colored-bar filak" style="width: ${(getHeroCap(hero.Army)*100/getHeroMaxCap(hero))}%"></div>
@@ -11412,8 +11414,6 @@ alert_box.heroReviewDetail = function(hero) {
                                 <div class="pull-L col-3">
                                 </div>
                             </div>
-                            <div class="dicor"></div>
-                            
                             <div class="army-review">
                                 
                                 <ul>
@@ -11521,7 +11521,7 @@ alert_box.randomMove = function() {
                         <img src="images/panner/king_name.png">    
                     </div>       
                     <div id="alert-title">${Translate.Button.MenuList.RelocateNow[UserLag.language]}</div>            
-                    <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                    <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                 </div>
                 <div id="alert_box" class="matrial-show">        
                     <div id="move-city-to">
@@ -12739,38 +12739,35 @@ const paragraph_for_fa3lia = "الفاعلية ممتدة حتى هاية مار
 
 
 function calPageNumber(type, isMall) {
-    var content_keys = Object.keys(Matrial.listOf(type));
-
-
-    var mat_counter = 0;
-
+    var items = Matrial.listOf(type);
+    var content_keys = Object.keys(items);
     if (isMall) {
-
-        for (var iii = 0; iii < content_keys.length; iii++) {
-
-            if (Caesar.BaseData.Items[content_keys[iii]].gold > 0) {
-                // console.log(content_keys[iii])
-                mat_counter++;
-            }
-        }
-
-        return Math.ceil(mat_counter / 12);
+        return Math.ceil(content_keys.filter(function(item) {
+            return items[item].gold > 0;
+        }).length / 12);
     }
+    return Math.ceil(content_keys.filter(function(item) {
+        return Matrial.getPlayerAmount(item) > 0;
+    }).length / 12);
+}
 
+function updateDialogPager(pageOffset, maxPageCount) {
+    var currentPage = maxPageCount > 0 ? pageOffset : 0;
+    var hasPages = maxPageCount > 0;
+    var isFirstPage = !hasPages || currentPage <= 1;
+    var isLastPage = !hasPages || currentPage >= maxPageCount;
 
-
-
-
-    for (var iii = 0; iii < content_keys.length; iii++) {
-
-        if (Matrial.getPlayerAmount(content_keys[iii]) !== 0) {
-            // console.log(content_keys[iii])
-            mat_counter++;
-        }
-    }
-    // console.log(mat_counter)
-    return Math.ceil(mat_counter / 12);
-
+    $("#page-nav-holder").text(`${currentPage}/${maxPageCount}`).toggle(hasPages);
+    $("#nav-item-box-right")
+        .attr("data-current-offset", currentPage)
+        .attr("aria-disabled", isLastPage)
+        .toggleClass("is-disabled", isLastPage)
+        .toggle(hasPages);
+    $("#nav-item-box-left")
+        .attr("data-current-offset", currentPage)
+        .attr("aria-disabled", isFirstPage)
+        .toggleClass("is-disabled", isFirstPage)
+        .toggle(hasPages);
 }
 
 // creat conent  unite 
@@ -12803,7 +12800,6 @@ function content_unit(image, name, req, player_amount, matrial_type, for_) {
     }
 
     var list = `<li matrial_type="${matrial_type}" class="tooltip_mat matrial_unit">
-                   <img src=" images/style/Border-up.png" class="border_up"/>
                    <div class="img-inside-box">
                        <div class="player_amount">
                             <img src="images/icons/shopQuantityBG.png"/>
@@ -12841,7 +12837,6 @@ function content_unit_equip(image, name, equi_type, equi_part, index) {
     var total = "";
 
     var list = `<li class="matrial_unit" data-equip-index="${index}">
-                   <img src=" images/style/Border-up.png" class="border_up"/>
                    <div class="img-inside-box">
                         <img src="${image}" class="big-img equip-unit" data-equi-part="${equi_part}" data-equi-type="${equi_type}">
                     </div>
@@ -13026,9 +13021,10 @@ function dialogBoxShow(dialog_box, callBack) {
 
 }
 var menu_bar = {
-    dialogBox: function(title, nav_bar, content, page_num) {
+    dialogBox: function(title, nav_bar, content, page_num, dialogClass = "") {
 
         var nav_list = "";
+        var hasPageControls = parseInt(page_num) !== 0 || dialogClass.indexOf("paged-dialog") !== -1;
         nav_bar.forEach(function(one, index) {
             nav_list += ` <li head_title = "${one["title"]}" class="${index === 0 ? "selected" : ""}" >
                                    ${one[("title_" + UserLag.language)]}
@@ -13038,7 +13034,7 @@ var menu_bar = {
 
 
         return `
-                    <div id='dialg_box'>
+                    <div id='dialg_box' class="${dialogClass}">
                         <div class="head_bar">
                            <img src="images/style/head_bar.png">
                            <div class="title">${title} </div>
@@ -13049,9 +13045,9 @@ var menu_bar = {
                             </div>
                             <div class="right-nav">
                                 <div class="nav_icon">
-                                    <img  class ="close_dialog" src="images/btns/close_b.png">
+                                    <img class="close_dialog" src="images/btns/close_b.png">
                                  ${
-            parseInt(page_num) === 0 ? "" : `
+            !hasPageControls ? "" : `
                                     <img id="nav-item-box-right" data-current-offset="1" src="images/btns/right.png" class="right">
                                     <h1 id="page-nav-holder"> 1/${page_num}</h1>
                                     <img id="nav-item-box-left" data-current-offset="1" src="images/btns/left.png" class="left">
@@ -13215,7 +13211,7 @@ $(document).on("click", ".menu-list", function(e) {
     switch (data_show) {
 
         case "trade":
-            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Exchange[UserLag.language], NavBar.Exchange, Trading.dailogBox_allMat());
+            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Exchange[UserLag.language], NavBar.Exchange, Trading.dailogBox_allMat(), Trading.calPageNum("trade-all"), "centered-left-nav paged-dialog");
 
             dialogBoxShow(dialog_box, function() {
                 var page_num = Trading.calPageNum();
@@ -13229,7 +13225,7 @@ $(document).on("click", ".menu-list", function(e) {
 
             break;
         case "matrial":
-            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.ItemMall[UserLag.language], NavBar.ItemMall, menu_bar.dialogBoxContent_mall("matrial_main"), calPageNumber("matrial_main", true));
+            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.ItemMall[UserLag.language], NavBar.ItemMall, menu_bar.dialogBoxContent_mall("matrial_main"), calPageNumber("matrial_main", true), "centered-left-nav paged-dialog");
             Player_profile.refreshMatrialBox();
 
             dialogBoxShow(dialog_box, function() {
@@ -13238,6 +13234,7 @@ $(document).on("click", ".menu-list", function(e) {
                 $("#dialg_box .right-content").addClass("full");
                 $("#dialg_box .right-content .total").attr("data-num", "1-12");
                 $("#dialg_box .right-content .total").attr("mat_table", "matrial_main");
+                updateDialogPager(1, calPageNumber("matrial_main", true));
             });
 
 
@@ -13261,7 +13258,7 @@ $(document).on("click", ".menu-list", function(e) {
 
             Quest.getPlayerQuestState().always(function() {
                 var content = Quest.dialogBoxcontent_qusets();
-                var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Quest[UserLag.language], NavBar.Quest, content, 0);
+                var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Quest[UserLag.language], NavBar.Quest, content, 0, "centered-left-nav left-nav-up");
                 dialogBoxShow(dialog_box, function() {
 
                     $("#quest-page").niceScroll(SCROLL_BAR_PROP);
@@ -13277,7 +13274,7 @@ $(document).on("click", ".menu-list", function(e) {
             break;
         case "messages":
 
-            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Mail[UserLag.language], NavBar.Mail, "<div class='box_content'></div>", 0);
+            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Mail[UserLag.language], NavBar.Mail, "<div class='box_content'></div>", 0, "centered-left-nav");
             dialogBoxShow(dialog_box, function() {
 
                 message.dialogBoxcontent_msgIncome();
@@ -13288,7 +13285,7 @@ $(document).on("click", ".menu-list", function(e) {
         case "ranks":
 
             var content = menu_bar.dialogBoxcontent_Ranks();
-            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Ranking[UserLag.language], NavBar.Ranking, content, 0);
+            var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Ranking[UserLag.language], NavBar.Ranking, content, 0, "centered-left-nav left-nav-up");
             dialogBoxShow(dialog_box, function() {
 
                 $("#dialg_box").attr("type", "messages");
@@ -13319,9 +13316,13 @@ $(document).on("click", ".menu-list", function(e) {
 
 
 $(document).on("click", ".close_dialog", function(e) {
-
-    var box = $("#dialg_box");
-    dialogBoxClose();
+    var box = $(this).closest("#dialg_box, #dialg_box_two");
+    if (!box.length) {
+        return;
+    }
+    if (box.is("#dialg_box")) {
+        dialogBoxClose();
+    }
     box.animate({
         top: "-250px"
     }, 200, "linear", function() {
@@ -13428,6 +13429,7 @@ $(document).on("click", ".left-nav ul  li", function() {
             $("#dialg_box .right-content .total").html("");
             $("#dialg_box .right-content .total").attr("mat_table", "equip");
             $("#dialg_box .nav_icon h1").html("0/0");
+            updateDialogPager(0, 0);
 
 
             break;
@@ -13598,7 +13600,7 @@ $(document).on("click", ".left-nav ul  li", function() {
 $("#matrial-box button").click(function() {
 
     var content = menu_bar.dialogBoxContent_ItemBox("matrial_main"); // will be player matrial
-    var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.MyItems[UserLag.language], NavBar.MatrialBox, content, calPageNumber("matrial_main", false));
+    var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.MyItems[UserLag.language], NavBar.MatrialBox, content, calPageNumber("matrial_main", false), "centered-left-nav paged-dialog");
 
     Player_profile.refreshMatrialBox().done(function() {
         $("#dialg_box .nav_bar .left-nav .selected").click();
@@ -13606,6 +13608,7 @@ $("#matrial-box button").click(function() {
 
     dialogBoxShow(dialog_box, function() {
         $("#dialg_box").attr("type", "box");
+        updateDialogPager(1, calPageNumber("matrial_main", false));
     });
 
     Caesar.Item.useItemFunc();
@@ -13684,7 +13687,7 @@ $(document)['on']('click', '#matrial-player .matrial_unit', function() {
                                     <img src="images/panner/king_name.png">    
                                 </div>       
                                 <div id="alert-title">${Translate['Title']['Box']['pleaseSelect'][UserLag['language']]}</div>            
-                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                             </div>
                             <div id="alert_box" class="matrial-show">        
                                 <div class="row-2">
@@ -13743,7 +13746,7 @@ $(document).on("click", ".buy_mat_btn button", function() {
                                     <img src="images/panner/king_name.png">    
                                 </div>       
                                 <div id="alert-title">${Translate.Button.MenuList.Buy[UserLag.language]} </div>            
-                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                             </div>
                             <div id="alert_box" class="matrial-show">        
                                 <div class="row-2">
@@ -19059,15 +19062,13 @@ function getAvailPlaces(id_hero, hero_army) {
  * @returns {undefined}
  */
 function getHeroMaxCap(hero) {
+    var point_a = Number(hero.Hero.point_a) + Number(hero.Hero.point_a_plus);
+    var politics_buff = hero.Medal.medal_ceasro > Date.now() / 1000 ? Math.round(point_a * 0.25) : 0;
+    var leadership_cap = 30000 + (point_a + politics_buff) * 500;
+    var bonus_percent = Number(Caesar.DPlayer.PlayerEdu.leader) * 3;
+    if (hero.Medal.ceaser_eagle > Date.now() / 1000) bonus_percent += 25;
 
-    var base_cap = Math.ceil((30000 + (Number(hero.Hero.point_a) + Number(hero.Hero.point_a_plus)) * 500));
-    var after_study = Math.ceil(base_cap) * (Caesar.DPlayer.PlayerEdu.leader) * 3 / 100;
-    var after_medal_cap = (hero.Medal.medal_ceasro > Date.now() / 1000 ? (Number(hero.Hero.point_a) + Number(hero.Hero.point_a_plus)) * 500 * 25 / 100 : 0);
-    var after_eagle = hero.Medal.ceaser_eagle > Date.now() / 1000 ? (Number(hero.Hero.point_a) + Number(hero.Hero.point_a_plus)) * 500 * 25 / 100 : 0;
-
-
-    return (base_cap + after_medal_cap + after_eagle + after_study);
-
+    return Math.floor(leadership_cap * (1 + bonus_percent / 100));
 }
 
 
@@ -19083,7 +19084,7 @@ function getReqHeroXp(lvl) {
         studyEffect = Caesar.DPlayer.PlayerEdu["scholership"] * 0.03;
 
 
-    return Math.floor(baseXp * (1 - studyEffect) * 125);
+    return Math.floor(baseXp * (1 - studyEffect) * 100);
 
 }
 
@@ -19160,19 +19161,18 @@ function getEquipData(eq_part) {
 
     if (eq_part) {
         var image = Equipment.getImage(eq_part["type"], eq_part["part"], eq_part["lvl"] || 1);
-        var EquData = Equipment.getEquipData(eq_part["type"], eq_part["part"], eq_part["lvl"] || 1);
         var data = {
             image: image,
             id_equip: eq_part.id_equip,
             type: eq_part.type,
-            vit: EquData.Power.vitality,
-            attack: EquData.Power.attack,
-            defence: EquData.Power.defence,
-            damage: EquData.Power.damage,
-            break: EquData.Power.break,
-            anti_break: EquData.Power.anti_break,
-            strike: EquData.Power.strike,
-            immunity: EquData.Power.immunity,
+            vit: 0,
+            attack: 0,
+            defence: 0,
+            damage: 0,
+            break: 0,
+            anti_break: 0,
+            strike: 0,
+            immunity: 0,
             lvl: eq_part["lvl"]
         };
         return data;
@@ -19247,16 +19247,26 @@ function calAttakTime() {
         WorldUnit.isArenaChallange(type) ||
         WorldUnit.isArenaDeath(type) ||
         WorldUnit.isArmyCapital(type) ||
-        WorldUnit.isMonawrat(type)) {
+        WorldUnit.isMonawrat(type) ||
+        WorldUnit.isCamp(type) ||
+        WorldUnit.isStatueWar(type) ||
+        WorldUnit.isStatueWalf(type)) {
         battel_data.time = 120;
         return 120;
     } else if (WorldUnit.isArenaGuild(type)) {
+        battel_data.time = 5 * 60;
         return 5 * 60;
+    } else if (WorldUnit.isQueenCity(type) || WorldUnit.isSeaCity(type)) {
+        battel_data.time = 15 * 60;
+        return 15 * 60;
+    } else if (WorldUnit.isRepelCastle(type)) {
+        battel_data.time = 60 * 60;
+        return 60 * 60;
     } else if (WorldUnit.isCity(type)) {
 
         var dist = getDistance(x_coord, y_coord);
-        battel_data.time = Math.ceil(dist / getMinSpeed());
-        return Math.max(Math.ceil(dist / getMinSpeed()), 15 * 60);
+        battel_data.time = Math.max(Math.ceil(dist / getMinSpeed()), 15 * 60);
+        return battel_data.time;
 
     } else {
         var dist = getDistance(x_coord, y_coord);
@@ -19307,7 +19317,7 @@ var army = {
 
 
         return `
-                    <div id='dialg_box'>
+                    <div id='dialg_box' class='centered-left-nav hero-dialog'>
                         <div class="head_bar">
                            <img src="images/style/head_bar.png">
                            <div class="title">${title} </div>
@@ -19318,7 +19328,7 @@ var army = {
                             </div>
                             <div class="right-nav">
                                 <div class="nav_icon">
-                                    <img  class ="close_dialog" src="images/btns/close_b.png">
+                                    <img class="close_dialog" src="images/btns/close_b.png">
                                 </div>
                             </div>
                         </div>
@@ -19811,7 +19821,7 @@ var army = {
                                 ${Hero.equipBreview()}
                              </div>
                              <div class="row row-3">
-                                 <div class="pull-L col-1">الجنود- الفيلق</div>                       
+                                 <div class="pull-L col-1">الفيلق</div>
                                  <div class="pull-L col-2">
                                      <div class="over-text " id="after-ajax-hero-cap">${getHeroCapById(Caesar.CurrentHero.Hero.id_hero) + "/" + getHeroMaxCap(Caesar.CurrentHero)}</div>
                                      <div class="colored-bar filak" style="width: ${Math.min((getHeroCapById(Caesar.CurrentHero.Hero.id_hero) * 100 / getHeroMaxCap(Caesar.CurrentHero)), 100) + "%"}"></div>
@@ -19897,7 +19907,7 @@ var army = {
                         ${Hero.equipBreview()}
                     </div>
                     <div class="row row-3">
-                        <div class="pull-L col-1">الجنود- الفيلق</div>                       
+                        <div class="pull-L col-1">الفيلق</div>
                         <div class="pull-L col-2">
                             <div class="over-text "> ${(getHeroCapById(Caesar.CurrentHero.Hero.id_hero))}/${(getHeroMaxCap(Caesar.CurrentHero))}</div>
                             <div class="colored-bar filak" style="width:${getHeroCapById(Caesar.CurrentHero.Hero.id_hero) * 100 / getHeroMaxCap(Caesar.CurrentHero)}%"></div>
@@ -19995,7 +20005,7 @@ var army = {
                     <div class="part-2 hero-2">
                         <ol style="direction: rtl; clear: both">
                             <li><div class="header-2">القوة البدنية</div> <div class="header-2">${Caesar.NextHero.Hero.power}/${getMaxPower(Caesar.NextHero.Hero.lvl)}</div></li>
-                            <li><div class="header-2">الجنود - الفيلق</div><div class="header-2"  id="sec-hero-filak">${getHeroCap(Caesar.NextHero.Army)}/${getHeroMaxCap(Caesar.NextHero)}</div></li>
+                            <li><div class="header-2">الفيلق</div><div class="header-2"  id="sec-hero-filak">${getHeroCap(Caesar.NextHero.Army)}/${getHeroMaxCap(Caesar.NextHero)}</div></li>
                             <li><div class="header-2">قوة السيطرة</div><div class="header-2 ltr">
                                    ${(parseInt(Caesar.NextHero.Hero.point_a) + Math.ceil(Caesar.NextHero.Medal.medal_ceasro > Date.now() / 1000 ? (Caesar.NextHero.Hero.point_a * 25 / 100) : 0))} + ${sec_hero.Hero.point_a_plus}</div></li>
                             <li><div class="header-2">الشجاعة</div><div class="header-2 ltr">
@@ -20071,7 +20081,7 @@ var army = {
                                 <div class="part-2 hero-1">
                                     <ol style="direction: rtl; clear: both">
                                         <li><div class="header-2">القوة البدنية</div> <div class="header-2">${Caesar.CurrentHero.Hero.power}/${getMaxPower(Caesar.CurrentHero.Hero.lvl)}</div></li>
-                                        <li><div class="header-2">الجنود - الفيلق</div><div class="header-2" id="A_A_R_Hero_cap">${getHeroCap(Caesar.CurrentHero.Army)}/${getHeroMaxCap(Caesar.CurrentHero)}</div></li>
+                                        <li><div class="header-2">الفيلق</div><div class="header-2" id="A_A_R_Hero_cap">${getHeroCap(Caesar.CurrentHero.Army)}/${getHeroMaxCap(Caesar.CurrentHero)}</div></li>
                                         <li><div class="header-2">قوة السيطرة</div><div class="header-2 ltr">
                                             ${parseInt(Caesar.CurrentHero.Hero.point_a) + Math.ceil(Caesar.CurrentHero.Medal.medal_ceasro > Date.now() / 1000 ? (Caesar.CurrentHero.Hero.point_a * 25 / 100) : 0)} + ${Caesar.CurrentHero.Hero.point_a_plus}</div></li>
                                         <li><div class="header-2">الشجاعة</div><div class="header-2 ltr">
@@ -20393,7 +20403,6 @@ var army = {
                         </div>
                         <div class="row row-4">
                             <div matrial_type="motiv_7" class="matrial_unit">
-                                <img src=" images/style/Border-up.png" class="border_up">
                                 <div class="img-inside-box">
                                     <div class="player_amount">
                                         <img src="images/icons/shopQuantityBG.png">
@@ -21066,13 +21075,23 @@ $(document).on("click", ".add_loy", function() {
  * عشان اقفل البوكس والغى الشاشة السودة
  */
 $(document).on("click", ".close_use_menu", function() {
-    $("#over_lay").remove();
+    var overlay = $(this).closest("#over_lay");
+    if (overlay.length) {
+        overlay.remove();
+    } else {
+        $(this).closest("#select_from").remove();
+    }
 });
 /*
  * عشان اقفل البوكس والغى الشاشة السودة
  */
 $(document).on("click", ".close_select_menu", function() {
-    $(".select_over_lay").remove();
+    var overlay = $(this).closest(".select_over_lay");
+    if (overlay.length) {
+        overlay.remove();
+    } else {
+        $(this).closest("#over_lay").remove();
+    }
 });
 
 /*
@@ -21246,6 +21265,8 @@ $(document).on("click", ".save_points", function() {
                     Caesar.CurrentHero.Hero.add_p_a = 0;
                     Caesar.CurrentHero.Hero.add_p_b = 0;
                     Caesar.CurrentHero.Hero.add_p_c = 0;
+                } else if (json_data.state === "error_hero_point_limit") {
+                    alert("لا يمكن لأي خاصية أن تتجاوز مجموع الخاصيتين الأخريين");
                 } else {
                     alert("wrong");
                 }
@@ -21747,6 +21768,7 @@ $(document).on("click", ".show-hero-theater", function() {
 
 
 function showHero(hero, recruit) {
+    $(".hero-profile-overlay").remove();
 
     var recruit_btn = "";
     if (!isNaN(recruit)) {
@@ -21765,7 +21787,7 @@ function showHero(hero, recruit) {
 
     }
 
-    var over_lay = `<div id="over_lay">
+    var over_lay = `<div id="over_lay" class="hero-profile-overlay">
                         <div id="select_from">
                             <div class="head_bar">
                                 <img src="images/style/head_bar.png" class="banner">
@@ -22295,7 +22317,9 @@ Hero.calWorldUnitArmy = function(heroList) {
 
 $(document).on("click", "#change-hero-name", function() {
 
-    $(this).parent().next().html("<input type='text' id='hero-input-name' style='width: 77%;'/>");
+    var nameInput = $("<input type='text' id='hero-input-name' maxlength='50' style='width: 77%;'/>");
+    nameInput.val(Caesar.CurrentHero.Hero.name);
+    $(this).parent().next().empty().append(nameInput);
     $(this).attr("src", "images/btns/done-btn.png");
     $(this).attr("id", "confirm-change-hero-name");
 
@@ -22303,42 +22327,62 @@ $(document).on("click", "#change-hero-name", function() {
 
 $(document).on("click", "#confirm-change-hero-name", function() {
 
-    var hero_name = $("#hero-input-name").val();
+    var hero_name = String($("#hero-input-name").val() || "").trim();
 
-    if (hero_name.length < 3) {
+    if (hero_name.length < 3 || hero_name.length > 50) {
 
-        alert_box.failMessage("لا يمكن ان  يحتوى اسم البطل على 3 حروف");
+        alert_box.failMessage("يجب أن يتراوح اسم البطل بين 3 و50 حرفًا");
         return;
     }
 
+    var heroId = Caesar.CurrentHero.Hero.id_hero;
     alert_box.confirmDialog("تاكيد تغير اسم البطل ", function() {
 
         $.ajax({
 
-            url: "api/hero.php",
+            url: `${API_URL}/api/AHero/changeName`,
             data: {
-
-                UPDATE_HERO_NEW_NAME: true,
-                new_name: hero_name,
-                id_hero: Caesar.CurrentHero.Hero.id_hero,
-                id_player: ID_PLAYER,
-                token: TOKEN
-
+                name: hero_name,
+                idHero: heroId,
+                token: Caesar.Config.AuthToken,
+                server: Caesar.Config.idServer
             },
             type: 'POST',
-            beforeSend: function(xhr) {
+            dataType: 'json',
+            success: function(data) {
+                var messages = {
+                    error_auth: "لا تملك صلاحية تغيير اسم هذا البطل",
+                    error_name: "اسم البطل غير صالح",
+                    error_same_name: "هذا هو اسم البطل الحالي"
+                };
+                if (!data || data.state !== "ok" || typeof data.name !== "string") {
+                    alert_box.failMessage(messages[data && data.state] || "تعذر تغيير اسم البطل، حاول مرة أخرى");
+                    return;
+                }
 
-            },
-            success: function(data, textStatus, jqXHR) {
-
-                Caesar.CurrentHero.Hero.name = hero_name;
+                var hero = Caesar.Hero.getHero(heroId);
+                if (!hero || !hero.Hero) {
+                    alert_box.failMessage("تعذر تحديث بيانات البطل، أعد فتح القائمة");
+                    return;
+                }
+                hero.Hero.name = data.name;
                 alert_box.succesMessage("تم تغير اسم البطل بنجاح");
-                $(".middle-content").replaceWith(army.middle_content(Caesar.CurrentHero));
+                if (Number(Caesar.CurrentHero.Hero.id_hero) === Number(heroId)) {
+                    Caesar.CurrentHero = hero;
+                    $(".middle-content").replaceWith(army.middle_content(Caesar.CurrentHero));
+                }
                 $("#city-hero-list").html(army.hero_list());
 
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-
+            error: function(jqXHR) {
+                var response = jqXHR.responseJSON;
+                var messages = {
+                    error_auth: "لا تملك صلاحية تغيير اسم هذا البطل",
+                    error_name: "اسم البطل غير صالح"
+                };
+                alert_box.failMessage(
+                    messages[response && response.state] || "تعذر الاتصال بالخادم لتغيير اسم البطل"
+                );
             }
 
         });
@@ -23100,6 +23144,7 @@ Caesar['Hero']['showHeroDetail'] = function(heroData) {
         ringEquipment = getEquipData(heroData['Equip']['ring']),
         steedEquipment = getEquipData(heroData['Equip']['steed']),
         heroOverviewHtml = '<div id=\"hero-over-view\">\x0a                        <div class=\"right\">\x0a                            <div class=\"equip-review\">\x0a                                <ul>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + helmetEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + necklaceEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + armorEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + bootEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + swordEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + shieldEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + pendantEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + beltEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li style=\"margin-left: 25%;\">\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + ringEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(' + steedEquipment['image'] + ')\"></div>\x0a                                        </div>\x0a                                    </li>\x0a                                </ul>\x0a                                    \x0a                            </div>\x0a                            <div class=\"row row-3\">\x0a                                <div class=\"pull-L col-1\">الجنود- الفيلق</div>                       \x0a                                <div class=\"pull-L col-2\">\x0a                                    <div class=\"over-text\">' + (getHeroCap(heroData['Army']) + '/' + getHeroMaxCap(heroData)) + '</div>\x0a                                    <div class=\"colored-bar filak\" style=\"width: ' + getHeroCap(heroData['Army']) * 100 / getHeroMaxCap(heroData) + '%\"></div>\x0a                                </div>\x0a                                <div class=\"pull-L col-3\">\x0a                                </div>\x0a                            </div>\x0a                            <div class=\"dicor\"></div>\x0a                            \x0a                            <div class=\"army-review\">\x0a                                \x0a                                <ul>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['f_1_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['f_1_num']) + '\"> ' + heroData['Army']['f_1_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['f_2_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['f_2_num']) + '\"> ' + heroData['Army']['f_2_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['f_3_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['f_3_num']) + '\"> ' + heroData['Army']['f_3_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['b_1_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['b_1_num']) + '\"> ' + heroData['Army']['b_1_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['b_2_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['b_2_num']) + '\"> ' + heroData['Army']['b_2_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                    <li>\x0a                                        <div class=\"wrapper\">\x0a                                            <div class=\"img\" style=\"background-image: url(images/tech/' + army_typs[heroData['Army']['b_3_type']] + ')\">\x0a                                                <div class=\"amount ' + Fixed['getArmyAmountColor'](heroData['Army']['b_3_num']) + '\"> ' + heroData['Army']['b_3_num'] + '</div>\x0a                                            </div>\x0a                                        </div>\x0a                                    </li>\x0a                                </ul>\x0a                            </div>\x0a                        </div>\x0a                        <div class=\"middel\">\x0a                            \x0a                        </div>\x0a                        <div class=\"left\">\x0a                            <div class=\"hero-data\">\x0a                                <div class=\"name\">\x0a                                    <div class=\"wrapper\">\x0a                                        ' + heroData['Hero']['name'] + '\x0a                                    </div>\x0a                                </div>\x0a                                <div class=\"image\">\x0a                                    <div class=\"wrapper\">\x0a                                        <div class=\"avatar-hero\" style=\"background-image: url(' + Caesar['BaseData']['HeroAvatar'][heroData['Hero']['avatar']] + ')\">\x0a                                            <div class=\"lvl\">' + heroData['Hero']['lvl'] + '</div>\x0a                                        </div>\x0a                                    </div>\x0a                                </div>\x0a                            </div>\x0a                            <div class=\"hero-points\">\x0a                                <table border=\"1\">\x0a                                    <tr>\x0a                                        <td>قوة السيطرة</td>\x0a                                        <td> <span style=\" color: #008c10;\"> ' + heroData['Hero']['point_a'] + ' + ' + heroData['Hero']['point_a_plus'] + '</span></td>\x0a                                    </tr>\x0a                                    <tr>\x0a                                        <td>الشجاعة</td>\x0a                                        <td> <span style=\"color: #b43d02;\"> ' + heroData['Hero']['point_b'] + ' + ' + heroData['Hero']['point_b_plus'] + '</span></td>\x0a                                    </tr>\x0a                                    <tr>\x0a                                        <td>الدفاع</td>\x0a                                        <td> <span style=\"color: #0065ac;\"> ' + heroData['Hero']['point_c'] + ' + ' + heroData['Hero']['point_c_plus'] + '</span></td>\x0a                                    </tr>\x0a                                </table>\x0a                            </div>\x0a                        </div>\x0a                    </div>';
+    heroOverviewHtml = heroOverviewHtml.replace(/الجنود- الفيلق/g, "الفيلق");
     alert_box['alert3X2'](Translate['Title']['Alert']['ShowHero'][UserLag['language']], heroOverviewHtml);
 };
 Caesar.HeroArmy = {};
@@ -24960,7 +25005,10 @@ var Matrial = {
 
     },
     image: function(mat) {
-        return Caesar.BaseData.Items[mat].image;
+        if (Caesar.BaseData && Caesar.BaseData.Items && Caesar.BaseData.Items[mat] && Caesar.BaseData.Items[mat].image) {
+            return Caesar.BaseData.Items[mat].image;
+        }
+        return "images/items/" + mat + ".png";
     },
     table: function(mat) {
         return Caesar.BaseData.Items[mat].db_tab;
@@ -25007,7 +25055,6 @@ Matrial.itemUnitWidget = function(Item, isMall = false) {
     }
 
     var list = `<li matrial_type="${Item}" class="tooltip_mat matrial_unit">
-                   <img src=" images/style/Border-up.png" class="border_up"/>
                    <div class="img-inside-box">
                        <div class="player_amount">
                             <img src="images/icons/shopQuantityBG.png"/>
@@ -25076,6 +25123,7 @@ Caesar.Item.useItemFunc = function() {
                             var response = JSON.parse(data);
                             if (response.state === "ok") {
                                 Caesar.CurrentCity.City = response.City;
+                                refreshEditablePlayerProfileFlag();
                                 if (ws && ws.readyState === 1) {
                                     ws.send(JSON.stringify({
                                         url: "World/refreshCityFlag",
@@ -28450,7 +28498,6 @@ var Trading = {
 
 
         var list = `<li data-index="${Item.id_ex}" matrial_type="${reword.matrial}" class="tooltip_mat matrial_unit exchange-item">
-                           <img src=" images/style/Border-up.png" class="border_up"/>
                            <div class="img-inside-box">
                                <div class="player_amount">
                                     <img src="images/icons/shopQuantityBG.png"/>
@@ -28525,17 +28572,9 @@ var Trading = {
     },
 
     calPageNum: function(cat) {
-
-        var count = 0;
-
-        for (var iii in EXCHANGE_ITEM) {
-
-            if (EXCHANGE_ITEM[iii].cat === cat || !cat) {
-                count++;
-            }
-
-        }
-
+        var count = EXCHANGE_ITEM.filter(function(item) {
+            return !cat || cat === "trade-all" || item.cat === cat;
+        }).length;
         return Math.ceil(count / 9);
     }
 
@@ -28643,7 +28682,7 @@ $(document).on("click", "#dialg_box .for_mat_trade .matrial_unit", function() {
                                     <img src="images/panner/king_name.png">    
                                 </div>       
                                 <div id="alert-title">${Translate.Button.MenuList.Buy[UserLag.language]}</div>            
-                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                             </div>
                             <div id="alert_box" class="matrial-show matrial-trade-show">        
                                 <div class="row-2">
@@ -29339,7 +29378,7 @@ $(document).on("click", ".left-nav ul  li", function() {
 
 Dominant.dialogBox = function() {
 
-    return menu_bar.dialogBox(Translate.Title.MenuList.Dominance[UserLag.language], NavBar.Dominance, `<div id="WORLD_UNIT_DOMINANT" class="box_content"></div>`, 0);
+    return menu_bar.dialogBox(Translate.Title.MenuList.Dominance[UserLag.language], NavBar.Dominance, `<div id="WORLD_UNIT_DOMINANT" class="box_content"></div>`, 0, "centered-left-nav");
 };
 
 Dominant.armyCapital = function() {
@@ -29639,36 +29678,23 @@ Caesar.Item.ItemBox = function(Box, pageOffset = 1) {
     var ListString = "";
     var ListOfItem = Matrial.listOf(Box);
     var FilteredList = {};
-    var currentOffset = 0;
+    var availableItems = Object.keys(ListOfItem).filter(It => Matrial.getPlayerAmount(It) > 0);
+    var maxPageCount = Math.ceil(availableItems.length / 12);
 
-    var maxPageCount = Math.ceil(Object.keys(ListOfItem).filter(It => Matrial.getPlayerAmount(It) > 0).length / 12);
-
-    if (pageOffset > maxPageCount)
+    if (maxPageCount === 0) {
+        updateDialogPager(0, 0);
         return "";
-    if (pageOffset < 1)
+    }
+    if (pageOffset > maxPageCount || pageOffset < 1)
         return "";
 
-
-
-
-    $("#page-nav-holder").html(`${pageOffset}/${Math.ceil(Object.keys(ListOfItem).filter(It => Matrial.getPlayerAmount(It) > 0).length / 12)}`);
-    $("#nav-item-box-right").attr("data-current-offset", pageOffset);
-    $("#nav-item-box-left").attr("data-current-offset", pageOffset);
+    updateDialogPager(pageOffset, maxPageCount);
     $("#dialg_box .right-content .total").attr("mat_table", Box);
     $(".box_content").attr("data-page-for", "box-item");
-    for (var iii in ListOfItem) {
-
-        if (Matrial.getPlayerAmount(iii) <= 0)
-            continue;
-        currentOffset++;
-
-        if (currentOffset > pageOffset * 12)
-            break;
-        if (currentOffset <= (pageOffset - 1) * 12)
-            continue;
-
-        FilteredList[iii] = ListOfItem[iii];
-    }
+    var pageItems = availableItems.slice((pageOffset - 1) * 12, pageOffset * 12);
+    pageItems.forEach(function(item) {
+        FilteredList[item] = ListOfItem[item];
+    });
 
     for (var iii in FilteredList)
         ListString += Matrial.itemUnitWidget(iii, false);
@@ -29683,33 +29709,23 @@ Caesar.Item.ItemMallBox = function(Box, pageOffset = 1) {
     var ListString = "";
     var ListOfItem = Matrial.listOf(Box);
     var FilteredList = {};
-    var currentOffset = 0;
+    var availableItems = Object.keys(ListOfItem).filter(It => ListOfItem[It].gold > 0);
+    var maxPageCount = Math.ceil(availableItems.length / 12);
 
-    var maxPageCount = Math.ceil(Object.keys(ListOfItem).filter(It => ListOfItem[It].gold > 0).length / 12);
+    if (maxPageCount === 0) {
+        updateDialogPager(0, 0);
+        return "";
+    }
+    if (pageOffset > maxPageCount || pageOffset < 1)
+        return "";
 
-    if (pageOffset > maxPageCount)
-        return;
-    if (pageOffset < 1)
-        return;
-
-    $("#page-nav-holder").html(`${pageOffset}/${Math.ceil(Object.keys(ListOfItem).filter(It => ListOfItem[It].gold > 0).length / 12)}`);
-    $("#nav-item-box-right").attr("data-current-offset", pageOffset);
-    $("#nav-item-box-left").attr("data-current-offset", pageOffset);
+    updateDialogPager(pageOffset, maxPageCount);
     $("#dialg_box .right-content .total").attr("mat_table", Box);
     $(".box_content").attr("data-page-for", "mall");
-    for (var iii in ListOfItem) {
-
-        if (ListOfItem[iii].gold <= 0)
-            continue;
-        currentOffset++;
-
-        if (currentOffset > pageOffset * 12)
-            break;
-        if (currentOffset <= (pageOffset - 1) * 12)
-            continue;
-
-        FilteredList[iii] = ListOfItem[iii];
-    }
+    var pageItems = availableItems.slice((pageOffset - 1) * 12, pageOffset * 12);
+    pageItems.forEach(function(item) {
+        FilteredList[item] = ListOfItem[item];
+    });
 
     for (var iii in FilteredList)
         ListString += Matrial.itemUnitWidget(iii, true);
@@ -29721,34 +29737,21 @@ Caesar.Item.ItemMallBox = function(Box, pageOffset = 1) {
 Caesar.Item.ItemExchangeBox = function(Box, pageOffset = 1) {
 
     var ListString = "";
-    var FilteredList = [];
-    var currentOffset = 0;
+    var FilteredList = EXCHANGE_ITEM.filter(It => It.cat === Box || Box === "trade-all");
+    var maxPageCount = Math.ceil(FilteredList.length / 9);
 
-    var maxPageCount = Math.ceil(EXCHANGE_ITEM.filter(It => It.cat === Box || Box === "trade-all").length / 9);
-
-    if (pageOffset > maxPageCount)
+    if (maxPageCount === 0) {
+        updateDialogPager(0, 0);
         return "";
-    if (pageOffset < 1)
+    }
+    if (pageOffset > maxPageCount || pageOffset < 1)
         return "";
 
-    $("#page-nav-holder").html(`${pageOffset}/${maxPageCount}`);
-    $("#nav-item-box-right").attr("data-current-offset", pageOffset);
-    $("#nav-item-box-left").attr("data-current-offset", pageOffset);
+    updateDialogPager(pageOffset, maxPageCount);
     $("#dialg_box .right-content .total").attr("mat_table", Box);
     $(".box_content").attr("data-page-for", "exchange");
 
-
-
-    for (var iii in EXCHANGE_ITEM) {
-        currentOffset++;
-
-        if (currentOffset > pageOffset * 9)
-            break;
-        if (currentOffset <= (pageOffset - 1) * 9)
-            continue;
-
-        FilteredList.push(EXCHANGE_ITEM[iii]);
-    }
+    FilteredList = FilteredList.slice((pageOffset - 1) * 9, pageOffset * 9);
 
     for (var iii in FilteredList)
         ListString += Trading.content_unit(FilteredList[iii]);
@@ -29762,38 +29765,24 @@ Caesar.Item.EquipBox = function(pageOffset = 1) {
 
     var all_equip = "";
     var FilteredList = [];
-    var currentOffset = 0;
+    var availableEquipment = Caesar.DPlayer.Equip.filter(It => !It.id_hero);
+    var maxPageCount = Math.ceil(availableEquipment.length / 12);
 
-    var maxPageCount = Math.ceil(Caesar.DPlayer.Equip.filter(It => !It.id_hero).length / 12);
+    if (maxPageCount === 0) {
+        updateDialogPager(0, 0);
+        return "";
+    }
+    if (pageOffset > maxPageCount || pageOffset < 1)
+        return "";
 
-    if (pageOffset > maxPageCount)
-        return;
-    if (pageOffset < 1)
-        return;
-
-    $("#page-nav-holder").html(`${pageOffset}/${maxPageCount}`);
-    $("#nav-item-box-right").attr("data-current-offset", pageOffset);
-    $("#nav-item-box-left").attr("data-current-offset", pageOffset);
+    updateDialogPager(pageOffset, maxPageCount);
     $("#dialg_box .right-content .total").attr("mat_table", "equip");
     $(".box_content").attr("data-page-for", "equip");
 
-    for (var iii in Caesar.DPlayer.Equip) {
-
-        if (Caesar.DPlayer.Equip[iii].id_hero)
-            continue;
-        currentOffset++;
-
-        if (currentOffset > pageOffset * 12)
-            break;
-        if (currentOffset <= (pageOffset - 1) * 12)
-            continue;
-
-        FilteredList.push(Caesar.DPlayer.Equip[iii]);
-    }
+    FilteredList = availableEquipment.slice((pageOffset - 1) * 12, pageOffset * 12);
 
     for (var iii in FilteredList)
         all_equip += `  <li class="matrial_unit" data-id-equip="${FilteredList[iii].id_equip}">
-                            <img src=" images/style/Border-up.png" class="border_up"/>
                             <div class="img-inside-box">
                                  <img src="${Equipment.getImage(FilteredList[iii].type, FilteredList[iii].part, FilteredList[iii].lvl)}" class="big-img equip-unit" data-equi-part="${FilteredList[iii].part}" data-equi-type="${FilteredList[iii].type}" data-equi-lvl="${FilteredList[iii].lvl}">
                              </div>
@@ -29806,43 +29795,56 @@ Caesar.Item.EquipBox = function(pageOffset = 1) {
 
 };
 
+function getDialogPageCount(pageFor, itemBox) {
+    if (pageFor === "mall")
+        return calPageNumber(itemBox, true);
+    if (pageFor === "box-item")
+        return calPageNumber(itemBox, false);
+    if (pageFor === "equip")
+        return Math.ceil(Caesar.DPlayer.Equip.filter(It => !It.id_hero).length / 12);
+    if (pageFor === "exchange")
+        return Trading.calPageNum(itemBox);
+    return 0;
+}
+
+function renderDialogPage(pageOffset) {
+    var $content = $("#dialg_box .box_content");
+    var $items = $("#dialg_box .right-content .total");
+    var pageFor = $content.attr("data-page-for");
+    var itemBox = $items.attr("mat_table");
+    var maxPageCount = getDialogPageCount(pageFor, itemBox);
+    var content = "";
+
+    if (!Number.isInteger(pageOffset) || pageOffset < 1 || pageOffset > maxPageCount)
+        return;
+
+    if (pageFor === "mall")
+        content = Caesar.Item.ItemMallBox(itemBox, pageOffset);
+    else if (pageFor === "box-item")
+        content = Caesar.Item.ItemBox(itemBox, pageOffset);
+    else if (pageFor === "equip")
+        content = Caesar.Item.EquipBox(pageOffset);
+    else if (pageFor === "exchange")
+        content = Caesar.Item.ItemExchangeBox(itemBox, pageOffset);
+    else
+        return;
+
+    if (typeof content !== "string" || content === "")
+        return;
+    $items.html(content);
+}
 
 $(document).on("click", "#nav-item-box-right", function() {
 
     var currentOffset = Number($(this).attr("data-current-offset"));
-    var PageFor = $(".box_content").attr("data-page-for");
-
-    if (PageFor === "mall")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.ItemMallBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset + 1));
-    if (PageFor === "box-item") {
-        let Cont = Caesar.Item.ItemBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset + 1);
-        if (Cont == "")
-            return;
-        return $("#dialg_box .right-content .total").html(Cont);
-    }
-
-    if (PageFor === "equip")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.EquipBox(currentOffset + 1));
-    if (PageFor === "exchange")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.ItemExchangeBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset + 1));
-
+    renderDialogPage(currentOffset + 1);
 });
 
 
 $(document).on("click", "#nav-item-box-left", function() {
 
     var currentOffset = Number($(this).attr("data-current-offset"));
-    var PageFor = $(".box_content").attr("data-page-for");
-
-    if (PageFor === "mall")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.ItemMallBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset - 1));
-    if (PageFor === "box-item")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.ItemBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset - 1));
-    if (PageFor === "equip")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.EquipBox(currentOffset - 1));
-    if (PageFor === "exchange")
-        return $("#dialg_box .right-content .total").html(Caesar.Item.ItemExchangeBox($("#dialg_box .right-content .total").attr("mat_table"), currentOffset - 1));
-
+    renderDialogPage(currentOffset - 1);
 });
 Caesar.Rank = {};
 
@@ -30952,6 +30954,8 @@ Caesar.WsLib.Battel.Started = function(data) {
 Caesar.WsLib.Battel.StartFailed = function(data) {
     if (data.state === "not_his_role") {
         alert_box.confirmMessage("لست الحلف المسيطر عليها");
+    } else if (data.state === "guild_owns_target") {
+        alert_box.confirmMessage("هدف المعركة تحت سيطرة حلفك بالفعل");
     } else if (data.state === "not_in_city") {
         alert_box.confirmMessage("البطل الحالى ليس فى المدينة");
     } else if (data.state === "no_more_lvls") {
@@ -30970,6 +30974,8 @@ Caesar.WsLib.Battel.StartFailed = function(data) {
         alert_box.confirmMessage("لا يمكنك الهجوم");
     } else if (data.state === "hero_count_over_plaze") {
         alert_box.confirmMessage("اكتملت سعة البلازا للأبطال الموجودين خارج المدينة");
+    } else if (data.state === "not_in_guild" || data.state === "error_6") {
+        alert_box.confirmMessage(data.msg || "يجب ان تكون عضو فى حلف لتتمكن من الهجوم");
     }
 }
 
@@ -32126,7 +32132,6 @@ Caesar.WsLib.World.LiveEventsUpdated = function(events) {
     var eventTypes = {
         luxury_drop_boost: "زيادة جوائز الرفاهية",
         global_drop_boost: "زيادة الجوائز",
-        equipment_drop_boost: "زيادة جوائز العتاد",
         speed_boost: "زيادة سرعة المسير",
         truce: "هدنة"
     };
@@ -33035,7 +33040,7 @@ var campDB = {
                         <div class="nav_bar">
                             <div class="right-nav">
                                 <div class="nav_icon">
-                                    <img class="close_dialog" src="images/btns/close_b.png" style="float: right; margin-right: 15px; margin-top: 20px">
+                                    <img class="close_dialog" src="images/btns/close_b.png">
                                 </div>
                             </div>   
                         </div>
@@ -35299,7 +35304,7 @@ var reviewBox = {
                                  ${title}
                             </div>
                             <div class="close_RB">
-                                <img src="images/btns/close_b.png"/>.
+                                <img src="images/btns/close_b.png"/>
                             </div>
                         </div>
                         <div class="content">
@@ -36146,7 +36151,7 @@ $(document).on("click", "#mail-player-from-world", function() {
     var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Mail[UserLag.language], msg_nav_bar, message.dialogBoxcontent_msgWrite({
         name: player_name,
         id: player_id
-    }), 0);
+    }), 0, "centered-left-nav");
     dialogBoxShow(dialog_box);
 
 });
@@ -36209,24 +36214,6 @@ WorldUnit.prize = {};
 WorldUnit.prize.prizes = {};
 
 
-WorldUnit.prize.getAllPrize = function() {
-    $.ajax({
-        'url': API_URL + '/api/AWorld/getWorldUnitPrize',
-        'data': {
-            token: Caesar['Config']['AuthToken'],
-            server: Caesar['Config']['idServer']
-        },
-        'type': 'GET',
-        success: function(data, _0x45a054, _0x31b37d) {
-            if (isJson(data))
-                WorldUnit['prize']['prizes'] = JSON['parse'](data);
-            else
-                Caesar.LBase.Error(data);
-        },
-        'error': function(_0x295c85, _0x4fa13c, _0x20447d) {}
-    });
-};
-
 WorldUnit.prize.PrizFor = {
     'Win': 'Win',
     'Lose': 'Lose',
@@ -36234,87 +36221,158 @@ WorldUnit.prize.PrizFor = {
     'Plunder': 'Plunder'
 };
 
+WorldUnit.prize.PrizeList = {
+    'Win': [],
+    'Lose': [],
+    'Sp': [],
+    'Plunder': []
+};
+WorldUnit.prize._loadedTypes = {};
+WorldUnit.prize._loadingTypes = {};
 
-
-WorldUnit['prize']['getUnitPrize'] = function(unitType, lvl, PrizeFor = 'Win') {
+WorldUnit.prize.fetchUnitPrizes = function(unitType, callback) {
     unitType = Number(unitType);
-    lvl = Number(lvl);
-    var PrizeList = [];
-    for (var iii in WorldUnit['prize']['prizes'][PrizeFor]) {
-        if (WorldUnit['prize']['prizes'][PrizeFor][iii]['unitType'] === unitType &&
-            WorldUnit['prize']['prizes'][PrizeFor][iii]['lvl'] === lvl)
-            PrizeList.push(WorldUnit['prize']['prizes'][PrizeFor][iii]);
+    if (!Number.isSafeInteger(unitType)) {
+        console.error('Cannot load prize data for an invalid world unit type:', unitType);
+        return;
     }
-    return PrizeList;
+    if (WorldUnit.prize._loadedTypes[unitType]) {
+        if (typeof callback === 'function') callback();
+        return;
+    }
+    if (WorldUnit.prize._loadingTypes[unitType]) return;
+    WorldUnit.prize._loadingTypes[unitType] = true;
+    var token = (Caesar.Config && Caesar.Config.AuthToken) ? Caesar.Config.AuthToken : '';
+    var server = (Caesar.Config && Caesar.Config.idServer) ? Caesar.Config.idServer : 1;
+    $.ajax({
+        url: `${API_URL}/api/AWorld/getUnitViewPrizes`,
+        data: {
+            unitType: unitType,
+            token: token,
+            server: server
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            delete WorldUnit.prize._loadingTypes[unitType];
+            if (!res || res.state !== 'ok' || !Array.isArray(res.prizes)) {
+                console.error('Failed to load world unit prizes:', res);
+                return;
+            }
+            WorldUnit.prize._loadedTypes[unitType] = true;
+            if (!WorldUnit.prize.PrizeList.Win) WorldUnit.prize.PrizeList.Win = [];
+            for (var i = 0; i < res.prizes.length; i++) {
+                WorldUnit.prize.PrizeList.Win.push(res.prizes[i]);
+            }
+            if (typeof callback === 'function') callback();
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            delete WorldUnit.prize._loadingTypes[unitType];
+            console.error('Failed to request world unit prizes:', textStatus, errorThrown);
+        }
+    });
 };
 
-WorldUnit['prize']['getUnitAllLvlsPrize'] = function(unitType, PrizeFor = 'Win') {
-    unitType = Number(unitType);
-    var PrizeList = [];
-    for (var iii in WorldUnit['prize']['prizes'][PrizeFor]) {
-        if (WorldUnit['prize']['prizes'][PrizeFor][iii]['unitType'] === unitType)
-            PrizeList.push(WorldUnit['prize']['prizes'][PrizeFor][iii]);
-    }
-    return PrizeList;
+WorldUnit.prize.fetchAllPrizes = function(callback) {
+    if (typeof callback === 'function') callback();
 };
 
+WorldUnit['prize']['getUnitPrize'] = function(t, l, u = 'Win') {
+    t = Number(t);
+    l = Number(l);
+    var y = [];
+    var list = (WorldUnit.prize.PrizeList && WorldUnit.prize.PrizeList[u]) ? WorldUnit.prize.PrizeList[u] : [];
+    for (var i = 0; i < list.length; i++) {
+        var e = list[i];
+        if (Number(e.unitType) === t && Number(e.lvl) === l) {
+            y.push(e);
+        }
+    }
+    return y;
+};
+
+WorldUnit['prize']['getUnitAllLvlsPrize'] = function(t, l = 'Win') {
+    t = Number(t);
+    var u = [];
+    var list = (WorldUnit.prize.PrizeList && WorldUnit.prize.PrizeList[l]) ? WorldUnit.prize.PrizeList[l] : [];
+    for (var i = 0; i < list.length; i++) {
+        var y = list[i];
+        if (Number(y.unitType) === t) {
+            u.push(y);
+        }
+    }
+    return u;
+};
 
 WorldUnit.prize.prizeList = function(x_coord, y_coord) {
-
-    if (!WorldUnit.getWorldUnit(x_coord, y_coord))
-        return;
-
-    var lvl = Number(WorldUnit.getWorldUnit(x_coord, y_coord).l);
-    var type = Number(WorldUnit.getWorldUnit(x_coord, y_coord).ut);
-
-    var prize = this.getUnitPrize(type, lvl);
-    var list = "";
-    for (var iii in prize) {
-        list += `   <li>
-                        <div class="golden-border">
-                            <div class="unit-image" style="background-image: url(${Matrial.image(prize[iii].prize)})">
-                                <div class="amount stroke">(${prize[iii].amount_min}-${prize[iii].amount_max})X</div>
-                            </div>
-                        </div>
-                    </li>
-                    `;
+    var u = WorldUnit.getWorldUnit(x_coord, y_coord);
+    if (!u) return '';
+    var y = Number(u.l), e = Number(u.ut);
+    var prizes = WorldUnit.prize.getUnitPrize(e, y);
+    if (prizes.length === 0 && !WorldUnit.prize._loadedTypes[e]) {
+        WorldUnit.prize.fetchUnitPrizes(e, function() {
+            var updated = WorldUnit.prize.prizeList(x_coord, y_coord);
+            if (updated) {
+                $('#unit_review .prize-list ul').html(updated);
+            }
+        });
     }
-
-    return list;
+    var html = '';
+    for (var i = 0; i < prizes.length; i++) {
+        var t = prizes[i];
+        var amt = t.amount_min === t.amount_max ? `${t.amount_min}` : `${t.amount_min}-${t.amount_max}`;
+        html += `<li>
+            <div class="golden-border">
+                <div class="unit-image" style="background-image: url(${Matrial.image(t.prize)})">
+                    <div class="amount stroke l-number">(${amt})X</div>
+                </div>
+            </div>
+        </li>`;
+    }
+    return html;
 };
 
 WorldUnit['prize']['prizeAllLvlsList'] = function(xCoord, yCoord, prizeFor = 'Win') {
-    if (!WorldUnit['getWorldUnit'](xCoord, yCoord))
-        return;
-    var lvl = Number(WorldUnit['getWorldUnit'](xCoord, yCoord)['l']),
-        unitType = Number(WorldUnit['getWorldUnit'](xCoord, yCoord)['ut']),
-        PrizeList = WorldUnit['prize']['getUnitAllLvlsPrize'](unitType, prizeFor),
-        PList = [],
-        List = '';
-    for (var iii in PrizeList) {
-        if (PList['indexOf'](PrizeList[iii]['prize']) === -0x1)
-            PList.push(PrizeList[iii]['prize']);
-        else
-            continue;
-        if (PList['length'] > 0x10)
-            break;
-        List += `   <li>
-                        <div class="golden-border">
-                            <div class="unit-image ${PrizeList[iii].lvl !== lvl ? "gray-filter" : ""}" style="background-image: url(${Matrial.image(PrizeList[iii].prize)})">
-                                <div class="amount stroke">(${PrizeList[iii].amount_min}-${PrizeList[iii].amount_max})X</div>
-                            </div>
-                        </div>
-                    </li>
-                    `;
+    var y = WorldUnit.getWorldUnit(xCoord, yCoord);
+    if (!y) return '';
+    var e = Number(y.l), x = Number(y.ut);
+    var prizes = WorldUnit.prize.getUnitAllLvlsPrize(x, prizeFor);
+    if (prizes.length === 0 && !WorldUnit.prize._loadedTypes[x]) {
+        WorldUnit.prize.fetchUnitPrizes(x, function() {
+            var updated = WorldUnit.prize.prizeAllLvlsList(xCoord, yCoord, prizeFor);
+            if (updated) {
+                $('#camp-prize ul').html(updated);
+            }
+        });
     }
-    return List;
+    var currentLvlPrizes = WorldUnit.prize.getUnitPrize(x, e, prizeFor);
+    var currentPrizeMap = {};
+    for (var k = 0; k < currentLvlPrizes.length; k++) {
+        currentPrizeMap[currentLvlPrizes[k].prize] = currentLvlPrizes[k];
+    }
+    var seen = [];
+    var html = '';
+    for (var i = 0; i < prizes.length; i++) {
+        var item = prizes[i];
+        if (seen.indexOf(item.prize) !== -1) continue;
+        seen.push(item.prize);
+        if (seen.length > 16) break;
+        var currentItem = currentPrizeMap[item.prize];
+        var isCurrent = Boolean(currentItem);
+        var displayItem = isCurrent ? currentItem : item;
+        var amt = displayItem.amount_min === displayItem.amount_max ? `${displayItem.amount_min}` : `${displayItem.amount_min}-${displayItem.amount_max}`;
+        html += `<li>
+            <div class="golden-border">
+                <div class="unit-image ${isCurrent ? '' : 'gray-filter'}" style="background-image: url(${Matrial.image(item.prize)})">
+                    <div class="amount stroke l-number">(${amt})X</div>
+                </div>
+            </div>
+        </li>`;
+    }
+    return html;
 };
 
 
-
-$(document).on("PlayerReady", "html", function() {
-    WorldUnit.prize.getAllPrize();
-});
 Caesar.World.Map.posX = function(xCoord, yCoord) {
     return xCoord * 64 - yCoord * 64;
 };
@@ -36761,7 +36819,7 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                 مكان خالى
                             </div>
                             <div class="close_RB">
-                                <img src="images/btns/close_b.png">.
+                                <img src="images/btns/close_b.png">
                             </div>
                         </div>
                         <div class="content">
@@ -36938,6 +36996,9 @@ Caesar.World.Map.OnOtherUnitClicked = function(Unit) {
         campDB.equipRow(jsonData.equip || []);
 
         $('#lvlChangableUnit')['html'](campDB['armyContainer'](Unit.x, Unit.y, jsonData.army));
+        if ($('#camp-prize ul').length) {
+            $('#camp-prize ul').html(WorldUnit.prize.prizeAllLvlsList(Unit.x, Unit.y));
+        }
 
         var maxLvl = (Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[Unit.ut]) ? Caesar.World.UnitTypeData[Unit.ut].maxLvl : 50;
         if (Number(Unit.l) > Number(maxLvl)) {
@@ -37051,6 +37112,11 @@ Caesar.World.MapBattel.AddBattels = function() {
             Caesar.World.MapBattel.removeBattel(OneBattel);
             continue;
         }
+        // Origin coordinates are intentionally stripped from the server response to hide
+        // troop movements. Skip line drawing when they are absent to avoid a zero-width
+        // Phaser tileSprite error.
+        if (!OneBattel.xCity || !OneBattel.yCity)
+            continue;
 
         let x1 = Caesar.World.Map.posX(OneBattel.xCity, OneBattel.yCity) + 64;
         let y1 = Caesar.World.Map.posY(OneBattel.xCity, OneBattel.yCity) + 64;
@@ -37742,11 +37808,12 @@ function playerBattels() {
 
             Caesar.Battel.Battels = JSON.parse(data);
 
-            if ($("#dialg_box").attr("type") === "reports" && Caesar.Battel.Battels && Caesar.Battel.Battels.length > 0) { // if opened menu is for reports
+            if ($("#dialg_box").attr("type") === "reports" && Array.isArray(Caesar.Battel.Battels)) { // if opened menu is for reports
 
-                if ($("#reports_list .selected").length > 0) { // if there selected  battel
+                if (Caesar.Battel.Battels.length > 0 && $("#reports_list .selected").length > 0) { // if there selected  battel
 
                     $("#reports_list").html(BattelField.getBattelHeaders(Caesar.Battel.Battels, $("#reports_list .selected").attr("id_battel"), true));
+                    refreshBattleReportListScroll();
                     BattelField.battelField({
                         navBar: NavBar.Report,
                         totalBox: false,
@@ -37755,9 +37822,10 @@ function playerBattels() {
                     //$(".box_content").replaceWith(Reports.dialogBoxcontent_reports($("#reports_list .selected").attr("id_battel")));
 
 
-                } else if ($("#reports_list").length > 0) { // no battels
+                } else if ($("#reports_list").length > 0) {
 
                     $("#reports_list").html(BattelField.getBattelHeaders(Caesar.Battel.Battels, 0, true));
+                    refreshBattleReportListScroll();
 
                 }
 
@@ -38341,7 +38409,7 @@ $(document).on("click", "#show_avail_guild", function() {
 
 
     var content = menu_bar.dialogBoxcontent_Ranks(true);
-    var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Ranking[UserLag.language], NavBar.Ranking, content, 0);
+    var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Ranking[UserLag.language], NavBar.Ranking, content, 0, "centered-left-nav left-nav-up");
     if ($("#dialg_box").length > 0) {
         $("#dialg_box").animate({
             top: "-800px"
@@ -38505,7 +38573,7 @@ var Guild = {
 
 
         return `
-            <div id='dialg_box' class='guild guild_dialog_box'>
+            <div id='dialg_box' class='guild guild_dialog_box centered-left-nav left-nav-up'>
                 <div class="head_bar">
                     <img src="images/style/head_bar.png">
                     <div class="title">${title}</div>
@@ -38517,7 +38585,7 @@ var Guild = {
                     </div>
                     <div class="right-nav">
                         <div class="nav_icon">
-                            <img  class ="close_dialog" src="images/btns/close_b.png">
+                            <img class="close_dialog" src="images/btns/close_b.png">
                             <div class="full-btn full-btn-1x ellipsis" id="guild_lead">
                                 ${Translate.Button.MenuList.LeagueManagement[UserLag.language]}
                             </div>
@@ -39464,7 +39532,7 @@ $(document).on("click", "#creat_guild", function() {
                         <div id="alert-title">
                              انشاء حلف
                         </div>            
-                        <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                        <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                     </div>
                     <div id="alert_box" class="guild_creat" >        
                         <div class="row-one">
@@ -40137,7 +40205,7 @@ $(document).on("click", "#change-g-slog", function() {
                                 <div id="alert-title">
                                     تعديل شعار
                                 </div>            
-                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                             </div>
                             <div id="alert_box" class="guild_creat">        
                                 <div class="row-one">
@@ -42271,6 +42339,7 @@ $(document).on("click", ".show-player-profile", function() {
  * @returns {undefined}
  */
 function showPlayerProfile(id_player) {
+    $(".player-profile-overlay").remove();
 
     $.ajax({
 
@@ -42283,7 +42352,7 @@ function showPlayerProfile(id_player) {
         },
         type: 'GET',
         beforeSend: function(xhr) {
-            var player_review = `<div id="over_lay">
+            var player_review = `<div id="over_lay" class="player-profile-overlay">
                                     <div id="select_from">
                                         <div class="head_bar">
                                             <img src="images/style/head_bar.png" class="banner">
@@ -42426,7 +42495,8 @@ $(document).on("click", "#send-g-msg", function() {
             name: Translate.Button.Chat.League[UserLag.language],
             id: null
         }),
-        0);
+        0,
+        "centered-left-nav");
 
     dialogBoxShow(dialog_box, function() {
         $("#dialg_box").attr("type", "messages");
@@ -43162,18 +43232,6 @@ function getReportContent(detail, data_obj, offset) {
     console.log(detail);
     console.log(data_obj);
     var resources = detail.prize && detail.prize.resource || {};
-    var battleTiming = detail.battle_data || {};
-    var timingDetails = [];
-    if (Number(battleTiming.battle_duration_sec) > 0) {
-        timingDetails.push(`مدة المعركة: ${changeTimeFormat(Number(battleTiming.battle_duration_sec))}`);
-    }
-    if (Number(battleTiming.return_duration_sec) > 0) {
-        timingDetails.push(`مدة العودة: ${changeTimeFormat(Number(battleTiming.return_duration_sec))}`);
-    }
-    if (Number(battleTiming.time_back) > 0) {
-        var expectedReturn = new Date(Number(battleTiming.time_back) * 1000);
-        timingDetails.push(`موعد عودة البطل المتوقع: ${expectedReturn.getHours()}:${String(expectedReturn.getMinutes()).padStart(2, "0")}`);
-    }
     var resourceTargetType = Number(data_obj.target_type);
     var showResourceLoot = resourceTargetType >= 1 && resourceTargetType <= 63
         && ["food", "wood", "stone", "metal", "coin"].some(function(resource) {
@@ -43185,8 +43243,8 @@ function getReportContent(detail, data_obj, offset) {
         "ماركوس أوريليوس", "كومودوس", "سبتيميوس سيفيروس", "قسطنطين"
     ];
     var getDisplayedHeroName = function(hero) {
-        var storedName = hero.h_name || "بطل النظام";
-        if (Number(hero.id_player) !== 0 || !/^حامية الأعداء(?:\s|$)/.test(storedName)) {
+        var storedName = (hero.h_name || "بطل النظام").replace(/^القيصر\s+/, "");
+        if (Number(hero.id_player) !== 0 || !/^حامية الأعداء(?:\s|$)/.test(hero.h_name || "")) {
             return storedName;
         }
         var targetLevel = Number(detail.general_data.lvl);
@@ -43197,7 +43255,7 @@ function getReportContent(detail, data_obj, offset) {
         }
         var index = (resourceTargetType * 31 + xCoord * 17 + yCoord * 13 + targetLevel - 1)
             % commanders.length;
-        return "القيصر " + commanders[index];
+        return commanders[index];
     };
 
     var cont = `<div class="box_content for_msg for_Br " id="battel-report-msg">
@@ -43220,20 +43278,38 @@ function getReportContent(detail, data_obj, offset) {
                             </div>
                             ${showResourceLoot ? `<div class="resource-row">
                                 <ul>
-                                    <li><img ondragstart="return false;" src="images/style/food.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${detail.prize.resource.food} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/wood.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${detail.prize.resource.wood}</span></li>
-                                    <li><img ondragstart="return false;" src="images/style/stone.png"><span>${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${detail.prize.resource.stone} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/iron.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${detail.prize.resource.metal} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/coin.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${detail.prize.resource.coin} </span></li>
+                                    <li><img ondragstart="return false;" src="images/style/food.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.food) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/style/wood.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.wood) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/style/stone.png"><span>${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.stone) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/style/iron.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.metal) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/style/coin.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.coin) || 0)} </span></li>
                                 </ul>
                             </div>` : ""}
                             <div class="prize-row flex">
                                 <ul>`;
     for (var iii in detail.prize.matrial) {
-
+        var reward = detail.prize.matrial[iii];
+        var matPrize = reward.prize;
+        var equipmentReward = reward.equipmentType && reward.equipmentPart && typeof Equipment !== "undefined";
+        var equipmentImage = equipmentReward
+            ? Equipment.getImage(reward.equipmentType, reward.equipmentPart, reward.equipmentLevel || 1)
+            : "";
+        var knownEquipmentReward = equipmentReward && !!equipmentImage;
+        var itemImage = equipmentReward
+            ? (knownEquipmentReward ? equipmentImage : "images/icons/hero/eq-bg.png")
+            : Matrial.image(matPrize);
+        var equipmentName = knownEquipmentReward
+            ? Equipment.getName(reward.equipmentType, reward.equipmentPart, reward.equipmentLevel || 1)
+            : "";
+        var matName = equipmentName || ((Caesar.BaseData && Caesar.BaseData.Items && Caesar.BaseData.Items[matPrize] && Caesar.BaseData.Items[matPrize].name)
+            ? Caesar.BaseData.Items[matPrize].name
+            : (typeof Matrial !== "undefined" && Matrial.getMatrialName ? Matrial.getMatrialName(matPrize) : matPrize));
+        var equipmentAttributes = knownEquipmentReward
+            ? ` class="equip-unit" data-equi-type="${reward.equipmentType}" data-equi-part="${reward.equipmentPart}" data-equi-lvl="${reward.equipmentLevel || 1}"`
+            : "";
         cont += `<li>
-                                            <img src="${Matrial.image(detail.prize.matrial[iii].prize)}">
-                                            <div class="amount stroke">${detail.prize.matrial[iii].amount}</div>
+                                            <img${equipmentAttributes} src="${itemImage}" title="${matName}">
+                                            <div class="amount stroke">${getArabicNumbers(detail.prize.matrial[iii].amount)}</div>
                                         </li>`;
 
     }
@@ -43241,7 +43317,6 @@ function getReportContent(detail, data_obj, offset) {
 
     cont += `</ul>
                                     <p>جولات: ${getArabicNumbers(detail.general_data.round_num)}, شرف: ${getArabicNumbers(detail.prize.honor ||0)}</p>
-                                    ${timingDetails.length ? `<p>${timingDetails.join(" | ")}</p>` : ""}
                                 </div>
                             </div>`;
 
@@ -43384,12 +43459,27 @@ function getReportContent(detail, data_obj, offset) {
                                         عودة
                                     </button>
                                 </li>
+                                <li  style=" float: right; width: 110px; margin-right: 10px;">  
+                                    <button class="full-btn full-btn-3x full" id="view-battle-replay" data-enc-id="${detail.encId || (data_obj && data_obj.id_report) || ''}">
+                                        عرض المعركة
+                                    </button>
+                                </li>
                             </ul>  
                         </div>  
                     </div>
                 </div>`;
     return cont;
 }
+
+$(document).on("click", "#view-battle-replay", function() {
+    var encId = $(this).attr("data-enc-id");
+    var serverId = (typeof SERVER_ID !== "undefined" && SERVER_ID) ? SERVER_ID : 1;
+    if (encId) {
+        window.open("battel.php?report=" + encodeURIComponent(encId) + "&server=" + encodeURIComponent(serverId), "_blank");
+    } else {
+        window.open("battel.php?server=" + encodeURIComponent(serverId), "_blank");
+    }
+});
 
 /*<button class="full-btn full" id="msg-reply" data-id-player="${msg_data[0].id_from}" data-player-name="${msg_data[0].name}">  رد </button>*/
 
@@ -44576,178 +44666,175 @@ $(document).on("click", ".avatar-name h1 , .avatar-img img", function() {
 
 function showEditablePlayerProfile() {
     var player = Caesar.DPlayer && Caesar.DPlayer.Player;
-    var id_player = player ? parseInt(player.id_player) : 0;
-
-    if (!Number.isSafeInteger(id_player) || id_player <= 0) {
+    if (!player || !Number.isSafeInteger(Number(player.id_player)) || Number(player.id_player) <= 0) {
         return;
     }
 
-    $.ajax({
+    $(".player-profile-overlay").remove();
+    var avatarIndex = Number(player.avatar);
+    if (!Number.isInteger(avatarIndex) || !Caesar.BaseData.HeroAvatar[avatarIndex]) {
+        avatarIndex = 1;
+    }
 
-        url: "api/player.php",
-        data: {
-
-            GET_PLAYER_DETAIL: true,
-            id_player: id_player
-
-        },
-        type: 'GET',
-        beforeSend: function(xhr) {
-            var player_review = `<div id="over_lay">
-                                    <div id="select_from">
-                                        <div class="head_bar">
-                                            <img src="images/style/head_bar.png" class="banner">
-                                            <div class="title">ملف الملك</div>
-                                            <img class="close close_use_menu" src="images/btns/close_b.png">
+    var guild = Caesar.DPlayer.GuildData && Caesar.DPlayer.GuildData.name
+        ? Caesar.DPlayer.GuildData.name
+        : "----";
+    var profile = `<div id="over_lay" class="player-profile-overlay">
+                        <div id="select_from">
+                            <div class="head_bar">
+                                <img src="images/style/head_bar.png" class="banner">
+                                <div class="title">ملف الملك</div>
+                                <img class="close close_use_menu" src="images/btns/close_b.png">
+                            </div>
+                            <p style="clear: both"></p>
+                            <div id="rank-review" class="player-review">
+                                <div class="upper">
+                                    <div class="left pull-L">
+                                        <div class="player-avatar">
+                                            <div id="change-avatar-left" class="left-btn pull-L" style="margin-left: 5px;margin-top: 13px;"></div>
+                                            <img src="${Caesar.BaseData.HeroAvatar[avatarIndex]}" id="A-A-P-image" data-index="${avatarIndex}">
+                                            <div id="change-avatar-right" class="right-btn pull-R" style="margin-right: 5px;margin-top: 13px;"></div>
                                         </div>
-                                        <p style="clear: both"></p>
-                                        <div id="rank-review" class="player-review">
-                                            <div class="upper">
-                                                <div class="left pull-L">
-                                                    <div class="player-avatar">
-                                                        <div id="change-avatar-left" class="left-btn pull-L" style="margin-left: 5px;margin-top: 13px;"></div>
-                                                        <img src="${Caesar.BaseData.HeroAvatar[1]}" id="A-A-P-image" data-index="${1}"/>
-                                                        <div id="change-avatar-right" class="right-btn pull-R" style="margin-right: 5px;margin-top: 13px;"></div>
-                                                        
-                                                    </div>
-                                                    <div id="confirm-player-new-img">
-                                                        <img src="images/btns/done.png" class="img-sml"  >
-                                                    </div>
-
-                                                </div>
-                                                <div class="right pull-R">
-                                                    <div class="th ellipsis">
-                                                        ${Translate.Title.TH.League[UserLag.language]}
-                                                    </div>
-                                                    <div class="trow bg-btn-blu" id="A-A-P-guild">
-                                                       ----
-                                                    </div>
-                                                    <div class="th ellipsis">
-                                                        ${Translate.Title.TH.NobleRank[UserLag.language]}
-                                                    </div>
-                                                    <div class="trow bg-btn-blu" id="A-A-P-promotion">
-                                                       ----
-                                                    </div>
-                                                    <div class="th ellipsis">
-                                                        ${Translate.Title.TH.Ranking[UserLag.language]}
-                                                    </div>
-                                                    <div class="trow bg-btn-blu" id="A-A-P-rank">
-                                                       ----
-                                                    </div>
-                                                </div>
-                                                <p style="clear: both"></p>
-                                                <h1 class="player-name" id="A-A-P-name">----- 
-                                                   
-                                                </h1>
-                                            </div>
-                                            <div class="down">
-                                                <div class="th ellipsis">${Translate.Title.TH.Info[UserLag.language]}</div>
-                                                <div class="li" style="margin-top: 15px;">
-                                                    <div class="li-d pull-L bg-btn-blu">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/prestige.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  " id="A-A-P-prestige">
-                                                           ------
-                                                        </div>
-                                                    </div>
-                                                    <div class="li-d pull-R bg-btn-blu">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/honor.png"/>
-                                                        </div>
-                                                        <div class="title pull-R " id="A-A-P-honor">
-                                                            ----
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                                <div class="li" style="margin-top: 5px; width: 125px; margin: auto">
-                                                     <div id="change-player-password" class="li-d pull-L bg-btn-blu">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/stat_login.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  ">
-                                                            تغير كلمة المرور
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="li buttons" style="margin-top: 15px; width: 95%">
-                                                     <div class="li-d pull-L bg-btn-red">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/message.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  ">
-                                                            مراسلة
-                                                        </div>
-                                                    </div>
-                                                     <div class="li-d pull-L bg-btn-red">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/chat.png"/>
-                                                        </div>
-                                                        <div class="title pull-R selectable">${Caesar.Config.RechCode}</div>
-                                                    </div>
-                                                     <div class="li-d pull-L bg-btn-red">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/friend.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  ">
-                                                            صديق
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <span style="clear: both"></span>
-                                            </div>
+                                        <div id="confirm-player-new-img">
+                                            <img src="images/btns/done.png" class="img-sml" alt="حفظ الصورة">
                                         </div>
                                     </div>
-                                </div>`;
+                                    <div class="right pull-R">
+                                        <div class="th ellipsis">${Translate.Title.TH.League[UserLag.language]}</div>
+                                        <div class="trow bg-btn-blu" id="A-A-P-guild">----</div>
+                                        <div class="th ellipsis">${Translate.Title.TH.NobleRank[UserLag.language]}</div>
+                                        <div class="trow bg-btn-blu" id="A-A-P-promotion">----</div>
+                                        <div class="th ellipsis">${Translate.Title.TH.Ranking[UserLag.language]}</div>
+                                        <div class="trow bg-btn-blu" id="A-A-P-rank">----</div>
+                                    </div>
+                                    <p style="clear: both"></p>
+                                    <h1 class="player-name">
+                                        <span id="A-A-P-name"></span>
+                                        <img src="images/btns/edit.png" class="img-sml" id="edit-player-name-btn" alt="تعديل الاسم">
+                                        <span class="player-profile-name-form" hidden>
+                                            <input type="text" class="input" id="playe-new-name" maxlength="10" autocomplete="off">
+                                            <button type="button" class="full-btn full-btn-1x" id="save-player-name-btn">حفظ الاسم</button>
+                                        </span>
+                                    </h1>
+                                </div>
+                                <div class="down">
+                                    <div class="th ellipsis">${Translate.Title.TH.Info[UserLag.language]}</div>
+                                    <div class="li" style="margin-top: 15px;">
+                                        <div class="li-d pull-L bg-btn-blu">
+                                            <div class="image pull-L">
+                                                <img src="images/icons/prestige.png" alt="">
+                                            </div>
+                                            <div class="title pull-R" id="A-A-P-prestige">----</div>
+                                        </div>
+                                        <div class="li-d pull-R bg-btn-blu">
+                                            <div class="image pull-L">
+                                                <img src="images/icons/honor.png" alt="">
+                                            </div>
+                                            <div class="title pull-R" id="A-A-P-honor">----</div>
+                                        </div>
+                                    </div>
+                                    <div class="li player-profile-flag-row">
+                                        <div class="li-d pull-L bg-btn-blu">
+                                            <img id="player-profile-flag-image" alt="" hidden>
+                                            <span id="player-profile-flag-tag"></span>
+                                        </div>
+                                        <button type="button" class="full-btn full-btn-3x" id="profile-change-flag">تغيير العلم</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    $("body").append(profile);
 
-            $("body").append(player_review);
-        },
-        success: function(data, textStatus, jqXHR) {
+    $("#A-A-P-name").text(player.name || "");
+    $("#A-A-P-guild").text(guild);
+    $("#A-A-P-prestige").text(getArabicNumbers(Number(player.prestige) || 0));
+    $("#A-A-P-honor").text(getArabicNumbers(Number(player.honor) || 0));
+    $("#A-A-P-rank").text(getArabicNumbers(Number(player.rank) || 0));
+    $("#A-A-P-promotion").text(getPromotionTitle(player.porm));
+    $("#playe-new-name").val(player.name || "");
+    refreshEditablePlayerProfileFlag();
+}
 
-            var json_data = JSON.parse(data);
-
-            $("#A-A-P-image").attr("src", Caesar.BaseData.HeroAvatar[json_data.avatar]);
-            $("#A-A-P-image").attr("data-index", json_data.avatar);
-            $("#A-A-P-guild").text(json_data.guild || "----");
-            $("#A-A-P-promotion").text(getPromotionTitle(json_data.porm));
-            $("#A-A-P-rank").html(getArabicNumbers(json_data.rank));
-            $("#A-A-P-name").html(json_data.name + ' <img src="images/btns/edit.png" class="img-sml" style="vertical-align: middle; margin-left: 15px" id="edit-player-name-btn">');
-            $("#A-A-P-prestige").html(getArabicNumbers(json_data.prestige));
-            $("#A-A-P-honor").html(getArabicNumbers(json_data.honor));
-
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-
-        }
-
-    });
-
-
-
-
+function refreshEditablePlayerProfileFlag() {
+    var city = Caesar.CurrentCity && Caesar.CurrentCity.City;
+    var flag = city && city.flag ? Caesar.BaseData.Items[city.flag] : null;
+    $("#player-profile-flag-image")
+        .attr("src", flag ? flag.image : "")
+        .prop("hidden", !flag);
+    $("#player-profile-flag-tag").text(city && city.flag_tag ? city.flag_tag : (flag ? "مفعّل" : "لا يوجد علم مفعّل"));
 }
 
 $(document).on("click", "#edit-player-name-btn", function() {
-
-    $("#A-A-P-name").html(`<input type="text" class="input" id="playe-new-name" style="text-align: center" value="${Caesar.DPlayer.Player.name}" data-pastable="true"/>
-                            <img src="images/btns/done.png" class="img-sml" style="margin-left: 15px" id="save-player-name-btn">`);
-
-
+    $(".player-profile-name-form").prop("hidden", false);
+    $("#playe-new-name").trigger("focus").select();
 });
-
 
 $(document).on("click", "#save-player-name-btn", function() {
+    var newName = String($("#playe-new-name").val() || "").trim();
+    if (newName.length < 3 || newName.length > 10) {
+        alert_box.confirmMessage(newName.length < 3 ? "اسم الملك صغير" : "اسم الملك كبير");
+        return;
+    }
+    if (newName === String(Caesar.DPlayer.Player.name || "")) {
+        alert_box.confirmMessage("يجب أن يكون الاسم الجديد مختلفًا");
+        return;
+    }
 
-    var matrial = ["change_name"];
-    BoxOfMatrialToUse(matrial, "change_player_name");
+    var itemKey = "change_name";
+    var itemCount = Matrial.getPlayerAmount(itemKey);
+    var itemData = Caesar.BaseData && Caesar.BaseData.Items && Caesar.BaseData.Items[itemKey];
+    var itemName = (itemData && itemData.name) || "تغير اسم الملك";
 
+    if (itemCount <= 0) {
+        alert_box.failMessage("لا تمتلك غرض " + itemName + " في صندوق المواد");
+        return;
+    }
+
+    var confirmMsg = `تأكيد تغيير اسم الملك إلى (${newName}) واستعمال 1 من ${itemName} من صندوق المواد الخاص؟`;
+    alert_box.confirmDialog(confirmMsg, function() {
+        var button = $("#save-player-name-btn").prop("disabled", true);
+        $.ajax({
+            url: `${API_URL}/api/APlayer/changePlayerName`,
+            type: "POST",
+            data: {
+                NewName: newName,
+                token: Caesar.Config.AuthToken,
+                server: Caesar.Config.idServer
+            }
+        }).done(function(data) {
+            button.prop("disabled", false);
+            if (!Caesar.LBase.isJson(data)) {
+                Caesar.LBase.Error(data);
+                return;
+            }
+            var response = typeof data === "string" ? JSON.parse(data) : data;
+            if (response.state === "ok") {
+                Caesar.DPlayer.Player.name = response.name;
+                $("#A-A-P-name").text(response.name);
+                $(".avatar-name h1").text(response.name);
+                $(".player-profile-name-form").prop("hidden", true);
+                Matrial.takeFrom(itemKey, 1);
+                if (typeof Player_profile !== "undefined" && typeof Player_profile.refreshMatrialBox === "function") {
+                    Player_profile.refreshMatrialBox();
+                }
+                alert_box.succesMessage("تم تغيير الاسم واستخدام غرض " + itemName);
+            } else if (response.state === "error_no_item") {
+                alert_box.failMessage("لا تمتلك غرض " + itemName);
+            } else if (response.state === "error_2") {
+                alert_box.failMessage("يوجد لاعب يحمل نفس الاسم");
+            } else if (response.state === "error_same_name") {
+                alert_box.confirmMessage("يجب أن يكون الاسم الجديد مختلفًا");
+            } else {
+                alert_box.failMessage("تعذر تغيير اسم الملك");
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            button.prop("disabled", false);
+            console.error("Failed to change player name", jqXHR.status, jqXHR.statusText, textStatus, errorThrown);
+            alert_box.failMessage("تعذر الاتصال بالخادم لتغيير الاسم");
+        });
+    });
 });
-
 
 /*
  * change player Avatar
@@ -44794,52 +44881,112 @@ $(document).on("click", "#change-avatar-right", function() {
 /*   save new avatar  */
 
 $(document).on("click", "#confirm-player-new-img", function() {
-
     var image_index = parseInt($("#A-A-P-image").attr("data-index"));
-
     if (image_index === parseInt(Caesar.DPlayer.Player.avatar)) {
-
         alert_box.confirmMessage("لتغير الصورة الشخصية عليك اختيار صورة اخرى");
         return;
-
-    } else {
-
-
-        $.ajax({
-
-            url: "api/player.php",
-            data: {
-
-                CHANGE_PLAYER_AVATAR: true,
-                image_index: image_index,
-                id_player: ID_PLAYER,
-                token: TOKEN
-
-            },
-            type: 'POST',
-            beforeSend: function(xhr) {
-
-            },
-            success: function(data, textStatus, jqXHR) {
-
-                if (data === "done") {
-
-                    $(".avatar-img img").attr("src", Caesar.BaseData.HeroAvatar[image_index]);
-
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-
-            }
-
-        });
-
     }
 
-
-
+    var button = $(this).prop("disabled", true);
+    $.ajax({
+        url: `${API_URL}/api/APlayer/changePlayerAvatar`,
+        type: "POST",
+        data: {
+            image_index: image_index,
+            token: Caesar.Config.AuthToken,
+            server: Caesar.Config.idServer
+        }
+    }).done(function(data) {
+        button.prop("disabled", false);
+        if (!Caesar.LBase.isJson(data)) {
+            Caesar.LBase.Error(data);
+            return;
+        }
+        var response = typeof data === "string" ? JSON.parse(data) : data;
+        if (response.state !== "ok") {
+            alert_box.failMessage("تعذر تغيير الصورة الشخصية");
+            return;
+        }
+        Caesar.DPlayer.Player.avatar = response.avatar;
+        Player_profile.refresh_view();
+        alert_box.succesMessage("تم تغيير الصورة الشخصية");
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        button.prop("disabled", false);
+        console.error("Failed to change player avatar", jqXHR.status, jqXHR.statusText, textStatus, errorThrown);
+        alert_box.failMessage("تعذر الاتصال بالخادم لتغيير الصورة");
+    });
 });
 
+$(document).on("click", "#profile-change-flag", function() {
+    if (!Caesar.CurrentCity || !Caesar.CurrentCity.City) {
+        alert_box.failMessage("تعذر تحديد المدينة الحالية");
+        return;
+    }
+
+    var flags = [
+        "flag_england", "flag_france", "flag_germany", "flag_magul",
+        "flag_macdoni", "flag_roma", "flag_spain", "flag_cartaga",
+        "flag_egypt", "flag_greek"
+    ];
+
+    Player_profile.refreshMatrialBox().done(function() {
+        var availableFlags = flags.filter(function(item) {
+            return Caesar.BaseData.Items[item] && Matrial.getPlayerAmount(item) > 0;
+        });
+        if (availableFlags.length === 0) {
+            alert_box.failMessage("لا تمتلك أعلامًا في صندوق المواد");
+            return;
+        }
+
+        var choices = availableFlags.map(function(item) {
+            var data = Caesar.BaseData.Items[item];
+            return `<li>
+                        <div class="pull-L left">
+                            <div class="ar_title">${data.name}</div>
+                            <div class="quant">${getArabicNumbers(Matrial.getPlayerAmount(item))}</div>
+                            <div class="image"><img src="${data.image}" alt=""></div>
+                        </div>
+                        <div class="pull-R right">
+                            <div class="header">
+                                <button type="button" class="full-btn full-btn-3x player-flag-choice" data-item="${item}">اختيار العلم</button>
+                            </div>
+                            <div class="desc">${data.desc || ""}</div>
+                        </div>
+                    </li>`;
+        }).join("");
+        var picker = `<div id="over_lay" class="select_over_lay player-profile-flag-picker">
+                          <div id="select_from">
+                              <div class="head_bar">
+                                  <img src="images/style/head_bar.png" class="banner">
+                                  <div class="title">اختر علم المدينة الحالية</div>
+                                  <img class="close close_select_menu" src="images/btns/close_b.png">
+                              </div>
+                              <p style="clear: both"></p>
+                              <ul class="select_item">${choices}</ul>
+                          </div>
+                      </div>`;
+        $(".player-profile-overlay").hide();
+        $("body").append(picker);
+    }).fail(function() {
+        alert_box.failMessage("تعذر تحميل الأعلام من صندوق المواد");
+    });
+});
+
+$(document).on("click", ".player-flag-choice", function() {
+    var item = String($(this).attr("data-item") || "");
+    $(".player-profile-flag-picker").remove();
+    $(".player-profile-overlay").show();
+    Caesar.Item.useItemFunc();
+    if (Caesar.BaseData.Items[item] && $.isFunction(Caesar.BaseData.Items[item].UseFunc)) {
+        useMatrialBox(item);
+        return;
+    }
+    alert_box.failMessage("تعذر استخدام هذا العلم");
+});
+
+$(document).on("click", ".player-profile-flag-picker .close_select_menu", function() {
+    $(".player-profile-overlay").show();
+});
 
 
 /*
@@ -46607,7 +46754,7 @@ var Market = {
                     </div>
                     <div class="footer">
                         <label class="name-city">${Trans.CityNameFrom} &nbsp;&nbsp;[ ${Trans.xCoordFrom} ,  ${Trans.yCoordFrom}] </label>
-                        <label class="arrow"><img src="images/arrow/go-right.png"/></label>
+                        <label class="arrow"><img src="images/btns/right.png"/></label>
                         <label class="name-city">[ ${Trans.xCoordTo} ,  ${Trans.yCoordTo}] </label>
                         <button data-id-trans=${Trans.id_trans} 
                             class="speed-up speed-up-btn acce-transport-deal"
@@ -49610,21 +49757,6 @@ Caesar.Equip.EquipList = {},
             'url': API_URL + '/js' + Caesar['Config']['JsVersion'] + '/json/equipment/' + UserLag['language'] + '.json',
             success: function(data, _0x18a598, _0x1ed6f5) {
                 Caesar['Equip']['EquipList'] = data;
-                $.ajax({
-                    'url': API_URL + '/api/APlayerEquip/getEquipPower',
-                    'data': {
-                        token: Caesar['Config']['AuthToken'],
-                        server: Caesar['Config']['idServer']
-                    },
-                    success: function(DataI, _0x23bbdc, _0x2945f2) {
-                        if (!Caesar['LBase']['isJson'](DataI))
-                            return Caesar['LBase']['Error'](DataI);
-                        var JsonData = JSON['parse'](DataI);
-                        for (var ii in JsonData) {
-                            Caesar['Equip']['EquipList'][`${JsonData[ii]['equip']}_${JsonData[ii]['part']}_${JsonData[ii]['lvl']}`]['Power'] = JsonData[ii];
-                        }
-                    }
-                });
             }
         });
     }
@@ -49673,20 +49805,6 @@ var Equipment = {
 
         if (!Caesar.Equip.EquipList[`${equip}_${part}_${lvl}`])
             return {
-                Power: {
-                    anti_break: 0,
-                    attack: 0,
-                    break: 0,
-                    damage: 0,
-                    defence: 0,
-                    equip: "",
-                    immunity: 0,
-                    lvl: 1,
-                    part: "",
-                    sp_attr: 0,
-                    strike: 0,
-                    vitality: 140
-                },
                 Texture2D: "Texture2D'/Game/images/equip/equip228.equip228'",
                 desc: "تزيد من الحيوية والهجوم لدى القوات.",
                 image: "images/equip/equip228.jpg",
@@ -49701,7 +49819,7 @@ var Equipment = {
     getPowerMarkup: function(equip, part, lvl = 1) {
         var equipData = Caesar.Equip.EquipList[`${equip}_${part}_${lvl}`];
         if (!equipData || !equipData.Power)
-            return "<p>خصائص المعدة غير متاحة حاليا</p>";
+            return "<p>إحصاءات المعدة غير معروضة</p>";
 
         var power = equipData.Power;
         var stats = [
@@ -51153,7 +51271,7 @@ BattelField.battelField = function(battel, currentBattels) {
 
     if (battel.totalBox) {
 
-        var box = menu_bar.dialogBox(Translate.Title.MenuList.Report[UserLag.language], battel.navBar, `<div class="box_content"></div>`, 0);
+        var box = menu_bar.dialogBox(Translate.Title.MenuList.Report[UserLag.language], battel.navBar, `<div class="box_content"></div>`, 0, "centered-left-nav");
 
         dialogBoxShow(box, function() {
 
@@ -51169,6 +51287,20 @@ BattelField.battelField = function(battel, currentBattels) {
 
 
 };
+
+function refreshBattleReportListScroll() {
+    var reportsList = $("#reports_list");
+    var element = reportsList[0];
+
+    if (!element) return;
+
+    var currentScroll = reportsList.getNiceScroll(0);
+    if (currentScroll) currentScroll.remove();
+
+    if (element.scrollHeight > element.clientHeight) {
+        reportsList.niceScroll(SCROLL_BAR_PROP);
+    }
+}
 
 BattelField.battelModel = function(battel, list) {
 
@@ -51286,7 +51418,7 @@ BattelField.battelModel = function(battel, list) {
         $("#reports_list .has_battel:first").addClass("selected");
     }
 
-    $("#reports_list").niceScroll(SCROLL_BAR_PROP);
+    refreshBattleReportListScroll();
 };
 
 
@@ -53012,8 +53144,6 @@ Caesar.Contribute.getList = function() {
 };
 
 
-Caesar['Contribute']['getList']();
-
 Caesar.Contribute.ToUpgradeBox = function(idCont) {
     var Cont = Caesar['Contribute']['List'][idCont];
     var ListOfNeed = Cont['ListOfNeed'][0];
@@ -53040,7 +53170,6 @@ Caesar.Contribute.ToUpgradeBox = function(idCont) {
                         <div class="prizeBg">
                             <div class="prizeimage">
                                 <div class="matrial_unit">
-                                    <img src="images/style/Border-up.png" class="border_up">
                                     <div class="img-inside-box">
                                         <div class="wrapper big-img">
                                             <div class="image" style="background-image: url(${Image})"></div>
@@ -53094,7 +53223,6 @@ Caesar.Contribute.PrizeBox = function(idCont) {
                         <div class="prizeBg">
                             <div class="prizeimage">
                                 <div class="matrial_unit">
-                                    <img src=" images/style/Border-up.png" class="border_up">
                                     <div class="img-inside-box">
                                         <div class="wrapper big-img">
                                             <div class="image" style="background-image: url(${Image})"></div>
@@ -53246,7 +53374,7 @@ Caesar['Contribute']['DialogBox'] = function(ContFor) {
                     </div>
                     <div class="right-nav">
                         <div class="nav_icon">
-                            <img class="close_dialog" src="images/btns/close_b.png">
+                            <img class="close_dialog" src="images/btns/close_b.png" style="float: right; margin-right: 15px; margin-top: 20px">
                         </div>
                     </div>
                 </div>
@@ -54005,6 +54133,8 @@ Caesar.ArenaChallange.PrizeList = function(PrizeFor) {
     if (ArenaFor == 'ArenaGuild')
         Prize = WorldUnit['prize'].getUnitAllLvlsPrize(WUT_CHALLAGE_FIELD_GUILD, PrizeFor);
 
+    if (!Prize.length)
+        return '<li>يتم إعلان الجوائز بعد انتهاء المنافسة</li>';
 
     var PrizeListHt = '';
     for (var ii in Prize)
@@ -55748,7 +55878,7 @@ $(document).on("click", "#CreatNewTeam", function() {
                         <div id="alert-title">
                              انشاء فريق
                         </div>            
-                        <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                        <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                     </div>
                     <div id="alert_box" class="guild_creat" >        
                         <div class="row-one">
@@ -56295,7 +56425,7 @@ $(document).on("click", "#change-t-slog", function() {
                                 <div id="alert-title">
                                     تعديل شعار
                                 </div>            
-                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">       
+                                <img src="images/btns/close_b.png" class="img-sml close-alert_container">
                             </div>
                             <div id="alert_box" class="guild_creat">        
                                 <div class="row-one">

@@ -103,10 +103,8 @@
 #move-city-to .body-wrapper .content {
     width: 84%;
     height: 150px;
-    background-image: url(../images/skins/desc-rect.png);
+    background: url(../images/background/paperCenter.jpg);
     margin: auto;
-    background-position-y: -10px;
-    background-size: 100% 106%;
     margin-top: 5px;
 }
 
@@ -603,45 +601,51 @@
 }
 
 .goRight {
-    background-image: url(../images/arrow/go-right-n.png);
+    background-image: url(../images/btns/right.png);
     background-size: auto 100%;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
 
 .goRight:hover {
-    background-image: url(../images/arrow/go-right-h.png);
+    background-image: url(../images/btns/right.png);
+    filter: brightness(1.15);
 }
 
 .goRight:active {
-    background-image: url(../images/arrow/go-right-a.png);
+    background-image: url(../images/btns/right.png);
+    filter: brightness(0.9);
 }
 
 .goRight:disabled {
-    background-image: url(../images/arrow/go-right-d.png);
+    background-image: url(../images/btns/right.png);
+    filter: grayscale(100%) opacity(0.5);
 }
 
 .goLeft {
-    background-image: url(../images/arrow/go-left-n.png);
+    background-image: url(../images/btns/left.png);
     background-size: auto 100%;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
 
 .goLeft:hover {
-    background-image: url(../images/arrow/go-left-h.png);
+    background-image: url(../images/btns/left.png);
+    filter: brightness(1.15);
 }
 
 .goLeft:active {
-    background-image: url(../images/arrow/go-left-a.png);
+    background-image: url(../images/btns/left.png);
+    filter: brightness(0.9);
 }
 
 .goLeft:disabled {
-    background-image: url(../images/arrow/go-left-d.png);
+    background-image: url(../images/btns/left.png);
+    filter: grayscale(100%) opacity(0.5);
 }
 
 .goDown {
-    background-image: url(../images/arrow/go-right-n.png);
+    background-image: url(../images/btns/right.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -649,19 +653,22 @@
 }
 
 .goDown:hover {
-    background-image: url(../images/arrow/go-right-h.png);
+    background-image: url(../images/btns/right.png);
+    filter: brightness(1.15);
 }
 
 .goDown:active {
-    background-image: url(../images/arrow/go-right-a.png);
+    background-image: url(../images/btns/right.png);
+    filter: brightness(0.9);
 }
 
 .goDown:disabled {
-    background-image: url(../images/arrow/go-right-d.png);
+    background-image: url(../images/btns/right.png);
+    filter: grayscale(100%) opacity(0.5);
 }
 
 .goUp {
-    background-image: url(../images/arrow/go-left-n.png);
+    background-image: url(../images/btns/left.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -669,15 +676,18 @@
 }
 
 .goUp:hover {
-    background-image: url(../images/arrow/go-left-h.png);
+    background-image: url(../images/btns/left.png);
+    filter: brightness(1.15);
 }
 
 .goUp:active {
-    background-image: url(../images/arrow/go-left-a.png);
+    background-image: url(../images/btns/left.png);
+    filter: brightness(0.9);
 }
 
 .goUp:disabled {
-    background-image: url(../images/arrow/go-left-d.png);
+    background-image: url(../images/btns/left.png);
+    filter: grayscale(100%) opacity(0.5);
 }
 
 #ArenaChallangeHome .heroControlBtns .content .btnBlock {
@@ -758,19 +768,6 @@
     font-size: 14px;
     color: #79582E;
     line-height: 24px;
-}
-
-#ArenaChallangeHome .arenaChallangeReview .th::after {
-    content: "";
-    height: 50px;
-    position: absolute;
-    display: block;
-    width: 347px;
-    background-image: url(../images/border/top_panel_helmet_decor.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-top: 42px;
-    pointer-events: none;
 }
 
 #ArenaChallangeHome .arenaChallangeReview .arenaKingPrize {

@@ -345,7 +345,7 @@ async function resolveBattle(context, dependencies) {
                 now: Math.floor(Date.now() / 1000)
             });
         }
-        
+
         // ── COMBAT RESOLUTION ENGINE ──
         const slots = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'];
         const [memberRows] = await battleDb.query(
@@ -834,7 +834,7 @@ async function resolveBattle(context, dependencies) {
 
             if (isCampOrStatue) {
                 // Per-attacker independent prize rolls with pure raw probability.
-                // Guaranteed prizes (win_rate = 10000) are handled by the database.
+                // Prizes with win_rate >= 1000 are capped to 1000 = 100% guaranteed.
                 for (const attacker of attackers) {
                     if (!attacker.itemLoot) attacker.itemLoot = [];
                     for (const p of matchingPrizes) {
@@ -937,6 +937,11 @@ async function resolveBattle(context, dependencies) {
                     ]
                 );
                 guildDominance = { guildId: conquerorGuildId, unitType, xCoord, yCoord };
+                // حذف دور هذا الحلف من الطابور بعد نجاح الهجوم
+                await battleDb.query(
+                    'DELETE FROM castle_attack_queue WHERE x_coord = ? AND y_coord = ? AND id_guild = ?',
+                    [xCoord, yCoord, conquerorGuildId]
+                );
                 broadcast(JSON.stringify({
                     classPath: 'Guild.DominanceAcquired',
                     data: {

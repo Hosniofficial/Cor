@@ -17,7 +17,8 @@ const {
     getRomanCommanderName,
     getWrappedDistance,
     isFixedDurationTarget,
-    normalizeDynamicWorldUnitSeedLevels
+    normalizeDynamicWorldUnitSeedLevels,
+    ROMAN_COMMANDERS
 } = require('../caesar-shared/battle-mechanics');
 
 test('hero fitness recovers once per two-minute interval and caps cleanly', () => {
@@ -75,7 +76,8 @@ test('dynamic world-unit map seeds are normalized without changing fixed-level u
 
 test('Roman commanders are stable per target level and change across levels', () => {
     const commander = getRomanCommanderName(70, 1, 20, 30);
-    assert.match(commander, /^القيصر /);
+    assert.doesNotMatch(commander, /^القيصر /);
+    assert.ok(ROMAN_COMMANDERS.includes(commander));
     assert.equal(getRomanCommanderName(70, 1, 20, 30), commander);
     assert.notEqual(getRomanCommanderName(70, 2, 20, 30), commander);
 });
@@ -146,11 +148,18 @@ test('march duration uses the slowest deployed unit and special target rules', (
     assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 20 }), 600);
     assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 1, y2: 0, army, unitType: 60, isCity: true }), 900);
     assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 70 }), 120);
+    assert.equal(isFixedDurationTarget(70), true);
+    assert.equal(isFixedDurationTarget(71), false);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 1, y2: 0, army, unitType: 71 }), 120);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 80 }), 600);
     assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 177 }), 300);
-    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 200 }), 600);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 180 }), 900);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 184 }), 3600);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 231 }), 900);
+    assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType: 200 }), 120);
     for (let unitType = 200; unitType <= 205; unitType++) {
-        assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType }), 600);
-        assert.equal(isFixedDurationTarget(unitType), false);
+        assert.equal(getMarchDuration({ x1: 0, y1: 0, x2: 10, y2: 0, army, unitType }), 120);
+        assert.equal(isFixedDurationTarget(unitType), true);
     }
 });
 
@@ -174,6 +183,12 @@ test('return duration applies the configured maximum only to fixed-duration targ
     }), 180);
     assert.equal(getReturnDuration({
         x1: 0, y1: 0, x2: 3, y2: 0, army, unitType: 200, maxDuration: 120
+    }), 120);
+    assert.equal(getReturnDuration({
+        x1: 0, y1: 0, x2: 3, y2: 0, army, unitType: 180, maxDuration: 120
+    }), 180);
+    assert.equal(getReturnDuration({
+        x1: 0, y1: 0, x2: 3, y2: 0, army, unitType: 184, maxDuration: 120
     }), 180);
 });
 
@@ -301,6 +316,7 @@ test('battle report shows wilderness levels and omits changing target levels', (
         UserLag: { language: 'ar' },
         changeTimeFormat: () => '',
         SCROLL_BAR_PROP: {},
+        refreshBattleReportListScroll: () => {},
         $: () => ({
             length: 0,
             replaceWith(html) { renderedHtml = html; },

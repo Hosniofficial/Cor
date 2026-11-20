@@ -64,6 +64,8 @@ test('hero detail renders the matching equipment, army, and hero data', () => {
     assert.match(renderedHtml, /avatar\.png/);
     assert.match(renderedHtml, /<div class="lvl">7<\/div>/);
     assert.match(renderedHtml, /12\/48/);
+    assert.match(renderedHtml, /class="pull-L col-1">الفيلق<\/div>/);
+    assert.doesNotMatch(renderedHtml, /الجنود- الفيلق/);
     assert.match(renderedHtml, /width: 25%/);
     assert.match(renderedHtml, /1 \+ 2/);
     assert.match(renderedHtml, /3 \+ 4/);
@@ -81,6 +83,75 @@ test('hero detail renders the matching equipment, army, and hero data', () => {
         assert.match(renderedHtml, new RegExp(`background-image: url\\(images/tech/troop-${index}\\.png\\)`));
         assert.match(renderedHtml, new RegExp(`class="amount amount-${index * 10}"> ${index * 10}<`));
     }
+});
+
+test('hero equipment preview stays inside its row above the army section', () => {
+    const heroCss = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'hero.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const equipmentRow = heroCss.match(
+        /\.box_content \.right-content \.equi_preveiw\s*\{([\s\S]*?)\}/
+    );
+    const equipmentList = heroCss.match(
+        /\.box_content \.right-content \.equi_preveiw ul\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(equipmentRow, 'equipment row styles should exist');
+    assert.ok(equipmentList, 'equipment list styles should exist');
+    assert.match(equipmentRow[1], /height:\s*90px/);
+    assert.match(equipmentRow[1], /overflow:\s*hidden/);
+    assert.match(equipmentRow[1], /background-image:\s*none/);
+    assert.match(equipmentList[1], /display:\s*flex/);
+    assert.match(equipmentList[1], /flex-wrap:\s*wrap/);
+    assert.match(equipmentList[1], /height:\s*72px/);
+});
+
+test('hero overview equipment panel has no background image above the legion heading', () => {
+    const tooltipCss = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'tooltips.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const equipmentPanel = tooltipCss.match(
+        /#hero-over-view \.right \.equip-review\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(equipmentPanel, 'hero overview equipment panel styles should exist');
+    assert.doesNotMatch(equipmentPanel[1], /background(?:-image)?\s*:/);
+});
+
+test('hero equipment and army management panels use the exchange panel frame background', () => {
+    const heroCss = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'hero.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const managementPanels = heroCss.match(
+        /#hero-dial-equip #HeroEquipBox,\s*#hero-dial-equip #after-ajax-hero-army,\s*#hero-dial-camp #after-ajax-hero-army\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(managementPanels, 'equipment and army management panels should share a frame style');
+    assert.match(managementPanels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(managementPanels[1], /background-size:\s*100%\s+100%/);
+    assert.match(managementPanels[1], /border:\s*6px\s+solid\s+transparent/);
+});
+
+test('hero profile data, equipment, and army panels use the frame without extending into the legion row', () => {
+    const heroCss = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'hero.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const overviewPanels = heroCss.match(
+        /#hero-dial-over-view \.hero-profile > \.part-1,\s*#hero-dial-over-view \.hero-profile > \.part-2,\s*#hero-dial-over-view \.hero-profile > \.equi_preveiw,\s*#hero-dial-over-view #after-ajax-hero-army\s*\{([\s\S]*?)\}/
+    );
+    const equipmentPanel = heroCss.match(
+        /#hero-dial-over-view \.hero-profile > \.equi_preveiw\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(overviewPanels, 'hero overview panels should share the frame style');
+    assert.match(overviewPanels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(overviewPanels[1], /background-size:\s*100%\s+100%/);
+    assert.ok(equipmentPanel, 'hero equipment preview should be contained within its row');
+    assert.match(equipmentPanel[1], /overflow:\s*hidden/);
 });
 
 test('hero level 255 hides level-up and experience controls', () => {
@@ -167,4 +238,37 @@ test('hero level 255 hides level-up and experience controls', () => {
     assert.match(belowCap, /hero_up_lvl/);
     assert.match(belowCap, /add_xp/);
     assert.match(belowCap, /الخبرة/);
+});
+
+test('hero capacity and experience thresholds match the verified raw formulas', () => {
+    const clientSource = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const extractFunction = name => {
+        const start = clientSource.indexOf(`function ${name}(`);
+        const end = clientSource.indexOf('\n}', start) + 2;
+        assert.ok(start >= 0 && end > start, `${name} should exist`);
+        return clientSource.slice(start, end);
+    };
+
+    const now = 1_000_000;
+    const context = {
+        Caesar: { DPlayer: { PlayerEdu: { leader: 1, scholership: 0 } } },
+        Date: { now: () => now * 1000 },
+        Math,
+        Number
+    };
+    vm.runInNewContext(extractFunction('getHeroMaxCap'), context);
+    const capacity = context.getHeroMaxCap({
+        Hero: { point_a: 22, point_a_plus: 0 },
+        Medal: { medal_ceasro: now + 100, ceaser_eagle: now + 100 }
+    });
+    assert.equal(capacity, 56320);
+
+    vm.runInNewContext(extractFunction('getReqHeroXp'), context);
+    assert.equal(context.getReqHeroXp(1), 100);
+    assert.equal(context.getReqHeroXp(2), 400);
+    context.Caesar.DPlayer.PlayerEdu.scholership = 10;
+    assert.equal(context.getReqHeroXp(2), 280);
 });

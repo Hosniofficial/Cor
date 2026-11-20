@@ -23,12 +23,10 @@ if ($idReport <= 0) {
 }
 
 if ($idReport <= 0) {
-    // Generate real battle if none exists
-    require_once __DIR__ . '/../caesar-api/services/BattleService.php';
-    $sim = BattleService::executeBattle($db, 1);
-    if ($sim && !empty($sim['reportId'])) {
-        $idReport = (int)$sim['reportId'];
-    }
+    http_response_code(404);
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>التقرير غير موجود</title><body>لا يوجد تقرير معركة للعرض.</body></html>';
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -77,6 +75,23 @@ if ($idReport <= 0) {
       font-weight: bold;
       white-space: nowrap;
       overflow: hidden;
+    }
+
+    #battle-report-container {
+      position: fixed;
+      z-index: 500;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #battle-report-container > * {
+      pointer-events: auto;
     }
   </style>
 </head>

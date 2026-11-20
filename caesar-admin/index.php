@@ -1283,7 +1283,7 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
                 <!-- Group 2: Drops & Wilderness Luxuries -->
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title"><i class="fa-solid fa-gem"></i> نسب السقوط والرفاهيات والعتاد</div>
+                        <div class="card-title"><i class="fa-solid fa-gem"></i> نسب السقوط والرفاهيات</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -1297,11 +1297,6 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
                         <div class="form-group">
                             <label class="form-label">مضاعف السقوط العام بالسيرفر (Global Drop Rate)</label>
                             <input type="number" id="cfg-global_drop_rate_multiplier" class="form-input" min="0.1" max="10.0" step="0.1">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">نسبة سقوط عتاد الأبطال من المعسكرات (%)</label>
-                            <input type="number" id="cfg-equipment_drop_chance_percent" class="form-input" min="1" max="100" step="1">
-                            <small style="color: var(--text-muted);">النسبة المئوية لفرصة سقوط عتاد نخبوي للبطل عند الانتصار على معسكرات المستوى 3+</small>
                         </div>
                     </div>
                 </div>
@@ -1701,7 +1696,6 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
                 <select id="event-type" class="form-select">
                     <option value="luxury_drop_boost">مضاعفة أدوات الرفاهية في البراري (Luxury Boost)</option>
                     <option value="global_drop_boost">مضاعفة السقوط العام بالسيرفر (Global Drop Boost)</option>
-                    <option value="equipment_drop_boost">مضاعفة فرصة سقوط عتاد الأبطال (Equipment Drop Boost)</option>
                     <option value="speed_boost">مضاعفة سرعة سير الجيوش (Speed Boost)</option>
                     <option value="truce">هدنة عامة بالسيرفر (Server Truce)</option>
                 </select>
@@ -2754,7 +2748,6 @@ async function saveAllServerConfigs() {
         'squad_reset_interval_hours',
         'wilderness_luxury_drop_multiplier',
         'global_drop_rate_multiplier',
-        'equipment_drop_chance_percent',
         'starter_player_gold',
         'starter_protection_hours',
         'starter_food',
@@ -2868,6 +2861,10 @@ async function fetchServerEvents() {
                 const isEnded = now > Number(ev.time_end);
                 const startDate = new Date(Number(ev.time_start) * 1000).toLocaleString('ar-EG');
                 const endDate = new Date(Number(ev.time_end) * 1000).toLocaleString('ar-EG');
+                const isDeprecatedEquipmentEvent = ev.event_type === 'equipment_drop_boost';
+                const eventTypeLabel = isDeprecatedEquipmentEvent
+                    ? 'فعالية إسقاط العتاد (قديمة ومتوقفة)'
+                    : ev.event_type;
 
                 let statusBadge = '<span class="pill pill-ruby">معطلة</span>';
                 if (isRunning) {
@@ -2882,13 +2879,13 @@ async function fetchServerEvents() {
                     <tr>
                         <td><strong>#${ev.id_event}</strong></td>
                         <td><strong style="color: var(--gold-bright);">${ev.title}</strong></td>
-                        <td><code style="color: var(--sky);">${ev.event_type}</code></td>
+                        <td><code style="color: var(--sky);">${eventTypeLabel}</code></td>
                         <td><span class="pill pill-amber">×${ev.multiplier}</span></td>
                         <td>${startDate}</td>
                         <td>${endDate}</td>
                         <td>${statusBadge}</td>
                         <td>
-                            <button class="btn btn-secondary btn-sm" onclick='editServerEvent(${JSON.stringify(ev)})'><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-secondary btn-sm" onclick='editServerEvent(${JSON.stringify(ev)})' ${isDeprecatedEquipmentEvent ? 'disabled title="هذه الفعالية القديمة غير مدعومة؛ احذفها بدلاً من تعديلها."' : ''}><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-danger btn-sm" onclick="deleteServerEvent(${ev.id_event})"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>

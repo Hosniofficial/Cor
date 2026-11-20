@@ -71,10 +71,6 @@
     margin-top: 32px;
 }
 
-.learn_hero .row-4 .matrial_unit .border_up {
-    margin-left: 25px;
-}
-
 .learn_hero .row-4 .matrial_unit .player_amount {
     margin-left: 10px;
     margin-top: -8px;
@@ -238,9 +234,7 @@
 }
 
 .empty_place .left-content {
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: -18px;
-    background-size: 100% 106%;
+    background: url(../images/background/paperCenter.jpg);
     overflow-y: auto;
 }
 
@@ -329,6 +323,13 @@
 
 .study_unite {
     position: relative;
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-origin: border-box;
+    background-clip: border-box;
+    border: 6px solid transparent;
+    box-sizing: border-box;
 }
 
 .study_unite .img-inside-box {
@@ -1379,9 +1380,7 @@
     width: 82%;
     margin: auto;
     margin-top: 18px;
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: -6px;
-    background-size: 100% 106%;
+    background: url(../images/background/paperCenter.jpg);
     padding: 5px;
 }
 
@@ -1497,11 +1496,7 @@
     border-image: url(../images/background/border_a.png);
     border-image-slice: 30;
     border-image-repeat: round;
-    background-image: url(../images/skins/desc-rect.png);
-    background-size: 100% 106%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-position-y: -18px;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 #matrial-box-gift .matrial-list li {
@@ -1542,9 +1537,7 @@
 }
 
 #spy-report .spy-report {
-    background-image: url(../images/skins/desc-rect.png);
-    background-size: 100% 105%;
-    background-position: center bottom;
+    background: url(../images/background/paperCenter.jpg);
     height: 100%;
     overflow: auto;
 }
@@ -1557,14 +1550,13 @@
 }
 
 #spy-report-city-floor {
-    background-image: url(../images/style/Corner-down-l.png), url(../images/style/Corner-down-r.png), url(../images/style/Corner-up-l.png), url(../images/style/Corner-up-r.png), url(../images/city/city_floor.jpg);
+    background-image: url(../images/city/city_floor.jpg);
     width: 740px;
     height: 320px;
     margin: auto;
-    background-position: left bottom, right bottom, left top, right top, center;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: 49px 50px, 49px 50px, 35px 50px, 35px 50px, 740px 320px;
-    background-repeat: no-repeat;
+    background-size: 740px 320px;
     padding: 8px;
     position: relative;
 }

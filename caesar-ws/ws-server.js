@@ -134,7 +134,7 @@ normalizeDynamicWorldUnitSeedLevels(worldUnits, unitData);
 // 1d. Prize Drop Rules (6,030 loot rules)
 let prizeData = { Win: [] };
 try {
-    prizeData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'caesar-assets', 'api', 'data', 'world-unit-prizes.json'), 'utf8'));
+    prizeData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'caesar-private', 'data', 'world-unit-prizes.json'), 'utf8'));
 } catch (e) {
     handleRequiredAssetError('world-unit-prizes.json', e);
 }
@@ -142,7 +142,7 @@ try {
 // 1e. Equipment Power Stats (330 equipment items with full combat attributes)
 const equipPowerMap = new Map();
 try {
-    const rawEquip = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'caesar-assets', 'api', 'data', 'equipment-power.json'), 'utf8'));
+    const rawEquip = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'caesar-private', 'data', 'equipment-power.json'), 'utf8'));
     for (const eq of rawEquip) {
         equipPowerMap.set(`${eq.equip}_${eq.part}_${eq.lvl}`, eq);
     }
@@ -191,7 +191,6 @@ let liveServerConfig = {
     camp_max_attack_per_player: 10,
     wilderness_luxury_drop_multiplier: 1.0,
     global_drop_rate_multiplier: 1.0,
-    equipment_drop_chance_percent: 25,
     starter_player_gold: 50,
     starter_protection_hours: 168,
     resource_production_multiplier: 1.0,
@@ -206,7 +205,7 @@ let liveServerConfig = {
     server_truce_active: false,
     live_banner_text: '',
     live_banner_color: '#dfba6b',
-    event_multipliers: { luxury: 1, global: 1, equipment: 1, speed: 1, truce: false },
+    event_multipliers: { luxury: 1, global: 1, speed: 1, truce: false },
     active_events: []
 };
 
@@ -225,14 +224,14 @@ async function reloadLiveServerConfig() {
         }
         const [events] = await db.query(
             "SELECT id_event, title, event_type, multiplier, time_end FROM server_events " +
-            "WHERE is_active = 1 AND time_start <= UNIX_TIMESTAMP() AND time_end >= UNIX_TIMESTAMP()"
+            "WHERE is_active = 1 AND time_start <= UNIX_TIMESTAMP() AND time_end >= UNIX_TIMESTAMP() " +
+            "AND event_type <> 'equipment_drop_boost'"
         );
-        const eventMultipliers = { luxury: 1, global: 1, equipment: 1, speed: 1, truce: false };
+        const eventMultipliers = { luxury: 1, global: 1, speed: 1, truce: false };
         for (const event of events) {
             const multiplier = Math.max(1, Math.min(10, Number(event.multiplier) || 1));
             if (event.event_type === 'luxury_drop_boost') eventMultipliers.luxury = Math.min(10, eventMultipliers.luxury * multiplier);
             if (event.event_type === 'global_drop_boost') eventMultipliers.global = Math.min(10, eventMultipliers.global * multiplier);
-            if (event.event_type === 'equipment_drop_boost') eventMultipliers.equipment = Math.min(10, eventMultipliers.equipment * multiplier);
             if (event.event_type === 'speed_boost') eventMultipliers.speed = Math.min(10, eventMultipliers.speed * multiplier);
             if (event.event_type === 'truce') eventMultipliers.truce = true;
         }
@@ -255,10 +254,34 @@ async function reloadLiveServerConfig() {
 }
 
 // Initial load and periodic background sync every 60 seconds
-const liveServerConfigReady = reloadLiveServerConfig();
-liveServerConfigReady.catch(() => {});
+let liveServerConfigLoaded = false;
+let liveServerConfigRefreshPromise = null;
+
+function refreshLiveServerConfig() {
+    if (liveServerConfigRefreshPromise) return liveServerConfigRefreshPromise;
+
+    const refreshPromise = reloadLiveServerConfig()
+        .then(() => {
+            liveServerConfigLoaded = true;
+        })
+        .finally(() => {
+            if (liveServerConfigRefreshPromise === refreshPromise) {
+                liveServerConfigRefreshPromise = null;
+            }
+        });
+    liveServerConfigRefreshPromise = refreshPromise;
+    refreshPromise.catch(() => {});
+    return refreshPromise;
+}
+
+async function ensureLiveServerConfig() {
+    if (liveServerConfigLoaded) return;
+    await refreshLiveServerConfig();
+}
+
+refreshLiveServerConfig();
 setInterval(() => {
-    reloadLiveServerConfig().catch(() => {});
+    refreshLiveServerConfig().catch(() => {});
 }, 60000);
 
 async function creditCityResources(db, cityId, requested) {
@@ -270,8 +293,9 @@ async function creditCityResources(db, cityId, requested) {
             throw new Error('Invalid city resource credit');
         }
     }
+    const defaultResources = { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 };
     const credits = resources.filter(([, amount]) => amount > 0);
-    if (credits.length === 0) return {};
+    if (credits.length === 0) return { ...defaultResources };
 
     const ownsConnection = typeof db.getConnection === 'function';
     const connection = ownsConnection ? await db.getConnection() : db;
@@ -284,7 +308,7 @@ async function creditCityResources(db, cityId, requested) {
         );
         if (!rows.length) throw new Error('Resource recipient city not found');
 
-        const credited = {};
+        const credited = { ...defaultResources };
         const setClauses = [];
         const params = [];
         for (const [resource, requestedAmount] of credits) {
@@ -1419,7 +1443,7 @@ async function initializeBattleTaskWorker() {
     if (battleTasksReady || recoveringBattleTasks) return;
     recoveringBattleTasks = true;
     try {
-        await liveServerConfigReady;
+        await ensureLiveServerConfig();
         await reschedulePersistedWorldUnitResets();
         await restorePersistedWorldUnitLevels();
         await recoverPendingBattleTasks();
@@ -1701,7 +1725,7 @@ function handleWs(ws) {
                 }
 
                 authenticating = true;
-                await liveServerConfigReady;
+                await ensureLiveServerConfig();
                 if (liveServerConfig.maintenance_mode) {
                     clearTimeout(authTimeout);
                     if (ws.readyState === 1) ws.close(1012, 'Server maintenance');
@@ -1848,6 +1872,12 @@ function handleWs(ws) {
                 const db = await getDb();
                 if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
 
+                const [playerRows] = await db.query(
+                    'SELECT id_guild FROM player WHERE id_player = ? LIMIT 1',
+                    [idPlayer]
+                );
+                const playerGuildId = playerRows[0] && playerRows[0].id_guild ? Number(playerRows[0].id_guild) : 0;
+
                 const [rows] = await db.query(
                     "SELECT b.id_battel, b.id_player, p.id_guild, p.name AS PlayerName, c.name AS CityName, " +
                     "b.x_city, b.y_city, b.x_coord, b.y_coord, b.task, b.time_start, b.time_arrive " +
@@ -1855,7 +1885,14 @@ function handleWs(ws) {
                     "JOIN player p ON p.id_player = b.id_player " +
                     "JOIN city c ON c.id_city = b.id_city " +
                     "WHERE b.state = 'marching' AND b.time_arrive > UNIX_TIMESTAMP() " +
-                    "ORDER BY b.id_battel DESC"
+                    "AND (" +
+                    "    b.id_player = ? " +
+                    "    OR EXISTS (SELECT 1 FROM city target_c WHERE target_c.x = b.x_coord AND target_c.y = b.y_coord AND target_c.id_player = ?) " +
+                    "    OR (? > 0 AND p.id_guild = ?) " +
+                    "    OR (? > 0 AND EXISTS (SELECT 1 FROM city target_c JOIN player target_p ON target_p.id_player = target_c.id_player WHERE target_c.x = b.x_coord AND target_c.y = b.y_coord AND target_p.id_guild = ?))" +
+                    ") " +
+                    "ORDER BY b.id_battel DESC",
+                    [idPlayer, idPlayer, playerGuildId, playerGuildId, playerGuildId, playerGuildId]
                 );
                 ws.send(JSON.stringify({
                     classPath: 'Base.Ack',
@@ -1866,8 +1903,9 @@ function handleWs(ws) {
                         idGuild: battle.id_guild ? Number(battle.id_guild) : null,
                         PlayerName: battle.PlayerName,
                         CityName: battle.CityName,
-                        xCity: Number(battle.x_city),
-                        yCity: Number(battle.y_city),
+                        // xCity/yCity (march origin) intentionally omitted — exposing them
+                        // reveals troop movements to all players who share a guild or are
+                        // the target. The map line is suppressed by the client guard too.
                         xCoord: Number(battle.x_coord),
                         yCoord: Number(battle.y_coord),
                         task: Number(battle.task),
@@ -2211,6 +2249,71 @@ function handleWs(ws) {
                     ws.send(JSON.stringify({ classPath: 'Battel.StartFailed', state: 'hero_cant_used' }));
                     return;
                 }
+                const isGuildTarget = (unitType >= 180 && unitType <= 182)
+                    || (unitType >= 184 && unitType <= 186)
+                    || unitType === 177
+                    || (unitType >= 150 && unitType <= 155);
+                if (isGuildTarget && (!player.id_guild || Number(player.id_guild) <= 0)) {
+                    ws.send(JSON.stringify({
+                        classPath: 'Battel.StartFailed',
+                        state: 'not_in_guild',
+                        msg: 'يجب ان تكون عضو فى حلف لتتمكن من الهجوم'
+                    }));
+                    return;
+                }
+                const isGuildDominanceTarget = (unitType >= 180 && unitType <= 182)
+                    || (unitType >= 184 && unitType <= 186);
+                if (isGuildDominanceTarget) {
+                    const [dominanceRows] = await db.query(
+                        'SELECT id_guild FROM guild_dominance WHERE x_coord = ? AND y_coord = ? LIMIT 1',
+                        [xCoord, yCoord]
+                    );
+                    if (dominanceRows.length
+                        && Number(dominanceRows[0].id_guild) === Number(player.id_guild)) {
+                        ws.send(JSON.stringify({
+                            classPath: 'Battel.StartFailed',
+                            state: 'guild_owns_target'
+                        }));
+                        return;
+                    }
+                }
+
+                // ── طابور الهجوم على القلاع (184-186) فقط ───────────────────────────────
+                // الممالك (180-182): مفتوحة لأي حلف في أي وقت بدون طابور.
+                // القلاع (184-186): يجب أن يكون الحلف في الطابور وأن تكون نافذته الزمنية مفتوحة.
+                // كل حلف يحجز دوراً عبر API منفصل (applyForRoleInAttQue).
+                // تُفتح نافذة الهجوم كل يوم الساعة 22:00 (10 مساءً) لمدة 24 ساعة.
+                // الحلف الأول في الطابور يهجم اليوم الأول، الثاني بعد 24 ساعة، وهكذا.
+                const isRepelCastle = (unitType >= 184 && unitType <= 186);
+                if (isRepelCastle) {
+                    const attackerGuildId = Number(player.id_guild) || 0;
+                    const nowTs = Math.floor(Date.now() / 1000);
+                    // جلب موقع الحلف في الطابور
+                    const [queueRows] = await db.query(
+                        "SELECT id_guild, time_start, time_end " +
+                        "FROM castle_attack_queue " +
+                        "WHERE x_coord = ? AND y_coord = ? AND id_guild = ? " +
+                        "LIMIT 1",
+                        [xCoord, yCoord, attackerGuildId]
+                    );
+                    if (!queueRows.length) {
+                        ws.send(JSON.stringify({
+                            classPath: 'Battel.StartFailed',
+                            state: 'not_in_queue',
+                            msg: 'حلفك غير مسجل في طابور الهجوم على هذه القلعة، اضغط "طلب" للتسجيل أولاً'
+                        }));
+                        return;
+                    }
+                    const slot = queueRows[0];
+                    if (nowTs < Number(slot.time_start) || nowTs > Number(slot.time_end)) {
+                        ws.send(JSON.stringify({
+                            classPath: 'Battel.StartFailed',
+                            state: 'queue_window_closed',
+                            msg: `نافذة هجوم حلفك لم تُفتح بعد أو انتهت، موعدك: ${new Date(Number(slot.time_start) * 1000).toLocaleString('ar-EG')}`
+                        }));
+                        return;
+                    }
+                }
                 const calculatedDuration = getMarchDuration({
                     x1: city.x,
                     y1: city.y,
@@ -2222,6 +2325,8 @@ function handleWs(ws) {
                 });
                 const configuredDuration = unitType === 60
                     ? Math.max(Number(liveServerConfig.city_attack_min_duration_sec) || 900, calculatedDuration)
+                    : unitType >= 71 && unitType <= 80
+                        ? Math.max(Number(liveServerConfig.camp_rally_duration_sec) || 120, calculatedDuration)
                     : isFixedDurationTarget(unitType) && unitType !== 177
                         ? (Number(liveServerConfig.camp_rally_duration_sec) || calculatedDuration)
                         : calculatedDuration;
@@ -2403,33 +2508,8 @@ function handleWs(ws) {
                     StartingPrice: []
                 }));
 
-                broadcast(JSON.stringify({
-                    classPath: 'World.Battel.Started',
-                    id_battel: battelId,
-                    idPlayer: Number(player.id_player),
-                    idGuild: player.id_guild ? Number(player.id_guild) : null,
-                    PlayerName: player.name,
-                    CityName: city.name,
-                    xCoord,
-                    yCoord,
-                    xCity: Number(city.x),
-                    yCity: Number(city.y),
-                    task: attackTask,
-                    timeStart: now,
-                    timeEnd: arrive
-                }), idPlayer);
-
-                if (targetCityRows.length > 0) {
-                    sendToPlayer(targetCityRows[0].id_player, JSON.stringify({
-                        classPath: 'Battel.battel',
-                        task: 'YOUR_CITY_FIRE',
-                        city_name: targetCityRows[0].name,
-                        x_to: xCoord,
-                        y_to: yCoord,
-                        x_from: Number(city.x),
-                        y_from: Number(city.y)
-                    }));
-                }
+                // World.Battel.Started broadcast intentionally suppressed —
+                // the march indicator (arrow/line on the world map) is not shown to any party.
 
             }
 

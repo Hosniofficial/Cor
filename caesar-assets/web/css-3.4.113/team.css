@@ -175,9 +175,7 @@
 #TeamBoxRight {
     width: 65%;
     height: 100%;
-    background-image: url(../images/skins/desc-rect.png);
-    background-size: 100% 107%;
-    background-position-y: -25px;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 #TeamBoxRight .PlayerList {

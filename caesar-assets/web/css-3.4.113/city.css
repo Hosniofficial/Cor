@@ -432,9 +432,53 @@
     float: left;
 }
 
+.centered-left-nav .nav_bar {
+    position: relative;
+    direction: ltr;
+    height: 65px !important;
+}
+
+.centered-left-nav .nav_bar .left-nav {
+    position: absolute;
+    top: 26px;
+    left: 8px;
+    transform: none;
+    z-index: 1;
+}
+
+.left-nav-up .nav_bar .left-nav {
+    top: 22px;
+}
+
+.centered-left-nav .nav_bar .right-nav {
+    margin-left: auto;
+}
+
+.centered-left-nav .nav_bar .nav_icon img.close_dialog {
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+    box-sizing: content-box;
+    margin: 0 20px 0 13px;
+    cursor: pointer;
+}
+
+.paged-dialog .nav_icon img.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.centered-left-nav .nav_bar .left-nav ul {
+    display: flex;
+    margin: 0 0 0 30px;
+    padding: 0;
+    float: none;
+    white-space: nowrap;
+}
+
 .for_building .nav_bar .left-nav ul {
-    margin-left: 30px;
-    margin-top: 10px;
+    margin-left: 38px;
+    margin-top: 7px;
     float: left;
 }
 
@@ -501,10 +545,7 @@
 }
 
 .for_building_box .full {
-    background: url(../images/skins/desc-rect.png);
-    background-size: 110% 110%;
-    background-position-x: -15px;
-    background-position-y: -15px;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 .box_content .right-content {
@@ -520,9 +561,7 @@
 .box_content .right-content .total_mat {
     width: 100%;
     height: 100%;
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: -18px;
-    background-size: 100% 106%;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 .show-item-list {
@@ -531,11 +570,7 @@
 
 .for_mat_trade .right-content .total {
     height: 352.8px;
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: 0%;
-    background-size: auto;
-    background-position-y: -18px;
-    background-size: 100% 106%
+    background: url(../images/background/paperCenter.jpg);
 }
 
 .for_mat_trade .left-content {
@@ -576,12 +611,6 @@
     height: 15px;
     width: 100%;
     margin-top: 6px;
-}
-
-.matrial_unit .border_up {
-    position: absolute;
-    width: 94px;
-    margin-left: 51px;
 }
 
 .matrial_unit .img-inside-box .big-img {
@@ -953,11 +982,7 @@
 .for_report .right-content {
     width: 52%;
     direction: rtl;
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: 0%;
-    background-size: auto;
-    background-position-y: -18px;
-    background-size: 100% 94%;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 .th {
@@ -1197,11 +1222,7 @@
 
 .for_quest .right-content {
     width: 72%;
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: 0%;
-    background-size: auto;
-    background-position-y: -18px;
-    background-size: 100% 95.6%;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 .for_quest .quest {
@@ -1365,7 +1386,13 @@
     direction: rtl;
     clear: both;
     margin-top: 20px;
-    background: url(../images/icons/bg_patern.png);
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-origin: border-box;
+    background-clip: border-box;
+    border: 6px solid transparent;
+    box-sizing: border-box;
     border-radius: 7px;
 }
 
@@ -1447,14 +1474,24 @@
 }
 
 .box_header .close_dialog img {
-    width: 27px;
+    width: 32px;
+    height: 31px;
     vertical-align: text-bottom;
-    margin-top: 13px
+    margin: 0;
+    display: block;
 }
 
 .box_header .close_dialog {
-    float: right;
-    height: 90px;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    z-index: 50;
+    width: 32px;
+    height: 31px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 .left-content .li {
@@ -1502,11 +1539,12 @@
 }
 
 .req_table_container {
-    background-image: url(../images/background/alert_box.png);
+    background: url(../images/skins/palace.png);
     background-size: 100% 100%;
+    background-repeat: no-repeat;
     width: 50%;
     margin: auto;
-    padding: 35px 11px 20px 11px;
+    padding: 25px 0px 10px 0px;
 }
 
 .req_table .thead {
@@ -1539,10 +1577,10 @@
 }
 
 .matrial_unit {
-    background-image: url(../images/style/Corner-down-l.png), url(../images/style/Corner-down-r.png), url(../images/style/Corner-up-l.png), url(../images/style/Corner-up-r.png), url(../images/style/matrail_bg.png);
-    background-position: left bottom, right bottom, left top, right top, center;
+    background-image: url(../images/style/matrail_bg.png);
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: 49px 50px, 49px 50px, 35px 50px, 35px 50px, 100% 100%;
+    background-size: 100% 100%;
 }
 
 .uni_tech ul li:first-child,
@@ -1562,9 +1600,9 @@
 .empty_place ul li {
     display: inline-table;
     width: 19%;
-    background-image: url(../images/style/Corner-up-l.png), url(../images/style/Corner-up-r.png), url(../images/style/Border-up.png), url(../images/style/matrail_bg.png);
-    background-size: 35px 50px, 35px 50px, auto 20px, 100% 85%;
-    background-position: top left, top right, top center, top center;
+    background-image: url(../images/style/matrail_bg.png);
+    background-size: 100% 85%;
+    background-position: top center;
     background-repeat: no-repeat;
     margin-top: 8px;
 }
@@ -1741,7 +1779,13 @@
     float: left;
     padding-right: 3px;
     border-radius: 5px;
-    background-image: url(../images/icons/bg_patern.png)
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-origin: border-box;
+    background-clip: border-box;
+    border: 6px solid transparent;
+    box-sizing: border-box;
 }
 
 .acce-btn img {
@@ -1788,9 +1832,7 @@
 }
 
 #palace_content .right-content {
-    background: url(../images/skins/desc-rect.png);
-    background-position-y: -18px;
-    background-size: 100% 106%;
+    background: url(../images/background/paperCenter.jpg);
 }
 
 #palace_content .left-content {

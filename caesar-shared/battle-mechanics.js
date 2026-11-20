@@ -39,7 +39,7 @@ function getRomanCommanderName(unitType, unitLevel, xCoord = 0, yCoord = 0) {
     const index = (
         values[0] * 31 + values[2] * 17 + values[3] * 13 + values[1] - 1
     ) % ROMAN_COMMANDERS.length;
-    return `القيصر ${ROMAN_COMMANDERS[index]}`;
+    return ROMAN_COMMANDERS[index];
 }
 
 function recoverHeroPower(power, powerMax, powerLastSync, nowSeconds) {
@@ -108,9 +108,12 @@ function getArmyMinimumSpeed(army) {
 }
 
 function isFixedDurationTarget(unitType) {
-    return (unitType >= 70 && unitType <= 105)
+    unitType = Number(unitType) || 0;
+    return unitType === 70
+        || (unitType >= 81 && unitType <= 105)
         || (unitType >= 150 && unitType <= 155)
-        || (unitType >= 175 && unitType <= 177);
+        || (unitType >= 175 && unitType <= 177)
+        || (unitType >= 200 && unitType <= 205);
 }
 
 function normalizeDynamicWorldUnitSeedLevels(worldUnits, unitData) {
@@ -130,10 +133,14 @@ function normalizeDynamicWorldUnitSeedLevels(worldUnits, unitData) {
 }
 
 function getMarchDuration({ x1, y1, x2, y2, army, unitType, isCity }) {
+    unitType = Number(unitType) || 0;
     if (unitType === 177) return 300;
-    if (isFixedDurationTarget(unitType)) return 120;
+    if (unitType >= 184 && unitType <= 186) return 3600;
+    if ((unitType >= 180 && unitType <= 182) || (unitType >= 231 && unitType <= 236)) return 900;
     const duration = Math.max(1, Math.ceil(getWrappedDistance(x1, y1, x2, y2) / getArmyMinimumSpeed(army)));
-    return isCity ? Math.max(15 * 60, duration) : duration;
+    if (unitType >= 71 && unitType <= 80) return Math.max(120, duration);
+    if (isFixedDurationTarget(unitType)) return 120;
+    return (isCity || (unitType >= 60 && unitType <= 63)) ? Math.max(15 * 60, duration) : duration;
 }
 
 function getReturnDuration({ x1, y1, x2, y2, army, unitType, maxDuration = 120 }) {
@@ -141,7 +148,8 @@ function getReturnDuration({ x1, y1, x2, y2, army, unitType, maxDuration = 120 }
     unitType = Number(unitType) || 0;
     const hasMaximumReturnDuration = (unitType >= 70 && unitType <= 105)
         || (unitType >= 150 && unitType <= 155)
-        || (unitType >= 175 && unitType <= 176);
+        || (unitType >= 175 && unitType <= 176)
+        || (unitType >= 200 && unitType <= 205);
     if (!hasMaximumReturnDuration) return duration;
 
     const configuredMaximum = Number(maxDuration);
@@ -233,5 +241,6 @@ module.exports = {
     getRomanCommanderName,
     getWrappedDistance,
     isFixedDurationTarget,
-    normalizeDynamicWorldUnitSeedLevels
+    normalizeDynamicWorldUnitSeedLevels,
+    ROMAN_COMMANDERS
 };

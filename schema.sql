@@ -780,7 +780,6 @@ VALUES
     ('squad_reset_interval_hours', 'camps', '4', 'number', 'فترة رسيت الفرق والكتائب', NULL),
     ('wilderness_luxury_drop_multiplier', 'drops', '1.0', 'number', 'مضاعف الرفاهيات', NULL),
     ('global_drop_rate_multiplier', 'drops', '1.0', 'number', 'مضاعف السقوط العام', NULL),
-    ('equipment_drop_chance_percent', 'drops', '25', 'number', 'نسبة سقوط العتاد', NULL),
     ('starter_player_gold', 'economy', '50', 'number', 'ذهب اللاعب الجديد', NULL),
     ('starter_protection_hours', 'economy', '168', 'number', 'حماية المبتدئين بالساعات', NULL),
     ('starter_food', 'economy', '10000', 'number', 'الطعام المبدئي', NULL),

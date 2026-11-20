@@ -12,7 +12,6 @@ class ServerConfigService {
         'squad_reset_interval_hours' => ['number', 1, 24],
         'wilderness_luxury_drop_multiplier' => ['number', 0.1, 10],
         'global_drop_rate_multiplier' => ['number', 0.1, 10],
-        'equipment_drop_chance_percent' => ['number', 0, 100],
         'starter_player_gold' => ['number', 0, 10000],
         'starter_protection_hours' => ['number', 0, 720],
         'starter_food' => ['number', 0, 10000000],
@@ -113,7 +112,7 @@ class ServerConfigService {
             $number = (float)$value;
             $integerKeys = [
                 'camp_reset_interval_hours', 'gang_reset_interval_hours', 'squad_reset_interval_hours',
-                'equipment_drop_chance_percent', 'starter_player_gold', 'starter_food',
+                'starter_player_gold', 'starter_food',
                 'starter_wood', 'starter_stone', 'starter_metal', 'starter_coin',
                 'starter_protection_hours', 'camp_rally_duration_sec', 'city_attack_min_duration_sec'
             ];

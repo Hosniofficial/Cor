@@ -42,6 +42,19 @@
     margin-top: 27px;
 }
 
+#hero-dial-over-view .hero-profile > .part-1,
+#hero-dial-over-view .hero-profile > .part-2,
+#hero-dial-over-view .hero-profile > .equi_preveiw,
+#hero-dial-over-view #after-ajax-hero-army {
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#hero-dial-over-view .hero-profile > .equi_preveiw {
+    overflow: hidden;
+}
+
 #hero-dial-over-view .row-4 {
     height: 136px;
 }
@@ -87,10 +100,6 @@
     margin-top: 2px;
 }
 
-#equip-list-heroDia .unite-eq .avail_equip {
-    background-size: 100% 100%;
-}
-
 .hero-equipment-action-menu {
     position: fixed;
     z-index: 10001;
@@ -131,10 +140,23 @@
     margin-top: 30px;
 }
 
+#hero-dial-equip #HeroEquipBox,
+#hero-dial-equip #after-ajax-hero-army,
+#hero-dial-camp #after-ajax-hero-army {
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-origin: border-box;
+    background-clip: border-box;
+    border: 6px solid transparent;
+    box-sizing: border-box;
+}
+
 #dialg_box .box_content .right-content .equi_preveiw ul li {
     width: 20%;
     margin: 0px;
     height: 36px;
+    flex: 0 0 20%;
 }
 
 .box_content .right-content .equi_preveiw ul li .wrapper {
@@ -157,12 +179,20 @@
 }
 
 .box_content .right-content .equi_preveiw {
-    overflow: auto;
+    height: 90px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-image: none;
 }
 
 .box_content .right-content .equi_preveiw ul {
-    margin-top: 10px;
-    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 72px;
+    margin: 4px 0 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 #hero-left-ol li,

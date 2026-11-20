@@ -108,6 +108,9 @@ class HeroController {
             case '/api/AHero/addPower':
                 self::addPower($db);
                 return true;
+            case '/api/AHero/changeName':
+                self::changeHeroName($db, $player);
+                return true;
             case '/api/AHero/fireHero':
                 self::fireHero($db);
                 return true;
@@ -289,24 +292,26 @@ class HeroController {
         $idHero   = (int)($hero['id_hero'] ?? 0);
 
         $pointA = (int)($hero['point_a'] ?? 20) + (int)($hero['point_a_plus'] ?? 0);
-        $baseCap = 30000 + ($pointA * 500);
 
-        // Leadership study: +3% of base cap per level
         $eduStmt = $db->prepare("SELECT leader FROM player_edu WHERE id_player = ?");
         $eduStmt->execute([$idPlayer]);
         $leaderLvl = (int)$eduStmt->fetchColumn();
-        $afterStudy = (int)ceil($baseCap * ($leaderLvl * 3 / 100.0));
 
-        // Medal buffs: +25% of point_a bonus each
         $mStmt = $db->prepare("SELECT medal_ceasro, ceaser_eagle FROM hero_medal WHERE id_hero = ?");
         $mStmt->execute([$idHero]);
         $medal = $mStmt->fetch(PDO::FETCH_ASSOC) ?: [];
         $now = time();
 
-        $afterMedalCap = (!empty($medal['medal_ceasro']) && (int)$medal['medal_ceasro'] > $now) ? (int)floor($pointA * 500 * 0.25) : 0;
-        $afterEagleCap = (!empty($medal['ceaser_eagle']) && (int)$medal['ceaser_eagle'] > $now) ? (int)floor($pointA * 500 * 0.25) : 0;
+        $politicsBuff = (!empty($medal['medal_ceasro']) && (int)$medal['medal_ceasro'] > $now)
+            ? (int)round($pointA * 0.25)
+            : 0;
+        $leadershipCap = 30000 + (($pointA + $politicsBuff) * 500);
+        $bonusPercent = $leaderLvl * 3;
+        if (!empty($medal['ceaser_eagle']) && (int)$medal['ceaser_eagle'] > $now) {
+            $bonusPercent += 25;
+        }
 
-        return (int)($baseCap + $afterStudy + $afterMedalCap + $afterEagleCap);
+        return (int)floor($leadershipCap * (1 + ($bonusPercent / 100.0)));
     }
 
     public static function refreshHeroArmy($db) {
@@ -779,7 +784,6 @@ class HeroController {
             return;
         }
         
-        // Exact original scholarship formula from caesar-client.js:18415-18429
         $idPlayer = (int)$hero['id_player'];
         $eduStmt = $db->prepare("SELECT scholership FROM player_edu WHERE id_player = ?");
         $eduStmt->execute([$idPlayer]);
@@ -794,7 +798,7 @@ class HeroController {
             $studyEffect = $scholership * 0.03;
         }
 
-        $reqExp = (int)floor(pow($currLvl, 2) * (1.0 - $studyEffect) * 125);
+        $reqExp = (int)floor(pow($currLvl, 2) * (1.0 - $studyEffect) * 100);
         if ((int)$hero['exp'] < $reqExp) {
             sendJson(['state' => 'not_enough_exp', 'reqExp' => $reqExp, 'currExp' => (int)$hero['exp']]);
         }
@@ -826,11 +830,34 @@ class HeroController {
         $pC = max(0, (int)($_REQUEST['pointC'] ?? 0));
         $totalAdd = $pA + $pB + $pC;
 
-        $stmt = $db->prepare("SELECT * FROM city_hero WHERE id_hero = ?");
+        $stmt = $db->prepare(
+            "SELECT h.*, COALESCE(m.medal_ceasro, 0) AS medal_ceasro, " .
+            "COALESCE(m.medal_den, 0) AS medal_den, COALESCE(m.medal_leo, 0) AS medal_leo " .
+            "FROM city_hero h LEFT JOIN hero_medal m ON m.id_hero = h.id_hero WHERE h.id_hero = ?"
+        );
         $stmt->execute([$idHero]);
-        $hero = $stmt->fetch();
+        $hero = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$hero || (int)$hero['points'] < $totalAdd) {
             sendJson(['state' => 'error']);
+            return;
+        }
+
+        $now = time();
+        $pointA = (int)$hero['point_a'] + (int)$hero['point_a_plus'];
+        $pointB = (int)$hero['point_b'] + (int)$hero['point_b_plus'];
+        $pointC = (int)$hero['point_c'] + (int)$hero['point_c_plus'];
+        if ((int)$hero['medal_ceasro'] > $now) $pointA += (int)round($pointA * 0.25);
+        if ((int)$hero['medal_den'] > $now) $pointB += (int)round($pointB * 0.25);
+        if ((int)$hero['medal_leo'] > $now) $pointC += (int)round($pointC * 0.25);
+
+        $nextPointA = $pointA + $pA;
+        $nextPointB = $pointB + $pB;
+        $nextPointC = $pointC + $pC;
+        if ($nextPointA > $nextPointB + $nextPointC
+            || $nextPointB > $nextPointA + $nextPointC
+            || $nextPointC > $nextPointA + $nextPointB) {
+            sendJson(['state' => 'error_hero_point_limit']);
+            return;
         }
 
         $newPA = (int)$hero['point_a'] + $pA;
@@ -838,8 +865,21 @@ class HeroController {
         $newPC = (int)$hero['point_c'] + $pC;
         $remPoints = (int)$hero['points'] - $totalAdd;
 
-        $db->prepare("UPDATE city_hero SET point_a = ?, point_b = ?, point_c = ?, points = ? WHERE id_hero = ?")
-           ->execute([$newPA, $newPB, $newPC, $remPoints, $idHero]);
+        $update = $db->prepare(
+            "UPDATE city_hero SET point_a = ?, point_b = ?, point_c = ?, points = ? " .
+            "WHERE id_hero = ? AND points = ? AND point_a = ? AND point_b = ? AND point_c = ? " .
+            "AND point_a_plus = ? AND point_b_plus = ? AND point_c_plus = ?"
+        );
+        $update->execute([
+            $newPA, $newPB, $newPC, $remPoints,
+            $idHero, (int)$hero['points'], (int)$hero['point_a'], (int)$hero['point_b'],
+            (int)$hero['point_c'], (int)$hero['point_a_plus'], (int)$hero['point_b_plus'],
+            (int)$hero['point_c_plus']
+        ]);
+        if ($update->rowCount() !== 1) {
+            sendJson(['state' => 'error']);
+            return;
+        }
 
         $uHero = $db->query("SELECT * FROM city_hero WHERE id_hero = $idHero")->fetch();
         foreach ($uHero as $k => $v) { if (is_numeric($v)) $uHero[$k] = (int)$v; }
@@ -1128,6 +1168,26 @@ class HeroController {
             'HeroMedal' => $freshMedal,
             'CityRes'   => $freshCity
         ]);
+    }
+
+    public static function changeHeroName($db, array $player) {
+        $idHero = (int)($_REQUEST['idHero'] ?? 0);
+        $name = normalizeGameDisplayName($_REQUEST['name'] ?? null);
+        if ($name === null || preg_match('/\A.{3,50}\z/us', $name) !== 1) {
+            sendJson(['state' => 'error_name']);
+        }
+
+        $hero = requirePlayerOwnedHero($db, $player, $idHero);
+        if ($name === $hero['name']) {
+            sendJson(['state' => 'error_same_name']);
+        }
+
+        $stmt = $db->prepare(
+            'UPDATE `city_hero` SET `name` = ? WHERE `id_hero` = ? AND `id_player` = ?'
+        );
+        $stmt->execute([$name, $idHero, (int)$player['id_player']]);
+
+        sendJson(['state' => 'ok', 'name' => $name]);
     }
 
     public static function fireHero($db) {
