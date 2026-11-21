@@ -2420,9 +2420,7 @@ body #luck-wheel-over-lay {
 }
 
 .empty_place .building-construction {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
+    display: block;
     box-sizing: border-box;
     padding: 8px;
     width: 100%;
@@ -2431,95 +2429,139 @@ body #luck-wheel-over-lay {
 
 .empty_place .building-construction > ul.total {
     display: flex;
-    flex: 1 1 70%;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: 70%;
-    max-height: 100%;
-    overflow-y: auto;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
     margin: 0;
     padding: 0;
     direction: rtl;
 }
 
 .empty_place .building-construction > ul.total > li {
+    position: relative;
     box-sizing: border-box;
-    width: 31%;
+    width: 19%;
     margin: 0.5%;
     padding-bottom: 5px;
+    z-index: 1;
 }
 
-.empty_place .building-option__blocked {
-    width: 90%;
-    min-height: 30px;
-    margin: 4px auto;
-    padding: 3px 4px;
-    box-sizing: border-box;
-    color: #ffe6c6;
-    background: rgba(92, 24, 16, 0.8);
-    border: 1px solid #8a4d39;
-    border-radius: 4px;
-    font-size: 11px;
-    line-height: 1.4;
-    text-align: center;
+.empty_place .building-option:hover,
+.empty_place .building-option:focus-within {
+    z-index: 5;
 }
 
-.empty_place .building-requirement-preview {
-    flex: 0 0 29%;
+.empty_place .building-construction-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    z-index: 20;
     box-sizing: border-box;
-    max-height: 100%;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    max-height: 300px;
     overflow-y: auto;
-    padding: 10px;
-    color: #f5e8c8;
-    background: rgba(45, 28, 17, 0.88);
-    border: 1px solid #a87b45;
-    border-radius: 5px;
-    direction: rtl;
-    text-align: right;
-    font-size: 13px;
+    right: auto;
+    left: auto;
+    margin-top: 0;
 }
 
-.building-requirement-preview__content h2 {
-    margin: 0 0 8px;
-    color: #f2d89a;
-    font-size: 17px;
-}
-
-.building-requirement-preview__content p {
-    margin: 5px 0;
-}
-
-.building-requirement-preview__content ul {
-    margin: 6px 0;
-    padding: 0;
-    list-style: none;
-}
-
-.building-requirement-preview__content li {
-    margin: 4px 0;
-    padding: 3px 5px;
-    border-radius: 3px;
-}
-
-.building-requirement-preview__content li span {
+.empty_place .building-option:hover .building-construction-tooltip,
+.empty_place .building-option:focus-within .building-construction-tooltip {
     display: block;
-    opacity: 0.85;
-    font-size: 11px;
 }
 
-.building-requirement-preview .enough {
-    color: #b7df98;
+.empty_place .building-option:nth-child(5n + 1) .building-construction-tooltip {
+    right: 0;
 }
 
-.building-requirement-preview .not-enough {
+.empty_place .building-option:nth-child(5n) .building-construction-tooltip {
+    left: 0;
+}
+
+.empty_place .building-option:nth-child(5n + 2) .building-construction-tooltip,
+.empty_place .building-option:nth-child(5n + 3) .building-construction-tooltip,
+.empty_place .building-option:nth-child(5n + 4) .building-construction-tooltip {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.exchange-purchase-status {
+    clear: both;
+    padding: 5px;
     color: #ffb2a1;
+    text-align: center;
+    font-size: 12px;
 }
 
-.building-requirement-preview__status {
-    padding-top: 6px;
-    border-top: 1px solid rgba(220, 184, 126, 0.4);
-    font-weight: bold;
-    line-height: 1.5;
+@media (max-width: 520px) {
+    .empty_place .building-option:nth-child(n) .building-construction-tooltip {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+}
+
+#matral-box-use .matrial-trade-show .confim-btn .trade-amount-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#matral-box-use .matrial-trade-show .row-3 .confim-btn.has-purchase-status {
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: auto;
+    min-height: 32px;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+#matral-box-use .matrial-trade-show .confim-btn.has-purchase-status .exchange-purchase-status {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    margin: 0;
+    clear: none;
+    text-align: right;
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#matral-box-use .matrial-trade-show .confim-btn.has-purchase-status .trade-amount-wrapper {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    direction: ltr;
+    margin: 0;
+    height: 24px;
+    vertical-align: middle;
+}
+
+#matral-box-use .matrial-trade-show .confim-btn.has-purchase-status #amount_to_trade {
+    flex: 0 0 auto;
+    float: none;
+    margin: 0;
+    height: 22px;
+    line-height: 22px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+#matral-box-use .matrial-trade-show .confim-btn.has-purchase-status .number-arrow-wrapper {
+    flex: 0 0 auto;
+    float: none;
+    margin: 0 0 0 -20px;
+    position: relative;
+    z-index: 2;
+    vertical-align: middle;
 }
 
 /* Fullscreen GameWindow container and Phaser canvas */

@@ -110,10 +110,10 @@
 .prize-row ul {
     overflow: visible;
     margin: 0;
-    padding: 0 4px;
+    padding: 0 8px;
     display: flex;
     align-items: center;
-    float: left;
+    order: 2;
 }
 
 .prize-row {
@@ -126,18 +126,25 @@
     width: 98%;
     margin: 2px auto 0 auto;
     box-sizing: border-box;
+    display: flex;
+    direction: rtl;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .prize-row p {
+    flex: 0 0 auto;
     height: auto;
     line-height: 28px;
-    float: right;
     margin: 0;
     padding-right: 15px;
+    padding-left: 0;
     color: #603a11;
     font-size: 13px;
     font-weight: bold;
     white-space: nowrap;
+    text-align: right;
+    order: 1;
 }
 
 .prize-row li {
@@ -805,74 +812,131 @@ a.for_Ranks .tr .rank-title {
 
 /*    dialog box for guild */
 
-#guild-guild_data .left-content .upper .table,
-#guild-guild_data .left-content .upper {
-    overflow: auto;
-}
-
 #guild-guild_data .left-content .upper {
     height: 52%;
+    overflow: hidden !important;
 }
 
-#guild-guild_data .left-content .upper .table .t-row:first-child {
-    width: 46%;
-    float: left;
+#guild-guild_data .left-content .upper .table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+    padding: 6px 8px;
+    box-sizing: border-box;
+    overflow: hidden !important;
+}
+
+#guild-guild_data .left-content .upper .table .t-row:first-child,
+#guild-guild_data .left-content .upper .table .guild-emblem-wrap {
+    flex: 0 0 38%;
+    max-width: 40%;
+    float: none;
     position: relative;
-    margin-top: 13px;
-    height: 130px
+    margin: 0;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
 }
 
-#guild-guild_data .left-content .upper .table .t-row:first-child .t-d {
-    overflow: auto;
-    height: 100px;
-    width: 100px;
+#guild-guild_data .left-content .upper .table .t-row:first-child .t-d,
+#guild-guild_data .left-content .upper .table .guild-emblem-wrap .t-d {
+    overflow: visible;
+    height: 90px;
+    width: 80px;
     margin: auto;
-    margin-top: 15px;
+    position: relative;
+    transform: scale(0.85);
+    transform-origin: center center;
 }
 
-#guild-guild_data .left-content .upper .table .t-row:nth-child(2) {
-    width: 54%;
-    float: right;
-    margin-top: 5px
+#guild-guild_data .left-content .upper .table .t-row:first-child .t-d img,
+#guild-guild_data .left-content .upper .table .guild-emblem-wrap .t-d img {
+    left: 0;
+    top: 0;
 }
 
-#guild-guild_data .left-content .upper .table .t-row:nth-child(2) .t-d {
-    font-size: 16px;
-    line-height: 25px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+#guild-guild_data .left-content .upper .table .t-row:nth-child(2),
+#guild-guild_data .left-content .upper .table .guild-stats-wrap {
+    flex: 0 0 58%;
+    max-width: 60%;
+    float: none;
+    margin: 0;
+    box-sizing: border-box;
+    direction: rtl;
+    order: 1;
 }
 
-#guild-guild_data .left-content .upper .table .t-row:nth-child(4) h1 {
-    width: 80%;
-    font-size: 16px;
-    line-height: 35px;
+#guild-guild_data .left-content .upper .table .t-row:nth-child(2) .t-d,
+#guild-guild_data .left-content .upper .table .guild-stats-wrap .t-d {
+    font-size: 13px;
+    line-height: 22px;
+    border: none;
+    float: none;
+    box-sizing: border-box;
+}
+
+#guild-guild_data .left-content .upper .table > p {
+    display: none;
+}
+
+#guild-guild_data .left-content .upper .table .t-row:nth-child(4),
+#guild-guild_data .left-content .upper .table .guild-name-wrap {
+    flex: 0 0 100%;
+    width: 100%;
+    margin-top: 12px;
+    order: 3;
+}
+
+#guild-guild_data .left-content .upper .table .t-row:nth-child(4) h1,
+#guild-guild_data .left-content .upper .table .guild-name-wrap h1 {
+    width: 85%;
+    font-size: 15px;
+    line-height: 30px;
     background-image: url("../images/background/profile_name.png");
     clear: both;
-    height: 35px;
+    height: 30px;
     margin: auto;
     background-size: 100% 100%;
     color: white;
     text-align: center;
-    margin-top: 6px;
 }
 
 #guild-guild_data .left-content .upper .table .t-row .t-r {
     background-image: url("../images/background/profile_name.png");
     background-size: 100% 100%;
-    overflow: auto;
+    overflow: hidden;
     color: white;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    display: flex;
+    direction: rtl;
+    height: 22px;
+    line-height: 22px;
+    font-size: 13px;
 }
 
 #guild-guild_data .left-content .upper .table .t-row:nth-child(2) .t-d:nth-child(2n+1) {
-    margin-right: 8px;
-    float: right;
+    flex: 0 0 auto;
+    padding: 0 6px;
+    font-weight: bold;
+    text-align: right;
+    margin: 0;
+    float: none;
 }
 
 #guild-guild_data .left-content .upper .table .t-row:nth-child(2) .t-d:nth-child(2n) {
+    flex: 1 1 auto;
     text-align: center;
     overflow: hidden;
-    width: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 4px;
+    margin: 0;
+    float: none;
 }
 
 .guild .nav_bar .nav_icon img {
@@ -1103,8 +1167,20 @@ a.for_Ranks .tr .rank-title {
     text-shadow: 0px 1px 1px black;
 }
 
-.for_guild .right-content .left table th {
-    display: block
+.for_guild .right-content .left table thead th,
+.for_guild .right-content .left table th.guild-upgrade-table-header {
+    display: table-cell !important;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #f5e7be;
+    background: rgba(0, 0, 0, 0.45);
+    height: 30px;
+    line-height: 30px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow: visible;
 }
 
 .for_guild .right-content .left {
@@ -1160,7 +1236,7 @@ a.for_Ranks .tr .rank-title {
     margin-top: 44px;
 }
 
-.for_guild .right-content .left table td:nth-child(2n+1) {
+.for_guild .right-content .left table tbody td:nth-child(2n+1) {
     width: 40px;
 }
 
@@ -1307,10 +1383,95 @@ a.for_Ranks .tr .rank-title {
     white-space: nowrap;
 }
 
+#msg_income_detail .upper,
+#msg_out_detail .upper {
+    box-sizing: border-box;
+    height: 48px;
+    padding: 5px 8px;
+    width: 100%;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar,
+#msg_out_detail .upper ol.msg-meta-bar {
+    align-items: center;
+    direction: rtl;
+    display: flex;
+    gap: 8px;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar li,
+#msg_out_detail .upper ol.msg-meta-bar li {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    float: none;
+    height: 34px;
+    margin: 0;
+    min-width: 0;
+    padding: 0 10px;
+    background-image: url("../images/background/bar_L.png"), url("../images/background/bar_R.png"), url("../images/background/bar_center.png");
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    background-position: left, right, center;
+    background-size: auto 100%;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar .msg-meta-bar__sender,
+#msg_out_detail .upper ol.msg-meta-bar .msg-meta-bar__sender {
+    flex: 0 0 185px;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar .msg-meta-bar__subject,
+#msg_out_detail .upper ol.msg-meta-bar .msg-meta-bar__subject {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar .msg-meta-bar__date,
+#msg_out_detail .upper ol.msg-meta-bar .msg-meta-bar__date {
+    flex: 0 0 240px;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar li span,
+#msg_out_detail .upper ol.msg-meta-bar li span {
+    box-sizing: border-box;
+    float: none;
+    height: 30px;
+    line-height: 30px;
+    min-width: 0;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar li span:first-child,
+#msg_out_detail .upper ol.msg-meta-bar li span:first-child {
+    flex: 0 0 auto;
+    margin: 0 0 0 6px;
+    overflow: visible;
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    white-space: nowrap;
+}
+
+#msg_income_detail .upper ol.msg-meta-bar li span:last-child,
+#msg_out_detail .upper ol.msg-meta-bar li span:last-child {
+    flex: 1 1 auto;
+    font-size: 13px;
+    color: #ffffff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: right;
+}
+
 #msg_income_detail .left-content,
+#msg_out_detail .left-content,
 #battel-report-msg .left-content,
-#msg_diff_detail .left-content,
-#msg_income_detail .left-content {
+#msg_diff_detail .left-content {
     background: url(../images/background/paperCenter.jpg);
 }
 
@@ -1381,35 +1542,61 @@ a.for_Ranks .tr .rank-title {
 
 .system-event-message__list {
     display: grid;
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px;
     list-style: none;
-    margin: 0;
+    margin: 10px 0;
     padding: 0;
+    direction: rtl;
 }
 
 .system-event-message__row {
     align-items: center;
-    border-bottom: 1px solid rgba(98, 65, 24, 0.18);
+    border: 1px solid rgba(98, 65, 24, 0.22);
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 4px;
+    box-sizing: border-box;
     display: flex;
-    gap: 10px;
-    min-height: 38px;
-    padding: 4px 0;
+    gap: 8px;
+    min-height: 44px;
+    padding: 4px 8px;
+    direction: rtl;
 }
 
 .system-event-message__row img {
-    height: 36px;
+    height: 34px;
+    width: 34px;
     object-fit: contain;
-    width: 36px;
+    flex: 0 0 34px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .system-event-message__row img.system-event-message__hero {
     border-radius: 50%;
-    height: 42px;
-    width: 42px;
+    height: 38px;
+    width: 38px;
+    flex: 0 0 38px;
+    border: 1px solid rgba(98, 65, 24, 0.35);
+}
+
+.system-event-message__row span {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
 }
 
 .system-event-message__row strong {
+    flex: 0 0 auto;
+    font-size: 13px;
+    color: #9c2716;
     margin-right: auto;
+    padding-right: 4px;
 }
 
 .system-event-message__note {
@@ -1574,6 +1761,10 @@ a.for_Ranks .tr .rank-title {
     box-sizing: border-box;
 }
 
+#reports_list_BF {
+    overflow-y: auto;
+}
+
 .for_quest .right-content,
 .for_guild .right-content #rightofright {
     background-image: url(../images/icons/left-content.png);
@@ -1667,4 +1858,424 @@ a.for_Ranks .tr .rank-title {
     width: 50%;
     height: 26px;
     margin-top: 2px;
+}
+
+/* Guild Upgrade Deposit Section */
+.up_guild .right-content-footer.up_guild_footer {
+    height: 48%;
+    background: none;
+    display: flex;
+    direction: rtl;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    align-items: center;
+    overflow: visible;
+}
+
+.guild-deposit-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(245, 231, 190, 0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+
+.guild-deposit-header {
+    text-align: right;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #f5e7be;
+}
+
+.guild-deposit-body {
+    display: flex;
+    direction: rtl;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+ol.guild-deposit-cards {
+    display: flex;
+    direction: rtl;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
+}
+
+.guild-deposit-card {
+    flex: 1 1 0;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(245, 231, 190, 0.2);
+    border-radius: 4px;
+    padding: 4px 4px 6px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.guild-deposit-card .card-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+}
+
+.guild-deposit-card .card-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #f5e7be;
+}
+
+.guild-deposit-card .card-stored {
+    font-size: 11px;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.guild-deposit-card input {
+    width: 90% !important;
+    height: 22px !important;
+    line-height: 20px !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    padding: 1px 2px !important;
+    margin: 2px 0 0 0 !important;
+    box-sizing: border-box !important;
+    float: none !important;
+}
+
+.guild-deposit-btn-wrap {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 8px;
+    padding-right: 0;
+}
+
+.guild-deposit-btn-wrap #guild-donate {
+    width: 82px;
+    height: 38px;
+    line-height: 38px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Edit Guild Word Modal Refinements */
+.edit-guild-word-modal {
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review {
+    height: 330px;
+    margin-top: 32px;
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review .upper {
+    height: 160px !important;
+    padding: 0 8px;
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review .upper .upper {
+    height: 160px !important;
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review .table .left {
+    height: 85px;
+}
+
+.edit-guild-word-modal #rank-review .table .left img {
+    transform: scale(0.85);
+    transform-origin: top left;
+}
+
+.edit-guild-word-modal #rank-review .table .right {
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.edit-guild-word-modal #rank-review .table .right label:first-child {
+    font-size: 13px;
+}
+
+.edit-guild-word-modal #rank-review table h1 {
+    font-size: 14px;
+    line-height: 28px;
+    height: 28px;
+}
+
+.edit-guild-word-modal #rank-review .down {
+    height: 155px !important;
+    padding-top: 4px;
+    box-sizing: border-box;
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review .down p {
+    margin-top: 14px;
+    padding: 6px 14px 4px 14px !important;
+    height: auto;
+    overflow: hidden !important;
+}
+
+.edit-guild-word-modal #rank-review .down textarea {
+    width: 90%;
+    margin: 4px auto;
+    height: 52px;
+    font-size: 13px;
+    line-height: 18px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    display: block;
+    resize: none;
+}
+
+.edit-guild-word-modal #rank-review .down button#save-g-intro,
+.edit-guild-word-modal #rank-review .down button#save-t-intro {
+    width: 90px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 13px;
+    margin: 4px auto 0 auto;
+    display: block;
+}
+
+#guild-guild_data .down p {
+    box-sizing: border-box;
+    padding-top: 24px !important;
+    padding-right: 12px;
+    padding-left: 12px;
+    line-height: 20px;
+    font-size: 13px;
+    text-align: center;
+    word-break: break-word;
+    overflow-y: auto;
+}
+
+#rank-review:not(.player-review) .down p {
+    padding-top: 22px;
+    line-height: 20px;
+    font-size: 13px;
+    box-sizing: border-box;
+    word-break: break-word;
+}
+
+/* Player Profile Review Dialog Buttons */
+.player-review .down .buttons {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 14px !important;
+    width: 100% !important;
+    margin: 15px auto 0 auto !important;
+    float: none !important;
+}
+
+.player-review .down .buttons .li-d {
+    width: 130px !important;
+    margin: 0 !important;
+    float: none !important;
+    cursor: pointer;
+}
+
+.player-review .down .buttons .title {
+    width: 90px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+/* Theater hero potential highlighting */
+.theater .tr.is-pot-hero > div:not(.td_9),
+.theater .tr .POT-HERO {
+    color: #0082cd !important;
+    font-weight: bold;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Favorite Coordinates (مفضلة الإحداثيات) Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+.for_fav_coords {
+    padding: 10px 15px;
+    direction: rtl;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.for_fav_coords .fav-add-bar {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid #5a4a32;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.for_fav_coords .fav-add-bar .input-grp {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.for_fav_coords .fav-add-bar .input-grp label {
+    font-size: 13px;
+    color: #dfba6b;
+    font-weight: bold;
+}
+
+.for_fav_coords .fav-add-bar .input-grp input {
+    background: #1b1610;
+    border: 1px solid #735c3a;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 3px;
+    height: 24px;
+    box-sizing: border-box;
+}
+
+.for_fav_coords .fav-add-bar .fav-counter-badge {
+    margin-right: auto;
+    font-size: 12px;
+    color: #dfba6b;
+    font-weight: bold;
+    padding: 2px 8px;
+    background: rgba(223, 186, 107, 0.15);
+    border-radius: 10px;
+    border: 1px solid #dfba6b;
+}
+
+.for_fav_coords .fav-table-header {
+    background: #2b2014;
+    border: 1px solid #5a4a32;
+    padding: 6px 10px;
+    font-weight: bold;
+    color: #dfba6b;
+    font-size: 13px;
+    border-radius: 3px 3px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.for_fav_coords .fav-table-body {
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid #5a4a32;
+    border-top: none;
+    background: rgba(18, 14, 10, 0.7);
+}
+
+.for_fav_coords .fav-coord-row {
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-bottom: 1px solid #3d2f1f;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.for_fav_coords .fav-coord-row:hover {
+    background: rgba(223, 186, 107, 0.12);
+}
+
+.for_fav_coords .col-coords {
+    width: 120px;
+    font-family: monospace;
+    font-size: 13px;
+    color: #8ce4ff;
+    font-weight: bold;
+    direction: ltr;
+    text-align: right;
+}
+
+.for_fav_coords .col-title {
+    flex: 1;
+    color: #f0e6d2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.for_fav_coords .col-dist {
+    width: 90px;
+    color: #c9b085;
+}
+
+.for_fav_coords .col-actions {
+    width: 170px;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.for_fav_coords .col-actions button {
+    height: 24px;
+    padding: 0 8px;
+    font-size: 11px;
+}
+
+.for_fav_coords .empty-fav-msg {
+    text-align: center;
+    padding: 40px 20px;
+    color: #bfa77e;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* World map popup add-to-fav icon */
+.add-fav-coord-btn {
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/world/map-icon/icon_map_favorite_01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.add-fav-coord-btn:hover {
+    filter: brightness(1.3);
+}
+
+/* Market transport favorite selector */
+.my-fav-distin {
+    margin-top: 6px;
+    position: relative;
+}
+
+.my-fav-distin label {
+    font-size: 12px;
+    color: #e5c07b;
+    margin-left: 8px;
+}
+
+.my-fav-distin .select-input {
+    width: 140px;
+    display: inline-block;
+    vertical-align: middle;
 }

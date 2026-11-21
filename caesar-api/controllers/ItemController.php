@@ -2,10 +2,14 @@
 // ItemController.php - Complete Item Buying, Inventory Consumption, Buffs, Relocation, Army Packs, and Mystery Boxes
 
 require_once __DIR__ . '/../services/HeroPowerService.php';
+require_once __DIR__ . '/../services/ResourceService.php';
 
 class ItemController {
     public static function handle($uri, $db) {
         switch ($uri) {
+            case '/api/AItem/getEquipmentPower':
+                self::getEquipmentPower();
+                return true;
             case '/api/AItem/getAllItemPrice':
                 self::getAllItemPrice();
                 return true;
@@ -166,6 +170,19 @@ class ItemController {
         return true;
     }
 
+    public static function runItemTransaction($db, callable $operation): void {
+        $db->beginTransaction();
+        try {
+            $operation();
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
+    }
+
     private static function addPlayerItem($db, $playerId, $itemKey, $amount = 1) {
         $stmt = $db->prepare("INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)");
         $stmt->execute([$playerId, $itemKey, $amount]);
@@ -246,6 +263,62 @@ class ItemController {
         header('Content-Type: text/plain; charset=utf-8');
         echo json_encode(array_values($prices), JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
         exit;
+    }
+
+    public static function getEquipmentPower(): void {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
+            http_response_code(405);
+            sendJson(['state' => 'error_method_not_allowed']);
+        }
+
+        $equip = $_GET['equip'] ?? '';
+        $part = $_GET['part'] ?? '';
+        $rawLevel = $_GET['lvl'] ?? null;
+        $level = is_string($rawLevel) ? filter_var($rawLevel, FILTER_VALIDATE_INT) : false;
+        $validParts = ['sword', 'helmet', 'shield', 'armor', 'boot', 'belt', 'necklace', 'pendant', 'ring', 'steed'];
+        if (!is_string($equip)
+            || preg_match('/\A[a-z0-9]+\z/i', $equip) !== 1
+            || !is_string($part)
+            || !in_array($part, $validParts, true)
+            || $level === false
+            || $level < 1
+            || $level > 9) {
+            http_response_code(400);
+            sendJson(['state' => 'error_invalid_equipment']);
+        }
+
+        $file = dirname(__DIR__, 2) . '/caesar-private/data/equipment-power.json';
+        $raw = is_file($file) && is_readable($file) ? file_get_contents($file) : false;
+        $entries = $raw === false ? null : json_decode($raw, true);
+        if (!is_array($entries)) {
+            error_log('[ItemController] Equipment power data is unavailable or invalid');
+            http_response_code(500);
+            sendJson(['state' => 'error_equipment_power_unavailable']);
+        }
+
+        foreach ($entries as $entry) {
+            if (!is_array($entry)
+                || ($entry['equip'] ?? null) !== $equip
+                || ($entry['part'] ?? null) !== $part
+                || (int)($entry['lvl'] ?? 0) !== $level) {
+                continue;
+            }
+
+            $power = [];
+            foreach (['attack', 'defence', 'vitality', 'damage', 'break', 'anti_break', 'strike', 'immunity', 'sp_attr'] as $field) {
+                if (!isset($entry[$field]) || !is_numeric($entry[$field])) {
+                    error_log('[ItemController] Equipment power entry is invalid for ' . $equip . '_' . $part . '_' . $level);
+                    http_response_code(500);
+                    sendJson(['state' => 'error_equipment_power_invalid']);
+                }
+                $power[$field] = (int)$entry[$field];
+            }
+
+            sendJson(['state' => 'ok', 'Power' => $power]);
+        }
+
+        http_response_code(404);
+        sendJson(['state' => 'error_equipment_not_found']);
     }
 
     private static function loadExchangeOffers(): array {
@@ -396,6 +469,9 @@ class ItemController {
         }
 
         $itemPrice = (int)($itemDefinition['gold'] ?? 0);
+        if ($itemPrice <= 0) {
+            sendJson(['state' => 'item_not_for_sale']);
+        }
         $prizeLimit = (int)($limits[$item] ?? 0);
         if ($itemPrice > 0 && $amount > intdiv(PHP_INT_MAX, $itemPrice)) {
             sendJson(['state' => 'error_invalid_amount']);
@@ -627,52 +703,89 @@ class ItemController {
                 break;
 
             case 'useGoldPack':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $goldVal = 5;
                 if (preg_match('/gold_(\d+)/', $item, $m)) {
                     $goldVal = (int)$m[1];
                 }
                 $totalGold = $goldVal * $amount;
-                $db->prepare("UPDATE player SET gold = gold + ? WHERE id_player = ?")->execute([$totalGold, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $totalGold) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $goldStmt = $db->prepare("UPDATE player SET gold = gold + ? WHERE id_player = ?");
+                    $goldStmt->execute([$totalGold, $playerId]);
+                    if ($goldStmt->rowCount() !== 1) {
+                        throw new RuntimeException('Gold pack could not update the player balance');
+                    }
+                });
                 sendJson(['state' => 'ok', 'gold' => (int)$player['gold'] + $totalGold]);
                 break;
 
             case 'useCeaseFire':
             case 'useItemProtect':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                // 12 hours peace shield per item
-                $db->prepare("UPDATE player_state SET `peace` = GREATEST(`peace`, ?) + ? WHERE id_player = ?")
-                   ->execute([$now, 43200 * $amount, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $now) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $stmt = $db->prepare("UPDATE player_state SET `peace` = GREATEST(`peace`, ?) + ? WHERE id_player = ?");
+                    $stmt->execute([$now, 43200 * $amount, $playerId]);
+                    if ($stmt->rowCount() !== 1) {
+                        throw new RuntimeException('Peace shield item could not update player state');
+                    }
+                });
                 sendJson(['state' => 'ok']);
                 break;
 
             case 'useAttackAdvancer':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                $db->prepare("UPDATE player_state SET `attack_10` = GREATEST(`attack_10`, ?) + ? WHERE id_player = ?")
-                   ->execute([$now, 86400 * $amount, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $now) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $stmt = $db->prepare("UPDATE player_state SET `attack_10` = GREATEST(`attack_10`, ?) + ? WHERE id_player = ?");
+                    $stmt->execute([$now, 86400 * $amount, $playerId]);
+                    if ($stmt->rowCount() !== 1) {
+                        throw new RuntimeException('Attack boost item could not update player state');
+                    }
+                });
                 sendJson(['state' => 'ok']);
                 break;
 
             case 'useDefenceAdvancer':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                $db->prepare("UPDATE player_state SET `defence_10` = GREATEST(`defence_10`, ?) + ? WHERE id_player = ?")
-                   ->execute([$now, 86400 * $amount, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $now) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $stmt = $db->prepare("UPDATE player_state SET `defence_10` = GREATEST(`defence_10`, ?) + ? WHERE id_player = ?");
+                    $stmt->execute([$now, 86400 * $amount, $playerId]);
+                    if ($stmt->rowCount() !== 1) {
+                        throw new RuntimeException('Defence boost item could not update player state');
+                    }
+                });
                 sendJson(['state' => 'ok']);
                 break;
 
             case 'useMotivSpeech':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $dur = (strpos($item, '_7') !== false) ? 86400 * 7 * $amount : 216000 * $amount;
-                $db->prepare("UPDATE player_state SET `motiv` = GREATEST(`motiv`, ?) + ? WHERE id_player = ?")
-                   ->execute([$now, $dur, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $now, $dur) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $stmt = $db->prepare("UPDATE player_state SET `motiv` = GREATEST(`motiv`, ?) + ? WHERE id_player = ?");
+                    $stmt->execute([$now, $dur, $playerId]);
+                    if ($stmt->rowCount() !== 1) {
+                        throw new RuntimeException('Motivational speech item could not update player state');
+                    }
+                });
                 sendJson(['state' => 'ok']);
                 break;
 
             case 'useProtPop':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $popBonus = max(100, round((int)$city['pop_max'] * 0.20 * $amount));
-                $db->prepare("UPDATE city SET `pop` = LEAST(`pop_max`, `pop` + ?) WHERE id_city = ?")->execute([$popBonus, $idCity]);
-                $db->prepare("UPDATE player_state SET `prot_pop` = GREATEST(`prot_pop`, ?) + ? WHERE id_player = ?")->execute([$now, 86400 * $amount, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $idCity, $popBonus, $now) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $cityStmt = $db->prepare('SELECT 1 FROM city WHERE id_city = ? AND id_player = ?');
+                    $cityStmt->execute([$idCity, $playerId]);
+                    if ($cityStmt->fetchColumn() === false) {
+                        throw new RuntimeException('Population item city is no longer owned by the player');
+                    }
+                    $db->prepare("UPDATE city SET `pop` = LEAST(`pop_max`, `pop` + ?) WHERE id_city = ? AND id_player = ?")
+                        ->execute([$popBonus, $idCity, $playerId]);
+                    $stateStmt = $db->prepare("UPDATE player_state SET `prot_pop` = GREATEST(`prot_pop`, ?) + ? WHERE id_player = ?");
+                    $stateStmt->execute([$now, 86400 * $amount, $playerId]);
+                    if ($stateStmt->rowCount() !== 1) {
+                        throw new RuntimeException('Population protection item could not update player state');
+                    }
+                });
 
                 $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
                 foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
@@ -680,74 +793,287 @@ class ItemController {
                 break;
 
             case 'useMedicalStatue':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                $db->prepare("UPDATE player_state SET `medical` = GREATEST(`medical`, ?) + ? WHERE id_player = ?")
-                   ->execute([$now, 86400 * $amount, $playerId]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $now) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $stmt = $db->prepare("UPDATE player_state SET `medical` = GREATEST(`medical`, ?) + ? WHERE id_player = ?");
+                    $stmt->execute([$now, 86400 * $amount, $playerId]);
+                    if ($stmt->rowCount() !== 1) {
+                        throw new RuntimeException('Medical item could not update player state');
+                    }
+                });
                 sendJson(['state' => 'ok']);
                 break;
 
             case 'useTheatrics':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                $db->prepare("UPDATE city SET `loy` = 100, `dis_loy` = 0 WHERE id_city = ?")->execute([$idCity]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $idCity) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $cityStmt = $db->prepare('SELECT 1 FROM city WHERE id_city = ? AND id_player = ?');
+                    $cityStmt->execute([$idCity, $playerId]);
+                    if ($cityStmt->fetchColumn() === false) {
+                        throw new RuntimeException('Theatrics item city is no longer owned by the player');
+                    }
+                    $db->prepare("UPDATE city SET `loy` = 100, `dis_loy` = 0 WHERE id_city = ? AND id_player = ?")
+                        ->execute([$idCity, $playerId]);
+                });
                 $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
                 foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
                 sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
                 break;
 
             case 'useFreedomHelp':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                $db->prepare("UPDATE city SET `helper` = 0 WHERE id_city = ?")->execute([$idCity]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $idCity) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $cityStmt = $db->prepare('SELECT 1 FROM city WHERE id_city = ? AND id_player = ?');
+                    $cityStmt->execute([$idCity, $playerId]);
+                    if ($cityStmt->fetchColumn() === false) {
+                        throw new RuntimeException('Freedom item city is no longer owned by the player');
+                    }
+                    $db->prepare("UPDATE city SET `helper` = 0 WHERE id_city = ? AND id_player = ?")
+                        ->execute([$idCity, $playerId]);
+                });
                 $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
                 foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
                 sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
                 break;
 
             case 'useRandomMove':
-                self::deductPlayerItem($db, $playerId, 'random_move', 1);
-                $newX = rand(50, 450);
-                $newY = rand(50, 450);
-                $db->prepare("UPDATE city SET `x` = ?, `y` = ? WHERE id_city = ?")->execute([$newX, $newY, $idCity]);
-                $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
-                foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
+                // 1. Verify player owns the city
+                $cityStmt = $db->prepare('SELECT * FROM city WHERE id_city = ? AND id_player = ?');
+                $cityStmt->execute([$idCity, $playerId]);
+                $city = $cityStmt->fetch(PDO::FETCH_ASSOC);
+                if (!$city) {
+                    sendJson(['state' => 'error_auth']);
+                    return;
+                }
+
+                // 2. Prerequisite check: ensure no heroes from this city are outside (in_city = 0)
+                $heroOutsideStmt = $db->prepare('SELECT 1 FROM city_hero WHERE id_city = ? AND in_city = 0 LIMIT 1');
+                $heroOutsideStmt->execute([$idCity]);
+                if ($heroOutsideStmt->fetchColumn() !== false) {
+                    sendJson([
+                        'state' => 'error_army_outside',
+                        'msg' => 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة'
+                    ]);
+                    return;
+                }
+
+                // Ensure no active marching/battle expeditions from this city
+                $activeBattleStmt = $db->prepare(
+                    "SELECT 1 FROM world_battel WHERE state = 'marching' AND (id_city = ? OR (x_city = ? AND y_city = ?)) LIMIT 1"
+                );
+                $activeBattleStmt->execute([$idCity, (int)$city['x'], (int)$city['y']]);
+                if ($activeBattleStmt->fetchColumn() !== false) {
+                    sendJson([
+                        'state' => 'error_army_outside',
+                        'msg' => 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة'
+                    ]);
+                    return;
+                }
+
+                // Find an empty tile before charging the player.
+                $foundX = null;
+                $foundY = null;
+                for ($attempt = 0; $attempt < 100; $attempt++) {
+                    $candX = rand(50, 450);
+                    $candY = rand(50, 450);
+                    $occCity = $db->prepare('SELECT 1 FROM city WHERE x = ? AND y = ? LIMIT 1');
+                    $occCity->execute([$candX, $candY]);
+                    if ($occCity->fetchColumn() !== false) continue;
+
+                    $occBar = $db->prepare('SELECT 1 FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1');
+                    $occBar->execute([$candX, $candY]);
+                    if ($occBar->fetchColumn() !== false) continue;
+
+                    $foundX = $candX;
+                    $foundY = $candY;
+                    break;
+                }
+                if ($foundX === null) {
+                    sendJson([
+                        'state' => 'error_no_place_empty',
+                        'msg' => 'لم يتم العثور على موقع فارغ لنقل المدينة'
+                    ]);
+                    return;
+                }
+
+                $db->beginTransaction();
+                try {
+                    $occCity = $db->prepare('SELECT 1 FROM city WHERE x = ? AND y = ? LIMIT 1');
+                    $occCity->execute([$foundX, $foundY]);
+                    $occBar = $db->prepare('SELECT 1 FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1');
+                    $occBar->execute([$foundX, $foundY]);
+                    if ($occCity->fetchColumn() !== false || $occBar->fetchColumn() !== false) {
+                        $db->rollBack();
+                        sendJson(['state' => 'error_no_place_empty', 'msg' => 'الموقع المختار لم يعد فارغاً']);
+                        return;
+                    }
+
+                    self::deductPlayerItem($db, $playerId, 'random_move', 1);
+                    $moveStmt = $db->prepare(
+                        'UPDATE city SET `x` = ?, `y` = ? WHERE `id_city` = ? AND `id_player` = ?'
+                    );
+                    $moveStmt->execute([$foundX, $foundY, $idCity, $playerId]);
+                    if ($moveStmt->rowCount() !== 1) {
+                        throw new RuntimeException('Random city move did not update the owned city');
+                    }
+
+                    $freshStmt = $db->prepare('SELECT * FROM city WHERE id_city = ? AND id_player = ?');
+                    $freshStmt->execute([$idCity, $playerId]);
+                    $freshCity = $freshStmt->fetch(PDO::FETCH_ASSOC);
+                    if (!$freshCity) {
+                        throw new RuntimeException('Moved city was not found after relocation');
+                    }
+                    foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
+                    $db->commit();
+                } catch (Throwable $error) {
+                    if ($db->inTransaction()) {
+                        $db->rollBack();
+                    }
+                    throw $error;
+                }
+
                 sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
                 break;
 
             case 'useCertainMove':
-                self::deductPlayerItem($db, $playerId, 'certain_move', 1);
-                $newX = isset($_REQUEST['newX']) ? (int)$_REQUEST['newX'] : (isset($_REQUEST['xCoord']) ? (int)$_REQUEST['xCoord'] : (isset($_REQUEST['x']) ? (int)$_REQUEST['x'] : rand(50, 450)));
-                $newY = isset($_REQUEST['newY']) ? (int)$_REQUEST['newY'] : (isset($_REQUEST['yCoord']) ? (int)$_REQUEST['yCoord'] : (isset($_REQUEST['y']) ? (int)$_REQUEST['y'] : rand(50, 450)));
-                $db->prepare("UPDATE city SET `x` = ?, `y` = ? WHERE id_city = ?")->execute([$newX, $newY, $idCity]);
-                $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
-                foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
-                sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
+                // 1. Verify player owns the city
+                $cityStmt = $db->prepare('SELECT * FROM city WHERE id_city = ? AND id_player = ?');
+                $cityStmt->execute([$idCity, $playerId]);
+                $city = $cityStmt->fetch(PDO::FETCH_ASSOC);
+                if (!$city) {
+                    sendJson(['state' => 'error_auth']);
+                    return;
+                }
+
+                // 2. Prerequisite check: ensure no heroes from this city are outside (in_city = 0)
+                $heroOutsideStmt = $db->prepare('SELECT 1 FROM city_hero WHERE id_city = ? AND in_city = 0 LIMIT 1');
+                $heroOutsideStmt->execute([$idCity]);
+                if ($heroOutsideStmt->fetchColumn() !== false) {
+                    sendJson([
+                        'state' => 'error_army_outside',
+                        'msg' => 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة'
+                    ]);
+                    return;
+                }
+
+                // Ensure no active marching/battle expeditions from this city
+                $activeBattleStmt = $db->prepare(
+                    "SELECT 1 FROM world_battel WHERE state = 'marching' AND (id_city = ? OR (x_city = ? AND y_city = ?)) LIMIT 1"
+                );
+                $activeBattleStmt->execute([$idCity, (int)$city['x'], (int)$city['y']]);
+                if ($activeBattleStmt->fetchColumn() !== false) {
+                    sendJson([
+                        'state' => 'error_army_outside',
+                        'msg' => 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة'
+                    ]);
+                    return;
+                }
+
+                // 3. Target coordinate validation
+                $newX = isset($_REQUEST['newX']) ? (int)$_REQUEST['newX'] : (isset($_REQUEST['xCoord']) ? (int)$_REQUEST['xCoord'] : (isset($_REQUEST['x']) ? (int)$_REQUEST['x'] : -1));
+                $newY = isset($_REQUEST['newY']) ? (int)$_REQUEST['newY'] : (isset($_REQUEST['yCoord']) ? (int)$_REQUEST['yCoord'] : (isset($_REQUEST['y']) ? (int)$_REQUEST['y'] : -1));
+                if ($newX < 0 || $newX >= 500 || $newY < 0 || $newY >= 500) {
+                    sendJson(['state' => 'error_coord', 'msg' => 'الإحداثيات غير صحيحة']);
+                    return;
+                }
+
+                // 4. Ensure target spot is empty
+                $occCity = $db->prepare('SELECT 1 FROM city WHERE x = ? AND y = ? LIMIT 1');
+                $occCity->execute([$newX, $newY]);
+                if ($occCity->fetchColumn() !== false) {
+                    sendJson(['state' => 'error_no_place_empty']);
+                    return;
+                }
+                $occBar = $db->prepare('SELECT 1 FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1');
+                $occBar->execute([$newX, $newY]);
+                if ($occBar->fetchColumn() !== false) {
+                    sendJson(['state' => 'error_no_place_empty']);
+                    return;
+                }
+
+                $wbPath = __DIR__ . '/../json/WorldBarrary.json';
+                if (!file_exists($wbPath)) {
+                    $wbPath = __DIR__ . '/../../caesar-assets/api/js-0.0.24/json/WorldBarrary.json';
+                }
+                if (file_exists($wbPath)) {
+                    $wbContent = file_get_contents($wbPath);
+                    if (preg_match('/(^|[,"]\s*)' . $newX . '_' . $newY . '_([1-9][0-9]*)/', $wbContent)) {
+                        sendJson(['state' => 'error_no_place_empty']);
+                        return;
+                    }
+                }
+
+                $db->beginTransaction();
+                try {
+                    $occCity->execute([$newX, $newY]);
+                    $occBar->execute([$newX, $newY]);
+                    if ($occCity->fetchColumn() !== false || $occBar->fetchColumn() !== false) {
+                        $db->rollBack();
+                        sendJson(['state' => 'error_no_place_empty']);
+                        return;
+                    }
+
+                    self::deductPlayerItem($db, $playerId, 'certain_move', 1);
+
+                    // Targeted move imposes 24-hour attack/expedition cooldown.
+                    $cooldownUntil = time() + 86400;
+                    $moveStmt = $db->prepare(
+                        'UPDATE city SET `x` = ?, `y` = ?, `attack_cooldown_until` = ?'
+                        . ' WHERE `id_city` = ? AND `id_player` = ?'
+                    );
+                    $moveStmt->execute([$newX, $newY, $cooldownUntil, $idCity, $playerId]);
+                    if ($moveStmt->rowCount() !== 1) {
+                        throw new RuntimeException('Certain city move did not update the owned city');
+                    }
+
+                    $freshStmt = $db->prepare('SELECT * FROM city WHERE id_city = ? AND id_player = ?');
+                    $freshStmt->execute([$idCity, $playerId]);
+                    $freshCity = $freshStmt->fetch(PDO::FETCH_ASSOC);
+                    if (!$freshCity) {
+                        throw new RuntimeException('Moved city was not found after relocation');
+                    }
+                    foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
+                    $db->commit();
+                } catch (Throwable $error) {
+                    if ($db->inTransaction()) {
+                        $db->rollBack();
+                    }
+                    throw $error;
+                }
+
+                sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity, 'attack_cooldown_until' => $cooldownUntil]);
                 break;
 
             case 'useArenaAttempt':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $attemptsToAdd = 1;
                 if ($item === 'arena_attempt_5') $attemptsToAdd = 5;
                 elseif ($item === 'arena_attempt_10') $attemptsToAdd = 10;
                 $totalAttempts = $attemptsToAdd * $amount;
 
-                $db->prepare("INSERT INTO `arena_player` (`id_player`, `rank`, `points`, `attempts`, `wins`, `losses`, `hero_list`) 
-                              VALUES (?, 1000, 100, ?, 0, 0, '[]')
-                              ON DUPLICATE KEY UPDATE `attempts` = `attempts` + ?")
-                   ->execute([$playerId, $totalAttempts, $totalAttempts]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $totalAttempts) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $db->prepare("INSERT INTO `arena_player` (`id_player`, `rank`, `points`, `attempts`, `wins`, `losses`, `hero_list`)
+                                  VALUES (?, 1000, 100, ?, 0, 0, '[]')
+                                  ON DUPLICATE KEY UPDATE `attempts` = `attempts` + ?")
+                       ->execute([$playerId, $totalAttempts, $totalAttempts]);
+                });
                 sendJson(['state' => 'ok', 'attempts' => $totalAttempts]);
                 break;
 
             case 'useArenaExpPack':
-                self::deductPlayerItem($db, $playerId, $item, $amount);
                 $expToAdd = 1;
                 if ($item === 'arena_exp_5') $expToAdd = 5;
                 elseif ($item === 'arena_exp_10') $expToAdd = 10;
                 elseif ($item === 'arena_exp_25') $expToAdd = 25;
                 $totalExp = $expToAdd * $amount;
 
-                $db->prepare("INSERT INTO `arena_player` (`id_player`, `rank`, `points`, `attempts`, `wins`, `losses`, `hero_list`) 
-                              VALUES (?, 1000, ?, 10, 0, 0, '[]')
-                              ON DUPLICATE KEY UPDATE `points` = `points` + ?")
-                   ->execute([$playerId, $totalExp, $totalExp]);
+                self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $totalExp) {
+                    self::deductPlayerItem($db, $playerId, $item, $amount);
+                    $db->prepare("INSERT INTO `arena_player` (`id_player`, `rank`, `points`, `attempts`, `wins`, `losses`, `hero_list`)
+                                  VALUES (?, 1000, ?, 10, 0, 0, '[]')
+                                  ON DUPLICATE KEY UPDATE `points` = `points` + ?")
+                       ->execute([$playerId, $totalExp, $totalExp]);
+                });
                 sendJson(['state' => 'ok', 'exp' => $totalExp]);
                 break;
 
@@ -781,9 +1107,8 @@ class ItemController {
                     sendJson(['state' => 'ok', 'City' => $freshCity, 'CityRes' => $freshCity]);
                     return;
                 }
-                self::deductPlayerItem($db, $playerId, $item, $amount);
-                sendJson(['state' => 'ok']);
-                break;
+                sendJson(['state' => 'error_invalid_item']);
+                return;
         }
     }
 
@@ -799,8 +1124,6 @@ class ItemController {
             $idCity = (int)$cityStmt->fetchColumn();
         }
         $city = requirePlayerOwnedCity($db, $player, $idCity);
-
-        self::deductPlayerItem($db, $playerId, $item, $amount);
 
         // Army pack rules
         $packs = [
@@ -831,7 +1154,18 @@ class ItemController {
         }
         $params[] = $idCity;
 
-        $db->prepare("UPDATE city SET " . implode(', ', $setClauses) . " WHERE id_city = ?")->execute($params);
+        self::runItemTransaction($db, function () use ($db, $playerId, $item, $amount, $idCity, $setClauses, $params) {
+            self::deductPlayerItem($db, $playerId, $item, $amount);
+            $updateParams = $params;
+            $updateParams[] = $playerId;
+            $update = $db->prepare(
+                "UPDATE city SET " . implode(', ', $setClauses) . " WHERE id_city = ? AND id_player = ?"
+            );
+            $update->execute($updateParams);
+            if ($update->rowCount() !== 1) {
+                throw new RuntimeException('Army pack could not update the owned city');
+            }
+        });
 
         $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch();
         foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }

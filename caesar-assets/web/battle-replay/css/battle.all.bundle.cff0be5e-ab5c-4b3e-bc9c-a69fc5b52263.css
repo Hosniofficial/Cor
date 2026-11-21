@@ -5001,7 +5001,7 @@ body {
 #player-city-list ul li {
   width: 110px;
   height: 36px;
-  background-image: url(../Res/world/city-list/no-select.png);
+  background-image: url(../../images/world/city-list/no-console.png);
   background-size: 75% 100%;
   overflow: auto;
   background-position: right;

@@ -225,7 +225,7 @@ Translate.Button.MenuList.Deposite = {
     "de": "spenden",
     "zh": "捐献",
     "en": "Contribute To Depository",
-    "ar": "مساعده بالايداع"
+    "ar": "ايداع"
 };
 Translate.Button.MenuList.BuyGold = {
     "pt": "Obt.Ouro",
@@ -1325,6 +1325,12 @@ NavBar.Exchange = [{
         "title_de": "Geschenk Gottes"
     }
 ];
+NavBar.FavoriteCoords = [{
+    "title_ar": "الإحداثيات المفضلة",
+    "title_en": "Favorite Coordinates",
+    "title": "fav_coords"
+}];
+
 NavBar.Report = [{
         "title_ar": "ارض المعركة",
         "title_en": "Arena",
@@ -2497,7 +2503,6 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('unit_floor', BASE_ASSET_BATH + 'images/world/unit_floor.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_1', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_1.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_2', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_2.png');
-    Caesar.GE.LoadingScene.load.image('building_lvl_lable_3', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_3.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_4', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_4.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_5', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_5.png');
     Caesar.GE.LoadingScene.load.image('building_level_badge', BASE_ASSET_BATH + 'images/city/building_levelBg.png');
@@ -2611,37 +2616,6 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('ConstructingHammer', BASE_ASSET_BATH + 'images/city/ConstructingHammer.png');
     Caesar.GE.LoadingScene.load.image('city_backdrop', BASE_ASSET_BATH + 'images/city/bg0.jpg');
     Caesar.GE.LoadingScene.load.image('city_wallpage', BASE_ASSET_BATH + 'images/city/wallpage_2.jpg');
-
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_01', 'images/CityFloor/mainCityBGHall_1.png', 'images/CityFloor/mainCityBGHall_1.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_02', 'images/CityFloor/mainCityBGHall_2.png', 'images/CityFloor/mainCityBGHall_2.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_03', 'images/CityFloor/mainCityBGHall_3.png', 'images/CityFloor/mainCityBGHall_3.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_04', 'images/CityFloor/mainCityBGHall_4.png', 'images/CityFloor/mainCityBGHall_4.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_05', 'images/CityFloor/mainCityBGHall_5.png', 'images/CityFloor/mainCityBGHall_5.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_06', 'images/CityFloor/mainCityBGHall_6.png', 'images/CityFloor/mainCityBGHall_6.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_07', 'images/CityFloor/mainCityBGHall_7.png', 'images/CityFloor/mainCityBGHall_7.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_08', 'images/CityFloor/mainCityBGHall_8.png', 'images/CityFloor/mainCityBGHall_8.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_09', 'images/CityFloor/mainCityBGHall_9.png', 'images/CityFloor/mainCityBGHall_9.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_10', 'images/CityFloor/mainCityBGHall_10.png', 'images/CityFloor/mainCityBGHall_10.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_11', 'images/CityFloor/mainCityBGHall_11.png', 'images/CityFloor/mainCityBGHall_11.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_12', 'images/CityFloor/mainCityBGHall_12.png', 'images/CityFloor/mainCityBGHall_12.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_13', 'images/CityFloor/mainCityBGHall_13.png', 'images/CityFloor/mainCityBGHall_13.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_14', 'images/CityFloor/mainCityBGHall_14.png', 'images/CityFloor/mainCityBGHall_14.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_15', 'images/CityFloor/mainCityBGHall_15.png', 'images/CityFloor/mainCityBGHall_15.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_16', 'images/CityFloor/mainCityBGHall_16.png', 'images/CityFloor/mainCityBGHall_16.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_17', 'images/CityFloor/mainCityBGHall_17.png', 'images/CityFloor/mainCityBGHall_17.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_18', 'images/CityFloor/mainCityBGHall_18.png', 'images/CityFloor/mainCityBGHall_18.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_19', 'images/CityFloor/mainCityBGHall_19.png', 'images/CityFloor/mainCityBGHall_19.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_20', 'images/CityFloor/mainCityBGHall_20.png', 'images/CityFloor/mainCityBGHall_20.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_21', 'images/CityFloor/mainCityBGHall_21.png', 'images/CityFloor/mainCityBGHall_21.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_22', 'images/CityFloor/mainCityBGHall_22.png', 'images/CityFloor/mainCityBGHall_22.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_23', 'images/CityFloor/mainCityBGHall_23.png', 'images/CityFloor/mainCityBGHall_23.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_24', 'images/CityFloor/mainCityBGHall_24.png', 'images/CityFloor/mainCityBGHall_24.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_25', 'images/CityFloor/mainCityBGHall_25.png', 'images/CityFloor/mainCityBGHall_25.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_26', 'images/CityFloor/mainCityBGHall_26.png', 'images/CityFloor/mainCityBGHall_26.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_27', 'images/CityFloor/mainCityBGHall_27.png', 'images/CityFloor/mainCityBGHall_27.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_28', 'images/CityFloor/mainCityBGHall_28.png', 'images/CityFloor/mainCityBGHall_28.json');
-    Caesar.GE.LoadingScene.load.atlas('MainCityBG_top', 'images/CityFloor/mainCityBGHall_top.png', 'images/CityFloor/mainCityBGHall_top.json');
-
 
 };
 
@@ -2911,7 +2885,7 @@ Caesar.GE.CLoadingScene = new Phaser.Class({
                     Caesar['Config']['RechCode'] = JsonData['RechCode'];
 
                     if (Caesar['DPlayer']['Player']['panned'] >= $['now']() / 1000) {
-                        alert('هذا الحساب محظور');
+                        alert_box.failMessage('هذا الحساب محظور');
                         return;
                     }
 
@@ -3287,8 +3261,7 @@ Caesar.LBase.Error = function(data) {
         alert_box.failMessage(message);
         return;
     }
-
-    window.alert(message);
+    console.warn("[API response error]", message);
 };
 
 Caesar.LBase.isJson = function(str) {
@@ -5046,7 +5019,7 @@ Caesar.BaseData.PlayerStateData = {
         en_title: ""
     },
     wheat: {
-        image: "images/icons/list/wheat.png",
+        image: "images/style/food.png",
         title: "انتاح الغذاء",
         ar_title: "",
         en_title: ""
@@ -7914,39 +7887,7 @@ function isInt(num) {
 }
 
 
-FAVORIT_LIST = [{
-        id: 1,
-        x_coord: 200,
-        y_coord: 150,
-        type: 27,
-        lvl: 5,
-        title: "mohamed"
-    },
-    {
-        id: 2,
-        x_coord: 458,
-        y_coord: 125,
-        type: 27,
-        lvl: 5,
-        title: "Mosta"
-    },
-    {
-        id: 3,
-        x_coord: 45,
-        y_coord: 52,
-        type: 27,
-        lvl: 5,
-        title: "morad"
-    },
-    {
-        id: 4,
-        x_coord: 45,
-        y_coord: 52,
-        type: 27,
-        lvl: 5,
-        title: "نغم"
-    }
-];
+FAVORIT_LIST = [];
 
 
 $(document).on("mouseenter", "#city-profile .page_content .army_type", function() {
@@ -9052,6 +8993,8 @@ $(document)['on']('click', '#relocate-city-now', function() {
 
 
                 });
+            } else if (JsonData['state'] === 'error_army_outside') {
+                alert_box['failMessage'](JsonData['msg'] || 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة');
             } else if (JsonData['state'] === 'error_no_place_empty') {
                 setTimeout(function() {
                     alert_box['confirmMessage']('للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]');
@@ -9473,9 +9416,17 @@ Caesar.City.RefreshCityHeros = function(idCity) {
 
 
 
+Caesar.City.getCityLogo = function(lvl) {
+    var l = Math.max(0, Math.min(3, Number(lvl) || 0));
+    var num = ("0" + (l + 1)).slice(-2);
+    return "images/world/city-list/city_citylogo_" + num + ".jpg";
+};
+
 Caesar.City.refreshBtnList = function() {
     var BtnList = "";
-    var idCity = Number(Caesar.CurrentCity.idCity);
+    var curCity = Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City : (Caesar.CurrentCity || {});
+    var idCity = Number(curCity.id_city || curCity.idCity || 0);
+
     for (var iii = Object.keys(Caesar.DPlayer.City).length - 1; iii >= 0; iii--) {
 
         var CCity = Caesar.DPlayer.City[Object.keys(Caesar.DPlayer.City)[iii]];
@@ -9484,10 +9435,18 @@ Caesar.City.refreshBtnList = function() {
             continue;
         }
 
+        var isSelected = idCity === Number(CCity.City.id_city);
         var console_hero = Caesar.Hero.getHero(CCity.City.console);
-        BtnList += `<li data-index="${iii}" data-id-city="${CCity.City.id_city}" ${idCity === Number(CCity.City.id_city) ? `class="selected"` : ""}>
-                                 <div class="console pull-R" style="background-image: url(${console_hero && console_hero.Hero ? Caesar.BaseData.HeroAvatar[console_hero.Hero.avatar] : "images/world/city-list/no-console.png"})">
-                                        <label class="stroke">${CCity.City.name}</label>
+        var cityLogo = Caesar.City.getCityLogo(CCity.City.lvl);
+        var bgImage = (console_hero && console_hero.Hero && Caesar.BaseData.HeroAvatar && Caesar.BaseData.HeroAvatar[console_hero.Hero.avatar])
+            ? Caesar.BaseData.HeroAvatar[console_hero.Hero.avatar]
+            : cityLogo;
+
+        var safeCityName = typeof escapeHtml === "function" ? escapeHtml(CCity.City.name) : CCity.City.name;
+
+        BtnList += `<li data-index="${iii}" data-id-city="${CCity.City.id_city}" class="${isSelected ? "selected" : ""}" title="${safeCityName}">
+                                 <div class="console pull-R" style="background-image: url(${bgImage})">
+                                        <label class="stroke">${safeCityName}</label>
                                  </div>
                                 <button class="nav-to-city pull-L" data-x-coord="${CCity.City.x}" data-y-coord="${CCity.City.y}"></button>
                              </li>`;
@@ -10968,75 +10927,90 @@ var alert_box = {
         return content;
     },
     confirmMessage: function(title) {
-        var content = `<div id="alert_box">        
-                            <div class="row-2" style="text-align:center">
-                                ${title}
-                            </div>    
-                            <div class="row-3">        
-                                <div class="confim-btn">            
-                                    <button id="closeAlertBoxButton" class="full-btn full-btn-3x pull-R enter ellipsis">${Translate.Button.Building.Confirm[UserLag.language]}</button>    
-                                    
-                                </div>    
-                            </div>
-                        </div> `;
-
-
-        $("body").append(this.alert("تنبيه", content));
-
+        this.showCenteredNotice(title, "warning");
     },
     close: function() {
         $('.close-alert').trigger('click');
     },
 
-    succesMessage: function(msg) {
-
-
-        var box = `<div id="fade-msg">
-                        <p class="success stroke">
-                            ${msg}
-                        </p>
-                    </div>`;
-
+    showCenteredNotice: function(msg, type, options) {
+        options = options || {};
+        if (window.gameNoticeTimer)
+            window.clearTimeout(window.gameNoticeTimer);
         $("#fade-msg").remove();
-        $("body").append(box);
-        $("#fade-msg").animate({
-            top: "30%"
-        }, 3000, "linear", function() {
-            $(this).animate({
-                top: "150px",
-                opacity: '0'
-            }, 2000, "linear", function() {
+        $("#study-failure-notice").remove();
 
-                $(this).remove();
-
+        var noticeType = type === "success" || type === "warning" ? type : "fail";
+        var notice;
+        if (options.title || options.subject) {
+            notice = $('<div>', {
+                id: "fade-msg",
+                role: noticeType === "success" ? "status" : "alert",
+                "aria-live": noticeType === "success" ? "polite" : "assertive",
+                class: "game-centered-notice game-centered-notice-" + noticeType
             });
-        });
+            var content = $('<div>', { class: "game-centered-notice-content" });
+            if (options.title) {
+                content.append($('<h2>').text(options.title));
+            }
+            if (options.subject) {
+                content.append($('<strong>', { class: "game-centered-notice-subject" }).text(options.subject));
+            }
+            content.append($('<p>').text(String(msg || "").replace(/<br\s*\/?>/gi, "\n")));
+            if (options.action && options.action.href && options.action.label) {
+                content.append(
+                    $('<a>', {
+                        class: "game-centered-notice-action",
+                        href: options.action.href
+                    }).text(options.action.label)
+                );
+            }
+            notice.append(content);
+        } else {
+            notice = $('<div>', {
+                id: "fade-msg",
+                role: noticeType === "success" ? "status" : "alert",
+                "aria-live": noticeType === "success" ? "polite" : "assertive",
+                class: "game-centered-notice game-centered-notice-" + noticeType
+            });
+            var message = String(msg || "").replace(/<br\s*\/?>/gi, "\n");
+            notice.append($('<p>', {
+                class: (noticeType === "warning" ? "warning" : noticeType) + " stroke"
+            }).text(message));
+        }
 
+        var duration = Number(options.duration) > 0 ? Number(options.duration) : 3000;
+        if (options.action && options.action.href && options.action.label) {
+            notice.addClass("game-centered-notice-has-action");
+        }
+        notice.css("animation-duration", duration + "ms");
+        $("body").append(notice);
+        window.gameNoticeTimer = window.setTimeout(function() {
+            notice.remove();
+            window.gameNoticeTimer = null;
+        }, duration);
+    },
+
+    succesMessage: function(msg) {
+        this.showCenteredNotice(msg, "success");
     },
     failMessage: function(msg) {
+        this.showCenteredNotice(msg, "fail");
+    },
 
+    warningMessage: function(msg) {
+        this.showCenteredNotice(msg, "warning");
+    },
 
-        var box = `<div id="fade-msg">
-                        <p class="fail stroke">
-                            ${msg}
-                        </p>
-                    </div>`;
-
-        $("#fade-msg").remove();
-        $("body").append(box);
-        $("#fade-msg").animate({
-            top: "30%"
-        }, 3000, "linear", function() {
-            $(this).animate({
-                top: "150px",
-                opacity: '0'
-            }, 2000, "linear", function() {
-
-                $(this).remove();
-
-            });
-        });
-
+    studyFailure: function(studyTitle, reason) {
+        this.showCenteredNotice(
+            reason || "راجع متطلبات الدراسة وحاول مرة أخرى.",
+            "fail",
+            {
+                title: "تعذّر بدء الدراسة",
+                subject: studyTitle || "الدراسة"
+            }
+        );
     },
 
     confirmDialog: function(msg, yesCallBack) {
@@ -12173,13 +12147,23 @@ var city_profile = {
     afterBattelFinish: function() {
 
         var min_time = 9999 * 9999 * 9999;
-        for (var iii in Caesar.Battel.Battels) {
-            if (min_time > Number(Caesar.Battel.Battels[iii].time_end)) {
-                min_time = Number(Caesar.Battel.Battels[iii].time_end);
+        var activeBattles = Array.isArray(Caesar.Battel && Caesar.Battel.Battels)
+            ? Caesar.Battel.Battels
+            : [];
+        for (var iii in activeBattles) {
+            if (min_time > Number(activeBattles[iii].time_end)) {
+                min_time = Number(activeBattles[iii].time_end);
             }
         }
 
-        if (min_time - Date.now() / 1000 < 30 && Caesar.Battel.Battels.length >= 1) {
+        if (min_time - Date.now() / 1000 < 30 && activeBattles.length >= 1) {
+            return;
+        }
+
+        var currentCity = Caesar.CurrentCity && Caesar.CurrentCity.City;
+        var idCity = Number(currentCity && currentCity.id_city);
+        if (!idCity) {
+            console.error("[Battle] Cannot refresh resources because the current city is unavailable");
             return;
         }
 
@@ -12189,7 +12173,7 @@ var city_profile = {
             data: {
                 AFTER_BATTEL_FINISH_REFRESH: true,
                 id_player: ID_PLAYER,
-                id_city: Caesar.CurrentCity.City.id_city,
+                id_city: idCity,
                 token: TOKEN
             },
             type: 'GET',
@@ -12200,12 +12184,31 @@ var city_profile = {
                 if (isJson(data)) {
 
                     var json_data = typeof data === "string" ? JSON.parse(data) : data;
-                    Caesar.CurrentCity.City.food = json_data.city.food;
-                    Caesar.CurrentCity.City.wood = json_data.city.wood;
-                    Caesar.CurrentCity.City.stone = json_data.city.stone;
-                    Caesar.CurrentCity.City.stone = json_data.city.stone;
-                    Caesar.CurrentCity.City.coin = json_data.city.coin;
-                    Caesar.CurrentCity.City.food_out = json_data.city.food_out;
+                    var refreshedCity = json_data.city && typeof json_data.city === "object"
+                        ? json_data.city
+                        : json_data;
+                    if (!refreshedCity || typeof refreshedCity !== "object"
+                        || refreshedCity.state === "error_no_city") {
+                        console.error("[Battle] City resource refresh returned no city data");
+                        return;
+                    }
+                    if (!Caesar.CurrentCity.City) {
+                        Caesar.CurrentCity.City = {};
+                    }
+                    Caesar.CurrentCity.City.food = refreshedCity.food;
+                    Caesar.CurrentCity.City.wood = refreshedCity.wood;
+                    Caesar.CurrentCity.City.stone = refreshedCity.stone;
+                    Caesar.CurrentCity.City.metal = refreshedCity.metal;
+                    Caesar.CurrentCity.City.coin = refreshedCity.coin;
+                    Caesar.CurrentCity.City.food_out = refreshedCity.food_out;
+                    if (refreshedCity.wall_cap !== undefined)
+                        Caesar.CurrentCity.City.wall_cap = refreshedCity.wall_cap;
+                    if (refreshedCity.wall_a !== undefined)
+                        Caesar.CurrentCity.City.wall_a = refreshedCity.wall_a;
+                    if (refreshedCity.wall_b !== undefined)
+                        Caesar.CurrentCity.City.wall_b = refreshedCity.wall_b;
+                    if (refreshedCity.wall_c !== undefined)
+                        Caesar.CurrentCity.City.wall_c = refreshedCity.wall_c;
                     city_profile.refresh_resource_view();
 
                 } else {
@@ -13628,17 +13631,20 @@ $(document).on("mouseenter", ".tooltip_mat", function() {
     if (!itemData)
         return;
 
+    var priceHtml = Number(itemData.gold) > 0
+        ? `<div class="mat_price pull-L">
+                <p class="pull-L">${itemData.gold}</p>
+                <div class="pull-R">
+                    <img src="images/icons/resource/gold.png"/>
+                </div>
+            </div>`
+        : "";
     var toolTip = ` <div class="tooltip-container">
                         <div class="header">
                             <div class="mat_name pull-R">
                                 ${itemData.name}
                             </div>
-                            <div class="mat_price pull-L">
-                                <p class="pull-L"> ${itemData.gold}</p>
-                                <div class="pull-R">
-                                    <img src="images/icons/resource/gold.png"/>
-                                </div>
-                            </div>
+                            ${priceHtml}
                         </div>
                         <div class="desc">
                             ${itemData.desc}
@@ -13733,9 +13739,9 @@ $(document).on("click", ".buy_mat_btn button", function() {
     var amount = Matrial.getPlayerAmount(matrial_name);
     var prizeLimit = Number(mat_obj.prizeLimit) || 0;
     var remainingLimit = prizeLimit > 0 ? Math.max(0, prizeLimit - amount) : null;
-    var amountByGold = mat_obj.gold > 0
+    var amountByGold = Number(mat_obj.gold) > 0
         ? Math.floor(Caesar.DPlayer.Player.gold / mat_obj.gold)
-        : Number.MAX_SAFE_INTEGER;
+        : 0;
     var maxAmount = remainingLimit === null ? amountByGold : Math.min(amountByGold, remainingLimit);
 
     $("#alert_container").remove();
@@ -14340,13 +14346,42 @@ Caesar.TimedTask.getCityBuildingTasks = function(idCity) {
 
 Caesar.TimedTask.replaceCityTasks = function(taskType, idCity, tasks) {
     var taskList = Caesar.TimedTask.TaskList[taskType];
+    var activeTaskIds = {};
+    for (var index in tasks)
+        activeTaskIds[tasks[index].id] = true;
+
+    var removedStudyTasks = [];
     for (var taskId in taskList) {
-        if (Number(taskList[taskId].id_city) === Number(idCity))
+        if (Number(taskList[taskId].id_city) === Number(idCity)) {
+            if (taskType === "Study" && !activeTaskIds[taskId])
+                removedStudyTasks.push(taskList[taskId]);
             delete taskList[taskId];
+        }
     }
     for (var index in tasks)
         taskList[tasks[index].id] = tasks[index];
     Caesar.TimedTask.refreshListView();
+
+    if (removedStudyTasks.length && !Caesar.TimedTask._expiredTaskSyncInFlight[Number(idCity)]) {
+        var completedStudies = {};
+        var nowSeconds = Math.floor(Date.now() / 1000);
+        for (var removedIndex in removedStudyTasks) {
+            var removedTask = removedStudyTasks[removedIndex];
+            if (Number(removedTask.time_end) <= nowSeconds && removedTask.study) {
+                completedStudies[removedTask.study] = Math.max(
+                    Number(completedStudies[removedTask.study]) || 0,
+                    Number(removedTask.lvl_to) || 0
+                );
+            }
+        }
+
+        Caesar.TimedTask.refreshCompletedStudyView(idCity, completedStudies).fail(function(jqXHR) {
+            console.error("Failed to refresh education after study task completion", jqXHR.status, jqXHR.statusText);
+        });
+        Player_profile.getPlayerBaseData().fail(function(jqXHR) {
+            console.error("Failed to refresh player prestige after study completion", jqXHR.status, jqXHR.statusText);
+        });
+    }
 };
 
 Caesar.TimedTask.refreshCityBuildingView = function(idCity, place) {
@@ -14415,27 +14450,87 @@ Caesar.TimedTask.refreshExpiredBuildingTask = function(task) {
 };
 
 Caesar.TimedTask._expiredTaskSyncAt = {};
+Caesar.TimedTask._expiredTaskSyncInFlight = {};
+Caesar.TimedTask.refreshCompletedStudyView = function(idCity, completedStudies) {
+    completedStudies = completedStudies || {};
+    var applyCompletedStudies = function() {
+        Caesar.DPlayer.PlayerEdu = Caesar.DPlayer.PlayerEdu || {};
+        for (var studyName in completedStudies) {
+            var completedLevel = Number(completedStudies[studyName]);
+            if (studyName && Number.isFinite(completedLevel) && completedLevel > 0) {
+                Caesar.DPlayer.PlayerEdu[studyName] = Math.max(
+                    Number(Caesar.DPlayer.PlayerEdu[studyName]) || 0,
+                    completedLevel
+                );
+            }
+        }
+    };
+
+    var refreshVisibleStudyList = function() {
+        var studyBox = $("#dialg_box .for_building_box");
+        var category = studyBox.attr("category");
+        if (category === "study_uni")
+            $("#dialg_box .uni_tech .left-content .total").replaceWith(edu.getUniTech());
+        else if (category === "study_acad")
+            $("#dialg_box .acad_tech .left-content .total").replaceWith(edu.getAcadTech());
+    };
+
+    applyCompletedStudies();
+    refreshVisibleStudyList();
+
+    return Player_profile.getPlayerEdu().then(function() {
+        applyCompletedStudies();
+        refreshVisibleStudyList();
+    });
+};
+
 Caesar.TimedTask.refreshExpiredTaskState = function(idCity) {
     idCity = Number(idCity);
     if (!Number.isSafeInteger(idCity) || idCity <= 0)
         return;
 
     var now = Date.now();
-    if (now - (Caesar.TimedTask._expiredTaskSyncAt[idCity] || 0) < 5000)
+    var nowSeconds = Math.floor(now / 1000);
+    if (Caesar.TimedTask._expiredTaskSyncInFlight[idCity])
+        return;
+
+    var hasExpiredStudyTask = false;
+    var completedStudies = {};
+    for (var studyTaskId in Caesar.TimedTask.TaskList.Study) {
+        var studyTask = Caesar.TimedTask.TaskList.Study[studyTaskId];
+        if (Number(studyTask.id_city) === idCity && Number(studyTask.time_end) <= nowSeconds) {
+            hasExpiredStudyTask = true;
+            if (studyTask.study)
+                completedStudies[studyTask.study] = Number(studyTask.lvl_to);
+        }
+    }
+    if (!hasExpiredStudyTask && now - (Caesar.TimedTask._expiredTaskSyncAt[idCity] || 0) < 5000)
         return;
     Caesar.TimedTask._expiredTaskSyncAt[idCity] = now;
+    Caesar.TimedTask._expiredTaskSyncInFlight[idCity] = true;
 
-    var taskRefresh = Player_profile.getPlayerBaseData().then(function() {
-        return $.when(
-            Caesar.City.getCityBase(idCity),
-            Caesar.TimedTask.getCityBuildingTasks(idCity),
-            Caesar.TimedTask.getCityStudyTasks(idCity),
-            Caesar.TimedTask.getCityArmyTasks(idCity),
-            Caesar.TimedTask.getCityJopTasks(idCity)
+    var taskRefresh = Player_profile.getPlayerBaseData()
+        .then(function() {
+            return Caesar.City.getCityBase(idCity);
+        })
+        .then(function() {
+            return $.when(
+                Caesar.TimedTask.getCityBuildingTasks(idCity),
+                Caesar.TimedTask.getCityStudyTasks(idCity),
+                Caesar.TimedTask.getCityArmyTasks(idCity),
+                Caesar.TimedTask.getCityJopTasks(idCity)
+            );
+        });
+    if (hasExpiredStudyTask) {
+        taskRefresh = $.when(
+            taskRefresh,
+            Caesar.TimedTask.refreshCompletedStudyView(idCity, completedStudies)
         );
-    });
+    }
     taskRefresh.fail(function(jqXHR) {
         console.error("Failed to refresh completed task state", jqXHR.status, jqXHR.statusText);
+    }).always(function() {
+        delete Caesar.TimedTask._expiredTaskSyncInFlight[idCity];
     });
 };
 
@@ -14457,7 +14552,6 @@ Caesar.TimedTask.refreshExpiredTasks = function() {
                 Caesar.TimedTask.refreshExpiredBuildingTask(task);
             else
                 Caesar.TimedTask.refreshExpiredTaskState(task.id_city);
-            return;
         }
     }
 };
@@ -14837,20 +14931,31 @@ Caesar.WsLib.TimedTask.Study = function(data) {
 
 
     //Crafty.audio.play("upgrade_done");
-    Caesar.DPlayer.Player.prestige = Number(Caesar.DPlayer.Player.prestige) + data.prestige;
-    Player_profile.getPlayerEdu().done(function() {
-        $(".uni_tech .left-content .total").replaceWith(edu.getUniTech());
-        $(".acad_tech .left-content .total").replaceWith(edu.getAcadTech());
-    });
-
-
+    var prestigeGain = Number(data.prestige);
+    if (Number.isFinite(prestigeGain) && prestigeGain !== 0) {
+        Caesar.DPlayer.Player.prestige =
+            (Number(Caesar.DPlayer.Player.prestige) || 0) + prestigeGain;
+    }
+    var completedTask = data.Task || Caesar.TimedTask.TaskList.Study[data.Task && data.Task.id] || {};
+    var taskId = Number(completedTask.id);
+    var storedTask = taskId > 0 ? Caesar.TimedTask.TaskList.Study[taskId] : null;
+    storedTask = storedTask || completedTask;
+    var completedStudy = storedTask.study || storedTask.item_id || completedTask.study || completedTask.item_id;
+    var completedLevel = Number(storedTask.lvl_to || completedTask.lvl_to);
+    var completedStudies = {};
+    if (completedStudy && Number.isFinite(completedLevel) && completedLevel > 0)
+        completedStudies[completedStudy] = completedLevel;
 
 
 
     city_profile.refresh_city_resources();
-    delete(Caesar.TimedTask.TaskList.Study[data.Task.id]);
+    delete(Caesar.TimedTask.TaskList.Study[taskId]);
     Caesar.TimedTask.refreshListView();
     Player_profile.refresh_view();
+    Caesar.TimedTask.refreshCompletedStudyView(
+        Number(storedTask.id_city || completedTask.id_city || Caesar.CurrentCity.idCity),
+        completedStudies
+    );
 
     var id_console = Caesar.CurrentCity.City.console;
     var hero = getHeroById(id_console);
@@ -15384,8 +15489,7 @@ function getNewBuildingAvailability(type) {
     var result = {
         ready: Boolean(requirement && city),
         requirement: requirement || null,
-        blockers: [],
-        rows: []
+        blockers: []
     };
 
     if (!requirement || !city) {
@@ -15393,25 +15497,10 @@ function getNewBuildingAvailability(type) {
         return result;
     }
 
-    (requirement.condetion || []).forEach(function(condition) {
-        if (condition.type !== "building") {
-            return;
-        }
-
-        var requiredLevel = Number(condition.lvl) || 0;
-        var actualLevel = Building.BuildingWithMaxLvl(Number(condition.BuildingType));
-        var title = BuildingConstData[Number(condition.BuildingType)]
-            ? BuildingConstData[Number(condition.BuildingType)].title
-            : `المبنى ${condition.BuildingType}`;
-        var met = actualLevel >= requiredLevel;
-        result.rows.push({
-            label: `${title} مستوى ${requiredLevel}`,
-            availableLevel: actualLevel,
-            met: met
-        });
-        if (!met) {
+    Caesar.Building.verfiyCondetion(Number(type), 0).forEach(function(condition) {
+        if (!condition.verfied) {
             result.ready = false;
-            result.blockers.push(`يتطلب ${title} مستوى ${requiredLevel}`);
+            result.blockers.push(condition.Txt);
         }
     });
 
@@ -15425,12 +15514,6 @@ function getNewBuildingAvailability(type) {
     Object.keys(resourceLabels).forEach(function(resource) {
         var amount = Number(requirement[resource]) || 0;
         var met = Number(city[resource]) >= amount;
-        result.rows.push({
-            label: resourceLabels[resource],
-            resource: resource,
-            amount: amount,
-            met: met
-        });
         if (!met) {
             result.ready = false;
             result.blockers.push(`تحتاج ${resourceLabels[resource]} ${getArabicNumbers(amount)}`);
@@ -15455,37 +15538,34 @@ function renderNewBuildingOption(type) {
     var availability = getNewBuildingAvailability(type);
     var action = availability.ready
         ? `<button type="button" class="full-btn full-btn-2x construct_building" data-building="${type}">${Translate.Button.Building.Erect[UserLag.language]}</button>`
-        : `<div class="building-option__blocked" role="status">${escapeHtml(availability.blockers[0] || "شروط البناء غير مكتملة")}</div>`;
+        : "";
 
     return `<li class="building-option" data-building-option="${type}" tabindex="0">
                 <img src="${escapeHtml(image)}" class="big-img" alt="">
                 <div class="txt-inside-box"><h2>${escapeHtml(title)}</h2></div>
                 ${action}
+                ${renderNewBuildingRequirementTooltip(type)}
             </li>`;
 }
 
-function renderBuildingRequirementPreview(type) {
+function renderNewBuildingRequirementTooltip(type) {
     var availability = getNewBuildingAvailability(type);
     var title = BuildingConstData[type].title;
     if (!availability.requirement) {
-        return `<div class="building-requirement-preview__empty">تعذر تحميل متطلبات البناء.</div>`;
+        return `<div class="upgrade_req_tooltip building-construction-tooltip" role="tooltip">
+                    <div class="upgrade-info">
+                        <div class="header-1"><h1>إنشاء ${escapeHtml(title)} مستوى 1</h1></div>
+                        <h1 class="header-2 green">تعذر تحميل متطلبات البناء.</h1>
+                    </div>
+                </div>`;
     }
 
-    var rows = availability.rows.map(function(row) {
-        var detail = row.resource
-            ? `${escapeHtml(row.label)}: ${escapeHtml(getArabicNumbers(row.amount))} <span>المتاح: ${escapeHtml(getArabicNumbers(Number(Caesar.CurrentCity.City[row.resource]) || 0))}</span>`
-            : `${escapeHtml(row.label)} <span>المتاح: مستوى ${escapeHtml(getArabicNumbers(row.availableLevel))}</span>`;
-        return `<li class="${row.met ? "enough" : "not-enough"}">${detail}</li>`;
-    }).join("");
-    var status = availability.ready
-        ? `<p class="building-requirement-preview__status enough">كل الشروط متوفرة، يمكنك البناء.</p>`
-        : `<p class="building-requirement-preview__status not-enough">${availability.blockers.map(escapeHtml).join("<br>")}</p>`;
-
-    return `<div class="building-requirement-preview__content">
-                <h2>${escapeHtml(title)}</h2>
-                <p>شروط إنشاء المبنى</p>
-                <ul>${rows}</ul>
-                ${status}
+    return `<div class="upgrade_req_tooltip building-construction-tooltip" role="tooltip">
+                <div class="upgrade-info">
+                    <div class="header-1"><h1>إنشاء ${escapeHtml(title)} مستوى 1</h1></div>
+                    <h1 class="header-2 green">متطلبات إنشاء المبنى</h1>
+                </div>
+                ${getReqTable(Number(type), 0)}
             </div>`;
 }
 
@@ -16138,7 +16218,7 @@ var Building = {
                                                     </span>
                                                 </div>
                                                 <div class="acce-btn">
-                                                    <button class="speed-up-btn ${Number(Task.acce) === 1 ? "acced" : "acce-army-build"}" ${parseInt(Task.acce) === 1 ? "disabled" : ""} data-id-task="${Task.id}"> تسريع</button>
+                                                    <button class="speed-up-btn full-btn full-btn-3x ${Number(Task.acce) === 1 ? "acced" : "acce-army-build"}" ${parseInt(Task.acce) === 1 ? "disabled" : ""} data-id-task="${Task.id}"> تسريع</button>
                                                     <img src="images/btns/close_b.png" class="cancel-army-build">
                                                 </div>
                                            </div>
@@ -16570,9 +16650,6 @@ var Building = {
         }).map(renderNewBuildingOption).join("");
         var content = `<div class="left-content full building-construction">
                            <ul class="total">${options}</ul>
-                           <aside id="building-requirement-preview" class="building-requirement-preview" aria-live="polite">
-                               اختر مبنى أو مرر المؤشر عليه لعرض متطلباته.
-                           </aside>
                        </div>`;
         return content;
     },
@@ -17625,11 +17702,6 @@ $(document).on("click", "#job-typs td", function() {
  *    cunstruct building
  */
 
-$(document).on("mouseenter focusin", ".empty_place .building-option", function() {
-    var type = Number($(this).attr("data-building-option"));
-    $("#building-requirement-preview").html(renderBuildingRequirementPreview(type));
-});
-
 $(document).on("click", ".construct_building", function() {
     var $btn = $(this);
     if ($btn.data("busy")) return;
@@ -17650,6 +17722,15 @@ $(document).on("click", ".construct_building", function() {
         return;
 
     } else {
+        var availability = getNewBuildingAvailability(building_to_build);
+        $btn.closest(".building-option")
+            .find(".building-construction-tooltip")
+            .replaceWith(renderNewBuildingRequirementTooltip(building_to_build));
+        if (!availability.ready) {
+            $btn.remove();
+            return;
+        }
+
         $btn.data("busy", true).css("pointer-events", "none");
 
         $.ajax({
@@ -17971,16 +18052,18 @@ Caesar.Building.Theater.RefreshTheaterListView = function(BuildingPlace) {
     for (var iii = 0; iii < 10; iii++) {
 
         if (heros && heros[iii]) {
+            var isPot = Number(heros[iii].ultra_p) > 0;
+            var potClass = isPot ? "POT-HERO" : "";
 
-            all_heros += `  <div class="tr" data-id-hero-theater="${heros[iii].id_hero}">
-                                <div class="td_1">${Caesar.BaseData.HeroTheaterName[heros[iii].name]}</div>
-                                <div class="td_2">${heros[iii].lvl}</div>
-                                <div class="td_3">${heros[iii].ultra_p}</div>
-                                <div class="td_4">${(parseInt(heros[iii].lvl) + 20)} </div>
-                                <div class="td_5">${(parseInt(heros[iii].lvl) + 15)}</div>
-                                <div class="td_6">${(parseInt(heros[iii].lvl) + 16)} </div>
-                                <div class="td_7">${(parseInt(heros[iii].lvl) * 10)} </div>
-                                <div class="td_8">${(parseInt(heros[iii].lvl) * 1000)} </div>
+            all_heros += `  <div class="tr ${isPot ? "is-pot-hero" : ""}" data-id-hero-theater="${heros[iii].id_hero}">
+                                <div class="td_1 ${potClass}">${Caesar.BaseData.HeroTheaterName[heros[iii].name]}</div>
+                                <div class="td_2 ${potClass}">${heros[iii].lvl}</div>
+                                <div class="td_3 ${potClass}">${heros[iii].ultra_p}</div>
+                                <div class="td_4 ${potClass}">${(parseInt(heros[iii].lvl) + 20)} </div>
+                                <div class="td_5 ${potClass}">${(parseInt(heros[iii].lvl) + 15)}</div>
+                                <div class="td_6 ${potClass}">${(parseInt(heros[iii].lvl) + 16)} </div>
+                                <div class="td_7 ${potClass}">${(parseInt(heros[iii].lvl) * 10)} </div>
+                                <div class="td_8 ${potClass}">${(parseInt(heros[iii].lvl) * 1000)} </div>
                                 <div class="td_9">
                                     <button class="full-btn full-btn-1x ellipsis show-hero-theater" data-hero='${JSON.stringify(heros[iii])}'>${Translate.Button.MenuList.View[UserLag.language]}</button>
                                 </div>
@@ -18035,11 +18118,11 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
             /*________________________________________________________________________*/
 
         case "city_name":
-            var left_content = `<div class="left-content ">
-                                <h1 style="margin-bottom: 30px;">تعديل اسم المدينة</h1>
-                                <h1 style="margin-bottom: 30px;">ادخل الاسم الجديد</h1>
+            var left_content = `<div class="left-content">
+                                <h1 style="margin-bottom: 25px;">تعديل اسم المدينة</h1>
+                                <h1 style="margin-bottom: 20px;">ادخل الاسم الجديد</h1>
                                 <div class="li">
-                                    <input type="text" style="width: 60%; display:block ; margin: 5px auto" value="${Caesar.CurrentCity.City.name}" id="city-name-val" class="input"/>
+                                    <input type="text" style="width: 60%; height: 28px; line-height: 26px; text-align: center; display: block; margin: 10px auto;" value="${escapeHtml(Caesar.CurrentCity.City.name)}" id="city-name-val" class="input"/>
                                 </div>
                                 <div class="btn_2">
                                     <button class="full-btn full-btn-2x full" id="change-city-name">${Translate.Button.Building.Confirm[UserLag.language]}</button>
@@ -18058,17 +18141,13 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
 
             /*________________________________________________________________________*/
         case "taxs":
-            var left_content = `<div class="left-content ">
-                                <h1 style="margin-bottom: 30px;">تعديل  الضريبة</h1>
+            var left_content = `<div class="left-content">
+                                <h1 style="margin-bottom: 20px;">تعديل  الضريبة</h1>
                                 <h1 > عدد السكان: &nbsp;&nbsp;&nbsp;&nbsp;${getArabicNumbers(Caesar.CurrentCity.City.pop)}</h1>
                                 <h1 > نسبة الولاء: &nbsp;&nbsp;&nbsp;&nbsp;<span id="loy-in-city">${getArabicNumbers(100 - Caesar.CurrentCity.City.taxs)}</span></h1>
-                                <h1 style="margin-bottom: 30px;">مقدار الضرائب</h1>
+                                <h1 style="margin-bottom: 20px;">مقدار الضرائب</h1>
                                 <div class="li">
-                                    <input type="text" max="100"  min="0" style="width: 60%; display:block ;" value="${Caesar.CurrentCity.City.taxs}" class="only_num numeric input pull-L"  id="city-name-val"/>
-                                    <div class="number-arrow-wrapper pull-L">
-                                        <label class="number-arrow up"></label>
-                                        <label class="number-arrow down"></label>
-                                    </div>
+                                    <input type="text" max="100" min="0" step="1" style="width: 60%; height: 28px; line-height: 26px; text-align: center; display: block; margin: 10px auto;" value="${Caesar.CurrentCity.City.taxs}" class="only_num input" id="city-name-val"/>
                                 </div>
                                 <div class="btn_2">
                                     <button class="full-btn full-btn-2x full" id="change-city-taxs">${Translate.Button.Building.Confirm[UserLag.language]}</button>
@@ -20645,7 +20724,7 @@ $(document).on("click", ".build_army", function() {
     }
 
 
-    if (working_count >= 10 || Number(Caesar.City.getCity().BuildingLvl[building_place]) <= working_count) {
+    if (dividBy === "none" && (working_count >= 10 || Number(Caesar.City.getCity().BuildingLvl[building_place]) <= working_count)) {
         alert_box.confirmMessage("وصل عدد المتدربين الى اقصى مستوى لا يمكنك تدريب قوات اخرى");
         return;
     }
@@ -20746,6 +20825,8 @@ $(document).on("click", ".build_army", function() {
                     alert_box.failMessage("مستوى المبنى غير كافى");
                 } else if (json_data.state === "error_7") {
                     alert_box.failMessage("وصل عدد الدفعات الى الحد الاقصى فى المبنى");
+                } else if (json_data.state === "error_no_available_building") {
+                    alert_box.failMessage(json_data.msg || "لا توجد ثكنة متاحة بدون دفعات تصنيع نشطة");
                 } else if (json_data.state === "error_6_2") {
                     alert_box.failMessage("مستوى الدراسة غير كافى");
                 } else {
@@ -20780,7 +20861,12 @@ $(document).on("keyup change", ".sol-2-build-amount", function() {
     $("#dialg_box .leftOfRight .army_req_table .sol-coin").html(Math.max(Caesar.BaseData.Army[army_type].coin * $(this).val(), Caesar.BaseData.Army[army_type].coin));
     $("#dialg_box .leftOfRight .army_req_table .sol-stone").html(Math.max(Caesar.BaseData.Army[army_type].stone * $(this).val(), Caesar.BaseData.Army[army_type].stone));
     $("#dialg_box .leftOfRight .army_req_table .sol-people").html(Math.max(Caesar.BaseData.Army[army_type].people * $(this).val(), Caesar.BaseData.Army[army_type].people));
-    $("#dialg_box .leftOfRight .army_req_table .sol-time").html(changeTimeFormat(Math.max(Caesar.BaseData.Army[army_type].time * $(this).val(), Caesar.BaseData.Army[army_type].time)));
+    var amount = Math.max(0, parseInt($(this).val(), 10) || 0);
+    var duration = Math.max(
+        Caesar.BaseData.Army[army_type].time * amount,
+        Caesar.BaseData.Army[army_type].time
+    );
+    $("#dialg_box .leftOfRight .army_req_table .sol-time").html(changeTimeFormat(duration));
 });
 
 $(document).on("click", ".acce-army-build", function() {
@@ -21266,9 +21352,9 @@ $(document).on("click", ".save_points", function() {
                     Caesar.CurrentHero.Hero.add_p_b = 0;
                     Caesar.CurrentHero.Hero.add_p_c = 0;
                 } else if (json_data.state === "error_hero_point_limit") {
-                    alert("لا يمكن لأي خاصية أن تتجاوز مجموع الخاصيتين الأخريين");
+                    alert_box.failMessage("لا يمكن لأي خاصية أن تتجاوز مجموع الخاصيتين الأخريين");
                 } else {
-                    alert("wrong");
+                    alert_box.failMessage("تعذر حفظ توزيع نقاط البطل");
                 }
 
             },
@@ -21799,24 +21885,24 @@ function showHero(hero, recruit) {
                                 <div class="upper">
                                     <div class="left pull-L">
                                         <div class="player-avatar">
-                                            <div class="hero_lvl-box" style="position: absolute;margin-left: 43px;margin-top: 4px;">${hero.lvl}</div>
+                                            <div class="hero_lvl-box ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}" style="position: absolute;margin-left: 43px;margin-top: 4px;">${hero.lvl}</div>
                                             <img src="${Caesar.BaseData.HeroAvatar[hero.image]}" id="A-A-P-image">
                                             
                                         </div>
-                                        <div class="hero_ultra_p">
+                                        <div class="hero_ultra_p ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}">
                                             <h1>نقاط الامكانية  (${ hero.ultra_p })</h1>
                                         </div>
                                     </div>
                                     <div class="right pull-R">
                                         <div class="th ellipsis">${Translate.Title.TH.SwayPoints[UserLag.language]}</div>
-                                        <div class="trow bg-btn-blu" id="A-A-P-guild">${getArabicNumbers(Number(hero.point_a))}</div>
+                                        <div class="trow bg-btn-blu ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}" id="A-A-P-guild">${getArabicNumbers(Number(hero.point_a))}</div>
                                         <div class="th ellipsis">${Translate.Title.TH.BraveryPoints[UserLag.language]}</div>
-                                        <div class="trow bg-btn-blu" id="A-A-P-promotion">${getArabicNumbers(Number(hero.point_b))}</div>
+                                        <div class="trow bg-btn-blu ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}" id="A-A-P-promotion">${getArabicNumbers(Number(hero.point_b))}</div>
                                         <div class="th ellipsis">${Translate.Title.TH.ParryPoints[UserLag.language]}</div>
-                                        <div class="trow bg-btn-blu" id="A-A-P-rank">${getArabicNumbers(Number(hero.point_c))}</div>
+                                        <div class="trow bg-btn-blu ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}" id="A-A-P-rank">${getArabicNumbers(Number(hero.point_c))}</div>
                                     </div>
                                     <p style="clear: both"></p>
-                                    <h1 class="player-name" id="A-A-P-name">${hero.name}</h1>
+                                    <h1 class="player-name ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}" id="A-A-P-name">${hero.name}</h1>
                                 </div>
                                 <div class="down">
                                     <div class="th ellipsis">${Translate.Title.TH.Info[UserLag.language]}</div>
@@ -21833,7 +21919,7 @@ function showHero(hero, recruit) {
                                             <div class="td_1 ellipsis">
                                                 ${Translate.Title.TH.SestersYouHave[UserLag.language]}
                                             </div>
-                                            <div class="td_2 ellipsis">
+                                            <div class="td_2 ellipsis ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}">
                                                 ${Math.ceil(getArabicNumbers(hero.lvl*100))}
                                             </div>
                                             <div class="td_3 ellipsis">
@@ -22594,15 +22680,7 @@ $(document).on("mouseleave", "#city-profile .page_content ul .hero_profile", fun
     $("#city-profile-tooltipe").html("");
 });
 
-$(document).on("mouseenter", ".equip-unit", function() {
-    var equi_part = $(this).attr("data-equi-part");
-    var equi_type = $(this).attr("data-equi-type");
-    var equi_lvl = $(this).attr("data-equi-lvl");
-
-    var unitEquipData = Equipment.getEquipData(equi_type, equi_part, equi_lvl);
-    if (!unitEquipData.Power)
-        return;
-    var unitPower = unitEquipData.Power;
+function renderEquipmentTooltip(element, unitEquipData, unitPower) {
     var equipFeature = Caesar.Equip.EquipFeature[unitPower.sp_attr] || Caesar.Equip.EquipFeature[0];
     var toolip = `<div class="tooltip tooltip-equip">
                     <div class="top">
@@ -22673,7 +22751,41 @@ $(document).on("mouseenter", ".equip-unit", function() {
                         </div>
                     </div>
                 </div>`;
-    $(this).after(toolip);
+    $(element).next(".tooltip-equip").remove();
+    $(element).after(toolip);
+}
+
+$(document).on("mouseenter", ".equip-unit", function() {
+    var element = this;
+    var equipPart = $(element).attr("data-equi-part");
+    var equipType = $(element).attr("data-equi-type");
+    var equipLevel = Number($(element).attr("data-equi-lvl")) || 1;
+    if (!equipType || equipType === "none")
+        return;
+    var unitEquipData = Equipment.getEquipData(equipType, equipPart, equipLevel);
+    var power = Caesar.Equip.PowerCache[`${equipType}_${equipPart}_${equipLevel}`];
+
+    var showTooltip = function(unitPower) {
+        if ($(element).is(":hover")) {
+            renderEquipmentTooltip(element, unitEquipData, unitPower);
+        }
+    };
+
+    if (power) {
+        showTooltip(power);
+        return;
+    }
+
+    Caesar.Equip.getEquipmentPower(equipType, equipPart, equipLevel)
+        .done(showTooltip)
+        .fail(function(request, _status, error) {
+            var responseState = request.responseJSON && request.responseJSON.state;
+            console.error(
+                'Unable to load equipment power for ' + equipType + '_' + equipPart + '_' + equipLevel + ':',
+                request.status,
+                responseState || error
+            );
+        });
 });
 
 $(document).on("mouseleave", ".equip-unit", function() {
@@ -23166,7 +23278,7 @@ Caesar.HeroArmy.dragArmy = function(e, el) {
     } else if (dragPlace.attr("data-drag-place") == "city") {
         Amount = Caesar.CurrentCity.City[armyPlace];
     } else {
-        alert("Unnkown drag place");
+        alert_box.failMessage("تعذر تحديد مكان القوات");
     }
 
     if (Amount <= 0)
@@ -23236,7 +23348,7 @@ Caesar.HeroArmy.dropArmy = function(e, el_to) {
         Caesar.HeroArmy.dropArmyToCity(DragPlace, DropPlace);
 
     } else {
-        alert("cannot Drop From This Place");
+        alert_box.failMessage("تعذر نقل القوات إلى هذا المكان");
     }
 
 };
@@ -23263,7 +23375,7 @@ Caesar.HeroArmy.dropArmyToHero = function(DragPlace, DropPlace) {
     } else if (DragPlace.attr("data-drag-place") == "city") {
         maxAmount = Caesar.CurrentCity.City[`${DragPlace.attr("data-army-place")}`];
     } else {
-        alert("Unknown Drag Place");
+        alert_box.failMessage("تعذر تحديد مصدر نقل القوات");
     }
 
     max = sameHeroTransfer
@@ -23292,7 +23404,7 @@ Caesar.HeroArmy.dropArmyToCity = function(DragPlace, DropPlace) {
     } else if (DragPlace.attr("data-drag-place") == "city") {
         maxAmount = Caesar.CurrentCity.City[`${DragPlace.attr("data-army-place")}`];
     } else {
-        alert("Unknown Drag Place");
+        alert_box.failMessage("تعذر تحديد مصدر نقل القوات");
     }
     Caesar.HeroArmy.StartDialogBox(DragPlace, DropPlace, maxAmount);
 
@@ -23579,8 +23691,7 @@ $(document).on("click", "#confirmTransArmy", function() {
         } else if (DropPlace == "city") {
             Caesar.HeroArmy.TransArmyFromHeroToCity();
         } else {
-
-            alert("unknown Drop Name")
+            alert_box.failMessage("تعذر تحديد مكان نقل القوات");
 
         }
 
@@ -23591,12 +23702,12 @@ $(document).on("click", "#confirmTransArmy", function() {
         if (DropPlace == "hero") {
             Caesar.HeroArmy.TransArmyFromCityToHero();
         } else {
-            alert("unknown Drop Name 2")
+            alert_box.failMessage("تعذر تحديد مكان نقل القوات");
         }
 
 
     } else {
-        alert("Droplace Error");
+        alert_box.failMessage("تعذر تنفيذ نقل القوات");
     }
 
 });
@@ -24002,12 +24113,18 @@ function useMatrial(user_for, matrial, other) {
                 if (JsonObject.state === "ok") {
 
                     Caesar.CurrentHero.Medal = JsonObject.HeroMedal;
+                    var storedHero = Caesar.Hero.getHero(Caesar.CurrentHero.Hero.id_hero);
+                    if (storedHero) {
+                        storedHero.Medal = JsonObject.HeroMedal;
+                    }
                     Caesar.City.getCity(idCity).City = JsonObject.CityRes;
-                    $(".middle-content").replaceWith(army.middle_content(Caesar.CurrentHero));
+                    Matrial.takeFrom(matrial, 1);
+                    $("#hero-wrapper").replaceWith(army.dialogBoxContent_forHeroRight(Caesar.CurrentHero));
+                    army.getCurrentArmy(Caesar.CurrentHero);
                     city_profile.refresh_resource_view();
                 } else if (JsonObject.state === "error_0") {
                     alert_box.failMessage("البطل ليس ملك لك");
-                } else if (JsonObject.state === "error_1") {
+                } else if (JsonObject.state === "error_1" || JsonObject.state === "error_no_item") {
                     alert_box.failMessage("لا تمتلك مواد كافية");
                 } else if (JsonObject.state === "error_2") {
                     alert_box.failMessage("البطل ليس فى المدينة");
@@ -24185,6 +24302,7 @@ function useMatrial(user_for, matrial, other) {
     else if (user_for === "study_acce") {
 
         var idTask = other;
+        var acceleratedStudyTask = Caesar.TimedTask.TaskList.Study[idTask];
         $.ajax({
 
             url: `${API_URL}/api/APlayerEdu/speedUpStudyTask`,
@@ -24203,6 +24321,10 @@ function useMatrial(user_for, matrial, other) {
                 var JsonObject = JSON.parse(data);
 
                 if (JsonObject.state === "ok") {
+                    var activeStudyTasks = Array.isArray(JsonObject.list) ? JsonObject.list : [];
+                    var speedTaskCompleted = !activeStudyTasks.some(function(task) {
+                        return Number(task.id) === Number(idTask);
+                    });
                     $("#over_lay_alert").remove();
                     $("#over_lay").remove();
                     Matrial.takeFrom(matrial, 1);
@@ -24210,9 +24332,27 @@ function useMatrial(user_for, matrial, other) {
                         if (Number(Caesar.TimedTask.TaskList.Study[iii].id_city) === Number(idCity))
                             delete(Caesar.TimedTask.TaskList.Study[iii]);
 
-                    for (var iii in JsonObject.list)
-                        Caesar.TimedTask.TaskList.Study[JsonObject.list[iii].id] = JsonObject.list[iii];
+                    for (var iii in activeStudyTasks)
+                        Caesar.TimedTask.TaskList.Study[activeStudyTasks[iii].id] = activeStudyTasks[iii];
                     Caesar.TimedTask.refreshListView();
+                    if (speedTaskCompleted) {
+                        var completedStudies = {};
+                        if (acceleratedStudyTask && acceleratedStudyTask.study) {
+                            completedStudies[acceleratedStudyTask.study] = Number(acceleratedStudyTask.lvl_to);
+                        }
+                        var completedCityId = Number(
+                            acceleratedStudyTask && acceleratedStudyTask.id_city || idCity
+                        );
+                        Caesar.TimedTask.refreshCompletedStudyView(
+                            completedCityId,
+                            completedStudies
+                        ).fail(function(jqXHR) {
+                            console.error("Failed to refresh education after accelerated study completion", jqXHR.status, jqXHR.statusText);
+                        });
+                        Player_profile.getPlayerBaseData().fail(function(jqXHR) {
+                            console.error("Failed to refresh player prestige after accelerated study completion", jqXHR.status, jqXHR.statusText);
+                        });
+                    }
                     buildingClick($("#dialg_box .box_header").attr("place"), true);
                 } else if (JsonObject.state === "error_0") {
                     alert_box.failMessage("دفعة الدراسة غير موجودة");
@@ -24296,22 +24436,23 @@ function useMatrial(user_for, matrial, other) {
                     return Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
-
-                    for (var iii in JsonObject.armyBatches) {
-                        if (Caesar.TimedTask.TaskList.Army[JsonObject.armyBatches[iii].id]) {
-                            Caesar.TimedTask.TaskList.Army[JsonObject.armyBatches[iii].id].time_start = JsonObject.armyBatches[iii].time_start;
-                            Caesar.TimedTask.TaskList.Army[JsonObject.armyBatches[iii].id].time_end = JsonObject.armyBatches[iii].time_end;
-                            Caesar.TimedTask.TaskList.Army[JsonObject.armyBatches[iii].id].acce = JsonObject.armyBatches[iii].acce;
-                        }
-                    }
-
+                    Caesar.TimedTask.replaceCityTasks("Army", idCity, JsonObject.armyBatches);
+                    Matrial.takeFrom(matrial, 1);
+                    var place = $(".box_header").attr("place");
+                    Building.militrayProduction.left(place);
+                    if (JsonObject.completedBatches > 0)
+                        Caesar.City.getCityBase(idCity);
+                    $("#over_lay_alert").remove();
+                    $("#over_lay").remove();
+                } else if (JsonObject.state === "error_no_item") {
+                    alert_box.failMessage(JsonObject.msg || "لا تمتلك مادة التسريع المحددة");
+                } else if (JsonObject.state === "error_already_sped_up") {
+                    alert_box.failMessage("تم تسريع دفعة التصنيع من قبل");
+                } else if (JsonObject.state === "error_invalid_speed_item") {
+                    alert_box.failMessage("مادة التسريع لا تناسب نوع التصنيع");
+                } else if (JsonObject.state === "error_task_not_found") {
+                    alert_box.failMessage("دفعة التصنيع لم تعد موجودة");
                 }
-
-
-                Matrial.takeFrom(matrial, 1);
-                Building.militrayProduction.left($(".box_header").attr("place"));
-                $("#over_lay_alert").remove();
-                $("#over_lay").remove();
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
@@ -24359,7 +24500,24 @@ function useMatrial(user_for, matrial, other) {
 
                 const JsonObjet = JSON.parse(data);
                 if (JsonObjet.state === "ok") {
-                    Matrial.takeFrom(matrial, 1);
+                    if (Number.isFinite(Number(JsonObjet.familySloganAmount))) {
+                        Matrial.setPlayerAmount("family_slogan", JsonObjet.familySloganAmount);
+                    }
+                    if (Caesar.Guild.GuildData) {
+                        Caesar.Guild.GuildData.name = JsonObjet.newName;
+                        Caesar.Guild.GuildData.slog_top = JsonObjet.slogTop;
+                        Caesar.Guild.GuildData.slog_cnt = JsonObjet.slogCnt;
+                        Caesar.Guild.GuildData.slog_btm = JsonObjet.slogBtm;
+                    }
+                    if (Caesar.DPlayer.GuildData) {
+                        Caesar.DPlayer.GuildData.name = JsonObjet.newName;
+                        Caesar.DPlayer.GuildData.guild_name = JsonObjet.newName;
+                    }
+                    if (Caesar.DPlayer.Player) {
+                        Caesar.DPlayer.Player.guild = JsonObjet.newName;
+                    }
+                    Player_profile.refresh_view();
+                    $("#nav_search input").val(JsonObjet.newName);
                     $(".close-alert_container").click();
                     $(".guild_dialog_box .nav_bar .left-nav .selected").click();
                     Guild.getGuildData();
@@ -24374,6 +24532,10 @@ function useMatrial(user_for, matrial, other) {
                     alert_box.failMessage("لا يمكن لإسم الخلف أن يكون أكثر من 15 حرف ")
                 } else if (JsonObjet.state == "error_3") {
                     alert_box.failMessage("لا يوجد مواد كافية");
+                } else if (JsonObjet.state === "error_no_item") {
+                    alert_box.failMessage("لا يوجد مواد كافية");
+                } else if (JsonObjet.state === "error_slogan") {
+                    alert_box.failMessage("الشعار المختار غير صالح");
                 }
 
             },
@@ -24501,7 +24663,7 @@ function useMatrial(user_for, matrial, other) {
     else if (user_for === "acce-arriving-deal") {
 
         if (isNaN(other)) {
-            alert("error here");
+            alert_box.failMessage("تعذر تحديد كمية العنصر");
             console.log(other);
             return;
         }
@@ -24730,12 +24892,10 @@ function useMatrialBox(matrial_name) {
                 alert_box.failMessage("تعذر الاتصال بالخادم لاستخدام العنصر");
             });
         } else {
-            alert("Item FunctionNot Found");
-            alert(matrial_name);
-            alert(JSON.stringify(Caesar.BaseData.Items[matrial_name]));
+            alert_box.failMessage("تعذر استخدام هذا العنصر");
         }
     else
-        alert("Item Not Found");
+        alert_box.failMessage("العنصر غير متوفر");
 }
 
 
@@ -24748,6 +24908,11 @@ function buyMatrial(matrial, amount) {
     var itemDefinition = Caesar.BaseData.Items[matrial];
     if (!itemDefinition) {
         alert_box.failMessage("العنصر المطلوب غير متاح");
+        return;
+    }
+
+    if (Number(itemDefinition.gold) <= 0) {
+        alert_box.failMessage("هذا العنصر غير متاح للشراء بالذهب");
         return;
     }
 
@@ -24771,7 +24936,14 @@ function buyMatrial(matrial, amount) {
 
     if (Caesar.DPlayer.Player.gold < itemDefinition.gold * amount) {
 
-        $("body").append(alert_box.confirmMessage(" ليس لديك قطع ذهب كافية<br> <a href='gold_buy.php'> لشراء ذهب اضغط هنا</a>"));
+        alert_box.showCenteredNotice("ليس لديك قطع ذهب كافية", "warning", {
+            title: "رصيد الذهب غير كافٍ",
+            action: {
+                href: "gold_buy.php",
+                label: "لشراء الذهب اضغط هنا"
+            },
+            duration: 5000
+        });
         return;
     }
 
@@ -24810,6 +24982,8 @@ function buyMatrial(matrial, amount) {
                 });
                 $(".close-alert_container").click();
                 alert_box.succesMessage("تمت عملية الشراء بنجاح");
+            } else if (JsonObject.state === "item_not_for_sale") {
+                alert_box.failMessage("هذا العنصر غير متاح للشراء بالذهب");
             } else {
                 Caesar.LBase.Error(data);
             }
@@ -25467,12 +25641,16 @@ Caesar.Item.useItemFunc = function() {
                                     $(".close_dialog").click();
                                 });
                             });
-                        else if (JsonData['state'] === 'error_no_place_empty') {
+                        else if (JsonData['state'] === 'error_army_outside') {
+                            alert_box.failMessage(JsonData['msg'] || 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة');
+                        } else if (JsonData['state'] === 'error_no_place_empty') {
                             setTimeout(function() {
                                 alert_box['confirmMessage']('للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]');
                             }, 0x64)
                         } else {
-                            alert(_0x73e02b);
+                            alert_box.failMessage(typeof _0x73e02b === "string"
+                                ? _0x73e02b
+                                : "تعذر إكمال نقل المدينة");
                             console['log'](_0x73e02b);
                         }
                     }
@@ -25500,7 +25678,7 @@ Caesar.Item.useItemFunc = function() {
 
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
-                    alert_box.succesMessage("قد تم نقل مدينتك بنجاح الى الاحداثيات الاتية <br/>" + "[ " + Caesar.CurrentCity.City.x + " , " + Caesar.CurrentCity.City.y + " ]");
+                    alert_box.succesMessage("قد تم نقل مدينتك بنجاح الى الاحداثيات الاتية <br/>" + "[ " + Caesar.CurrentCity.City.x + " , " + Caesar.CurrentCity.City.y + " ]<br/><span style='color:#e67e22;font-size:12px;'>ملاحظة: لا يمكنك القيام بأي حملات عسكرية لمدة 24 ساعة من الآن.</span>");
                     Caesar.City.getCityBase().done(function(data) {
 
                         $("#city-data .coords").html("[ " + Caesar.CurrentCity.City.y + " , " + Caesar.CurrentCity.City.x + " ]");
@@ -25517,6 +25695,10 @@ Caesar.Item.useItemFunc = function() {
                         });
                     });
 
+                } else if (JsonObject.state === "error_army_outside") {
+                    alert_box.failMessage(JsonObject.msg || "لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة");
+                } else if (JsonObject.state === "error_coord") {
+                    alert_box.failMessage("الإحداثيات غير صحيحة، يجب أن تكون بين 0 و 499");
                 } else if (JsonObject.state === "error_no_place_empty") {
                     setTimeout(function() {
                         alert_box.confirmMessage("للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]");
@@ -27638,8 +27820,8 @@ var edu = {
             var button = "";
             if (studyTask.study === tech) {
 
-                button = `  <button class="speed-up-btn edu_acce" data-id-task="${studyTask.id}">
-                                <h6> تسريع </h6>
+                button = `  <button class="speed-up-btn full-btn full-btn-3x edu_acce" data-id-task="${studyTask.id}">
+                                تسريع
                             </button>
                             <button data-tech="${tech}" class="cancel-study cancel-btn"></button>`;
 
@@ -27656,7 +27838,6 @@ var edu = {
                                     <div class="current_lvl_study">${Caesar.DPlayer.PlayerEdu[tech]}</div>
                                     <img src="${Caesar.BaseData.Edu[tech].image}" class="big-img">
                                     ${permit}
-                                    <div class="city_lvl_study">${Math.min(Caesar.DPlayer.PlayerEdu[tech], Caesar.City.getCity().BuildingLvl[cityHasType(BUILDING_TYPS.UNIVERSITY)])}</div>
                                 </div> 
                                 <div class="txt-inside-box">
                                     <h2>${Caesar.BaseData.Edu[tech].ar_title}</h2>
@@ -27702,8 +27883,8 @@ var edu = {
             var button = "";
             if (studyTask.study === tech) {
 
-                button = `  <button class="speed-up-btn edu_acce" data-id-task="${studyTask.id}">
-                                <h6> تسريع </h6>
+                button = `  <button class="speed-up-btn full-btn full-btn-3x edu_acce" data-id-task="${studyTask.id}">
+                                تسريع
                             </button>
                             <button data-tech="${tech}" class="cancel-study cancel-btn"></button>`;
 
@@ -27720,7 +27901,6 @@ var edu = {
                                     <div class="current_lvl_study">${Caesar.DPlayer.PlayerEdu[tech]}</div>
                                     <img src="${Caesar.BaseData.Edu[tech].image}" class="big-img">
                                     ${permit}
-                                    <div class="city_lvl_study">${Math.min(Caesar.DPlayer.PlayerEdu[tech], Caesar.City.getCity().BuildingLvl[cityHasType(BUILDING_TYPS.UNIVERSITY)])}</div>
                                 </div> 
                                 <div class="txt-inside-box">
                                     <h2>${Caesar.BaseData.Edu[tech].ar_title}</h2>
@@ -28196,6 +28376,22 @@ $(document).on("click", ".edu_study", function() {
     if (!$(this).hasClass("disabled") && edu.isUpgradable(study_type, sLvl)) {
 
         var idCity = Number(Caesar.CurrentCity.idCity);
+        var studyTitle = Caesar.BaseData.Edu[study_type] && Caesar.BaseData.Edu[study_type].ar_title
+            ? Caesar.BaseData.Edu[study_type].ar_title
+            : "الدراسة";
+        var refreshAfterStudyFailure = function(message) {
+            var stateRefresh = $.when(
+                Player_profile.getPlayerEdu(),
+                Caesar.City.getCityBase(idCity),
+                Caesar.TimedTask.getCityStudyTasks(idCity)
+            );
+            stateRefresh.fail(function(jqXHR) {
+                console.error("Failed to refresh study prerequisites after rejection", jqXHR.status, jqXHR.statusText);
+            }).always(function() {
+                buildingClick(buildingPlace, true);
+                alert_box.studyFailure(studyTitle, message);
+            });
+        };
         $.ajax({
 
             url: `${API_URL}/api/APlayerEdu/upgradeStudyLvl`,
@@ -28233,6 +28429,18 @@ $(document).on("click", ".edu_study", function() {
 
                     buildingClick(buildingPlace, true);
                     Caesar.TimedTask.refreshListView();
+                } else {
+                    var stateMessages = {
+                        error_max_lvl: "الدراسة وصلت للحد الأقصى",
+                        error_cond: "مستوى مبنى الجامعة أو الأكاديمية غير كافٍ",
+                        error_item: "لا تتوفر المواد المطلوبة للدراسة",
+                        error_res: "الموارد المتوفرة بالمدينة غير كافية للبحث",
+                        error_city: "المدينة غير صالحة لبدء الدراسة",
+                        error_city_owner: "لا تملك هذه المدينة"
+                    };
+                    refreshAfterStudyFailure(
+                        JsonObject.msg || stateMessages[JsonObject.state] || "تعذر بدء الدراسة"
+                    );
                 }
 
 
@@ -28240,7 +28448,16 @@ $(document).on("click", ".edu_study", function() {
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                self_.removeAttr("disabled");
+                unwaitCursor();
+                console.error("Failed to start study", jqXHR.status, jqXHR.statusText, errorThrown);
+                var message = "تعذر بدء الدراسة، حاول مرة أخرى";
+                if (jqXHR.responseText && Caesar.LBase.isJson(jqXHR.responseText)) {
+                    var errorResponse = JSON.parse(jqXHR.responseText);
+                    if (errorResponse && typeof errorResponse === "object" && errorResponse.msg)
+                        message = errorResponse.msg;
+                }
+                refreshAfterStudyFailure(message);
 
             }
 
@@ -28591,6 +28808,78 @@ $('.menu-list[data-show="trade"]').click(function() {
     Trading.getTradeList();
 });
 
+function getExchangePurchaseAvailability(exchange, requirements, reward, amount) {
+    var blockers = [];
+    var tradeAmount = Number(amount);
+    if (!Number.isInteger(tradeAmount) || tradeAmount < 1) {
+        return { ready: false, blockers: ["أدخل كمية صحيحة للتبادل"] };
+    }
+
+    var playerMax = Number(exchange.player_max);
+    var takeTimes = Number(exchange.take_times);
+    if (!Number.isFinite(playerMax) || !Number.isFinite(takeTimes) || tradeAmount > playerMax - takeTimes) {
+        blockers.push("تم استنفاد الحد المتاح لهذا التبادل");
+    }
+
+    var required = Object.create(null);
+    (requirements || []).forEach(function(requirement) {
+        var quantity = Number(requirement.amount);
+        if (!Number.isFinite(quantity) || quantity <= 0) {
+            blockers.push("بيانات متطلبات التبادل غير صالحة");
+            return;
+        }
+
+        var key;
+        if (requirement.type === "resource" && requirement.resource_type) {
+            key = `resource:${requirement.resource_type}`;
+        } else if (requirement.type === "matrial" && requirement.matrial) {
+            key = `matrial:${requirement.matrial}`;
+        } else if (requirement.type === "equip" && requirement.Equip && requirement.Part) {
+            key = `equip:${JSON.stringify([requirement.Equip, requirement.Part, Number(requirement.lvl) || 1])}`;
+        } else {
+            blockers.push("نوع أحد متطلبات التبادل غير مدعوم");
+            return;
+        }
+        required[key] = (required[key] || 0) + quantity * tradeAmount;
+    });
+
+    Object.keys(required).forEach(function(key) {
+        var available = 0;
+        var parts = key.split(":");
+        if (parts[0] === "resource") {
+            available = Number(Caesar.CurrentCity.City[parts[1]]) || 0;
+        } else if (parts[0] === "matrial") {
+            available = Number(Matrial.getPlayerAmount(parts[1])) || 0;
+        } else if (parts[0] === "equip") {
+            var equip = JSON.parse(parts.slice(1).join(":"));
+            available = Number(Equipment.getPlayerAmount(equip[0], equip[1], equip[2])) || 0;
+        }
+        if (available < required[key]) {
+            blockers.push("لا تمتلك كمية كافية من متطلبات التبادل");
+        }
+    });
+
+    var rewardQuantity = Number(reward && reward.amount) * tradeAmount;
+    var maxToHave = Number(exchange.max_to_have);
+    if (!Number.isFinite(rewardQuantity) || rewardQuantity <= 0) {
+        blockers.push("بيانات جائزة التبادل غير صالحة");
+    } else if (maxToHave > 0) {
+        var ownedReward = 0;
+        if (reward.type === "matrial") {
+            ownedReward = Number(Matrial.getPlayerAmount(reward.matrial)) || 0;
+        } else if (reward.type === "equip") {
+            ownedReward = Number(Equipment.getPlayerAmount(reward.Equip, reward.Part, reward.lvl)) || 0;
+        } else {
+            blockers.push("نوع جائزة التبادل غير مدعوم");
+        }
+        if (ownedReward + rewardQuantity > maxToHave) {
+            blockers.push("وصلت إلى الحد الأقصى للجائزة");
+        }
+    }
+
+    return { ready: blockers.length === 0, blockers: blockers };
+}
+
 $(document).on("click", "#dialg_box .for_mat_trade .matrial_unit", function() {
 
 
@@ -28603,6 +28892,13 @@ $(document).on("click", "#dialg_box .for_mat_trade .matrial_unit", function() {
 
     var req = JSON.parse(exchange.req);
     var reword = JSON.parse(exchange.reword);
+    var availability = getExchangePurchaseAvailability(exchange, req, reword, 1);
+    var purchaseStatus = availability.ready
+        ? ""
+        : `<p class="exchange-purchase-status">${escapeHtml(availability.blockers.join("، "))}</p>`;
+    var buyButton = availability.ready
+        ? `<button class="full-btn full-btn-3x pull-R enter" id="buyTradeItem" data-trade-index="${index}">${Translate.Button.MenuList.Buy[UserLag.language]}</button>`
+        : "";
 
     var image = "";
     var req_list = "";
@@ -28720,12 +29016,15 @@ $(document).on("click", "#dialg_box .for_mat_trade .matrial_unit", function() {
                                 </div>  
 
                                 <div class="row-3">        
-                                    <div class="confim-btn">            
-                                        <button class="full-btn full-btn-3x  pull-R enter" id="buyTradeItem" data-trade-index="${index}">${Translate.Button.MenuList.Buy[UserLag.language]}</button>  
-                                        <input type="text" min="1" step="1" class="pull-L only_num input" max="${exchange.player_max - exchange.take_times}" id="amount_to_trade" value="1">
-                                        <div class="number-arrow-wrapper pull-L">
-                                            <label class="number-arrow up"></label>
-                                            <label class="number-arrow down"></label>
+                                    <div class="confim-btn${availability.ready ? "" : " has-purchase-status"}">
+                                        ${purchaseStatus}
+                                        ${buyButton}
+                                        <div class="trade-amount-wrapper pull-L">
+                                            <input type="text" min="1" step="1" class="pull-L only_num input" max="${exchange.player_max - exchange.take_times}" id="amount_to_trade" value="1">
+                                            <div class="number-arrow-wrapper pull-L">
+                                                <label class="number-arrow up"></label>
+                                                <label class="number-arrow down"></label>
+                                            </div>
                                         </div>
                                     </div>    
                                 </div>
@@ -28733,6 +29032,36 @@ $(document).on("click", "#dialg_box .for_mat_trade .matrial_unit", function() {
                         </div>`;
     $("body").append(confirm_box);
 
+});
+
+$(document).on("input keyup change", "#amount_to_trade", function() {
+    var confimBtn = $(this).closest(".confim-btn");
+    var index = confimBtn.find("#buyTradeItem").attr("data-trade-index");
+    if (index === undefined) return;
+
+    var exchange;
+    for (var iii in EXCHANGE_ITEM) {
+        if (Number(EXCHANGE_ITEM[iii].id_ex) === Number(index)) {
+            exchange = EXCHANGE_ITEM[iii];
+            break;
+        }
+    }
+    if (!exchange) return;
+
+    var availability = getExchangePurchaseAvailability(
+        exchange,
+        JSON.parse(exchange.req),
+        JSON.parse(exchange.reword),
+        $(this).val()
+    );
+    confimBtn.find("#buyTradeItem")
+        .toggle(availability.ready)
+        .prop("disabled", !availability.ready);
+    confimBtn
+        .toggleClass("has-purchase-status", !availability.ready);
+    confimBtn.find(".exchange-purchase-status")
+        .toggle(!availability.ready)
+        .text(availability.ready ? "" : availability.blockers.join("، "));
 });
 
 
@@ -30970,6 +31299,8 @@ Caesar.WsLib.Battel.StartFailed = function(data) {
         alert_box.confirmMessage("لا توجد مواد كافية");
     } else if (data.state === "hero_carry_no_army") {
         alert_box.confirmMessage("البطل لا يحمل اى قوات");
+    } else if (data.state === "city_move_cooldown" || data.state === "error_city_move_cooldown") {
+        alert_box.confirmMessage(data.msg || "لا يمكن إرسال أو استخدام القوات بعد تغيير موقع المدينة ولمدة 24 ساعة من وقت النقل");
     } else if (data.state === "in_attackable") {
         alert_box.confirmMessage("لا يمكنك الهجوم");
     } else if (data.state === "hero_count_over_plaze") {
@@ -32957,7 +33288,11 @@ $(document).on("click", "#new-city-confirm button", function() {
 
                             Caesar.City.prepareCity(json_data.City.id_city);
                             Caesar.DPlayer.City[json_data.City.id_city].City = json_data.City;
-                            Caesar.City.refreshBtnList();
+                            if (typeof Caesar.City.refreshBtnList === 'function') {
+                                if (typeof Caesar.City.refreshBtnList === 'function') {
+                        Caesar.City.refreshBtnList();
+                    }
+                            }
                             Caesar.WsLib.Base.refreshWorldCitiesForPlayers({
                                 xCoord: json_data.City.x,
                                 yCoord: json_data.City.y,
@@ -32982,7 +33317,7 @@ $(document).on("click", "#new-city-confirm button", function() {
 
 
                         } else {
-                            alert("error add city");
+                            alert_box.failMessage("تعذر إضافة المدينة");
                         }
 
 
@@ -33393,7 +33728,8 @@ var campDB = {
                                         <td colspan="2">
                                             <div class="coord-txt">[${getArabicNumbers(x_coord)},${getArabicNumbers(y_coord)}]</div>
                                             <div class="copy-coord-icon">
-                                                <button class="copy-coord" data-x-coord="${x_coord}" data-y-coord="${y_coord}"></button>
+                                                <button class="copy-coord" data-x-coord="${x_coord}" data-y-coord="${y_coord}" title="نسخ الإحداثيات"></button>
+                                                <button class="add-fav-coord-btn" data-x-coord="${x_coord}" data-y-coord="${y_coord}" data-title="${title}" title="إضافة إلى المفضلة"></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -35325,7 +35661,8 @@ var reviewBox = {
                                         ${getDistance(x_coord, y_coord)} ميل
                                    </div>
                                    <div class="copy-coord-icon">
-                                        <button class="copy-coord" data-x-coord="${x_coord}" data-y-coord="${y_coord}"></button>
+                                        <button class="copy-coord" data-x-coord="${x_coord}" data-y-coord="${y_coord}" title="نسخ الإحداثيات"></button>
+                                        <button class="add-fav-coord-btn" data-x-coord="${x_coord}" data-y-coord="${y_coord}" data-title="${title}" title="إضافة إلى المفضلة"></button>
                                     </div>
                                 </div>
                                 <div class="desc">
@@ -35471,19 +35808,6 @@ var reviewBox = {
                                         <div class="th ellipsis">
                                             ${Translate.Title.TH.Subject[UserLag.language]}
                                         </div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
-                                        <div class="tr"></div>
                                     </div>
 
                                     <div class="right-content ">
@@ -35579,10 +35903,6 @@ var reviewBox = {
                             all_reportHeader += `<div class="tr has_battel_BF ${json_data[iii].id_battel === id_battel || (id_battel === undefined && iii === 0) ? "selected" : ""}"  id_battel="${json_data[iii].id_battel}"  >
                                                     قام الملك ${json_data[iii].player_name} بانشاء  معركة    من المدينة  ${json_data[iii].city_name}
                                                 </div>`;
-
-                        } else {
-
-                            all_reportHeader += `<div class="tr" > </div>`;
 
                         }
 
@@ -36318,8 +36638,12 @@ WorldUnit.prize.prizeList = function(x_coord, y_coord) {
         });
     }
     var html = '';
+    var isWilderness = (e >= 1 && e <= 10) || (e >= 30 && e <= 59);
     for (var i = 0; i < prizes.length; i++) {
         var t = prizes[i];
+        if (isWilderness && typeof t.prize === 'string' && t.prize.indexOf('coin_') === 0) {
+            continue;
+        }
         var amt = t.amount_min === t.amount_max ? `${t.amount_min}` : `${t.amount_min}-${t.amount_max}`;
         html += `<li>
             <div class="golden-border">
@@ -36832,7 +37156,8 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                         ${getDistance(Unit.x, Unit.y)} ميل
                                     </div>
                                     <div class="copy-coord-icon">
-                                        <button class="copy-coord" data-x-coord="${Unit.x}" data-y-coord="${Unit.y}"></button>
+                                        <button class="copy-coord" data-x-coord="${Unit.x}" data-y-coord="${Unit.y}" title="نسخ الإحداثيات"></button>
+                                        <button class="add-fav-coord-btn" data-x-coord="${Unit.x}" data-y-coord="${Unit.y}" data-title="حقل [${Unit.x}, ${Unit.y}]" title="إضافة إلى المفضلة"></button>
                                     </div>
                                 </div>
                                 <div class="new-city-req-table">
@@ -37812,7 +38137,12 @@ function playerBattels() {
 
                 if (Caesar.Battel.Battels.length > 0 && $("#reports_list .selected").length > 0) { // if there selected  battel
 
-                    $("#reports_list").html(BattelField.getBattelHeaders(Caesar.Battel.Battels, $("#reports_list .selected").attr("id_battel"), true));
+                    var headerList = BattelField.getBattelHeaders(Caesar.Battel.Battels, $("#reports_list .selected").attr("id_battel"), true);
+                    if ($("#reports_list #AllBattelLists").length > 0) {
+                        $("#reports_list #AllBattelLists").html(headerList);
+                    } else {
+                        $("#reports_list").html(`<div class="th ellipsis">${Translate.Title.TH.Subject[UserLag.language]}</div><div id="AllBattelLists">${headerList}</div>`);
+                    }
                     refreshBattleReportListScroll();
                     BattelField.battelField({
                         navBar: NavBar.Report,
@@ -37824,7 +38154,12 @@ function playerBattels() {
 
                 } else if ($("#reports_list").length > 0) {
 
-                    $("#reports_list").html(BattelField.getBattelHeaders(Caesar.Battel.Battels, 0, true));
+                    var headerList = BattelField.getBattelHeaders(Caesar.Battel.Battels, 0, true);
+                    if ($("#reports_list #AllBattelLists").length > 0) {
+                        $("#reports_list #AllBattelLists").html(headerList);
+                    } else {
+                        $("#reports_list").html(`<div class="th ellipsis">${Translate.Title.TH.Subject[UserLag.language]}</div><div id="AllBattelLists">${headerList}</div>`);
+                    }
                     refreshBattleReportListScroll();
 
                 }
@@ -38586,25 +38921,26 @@ var Guild = {
                     <div class="right-nav">
                         <div class="nav_icon">
                             <img class="close_dialog" src="images/btns/close_b.png">
-                            <div class="full-btn full-btn-1x ellipsis" id="guild_lead">
-                                ${Translate.Button.MenuList.LeagueManagement[UserLag.language]}
-                            </div>
-                            <div class="drop-list">
-                                <ul>
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.DEPUTY ? `<li id="chang-g-word"> تعديل المقدمة</li>` : ""}
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.DEPUTY ? `<li id="change-g-F_E-list">الاصدقاء والاعداء</li>` : ""}
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SUPERVISOR ? ` <li id="invite-g">دعوة ملك</li>` : ""}
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SUPERVISOR ? ` <li id="send-g-msg"> ارسال رسالة</li>` : ""}
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.MENSTER ? ` <li id="change-g-slog"> تغير الشعار</li>` : ""}
-                                    ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SENIOR_MEM ? ` <li id="resignation-g"> استقالة</li>` : ""}
-                                    <li id="leave-g">
-                                        الخروج
-                                    </li>
-                                    ${Number(Caesar.DPlayer.GuildData.rank) === Guild.RANK_DATA.LEADER ? ` <li id="destroy-g">تفكيك</li>` : ""}
+                            <div class="guild_lead_wrapper" style="position: relative; display: inline-block;">
+                                <div class="full-btn full-btn-1x ellipsis" id="guild_lead">
+                                    ${Translate.Button.MenuList.LeagueManagement[UserLag.language]}
+                                </div>
+                                <div class="drop-list">
+                                    <ul>
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.DEPUTY ? `<li id="chang-g-word"> تعديل المقدمة</li>` : ""}
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.DEPUTY ? `<li id="change-g-F_E-list">الاصدقاء والاعداء</li>` : ""}
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SUPERVISOR ? ` <li id="invite-g">دعوة ملك</li>` : ""}
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SUPERVISOR ? ` <li id="send-g-msg"> ارسال رسالة</li>` : ""}
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.MENSTER ? ` <li id="change-g-slog"> تغير الشعار</li>` : ""}
+                                        ${Number(Caesar.DPlayer.GuildData.rank) >= Guild.RANK_DATA.SENIOR_MEM ? ` <li id="resignation-g"> استقالة</li>` : ""}
+                                        <li id="leave-g">
+                                            الخروج
+                                        </li>
+                                        ${Number(Caesar.DPlayer.GuildData.rank) === Guild.RANK_DATA.LEADER ? ` <li id="destroy-g">تفكيك</li>` : ""}
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -38927,14 +39263,14 @@ var Guild = {
                             <div class="left-content">
                                 <div class="upper">
                                     <div class="table">
-                                        <div class="t-row">
+                                        <div class="t-row guild-emblem-wrap">
                                             <div class="t-d">
                                                 <img src="images/style/bottom-${Caesar.Guild.GuildData.slog_btm}.png" style="position: absolute">
                                                 <img src="images/style/central-${Caesar.Guild.GuildData.slog_cnt}.png" style=" position: absolute">
                                                 <img src="images/style/top-${Caesar.Guild.GuildData.slog_top}.png" style="position: absolute">
                                             </div>
                                         </div>
-                                        <div class="t-row">
+                                        <div class="t-row guild-stats-wrap">
                                             <div class="t-r">
                                                 <div class="t-d"> :مدير</div>
                                                 <div class="t-d">${Caesar.Guild.LeaderName}</div>
@@ -38957,7 +39293,7 @@ var Guild = {
                                             </div>
                                         </div>
                                         <p style="clear: both"></p>
-                                        <div class="t-row">
+                                        <div class="t-row guild-name-wrap">
                                             <h1>
                                                 ${escapeHtml(Caesar.Guild.GuildData.name)}
                                             </h1>
@@ -39212,44 +39548,49 @@ var Guild = {
                             <div class="right-content">
                                 <div class="left pull-L">
                                     <table border="1">
-                                        <td colspan="6" class="th ellipsis">
-                                            ${guild_data.lvl < 10 ? "المواد المطلوبة لتطوير الحلف" : "لا يمكنك تطوير الحلف بالموارد مرة اخرى"}
-                                        </td>
-                                        <tr>
-                                            <td>
-                                                <img src="images/style/food.png"/>
-                                            </td>
-                                            <td class="${guild_data.food >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
-                                                ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
-                                            </td>
-                                            <td>
-                                                <img src="images/style/stone.png"/>
-                                            </td>
-                                            <td class="${guild_data.stone >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
-                                                ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
-                                            </td>
-                                            <td>
-                                                <img src="images/style/coin.png"/>
-                                            </td>
-                                            <td class="${guild_data.coin >= guild_data.lvl * 1000000 ? 'enough' : 'not_enough'}">
-                                                ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1000000) : "----"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                           <td>
-                                                <img src="images/style/wood.png"/>
-                                            </td>
-                                            <td class="${guild_data.wood >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
-                                                ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
-                                            </td>
-                                            <td>
-                                                <img src="images/style/iron.png"/>
-                                            </td>
-                                            <td class="${guild_data.metal >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
-                                                ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
-                                            </td>
-                                            
-                                        </tr>
+                                        <thead>
+                                            <tr class="table-title-row">
+                                                <th colspan="6" class="th guild-upgrade-table-header">
+                                                    ${guild_data.lvl < 10 ? "المواد المطلوبة لتطوير الحلف" : "لا يمكنك تطوير الحلف بالموارد مرة اخرى"}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="images/style/food.png"/>
+                                                </td>
+                                                <td class="${guild_data.food >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
+                                                    ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
+                                                </td>
+                                                <td>
+                                                    <img src="images/style/stone.png"/>
+                                                </td>
+                                                <td class="${guild_data.stone >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
+                                                    ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
+                                                </td>
+                                                <td>
+                                                    <img src="images/style/coin.png"/>
+                                                </td>
+                                                <td class="${guild_data.coin >= guild_data.lvl * 1000000 ? 'enough' : 'not_enough'}">
+                                                    ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1000000) : "----"}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                               <td>
+                                                    <img src="images/style/wood.png"/>
+                                                </td>
+                                                <td class="${guild_data.wood >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
+                                                    ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
+                                                </td>
+                                                <td>
+                                                    <img src="images/style/iron.png"/>
+                                                </td>
+                                                <td class="${guild_data.metal >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
+                                                    ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                     <div class="up_with_mat">
                                         <button class="full-btn pull-L" id="up_with_mat">
@@ -39276,59 +39617,50 @@ var Guild = {
                                 </div>
 
                             </div>
-                            <div class="right-content-footer" >  
-                                <div class="left pull-L">
-                                   <div class="table" id="guild-res-table">
-
-                                        <div class="td"  style="width: 13.4%;"></div>
-                                        <div  class="td" style="width: 73px;" data-resource="wood" data-count="${guild_data.wood}">
-                                            ${getArabicNumbers(guild_data.wood)}
-                                        </div>
-
-
-                                        <div  class="td" style="width: 73px;" data-resource="stone" data-count="${guild_data.stone}">
-                                            ${getArabicNumbers(guild_data.stone)}
-                                        </div> 
-
-                                        <div  class="td" style="width: 73px;" data-resource="metal" data-count="${guild_data.metal}">
-                                            ${getArabicNumbers(guild_data.metal)}
-                                        </div>
-
-                                        <div  class="td" style="width: 73px;"  data-resource="food" data-count="${guild_data.food}">
-                                            ${getArabicNumbers(guild_data.food)}
-                                        </div>
-
-                                        <div  class="td" style="width: 73px;" >
-                                            ----
-                                        </div> 
-                                        <div  class="td" style="width: 73px; margin-top: 10px;">
-                                            <img src="images/style/coin.png" style="margin-bottom: -26px;"/>
-                                            <div  data-resource="coin" data-count="${guild_data.coin}" >${getArabicNumbers(guild_data.coin)}</div>
-                                        </div> 
-                                         
+                            <div class="right-content-footer up_guild_footer" >
+                                <div class="guild-deposit-section">
+                                    <div class="guild-deposit-header">
+                                        <span class="deposit-title">إيداع الموارد في خزينة الحلف</span>
                                     </div>
-                                     <ol id="input-guild-donate">
-                                         <li>
-                                            <input type="text" value="0" class="only_num input"  min="0" data-resource="wood" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.wood), guild_data.lvl * 1250000 - guild_data.wood))}" min="0" step="${Math.floor(Caesar.CurrentCity.City.wood)}"/>
-                                         </li>
-                                         <li>
-                                             <input type="text" value="0" class="only_num input"  min="0" data-resource="stone" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.stone), guild_data.lvl * 1250000 - guild_data.stone))}" step="${Math.floor(Caesar.CurrentCity.City.stone)}"/>
-                                         </li>
-                                         <li>
-                                             <input type="text" value="0" class="only_num input"  min="0" data-resource="metal" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.metal), guild_data.lvl * 1250000 - guild_data.metal))}" step="${Math.floor(Caesar.CurrentCity.City.metal)}"/>
-                                         </li>
-                                         <li>
-                                             <input type="text" value="0" class="only_num input"  min="0" data-resource="food" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.food), guild_data.lvl * 1250000 - guild_data.food))}" step="${Math.floor(Caesar.CurrentCity.City.food)}"/>
-                                         </li>
-                                         <li>
-                                             <input type="text" value="0" class="only_num input" style="margin-left: 82px;"  min="0"  data-resource="coin" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.coin), guild_data.lvl * 1000000 - guild_data.coin))}" step="${Math.floor(Caesar.CurrentCity.City.coin)}"/>
-                                         </li>
-                                     </ol>
-                                </div>
-                                <div class="right pull-R">
-                                    <button class="full-btn full-btn-3x" id="guild-donate">
-                                        ${Translate.Button.MenuList.Deposite[UserLag.language]}
-                                    </button>
+                                    <div class="guild-deposit-body">
+                                        <div class="guild-deposit-btn-wrap">
+                                            <button class="full-btn full-btn-3x" id="guild-donate">
+                                                ${Translate.Button.MenuList.Deposite[UserLag.language]}
+                                            </button>
+                                        </div>
+                                        <ol id="input-guild-donate" class="guild-deposit-cards">
+                                            <li class="guild-deposit-card">
+                                                <div class="card-icon"><img src="images/style/food.png" alt="طعام"></div>
+                                                <div class="card-label">طعام</div>
+                                                <div class="card-stored" data-resource="food" data-count="${guild_data.food}" title="رصيد الحلف">${getArabicNumbers(guild_data.food)}</div>
+                                                <input type="text" value="0" class="only_num numeric input" min="0" data-resource="food" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.food), guild_data.lvl * 1250000 - guild_data.food))}" step="${Math.floor(Caesar.CurrentCity.City.food)}"/>
+                                            </li>
+                                            <li class="guild-deposit-card">
+                                                <div class="card-icon"><img src="images/style/wood.png" alt="خشب"></div>
+                                                <div class="card-label">خشب</div>
+                                                <div class="card-stored" data-resource="wood" data-count="${guild_data.wood}" title="رصيد الحلف">${getArabicNumbers(guild_data.wood)}</div>
+                                                <input type="text" value="0" class="only_num numeric input" min="0" data-resource="wood" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.wood), guild_data.lvl * 1250000 - guild_data.wood))}" step="${Math.floor(Caesar.CurrentCity.City.wood)}"/>
+                                            </li>
+                                            <li class="guild-deposit-card">
+                                                <div class="card-icon"><img src="images/style/stone.png" alt="حجر"></div>
+                                                <div class="card-label">حجر</div>
+                                                <div class="card-stored" data-resource="stone" data-count="${guild_data.stone}" title="رصيد الحلف">${getArabicNumbers(guild_data.stone)}</div>
+                                                <input type="text" value="0" class="only_num numeric input" min="0" data-resource="stone" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.stone), guild_data.lvl * 1250000 - guild_data.stone))}" step="${Math.floor(Caesar.CurrentCity.City.stone)}"/>
+                                            </li>
+                                            <li class="guild-deposit-card">
+                                                <div class="card-icon"><img src="images/style/iron.png" alt="حديد"></div>
+                                                <div class="card-label">حديد</div>
+                                                <div class="card-stored" data-resource="metal" data-count="${guild_data.metal}" title="رصيد الحلف">${getArabicNumbers(guild_data.metal)}</div>
+                                                <input type="text" value="0" class="only_num numeric input" min="0" data-resource="metal" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.metal), guild_data.lvl * 1250000 - guild_data.metal))}" step="${Math.floor(Caesar.CurrentCity.City.metal)}"/>
+                                            </li>
+                                            <li class="guild-deposit-card">
+                                                <div class="card-icon"><img src="images/style/coin.png" alt="عملات"></div>
+                                                <div class="card-label">عملات</div>
+                                                <div class="card-stored" data-resource="coin" data-count="${guild_data.coin}" title="رصيد الحلف">${getArabicNumbers(guild_data.coin)}</div>
+                                                <input type="text" value="0" class="only_num numeric input" min="0" data-resource="coin" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.coin), guild_data.lvl * 1000000 - guild_data.coin))}" step="${Math.floor(Caesar.CurrentCity.City.coin)}"/>
+                                            </li>
+                                        </ol>
+                                    </div>
                                 </div>
                             </div> 
                         </div>`;
@@ -39802,7 +40134,7 @@ $(document).on("click", "#guild_lead", function() {
 $(document).on("click", "#chang-g-word", function() {
 
     var current_guild = `<div id="over_lay">
-                            <div id="select_from">
+                            <div id="select_from" class="edit-guild-word-modal">
                                 <div class="head_bar">
                                     <img src="images/style/head_bar.png" class="banner">
                                     <div class="title">المقدمة</div>
@@ -40607,35 +40939,17 @@ $(document).on("click", "#trade-guild-position", function() {
     var rank_member = parseInt($(this).parents(".tr").attr("data-member-rank"));
     var id_member = parseInt($(this).parents(".tr").attr("data-id-member"));
 
-    if (parseInt(Caesar.DPlayer.GuildData.rank) === Guild.RANK_DATA.LEADER) {
-
-
-
-
-        if (!confirm("تاكيد نقل منصب المدير الى شخص اخر بالحلف")) {
-
-            alert_box.confirmMessage("تم الغاء الطلب");
+    var executeTrade = function() {
+        if (rank_member >= parseInt(Caesar.DPlayer.GuildData.rank)) {
+            alert_box.confirmMessage("لا يمكنك تبادل مناصب اعلى او فى نفس مستوى منصبك");
             return;
-
+        }
+        if (id_member === parseInt(Caesar.DPlayer.Player.id_player)) {
+            alert_box.confirmMessage("لا يمكنك تبادل مناصب مع نفسك");
+            return;
         }
 
-    }
-
-    if (rank_member >= parseInt(Caesar.DPlayer.GuildData.rank)) {
-
-
-        alert_box.confirmMessage("لا يمكنك تبادل مناصب اعلى او فى نفس مستوى منصبك");
-        return;
-
-    } else if (id_member === parseInt(Caesar.DPlayer.Player.id_player)) {
-
-        alert_box.confirmMessage("لا يمكنك تبادل مناصب مع نفسك");
-        return;
-
-    } else {
-
         $.ajax({
-
             url: `${API_URL}/api/AGuildMember/tradePosition`,
             data: {
                 idMember: id_member,
@@ -40645,32 +40959,29 @@ $(document).on("click", "#trade-guild-position", function() {
             },
             type: 'POST',
             success: function(data, textStatus, jqXHR) {
-
                 if (!Caesar.LBase.isJson(data))
                     return Caesar.LBase.Error(data);
 
                 var JsonObject = JSON.parse(data);
-
                 if (JsonObject.state === "ok") {
-
-                    //Guild.content_forRelation();
                     var offset = Number($("#AFTER-AJAX-allMember .tr:first-child").attr("data-offset")) || 0;
                     Guild.getGuildMemeber(offset);
-
                 } else if (JsonObject.state === "error_3") {
-
                     alert_box.confirmMessage("لا يمكنك تبادل مناصب اعلى او فى نفس مستوى منصبك");
-
                 }
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
-
+                alert_box.failMessage("تعذر تبادل منصب العضو");
             }
-
         });
+    };
 
+    if (parseInt(Caesar.DPlayer.GuildData.rank) === Guild.RANK_DATA.LEADER) {
+        alert_box.confirmDialog("تأكيد نقل منصب المدير إلى عضو آخر بالحلف", executeTrade);
+        return;
     }
+
+    executeTrade();
 
 });
 $(document).on("click", ".mem-prize-percent", function() {
@@ -41270,6 +41581,15 @@ function findSystemHeroByName(name) {
 function renderSystemDesertionMessage(payload) {
     var cityName = escapeHtml(payload.cityName || "المدينة");
     var units = Array.isArray(payload.units) ? payload.units : [];
+    var canonicalArmyNames = {
+        army_a: "مشاة خفيف",
+        army_b: "فرسان",
+        army_c: "مدرعون",
+        army_d: "رماة سهام",
+        army_e: "مقاليع",
+        army_f: "مجانيق"
+    };
+
     var rows = units.map(function(unit) {
         if (!unit || typeof unit !== "object") {
             return "";
@@ -41289,14 +41609,21 @@ function renderSystemDesertionMessage(payload) {
         var image = armyData
             ? armyData.image
             : (unit.heroName ? "images/icons/hero_army.png" : "images/tech/no_army.png");
-        var name = unit.name || (armyData && armyData.ar_title) || "قوات";
-        var label = unit.heroName
+        var name = (armyType && canonicalArmyNames[armyType])
+            || (armyData && armyData.ar_title)
+            || unit.name
+            || "قوات";
+        var heroNameHtml = unit.heroName ? `<bdi>${escapeHtml(unit.heroName)}</bdi>` : "";
+        var labelTitle = unit.heroName
             ? `${escapeHtml(name)} - ${escapeHtml(unit.heroName)}`
+            : escapeHtml(name);
+        var labelHtml = unit.heroName
+            ? `${escapeHtml(name)} - ${heroNameHtml}`
             : escapeHtml(name);
 
         return `<li class="system-event-message__row">
                     <img src="${escapeHtml(image)}" alt="">
-                    <span>${label}</span>
+                    <span title="${labelTitle}">${labelHtml}</span>
                     <strong>${escapeHtml(amount.toLocaleString())}</strong>
                 </li>`;
     }).join("");
@@ -41324,7 +41651,7 @@ function renderSystemHeroLoyaltyMessage(payload, isLegacySnapshot) {
             : `${isLegacySnapshot ? "الولاء الحالي" : "الولاء بعد الخصم"}: ${escapeHtml(loyalty)}`;
         return `<li class="system-event-message__row system-event-message__hero-row">
                     <img class="system-event-message__hero" src="${escapeHtml(getSystemHeroAvatar(hero))}" alt="">
-                    <span>${escapeHtml(hero.name || "بطل")} — ${status}</span>
+                    <span title="${escapeHtml(hero.name || "بطل")} — ${status}">${escapeHtml(hero.name || "بطل")} — ${status}</span>
                 </li>`;
     }).join("");
 
@@ -41364,11 +41691,16 @@ function renderSystemEventMessageBody(body, subject) {
         || text.indexOf("تفاصيل القوات الهاربة") !== -1) {
         var unitNames = {
             "مشاة خفيف": "army_a",
-            "رماة سهام": "army_b",
-            "فرسان": "army_c",
-            "مدرعون": "army_d",
+            "مشاة": "army_a",
+            "فرسان": "army_b",
+            "مدرعون": "army_c",
+            "مدرعين": "army_c",
+            "رماة سهام": "army_d",
+            "رماة": "army_d",
+            "مقاليع": "army_e",
             "فرسان ثقيل": "army_e",
-            "مجانيق": "army_f"
+            "مجانيق": "army_f",
+            "منجنيق": "army_f"
         };
         var details = text.split("تفاصيل القوات الهاربة:")[1] || "";
         details = details.split(/\n\s*\n|سارع بتوفير/)[0];
@@ -41564,15 +41896,15 @@ var message = {
                 var single_meassage = `  <div class="box_content for_msg" id="msg_income_detail">
                                             <div class="left-content full">
                                                 <div class="upper">
-                                                    <ol>
-                                                        <li>
-                                                             <span>: المرسل </span><span> ${escapeHtml(msg_data[0].name)}</span>
+                                                    <ol class="msg-meta-bar">
+                                                        <li class="msg-meta-bar__sender">
+                                                             <span>المرسل :</span><span>${escapeHtml(msg_data[0].name)}</span>
                                                         </li>
-                                                        <li>
-                                                              <span>  : الموضوع  </span><span style="width: 256px;">${escapeHtml(msg_data[0].head)}</span>
+                                                        <li class="msg-meta-bar__subject">
+                                                              <span>الموضوع :</span><span title="${escapeHtml(msg_data[0].head)}">${escapeHtml(msg_data[0].head)}</span>
                                                         </li>
-                                                        <li>
-                                                             <span> : التاريخ</span><span>${escapeHtml(msg_data[0].time_stamp)}</span>
+                                                        <li class="msg-meta-bar__date">
+                                                             <span>التاريخ :</span><span>${escapeHtml(msg_data[0].time_stamp)}</span>
                                                         </li>
                                                     </ol>
                                                 </div>
@@ -41826,18 +42158,18 @@ var message = {
             success: function(data, textStatus, jqXHR) {
 
                 msg_data = JSON.parse(data);
-                var single_meassage = `  <div class="box_content for_msg">
+                var single_meassage = `  <div class="box_content for_msg" id="msg_out_detail">
                                             <div class="left-content full">
                                                 <div class="upper">
-                                                    <ol>
-                                                        <li>
-                                                             <span>: المرسل </span><span> ${escapeHtml(msg_data[0].name)}</span>
+                                                    <ol class="msg-meta-bar">
+                                                        <li class="msg-meta-bar__sender">
+                                                             <span>المستلم :</span><span>${escapeHtml(msg_data[0].name)}</span>
                                                         </li>
-                                                        <li>
-                                                              <span>  : الموضوع  </span><span>${escapeHtml(msg_data[0].head)}</span>
+                                                        <li class="msg-meta-bar__subject">
+                                                              <span>الموضوع :</span><span title="${escapeHtml(msg_data[0].head)}">${escapeHtml(msg_data[0].head)}</span>
                                                         </li>
-                                                        <li>
-                                                             <span> : التاريخ</span><span>${escapeHtml(msg_data[0].time_stamp)}</span>
+                                                        <li class="msg-meta-bar__date">
+                                                             <span>التاريخ :</span><span>${escapeHtml(msg_data[0].time_stamp)}</span>
                                                         </li>
                                                     </ol>
                                                 </div>
@@ -42057,7 +42389,7 @@ $(document).on("click", "#del_selected", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert(errorThrown);
+            alert_box.failMessage(errorThrown || "تعذر تحديث الرسائل");
         }
 
     });
@@ -42106,7 +42438,7 @@ $(document).on("click", "#delete-all button", function() {
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                alert_box.failMessage(errorThrown || "تعذر حذف الرسائل");
             }
 
         });
@@ -42413,43 +42745,23 @@ function showPlayerProfile(id_player) {
 
 
                                                 </div>
-                                                <div class="li" style="margin-top: 5px; width: 125px; margin: auto">
-                                                     <div class="li-d pull-L bg-btn-blu">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/stat_login.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  ">
-                                                            ${Translate.Button.General.Soon[UserLag.language]}
-                                                        </div>
-                                                    </div>
-
-                                                </div>
                                                 <div class="li buttons" style="margin-top: 15px; width: 95%">
-                                                     <div class="li-d pull-L bg-btn-red">
+                                                    <div class="li-d pull-L bg-btn-red pointer" id="profile-send-msg" data-id-player="${id_player}">
                                                         <div class="image pull-L">
                                                             <img src="images/icons/message.png"/>
                                                         </div>
-                                                        <div class="title pull-R  ">
-                                                            مراسلة
+                                                        <div class="title pull-R">
+                                                            ارسال رسالة
                                                         </div>
                                                     </div>
-                                                     <div class="li-d pull-L bg-btn-red">
-                                                        <div class="image pull-L">
-                                                            <img src="images/icons/chat.png"/>
-                                                        </div>
-                                                        <div class="title pull-R  ">
-                                                            شات
-                                                        </div>
-                                                    </div>
-                                                     <div class="li-d pull-L bg-btn-red">
+                                                    <div class="li-d pull-R bg-btn-red pointer" id="profile-add-friend" data-id-player="${id_player}">
                                                         <div class="image pull-L">
                                                             <img src="images/icons/friend.png"/>
                                                         </div>
-                                                        <div class="title pull-R  ">
-                                                            صديق
+                                                        <div class="title pull-R">
+                                                            اضافة صديق
                                                         </div>
                                                     </div>
-
                                                 </div>
 
                                                 <span style="clear: both"></span>
@@ -42471,6 +42783,8 @@ function showPlayerProfile(id_player) {
             $("#A-A-P-name").html(json_data.name);
             $("#A-A-P-prestige").html(getArabicNumbers(json_data.prestige));
             $("#A-A-P-honor").html(getArabicNumbers(json_data.honor));
+            $("#profile-send-msg").attr("data-player-name", json_data.name || "");
+            $("#profile-add-friend").attr("data-player-name", json_data.name || "");
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -42483,6 +42797,64 @@ function showPlayerProfile(id_player) {
 
 
 }
+
+$(document).on("click", "#profile-send-msg", function() {
+    var playerId = $(this).attr("data-id-player");
+    var playerName = $(this).attr("data-player-name") || $("#A-A-P-name").text().trim();
+    if (playerName === "-----") {
+        playerName = "";
+    }
+    $(".player-profile-overlay").remove();
+
+    var dialog_box = menu_bar.dialogBox(
+        Translate.Title.MenuList.Mail[UserLag.language],
+        NavBar.Mail,
+        message.dialogBoxcontent_msgWrite({
+            name: playerName,
+            id: playerId
+        }),
+        0,
+        "centered-left-nav"
+    );
+
+    dialogBoxShow(dialog_box, function() {
+        $("#dialg_box").attr("type", "messages");
+    });
+});
+
+$(document).on("click", "#profile-add-friend", function() {
+    var id_friend = $(this).attr("data-id-player");
+    if (!id_friend || (typeof ID_PLAYER !== "undefined" && parseInt(id_friend) === parseInt(ID_PLAYER))) {
+        alert_box.confirmMessage("لا يمكنك إضافة نفسك كصديق");
+        return;
+    }
+
+    $.ajax({
+        url: "api/player.php",
+        data: {
+            add_friend: true,
+            id_friend: id_friend,
+            id_player: typeof ID_PLAYER !== "undefined" ? ID_PLAYER : 0,
+            token: typeof TOKEN !== "undefined" ? TOKEN : ""
+        },
+        type: 'POST',
+        success: function(data) {
+            try {
+                var json = typeof data === 'string' ? JSON.parse(data) : data;
+                if (json.state === 'ok') {
+                    alert_box.succesMessage(json.message || "تم إرسال طلب الصداقة بنجاح");
+                } else {
+                    alert_box.confirmMessage(json.message || "حدث خطأ أثناء إرسال طلب الصداقة");
+                }
+            } catch (e) {
+                alert_box.confirmMessage("حدث خطأ أثناء معالجة الطلب");
+            }
+        },
+        error: function() {
+            alert_box.confirmMessage("فشل الاتصال بالخادم");
+        }
+    });
+});
 
 
 $(document).on("click", "#send-g-msg", function() {
@@ -43286,6 +43658,7 @@ function getReportContent(detail, data_obj, offset) {
                                 </ul>
                             </div>` : ""}
                             <div class="prize-row flex">
+                                <p class="battle-report-rounds-honor">جولات: ${getArabicNumbers(detail.general_data.round_num)}, شرف: ${getArabicNumbers(detail.prize.honor || 0)}</p>
                                 <ul>`;
     for (var iii in detail.prize.matrial) {
         var reward = detail.prize.matrial[iii];
@@ -43316,9 +43689,8 @@ function getReportContent(detail, data_obj, offset) {
 
 
     cont += `</ul>
-                                    <p>جولات: ${getArabicNumbers(detail.general_data.round_num)}, شرف: ${getArabicNumbers(detail.prize.honor ||0)}</p>
-                                </div>
-                            </div>`;
+                            </div>
+                        </div>`;
 
 
     cont += `<div id="battel-detail">
@@ -43784,67 +44156,84 @@ Quest = {
         for (var jjj = 0; jjj < list_of_need.length; jjj++) {
 
             var unit_list = list_of_need[jjj];
+            if (!unit_list) continue;
 
             if (unit_list.type === "promotion") {
-                console.log(list_of_need[jjj])
+                var porm = (Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.porm !== undefined) ? Number(Caesar.DPlayer.Player.porm) : 0;
+                var promObj = (Caesar.BaseData && Caesar.BaseData.Promotion && Caesar.BaseData.Promotion[unit_list.promotion]) ? Caesar.BaseData.Promotion[unit_list.promotion] : null;
+                var promTitle = promObj ? promObj.Title : (unit_list.ar_title || unit_list.promotion);
                 list += `<li>
-                            <span> تصنيف النبيل ${Caesar.BaseData.Promotion[list_of_need[jjj].promotion].Title}</span>
-                            <span class=" state ${Caesar.DPlayer.Player.porm >= list_of_need[jjj].promotion ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                            <span> تصنيف النبيل ${promTitle}</span>
+                            <span class=" state ${porm >= unit_list.promotion ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                         </li>`;
 
-                done = Caesar.DPlayer.Player.porm < list_of_need[jjj].promotion ? false : done;
+                done = porm < unit_list.promotion ? false : done;
 
             } else if (unit_list.type === "item") {
+                var currentItem = (typeof Matrial !== "undefined" && Matrial.getPlayerAmount) ? Matrial.getPlayerAmount(unit_list.item) : 0;
+                var itemName = (typeof Matrial !== "undefined" && Matrial.getMatrialName) ? Matrial.getMatrialName(unit_list.item) : unit_list.item;
+                done = currentItem >= unit_list.amount ? done : false;
 
-                done = Matrial.getPlayerAmount(unit_list.item) >= unit_list.amount ? done : false;
-
-                list += `<li class="${Matrial.getPlayerAmount(unit_list.item) >= unit_list.amount ? 'done_all' : '' }">
-                            <span> لديك ${(unit_list.amount)} ${Matrial.getMatrialName(unit_list.item)}</span>
-                            <span class=" state ${Matrial.getPlayerAmount(unit_list.item) >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)' }</span>
-                            <span>تمتلك (${Matrial.getPlayerAmount(unit_list.item)}) وحدة</span>
+                list += `<li class="${done ? 'done_all' : '' }">
+                            <span> لديك ${(unit_list.amount)} ${itemName}</span>
+                            <span class=" state ${done ? 'done">(تم)' : 'required">(لم يتم)' }</span>
+                            <span>تمتلك (${currentItem}) وحدة</span>
                         </li>`;
 
             } else if (unit_list.type === 'building') {
-
+                var bldLvl = (typeof Max_of !== "undefined" && Max_of.buildingTypeLvl) ? Max_of.buildingTypeLvl(unit_list.buildingType) : 0;
+                var bldTitle = (typeof BuildingConstData !== "undefined" && BuildingConstData[unit_list.buildingType]) ? BuildingConstData[unit_list.buildingType].title : (typeof BUILDING_TYPS_TITLE !== "undefined" && BUILDING_TYPS_TITLE[unit_list.buildingType] ? BUILDING_TYPS_TITLE[unit_list.buildingType] : unit_list.buildingType);
                 list += `  <li class="done_all">
-                                <span> ${BuildingConstData[unit_list.buildingType].title} مستوى ${unit_list.lvl}</span>
-                                <span class=" state ${Max_of.buildingTypeLvl(unit_list.buildingType) >= unit_list.lvl ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                                <span> ${bldTitle} مستوى ${unit_list.lvl}</span>
+                                <span class=" state ${bldLvl >= unit_list.lvl ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                             </li>`;
-                done = Max_of.buildingTypeLvl(unit_list.buildingType) >= unit_list.lvl ? done : false;
+                done = bldLvl >= unit_list.lvl ? done : false;
 
             } else if (unit_list.type === 'prestige') {
-
-                /*   prestige of player */
+                var prestige = (Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.prestige !== undefined) ? Number(Caesar.DPlayer.Player.prestige) : 0;
                 list += `<li class="done_all">
                         <span>نقاط البرستيج ${unit_list.amount}</span>
-                        <span class=" state ${Caesar.DPlayer.Player.prestige >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                        <span class=" state ${prestige >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                     </li>`;
-                done = Caesar.DPlayer.Player.prestige >= unit_list.amount ? done : false;
+                done = prestige >= unit_list.amount ? done : false;
 
             } else if (unit_list.type === 'resource') {
-                /*   prestige of player */
+                /*   resource of city */
+                var currentRes = (Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City[unit_list.resourceType] !== undefined)
+                    ? Number(Caesar.CurrentCity.City[unit_list.resourceType])
+                    : 0;
+                var resName = (typeof RESOURCE_AR_NAME !== "undefined" && RESOURCE_AR_NAME[unit_list.resourceType]) ? RESOURCE_AR_NAME[unit_list.resourceType] : unit_list.resourceType;
                 list += `<li class="done_all">
-                        <span>  ${RESOURCE_AR_NAME[unit_list.resourceType]} ${unit_list.amount}</span>
-                        <span class=" state ${Caesar.CurrentCity.City[unit_list.resourceType] >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                        <span>  ${resName} ${unit_list.amount}</span>
+                        <span class=" state ${currentRes >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                     </li>`;
-                done = Caesar.CurrentCity.City[unit_list.resourceType] >= unit_list.amount ? done : false;
+                done = currentRes >= unit_list.amount ? done : false;
 
 
             } else if (unit_list.type === "population") {
 
+                var currentPop = (Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.pop !== undefined)
+                    ? Number(Caesar.CurrentCity.City.pop)
+                    : 0;
                 list += `<li class="done_all">
                         <span>  عدد السكان وصل الى  ${unit_list.amount}</span>
-                        <span class=" state ${Caesar.CurrentCity.City.pop >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                        <span class=" state ${currentPop >= unit_list.amount ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                     </li>`;
-                done = Caesar.CurrentCity.City.pop >= unit_list.amount ? done : false;
+                done = currentPop >= unit_list.amount ? done : false;
 
             } else if (unit_list.type === "playerState") {
 
+                var stateVal = (Caesar.DPlayer && Caesar.DPlayer.PlayerState && Caesar.DPlayer.PlayerState[unit_list.stateFor] !== undefined)
+                    ? Number(Caesar.DPlayer.PlayerState[unit_list.stateFor])
+                    : 0;
+                var stateTitle = (Caesar.BaseData && Caesar.BaseData.PlayerStateData && Caesar.BaseData.PlayerStateData[unit_list.stateFor])
+                    ? Caesar.BaseData.PlayerStateData[unit_list.stateFor].title
+                    : unit_list.stateFor;
                 list += `<li class="done_all">
-                        <span>تفعيل ${Caesar.BaseData.PlayerStateData[unit_list.stateFor].title} </span>
-                        <span class=" state ${Caesar.DPlayer.PlayerState[unit_list.stateFor] >= $.now() / 1000 ? 'done">(تم)' : 'required">(لم يتم)'}</span>
+                        <span>تفعيل ${stateTitle} </span>
+                        <span class=" state ${stateVal >= $.now() / 1000 ? 'done">(تم)' : 'required">(لم يتم)'}</span>
                     </li>`;
-                done = Caesar.DPlayer.PlayerState[unit_list.stateFor] >= $.now() / 1000 ? done : false;
+                done = stateVal >= $.now() / 1000 ? done : false;
 
             }
 
@@ -43925,47 +44314,59 @@ Quest = {
     checkComplete: function(idQuest) {
 
         var done = true;
-        if (!QUESTS_LIST[idQuest])
+        if (!QUESTS_LIST || !QUESTS_LIST[idQuest])
             return false;
 
-        if (Number(PLAYER_QUEST_DONE[idQuest]) !== 0) {
+        if (typeof PLAYER_QUEST_DONE === "undefined" || !PLAYER_QUEST_DONE || Number(PLAYER_QUEST_DONE[idQuest]) !== 0) {
             return false;
         }
 
         var list_of_need = QUESTS_LIST[idQuest].ListOfNeed;
-        var list = ``;
+        if (!list_of_need || !Array.isArray(list_of_need)) {
+            return false;
+        }
 
         for (var jjj = 0; jjj < list_of_need.length; jjj++) {
 
             var unit_list = list_of_need[jjj];
+            if (!unit_list) continue;
+
             if (unit_list.type === "promotion") {
-                done = Caesar.DPlayer.Player.porm < unit_list.promotion ? false : done;
+                var porm = (Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.porm !== undefined) ? Number(Caesar.DPlayer.Player.porm) : 0;
+                done = porm < unit_list.promotion ? false : done;
             } else if (unit_list.type === "item") {
 
-                done = Matrial.getPlayerAmount(unit_list.item) >= unit_list.amount ? done : false;
+                done = (typeof Matrial !== "undefined" && Matrial.getPlayerAmount) ? (Matrial.getPlayerAmount(unit_list.item) >= unit_list.amount ? done : false) : false;
 
             } else if (unit_list.type === 'building') {
 
-                done = Max_of.buildingTypeLvl(unit_list.buildingType) >= unit_list.lvl ? done : false;
+                done = (typeof Max_of !== "undefined" && Max_of.buildingTypeLvl) ? (Max_of.buildingTypeLvl(unit_list.buildingType) >= unit_list.lvl ? done : false) : false;
 
             } else if (unit_list.type === 'prestige') {
 
-                done = Caesar.DPlayer.Player.prestige >= unit_list.amount ? done : false;
+                var prestige = (Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.prestige !== undefined) ? Number(Caesar.DPlayer.Player.prestige) : 0;
+                done = prestige >= unit_list.amount ? done : false;
 
             } else if (unit_list.type === 'resource') {
-                /*   prestige of player */
-
-                done = Caesar.CurrentCity.City[unit_list.resourceType] >= unit_list.amount ? done : false;
-
+                /*   resource of city */
+                var currentRes = (Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City[unit_list.resourceType] !== undefined)
+                    ? Number(Caesar.CurrentCity.City[unit_list.resourceType])
+                    : 0;
+                done = currentRes >= unit_list.amount ? done : false;
 
             } else if (unit_list.type === "population") {
 
-                done = Caesar.CurrentCity.City.pop >= unit_list.amount ? done : false;
+                var currentPop = (Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.pop !== undefined)
+                    ? Number(Caesar.CurrentCity.City.pop)
+                    : 0;
+                done = currentPop >= unit_list.amount ? done : false;
 
             } else if (unit_list.type === "playerState") {
 
-                if (Caesar.DPlayer.PlayerState)
-                    done = Caesar.DPlayer.PlayerState[unit_list.stateFor] >= $.now() / 1000 ? done : false;
+                var stateVal = (Caesar.DPlayer && Caesar.DPlayer.PlayerState && Caesar.DPlayer.PlayerState[unit_list.stateFor] !== undefined)
+                    ? Number(Caesar.DPlayer.PlayerState[unit_list.stateFor])
+                    : 0;
+                done = stateVal >= $.now() / 1000 ? done : false;
 
             }
 
@@ -43996,11 +44397,19 @@ Quest = {
     },
     refrehQuestNotif: function() {
 
-        var c_1 = Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestGrowth);
-        var c_2 = Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestDaily);
-        var c_3 = Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestTrade);
+        if (!Caesar.CurrentCity || !Caesar.CurrentCity.City || !Caesar.DPlayer || !Caesar.DPlayer.Player) {
+            return;
+        }
+        if (typeof ALL_AVAIL_QUEST === "undefined" || !ALL_AVAIL_QUEST) {
+            return;
+        }
 
-        $("#Quests-ready-notif").html(c_1 + c_2 + c_3);
+        var c_1 = ALL_AVAIL_QUEST.QuestGrowth ? Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestGrowth) : 0;
+        var c_2 = ALL_AVAIL_QUEST.QuestDaily ? Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestDaily) : 0;
+        var c_3 = ALL_AVAIL_QUEST.QuestTrade ? Quest.getCompletedSections(ALL_AVAIL_QUEST.QuestTrade) : 0;
+
+        var total = c_1 + c_2 + c_3;
+        $("#Quests-ready-notif").html(total > 0 ? total : '');
         $("#Quest-growth-notif").html(c_1 || '');
         $("#Quest-daily-notif").html(c_2 || '');
         $("#Quest-trade-notif").html(c_3 || '');
@@ -44016,23 +44425,28 @@ Quest = {
 
             } else if (reward[iii].type === "prestige") {
 
-                Caesar.DPlayer.Player.prestige = Number(Caesar.DPlayer.Player.prestige) +
-                    Number(reward[iii].amount);
-                Player_profile.refresh_view();
-                Player_profile.refresh_player_data();
+                if (Caesar.DPlayer && Caesar.DPlayer.Player) {
+                    Caesar.DPlayer.Player.prestige = Number(Caesar.DPlayer.Player.prestige || 0) +
+                        Number(reward[iii].amount);
+                    Player_profile.refresh_view();
+                    Player_profile.refresh_player_data();
+                }
 
             } else if (reward[iii].type === "resource") {
 
-                Caesar.CurrentCity.City[reward[iii].resourceType] =
-                    Number(Caesar.CurrentCity.City[reward[iii].resourceType]) +
-                    Number(reward[iii].amount);
-                city_profile.refresh_resource_view();
-
+                if (Caesar.CurrentCity && Caesar.CurrentCity.City) {
+                    Caesar.CurrentCity.City[reward[iii].resourceType] =
+                        Number(Caesar.CurrentCity.City[reward[iii].resourceType] || 0) +
+                        Number(reward[iii].amount);
+                    city_profile.refresh_resource_view();
+                }
 
             } else if (reward[iii].type === "population") {
 
-                Caesar.CurrentCity.City.pop = Number(Caesar.CurrentCity.City.pop) + reward[iii].amount;
-                city_profile.refresh_resource_view();
+                if (Caesar.CurrentCity && Caesar.CurrentCity.City) {
+                    Caesar.CurrentCity.City.pop = Number(Caesar.CurrentCity.City.pop || 0) + Number(reward[iii].amount || 0);
+                    city_profile.refresh_resource_view();
+                }
 
             } else if (reward[iii].type === "equip") {
 
@@ -44045,10 +44459,11 @@ Quest = {
 
             } else if (reward[iii].type === "promotion") {
 
-                Caesar.DPlayer.Player.porm = Number(Caesar.DPlayer.Player.porm) + 1;
-                Player_profile.refresh_view();
-                Player_profile.getPlayerBaseData();
-
+                if (Caesar.DPlayer && Caesar.DPlayer.Player) {
+                    Caesar.DPlayer.Player.porm = Number(Caesar.DPlayer.Player.porm || 0) + 1;
+                    Player_profile.refresh_view();
+                    Player_profile.getPlayerBaseData();
+                }
 
             }
 
@@ -45601,6 +46016,15 @@ Fixed.refresePlayerStateList = function() {
         }
     }
 
+    if (Caesar.CurrentCity && Caesar.CurrentCity.City && Number(Caesar.CurrentCity.City.attack_cooldown_until) > Date.now() / 1000) {
+        var cdRemaining = Math.max(0, Math.floor(Number(Caesar.CurrentCity.City.attack_cooldown_until) - (Date.now() / 1000)));
+        var list_cd = `<li title="فترة تهدئة نقل المدينة: لا يمكن إرسال قوات للهجوم لمدة 24 ساعة من النقل">
+                         <img src="images/items/item008.jpg"/>
+                         <div class="duration stroke">${changeTimeFormat(cdRemaining)}</div>
+                       </li> `;
+        $("#player_stat_bar ul").append(list_cd);
+    }
+
 };
 
 Fixed.getArmyAmountColor = function(amount) {
@@ -46673,8 +47097,17 @@ var Market = {
                                             <ol></ol>
                                         </div>
                                     </div>
-                                    <p>
-                                        يتم الان نقل 0 من 20 عملية نقل بواسطة النقالين
+                                    <div class="my-fav-distin">
+                                        <label>المفضلة</label>
+                                        <div class="select-input" id="select-fav-trans-dis">
+                                            <div class="value ellipsis">اختر من المفضلة</div>
+                                        </div>
+                                        <div id="select_fav_trans" class="select_option" style="display: none;">
+                                            <ol></ol>
+                                        </div>
+                                    </div>
+                                    <p id="trans-porters-info">
+                                        يتم الان نقل <span id="trans-active-out-count">0</span> من 20 عملية نقل بواسطة النقالين
                                         (يستطيع كل ناقل  حمل مقدار 20000 من الموارد)
 
                                     </p>
@@ -46722,6 +47155,8 @@ var Market = {
         for (var ii in this.TransList[inOrOut]) {
 
             Trans = this.TransList[inOrOut][ii];
+            var isReturning = Trans.status === 'returning';
+            var destLabel = isReturning ? `[ ${Trans.xCoordFrom} ,  ${Trans.yCoordFrom}] (عودة النقالين)` : `[ ${Trans.xCoordTo} ,  ${Trans.yCoordTo}] `;
 
             List += `<li class="unit-trans-table" data-id-trans="${Trans.id_trans}">
                     <div class="row">
@@ -46755,7 +47190,7 @@ var Market = {
                     <div class="footer">
                         <label class="name-city">${Trans.CityNameFrom} &nbsp;&nbsp;[ ${Trans.xCoordFrom} ,  ${Trans.yCoordFrom}] </label>
                         <label class="arrow"><img src="images/btns/right.png"/></label>
-                        <label class="name-city">[ ${Trans.xCoordTo} ,  ${Trans.yCoordTo}] </label>
+                        <label class="name-city">${destLabel}</label>
                         <button data-id-trans=${Trans.id_trans} 
                             class="speed-up speed-up-btn acce-transport-deal"
                             ${Trans.acce != 0 ? 'disabled="disabled"' : ""}><span>تسريع</span></button>
@@ -46788,16 +47223,20 @@ var Market = {
 
 
                 var JsonData = JSON.parse(data);
+                if (JsonData && JsonData.transports) {
+                    JsonData = JsonData.transports;
+                }
                 Market.TransList.in = [];
                 Market.TransList.out = [];
                 for (var iii in JsonData) {
-                    if (JsonData[iii].id_city_to == Caesar.CurrentCity.City.id_city)
-                        Market.TransList.in.push(JsonData[iii]);
-                    if (JsonData[iii].id_city_from == Caesar.CurrentCity.City.id_city)
-                        Market.TransList.out.push(JsonData[iii]);
+                    var transItem = JsonData[iii];
+                    if (transItem.id_city_to == Caesar.CurrentCity.City.id_city && transItem.status === 'marching')
+                        Market.TransList.in.push(transItem);
+                    if (transItem.id_city_from == Caesar.CurrentCity.City.id_city && (transItem.status === 'marching' || transItem.status === 'returning'))
+                        Market.TransList.out.push(transItem);
                 }
 
-
+                $("#trans-active-out-count").text(Market.TransList.out.length);
                 $("#under-inner-nav").html(Market.TransListHt(in_or_out));
                 $("#under-inner-nav").niceScroll(SCROLL_BAR_PROP);
             },
@@ -47244,16 +47683,30 @@ $(document).on("click", ".acce-arrving-dael", function() {
 $(document).on("click", "#select-city-trans-dis", function() {
 
     var list = ``;
-    for (var index in FAVORIT_LIST) {
+    var currentCityId = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.id_city) || 0;
+    var cities = Caesar.DPlayer && Caesar.DPlayer.City ? Caesar.DPlayer.City : {};
+    var foundAny = false;
 
-        list += `<li data-index="${index}" data-x-coord="${FAVORIT_LIST[index].x_coord}" data-y-coord="${FAVORIT_LIST[index].y_coord}">
-                    ${FAVORIT_LIST[index].title} [${FAVORIT_LIST[index].x_coord} , ${FAVORIT_LIST[index].y_coord}]
+    for (var id in cities) {
+        var cityObj = cities[id] && cities[id].City;
+        if (!cityObj) continue;
+        if (Number(cityObj.id_city) === currentCityId) continue;
+
+        foundAny = true;
+        var cityName = typeof escapeHtml === "function" ? escapeHtml(cityObj.name) : cityObj.name;
+        var xCoord = Number(cityObj.x);
+        var yCoord = Number(cityObj.y);
+
+        list += `<li data-city-id="${cityObj.id_city}" data-x-coord="${xCoord}" data-y-coord="${yCoord}">
+                    ${cityName} [${xCoord} , ${yCoord}]
                 </li>`;
+    }
 
+    if (!foundAny) {
+        list = `<li class="empty-city-item" style="color: #888; cursor: default; padding: 4px 6px; text-align: center;">لا توجد مدن أخرى</li>`;
     }
 
     $("#select_city_trans ol").html(list);
-
     $("#select_city_trans").toggle();
 
 });
@@ -47261,16 +47714,341 @@ $(document).on("click", "#select-city-trans-dis", function() {
 
 $(document).on('click', "#select_city_trans ol li", function() {
 
-    var index = $(this).attr("data-index");
+    if ($(this).hasClass("empty-city-item")) {
+        return;
+    }
+
     var x_coord = $(this).attr("data-x-coord");
     var y_coord = $(this).attr("data-y-coord");
-    var title = $(this).html();
+    var title = $(this).text().trim();
 
-    $("#select-city-trans-dis .value").html(title);
+    $("#select-city-trans-dis .value").html(typeof escapeHtml === "function" ? escapeHtml(title) : title);
     $("#select_city_trans").hide();
     $("#transport-distin input[data-coord='x']").val(x_coord);
-    $("#transport-distin input[data-coord='y']").val(y_coord);
+    $("#transport-distin input[data-coord='y']").val(y_coord).trigger("change");
 
+});
+
+$(document).on("click", "#select-fav-trans-dis", function() {
+
+    FavoriteCoord.refresh(function(list) {
+        var itemsHtml = '';
+        if (!list || list.length === 0) {
+            itemsHtml = `<li class="empty-fav-item" style="color: #888; cursor: default; padding: 4px 6px; text-align: center;">لا توجد إحداثيات مفضلة</li>`;
+        } else {
+            for (var i = 0; i < list.length; i++) {
+                var f = list[i];
+                var fTitle = typeof escapeHtml === "function" ? escapeHtml(f.title) : f.title;
+                itemsHtml += `<li data-x-coord="${f.x}" data-y-coord="${f.y}">${fTitle} [${f.x} , ${f.y}]</li>`;
+            }
+        }
+        $("#select_fav_trans ol").html(itemsHtml);
+        $("#select_fav_trans").toggle();
+    });
+
+});
+
+$(document).on('click', "#select_fav_trans ol li", function() {
+
+    if ($(this).hasClass("empty-fav-item")) {
+        return;
+    }
+
+    var x_coord = $(this).attr("data-x-coord");
+    var y_coord = $(this).attr("data-y-coord");
+    var title = $(this).text().trim();
+
+    $("#select-fav-trans-dis .value").html(typeof escapeHtml === "function" ? escapeHtml(title) : title);
+    $("#select_fav_trans").hide();
+    $("#transport-distin input[data-coord='x']").val(x_coord);
+    $("#transport-distin input[data-coord='y']").val(y_coord).trigger("change");
+
+});
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Favorite Coordinates (مفضلة الإحداثيات) System
+   ───────────────────────────────────────────────────────────────────────────── */
+var FavoriteCoord = {
+    list: [],
+    loaded: false,
+    refresh: function(callback) {
+        $.ajax({
+            url: `${API_URL}/api/APlayer/getFavoriteCoords`,
+            data: {
+                token: Caesar.Config.AuthToken,
+                server: Caesar.Config.idServer
+            },
+            type: 'GET',
+            success: function(data) {
+                if (!Caesar.LBase.isJson(data)) return Caesar.LBase.Error(data);
+                var json = JSON.parse(data);
+                if (json.state === 'ok' && Array.isArray(json.list)) {
+                    FavoriteCoord.list = json.list;
+                    FavoriteCoord.loaded = true;
+                }
+                if (typeof callback === 'function') callback(FavoriteCoord.list);
+            },
+            error: function() {
+                if (typeof callback === 'function') callback([]);
+            }
+        });
+    },
+    add: function(x, y, title, callback) {
+        var currentCity = Caesar.CurrentCity && Caesar.CurrentCity.City
+            ? Caesar.CurrentCity.City
+            : (Caesar.CurrentCity || {});
+        $.ajax({
+            url: `${API_URL}/api/APlayer/addFavoriteCoord`,
+            data: {
+                x: x,
+                y: y,
+                title: title,
+                id_city: Number(currentCity.id_city || currentCity.idCity || 0),
+                token: Caesar.Config.AuthToken,
+                server: Caesar.Config.idServer
+            },
+            type: 'POST',
+            success: function(data) {
+                if (!Caesar.LBase.isJson(data)) return Caesar.LBase.Error(data);
+                var json = JSON.parse(data);
+                if (json.state === 'ok') {
+                    FavoriteCoord.list = json.list || [];
+                    alert_box.succesMessage("تمت إضافة الإحداثيات إلى المفضلة بنجاح");
+                    if (typeof callback === 'function') callback(true, json);
+                } else {
+                    alert_box.confirmMessage(json.msg || "تعذر حفظ الإحداثية");
+                    if (typeof callback === 'function') callback(false, json);
+                }
+            },
+            error: function() {
+                alert_box.failMessage("فشل الاتصال بالخادم");
+                if (typeof callback === 'function') callback(false);
+            }
+        });
+    },
+    delete: function(idFav, callback) {
+        alert_box.confirmDialog("هل أنت متأكد من حذف هذه الإحداثية من المفضلة؟", function() {
+            $.ajax({
+                url: `${API_URL}/api/APlayer/deleteFavoriteCoord`,
+                data: {
+                    id_fav: idFav,
+                    token: Caesar.Config.AuthToken,
+                    server: Caesar.Config.idServer
+                },
+                type: 'POST',
+                success: function(data) {
+                    if (!Caesar.LBase.isJson(data)) return Caesar.LBase.Error(data);
+                    var json = JSON.parse(data);
+                    if (json.state === 'ok') {
+                        FavoriteCoord.list = json.list || [];
+                        alert_box.succesMessage("تم حذف الإحداثية من المفضلة");
+                        if (typeof callback === 'function') callback(true);
+                    } else {
+                        alert_box.confirmMessage(json.msg || "تعذر حذف الإحداثية");
+                        if (typeof callback === 'function') callback(false);
+                    }
+                },
+                error: function() {
+                    alert_box.failMessage("فشل الاتصال بالخادم");
+                    if (typeof callback === 'function') callback(false);
+                }
+            });
+        });
+    },
+    modifyTitle: function(idFav, newTitle, callback) {
+        $.ajax({
+            url: `${API_URL}/api/APlayer/modifyFavoriteCoordTitle`,
+            data: {
+                id_fav: idFav,
+                title: newTitle,
+                token: Caesar.Config.AuthToken,
+                server: Caesar.Config.idServer
+            },
+            type: 'POST',
+            success: function(data) {
+                if (!Caesar.LBase.isJson(data)) return Caesar.LBase.Error(data);
+                var json = JSON.parse(data);
+                if (json.state === 'ok') {
+                    for (var i = 0; i < FavoriteCoord.list.length; i++) {
+                        if (FavoriteCoord.list[i].id_fav == idFav) {
+                            FavoriteCoord.list[i].title = json.title;
+                            break;
+                        }
+                    }
+                    alert_box.succesMessage("تم تعديل الاسم بنجاح");
+                    if (typeof callback === 'function') callback(true);
+                } else {
+                    alert_box.confirmMessage(json.msg || "تعذر تعديل الاسم");
+                    if (typeof callback === 'function') callback(false);
+                }
+            },
+            error: function() {
+                alert_box.failMessage("فشل الاتصال بالخادم");
+                if (typeof callback === 'function') callback(false);
+            }
+        });
+    },
+    renderRows: function() {
+        if (!FavoriteCoord.list || FavoriteCoord.list.length === 0) {
+            return `<div class="empty-fav-msg">لا توجد إحداثيات مفضلة محفوظة حالياً.<br>يمكنك إضافة إحداثية من النموذج أعلاه أو من شاشة الخريطة مباشرة.</div>`;
+        }
+        var rows = '';
+        var curX = Caesar.CurrentCity && Caesar.CurrentCity.City ? Number(Caesar.CurrentCity.City.x) : 0;
+        var curY = Caesar.CurrentCity && Caesar.CurrentCity.City ? Number(Caesar.CurrentCity.City.y) : 0;
+        for (var i = 0; i < FavoriteCoord.list.length; i++) {
+            var item = FavoriteCoord.list[i];
+            var dist = typeof getDistance === 'function' ? getDistance(item.x, item.y) : Math.ceil(Math.sqrt(Math.pow(curX - item.x, 2) + Math.pow(curY - item.y, 2)));
+            var safeTitle = typeof escapeHtml === "function" ? escapeHtml(item.title) : item.title;
+            rows += `<div class="fav-coord-row" data-id-fav="${item.id_fav}" data-x="${item.x}" data-y="${item.y}">
+                <div class="col col-coords">[ ${item.x} , ${item.y} ]</div>
+                <div class="col col-title" title="انقر لتعديل الاسم">
+                    <span class="fav-title-text">${safeTitle}</span>
+                </div>
+                <div class="col col-dist">${dist} ميل</div>
+                <div class="col col-actions">
+                    <button class="full-btn full-btn-1x btn-goto-fav" data-x="${item.x}" data-y="${item.y}">انتقل</button>
+                    <button class="full-btn full-btn-1x btn-edit-fav-title" data-id-fav="${item.id_fav}">تعديل</button>
+                    <button class="full-btn full-btn-1x btn-del-fav" data-id-fav="${item.id_fav}">حذف</button>
+                </div>
+            </div>`;
+        }
+        return rows;
+    },
+    showDialog: function() {
+        FavoriteCoord.refresh(function() {
+            var count = FavoriteCoord.list.length;
+            var content = `
+                <div class="box_content for_fav_coords">
+                    <div class="fav-add-bar flex">
+                        <div class="input-grp">
+                            <label>الاسم:</label>
+                            <input type="text" id="fav-input-title" placeholder="اسم الإحداثية..." maxlength="50" class="input" style="width: 140px;" />
+                        </div>
+                        <div class="input-grp">
+                            <label>X:</label>
+                            <input type="text" id="fav-input-x" class="only_num input" min="0" max="499" style="width: 50px;" />
+                        </div>
+                        <div class="input-grp">
+                            <label>Y:</label>
+                            <input type="text" id="fav-input-y" class="only_num input" min="0" max="499" style="width: 50px;" />
+                        </div>
+                        <div class="input-grp-btn">
+                            <button id="btn-add-manual-fav" class="full-btn full-btn-2x" style="height: 26px; padding: 0 12px;">حفظ الإحداثية</button>
+                        </div>
+                        <div class="fav-counter-badge">
+                            <span id="fav-curr-count">${count}</span> / 50
+                        </div>
+                    </div>
+                    <div class="fav-table-header flex">
+                        <div class="col col-coords">الإحداثيات</div>
+                        <div class="col col-title">الاسم المخصص</div>
+                        <div class="col col-dist">المسافة</div>
+                        <div class="col col-actions">إجراءات</div>
+                    </div>
+                    <div class="fav-table-body scrollable">
+                        ${FavoriteCoord.renderRows()}
+                    </div>
+                </div>
+            `;
+            var dialog_box = menu_bar.dialogBox(
+                "الإحداثيات المفضلة",
+                NavBar.FavoriteCoords,
+                content,
+                0,
+                "centered-left-nav"
+            );
+            dialogBoxShow(dialog_box, function() {
+                $("#dialg_box").attr("type", "fav_coords");
+                $(".scrollable").niceScroll(SCROLL_BAR_PROP);
+            });
+        });
+    }
+};
+
+$(document).on("click", "#btn-show-favorites", function() {
+    FavoriteCoord.showDialog();
+});
+
+$(document).on("click", ".add-fav-coord-btn", function(e) {
+    e.stopPropagation();
+    var xCoord = Number($(this).attr("data-x-coord"));
+    var yCoord = Number($(this).attr("data-y-coord"));
+    var defaultTitle = $(this).attr("data-title") || `إحداثية [${xCoord}, ${yCoord}]`;
+
+    alert_box.confirmWithInput(
+        "إضافة الإحداثيات إلى المفضلة",
+        `<input type="text" id="fav-coord-name-input" class="input" value="${defaultTitle}" maxlength="50" style="width: 80%; margin: 10px auto; display: block; text-align: center;" />`,
+        function() {
+            var title = $("#fav-coord-name-input").val().trim() || defaultTitle;
+            FavoriteCoord.add(xCoord, yCoord, title);
+        }
+    );
+});
+
+$(document).on("click", "#btn-add-manual-fav", function() {
+    var title = $("#fav-input-title").val().trim();
+    var x = parseInt($("#fav-input-x").val());
+    var y = parseInt($("#fav-input-y").val());
+
+    if (isNaN(x) || isNaN(y) || x < 0 || x > 499 || y < 0 || y > 499) {
+        return alert_box.failMessage("الإحداثيات غير صحيحة، يجب أن تكون بين 0 و 499");
+    }
+
+    FavoriteCoord.add(x, y, title, function(ok) {
+        if (ok) {
+            $(".fav-table-body").html(FavoriteCoord.renderRows());
+            $("#fav-curr-count").text(FavoriteCoord.list.length);
+            $("#fav-input-title").val("");
+            $("#fav-input-x").val("");
+            $("#fav-input-y").val("");
+        }
+    });
+});
+
+$(document).on("click", ".btn-del-fav", function() {
+    var idFav = Number($(this).attr("data-id-fav"));
+    if (!idFav) return;
+    FavoriteCoord.delete(idFav, function(ok) {
+        if (ok) {
+            $(".fav-table-body").html(FavoriteCoord.renderRows());
+            $("#fav-curr-count").text(FavoriteCoord.list.length);
+        }
+    });
+});
+
+$(document).on("click", ".btn-edit-fav-title", function() {
+    var idFav = Number($(this).attr("data-id-fav"));
+    var row = $(this).closest(".fav-coord-row");
+    var currentTitle = row.find(".fav-title-text").text().trim();
+
+    alert_box.confirmWithInput(
+        "تعديل اسم الإحداثية",
+        `<input type="text" id="fav-edit-title-input" class="input" value="${currentTitle}" maxlength="50" style="width: 80%; margin: 10px auto; display: block; text-align: center;" />`,
+        function() {
+            var newTitle = $("#fav-edit-title-input").val().trim();
+            if (!newTitle) return alert_box.failMessage("يجب إدخال اسم للإحداثية");
+            FavoriteCoord.modifyTitle(idFav, newTitle, function(ok) {
+                if (ok) {
+                    $(".fav-table-body").html(FavoriteCoord.renderRows());
+                }
+            });
+        }
+    );
+});
+
+$(document).on("click", ".btn-goto-fav", function() {
+    var xCoord = Number($(this).attr("data-x"));
+    var yCoord = Number($(this).attr("data-y"));
+
+    $(".close_dialog").click();
+
+    if ($("#WorldCity").attr("data-view") !== "world") {
+        $("#WorldCity").click();
+    }
+
+    $("#x_coord-input input").val(xCoord);
+    $("#y_coord-input input").val(yCoord);
+    $("#nav-btn button").click();
 });
 
 
@@ -48060,6 +48838,9 @@ $(document).on("click", "#expan-city button", function() {
                     if (Number(Caesar.CurrentCity.City.id_city) === expandedCityId) {
                         Caesar.CurrentCity.City = expandedCity;
                     }
+                    if (typeof Caesar.City.refreshBtnList === 'function') {
+                        Caesar.City.refreshBtnList();
+                    }
                     Caesar.WsLib.Base.refreshWorldCitiesForPlayers({
                         xCoord: expandedCity.x,
                         yCoord: expandedCity.y,
@@ -48776,9 +49557,8 @@ $(document).on("click", "#player-city-list ul li", function() {
     city_profile.refresh_hero_view();
     city_profile.refresh_army_view();
     Caesar.TimedTask.refreshListView();
-    Caesar.City.refreshBtnList();
-
     Caesar.CurrentCity = Caesar.City.getCity(id_city);
+    Caesar.City.refreshBtnList();
 
     Caesar.City.getCityBuilding().done(function(data) {
 
@@ -49761,6 +50541,43 @@ Caesar.Equip.EquipList = {},
         });
     }
 
+Caesar.Equip.PowerCache = {};
+Caesar.Equip.PowerRequests = {};
+Caesar.Equip.getEquipmentPower = function(equip, part, lvl) {
+    var level = Number(lvl) || 1;
+    var key = `${equip}_${part}_${level}`;
+    if (Object.prototype.hasOwnProperty.call(Caesar.Equip.PowerCache, key)) {
+        return $.Deferred().resolve(Caesar.Equip.PowerCache[key]).promise();
+    }
+    if (Caesar.Equip.PowerRequests[key]) {
+        return Caesar.Equip.PowerRequests[key];
+    }
+
+    var request = $.ajax({
+        url: `${API_URL}/api/AItem/getEquipmentPower`,
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            equip: equip,
+            part: part,
+            lvl: level,
+            token: Caesar.Config.AuthToken
+        }
+    }).then(function(response) {
+        if (!response || response.state !== 'ok' || !response.Power) {
+            throw new Error(`Equipment power is unavailable for ${key}`);
+        }
+        Caesar.Equip.PowerCache[key] = response.Power;
+        return response.Power;
+    });
+
+    Caesar.Equip.PowerRequests[key] = request;
+    request.always(function() {
+        delete Caesar.Equip.PowerRequests[key];
+    });
+    return request;
+};
+
 Caesar.Equip.getPlayerAmount = function(EquipType, Part, Lvl = 1) {
 
     var Count = 0x0;
@@ -49817,11 +50634,10 @@ var Equipment = {
         return Caesar.Equip.EquipList[`${equip}_${part}_${lvl}`];
     },
     getPowerMarkup: function(equip, part, lvl = 1) {
-        var equipData = Caesar.Equip.EquipList[`${equip}_${part}_${lvl}`];
-        if (!equipData || !equipData.Power)
-            return "<p>إحصاءات المعدة غير معروضة</p>";
+        var power = Caesar.Equip.PowerCache[`${equip}_${part}_${lvl}`];
+        if (!power)
+            return "<p>مرر المؤشر فوق المعدة لعرض إحصاءاتها</p>";
 
-        var power = equipData.Power;
         var stats = [
             ["حيوية", power.vitality],
             ["هجوم", power.attack],
@@ -51237,11 +52053,7 @@ BattelField.battelField = function(battel, currentBattels) {
 
                 BattelField.addToWatchList(battel.x_coord, battel.y_coord);
 
-
-
-                var stop = Math.max(13, BattelField.battelList.length);
                 list = "";
-
 
                 list = BattelField.getBattelHeaders(BattelField.battelList, 0, false);
 
@@ -51297,7 +52109,11 @@ function refreshBattleReportListScroll() {
     var currentScroll = reportsList.getNiceScroll(0);
     if (currentScroll) currentScroll.remove();
 
-    if (element.scrollHeight > element.clientHeight) {
+    var hasBattels = typeof reportsList.find === "function"
+        ? reportsList.find(".has_battel").length > 0
+        : true;
+
+    if (hasBattels && element.scrollHeight > element.clientHeight) {
         reportsList.niceScroll(SCROLL_BAR_PROP);
     }
 }
@@ -51425,10 +52241,13 @@ BattelField.battelModel = function(battel, list) {
 
 BattelField.getBattelHeaders = function(battels, selectedBattelId, myBattels) {
 
-    var stop = Math.max(13, battels.length);
+    if (!Array.isArray(battels) || battels.length === 0) {
+        return "";
+    }
+
     var list = "";
 
-    for (var iii = 0; iii < stop; iii++) {
+    for (var iii = 0; iii < battels.length; iii++) {
 
         if (battels[iii]) {
             list += `
@@ -51436,15 +52255,11 @@ BattelField.getBattelHeaders = function(battels, selectedBattelId, myBattels) {
                             data-id-battel="${battels[iii].id_battel}" data-my-battel="${myBattels}" >
                                         ${Number(battels[iii].battle_pending) === 1 ? "معركة جارية" : `قام الملك ${battels[iii].PlayerName} بانشاء معركة`} على ( ${getArabicNumbers(battels[iii].y_coord)} , ${getArabicNumbers(battels[iii].x_coord)}) من المدينة ${battels[iii].CityName}
                                     </div>`;
-        } else {
-            list += `<div class="tr"></div>`;
         }
 
     }
 
     return list;
-
-
 
 };
 
@@ -52534,8 +53349,7 @@ $(document).on("click", "#change-player-password", function() {
                 var jsonData = JSON.parse(data);
 
                 if (jsonData.state === "ok") {
-
-                    alert("تم تغير كلمة المرور بنجاح");
+                    alert_box.succesMessage("تم تغيير كلمة المرور بنجاح");
                     location.reload();
 
                 } else {
@@ -53150,15 +53964,16 @@ Caesar.Contribute.ToUpgradeBox = function(idCont) {
     var Name = '';
     var Image = 'images/tech/no_army.png';
     var Desc = '';
+    var EquipAttrs = '';
     if (ListOfNeed) {
         if (ListOfNeed['type'] == 'equip') {
             var EquipData = Equipment.getData(ListOfNeed['equip'], ListOfNeed['part'], ListOfNeed['lvl']);
-            Image = EquipData['image'];
-            Name = EquipData['name'];
-            Desc = `   <li>هجوم  + ${EquipData['Power']['attack']} </li>
-                            <li>دفاع  + ${EquipData['Power']['defence']} </li>
-                            <li>انجراح  + ${EquipData['Power']['damage']} </li>
-                            <li>حيوية  + ${EquipData['Power']['vitality']} </li>`;
+            if (EquipData) {
+                Image = EquipData['image'];
+                Name = EquipData['name'];
+            }
+            EquipAttrs = ` equip-unit data-equi-type="${ListOfNeed['equip']}" data-equi-part="${ListOfNeed['part']}" data-equi-lvl="${ListOfNeed['lvl'] || 1}"`;
+            Desc = Equipment.getPowerMarkup(ListOfNeed['equip'], ListOfNeed['part'], ListOfNeed['lvl']);
         } else if (ListOfNeed['type'] == 'item') {
             Image = Caesar['BaseData']['Items'][ListOfNeed['item']]['image'];
             Name = Caesar['BaseData']['Items'][ListOfNeed['item']]['name'];
@@ -53169,7 +53984,7 @@ Caesar.Contribute.ToUpgradeBox = function(idCont) {
                     <div class="imageCol">
                         <div class="prizeBg">
                             <div class="prizeimage">
-                                <div class="matrial_unit">
+                                <div class="matrial_unit"${EquipAttrs}>
                                     <div class="img-inside-box">
                                         <div class="wrapper big-img">
                                             <div class="image" style="background-image: url(${Image})"></div>
@@ -53198,15 +54013,16 @@ Caesar.Contribute.PrizeBox = function(idCont) {
     var Name = '';
     var Image = 'images/tech/no_army.png';
     var Desc = '';
+    var EquipAttrs = '';
     if (Reword) {
         if (Reword['type'] == 'equip') {
             var EquipData = Equipment['getData'](Reword['equip'], Reword['part'], Reword['lvl']);
-            Image = EquipData['image'];
-            Name = EquipData['name'];
-            Desc = `' <li>هجوم  + ${EquipData['Power']['attack']} </li>
-                            <li>دفاع  + ${EquipData['Power']['defence']} </li>
-                            <li>انجراح  + ${EquipData['Power']['damage']} </li>
-                            <li>حيوية  + ${EquipData['Power']['vitality']} </li>`;
+            if (EquipData) {
+                Image = EquipData['image'];
+                Name = EquipData['name'];
+            }
+            EquipAttrs = ` equip-unit data-equi-type="${Reword['equip']}" data-equi-part="${Reword['part']}" data-equi-lvl="${Reword['lvl'] || 1}"`;
+            Desc = Equipment['getPowerMarkup'](Reword['equip'], Reword['part'], Reword['lvl']);
         } else if (Reword['type'] == 'item') {
             Image = Caesar['BaseData']['Items'][Reword['item']]['image'];
             Name = Caesar['BaseData']['Items'][Reword['item']]['name'];
@@ -53222,7 +54038,7 @@ Caesar.Contribute.PrizeBox = function(idCont) {
                     <div class="imageCol">
                         <div class="prizeBg">
                             <div class="prizeimage">
-                                <div class="matrial_unit">
+                                <div class="matrial_unit"${EquipAttrs}>
                                     <div class="img-inside-box">
                                         <div class="wrapper big-img">
                                             <div class="image" style="background-image: url(${Image})"></div>
@@ -56024,7 +56840,7 @@ $(document).on("click", "#TeamHeaderNavBar li", function() {
     } else if (NavTo == "TeamUpgradePage") {
 
     } else {
-        alert("sadsad " + NavTo);
+        alert_box.failMessage("تعذر فتح القسم المطلوب");
     }
 
 });
@@ -56040,7 +56856,7 @@ $(document).on("click", "#chang-t-word", function() {
     $("#over_lay").remove();
 
     var current_guild = `<div id="over_lay">
-                            <div id="select_from">
+                            <div id="select_from" class="edit-guild-word-modal">
                                 <div class="head_bar">
                                     <img src="images/style/head_bar.png" class="banner">
                                     <div class="title">المقدمة</div>

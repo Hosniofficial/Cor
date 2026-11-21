@@ -153,11 +153,12 @@ echo "\n--- 3. Recruitment Queue Limits Verification ---\n";
 $stmtBarracks = $db->prepare("INSERT INTO `city_building` (`id_city`, `place`, `type`, `lvl`) VALUES (99999, 'barracks_1', 3, ?)
                               ON DUPLICATE KEY UPDATE `lvl` = VALUES(`lvl`)");
 
-function callBuildArmy($db, $cityId, $armyType, $amount, $place, $token) {
+function callBuildArmy($db, $cityId, $armyType, $amount, $place, $token, $divideBy = 'none') {
     $_REQUEST['idCity']         = $cityId;
     $_REQUEST['armyType']       = $armyType;
     $_REQUEST['amount']         = $amount;
     $_REQUEST['buildingPlace']  = $place;
+    $_REQUEST['divideBy']       = $divideBy;
     $_REQUEST['token']          = $token;
     $_GET['token']              = $token;
     $_POST['token']             = $token;
@@ -178,8 +179,8 @@ $res1 = callBuildArmy($db, 99999, 'army_a', 10, 'barracks_1', 'test_token_99999'
 assertTest(($res1['state'] ?? '') === 'ok', "Batch 1 on Lvl 1 Barracks succeeds with state ok");
 $firstRecruitment = $db->query("SELECT `start_time`, `time_arrive` FROM `timed_task` WHERE `id_city` = 99999 ORDER BY `id_task` DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
 assertTest(
-    (int)$firstRecruitment['time_arrive'] - (int)$firstRecruitment['start_time'] === 20,
-    "Recruitment ETA uses the original 20-second duration for 10 army_a"
+    (int)$firstRecruitment['time_arrive'] - (int)$firstRecruitment['start_time'] === 500,
+    "Recruitment ETA uses 50 seconds per army_a unit"
 );
 
 $res2 = callBuildArmy($db, 99999, 'army_a', 10, 'barracks_1', 'test_token_99999');
@@ -209,6 +210,117 @@ assertTest($i === 11, "Successfully queued 10 batches on Lvl 15 Barracks");
 
 $resOver10 = callBuildArmy($db, 99999, 'army_a', 5, 'barracks_1', 'test_token_99999');
 assertTest(($resOver10['state'] ?? '') === 'error_4', "Batch 11 on Lvl 15 Barracks blocked by absolute 10 queue limit");
+
+// Recruitment durations match the raw per-unit timing: 1,000 infantry take 50,000 seconds.
+$db->exec("DELETE FROM `timed_task` WHERE `id_city` = 99999");
+$stmtBarracks->execute([1]);
+$db->exec("UPDATE `city` SET `pop` = 50000, `pop_cap` = 1000000, `pop_max` = 1000000 WHERE `id_city` = 99999");
+$resLongBatch = callBuildArmy($db, 99999, 'army_a', 1000, 'barracks_1', 'test_token_99999');
+$longBatch = $db->query("SELECT `start_time`, `time_arrive` FROM `timed_task` WHERE `id_city` = 99999 ORDER BY `id_task` DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+$longBatchDuration = $longBatch ? (int)$longBatch['time_arrive'] - (int)$longBatch['start_time'] : null;
+assertTest(
+    ($resLongBatch['state'] ?? '') === 'ok'
+    && $longBatchDuration === 50000,
+    "Recruiting 1,000 infantry keeps the full 50,000-second duration (state: "
+        . ($resLongBatch['state'] ?? 'no response') . ', duration: ' . ($longBatchDuration ?? 'n/a') . ')'
+);
+$db->exec("DELETE FROM `timed_task` WHERE `id_city` = 99999");
+$db->exec("DELETE FROM `army_training` WHERE `id_city` = 99999");
+$stmtBarracks->execute([15]);
+$db->exec("UPDATE `city` SET `pop_cap` = 50000, `pop_max` = 50000 WHERE `id_city` = 99999");
+
+$db->exec("INSERT INTO `city_building` (`id_city`, `place`, `type`, `lvl`) VALUES
+           (99999, 'barracks_2', 3, 3),
+           (99999, 'barracks_3', 3, 5)
+           ON DUPLICATE KEY UPDATE `lvl` = VALUES(`lvl`)");
+$amountSplitResponse = callBuildArmy(
+    $db,
+    99999,
+    'army_a',
+    10,
+    'barracks_1',
+    'test_token_99999',
+    'amount'
+);
+$amountSplit = [];
+foreach (($amountSplitResponse['armyBatches'] ?? []) as $batch) {
+    $amountSplit[$batch['place']] = (int)$batch['amount'];
+}
+assertTest(
+    ($amountSplitResponse['state'] ?? '') === 'ok'
+    && $amountSplit === ['barracks_1' => 4, 'barracks_2' => 3, 'barracks_3' => 3],
+    "Quantity mode distributes troop batches evenly across eligible barracks"
+);
+$db->exec("DELETE FROM `timed_task` WHERE `id_city` = 99999");
+$db->exec("DELETE FROM `army_training` WHERE `id_city` = 99999");
+
+$now = time();
+$db->prepare(
+    "INSERT INTO `timed_task` (`id_city`, `id_player`, `task_type`, `item_id`, `lvl_to`, `start_time`, `time_arrive`, `details`)
+     VALUES (99999, 99999, 'army', 'army_a', 1, ?, ?, ?)"
+)->execute([$now, $now + 3600, json_encode(['place' => 'barracks_2'])]);
+$timeSplitResponse = callBuildArmy(
+    $db,
+    99999,
+    'army_a',
+    6,
+    'barracks_1',
+    'test_token_99999',
+    'time'
+);
+$timeSplit = [];
+foreach (($timeSplitResponse['armyBatches'] ?? []) as $batch) {
+    $timeSplit[$batch['place']] = (int)$batch['amount'];
+}
+assertTest(
+    ($timeSplitResponse['state'] ?? '') === 'ok'
+    && $timeSplit === ['barracks_1' => 3, 'barracks_3' => 3],
+    "Time mode avoids a busy barracks and distributes work across free barracks"
+);
+$taskCountBeforeNoFreeBarracks = (int)$db->query(
+    "SELECT COUNT(*) FROM `timed_task` WHERE `id_city` = 99999"
+)->fetchColumn();
+$noFreeBarracksResponse = callBuildArmy(
+    $db,
+    99999,
+    'army_a',
+    1,
+    'barracks_1',
+    'test_token_99999',
+    'time'
+);
+$taskCountAfterNoFreeBarracks = (int)$db->query(
+    "SELECT COUNT(*) FROM `timed_task` WHERE `id_city` = 99999"
+)->fetchColumn();
+assertTest(
+    ($noFreeBarracksResponse['state'] ?? '') === 'error_no_available_building'
+    && $taskCountAfterNoFreeBarracks === $taskCountBeforeNoFreeBarracks,
+    "Time mode rejects production when every eligible barracks is busy"
+);
+$db->exec("DELETE FROM `timed_task` WHERE `id_city` = 99999");
+$db->exec("DELETE FROM `army_training` WHERE `id_city` = 99999");
+
+// Wall fortification durations use their own raw per-unit timings.
+$db->exec("INSERT INTO `city_building` (`id_city`, `place`, `type`, `lvl`) VALUES (99999, 'wall_1', 13, 5)
+           ON DUPLICATE KEY UPDATE `lvl` = VALUES(`lvl`)");
+foreach (['wall_a' => 600, 'wall_b' => 1800, 'wall_c' => 6000] as $wallType => $expectedDuration) {
+    $wallRecruitment = callBuildArmy($db, 99999, $wallType, 10, 'wall_1', 'test_token_99999');
+    $wallBatch = $db->query(
+        "SELECT `start_time`, `time_arrive` FROM `timed_task`
+         WHERE `id_city` = 99999 AND `item_id` = " . $db->quote($wallType) . "
+         ORDER BY `id_task` DESC LIMIT 1"
+    )->fetch(PDO::FETCH_ASSOC);
+    $wallDuration = $wallBatch
+        ? (int)$wallBatch['time_arrive'] - (int)$wallBatch['start_time']
+        : null;
+    assertTest(
+        ($wallRecruitment['state'] ?? '') === 'ok' && $wallDuration === $expectedDuration,
+        "$wallType batches use the full {$expectedDuration}-second raw duration"
+    );
+}
+$db->exec("DELETE FROM `timed_task` WHERE `id_city` = 99999");
+$db->exec("DELETE FROM `army_training` WHERE `id_city` = 99999");
+$db->exec("DELETE FROM `city_building` WHERE `id_city` = 99999 AND `place` = 'wall_1'");
 
 // =========================================================================
 // SECTION 4: Resource & Population Verification & Concurrency

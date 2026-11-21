@@ -541,47 +541,149 @@ class MarketController {
         sendJson($res);
     }
 
+    public static function resolveArrivedTransports($db, $cityId = null) {
+        $now = time();
+        $ownsTransaction = !$db->inTransaction();
+        if ($ownsTransaction) {
+            $db->beginTransaction();
+        }
+
+        try {
+            $marchingSql = "SELECT * FROM `city_market_trans` WHERE `status` = 'marching' AND `time_arrive` <= ?";
+            $marchingParams = [$now];
+            if ($cityId !== null && (int)$cityId > 0) {
+                $marchingSql .= " AND (`id_city_from` = ? OR `id_city_to` = ?)";
+                $marchingParams[] = (int)$cityId;
+                $marchingParams[] = (int)$cityId;
+            }
+
+            $marchingStmt = $db->prepare($marchingSql);
+            $marchingStmt->execute($marchingParams);
+            $arrivedMarching = $marchingStmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+            foreach ($arrivedMarching as $trans) {
+                $transId = (int)$trans['id_trans'];
+                $timeStart = (int)$trans['time_start'];
+                $timeArrive = (int)$trans['time_arrive'];
+                $timeReturn = $timeArrive + max(1, $timeArrive - $timeStart);
+                $nextStatus = $now >= $timeReturn ? 'completed' : 'returning';
+
+                $claim = $db->prepare(
+                    "UPDATE `city_market_trans` SET `status` = ?, `time_arrive` = ?, `acce` = 0"
+                    . " WHERE `id_trans` = ? AND `status` = 'marching' AND `time_arrive` <= ?"
+                );
+                $claim->execute([$nextStatus, $timeReturn, $transId, $now]);
+                if ($claim->rowCount() !== 1) {
+                    continue;
+                }
+
+                $credited = ResourceService::creditCity($db, (int)$trans['id_city_to'], (int)$trans['id_player'], [
+                    'food'  => (int)$trans['food'],
+                    'wood'  => (int)$trans['wood'],
+                    'stone' => (int)$trans['stone'],
+                    'metal' => (int)$trans['metal'],
+                    'coin'  => (int)$trans['coin'],
+                ]);
+                if (!$credited) {
+                    throw new RuntimeException('Unable to deliver arrived market transport resources');
+                }
+            }
+
+            $returningSql = "UPDATE `city_market_trans` SET `status` = 'completed'"
+                . " WHERE `status` = 'returning' AND `time_arrive` <= ?";
+            $returningParams = [$now];
+            if ($cityId !== null && (int)$cityId > 0) {
+                $returningSql .= " AND (`id_city_from` = ? OR `id_city_to` = ?)";
+                $returningParams[] = (int)$cityId;
+                $returningParams[] = (int)$cityId;
+            }
+            $db->prepare($returningSql)->execute($returningParams);
+
+            if ($ownsTransaction) {
+                $db->commit();
+            }
+        } catch (Throwable $error) {
+            if ($ownsTransaction && $db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
+    }
+
     public static function transportResource($db) {
         $player = self::getPlayer($db);
+        $playerId = (int)$player['id_player'];
         $idCityFrom = isset($_REQUEST['idCityFrom']) ? (int)$_REQUEST['idCityFrom'] : 0;
         $idCityTo   = isset($_REQUEST['idCityTo']) ? (int)$_REQUEST['idCityTo'] : 0;
         requirePlayerOwnedCity($db, $player, $idCityFrom);
-        requirePlayerOwnedCity($db, $player, $idCityTo);
-        if ($idCityFrom === $idCityTo) {
+
+        if ($idCityFrom <= 0 || $idCityTo <= 0 || $idCityFrom === $idCityTo) {
             sendJson(['state' => 'error_invalid_input']);
         }
+
+        $toStmt = $db->prepare("SELECT `id_city`, `id_player`, `x`, `y`, `name` FROM `city` WHERE `id_city` = ? AND `id_player` = ?");
+        $toStmt->execute([$idCityTo, $playerId]);
+        $toCity = $toStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$toCity) {
+            sendJson(['state' => 'error_invalid_input']);
+        }
+
+        self::resolveArrivedTransports($db, $idCityFrom);
+
+        // Check concurrent active outgoing transports (limit 20 porters)
+        $activeStmt = $db->prepare("SELECT COUNT(*) FROM `city_market_trans` WHERE `id_city_from` = ? AND `status` IN ('marching', 'returning')");
+        $activeStmt->execute([$idCityFrom]);
+        $activeCount = (int)$activeStmt->fetchColumn();
+        if ($activeCount >= 20) {
+            sendJson(['state' => 'error_1']); // "لا يمكنك ارسال بعثات اخرى خارج المدينة جميع النقالين بالخارج"
+        }
+
         $food = ResourceService::parseAmount($_REQUEST['food'] ?? '0');
         $wood = ResourceService::parseAmount($_REQUEST['wood'] ?? '0');
         $stone = ResourceService::parseAmount($_REQUEST['stone'] ?? '0');
         $metal = ResourceService::parseAmount($_REQUEST['metal'] ?? '0');
         $coin = ResourceService::parseAmount($_REQUEST['coin'] ?? '0');
         if ($food === null || $wood === null || $stone === null || $metal === null || $coin === null) {
-            sendJson(['state' => 'error_invalid_input']);
+            sendJson(['state' => 'error_0']);
         }
 
-        if ($food + $wood + $stone + $metal + $coin <= 0) {
-            sendJson(['state' => 'error_invalid_input']);
+        $totalResource = $food + $wood + $stone + $metal + $coin;
+        if ($totalResource <= 0) {
+            sendJson(['state' => 'error_0']); // "كمية المواد غير صحيحة"
         }
+
+        $fromStmt = $db->prepare("SELECT `id_city`, `x`, `y`, `food`, `wood`, `stone`, `metal`, `coin` FROM `city` WHERE `id_city` = ?");
+        $fromStmt->execute([$idCityFrom]);
+        $fromCity = $fromStmt->fetch(PDO::FETCH_ASSOC);
+
+        $dx = (int)$fromCity['x'] - (int)$toCity['x'];
+        $dy = (int)$fromCity['y'] - (int)$toCity['y'];
+        $distance = max(1, (int)ceil(sqrt($dx * $dx + $dy * $dy)));
+        $duration = $distance * 20; // 20 seconds per map unit
+        $now = time();
+        $timeArrive = $now + $duration;
 
         $db->beginTransaction();
         try {
             $deduct = $db->prepare("UPDATE `city` SET `food` = `food` - ?, `wood` = `wood` - ?, `stone` = `stone` - ?, `metal` = `metal` - ?, `coin` = `coin` - ? WHERE `id_city` = ? AND `id_player` = ? AND `food` >= ? AND `wood` >= ? AND `stone` >= ? AND `metal` >= ? AND `coin` >= ?");
-            $deduct->execute([$food, $wood, $stone, $metal, $coin, $idCityFrom, (int)$player['id_player'], $food, $wood, $stone, $metal, $coin]);
+            $deduct->execute([$food, $wood, $stone, $metal, $coin, $idCityFrom, $playerId, $food, $wood, $stone, $metal, $coin]);
             if ($deduct->rowCount() !== 1) {
                 $db->rollBack();
-                sendJson(['state' => 'error_not_enough_resources']);
+                sendJson(['state' => 'error_3']); // "لا توجد موارد كافية فى المدينة"
             }
 
-            if (!ResourceService::creditCity($db, $idCityTo, (int)$player['id_player'], [
-                'food' => $food,
-                'wood' => $wood,
-                'stone' => $stone,
-                'metal' => $metal,
-                'coin' => $coin
-            ])) {
-                $db->rollBack();
-                sendJson(['state' => 'error_resource_limit', 'msg' => 'سيتجاوز النقل الحد الأقصى لموارد المدينة المستقبلة']);
-            }
+            $ins = $db->prepare("
+                INSERT INTO `city_market_trans`
+                (`id_player`, `id_city_from`, `id_city_to`, `resource`, `amount`, `food`, `wood`, `stone`, `metal`, `coin`, `time_start`, `time_arrive`, `status`, `acce`)
+                VALUES (?, ?, ?, 'mixed', ?, ?, ?, ?, ?, ?, ?, ?, 'marching', 0)
+            ");
+            $ins->execute([
+                $playerId, $idCityFrom, $idCityTo,
+                $totalResource, $food, $wood, $stone, $metal, $coin,
+                $now, $timeArrive
+            ]);
+            $transId = (int)$db->lastInsertId();
+
             $db->commit();
         } catch (Throwable $error) {
             if ($db->inTransaction()) {
@@ -591,14 +693,15 @@ class MarketController {
         }
 
         $freshStmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?");
-        $freshStmt->execute([$idCityFrom, (int)$player['id_player']]);
+        $freshStmt->execute([$idCityFrom, $playerId]);
         $freshCity = $freshStmt->fetch(PDO::FETCH_ASSOC);
         foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
 
         sendJson([
-            'state'   => 'ok',
-            'City'    => $freshCity,
-            'cityRes' => $freshCity
+            'state'    => 'ok',
+            'City'     => $freshCity,
+            'cityRes'  => $freshCity,
+            'id_trans' => $transId
         ]);
     }
 
@@ -606,15 +709,121 @@ class MarketController {
         $player = self::getPlayer($db);
         $idCity = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
         requirePlayerOwnedCity($db, $player, $idCity);
-        $stmt = $db->prepare("SELECT * FROM `city_market_trans` WHERE (`id_city_from` = ? OR `id_city_to` = ?) AND `status` = 'marching'");
+
+        self::resolveArrivedTransports($db, $idCity);
+
+        $stmt = $db->prepare("
+            SELECT
+                t.id_trans,
+                t.id_player,
+                t.id_city_from,
+                t.id_city_to,
+                t.food,
+                t.wood,
+                t.stone,
+                t.metal,
+                t.coin,
+                t.time_start,
+                t.time_arrive,
+                t.status,
+                t.acce,
+                cFrom.name AS CityNameFrom,
+                cFrom.x AS xCoordFrom,
+                cFrom.y AS yCoordFrom,
+                cTo.name AS CityNameTo,
+                cTo.x AS xCoordTo,
+                cTo.y AS yCoordTo
+            FROM `city_market_trans` t
+            LEFT JOIN `city` cFrom ON cFrom.id_city = t.id_city_from
+            LEFT JOIN `city` cTo ON cTo.id_city = t.id_city_to
+            WHERE ((t.id_city_from = ? AND t.status IN ('marching', 'returning'))
+                OR (t.id_city_to = ? AND t.status = 'marching'))
+            ORDER BY t.time_arrive ASC
+        ");
         $stmt->execute([$idCity, $idCity]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-        sendJson(['state' => 'ok', 'transports' => $rows]);
+
+        foreach ($rows as &$r) {
+            $r['id_trans']     = (int)$r['id_trans'];
+            $r['id_player']    = (int)$r['id_player'];
+            $r['id_city_from'] = (int)$r['id_city_from'];
+            $r['id_city_to']   = (int)$r['id_city_to'];
+            $r['food']         = (int)$r['food'];
+            $r['wood']         = (int)$r['wood'];
+            $r['stone']        = (int)$r['stone'];
+            $r['metal']        = (int)$r['metal'];
+            $r['coin']         = (int)$r['coin'];
+            $r['time_start']   = (int)$r['time_start'];
+            $r['time_arrive']  = (int)$r['time_arrive'];
+            $r['acce']         = (int)$r['acce'];
+            $r['xCoordFrom']   = (int)($r['xCoordFrom'] ?? 0);
+            $r['yCoordFrom']   = (int)($r['yCoordFrom'] ?? 0);
+            $r['xCoordTo']     = (int)($r['xCoordTo'] ?? 0);
+            $r['yCoordTo']     = (int)($r['yCoordTo'] ?? 0);
+            $r['CityNameFrom'] = (string)($r['CityNameFrom'] ?? '');
+            $r['CityNameTo']   = (string)($r['CityNameTo'] ?? '');
+        }
+        unset($r);
+
+        sendJson($rows);
     }
 
     public static function speedUpTransport($db) {
-        self::getPlayer($db);
-        http_response_code(501);
-        sendJson(['state' => 'error_not_implemented']);
+        $player = self::getPlayer($db);
+        $playerId = (int)$player['id_player'];
+        $idTrans = isset($_REQUEST['idTrans']) ? (int)$_REQUEST['idTrans'] : 0;
+        $idCity  = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 0;
+
+        if ($idTrans <= 0) {
+            sendJson(['state' => 'error_0']);
+        }
+
+        self::resolveArrivedTransports($db, $idCity);
+
+        $stmt = $db->prepare("SELECT * FROM `city_market_trans` WHERE `id_trans` = ? AND `id_player` = ?");
+        $stmt->execute([$idTrans, $playerId]);
+        $trans = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$trans || !in_array($trans['status'], ['marching', 'returning'], true)) {
+            sendJson(['state' => 'error_0']); // "لقد تم نقل هذه النقله"
+        }
+
+        if ((int)$trans['acce'] !== 0) {
+            sendJson(['state' => 'error_1']); // "لقد تم تسريع هذه النقله"
+        }
+
+        $itemStmt = $db->prepare("SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = 'shopping_car'");
+        $itemStmt->execute([$playerId]);
+        $carCount = (int)$itemStmt->fetchColumn();
+        if ($carCount < 1) {
+            sendJson(['state' => 'error_2']); // "لا توجد عربات نقل كافية لتسريع هذه الدفعة"
+        }
+
+        $now = time();
+        $remTime = max(0, (int)$trans['time_arrive'] - $now);
+        $newRem = (int)ceil($remTime / 2);
+        $newTimeArrive = $now + $newRem;
+
+        $db->beginTransaction();
+        try {
+            $deductItem = $db->prepare("UPDATE `player_item` SET `amount` = `amount` - 1 WHERE `id_player` = ? AND `id_item` = 'shopping_car' AND `amount` >= 1");
+            $deductItem->execute([$playerId]);
+            if ($deductItem->rowCount() !== 1) {
+                $db->rollBack();
+                sendJson(['state' => 'error_2']);
+            }
+
+            $db->prepare("UPDATE `city_market_trans` SET `time_arrive` = ?, `acce` = 1 WHERE `id_trans` = ?")
+               ->execute([$newTimeArrive, $idTrans]);
+
+            $db->commit();
+        } catch (Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $e;
+        }
+
+        sendJson(['state' => 'ok']);
     }
 }

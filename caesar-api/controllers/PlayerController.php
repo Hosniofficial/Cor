@@ -42,6 +42,22 @@ class PlayerController {
             case '/api/APlayer/getAllNotif':
                 self::getAllNotif($db);
                 return true;
+            case '/api/APlayer/getFavoriteCoords':
+            case '/api/AWorld/getFavoriteCoords':
+                self::getFavoriteCoords($db);
+                return true;
+            case '/api/APlayer/addFavoriteCoord':
+            case '/api/AWorld/addFavoriteCoord':
+                self::addFavoriteCoord($db);
+                return true;
+            case '/api/APlayer/deleteFavoriteCoord':
+            case '/api/AWorld/deleteFavoriteCoord':
+                self::deleteFavoriteCoord($db);
+                return true;
+            case '/api/APlayer/modifyFavoriteCoordTitle':
+            case '/api/AWorld/modifyFavoriteCoordTitle':
+                self::modifyFavoriteCoordTitle($db);
+                return true;
             case '/api/APlayer/chatPann':
                 sendJson(['state' => 'ok']);
                 return true;
@@ -422,7 +438,8 @@ class PlayerController {
         $costCoin  = (int)($req['coin']  ?? ($nextLvl * 500));
         // 1. Building Prerequisite: Academy (type 9) for military studies, University (type 8) for civil studies
         $academyStudies = ['infantry', 'riding', 'army', 'spying', 'leader', 'safe', 'medicine', 'logistic', 'navigating', 'supplying'];
-        $reqBType = in_array($idStudy, $academyStudies, true) ? 9 : 8;
+        $studyPlace = in_array($idStudy, $academyStudies, true) ? 'acad' : 'uni';
+        $reqBType = $studyPlace === 'acad' ? 9 : 8;
 
         $bStmt = $db->prepare("SELECT MAX(lvl) FROM city_building WHERE id_city = ? AND type = ?");
         $bStmt->execute([$cityId, $reqBType]);
@@ -438,28 +455,27 @@ class PlayerController {
             / max(0.1, ServerConfigService::getFloat($db, 'study_speed_multiplier', 1.0))
         ));
 
-        // 2. Law Items Prerequisite for advanced levels
+        $lawItem = null;
         if ($nextLvl >= 25) {
-            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_3'")->fetchColumn();
-            if ($hasLaw <= 0) {
-                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 25 وجود قانون روماني (law_3)']);
-                return;
-            }
-            ItemController::deductPlayerItem($db, $playerId, 'law_3', 1);
+            $lawItem = 'law_3';
         } elseif ($nextLvl >= 20) {
-            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_2'")->fetchColumn();
-            if ($hasLaw <= 0) {
-                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 20 وجود جدول الثاني عشر (law_2)']);
-                return;
-            }
-            ItemController::deductPlayerItem($db, $playerId, 'law_2', 1);
+            $lawItem = 'law_2';
         } elseif ($nextLvl >= 10) {
-            $hasLaw = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'law_1'")->fetchColumn();
-            if ($hasLaw <= 0) {
-                sendJson(['state' => 'error_item', 'msg' => 'تتطلب الدراسة من مستوى 10 وجود قانون دراكو (law_1)']);
+            $lawItem = 'law_1';
+        }
+
+        if ($lawItem !== null) {
+            $lawStmt = $db->prepare('SELECT amount FROM player_item WHERE id_player = ? AND id_item = ?');
+            $lawStmt->execute([$playerId, $lawItem]);
+            if ((int)$lawStmt->fetchColumn() <= 0) {
+                $lawMessages = [
+                    'law_1' => 'تتطلب الدراسة من مستوى 10 وجود قانون دراكو (law_1)',
+                    'law_2' => 'تتطلب الدراسة من مستوى 20 وجود جدول الثاني عشر (law_2)',
+                    'law_3' => 'تتطلب الدراسة من مستوى 25 وجود قانون روماني (law_3)',
+                ];
+                sendJson(['state' => 'error_item', 'msg' => $lawMessages[$lawItem]]);
                 return;
             }
-            ItemController::deductPlayerItem($db, $playerId, 'law_1', 1);
         }
 
         // 3. Resource Check
@@ -472,22 +488,73 @@ class PlayerController {
             return;
         }
 
-        // Deduct authentic resources
-        $db->prepare("UPDATE `city` SET 
-            `food`  = GREATEST(0, `food`  - ?), 
-            `wood`  = GREATEST(0, `wood`  - ?), 
-            `stone` = GREATEST(0, `stone` - ?), 
-            `metal` = GREATEST(0, `metal` - ?), 
-            `coin`  = GREATEST(0, `coin`  - ?) 
-            WHERE `id_city` = ?")
-           ->execute([$costFood, $costWood, $costStone, $costMetal, $costCoin, $cityId]);
-
         $now = time();
         $arrive = $now + $duration;
+        $insufficientResources = false;
+        $taskId = 0;
+        ItemController::runItemTransaction($db, function () use (
+            $db,
+            $cityId,
+            $playerId,
+            $costFood,
+            $costWood,
+            $costStone,
+            $costMetal,
+            $costCoin,
+            &$insufficientResources,
+            $lawItem,
+            $idStudy,
+            $nextLvl,
+            $now,
+            $arrive,
+            $studyPlace,
+            &$taskId
+        ) {
+            $resourceStmt = $db->prepare(
+                'UPDATE `city` SET
+                    `food` = `food` - ?,
+                    `wood` = `wood` - ?,
+                    `stone` = `stone` - ?,
+                    `metal` = `metal` - ?,
+                    `coin` = `coin` - ?
+                 WHERE `id_city` = ? AND `id_player` = ?
+                    AND `food` >= ? AND `wood` >= ? AND `stone` >= ?
+                    AND `metal` >= ? AND `coin` >= ?'
+            );
+            $resourceStmt->execute([
+                $costFood, $costWood, $costStone, $costMetal, $costCoin,
+                $cityId, $playerId,
+                $costFood, $costWood, $costStone, $costMetal, $costCoin,
+            ]);
+            if ($resourceStmt->rowCount() !== 1) {
+                $insufficientResources = true;
+                return;
+            }
 
-        $stmt = $db->prepare("INSERT INTO `timed_task` (`id_city`, `id_player`, `task_type`, `item_id`, `lvl_to`, `start_time`, `time_arrive`, `details`) VALUES (?, ?, 'study', ?, ?, ?, ?, ?)");
-        $stmt->execute([$cityId, $playerId, $idStudy, $nextLvl, $now, $arrive, json_encode(['study_in' => 'academy'])]);
-        $taskId = (int)$db->lastInsertId();
+            if ($lawItem !== null) {
+                ItemController::deductPlayerItem($db, $playerId, $lawItem, 1);
+            }
+
+            $taskStmt = $db->prepare(
+                "INSERT INTO `timed_task` (`id_city`, `id_player`, `task_type`, `item_id`, `lvl_to`, `start_time`, `time_arrive`, `details`)"
+                . " VALUES (?, ?, 'study', ?, ?, ?, ?, ?)"
+            );
+            $taskStmt->execute([
+                $cityId,
+                $playerId,
+                $idStudy,
+                $nextLvl,
+                $now,
+                $arrive,
+                json_encode(['study_in' => $studyPlace]),
+            ]);
+            $taskId = (int)$db->lastInsertId();
+        });
+
+        if ($insufficientResources) {
+            sendJson(['state' => 'error_res', 'msg' => 'الموارد المتوفرة بالمدينة غير كافية للبحث']);
+            return;
+        }
 
         $cStmt = $db->prepare("SELECT * FROM city WHERE id_city = ?");
         $cStmt->execute([$cityId]);
@@ -502,7 +569,7 @@ class PlayerController {
                     'id'           => $taskId,
                     'id_city'      => $cityId,
                     'study'        => $idStudy,
-                    'study_in'     => 'academy',
+                    'study_in'     => $studyPlace,
                     'lvl_to'       => $nextLvl,
                     'time_start'   => $now,
                     'time_end'     => $arrive,
@@ -607,5 +674,130 @@ class PlayerController {
         $db->prepare('UPDATE `player` SET `avatar` = ? WHERE `id_player` = ?')
             ->execute([$avatar, (int)$player['id_player']]);
         sendJson(['state' => 'ok', 'avatar' => $avatar]);
+    }
+
+    public static function getFavoriteCoords($db) {
+        $player = self::resolvePlayer($db);
+        $playerId = (int)$player['id_player'];
+
+        $stmt = $db->prepare("SELECT `id_fav`, `id_player`, `title`, `x`, `y`, `created_at` FROM `player_favorite_coord` WHERE `id_player` = ? ORDER BY `id_fav` DESC");
+        $stmt->execute([$playerId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        foreach ($rows as &$r) {
+            $r['id_fav'] = (int)$r['id_fav'];
+            $r['id_player'] = (int)$r['id_player'];
+            $r['x'] = (int)$r['x'];
+            $r['y'] = (int)$r['y'];
+        }
+        unset($r);
+        sendJson(['state' => 'ok', 'list' => $rows]);
+    }
+
+    public static function addFavoriteCoord($db) {
+        $player = self::resolvePlayer($db);
+        $playerId = (int)$player['id_player'];
+
+        $x = filter_var($_REQUEST['x'] ?? null, FILTER_VALIDATE_INT);
+        $y = filter_var($_REQUEST['y'] ?? null, FILTER_VALIDATE_INT);
+        $rawTitle = trim((string)($_REQUEST['title'] ?? ''));
+
+        if ($x === false || $y === false || $x === null || $y === null || $x < 0 || $x > 499 || $y < 0 || $y > 499) {
+            sendJson(['state' => 'error_coord', 'msg' => 'الإحداثيات غير صحيحة']);
+        }
+
+        $currentCityId = filter_var($_REQUEST['id_city'] ?? $_REQUEST['idCity'] ?? null, FILTER_VALIDATE_INT);
+        if ($currentCityId === false || $currentCityId === null || $currentCityId <= 0) {
+            sendJson(['state' => 'error_invalid_city', 'msg' => 'المدينة الحالية غير صحيحة']);
+        }
+
+        $currentCityStmt = $db->prepare(
+            "SELECT `x`, `y` FROM `city` WHERE `id_city` = ? AND `id_player` = ? LIMIT 1"
+        );
+        $currentCityStmt->execute([$currentCityId, $playerId]);
+        $currentCity = $currentCityStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$currentCity) {
+            sendJson(['state' => 'error_auth', 'msg' => 'المدينة الحالية غير مملوكة للاعب']);
+        }
+        if ((int)$currentCity['x'] === $x && (int)$currentCity['y'] === $y) {
+            sendJson(['state' => 'error_own_city', 'msg' => 'لا يمكنك إضافة إحداثيات مدينتك إلى المفضلة']);
+        }
+
+        // Limit favorites count (max 50 per player)
+        $countStmt = $db->prepare("SELECT COUNT(*) FROM `player_favorite_coord` WHERE `id_player` = ?");
+        $countStmt->execute([$playerId]);
+        if ((int)$countStmt->fetchColumn() >= 50) {
+            sendJson(['state' => 'error_limit', 'msg' => 'وصلت للحد الأقصى لعدد الإحداثيات المفضلة (50). احذف بعضها لإضافة المزيد']);
+        }
+
+        // Check if already in favorites
+        $checkStmt = $db->prepare("SELECT `id_fav` FROM `player_favorite_coord` WHERE `id_player` = ? AND `x` = ? AND `y` = ?");
+        $checkStmt->execute([$playerId, $x, $y]);
+        $existingId = $checkStmt->fetchColumn();
+        if ($existingId) {
+            sendJson(['state' => 'error_exists', 'msg' => 'هذه الإحداثيات مضافة بالفعل في المفضلة لديك']);
+        }
+
+        $title = $rawTitle !== '' ? mb_substr($rawTitle, 0, 50) : "إحداثية [{$x}, {$y}]";
+
+        $ins = $db->prepare("INSERT INTO `player_favorite_coord` (`id_player`, `title`, `x`, `y`) VALUES (?, ?, ?, ?)");
+        $ins->execute([$playerId, $title, $x, $y]);
+        $idFav = (int)$db->lastInsertId();
+
+        $stmt = $db->prepare("SELECT `id_fav`, `id_player`, `title`, `x`, `y`, `created_at` FROM `player_favorite_coord` WHERE `id_player` = ? ORDER BY `id_fav` DESC");
+        $stmt->execute([$playerId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        foreach ($rows as &$r) {
+            $r['id_fav'] = (int)$r['id_fav'];
+            $r['id_player'] = (int)$r['id_player'];
+            $r['x'] = (int)$r['x'];
+            $r['y'] = (int)$r['y'];
+        }
+        unset($r);
+
+        sendJson(['state' => 'ok', 'id_fav' => $idFav, 'list' => $rows]);
+    }
+
+    public static function deleteFavoriteCoord($db) {
+        $player = self::resolvePlayer($db);
+        $playerId = (int)$player['id_player'];
+
+        $idFav = filter_var($_REQUEST['id_fav'] ?? null, FILTER_VALIDATE_INT);
+        if ($idFav === false || $idFav === null || $idFav <= 0) {
+            sendJson(['state' => 'error_invalid', 'msg' => 'معرف الإحداثية غير صحيح']);
+        }
+
+        $del = $db->prepare("DELETE FROM `player_favorite_coord` WHERE `id_fav` = ? AND `id_player` = ?");
+        $del->execute([$idFav, $playerId]);
+
+        $stmt = $db->prepare("SELECT `id_fav`, `id_player`, `title`, `x`, `y`, `created_at` FROM `player_favorite_coord` WHERE `id_player` = ? ORDER BY `id_fav` DESC");
+        $stmt->execute([$playerId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        foreach ($rows as &$r) {
+            $r['id_fav'] = (int)$r['id_fav'];
+            $r['id_player'] = (int)$r['id_player'];
+            $r['x'] = (int)$r['x'];
+            $r['y'] = (int)$r['y'];
+        }
+        unset($r);
+
+        sendJson(['state' => 'ok', 'list' => $rows]);
+    }
+
+    public static function modifyFavoriteCoordTitle($db) {
+        $player = self::resolvePlayer($db);
+        $playerId = (int)$player['id_player'];
+
+        $idFav = filter_var($_REQUEST['id_fav'] ?? null, FILTER_VALIDATE_INT);
+        $newTitle = trim((string)($_REQUEST['title'] ?? ''));
+
+        if ($idFav === false || $idFav === null || $idFav <= 0 || $newTitle === '') {
+            sendJson(['state' => 'error_invalid', 'msg' => 'بيانات التعديل غير صحيحة']);
+        }
+
+        $title = mb_substr($newTitle, 0, 50);
+        $up = $db->prepare("UPDATE `player_favorite_coord` SET `title` = ? WHERE `id_fav` = ? AND `id_player` = ?");
+        $up->execute([$title, $idFav, $playerId]);
+
+        sendJson(['state' => 'ok', 'title' => $title]);
     }
 }

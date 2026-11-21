@@ -173,6 +173,7 @@ CREATE TABLE IF NOT EXISTS `city` (
     `wall_c` INT NOT NULL DEFAULT 0,
     `wall_cap` INT NOT NULL DEFAULT 5000,
     `spies` INT NOT NULL DEFAULT 0,
+    `attack_cooldown_until` INT UNSIGNED NOT NULL DEFAULT 0,
     `LS` INT NOT NULL DEFAULT 0,
     KEY `idx_city_coordinates` (`x`, `y`),
     KEY `idx_city_ranking` (`lvl`, `pop`),
@@ -253,10 +254,16 @@ CREATE TABLE IF NOT EXISTS `city_market_trans` (
     `id_city_to` INT NOT NULL,
     `resource` VARCHAR(20) NOT NULL,
     `amount` BIGINT NOT NULL,
+    `food` BIGINT NOT NULL DEFAULT 0,
+    `wood` BIGINT NOT NULL DEFAULT 0,
+    `stone` BIGINT NOT NULL DEFAULT 0,
+    `metal` BIGINT NOT NULL DEFAULT 0,
+    `coin` BIGINT NOT NULL DEFAULT 0,
     `unit_price` DECIMAL(10,4) NOT NULL DEFAULT 0.0000,
     `time_start` INT NOT NULL,
     `time_arrive` INT NOT NULL,
     `status` VARCHAR(20) NOT NULL DEFAULT 'marching',
+    `acce` TINYINT NOT NULL DEFAULT 0,
     KEY `idx_city_market_trans_destination` (`id_city_to`, `status`, `time_arrive`),
     KEY `idx_city_market_trans_origin` (`id_city_from`, `status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -741,6 +748,18 @@ CREATE TABLE IF NOT EXISTS `player_resource_slot` (
     `expires_at` INT DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `idx_player` (`id_player`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 18.2. Player Favorite Coordinates
+CREATE TABLE IF NOT EXISTS `player_favorite_coord` (
+    `id_fav` INT AUTO_INCREMENT PRIMARY KEY,
+    `id_player` INT NOT NULL,
+    `title` VARCHAR(50) NOT NULL,
+    `x` INT NOT NULL,
+    `y` INT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    KEY `idx_player_fav` (`id_player`),
+    UNIQUE KEY `uq_player_coord` (`id_player`, `x`, `y`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 19. LiveOps configuration and scheduled events

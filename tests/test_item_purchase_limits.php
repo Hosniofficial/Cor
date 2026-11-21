@@ -126,6 +126,16 @@ if (($response['state'] ?? '') !== 'ok' || $db->items['food_pack'] !== 4 || $db-
     echo "[PASS] purchase up to the configured limit succeeds\n";
 }
 
+$response = buyTestItem($db, 'ancient_coins', 1);
+if (($response['state'] ?? '') !== 'item_not_for_sale'
+    || isset($db->items['ancient_coins'])
+    || $db->gold !== 650) {
+    echo "[FAIL] zero-price items cannot be purchased for free\n";
+    $failed++;
+} else {
+    echo "[PASS] zero-price items cannot be purchased for free\n";
+}
+
 $response = buyTestItem($db, 'bronze_horn', 2);
 if (($response['state'] ?? '') !== 'error_prize_limit'
     || isset($db->items['bronze_horn'])

@@ -165,8 +165,6 @@ switch ($action) {
             'saton' => 'ساتون', 'holy' => 'المقدس', 'sparta' => 'سبارتا', 'volcan' => 'فولكان',
             'mili' => 'الحربي', 'fart' => 'فارتومنوس', 'peace' => 'القيصر/السلام', 'victory' => 'النصر',
             'mars' => 'مارس', 'bright' => 'الضوئي', 'khaled' => 'الخالد/الأخضر', 'blue' => 'الأبيض',
-            'worrior' => 'المحارب', 'thunder' => 'الرعد', 'neptune' => 'نيبتون', 'thor' => 'ثور',
-            'light' => 'النور'
         ];
 
         foreach ($equipsCatalog as $setKey => $setData) {
@@ -790,15 +788,20 @@ switch ($action) {
         }
 
         // For primary equipments, level is fixed at 1
-        $primaryParts = ['sword', 'helmet', 'shield', 'armor', 'boot'];
-        if (in_array($part, $primaryParts)) {
+        if (in_array($part, $primaryEquipParts, true)) {
             $lvl = 1;
+        }
+
+        $meta = in_array($part, $primaryEquipParts, true)
+            ? ($equipsCatalog[$type][$part] ?? null)
+            : ($equipsCatalog[$type]['sec'][$part][$lvl - 1] ?? null);
+        if ($meta === null) {
+            jsonError('قطعة العتاد أو مستواها غير موجودة في الكتالوج');
         }
 
         $stmt = $db->prepare("INSERT INTO `player_equip` (`id_player`, `id_hero`, `type`, `part`, `lvl`, `on_hero`) VALUES (?, 0, ?, ?, ?, 0)");
         $stmt->execute([$idPlayer, $type, $part, $lvl]);
 
-        $meta = $equipsCatalog[$type][$part] ?? ($equipsCatalog[$type]['sec'][$part][0] ?? null);
         $equipName = $meta['name'] ?? "{$type} {$part}";
         $playerName = $db->query("SELECT name FROM player WHERE id_player = $idPlayer")->fetchColumn();
         logAdminAction('grant_equip', 'player', $idPlayer, $playerName, [

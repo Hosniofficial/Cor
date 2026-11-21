@@ -466,6 +466,9 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                         <button class="full-btn full-btn-3x" style="">اذهب الى </button>
                         
                     </div>
+                    <div id="fav-btn">
+                        <button class="full-btn full-btn-3x" id="btn-show-favorites" title="عرض الإحداثيات المفضلة">المفضلة</button>
+                    </div>
 
                     <label class="pull-R">Y</label>
                     <div id="y_coord-input" class="coords-input">

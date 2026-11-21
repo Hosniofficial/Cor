@@ -148,11 +148,17 @@
 }
 
 #dialg_box.guild_dialog_box .nav_icon {
+    position: static;
+}
+
+#dialg_box.guild_dialog_box .nav_icon .guild_lead_wrapper {
     position: relative;
+    display: inline-block;
 }
 
 #dialg_box.guild_dialog_box .nav_icon .drop-list {
-    top: 42px;
+    top: 36px;
+    right: 0;
 }
 
 #msg-area .msg-body .quote::before {

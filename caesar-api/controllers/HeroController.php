@@ -7,6 +7,7 @@ require_once __DIR__ . '/../services/HeroPowerService.php';
 class HeroController {
     private const THEATER_POOL_VERSION = 2;
     private const MAX_HERO_LEVEL = 255;
+    private const HERO_MEDAL_DURATION_SECONDS = 604800;
 
     private static $solMap = [
         'army_a' => 1, 'army_b' => 2, 'army_c' => 3, 'army_d' => 4, 'army_e' => 5, 'army_f' => 6,
@@ -804,7 +805,7 @@ class HeroController {
         }
         $newLvl = $currLvl + 1;
         $newExp = (int)$hero['exp'] - $reqExp;
-        $newPoints = (int)$hero['points'] + 5;
+        $newPoints = (int)$hero['points'] + max(1, (int)$hero['ultra_p']);
         $newPowerMax = HeroPowerService::getMaxPower($newLvl);
         $db->prepare(
             "UPDATE city_hero SET lvl = ?, exp = ?, points = ?, power_max = ? " .
@@ -893,30 +894,46 @@ class HeroController {
 
     public static function resetHeroPoints($db) {
         $idHero = isset($_REQUEST['idHero']) ? (int)$_REQUEST['idHero'] : 0;
-        $stmt = $db->prepare("SELECT h.*, c.id_player FROM city_hero h JOIN city c ON h.id_city = c.id_city WHERE h.id_hero = ?");
-        $stmt->execute([$idHero]);
-        $hero = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$hero) {
+        $heroMissing = false;
+        $lockClause = $db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql' ? ' FOR UPDATE' : '';
+        ItemController::runItemTransaction($db, function () use ($db, $idHero, $lockClause, &$heroMissing) {
+            $heroStmt = $db->prepare(
+                'SELECT h.*, c.id_player FROM city_hero h'
+                . ' JOIN city c ON h.id_city = c.id_city WHERE h.id_hero = ?'
+                . $lockClause
+            );
+            $heroStmt->execute([$idHero]);
+            $hero = $heroStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$hero) {
+                $heroMissing = true;
+                return;
+            }
+
+            $playerId = (int)$hero['id_player'];
+            $reqItemAmount = max(1, (int)floor(((int)$hero['lvl']) / 10) + 1);
+            $itemStmt = $db->prepare(
+                "SELECT amount FROM player_item WHERE id_player = ? AND id_item = 'retreat_point'"
+            );
+            $itemStmt->execute([$playerId]);
+            $hasItem = (int)$itemStmt->fetchColumn();
+            if ($hasItem > 0) {
+                ItemController::deductPlayerItem($db, $playerId, 'retreat_point', min($hasItem, $reqItemAmount));
+            }
+
+            $diffA = max(0, (int)$hero['point_a'] - (int)$hero['p_b_a']);
+            $diffB = max(0, (int)$hero['point_b'] - (int)$hero['p_b_b']);
+            $diffC = max(0, (int)$hero['point_c'] - (int)$hero['p_b_c']);
+            $newPoints = (int)$hero['points'] + $diffA + $diffB + $diffC;
+            $db->prepare(
+                'UPDATE city_hero SET point_a = p_b_a, point_b = p_b_b, point_c = p_b_c, points = ?'
+                . ' WHERE id_hero = ? AND id_player = ?'
+            )->execute([$newPoints, $idHero, $playerId]);
+        });
+
+        if ($heroMissing) {
             sendJson(['state' => 'error_0', 'msg' => 'البطل ليس ملك لك']);
             return;
         }
-        $playerId = (int)$hero['id_player'];
-        $reqItemAmount = max(1, (int)floor(((int)$hero['lvl']) / 10) + 1);
-
-        // Deduct retreat_point if player owns it
-        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = 'retreat_point'")->fetchColumn();
-        if ($hasItem > 0) {
-            ItemController::deductPlayerItem($db, $playerId, 'retreat_point', min($hasItem, $reqItemAmount));
-        }
-
-        $diffA = max(0, (int)$hero['point_a'] - (int)$hero['p_b_a']);
-        $diffB = max(0, (int)$hero['point_b'] - (int)$hero['p_b_b']);
-        $diffC = max(0, (int)$hero['point_c'] - (int)$hero['p_b_c']);
-        $refunded = $diffA + $diffB + $diffC;
-
-        $newPoints = (int)$hero['points'] + $refunded;
-        $db->prepare("UPDATE city_hero SET point_a = p_b_a, point_b = p_b_b, point_c = p_b_c, points = ? WHERE id_hero = ?")
-           ->execute([$newPoints, $idHero]);
 
         $uHero = $db->query("SELECT * FROM city_hero WHERE id_hero = $idHero")->fetch(PDO::FETCH_ASSOC);
         foreach ($uHero as $k => $v) { if (is_numeric($v)) $uHero[$k] = (int)$v; }
@@ -963,15 +980,24 @@ class HeroController {
         ];
         $expGain = isset($expMap[$item]) ? $expMap[$item] : 1000;
 
-        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = '$item'")->fetchColumn();
+        $hasItemStmt = $db->prepare('SELECT amount FROM player_item WHERE id_player = ? AND id_item = ?');
+        $hasItemStmt->execute([$playerId, $item]);
+        $hasItem = (int)$hasItemStmt->fetchColumn();
         if ($hasItem <= 0) {
             sendJson(['state' => 'error_2', 'msg' => 'لا تمتلك مواد كافية']);
             return;
         }
 
-        ItemController::deductPlayerItem($db, $playerId, $item, 1);
-
-        $db->prepare("UPDATE city_hero SET exp = exp + ? WHERE id_hero = ?")->execute([$expGain, $idHero]);
+        ItemController::runItemTransaction($db, function () use ($db, $playerId, $item, $expGain, $idHero) {
+            ItemController::deductPlayerItem($db, $playerId, $item, 1);
+            $update = $db->prepare(
+                'UPDATE city_hero SET exp = exp + ? WHERE id_hero = ? AND id_player = ? AND lvl < ?'
+            );
+            $update->execute([$expGain, $idHero, $playerId, self::MAX_HERO_LEVEL]);
+            if ($update->rowCount() !== 1) {
+                throw new RuntimeException('Hero experience item could not update the owned hero');
+            }
+        });
 
         $uHero = $db->query("SELECT * FROM city_hero WHERE id_hero = $idHero")->fetch(PDO::FETCH_ASSOC);
         foreach ($uHero as $k => $v) { if (is_numeric($v)) $uHero[$k] = (int)$v; }
@@ -1015,15 +1041,24 @@ class HeroController {
         $loyGain = isset($loyMap[$item]) ? $loyMap[$item] : 10;
 
         // Check if player has item
-        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = '$item'")->fetchColumn();
+        $hasItemStmt = $db->prepare('SELECT amount FROM player_item WHERE id_player = ? AND id_item = ?');
+        $hasItemStmt->execute([$playerId, $item]);
+        $hasItem = (int)$hasItemStmt->fetchColumn();
         if ($hasItem <= 0) {
             sendJson(['state' => 'error_2', 'msg' => 'لا تمتلك مواد كافية']);
             return;
         }
 
-        ItemController::deductPlayerItem($db, $playerId, $item, 1);
-
-        $db->prepare("UPDATE city_hero SET loyal = LEAST(100, loyal + ?) WHERE id_hero = ?")->execute([$loyGain, $idHero]);
+        ItemController::runItemTransaction($db, function () use ($db, $playerId, $item, $loyGain, $idHero) {
+            ItemController::deductPlayerItem($db, $playerId, $item, 1);
+            $update = $db->prepare(
+                'UPDATE city_hero SET loyal = LEAST(100, loyal + ?) WHERE id_hero = ? AND id_player = ? AND loyal < 100'
+            );
+            $update->execute([$loyGain, $idHero, $playerId]);
+            if ($update->rowCount() !== 1) {
+                throw new RuntimeException('Hero loyalty item could not update the owned hero');
+            }
+        });
 
         $uHero = $db->query("SELECT * FROM city_hero WHERE id_hero = $idHero")->fetch();
         foreach ($uHero as $k => $v) { if (is_numeric($v)) $uHero[$k] = (int)$v; }
@@ -1095,8 +1130,18 @@ class HeroController {
     }
 
     public static function activateHeroMedal($uri, $db) {
+        $medals = [
+            '/api/AHeroMedal/activateCiceroMedal' => ['item' => 'medal_ceasro', 'column' => 'medal_ceasro'],
+            '/api/AHeroMedal/activateDentatusMedal' => ['item' => 'medal_den', 'column' => 'medal_den'],
+            '/api/AHeroMedal/activateLeonidasMedal' => ['item' => 'medal_leo', 'column' => 'medal_leo'],
+            '/api/AHeroMedal/activateCaeserMedal' => ['item' => 'ceaser_eagle', 'column' => 'ceaser_eagle']
+        ];
+        if (!isset($medals[$uri])) {
+            sendJson(['state' => 'error_invalid_medal']);
+            return;
+        }
+
         $idHero = isset($_REQUEST['idHero']) ? (int)$_REQUEST['idHero'] : 0;
-        
         $hStmt = $db->prepare("SELECT h.*, c.id_player, c.id_city FROM city_hero h JOIN city c ON h.id_city = c.id_city WHERE h.id_hero = ?");
         $hStmt->execute([$idHero]);
         $hero = $hStmt->fetch(PDO::FETCH_ASSOC);
@@ -1107,6 +1152,8 @@ class HeroController {
 
         $playerId = (int)$hero['id_player'];
         $idCity   = (int)$hero['id_city'];
+        $medalItem = $medals[$uri]['item'];
+        $medalColumn = $medals[$uri]['column'];
 
         $db->exec("CREATE TABLE IF NOT EXISTS `hero_medal` (
             `id_hero` int(11) NOT NULL,
@@ -1119,49 +1166,51 @@ class HeroController {
             KEY `id_player` (`id_player`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
-        $db->prepare("INSERT IGNORE INTO `hero_medal` (`id_hero`, `id_player`) VALUES (?, ?)")->execute([$idHero, $playerId]);
+        $db->beginTransaction();
+        try {
+            $db->prepare("INSERT IGNORE INTO `hero_medal` (`id_hero`, `id_player`) VALUES (?, ?)")->execute([$idHero, $playerId]);
 
-        $medalItem = '';
-        $statField = '';
-        if (strpos($uri, 'activateCiceroMedal') !== false) {
-            $medalItem = 'medal_ceasro';
-            $statField = 'point_a';
-        } else if (strpos($uri, 'activateDentatusMedal') !== false) {
-            $medalItem = 'medal_den';
-            $statField = 'point_b';
-        } else if (strpos($uri, 'activateLeonidasMedal') !== false) {
-            $medalItem = 'medal_leo';
-            $statField = 'point_c';
-        } else if (strpos($uri, 'activateCaeserMedal') !== false) {
-            $medalItem = 'ceaser_eagle';
-            $statField = 'all';
+            $itemStmt = $db->prepare("SELECT amount FROM player_item WHERE id_player = ? AND id_item = ?");
+            $itemStmt->execute([$playerId, $medalItem]);
+            if ((int)$itemStmt->fetchColumn() <= 0) {
+                $db->rollBack();
+                sendJson(['state' => 'error_1', 'msg' => 'لا تمتلك مواد كافية']);
+                return;
+            }
+
+            ItemController::deductPlayerItem($db, $playerId, $medalItem, 1);
+
+            $medalUpdate = $db->prepare(
+                "UPDATE `hero_medal` SET `$medalColumn` = GREATEST(`$medalColumn`, ?) + ? WHERE `id_hero` = ?"
+            );
+            $medalUpdate->execute([time(), self::HERO_MEDAL_DURATION_SECONDS, $idHero]);
+            if ($medalUpdate->rowCount() !== 1) {
+                throw new RuntimeException('Hero medal activation did not update the hero medal record');
+            }
+
+            $freshMedalStmt = $db->prepare("SELECT * FROM hero_medal WHERE id_hero = ?");
+            $freshMedalStmt->execute([$idHero]);
+            $freshMedal = $freshMedalStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$freshMedal) {
+                throw new RuntimeException('Hero medal record was not found after activation');
+            }
+            foreach ($freshMedal as $k => $v) { if (is_numeric($v)) $freshMedal[$k] = (int)$v; }
+
+            $freshCityStmt = $db->prepare("SELECT * FROM city WHERE id_city = ?");
+            $freshCityStmt->execute([$idCity]);
+            $freshCity = $freshCityStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$freshCity) {
+                throw new RuntimeException('Hero city was not found after medal activation');
+            }
+            foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
+
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
         }
-
-        $hasItem = (int)$db->query("SELECT amount FROM player_item WHERE id_player = $playerId AND id_item = '$medalItem'")->fetchColumn();
-        if ($hasItem <= 0) {
-            sendJson(['state' => 'error_1', 'msg' => 'لا تمتلك مواد كافية']);
-            return;
-        }
-
-        ItemController::deductPlayerItem($db, $playerId, $medalItem, 1);
-
-        $db->prepare("UPDATE `hero_medal` SET `$medalItem` = `$medalItem` + 1 WHERE `id_hero` = ?")->execute([$idHero]);
-
-        if ($statField === 'point_a') {
-            $db->prepare("UPDATE city_hero SET point_a = point_a + 5, p_b_a = p_b_a + 5 WHERE id_hero = ?")->execute([$idHero]);
-        } else if ($statField === 'point_b') {
-            $db->prepare("UPDATE city_hero SET point_b = point_b + 5, p_b_b = p_b_b + 5 WHERE id_hero = ?")->execute([$idHero]);
-        } else if ($statField === 'point_c') {
-            $db->prepare("UPDATE city_hero SET point_c = point_c + 5, p_b_c = p_b_c + 5 WHERE id_hero = ?")->execute([$idHero]);
-        } else if ($statField === 'all') {
-            $db->prepare("UPDATE city_hero SET point_a = point_a + 5, p_b_a = p_b_a + 5, point_b = point_b + 5, p_b_b = p_b_b + 5, point_c = point_c + 5, p_b_c = p_b_c + 5 WHERE id_hero = ?")->execute([$idHero]);
-        }
-
-        $freshMedal = $db->query("SELECT * FROM hero_medal WHERE id_hero = $idHero")->fetch(PDO::FETCH_ASSOC);
-        foreach ($freshMedal as $k => $v) { if (is_numeric($v)) $freshMedal[$k] = (int)$v; }
-
-        $freshCity = $db->query("SELECT * FROM city WHERE id_city = $idCity")->fetch(PDO::FETCH_ASSOC);
-        foreach ($freshCity as $k => $v) { if (is_numeric($v)) $freshCity[$k] = (int)$v; }
 
         sendJson([
             'state'     => 'ok',
@@ -1248,12 +1297,16 @@ class HeroController {
         $slotCount = min(10, max(3, $theaterLvl > 0 ? $theaterLvl : 6));
 
         // If refreshing via recruitment letter (رسالة تجنيد), deduct 1 rec_letter from inventory
+        $refreshPlayerId = 0;
         if ($withLetter) {
             $cStmt = $db->prepare("SELECT `id_player` FROM `city` WHERE `id_city` = ?");
             $cStmt->execute([$idCity]);
-            $playerId = (int)$cStmt->fetchColumn() ?: 1;
+            $refreshPlayerId = (int)$cStmt->fetchColumn();
+            if ($refreshPlayerId <= 0) {
+                sendJson(['state' => 'error_city']);
+                return;
+            }
             require_once __DIR__ . '/ItemController.php';
-            ItemController::deductPlayerItem($db, $playerId, 'rec_letter', 1);
         }
 
         $names = ["ماكسيموس", "اشرف", "مصطفى", "اليكس", "اليسا", "بطليموس", "كليوباترا", "هكس", "ماجد", "يويليوس", "مارس", "ماكس", "صلاح الدين", "سيورس", "سيزار", "اغسطس", "جلادياتور"];
@@ -1291,7 +1344,15 @@ class HeroController {
         $save = $db->prepare("INSERT INTO `city_theater` (`id_city`, `last_update`, `refresh_time`, `heroes`) 
                               VALUES (?, ?, ?, ?) 
                               ON DUPLICATE KEY UPDATE `last_update` = VALUES(`last_update`), `refresh_time` = VALUES(`refresh_time`), `heroes` = VALUES(`heroes`)");
-        $save->execute([$idCity, $now, $refreshPeriod, json_encode($heroList, JSON_UNESCAPED_UNICODE)]);
+        $poolJson = json_encode($heroList, JSON_UNESCAPED_UNICODE);
+        if ($withLetter) {
+            ItemController::runItemTransaction($db, function () use ($db, $refreshPlayerId, $save, $idCity, $now, $refreshPeriod, $poolJson) {
+                ItemController::deductPlayerItem($db, $refreshPlayerId, 'rec_letter', 1);
+                $save->execute([$idCity, $now, $refreshPeriod, $poolJson]);
+            });
+        } else {
+            $save->execute([$idCity, $now, $refreshPeriod, $poolJson]);
+        }
 
         sendJson([
             'lastUpdate'  => $now,

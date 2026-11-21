@@ -465,12 +465,13 @@ class WorldController {
 
         $playerId = (int)$player['id_player'];
         $now = time();
+        $lock = $db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite' ? '' : ' FOR UPDATE';
         $db->beginTransaction();
         try {
             $battleStmt = $db->prepare(
                 "SELECT b.*, p.id_guild, p.name AS PlayerName " .
                 "FROM world_battel b JOIN player p ON p.id_player = b.id_player " .
-                "WHERE b.id_battel = ? AND b.state = 'marching' AND b.time_arrive > ? FOR UPDATE"
+                "WHERE b.id_battel = ? AND b.state = 'marching' AND b.time_arrive > ?{$lock}"
             );
             $battleStmt->execute([$idBattle, $now]);
             $battle = $battleStmt->fetch(PDO::FETCH_ASSOC);
@@ -489,10 +490,10 @@ class WorldController {
             }
 
             $heroStmt = $db->prepare(
-                "SELECT h.*, c.id_city, c.x AS x_city, c.y AS y_city, p.id_guild " .
+                "SELECT h.*, c.id_city, c.x AS x_city, c.y AS y_city, c.attack_cooldown_until, p.id_guild " .
                 "FROM city_hero h JOIN city c ON c.id_city = h.id_city " .
                 "JOIN player p ON p.id_player = h.id_player " .
-                "WHERE h.id_hero = ? AND h.id_player = ? AND h.in_city = 1 FOR UPDATE"
+                "WHERE h.id_hero = ? AND h.id_player = ? AND h.in_city = 1{$lock}"
             );
             $heroStmt->execute([$idHero, $playerId]);
             $hero = $heroStmt->fetch(PDO::FETCH_ASSOC);
@@ -502,7 +503,16 @@ class WorldController {
                 return;
             }
 
-            $armyStmt = $db->prepare('SELECT * FROM hero_army WHERE id_hero = ? FOR UPDATE');
+            if ($side === 0 && !empty($hero['attack_cooldown_until']) && (int)$hero['attack_cooldown_until'] > $now) {
+                $db->rollBack();
+                sendJson([
+                    'state' => 'error_city_move_cooldown',
+                    'msg' => 'لا يمكن إرسال أو استخدام القوات بعد تغيير موقع المدينة ولمدة 24 ساعة من وقت النقل'
+                ]);
+                return;
+            }
+
+            $armyStmt = $db->prepare("SELECT * FROM hero_army WHERE id_hero = ?{$lock}");
             $armyStmt->execute([$idHero]);
             $army = $armyStmt->fetch(PDO::FETCH_ASSOC) ?: [];
             $troops = 0;
@@ -596,7 +606,7 @@ class WorldController {
                 $dominanceStmt = $db->prepare(
                     'SELECT gd.id_guild FROM guild_dominance gd ' .
                     'JOIN guild_member gm ON gm.id_guild = gd.id_guild AND gm.id_player = ? ' .
-                    'WHERE gd.x_coord = ? AND gd.y_coord = ? FOR UPDATE'
+                    "WHERE gd.x_coord = ? AND gd.y_coord = ?{$lock}"
                 );
                 $dominanceStmt->execute([
                     $playerId,
@@ -1312,15 +1322,23 @@ class WorldController {
         $sanitize = function($list, $filterType = null, $filterLvl = null) {
             $result = [];
             if (!is_array($list)) return $result;
+            $isWilderness = $filterType !== null && (
+                ($filterType >= 1 && $filterType <= 10) ||
+                ($filterType >= 30 && $filterType <= 59)
+            );
             foreach ($list as $p) {
                 $uType = (int)($p['unitType'] ?? 0);
                 $pLvl = (int)($p['lvl'] ?? 0);
                 if ($filterType !== null && $uType !== $filterType) continue;
                 if ($filterLvl !== null && $pLvl !== $filterLvl) continue;
+                $prize = (string)($p['prize'] ?? '');
+                if ($isWilderness && strncmp($prize, 'coin_', 5) === 0) {
+                    continue;
+                }
                 $result[] = [
                     'unitType'   => $uType,
                     'lvl'        => $pLvl,
-                    'prize'      => (string)($p['prize'] ?? ''),
+                    'prize'      => $prize,
                     'amount_min' => (int)($p['amount_min'] ?? 1),
                     'amount_max' => (int)($p['amount_max'] ?? 1),
                 ];

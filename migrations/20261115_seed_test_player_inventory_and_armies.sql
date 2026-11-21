@@ -150,9 +150,8 @@ INSERT INTO _seed_equipment_catalog (type, part, lvl) VALUES
     ('khaled', 'shield', 1), ('khaled', 'steed', 1), ('khaled', 'steed', 2),
     ('khaled', 'steed', 3), ('khaled', 'steed', 4), ('khaled', 'steed', 5),
     ('khaled', 'steed', 6), ('khaled', 'steed', 7), ('khaled', 'steed', 8),
-    ('khaled', 'steed', 9), ('khaled', 'sword', 1), ('light', 'armor', 1),
-    ('light', 'boot', 1), ('light', 'helmet', 1), ('light', 'shield', 1),
-    ('light', 'sword', 1), ('lion', 'armor', 1), ('lion', 'boot', 1),
+    ('khaled', 'steed', 9), ('khaled', 'sword', 1),
+    ('lion', 'armor', 1), ('lion', 'boot', 1),
     ('lion', 'helmet', 1), ('lion', 'shield', 1), ('lion', 'sword', 1),
     ('loy', 'armor', 1), ('loy', 'belt', 1), ('loy', 'belt', 2),
     ('loy', 'belt', 3), ('loy', 'belt', 4), ('loy', 'belt', 5),
@@ -174,16 +173,12 @@ INSERT INTO _seed_equipment_catalog (type, part, lvl) VALUES
     ('mars', 'boot', 1), ('mars', 'helmet', 1), ('mars', 'shield', 1),
     ('mars', 'sword', 1), ('mili', 'armor', 1), ('mili', 'boot', 1),
     ('mili', 'helmet', 1), ('mili', 'shield', 1), ('mili', 'sword', 1),
-    ('neptune', 'armor', 1), ('neptune', 'boot', 1), ('neptune', 'helmet', 1),
-    ('neptune', 'shield', 1), ('neptune', 'sword', 1), ('peace', 'armor', 1),
+    ('peace', 'armor', 1),
     ('peace', 'boot', 1), ('peace', 'helmet', 1), ('peace', 'shield', 1),
     ('peace', 'sword', 1), ('saton', 'armor', 1), ('saton', 'boot', 1),
     ('saton', 'helmet', 1), ('saton', 'shield', 1), ('saton', 'sword', 1),
     ('sparta', 'armor', 1), ('sparta', 'boot', 1), ('sparta', 'helmet', 1),
-    ('sparta', 'shield', 1), ('sparta', 'sword', 1), ('thor', 'armor', 1),
-    ('thor', 'boot', 1), ('thor', 'helmet', 1), ('thor', 'shield', 1),
-    ('thor', 'sword', 1), ('thunder', 'armor', 1), ('thunder', 'boot', 1),
-    ('thunder', 'helmet', 1), ('thunder', 'shield', 1), ('thunder', 'sword', 1),
+    ('sparta', 'shield', 1), ('sparta', 'sword', 1),
     ('victory', 'armor', 1), ('victory', 'belt', 1), ('victory', 'belt', 2),
     ('victory', 'belt', 3), ('victory', 'belt', 4), ('victory', 'belt', 5),
     ('victory', 'belt', 6), ('victory', 'belt', 7), ('victory', 'belt', 8),
@@ -202,8 +197,7 @@ INSERT INTO _seed_equipment_catalog (type, part, lvl) VALUES
     ('victory', 'steed', 6), ('victory', 'steed', 7), ('victory', 'steed', 8),
     ('victory', 'steed', 9), ('victory', 'sword', 1), ('volcan', 'armor', 1),
     ('volcan', 'boot', 1), ('volcan', 'helmet', 1), ('volcan', 'shield', 1),
-    ('volcan', 'sword', 1), ('worrior', 'armor', 1), ('worrior', 'boot', 1),
-    ('worrior', 'helmet', 1), ('worrior', 'shield', 1), ('worrior', 'sword', 1);
+    ('volcan', 'sword', 1);
 
 CREATE TEMPORARY TABLE _seed_piece_number (
     piece TINYINT NOT NULL PRIMARY KEY

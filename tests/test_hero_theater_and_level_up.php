@@ -89,7 +89,7 @@ $db->exec('INSERT INTO city VALUES (3, 7, 5000), (4, 8, 5000)');
 $db->exec('INSERT INTO player_edu VALUES (7, 0)');
 $db->exec('INSERT INTO city_hero VALUES
     (101, 3, 7, 1, 100, 0, 2, 52, 50),
-    (102, 3, 7, 1, 125, 1, 6, 52, 50),
+    (102, 3, 7, 1, 125, 3, 6, 52, 50),
     (103, 3, 7, 1, 125, 8, 9, 52, 50),
     (104, 3, 7, 255, 2147483647, 0, 2, 560, 50),
     (105, 3, 7, 256, 2147483647, 0, 2, 562, 50)');
@@ -129,8 +129,15 @@ try {
     }
 }
 
-$initialPoints = [101 => 2, 102 => 6, 103 => 9];
-foreach ($initialPoints as $heroId => $pointsBefore) {
+$levelUpCases = [
+    ['heroId' => 101, 'pointsBefore' => 2, 'pointsGained' => 1],
+    ['heroId' => 102, 'pointsBefore' => 6, 'pointsGained' => 3],
+    ['heroId' => 103, 'pointsBefore' => 9, 'pointsGained' => 8]
+];
+foreach ($levelUpCases as $case) {
+    $heroId = $case['heroId'];
+    $pointsBefore = $case['pointsBefore'];
+    $pointsGained = $case['pointsGained'];
     $_POST = ['token' => 'player-token'];
     $_REQUEST = ['token' => 'player-token', 'idHero' => $heroId];
     try {
@@ -138,15 +145,15 @@ foreach ($initialPoints as $heroId => $pointsBefore) {
         throw new RuntimeException('Hero level-up should return a JSON response');
     } catch (HeroControllerTestResponse $response) {
         if (($response->payload['state'] ?? null) !== 'ok'
-            || (int)$response->payload['Hero']['points'] !== $pointsBefore + 5
+            || (int)$response->payload['Hero']['points'] !== $pointsBefore + $pointsGained
             || (int)$response->payload['Hero']['power_max'] !== 54
             || (int)$db
                 ->query("SELECT points FROM city_hero WHERE id_hero = {$heroId}")
-                ->fetchColumn() !== $pointsBefore + 5
+                ->fetchColumn() !== $pointsBefore + $pointsGained
             || (int)$db
                 ->query("SELECT power_max FROM city_hero WHERE id_hero = {$heroId}")
                 ->fetchColumn() !== 54) {
-            throw new RuntimeException('Hero level-up should add five points and set the authentic fitness cap');
+            throw new RuntimeException('Hero level-up should add the minimum of one or the hero potential and set the fitness cap');
         }
     }
 }

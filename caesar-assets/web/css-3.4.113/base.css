@@ -847,6 +847,11 @@ td .colored-bar {
     margin: 0px;
     margin-right: 5px;
     line-height: 29px;
+    font-size: 12px;
+}
+
+.medal .header-2 .time_counter {
+    font-size: 12px;
 }
 
 .box_content .right-content .row-2 ul {

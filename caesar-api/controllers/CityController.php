@@ -7,6 +7,7 @@ require_once __DIR__ . '/../services/ResourceService.php';
 require_once __DIR__ . '/../services/TaskService.php';
 require_once __DIR__ . '/../services/TributaryService.php';
 require_once __DIR__ . '/../services/CityGarrisonService.php';
+require_once __DIR__ . '/MarketController.php';
 
 class CityController {
     private static function isDecorativeBuildingType(int $type): bool {
@@ -183,6 +184,7 @@ class CityController {
                 throw new RuntimeException('City resource recipient not found');
             }
 
+            MarketController::resolveArrivedTransports($db, $cityId);
             ProductionService::recalculateCityProduction($db, $cityId);
             $stmt = $db->prepare(
                 'SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ? FOR UPDATE'
@@ -904,9 +906,32 @@ class CityController {
                 if ($newArrive <= $now) {
                     TaskService::processCompletedTasks($db);
                 }
+
+                $cityId = (int)$task['id_city'];
             }
         }
-        sendJson(['state' => 'ok', 'list' => []]);
+
+        $list = [];
+        if (isset($cityId) && $cityId > 0) {
+            $listStmt = $db->prepare(
+                "SELECT * FROM `timed_task` WHERE `task_type` = 'study' AND `id_city` = ?"
+            );
+            $listStmt->execute([$cityId]);
+            foreach ($listStmt->fetchAll(PDO::FETCH_ASSOC) ?: [] as $studyTask) {
+                $details = !empty($studyTask['details']) ? json_decode($studyTask['details'], true) : [];
+                $list[] = [
+                    'id'           => (int)$studyTask['id_task'],
+                    'id_city'      => (int)$studyTask['id_city'],
+                    'study'        => $studyTask['item_id'],
+                    'study_in'     => isset($details['study_in']) ? $details['study_in'] : 'academy',
+                    'lvl_to'       => (int)$studyTask['lvl_to'],
+                    'time_start'   => (int)$studyTask['start_time'],
+                    'time_end'     => (int)$studyTask['time_arrive'],
+                    'time_end_org' => (int)$studyTask['time_arrive']
+                ];
+            }
+        }
+        sendJson(['state' => 'ok', 'list' => $list]);
     }
 
     public static function updateProductionRate($db) {

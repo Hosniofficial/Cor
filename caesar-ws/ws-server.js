@@ -2183,6 +2183,19 @@ function handleWs(ws) {
                     return;
                 }
 
+                // Check targeted city move 24-hour attack/expedition cooldown (buff.moveCity.coolDown)
+                const nowSec = Math.floor(Date.now() / 1000);
+                if (city.attack_cooldown_until && Number(city.attack_cooldown_until) > nowSec) {
+                    const remainingSec = Number(city.attack_cooldown_until) - nowSec;
+                    ws.send(JSON.stringify({
+                        classPath: 'Battel.StartFailed',
+                        state: 'city_move_cooldown',
+                        remaining: remainingSec,
+                        msg: 'لا يمكن إرسال أو استخدام القوات بعد تغيير موقع المدينة ولمدة 24 ساعة من وقت النقل'
+                    }));
+                    return;
+                }
+
                 // 2b. Identify Target Unit Type and Level (Check Player Cities first, then World Units)
                 const [targetCityRows] = await db.query("SELECT * FROM city WHERE x = ? AND y = ?", [xCoord, yCoord]);
                 let unitType = 0;

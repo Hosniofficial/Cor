@@ -4,19 +4,35 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
+const clientSource = fs.readFileSync(
+    path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
+    'utf8'
+).replace(/\r\n/g, '\n');
+
 function loadConstructionRenderer(city, buildingData) {
-    const clientSource = fs.readFileSync(
-        path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
-        'utf8'
-    ).replace(/\r\n/g, '\n');
     const start = clientSource.indexOf('function cityHasType(building_type) {');
     const end = clientSource.indexOf('\n\n// get content acording to  building type', start);
     assert.ok(start >= 0 && end > start, 'building construction renderer should exist');
 
+    const verifyCondition = (type, lvl) => {
+        const conditions = buildingData && buildingData[type]
+            && buildingData[type].lvlRequirment[lvl].condetion || [];
+        return conditions.map(condition => {
+            const title = condition.type === 'building'
+                ? (condition.BuildingType === 12 ? 'قصر' : 'المبنى')
+                : 'شرط';
+            const requiredLevel = Number(condition.lvl) || 0;
+            return {
+                Txt: condition.type === 'building' ? `${title} مستوى ${requiredLevel}` : title,
+                verfied: condition.type !== 'building'
+                    || (Number(city.BuildingLvl[condition.BuildingType]) || 0) >= requiredLevel
+            };
+        });
+    };
+    const caesarBuilding = { BuildingData: buildingData, verfiyCondetion: verifyCondition };
     const context = {
-        BUILDING_CONSTRUCTION_TYPES: undefined,
         Caesar: {
-            Building: { BuildingData: buildingData },
+            Building: caesarBuilding,
             CurrentCity: { City: city },
             City: { getCity: () => city }
         },
@@ -36,8 +52,13 @@ function loadConstructionRenderer(city, buildingData) {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;'),
-        getArabicNumbers: String
+        getArabicNumbers: String,
+        changeTimeFormat: String
     };
+    const requirementStart = clientSource.indexOf('function getReqTable(type, lvl) {');
+    const requirementEnd = clientSource.indexOf('function cityHasType', requirementStart);
+    assert.ok(requirementStart >= 0 && requirementEnd > requirementStart, 'upgrade requirement table should exist');
+    vm.runInNewContext(clientSource.slice(requirementStart, requirementEnd), context);
     vm.runInNewContext(clientSource.slice(start, end), context);
     return context;
 }
@@ -73,13 +94,52 @@ test('construction option hides build action until resources and building requir
 
     let html = renderer.renderNewBuildingOption(1);
     assert.doesNotMatch(html, /class="[^"]*construct_building/);
-    assert.match(html, /يتطلب قصر مستوى 1/);
+    assert.match(html, /building-construction-tooltip/);
+    assert.match(html, /قصر مستوى 1/);
+    assert.match(html, /req_table_container/);
 
     city.wood = 30;
     city.BuildingLvl[12] = 1;
     html = renderer.renderNewBuildingOption(1);
     assert.match(html, /class="[^"]*construct_building/);
-    assert.match(renderer.renderBuildingRequirementPreview(1), /كل الشروط متوفرة/);
+    assert.match(renderer.renderNewBuildingRequirementTooltip(1), /req_table_container/);
+    assert.match(renderer.renderNewBuildingRequirementTooltip(1), /class="enough"/);
+});
+
+test('construction requirements are shown on each building, not in a side panel', () => {
+    const renderer = loadConstructionRenderer({
+        food: 100, wood: 100, stone: 100, metal: 100, coin: 100,
+        BuildingType: {}, BuildingLvl: {}
+    }, makeConstructionData([]));
+    const html = renderer.renderNewBuildingOption(1);
+    const contentStart = clientSource.indexOf('contentfor_emptyPlace: function() {');
+    const contentEnd = clientSource.indexOf('\n    },\n    /**/', contentStart);
+    const constructionContent = clientSource.slice(contentStart, contentEnd);
+
+    assert.match(html, /class="upgrade_req_tooltip building-construction-tooltip"/);
+    assert.match(html, /class="req_table"/);
+    assert.doesNotMatch(constructionContent, /<aside/);
+    assert.doesNotMatch(clientSource, /#building-requirement-preview/);
+});
+
+test('food and unselected-city images point to assets that exist', () => {
+    const foodImage = clientSource.match(/wheat:\s*\{\s*image:\s*"([^"]+)"/);
+    assert.ok(foodImage, 'food production icon mapping should exist');
+    assert.equal(
+        fs.existsSync(path.join(__dirname, '..', 'caesar-assets', 'web', foodImage[1])),
+        true
+    );
+
+    for (const stylesheet of [
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'world.css'),
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay', 'css', 'battle.all.bundle.css'),
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay', 'css', 'battle.all.bundle.cff0be5e-ab5c-4b3e-bc9c-a69fc5b52263.css')
+    ]) {
+        const stylesheetSource = fs.readFileSync(stylesheet, 'utf8');
+        const imagePath = stylesheetSource.match(/url\(([^)]+no-console\.png)\)/);
+        assert.ok(imagePath, `${path.basename(stylesheet)} should use an existing city-list image`);
+        assert.equal(fs.existsSync(path.resolve(path.dirname(stylesheet), imagePath[1])), true);
+    }
 });
 
 test('construction option stays disabled when requirements have not loaded', () => {
@@ -89,6 +149,21 @@ test('construction option stays disabled when requirements have not loaded', () 
 
     assert.doesNotMatch(html, /class="[^"]*construct_building/);
     assert.match(html, /تعذر تحميل متطلبات البناء/);
+});
+
+test('empty-slot building selection fits five buildings per row', () => {
+    const stylesheet = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'lastOfLast.css'),
+        'utf8'
+    );
+    const columnRule = stylesheet.match(
+        /\.empty_place \.building-construction > ul\.total > li\s*\{([^}]*)\}/
+    );
+    assert.ok(columnRule, 'building construction column rule should exist');
+    assert.match(columnRule[1], /width:\s*19%/);
+    assert.match(columnRule[1], /margin:\s*0\.5%/);
+    assert.match(stylesheet, /\.building-option:nth-child\(5n \+ 1\)/);
+    assert.match(stylesheet, /\.building-option:nth-child\(5n\)/);
 });
 
 test('single-instance building cannot be built twice', () => {

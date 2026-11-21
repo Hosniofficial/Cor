@@ -71,7 +71,7 @@ class TimedTaskController {
 
     public static function getCityArmyTasks($db) {
         $cityId = isset($_REQUEST['idCity']) ? (int)$_REQUEST['idCity'] : 1;
-        $stmt = $db->prepare("SELECT * FROM `timed_task` WHERE `task_type` = 'army' AND `id_city` = ?");
+        $stmt = $db->prepare("SELECT * FROM `timed_task` WHERE `task_type` IN ('army', 'wall') AND `id_city` = ?");
         $stmt->execute([$cityId]);
         $tasks = $stmt->fetchAll() ?: [];
         $list = [];
@@ -85,7 +85,7 @@ class TimedTaskController {
                 'amount'     => (int)$t['lvl_to'],
                 'time_start' => (int)$t['start_time'],
                 'time_end'   => (int)$t['time_arrive'],
-                'acce'       => 0
+                'acce'       => !empty($details['acce']) ? 1 : 0
             ];
         }
         sendJson($list);

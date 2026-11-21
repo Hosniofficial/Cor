@@ -85,6 +85,40 @@ test('hero detail renders the matching equipment, army, and hero data', () => {
     }
 });
 
+test('activating a hero medal updates the client inventory only on success', () => {
+    const clientSource = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const start = clientSource.indexOf('else if (user_for === "add_medal") {');
+    const end = clientSource.indexOf('\n    /**************************************************************************/', start);
+    assert.ok(start >= 0 && end > start, 'hero medal activation handler should exist');
+    const handler = clientSource.slice(start, end);
+
+    assert.match(handler, /if \(JsonObject\.state === "ok"\)[\s\S]*?Matrial\.takeFrom\(matrial, 1\);/);
+    assert.match(handler, /JsonObject\.state === "error_1" \|\| JsonObject\.state === "error_no_item"/);
+    assert.match(handler, /\$\("\#hero-wrapper"\)\.replaceWith\(army\.dialogBoxContent_forHeroRight\(Caesar\.CurrentHero\)\)/);
+    assert.match(handler, /storedHero\.Medal = JsonObject\.HeroMedal/);
+});
+
+test('hero medal expiry text uses a compact font to avoid overlap', () => {
+    const baseCss = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'base.css'),
+        'utf8'
+    ).replace(/\r\n/g, '\n');
+    const medalHeader = baseCss.match(
+        /\.medal \.header-2\s*\{([\s\S]*?)\}/
+    );
+    const medalCounter = baseCss.match(
+        /\.medal \.header-2 \.time_counter\s*\{([\s\S]*?)\}/
+    );
+
+    assert.ok(medalHeader, 'hero medal header styles should exist');
+    assert.match(medalHeader[1], /font-size:\s*12px/);
+    assert.ok(medalCounter, 'hero medal expiry counter styles should exist');
+    assert.match(medalCounter[1], /font-size:\s*12px/);
+});
+
 test('hero equipment preview stays inside its row above the army section', () => {
     const heroCss = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'hero.css'),

@@ -32,13 +32,14 @@ class ArmyController {
             }
         } elseif ($uri === '/api/APlayerEdu/speedUpStudyTask') {
             $player = requireAuthenticatedPlayer($db);
-            $city = requirePlayerOwnedCity($db, $player);
             $taskId = $_REQUEST['idTask'] ?? 0;
             $task = requirePlayerOwnedTask($db, $player, $taskId);
-            if ((int)$task['id_city'] !== (int)$city['id_city']) {
+            if (($task['task_type'] ?? '') !== 'study') {
                 http_response_code(403);
                 sendJson(['state' => 'error_auth']);
             }
+            $city = requirePlayerOwnedCity($db, $player, (int)$task['id_city']);
+            $_REQUEST['idCity'] = (int)$city['id_city'];
         }
 
         switch ($uri) {
@@ -77,9 +78,13 @@ class ArmyController {
         $armyType  = isset($_REQUEST['armyType']) ? trim($_REQUEST['armyType']) : 'army_a';
         $amount    = isset($_REQUEST['amount']) ? (int)$_REQUEST['amount'] : 0;
         $place     = isset($_REQUEST['buildingPlace']) ? trim($_REQUEST['buildingPlace']) : '';
+        $divideBy  = isset($_REQUEST['divideBy']) ? trim($_REQUEST['divideBy']) : 'none';
 
         if ($amount <= 0) {
             sendJson(['state' => 'error_4']);
+        }
+        if (!in_array($divideBy, ['none', 'time', 'amount'], true)) {
+            sendJson(['state' => 'error_3']);
         }
 
         $unitDefs = [
@@ -153,38 +158,45 @@ class ArmyController {
             $stmt->execute([$cityId, $playerId]);
             $city = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Check the selected building and its level, matching the client's per-building queue limit.
             $reqBType = (int)$u['cond']['place_type'];
             $reqBLvl = (int)$u['cond']['place_lvl'];
             if ($place === '') {
                 $reject(['state' => 'error_7_1', 'msg' => 'مستوى المبنى غير كافى']);
             }
-            $bStmt = $db->prepare(
-                "SELECT `lvl` FROM `city_building` WHERE `id_city` = ? AND `place` = ? AND `type` = ? FOR UPDATE"
+            $buildingStmt = $db->prepare(
+                "SELECT `place`, `lvl` FROM `city_building` WHERE `id_city` = ? AND `type` = ? ORDER BY `place` FOR UPDATE"
             );
-            $bStmt->execute([$cityId, $place, $reqBType]);
-            $buildingLvl = (int)$bStmt->fetchColumn();
-            if ($buildingLvl < $reqBLvl) {
+            $buildingStmt->execute([$cityId, $reqBType]);
+            $buildings = $buildingStmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+            $selectedBuildingExists = false;
+            $maxBuildingLvl = 0;
+            foreach ($buildings as $building) {
+                if ((string)$building['place'] === $place) {
+                    $selectedBuildingExists = true;
+                }
+                $maxBuildingLvl = max($maxBuildingLvl, (int)$building['lvl']);
+            }
+            if (!$selectedBuildingExists) {
                 $reject(['state' => 'error_7_1', 'msg' => 'مستوى المبنى غير كافى']);
             }
 
-            // Enforce the original client rule on the server: at most 10 queues and no more than building level.
             $queueStmt = $db->prepare(
-                "SELECT `details` FROM `timed_task` WHERE `id_city` = ? AND `task_type` IN ('army', 'wall')"
+                "SELECT `details`, `time_arrive` FROM `timed_task` WHERE `id_city` = ? AND `task_type` IN ('army', 'wall') FOR UPDATE"
             );
             $queueStmt->execute([$cityId]);
-            $workingCount = 0;
-            foreach ($queueStmt->fetchAll(PDO::FETCH_COLUMN) as $detailsJson) {
-                $details = is_string($detailsJson) ? json_decode($detailsJson, true) : null;
-                if (is_array($details) && ($details['place'] ?? null) === $place) {
-                    $workingCount++;
+            $now = time();
+            $queueCounts = [];
+            foreach ($queueStmt->fetchAll(PDO::FETCH_ASSOC) ?: [] as $queuedTask) {
+                if ((int)$queuedTask['time_arrive'] <= $now) {
+                    continue;
+                }
+                $details = !empty($queuedTask['details']) ? json_decode($queuedTask['details'], true) : [];
+                $queuedPlace = is_array($details) ? (string)($details['place'] ?? '') : '';
+                if ($queuedPlace !== '') {
+                    $queueCounts[$queuedPlace] = ($queueCounts[$queuedPlace] ?? 0) + 1;
                 }
             }
-            if ($workingCount >= min(10, $buildingLvl)) {
-                $reject(['state' => 'error_4']);
-            }
 
-            // Check Study Prerequisites
             $studyCol = preg_replace('/[^a-zA-Z0-9_]/', '', $u['cond']['study']);
             $reqSLvl = (int)$u['cond']['study_lvl'];
             $eduStmt = $db->prepare("SELECT `{$studyCol}` FROM player_edu WHERE id_player = ?");
@@ -195,9 +207,72 @@ class ArmyController {
                 $reject(['state' => 'error_6_2', 'msg' => 'مستوى الدراسة غير كافى']);
             }
 
+            $availableBuildings = [];
+            $qualifiedBuildingCount = 0;
+            $selectedBuildingLvl = 0;
+            foreach ($buildings as $building) {
+                $buildingPlace = (string)$building['place'];
+                $buildingLvl = (int)$building['lvl'];
+                if ($buildingPlace === $place) {
+                    $selectedBuildingLvl = $buildingLvl;
+                }
+                if ($buildingLvl < $reqBLvl) {
+                    continue;
+                }
+                $qualifiedBuildingCount++;
+                if ($divideBy === 'none' && $buildingPlace !== $place) {
+                    continue;
+                }
+
+                $workingCount = $queueCounts[$buildingPlace] ?? 0;
+                if ($workingCount >= min(10, $buildingLvl)) {
+                    continue;
+                }
+                if ($divideBy === 'time' && $workingCount > 0) {
+                    continue;
+                }
+                $availableBuildings[] = [
+                    'place' => $buildingPlace,
+                    'lvl' => $buildingLvl
+                ];
+            }
+            if ($divideBy === 'none' && $selectedBuildingLvl < $reqBLvl) {
+                $reject(['state' => 'error_7_1', 'msg' => 'مستوى المبنى غير كافى']);
+            }
+            if ($qualifiedBuildingCount === 0) {
+                $reject(['state' => 'error_7_1', 'msg' => 'لا يوجد مبنى بالمستوى المطلوب']);
+            }
+            if (!$availableBuildings) {
+                if ($divideBy === 'time') {
+                    $reject([
+                        'state' => 'error_no_available_building',
+                        'msg' => 'لا توجد ثكنة متاحة بدون دفعات تصنيع نشطة'
+                    ]);
+                }
+                if ($divideBy === 'amount') {
+                    $reject(['state' => 'error_7']);
+                }
+                $reject(['state' => 'error_4']);
+            }
+
+            $assignments = [];
+            if ($divideBy === 'none') {
+                $assignments[$place] = $amount;
+            } else {
+                $buildingCount = count($availableBuildings);
+                $amountPerBuilding = intdiv($amount, $buildingCount);
+                $remainder = $amount % $buildingCount;
+                foreach ($availableBuildings as $index => $building) {
+                    $buildingAmount = $amountPerBuilding + ($index < $remainder ? 1 : 0);
+                    if ($buildingAmount > 0) {
+                        $assignments[$building['place']] = $buildingAmount;
+                    }
+                }
+            }
+
             // Wall space and population are dynamic caps, not fixed batch-size limits.
             if ($u['is_wall']) {
-                $wallCapacity = max(0, $buildingLvl * 5000);
+                $wallCapacity = max(0, $maxBuildingLvl * 5000);
                 $builtSpace = ((int)($city['wall_a'] ?? 0) * 1) +
                     ((int)($city['wall_b'] ?? 0) * 3) +
                     ((int)($city['wall_c'] ?? 0) * 5);
@@ -250,17 +325,34 @@ class ArmyController {
                 WHERE `id_city` = ? AND `id_player` = ?");
             $upStmt->execute([$costFood, $costWood, $costStone, $costMetal, $costCoin, $costPop, $cityId, $playerId]);
 
-            $duration = max(10, min(1800, (int)ceil(($amount * $u['time']) / 25)));
-            $now = time();
-            $arrive = $now + $duration;
             $taskType = $u['is_wall'] ? 'wall' : 'army';
 
             $stmt = $db->prepare("INSERT INTO `timed_task` (`id_city`, `id_player`, `task_type`, `item_id`, `lvl_to`, `start_time`, `time_arrive`, `details`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$cityId, $playerId, $taskType, $armyType, $amount, $now, $arrive, json_encode(['place' => $place])]);
-            $taskId = (int)$db->lastInsertId();
-
-            $db->prepare("INSERT INTO `army_training` (`id_city`, `id_player`, `army_type`, `amount`, `start_time`, `end_time`, `done`) VALUES (?, ?, ?, ?, ?, ?, 0)")
-               ->execute([$cityId, $playerId, $armyType, $amount, $now, $arrive]);
+            $trainingStmt = $db->prepare(
+                "INSERT INTO `army_training` (`id_city`, `id_player`, `army_type`, `amount`, `start_time`, `end_time`, `done`) VALUES (?, ?, ?, ?, ?, ?, 0)"
+            );
+            $armyBatches = [];
+            foreach ($assignments as $batchPlace => $batchAmount) {
+                $duration = max((int)$u['time'], $batchAmount * (int)$u['time']);
+                $arrive = $now + $duration;
+                $detailsJson = json_encode(['place' => $batchPlace], JSON_UNESCAPED_UNICODE);
+                if (!is_string($detailsJson)) {
+                    throw new RuntimeException('Failed to encode army task details');
+                }
+                $stmt->execute([$cityId, $playerId, $taskType, $armyType, $batchAmount, $now, $arrive, $detailsJson]);
+                $taskId = (int)$db->lastInsertId();
+                $trainingStmt->execute([$cityId, $playerId, $armyType, $batchAmount, $now, $arrive]);
+                $armyBatches[] = [
+                    'id'         => $taskId,
+                    'id_city'    => $cityId,
+                    'place'      => $batchPlace,
+                    'army_type'  => $armyType,
+                    'amount'     => $batchAmount,
+                    'time_start' => $now,
+                    'time_end'   => $arrive,
+                    'acce'       => 0
+                ];
+            }
 
             ProductionService::recalculateCityProduction($db, $cityId);
 
@@ -277,18 +369,7 @@ class ArmyController {
             sendJson([
                 'state'       => 'ok',
                 'City'        => $updatedCity,
-                'armyBatches' => [
-                    [
-                        'id'         => $taskId,
-                        'id_city'    => $cityId,
-                        'place'      => $place,
-                        'army_type'  => $armyType,
-                        'amount'     => $amount,
-                        'time_start' => $now,
-                        'time_end'   => $arrive,
-                        'acce'       => 0
-                    ]
-                ]
+                'armyBatches' => $armyBatches
             ]);
         } catch (Throwable $error) {
             if ($db->inTransaction()) {
@@ -301,69 +382,196 @@ class ArmyController {
     public static function speedUpArmy($db) {
         $taskId    = isset($_REQUEST['idTask']) ? (int)$_REQUEST['idTask'] : (int)($_REQUEST['idBatch'] ?? 0);
         $itemToUse = trim($_REQUEST['itemToUse'] ?? '');
+        $speedItems = [
+            'train_acce_15'  => ['sec' => 900,   'pct' => 0.0],
+            'train_acce_1h'  => ['sec' => 3600,  'pct' => 0.0],
+            'train_acce_3h'  => ['sec' => 10800, 'pct' => 0.0],
+            'train_acce_30'  => ['sec' => 0,     'pct' => 0.30],
+            'train_acce_30p' => ['sec' => 0,     'pct' => 0.30],
+            'train_acce_50'  => ['sec' => 0,     'pct' => 0.50],
+            'wall_acce'      => ['sec' => 0,     'pct' => 0.50],
+            'coach'          => ['sec' => 0,     'pct' => 0.30],
+            'speed_15m'      => ['sec' => 900,   'pct' => 0.0],
+            'speed_1h'       => ['sec' => 3600,  'pct' => 0.0],
+            'speed_2_5h'     => ['sec' => 9000,  'pct' => 0.0],
+            'speed_8h'       => ['sec' => 28800, 'pct' => 0.0],
+        ];
 
-        if ($taskId > 0) {
-            $tStmt = $db->prepare("SELECT * FROM `timed_task` WHERE `id_task` = ?");
-            $tStmt->execute([$taskId]);
-            $task = $tStmt->fetch(PDO::FETCH_ASSOC);
+        if ($taskId <= 0) {
+            sendJson(['state' => 'error_task_not_found']);
+        }
+        if (!isset($speedItems[$itemToUse])) {
+            sendJson(['state' => 'error_invalid_speed_item']);
+        }
 
-            if ($task) {
-                $playerId = (int)$task['id_player'];
-                $now = time();
-                $rem = max(0, (int)$task['time_arrive'] - $now);
+        $db->beginTransaction();
+        $reject = static function(array $response) use ($db): void {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            sendJson($response);
+        };
 
-                $reduceSec = 0;
+        try {
+            $driver = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $lockClause = $driver === 'sqlite' ? '' : ' FOR UPDATE';
+            $taskStmt = $db->prepare("SELECT * FROM `timed_task` WHERE `id_task` = ?" . $lockClause);
+            $taskStmt->execute([$taskId]);
+            $task = $taskStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$task || !in_array($task['task_type'], ['army', 'wall'], true)) {
+                $reject(['state' => 'error_task_not_found']);
+            }
 
-                // Military Recruitment & Troop Training Speedup Items
-                $speedItems = [
-                    'train_acce_15'  => ['sec' => 900,   'pct' => 0.0],  // 15 minutes
-                    'train_acce_1h'  => ['sec' => 3600,  'pct' => 0.0],  // 1 hour
-                    'train_acce_3h'  => ['sec' => 10800, 'pct' => 0.0],  // 3 hours
-                    'train_acce_30'  => ['sec' => 0,     'pct' => 0.30], // 30% reduction
-                    'train_acce_30p' => ['sec' => 0,     'pct' => 0.30], // 30% reduction
-                    'train_acce_50'  => ['sec' => 0,     'pct' => 0.50], // 50% reduction
-                    'coach'          => ['sec' => 0,     'pct' => 0.30], // 30% reduction
-                    'speed_15m'      => ['sec' => 900,   'pct' => 0.0],  // 15 minutes
-                    'speed_1h'       => ['sec' => 3600,  'pct' => 0.0],  // 1 hour
-                    'speed_2_5h'     => ['sec' => 9000,  'pct' => 0.0],  // 2.5 hours
-                    'speed_8h'       => ['sec' => 28800, 'pct' => 0.0],  // 8 hours
-                ];
+            $taskDetails = !empty($task['details']) ? json_decode($task['details'], true) : [];
+            $taskDetails = is_array($taskDetails) ? $taskDetails : [];
+            if (!empty($taskDetails['acce'])) {
+                $reject(['state' => 'error_already_sped_up']);
+            }
 
-                if (!empty($itemToUse) && isset($speedItems[$itemToUse])) {
-                    $iStmt = $db->prepare("SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = ?");
-                    $iStmt->execute([$playerId, $itemToUse]);
-                    $hasAmt = (int)$iStmt->fetchColumn();
+            $isWallTask = $task['task_type'] === 'wall';
+            if (($itemToUse === 'wall_acce') !== $isWallTask) {
+                $reject(['state' => 'error_invalid_speed_item']);
+            }
 
-                    if ($hasAmt > 0) {
-                        $db->prepare("UPDATE `player_item` SET `amount` = GREATEST(0, `amount` - 1) WHERE `id_player` = ? AND `id_item` = ?")
-                           ->execute([$playerId, $itemToUse]);
-
-                        $def = $speedItems[$itemToUse];
-                        if ($def['pct'] > 0) {
-                            $reduceSec = (int)ceil($rem * $def['pct']);
-                        } else {
-                            $reduceSec = $def['sec'];
-                        }
-
-                    } else {
-                        sendJson(['state' => 'error_no_item', 'msg' => 'لا تمتلك المادة المحددة للتسريع']);
-                        return;
-                    }
-                } else {
-                    $reduceSec = $rem;
+            $cityId = (int)$task['id_city'];
+            $playerId = (int)$task['id_player'];
+            $matchingPlaces = [];
+            if ($isWallTask) {
+                $queueStmt = $db->prepare(
+                    "SELECT * FROM `timed_task` WHERE `id_city` = ? AND `task_type` = 'wall'" . $lockClause
+                );
+                $queueStmt->execute([$cityId]);
+            } else {
+                $place = (string)($taskDetails['place'] ?? '');
+                $buildingTypeStmt = $db->prepare(
+                    "SELECT `type` FROM `city_building` WHERE `id_city` = ? AND `place` = ?"
+                );
+                $buildingTypeStmt->execute([$cityId, $place]);
+                $buildingType = (int)$buildingTypeStmt->fetchColumn();
+                if ($place === '' || $buildingType <= 0) {
+                    $reject(['state' => 'error_task_not_found']);
                 }
 
-                $newArrive = max($now, (int)$task['time_arrive'] - $reduceSec);
-                $db->prepare("UPDATE `timed_task` SET `time_arrive` = ? WHERE `id_task` = ?")->execute([$newArrive, $taskId]);
-                $db->prepare("UPDATE `army_training` SET `end_time` = ? WHERE `id_city` = ? AND `army_type` = ? AND `done` = 0")
-                   ->execute([$newArrive, $task['id_city'], $task['item_id']]);
+                $placeStmt = $db->prepare(
+                    "SELECT `place` FROM `city_building` WHERE `id_city` = ? AND `type` = ?"
+                );
+                $placeStmt->execute([$cityId, $buildingType]);
+                $matchingPlaces = array_fill_keys($placeStmt->fetchAll(PDO::FETCH_COLUMN), true);
 
-                if ($newArrive <= $now) {
-                    TaskService::processCompletedTasks($db);
+                $queueStmt = $db->prepare(
+                    "SELECT * FROM `timed_task` WHERE `id_city` = ? AND `task_type` = 'army'" . $lockClause
+                );
+                $queueStmt->execute([$cityId]);
+            }
+
+            $candidateTasks = [];
+            foreach ($queueStmt->fetchAll(PDO::FETCH_ASSOC) ?: [] as $candidate) {
+                $details = !empty($candidate['details']) ? json_decode($candidate['details'], true) : [];
+                $details = is_array($details) ? $details : [];
+                if ($isWallTask || isset($matchingPlaces[(string)($details['place'] ?? '')])) {
+                    $candidate['details_data'] = $details;
+                    $candidateTasks[] = $candidate;
                 }
             }
+
+            $acceleratedTask = false;
+            foreach ($candidateTasks as $candidate) {
+                if ((int)$candidate['id_task'] === $taskId) {
+                    $acceleratedTask = $candidate;
+                    break;
+                }
+            }
+            if ($acceleratedTask === false) {
+                $reject(['state' => 'error_task_not_found']);
+            }
+
+            $itemStmt = $db->prepare(
+                "UPDATE `player_item` SET `amount` = `amount` - 1 " .
+                "WHERE `id_player` = ? AND `id_item` = ? AND `amount` > 0"
+            );
+            $itemStmt->execute([$playerId, $itemToUse]);
+            if ($itemStmt->rowCount() !== 1) {
+                $reject(['state' => 'error_no_item', 'msg' => 'لا تمتلك المادة المحددة للتسريع']);
+            }
+
+            $now = time();
+            $speed = $speedItems[$itemToUse];
+            $updatedTaskCount = 0;
+            $affectedBatchCount = 0;
+            foreach ($candidateTasks as $candidate) {
+                $details = $candidate['details_data'];
+                if (!empty($details['acce'])) {
+                    continue;
+                }
+
+                $oldArrive = (int)$candidate['time_arrive'];
+                $remaining = max(0, $oldArrive - $now);
+                $reduction = $speed['pct'] > 0
+                    ? (int)ceil($remaining * $speed['pct'])
+                    : (int)$speed['sec'];
+                $newArrive = max($now, $oldArrive - $reduction);
+                $details['acce'] = 1;
+                $detailsJson = json_encode($details, JSON_UNESCAPED_UNICODE);
+                if (!is_string($detailsJson)) {
+                    throw new RuntimeException('Failed to encode accelerated army task details');
+                }
+
+                $db->prepare(
+                    "UPDATE `timed_task` SET `time_arrive` = ?, `details` = ? WHERE `id_task` = ?"
+                )->execute([$newArrive, $detailsJson, (int)$candidate['id_task']]);
+                $db->prepare(
+                    "UPDATE `army_training` SET `end_time` = ? " .
+                    "WHERE `id_city` = ? AND `army_type` = ? AND `amount` = ? AND `start_time` = ? AND `done` = 0"
+                )->execute([
+                    $newArrive,
+                    $cityId,
+                    $candidate['item_id'],
+                    (int)$candidate['lvl_to'],
+                    (int)$candidate['start_time']
+                ]);
+                $affectedBatchCount++;
+                if ($newArrive <= $now) {
+                    $updatedTaskCount++;
+                }
+            }
+
+            if ($updatedTaskCount > 0) {
+                TaskService::processCompletedTasks($db);
+            }
+
+            $listStmt = $db->prepare(
+                "SELECT * FROM `timed_task` WHERE `id_city` = ? AND `task_type` IN ('army', 'wall')"
+            );
+            $listStmt->execute([$cityId]);
+            $armyBatches = [];
+            foreach ($listStmt->fetchAll(PDO::FETCH_ASSOC) ?: [] as $activeTask) {
+                $details = !empty($activeTask['details']) ? json_decode($activeTask['details'], true) : [];
+                $details = is_array($details) ? $details : [];
+                $armyBatches[] = [
+                    'id'         => (int)$activeTask['id_task'],
+                    'id_city'    => (int)$activeTask['id_city'],
+                    'place'      => isset($details['place']) ? $details['place'] : '',
+                    'army_type'  => $activeTask['item_id'],
+                    'amount'     => (int)$activeTask['lvl_to'],
+                    'time_start' => (int)$activeTask['start_time'],
+                    'time_end'   => (int)$activeTask['time_arrive'],
+                    'acce'       => !empty($details['acce']) ? 1 : 0
+                ];
+            }
+
+            $db->commit();
+            sendJson([
+                'state' => 'ok',
+                'affectedBatches' => $affectedBatchCount,
+                'completedBatches' => $updatedTaskCount,
+                'armyBatches' => $armyBatches
+            ]);
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
         }
-        sendJson(['state' => 'ok', 'reduced' => $reduceSec, 'armyBatches' => []]);
     }
 
     public static function cancelBatch($db) {

@@ -737,21 +737,124 @@ class GuildController {
     public static function changeGuildName($db) {
         $player = self::getPlayer($db);
         $idGuild = self::requireGuildLeader($db, $player);
-        $newName = isset($_REQUEST['newGuildName']) ? trim($_REQUEST['newGuildName']) : (isset($_REQUEST['name']) ? trim($_REQUEST['name']) : '');
-        $slogTop = isset($_REQUEST['slog_top']) ? preg_replace('/\D/', '', (string)$_REQUEST['slog_top']) : '';
-        $slogCnt = isset($_REQUEST['slog_cnt']) ? preg_replace('/\D/', '', (string)$_REQUEST['slog_cnt']) : '';
-        $slogBtm = isset($_REQUEST['slog_btm']) ? preg_replace('/\D/', '', (string)$_REQUEST['slog_btm']) : '';
-
-        if ($idGuild > 0) {
-            if ($newName) {
-                $db->prepare("UPDATE guild SET name = ? WHERE id_guild = ?")->execute([$newName, $idGuild]);
-                $db->prepare("UPDATE player SET guild = ? WHERE id_guild = ?")->execute([$newName, $idGuild]);
-            }
-            if ($slogTop) $db->prepare("UPDATE guild SET slog_top = ? WHERE id_guild = ?")->execute([$slogTop, $idGuild]);
-            if ($slogCnt) $db->prepare("UPDATE guild SET slog_cnt = ? WHERE id_guild = ?")->execute([$slogCnt, $idGuild]);
-            if ($slogBtm) $db->prepare("UPDATE guild SET slog_btm = ? WHERE id_guild = ?")->execute([$slogBtm, $idGuild]);
+        $newName = isset($_REQUEST['newGuildName'])
+            ? trim($_REQUEST['newGuildName'])
+            : (isset($_REQUEST['name']) ? trim($_REQUEST['name']) : '');
+        if ($newName !== '' && mb_strlen($newName, 'UTF-8') > 15) {
+            sendJson(['state' => 'error_2']);
+            return;
         }
-        sendJson(['state' => 'ok']);
+
+        $sloganFields = [
+            'slog_top' => ['request' => 'slog_top', 'max' => 21],
+            'slog_cnt' => ['request' => 'slog_cnt', 'max' => 4],
+            'slog_btm' => ['request' => 'slog_btm', 'max' => 5],
+        ];
+        $requestedSlogans = [];
+        foreach ($sloganFields as $field => $definition) {
+            if (!array_key_exists($definition['request'], $_REQUEST)) {
+                continue;
+            }
+            $value = filter_var($_REQUEST[$definition['request']], FILTER_VALIDATE_INT);
+            if ($value === false || $value < 1 || $value > $definition['max']) {
+                sendJson(['state' => 'error_slogan']);
+                return;
+            }
+            $requestedSlogans[$field] = (string)$value;
+        }
+
+        $result = [
+            'state' => null,
+            'oldName' => '',
+            'newName' => '',
+            'slogans' => [],
+            'familySloganAmount' => 0,
+        ];
+        $lockClause = $db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql' ? ' FOR UPDATE' : '';
+        ItemController::runItemTransaction($db, function () use (
+            $db,
+            $player,
+            $idGuild,
+            $newName,
+            $requestedSlogans,
+            $lockClause,
+            &$result
+        ) {
+            $guildStmt = $db->prepare(
+                'SELECT `name`, `slog_top`, `slog_cnt`, `slog_btm` FROM `guild` WHERE `id_guild` = ?'
+                . $lockClause
+            );
+            $guildStmt->execute([$idGuild]);
+            $guild = $guildStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$guild) {
+                $result['state'] = 'error_0';
+                return;
+            }
+
+            $result['oldName'] = (string)$guild['name'];
+            $result['newName'] = $newName !== '' ? $newName : (string)$guild['name'];
+            foreach (['slog_top', 'slog_cnt', 'slog_btm'] as $field) {
+                $result['slogans'][$field] = $requestedSlogans[$field] ?? (string)$guild[$field];
+            }
+
+            $nameChanged = $result['newName'] !== (string)$guild['name'];
+            $sloganChanged = $result['slogans']['slog_top'] !== (string)$guild['slog_top']
+                || $result['slogans']['slog_cnt'] !== (string)$guild['slog_cnt']
+                || $result['slogans']['slog_btm'] !== (string)$guild['slog_btm'];
+            if ($nameChanged || $sloganChanged) {
+                $itemStmt = $db->prepare(
+                    'SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = ?'
+                    . $lockClause
+                );
+                $itemStmt->execute([(int)$player['id_player'], 'family_slogan']);
+                if ((int)$itemStmt->fetchColumn() < 1) {
+                    $result['state'] = 'error_3';
+                    return;
+                }
+
+                ItemController::deductPlayerItem($db, (int)$player['id_player'], 'family_slogan', 1);
+                $db->prepare(
+                    'UPDATE `guild` SET `name` = ?, `slog_top` = ?, `slog_cnt` = ?, `slog_btm` = ?'
+                    . ' WHERE `id_guild` = ?'
+                )->execute([
+                    $result['newName'],
+                    $result['slogans']['slog_top'],
+                    $result['slogans']['slog_cnt'],
+                    $result['slogans']['slog_btm'],
+                    $idGuild,
+                ]);
+
+                if ($nameChanged) {
+                    $db->prepare('UPDATE `player` SET `guild` = ? WHERE `id_guild` = ?')
+                        ->execute([$result['newName'], $idGuild]);
+                }
+            }
+
+            $remainingItemStmt = $db->prepare(
+                'SELECT `amount` FROM `player_item` WHERE `id_player` = ? AND `id_item` = ?'
+            );
+            $remainingItemStmt->execute([(int)$player['id_player'], 'family_slogan']);
+            $remainingAmount = $remainingItemStmt->fetchColumn();
+            $result['familySloganAmount'] = $remainingAmount === false ? 0 : (int)$remainingAmount;
+            $result['state'] = 'ok';
+        });
+
+        if ($result['state'] !== 'ok') {
+            sendJson(['state' => $result['state']]);
+            return;
+        }
+
+        sendJson([
+            'state' => 'ok',
+            'idGuild' => $idGuild,
+            'oldName' => $result['oldName'],
+            'newName' => $result['newName'],
+            'slogTop' => $result['slogans']['slog_top'],
+            'slogCnt' => $result['slogans']['slog_cnt'],
+            'slogBtm' => $result['slogans']['slog_btm'],
+            'familySloganAmount' => $result['familySloganAmount'],
+            'changeBy' => (string)($player['name'] ?? ''),
+        ]);
     }
 
     public static function getGuildInvReq($db) {

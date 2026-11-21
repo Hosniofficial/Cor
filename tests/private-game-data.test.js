@@ -16,6 +16,10 @@ const worldController = fs.readFileSync(
     path.join(root, 'caesar-api', 'controllers', 'WorldController.php'),
     'utf8'
 );
+const apiRouter = fs.readFileSync(
+    path.join(root, 'caesar-api', 'router.php'),
+    'utf8'
+);
 const itemController = fs.readFileSync(
     path.join(root, 'caesar-api', 'controllers', 'ItemController.php'),
     'utf8'
@@ -38,6 +42,9 @@ test('client does not request complete equipment power or prize tables', () => {
     assert.doesNotMatch(clientSource, /AWorld\/getWorldUnitPrize/);
     assert.doesNotMatch(playerController, /APlayerEquip\/getEquipPower/);
     assert.doesNotMatch(worldController, /AWorld\/getWorldUnitPrize/);
+    assert.match(apiRouter, /strpos\(\$uri, '\/api\/'\)[\s\S]*?requireAuthenticatedPlayer\(\$db\)/);
+    assert.match(itemController, /case '\/api\/AItem\/getEquipmentPower':/);
+    assert.match(itemController, /sendJson\(\['state' => 'ok', 'Power' => \$power\]\)/);
     assert.match(itemController, /caesar-private\/data\/item-prices\.json/);
     assert.match(itemController, /caesar-private\/data\/exchange-offers\.json/);
 });

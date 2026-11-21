@@ -379,10 +379,10 @@ class ProductionService {
         if ((int)$city['food'] <= 0 && ((int)$city['food_in'] - (int)$city['food_out']) < 0) {
             $unitNames = [
                 'army_a' => 'مشاة خفيف',
-                'army_b' => 'رماة سهام',
-                'army_c' => 'فرسان',
-                'army_d' => 'مدرعون',
-                'army_e' => 'فرسان ثقيل',
+                'army_b' => 'فرسان',
+                'army_c' => 'مدرعون',
+                'army_d' => 'رماة سهام',
+                'army_e' => 'مقاليع',
                 'army_f' => 'مجانيق'
             ];
             $heroArmyTypes = [

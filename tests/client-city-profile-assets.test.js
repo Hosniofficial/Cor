@@ -60,3 +60,11 @@ test('city wild view keeps map snapshots for non-field units and handles missing
     assert.match(html, /images\/world\/snap-shot\/camps\.png/);
     assert.match(html, /images\/raw-ui\/field-wildlands-05\.jpg/);
 });
+
+test('unused CityFloor atlases are neither loaded nor shipped', () => {
+    assert.doesNotMatch(clientSource, /MainCityBG_|images\/CityFloor\//);
+    assert.equal(
+        fs.existsSync(path.join(__dirname, '..', 'caesar-assets', 'web', 'images', 'CityFloor')),
+        false
+    );
+});

@@ -215,9 +215,11 @@ body {
 }
 
 #unit_review .right_cont .copy-coord-icon {
-    width: 20px;
+    width: 48px;
     float: left;
     height: 28px;
+    display: flex;
+    align-items: center;
 }
 
 .copy-coord {
@@ -378,10 +380,12 @@ body {
 }
 
 .world .camps .camp_review .copy-coord-icon {
-    width: 20px;
+    width: 48px;
     height: 20px;
     margin-right: 15px;
     margin-top: 3px;
+    display: flex;
+    align-items: center;
 }
 
 .world .camps .left-content .battel_req {
@@ -1352,47 +1356,62 @@ body {
 
 #player-city-list ul {
     direction: rtl;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 #player-city-list ul li {
-    width: 110px;
-    height: 36px;
-    background-image: url(../images/world/city-list/no-select.png);
-    background-size: 75% 100%;
-    overflow: auto;
-    background-position: right;
-    background-repeat: no-repeat;
+    width: 105px;
+    height: 34px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    transition: margin-right 0.15s ease;
 }
 
 #player-city-list ul .console {
     width: 65px;
     height: 27px;
-    margin-top: 4.25px;
-    display: block;
+    margin-top: 3.5px;
     margin-right: 6px;
+    display: block;
     line-height: 27px;
     text-align: center;
     color: white;
     border-radius: 1px;
     background-image: url(../images/world/city-list/no-console.png);
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
 }
 
+#player-city-list ul li.selected,
 #player-city-list ul .selected {
     background-image: url(../images/world/city-list/selected.png);
+    background-size: 57px 28px;
+    background-position: right center;
+    background-repeat: no-repeat;
     background-color: transparent;
     margin-right: 5px;
 }
 
 #player-city-list ul .console label {
     display: block;
-    width: 80%;
+    width: 100%;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin: auto;
     font-size: 13px;
     font-weight: bold;
+    line-height: 27px;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+    pointer-events: none;
 }
 
 #player-city-list ul li .nav-to-city {
@@ -1400,10 +1419,12 @@ body {
     height: 22px;
     background-image: url(../images/icons/navigate/nav-to-city.png);
     background-position: center;
-    margin-top: 7px;
+    margin-top: 5px;
     background-repeat: no-repeat;
     background-color: transparent;
     display: none;
+    border: none;
+    cursor: pointer;
 }
 
 #unit_review .under-desc ul {
