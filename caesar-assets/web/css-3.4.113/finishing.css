@@ -880,7 +880,7 @@
     background-image: url(../images/tools/luck-wheel-track.png), url(../images/tools/luck-wheel-btn.png);
     background-repeat: no-repeat;
     background-position: center 6px, center;
-    z-index: 10 !important;
+    z-index: 10;
     cursor: pointer;
     transition: all 0.8s ease-in-out;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));

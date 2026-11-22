@@ -30,7 +30,7 @@ button {
     border: solid 5px transparent !important;
     border-image: url(../images/border/input.png) 15% round !important;
     border-image-outset: 4px !important;
-    box-sizing: border-box !important;
+    box-sizing: border-box;
 }
 
 .selectable {
@@ -64,8 +64,8 @@ html {
 }
 
 canvas {
-    margin: 0px !important;
-    padding: 0px !important;
+    margin: 0px;
+    padding: 0px;
 }
 
 .not_enough {

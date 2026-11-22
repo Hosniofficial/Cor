@@ -21,7 +21,7 @@ if ($clientBundleVersion === false) {
     exit('Game client asset is unavailable.');
 }
 $gameStyleDirectory = dirname(__DIR__) . '/caesar-assets/web/css-3.4.113';
-$gameStyleFiles = ['base.bundle.css', 'overrides.bundle.css', 'features.bundle.css'];
+$gameStyleFiles = ['core.bundle.css', 'gameplay.bundle.css', 'overrides.bundle.css'];
 $gameStyleVersion = 0;
 foreach ($gameStyleFiles as $gameStyleFile) {
     $gameStylePath = $gameStyleDirectory . '/' . $gameStyleFile;
@@ -230,9 +230,9 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css-3.4.113/base.bundle.css?v=<?= $gameStyleVersion ?>"/>
+        <link rel="stylesheet" href="css-3.4.113/core.bundle.css?v=<?= $gameStyleVersion ?>"/>
+        <link rel="stylesheet" href="css-3.4.113/gameplay.bundle.css?v=<?= $gameStyleVersion ?>"/>
         <link rel="stylesheet" href="css-3.4.113/overrides.bundle.css?v=<?= $gameStyleVersion ?>"/>
-        <link rel="stylesheet" href="css-3.4.113/features.bundle.css?v=<?= $gameStyleVersion ?>"/>
         <!-- <link rel="stylesheet" href="css/loader.css"/>-->
         <!--<script src="js/loader.js"></script>-->
 

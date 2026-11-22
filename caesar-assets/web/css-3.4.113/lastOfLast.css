@@ -1255,10 +1255,10 @@
 }
 
 .bg-general {
-    background-image: url("../images/background/U.png"), url("../images/background/B.png"), url("../images/background/L.png"), url("../images/background/R.png"), url(../images/background/paperCenter.jpg) !important;
-    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y, repeat !important;
+    background-image: url("../images/background/U.png"), url("../images/background/B.png"), url("../images/background/L.png"), url("../images/background/R.png"), url(../images/background/paperCenter.jpg);
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y, repeat;
     background-position: top, bottom, left, right;
-    background-size: auto auto !important;
+    background-size: auto auto;
 }
 
 .bg-general::before {
@@ -2267,9 +2267,9 @@ body #luck-wheel-over-lay {
 
     #chat-box {
         width: min(580px, calc(100vw - 16px));
-        left: calc(50% - 18px) !important;
-        margin-left: 0 !important;
-        transform: translateX(-50%) !important;
+        left: calc(50% - 18px);
+        margin-left: 0;
+        transform: translateX(-50%);
         bottom: 0;
     }
 
@@ -2282,9 +2282,9 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 182px !important;
-        top: auto !important;
-        right: 5px !important;
+        bottom: 182px;
+        top: auto;
+        right: 5px;
         transform: scale(.78);
         transform-origin: bottom right;
     }
@@ -2293,37 +2293,37 @@ body #luck-wheel-over-lay {
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
     #PlayerTeamWrapper {
-        bottom: 160px !important;
-        top: auto !important;
+        bottom: 160px;
+        top: auto;
         transform: scale(.78);
         transform-origin: bottom left;
-        z-index: 10 !important;
+        z-index: 10;
     }
 
     #godGateBtnWrapper {
-        left: 5px !important;
+        left: 5px;
     }
 
     #helpGateBtnWrapper {
-        left: 58px !important;
+        left: 58px;
     }
 
     #ArenaChallangeBtnWrapper {
-        left: 108px !important;
+        left: 108px;
     }
 
     #PlayerTeamWrapper {
-        left: 158px !important;
+        left: 158px;
     }
 
     #luck-wheel-btn {
-        bottom: 156px !important;
-        top: auto !important;
-        left: 226px !important;
-        transform: scale(0.96) !important;
+        bottom: 156px;
+        top: auto;
+        left: 226px;
+        transform: scale(0.96);
         transform-origin: bottom left;
-        z-index: 10 !important;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) !important;
+        z-index: 10;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
     }
 }
 
@@ -2334,7 +2334,7 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 162px !important;
+        bottom: 162px;
         transform: scale(.70);
     }
 
@@ -2342,13 +2342,13 @@ body #luck-wheel-over-lay {
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
     #PlayerTeamWrapper {
-        bottom: 144px !important;
+        bottom: 144px;
         transform: scale(.70);
     }
 
     #luck-wheel-btn {
-        bottom: 142px !important;
-        transform: scale(0.86) !important;
+        bottom: 142px;
+        transform: scale(0.86);
     }
 
     #menu-bar .mid {
@@ -2387,7 +2387,7 @@ body #luck-wheel-over-lay {
     }
 
     #city_col {
-        bottom: 148px !important;
+        bottom: 148px;
         transform: scale(.65);
     }
 
@@ -2395,13 +2395,13 @@ body #luck-wheel-over-lay {
     #helpGateBtnWrapper,
     #ArenaChallangeBtnWrapper,
     #PlayerTeamWrapper {
-        bottom: 134px !important;
+        bottom: 134px;
         transform: scale(.65);
     }
 
     #luck-wheel-btn {
-        bottom: 132px !important;
-        transform: scale(0.80) !important;
+        bottom: 132px;
+        transform: scale(0.80);
     }
 }
 
@@ -2683,7 +2683,7 @@ select[name="tasks"] {
 
 button,
 .full-btn {
-    cursor: pointer !important;
+    cursor: pointer;
     transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
 
