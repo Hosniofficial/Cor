@@ -20,42 +20,18 @@
 }
 
 .red-btn-wide {
-    background-image: url(../images/btns/parts/red-n-l.jpg), url(../images/btns/parts/red-n-r.jpg), url(../images/btns/parts/red-n-m.jpg);
+
     background-position-y: center;
     background-position-x: left, right, center;
     background-repeat: no-repeat, no-repeat, repeat-x;
     background-size: auto 100%;
 }
 
-.red-btn-wide:hover {
-    background-image: url(../images/btns/parts/red-h-l.jpg), url(../images/btns/parts/red-h-r.jpg), url(../images/btns/parts/red-h-m.jpg);
-}
-
-.red-btn-wide:active {
-    background-image: url(../images/btns/parts/red-a-l.jpg), url(../images/btns/parts/red-a-r.jpg), url(../images/btns/parts/red-a-m.jpg);
-}
-
-.red-btn-wide:disabled {
-    background-image: url(../images/btns/parts/red-d-l.jpg), url(../images/btns/parts/red-d-r.jpg), url(../images/btns/parts/red-d-m.jpg);
-}
-
 .smallAcce {
-    background-image: url(../images/btns/smallAcce-n.png);
+
     background-position-y: center;
     background-repeat: no-repeat;
     background-size: auto 100%;
-}
-
-.smallAcce:hover {
-    background-image: url(../images/btns/smallAcce-h.png);
-}
-
-.smallAcce:active {
-    background-image: url(../images/btns/smallAcce-a.png);
-}
-
-.smallAcce:disabled {
-    background-image: url(../images/btns/smallAcce-d.png);
 }
 
 .select-input {
@@ -74,10 +50,6 @@
 
 .select-input:hover {
     background-image: url(../images/input/select-btn-h.png);
-}
-
-.select-input:active {
-    background-image: url(../images/input/select-btn-active.png);
 }
 
 #move-city-to {
@@ -137,7 +109,7 @@
 }
 
 .select-list .option ul li:hover {
-    background-image: url(../images/selelct/select-rect.png);
+
     color: white
 }
 
@@ -275,25 +247,25 @@
 }
 
 .uiCheckedBox {
-    background-image: url(../images/BtnCover/BoxChecked.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiUnCheckBox {
-    background-image: url(../images/BtnCover/BoxUnChecked.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiCheckedRadio {
-    background-image: url(../images/BtnCover/RadioChecked.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiUnCheckRadio {
-    background-image: url(../images/BtnCover/RadioUnChecked.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -317,13 +289,13 @@
 }
 
 .uiBtnCloseDown:disabled {
-    background-image: url(../images/BtnCover/closeDownD.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .rightMark {
-    background-image: url(../images/BtnCover/rightMark.png);
+
     background-position: center;
     background-repeat: no-repeat;
 }

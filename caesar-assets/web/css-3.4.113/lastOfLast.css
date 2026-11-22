@@ -63,7 +63,7 @@
 }
 
 #helper-choose .selected {
-    background-image: url(../images/skins/table-rect.png);
+
     background-size: 100% 100%;
 }
 
@@ -320,7 +320,7 @@
 }
 
 #city-garrison-list .selected {
-    background-image: url(../images/selelct/select-row-4x.png);
+
     color: white;
     background-size: 100% 110%;
     background-position: center;
@@ -469,7 +469,7 @@
 }
 
 #job-typs tr .selected {
-    background-image: url(../images/background/selected-squer.png);
+
     background-size: 100% 100%;
 }
 
@@ -871,7 +871,7 @@
     margin-left: -65px;
     margin-top: 5px;
     border: solid 10px transparent;
-    border-image: url(../images/border/win_sprite.png) 20 round;
+
     z-index: 100000;
     display: none;
 }
@@ -1434,7 +1434,7 @@
     margin: auto;
     padding-top: 15px;
     margin-top: 16px;
-    background-image: url(../images/background/ribbon.png);
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
@@ -1444,7 +1444,7 @@
 .chat-room .container .your-avatar .image {
     margin: auto;
     padding-top: 15px;
-    background-image: url(../images/background/ribbon.png);
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
@@ -1639,7 +1639,7 @@
 }
 
 #guild-lvl {
-    background-image: url(../images/background/bg_lvl.png);
+
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;

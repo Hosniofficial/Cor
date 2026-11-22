@@ -203,7 +203,7 @@
 }
 
 .coming-soon-building {
-    background-image: url(../images/log-in-bg.jpg);
+
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -401,23 +401,11 @@
 }
 
 #cansel-building-upgrade {
-    background-image: url(../images/btns/building/cancel_up.png);
+
     width: 35px;
     height: 35px;
     background-size: contain;
     margin-top: 7px;
-}
-
-#cansel-building-upgrade:hover {
-    background-image: url(../images/btns/building/cancel_up-h.png);
-}
-
-#cansel-building-upgrade:active {
-    background-image: url(../images/btns/building/cancel_up-a.png);
-}
-
-#cansel-building-upgrade:disabled {
-    background-image: url(../images/btns/building/cancel_up-d.png);
 }
 
 #building-lvl-down {
@@ -426,10 +414,6 @@
     height: 35px;
     background-size: contain;
     margin-top: 7px;
-}
-
-#building-lvl-down:active {
-    background-image: url(../images/btns/down_h.png);
 }
 
 #building-lvl-inheader {
@@ -946,7 +930,7 @@
 }
 
 .for_market .resource-list ul .selected {
-    background-image: url(../images/background/selected-squer.png);
+
     background-size: 100% 100%;
     color: white;
     font-weight: bolder
@@ -969,7 +953,7 @@
 
 .for_market .auction-list .br {
     height: 3px;
-    background: url(../images/border/border-h.png);
+
     background-size: 100%;
     background-repeat: repeat-y;
     clear: both;
@@ -1037,7 +1021,7 @@
 }
 
 .inner_nav .selected {
-    background-image: url(../images/btns/seleced-inner-nav.png);
+
     background-repeat: no-repeat;
     background-position-y: 5px;
     background-size: 100% 28px;
@@ -1162,16 +1146,8 @@
 }
 
 .acce-small-btn {
-    background-image: url(../images/btn-small/acce-small.png);
+
     background-repeat: no-repeat;
-}
-
-.acce-small-btn:hover {
-    background-image: url(../images/btn-small/acce-small-hover.png);
-}
-
-.acce-small-btn:active {
-    background-image: url(../images/btn-small/acce-small-active.png);
 }
 
 /*  trsns resources*/
@@ -1319,7 +1295,7 @@
     margin-left: 5px;
     margin-right: 25px;
     height: 86px;
-    background-image: url(../images/skins/table-rect.png);
+
     background-size: 100% 100%;
     overflow: auto;
     margin-bottom: 3px;
@@ -1466,7 +1442,7 @@
 
 #dismiss-army-container .dismiss-amount-input {
     height: 70px;
-    background-image: url(../images/background/row.png);
+
     background-size: 100% 100%;
     width: 76%;
     margin: auto;
@@ -1717,7 +1693,7 @@
     width: 16px;
     height: 19px;
     text-align: center;
-    background-image: url(../images/background/bg_lvl.png);
+
     background-size: 100% 100%;
     font-size: 8px;
     line-height: 21px;
@@ -1927,7 +1903,7 @@
 
 #alert-with-input .spy-wrapper {
     height: 70px;
-    background-image: url(../images/background/row.png);
+
     background-size: 100% 100%;
     width: 76%;
     margin: auto;
@@ -1993,7 +1969,7 @@
     position: fixed;
     z-index: 20;
     height: 563px;
-    background-image: url(../images/godGate/rank/bg.png);
+
     background-size: 100% 100%;
     background-position: center;
     left: 50%;
@@ -2024,7 +2000,7 @@
     width: 15%;
     margin-left: 1%;
     height: 100%;
-    background-image: url(../images/godGate/rank/nav-nor.png);
+
     background-size: 100% 100%;
     float: left;
     text-align: center;
@@ -2033,14 +2009,10 @@
 }
 
 #Box-mid .nav-bar ul li:hover {
-    background-image: url(../images/godGate/rank/nav-sel.png);
+
     opacity: 0.9;
     transform: scale(1.01);
     transition: linear 0.2s all;
-}
-
-#Box-mid .nav-bar ul .selected {
-    background-image: url(../images/godGate/rank/nav-sel.png);
 }
 
 #Box-mid .content-wrapper {

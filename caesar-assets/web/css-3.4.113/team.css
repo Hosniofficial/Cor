@@ -208,7 +208,7 @@
     width: 82%;
     height: 82%;
     border-radius: 50%;
-    background-image: url(../images/player/faceA10_.jpg);
+
     background-size: 100% 100%;
     margin: auto;
     margin-top: 10px;
@@ -217,7 +217,7 @@
 #TeamBoxRight .PlayerList .Body .LeaderLi .LPlayerTitle {
     margin-top: -14px;
     ;
-    background-image: url(../images/bars/title-bg.png);
+
     background-size: 100% 700%;
     width: 80px;
     float: right;
@@ -249,7 +249,7 @@
 #TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerAvaterBg {
     width: 124px;
     height: 62px;
-    background-image: url(../images/border/RectBorder_n.png);
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
@@ -265,7 +265,7 @@
 
 #TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerTitle {
     margin-top: -22px;
-    background-image: url(../images/bars/title-bg.png);
+
     background-size: 100% 700%;
     width: 80px;
     float: right;
@@ -750,20 +750,12 @@
 .PlayerAvater .playerSettingIcon .btn {
     height: 30px;
     width: 30px;
-    background-image: url(../images/btn-small/setting-n.png);
+
     background-repeat: no-repeat;
     background-position: center;
     float: right;
     margin-right: 3px;
     margin-top: 3px;
-}
-
-.PlayerAvater .playerSettingIcon .btn:hover {
-    background-image: url(../images/btn-small/setting-h.png);
-}
-
-.PlayerAvater .playerSettingIcon .btn:active {
-    background-image: url(../images/btn-small/setting-a.png);
 }
 
 .PlayerAvater .settingList {

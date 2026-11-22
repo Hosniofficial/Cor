@@ -101,6 +101,27 @@ if ($file !== false && is_file($file)) {
     if ($ext === 'php') {
         require $file;
     } else {
+        $compressibleExtensions = ['css', 'js', 'json', 'svg', 'html', 'xml', 'plist', 'fnt'];
+        if (in_array($ext, $compressibleExtensions, true)) {
+            header('Vary: Accept-Encoding');
+            $acceptEncoding = strtolower($_SERVER['HTTP_ACCEPT_ENCODING'] ?? '');
+            $acceptsGzip = preg_match('/(?:^|,)\s*gzip(?:\s*;\s*q=([0-9.]+))?(?:,|$)/', $acceptEncoding, $gzipMatch) === 1
+                && (!isset($gzipMatch[1]) || (float)$gzipMatch[1] > 0);
+            if ($acceptsGzip && function_exists('gzencode')) {
+                $contents = file_get_contents($file);
+                if ($contents !== false) {
+                    $compressedContents = gzencode($contents, 1);
+                    if ($compressedContents !== false && strlen($compressedContents) < strlen($contents)) {
+                        header('Content-Encoding: gzip');
+                        header('Content-Length: ' . strlen($compressedContents));
+                        echo $compressedContents;
+                        exit;
+                    }
+                    echo $contents;
+                    exit;
+                }
+            }
+        }
         readfile($file);
     }
     exit;

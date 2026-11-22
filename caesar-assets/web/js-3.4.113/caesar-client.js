@@ -2481,7 +2481,6 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('B11', BASE_ASSET_BATH + 'images/city/_B11.png');
     Caesar.GE.LoadingScene.load.image('no_building', BASE_ASSET_BATH + 'images/city/no_building.png');
     Caesar.GE.LoadingScene.load.image('city_floor', BASE_ASSET_BATH + 'images/city/city_floor.jpg');
-    Caesar.GE.LoadingScene.load.image('town_bg_0', BASE_ASSET_BATH + 'images/city/background_townBackground0.jpg');
     Caesar.GE.LoadingScene.load.image('town_bg_1', BASE_ASSET_BATH + 'images/city/background_townBackground1.jpg');
     Caesar.GE.LoadingScene.load.image('town_bg_2', BASE_ASSET_BATH + 'images/city/background_townBackground2.jpg');
     Caesar.GE.LoadingScene.load.image('town_bg_3', BASE_ASSET_BATH + 'images/city/background_townBackground3.jpg');
@@ -2971,7 +2970,7 @@ Caesar.GE.CCityScene = new Phaser.Class({
         this.cityBackdrop = this.add.tileSprite(500, 200, 4000, 3000, 'city_backdrop').setOrigin(0.5, 0.5).setDepth(-10);
 
         var cityLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
-        var bgKey = "town_bg_0";
+        var bgKey = "city_floor";
         if (cityLvl > 2) bgKey = "town_bg_3";
         else if (cityLvl > 1) bgKey = "town_bg_2";
         else if (cityLvl > 0) bgKey = "town_bg_1";
@@ -3235,6 +3234,9 @@ $(document).ready(function() {
         height: window.innerHeight,
         backgroundColor: "#000000",
         scene: [Caesar.GE.CLoadingScene, Caesar.GE.CCityScene, Caesar.GE.CWorldScene],
+        audio: {
+            noAudio: true
+        },
         /* input: {
          windowEvents: false
          }*/
@@ -10593,7 +10595,7 @@ Caesar.GE.TextConfig = {
 function fillCityWithBuilding() {
     if (Caesar.GE.CityScene && Caesar.GE.CityScene.cityBackground && Caesar.GE.CityScene.cityBackground.scene && Caesar.GE.CityScene.cityBackground.scene.sys && typeof Caesar.GE.CityScene.cityBackground.setTexture === "function") {
         var cLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
-        var curBgKey = "town_bg_0";
+        var curBgKey = "city_floor";
         if (cLvl > 2) curBgKey = "town_bg_3";
         else if (cLvl > 1) curBgKey = "town_bg_2";
         else if (cLvl > 0) curBgKey = "town_bg_1";

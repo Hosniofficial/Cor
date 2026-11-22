@@ -938,10 +938,6 @@
     clear: both;
 }
 
-.avatar-name h1:hover {
-    background-image: url("../images/background/p_name_a.png");
-}
-
 .avatar-name h1:active {
     background-image: url("../images/background/p_name_n.png");
 }
@@ -1739,7 +1735,7 @@
 
 .mili_building .middle-content .selected_sol {
     color: white;
-    background-image: url(../images/background/selected-squer.png);
+
     background-size: 90% 100%;
     background-position: center;
     background-repeat: no-repeat;

@@ -76,10 +76,6 @@
     background-image: url(../images/icon-menu/6_a.png);
 }
 
-#godGate-rank:disabled {
-    background-image: url(../images/icon-menu/6_d.png);
-}
-
 #godGate-rank .text {
     color: #e2952b;
     font-size: 12px;
@@ -212,7 +208,7 @@
     width: 87%;
     height: 65%;
     margin: auto;
-    background-image: url(../images/godGate/godGateBoxBg.png);
+
     background-size: 100% 100%;
     margin-top: 54px;
     overflow: auto;
@@ -281,7 +277,7 @@
 #godGateBox .content-wrapper .scoreBord {
     width: 70px;
     height: 73px;
-    background-image: url(../images/godGate/scoreBord.png);
+
     position: absolute;
     background-size: 100% 100%;
     top: 30px;
@@ -291,7 +287,7 @@
 #godGateBox .content-wrapper .scoreBord {
     width: 70px;
     height: 73px;
-    background-image: url(../images/godGate/scoreBord.png);
+
     position: absolute;
     background-size: 100% 100%;
     top: 30px;
@@ -319,7 +315,7 @@
     float: right;
     text-align: center;
     line-height: 40px;
-    background-image: url(../images/godGate/godName.png);
+
     background-position: center;
     background-repeat: no-repeat;
     color: #e2952b;
@@ -337,7 +333,7 @@
     height: 32px;
     margin: auto;
     margin-top: 5px;
-    background-image: url(../images/godGate/listItem.png);
+
     background-size: 100% 100%;
 }
 
@@ -394,17 +390,9 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: url(../images/godGate/checkMark.png);
+
     background-size: 100% 100%;
     background-color: transparent;
-}
-
-#godGateBox .content-wrapper ul li .checkBox .chackable:hover {
-    background-image: url(../images/godGate/checkedMark.png);
-}
-
-#godGateBox .content-wrapper ul li .checkBox .checked {
-    background-image: url(../images/godGate/checkedMark.png);
 }
 
 #godGateBox .content-wrapper ul li .open-fourth-cell .pluse {
@@ -622,7 +610,7 @@
     width: 80px;
     height: 30px;
     background-size: 100% auto;
-    background-image: url(../images/arrow/rightSolid.png);
+
     background-color: transparent;
     margin: auto;
     display: block;

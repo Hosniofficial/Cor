@@ -1165,10 +1165,10 @@ select[name=tasks] {
 .hero-equip .equip {
     width: 100%;
     height: 210px;
-    background-image: url(../images/ribbon/cloth_top.png), url(../images/ribbon/roupe.png), url(../images/ribbon/drapirovka.png), url(../images/ribbon/cloth_btm_left.png), url(../images/background/bg_h_equip.jpg);
-    background-size: 100% 30px, auto 100px, auto, auto, 100% 100%;
+    background-image: url(../images/background/bg_h_equip.jpg);
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-position: center top, left 5px, top right, bottom left, center;
+    background-position: center;
     overflow: auto
 }
 
@@ -1216,10 +1216,6 @@ select[name=tasks] {
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent
-}
-
-#eq-part-select ul li:hover {
-    background-image: url(../images/icons/hero/eq-part-selected-h.png);
 }
 
 #eq-part-select ul li:hover {
@@ -1975,14 +1971,6 @@ button:disabled {
     background-repeat: no-repeat
 }
 
-.most-left-btn:hover {
-    background-image: url(../images/arrow/m_l_h.png);
-}
-
-.most-left-btn:active {
-    background-image: url(../images/arrow/m_l_a.png);
-}
-
 .most-right-btn {
     width: 30px;
     height: 30px;
@@ -1994,10 +1982,6 @@ button:disabled {
 
 .most-right-btn:hover {
     background-image: url(../images/arrow/m_r_h.png);
-}
-
-.most-right-btn:active {
-    background-image: url(../images/arrow/m_r_a.png);
 }
 
 .for_trade .army_container::after {
@@ -2097,16 +2081,12 @@ button:disabled {
     background-image: url(../images/btns/global/full-btn-1x-h.png);
 }
 
-.full-btn-1x:active {
-    background-image: url(../images/btns/global/full-btn-1x-a.png);
-}
-
 .full-btn-1x:disabled {
     background-image: url(../images/btns/global/full-btn-1x-h.png);
 }
 
 .speed-up-btn {
-    background-image: url(../images/btn-small/speed-up.png);
+
     background-size: 100% 100%;
     color: white;
     background-color: transparent;
@@ -2152,35 +2132,11 @@ button:disabled {
     background-repeat: no-repeat;
 }
 
-.speed-up-btn:hover {
-    background-image: url(../images/btn-small/speed-up-hover.png);
-}
-
-.speed-up-btn:active {
-    background-image: url(../images/btn-small/speed-up-active.png);
-}
-
-.speed-up-btn:disabled {
-    background-image: url(../images/btn-small/speed-up-hover.png);
-}
-
 .cancel-btn {
-    background-image: url(../images/btns/building/cancel_up.png);
+
     background-size: 100% 100%;
     color: white;
     background-color: transparent;
-}
-
-.cancel-btn:hover {
-    background-image: url(../images/btns/building/cancel_up-h.png);
-}
-
-.cancel-btn:active {
-    background-image: url(../images/btns/building/cancel_up-a.png);
-}
-
-.cancel-btn:disabled {
-    background-image: url(../images/btns/building/cancel_up-d.png);
 }
 
 #chat-box .user-group-0 {
@@ -2338,18 +2294,6 @@ button:disabled {
     margin: auto;
 }
 
-#swap_army:hover {
-    background-image: url(../images/btns/hero/armyTrade_h.png);
-}
-
-#swap_army:active {
-    background-image: url(../images/btns/hero/armyTrade_a.png);
-}
-
-#swap_army:disabled {
-    background-image: url(../images/btns/hero/armyTrade_d.png);
-}
-
 #left-down,
 #right-down {
     background-image: url(../images/btns/army_down.png);
@@ -2393,32 +2337,8 @@ button:disabled {
     background-image: url(../images/btns/hero/hero-up-n.png);
 }
 
-.order-up:hover {
-    background-image: url(../images/btns/hero/hero-up-h.png);
-}
-
-.order-up:active {
-    background-image: url(../images/btns/hero/hero-up-a.png);
-}
-
-.order-up:disabled {
-    background-image: url(../images/btns/hero/hero-up-d.png);
-}
-
 .order-down {
     background-image: url(../images/btns/hero/hero-down-n.png);
-}
-
-.order-down:hover {
-    background-image: url(../images/btns/hero/hero-down-h.png);
-}
-
-.order-down:active {
-    background-image: url(../images/btns/hero/hero-down-a.png);
-}
-
-.order-down:disabled {
-    background-image: url(../images/btns/hero/hero-down-d.png);
 }
 
 #order-hero .wrapper {
@@ -2602,7 +2522,7 @@ button:disabled {
 }
 
 .rank-title {
-    background-image: url(../images/bars/title-bg.png);
+
     width: 60px;
     height: 20px;
     text-align: center;
@@ -2697,26 +2617,26 @@ button:disabled {
 }
 
 .close-wide {
-    background-image: url(../images/btns/global/closeWide.png);
+
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;
 }
 
 .close-wide:hover {
-    background-image: url(../images/btns/global/closeWide.png);
+
     background-repeat: no-repeat;
     background-position-y: -20px;
 }
 
 .close-wide:active {
-    background-image: url(../images/btns/global/closeWide.png);
+
     background-repeat: no-repeat;
     background-position-y: -40px;
 }
 
 .close-wide:disabled {
-    background-image: url(../images/btns/global/closeWide.png);
+
     background-repeat: no-repeat;
     background-position-y: -60px;
 }
