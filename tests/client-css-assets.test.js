@@ -5,6 +5,24 @@ const path = require('node:path');
 
 const stylesheetDirectory = path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113');
 const imageDirectory = path.join(__dirname, '..', 'caesar-assets', 'web', 'images');
+const stylesheetBundles = {
+    'base.bundle.css': ['reset-min.css', 'fonts-min.css', 'base.css', 'city.css', 'world.css'],
+    'overrides.bundle.css': ['lastStyle.css', 'lastOfLast.css', 'finishing.css', 'tooltips.css', 'animation.css'],
+    'features.bundle.css': ['hero.css', 'godPoints.css', 'ui.css', 'team.css']
+};
+
+test('game stylesheet bundles preserve their source order and contents', () => {
+    for (const [bundleName, sourceFiles] of Object.entries(stylesheetBundles)) {
+        const expected = sourceFiles
+            .map(filename => fs.readFileSync(path.join(stylesheetDirectory, filename), 'utf8'))
+            .join('\n');
+        const actual = fs.readFileSync(path.join(stylesheetDirectory, bundleName), 'utf8');
+        assert.equal(actual, expected, `${bundleName} must be rebuilt from the ordered source files`);
+    }
+
+    const server = fs.readFileSync(path.join(__dirname, '..', 'caesar-web', 'server.php'), 'utf8');
+    assert.equal((server.match(/<link rel="stylesheet" href="css-3\.4\.113\/[^"]+\.bundle\.css\?v=/g) || []).length, 3);
+});
 
 test('game stylesheets only reference existing local assets', () => {
     const missingAssets = [];

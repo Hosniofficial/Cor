@@ -20,31 +20,24 @@ if ($clientBundleVersion === false) {
     http_response_code(500);
     exit('Game client asset is unavailable.');
 }
-$gameStylePath = dirname(__DIR__) . '/caesar-assets/web/css-3.4.113/lastOfLast.css';
-if (!is_file($gameStylePath) || !is_readable($gameStylePath)) {
-    error_log('[Game] Required game stylesheet is missing or unreadable');
-    http_response_code(500);
-    exit('Game styles are unavailable.');
+$gameStyleDirectory = dirname(__DIR__) . '/caesar-assets/web/css-3.4.113';
+$gameStyleFiles = ['base.bundle.css', 'overrides.bundle.css', 'features.bundle.css'];
+$gameStyleVersion = 0;
+foreach ($gameStyleFiles as $gameStyleFile) {
+    $gameStylePath = $gameStyleDirectory . '/' . $gameStyleFile;
+    if (!is_file($gameStylePath) || !is_readable($gameStylePath)) {
+        error_log('[Game] Required game stylesheet is missing or unreadable: ' . $gameStyleFile);
+        http_response_code(500);
+        exit('Game styles are unavailable.');
+    }
+    $styleVersion = filemtime($gameStylePath);
+    if ($styleVersion === false) {
+        error_log('[Game] Unable to read game stylesheet timestamp: ' . $gameStyleFile);
+        http_response_code(500);
+        exit('Game styles are unavailable.');
+    }
+    $gameStyleVersion = max($gameStyleVersion, $styleVersion);
 }
-$gameStyleVersion = filemtime($gameStylePath);
-if ($gameStyleVersion === false) {
-    error_log('[Game] Unable to read the game stylesheet timestamp');
-    http_response_code(500);
-    exit('Game styles are unavailable.');
-}
-$messageStylePath = dirname(__DIR__) . '/caesar-assets/web/css-3.4.113/lastStyle.css';
-if (!is_file($messageStylePath) || !is_readable($messageStylePath)) {
-    error_log('[Game] Required message stylesheet is missing or unreadable');
-    http_response_code(500);
-    exit('Game styles are unavailable.');
-}
-$messageStyleVersion = filemtime($messageStylePath);
-if ($messageStyleVersion === false) {
-    error_log('[Game] Unable to read the message stylesheet timestamp');
-    http_response_code(500);
-    exit('Game styles are unavailable.');
-}
-$gameStyleVersion = max($gameStyleVersion, $messageStyleVersion);
 $selectedServer = $servers[$selectedServerId];
 require_once __DIR__ . '/../caesar-api/db.php';
 $db = getDB();
@@ -237,20 +230,9 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css-3.4.113/reset-min.css"/>
-        <link rel="stylesheet" href="css-3.4.113/fonts-min.css"/>
-        <link rel="stylesheet" href="css-3.4.113/base.css"/>
-        <link rel="stylesheet" href="css-3.4.113/city.css"/>
-        <link rel="stylesheet" href="css-3.4.113/world.css"/>
-        <link rel="stylesheet" href="css-3.4.113/lastStyle.css?v=<?= $gameStyleVersion ?>"/>
-        <link rel="stylesheet" href="css-3.4.113/lastOfLast.css?v=<?= $gameStyleVersion ?>"/>
-        <link rel="stylesheet" href="css-3.4.113/finishing.css"/>
-        <link rel="stylesheet" href="css-3.4.113/tooltips.css"/>
-        <link rel="stylesheet" href="css-3.4.113/animation.css"/>
-        <link rel="stylesheet" href="css-3.4.113/hero.css"/>
-        <link rel="stylesheet" href="css-3.4.113/godPoints.css"/>
-        <link rel="stylesheet" href="css-3.4.113/ui.css"/>
-        <link rel="stylesheet" href="css-3.4.113/team.css"/>
+        <link rel="stylesheet" href="css-3.4.113/base.bundle.css?v=<?= $gameStyleVersion ?>"/>
+        <link rel="stylesheet" href="css-3.4.113/overrides.bundle.css?v=<?= $gameStyleVersion ?>"/>
+        <link rel="stylesheet" href="css-3.4.113/features.bundle.css?v=<?= $gameStyleVersion ?>"/>
         <!-- <link rel="stylesheet" href="css/loader.css"/>-->
         <!--<script src="js/loader.js"></script>-->
 

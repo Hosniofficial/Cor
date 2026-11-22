@@ -1,0 +1,2525 @@
+.army-review {
+    width: 90%;
+    margin: auto;
+    overflow: auto;
+}
+
+.army-review li {
+    width: 33.33%;
+    margin: 0px;
+    height: 50px;
+    float: left;
+}
+
+.army-review li .wrapper {
+    width: 95%;
+    background-image: url(../images/back-shape/rect.png);
+    background-position: center;
+    background-size: 100% auto;
+    height: 100%;
+    margin: auto;
+    background-repeat: no-repeat;
+}
+
+.army-review li .wrapper .army-unit {
+    width: 94%;
+    margin: auto;
+    background-size: 100% 34px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+.army-review li .wrapper .army-unit .amount {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 0px 0px 3px 3px;
+    margin: auto;
+    margin-top: 27px;
+}
+
+#hero-dial-over-view .hero-profile > .part-1,
+#hero-dial-over-view .hero-profile > .part-2,
+#hero-dial-over-view .hero-profile > .equi_preveiw,
+#hero-dial-over-view #after-ajax-hero-army {
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#hero-dial-over-view .hero-profile > .equi_preveiw {
+    overflow: hidden;
+}
+
+#hero-dial-over-view .row-4 {
+    height: 136px;
+}
+
+#hero-dial-over-view #after-ajax-hero-army {
+    height: 100%;
+    overflow: auto;
+}
+
+#hero-dial-over-view #after-ajax-hero-army .army-review {
+    margin-top: 30px;
+}
+
+#hero-dial-equip .row-4 {
+    height: 149px;
+}
+
+#hero-dial-equip #after-ajax-hero-army .army-review {
+    margin-top: 30px;
+}
+
+#hero-dial-equip .equip table td .wrapper {
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    overflow: auto;
+}
+
+#hero-dial-equip .equip table td .EquiUnitWrapper {
+    background-image: url(../images/back-shape/rect.png);
+}
+
+#hero-dial-equip .equip table td .wrapper button {
+    height: 87%;
+    display: block;
+    width: 93%;
+    margin: auto;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-radius: 0px;
+    margin-top: 2px;
+}
+
+.hero-equipment-action-menu {
+    position: fixed;
+    z-index: 10001;
+    min-width: 124px;
+    padding: 4px;
+    direction: rtl;
+    background: #2b2118;
+    border: 1px solid #d5b36c;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .65);
+}
+
+.hero-equipment-action-menu button {
+    display: block;
+    width: 100%;
+    padding: 6px 9px;
+    color: #f8e7bf;
+    text-align: center;
+    white-space: nowrap;
+    background: transparent;
+    cursor: pointer;
+}
+
+.hero-equipment-action-menu button:hover {
+    background: rgba(213, 179, 108, .2);
+}
+
+#hero-dial-camp .row-4 {
+    height: 136px;
+}
+
+#hero-dial-camp #after-ajax-hero-army {
+    height: 100%;
+    overflow: auto;
+}
+
+#hero-dial-camp #after-ajax-hero-army .army-review {
+    margin-top: 30px;
+}
+
+#hero-dial-equip #HeroEquipBox,
+#hero-dial-equip #after-ajax-hero-army,
+#hero-dial-camp #after-ajax-hero-army {
+    background-image: url(../images/icons/left-content.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-origin: border-box;
+    background-clip: border-box;
+    border: 6px solid transparent;
+    box-sizing: border-box;
+}
+
+#dialg_box .box_content .right-content .equi_preveiw ul li {
+    width: 20%;
+    margin: 0px;
+    height: 36px;
+    flex: 0 0 20%;
+}
+
+.box_content .right-content .equi_preveiw ul li .wrapper {
+    width: 92%;
+    margin: auto;
+    background-image: url(../images/back-shape/rect.png);
+    background-size: 100% auto;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.box_content .right-content .equi_preveiw ul li .wrapper .img {
+    width: 94%;
+    height: 100%;
+    background-size: 100% 26px;
+    background-position: center;
+    margin: auto;
+    background-repeat: no-repeat;
+}
+
+.box_content .right-content .equi_preveiw {
+    height: 90px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-image: none;
+}
+
+.box_content .right-content .equi_preveiw ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 72px;
+    margin: 4px 0 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#hero-left-ol li,
+#hero-right-ol li {
+    width: 33.33% !important;
+    margin: 0px !important;
+    height: 52px !important;
+}
+
+#hero-left-ol,
+#hero-right-ol {
+    width: 90% !important;
+    margin: auto;
+}
+
+#hero-left-ol .unit-wrapper,
+#hero-right-ol .unit-wrapper {
+    width: 95%;
+    height: 100%;
+    background-image: url(../images/back-shape/rect.png);
+    background-size: 100% 42px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    padding: 4px;
+    margin: auto;
+}
+
+#hero-left-ol .unit-wrapper .img-bg,
+#hero-right-ol .unit-wrapper .img-bg {
+    height: 36px;
+    background-size: 100% 100%;
+    background-position: center;
+    width: auto;
+    position: static;
+    margin: auto;
+}
+
+#hero-left-ol .amount,
+#hero-right-ol .amount {
+    margin-top: -22px !important;
+    width: 78px !important;
+}
+
+.hero_up_lvl,
+.FIRE_HERO {
+    width: 70px;
+    font-size: 14px;
+}
+#god-gate {
+    height: 435px;
+    margin-top: -20px;
+}
+
+#god-gate .content-wrapper {
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/godGate/godGate-bg.jpg);
+    background-size: 100% 100%;
+    position: relative;
+}
+
+#god-gate .content-wrapper .god-container {
+    width: 180px;
+    height: 160px;
+    position: absolute;
+    background-repeat: no-repeat;
+    transition: all linear 0.1s;
+}
+
+#god-gate .content-wrapper .god-container:hover {
+    transform: scale(1.03);
+}
+
+#god-1 {
+    background-image: url(../images/godGate/god-1.png);
+    background-position: center;
+    background-size: contain;
+}
+
+#god-2 {
+    background-image: url(../images/godGate/god-2.png);
+    background-position: center;
+    background-size: contain;
+}
+
+#god-3 {
+    background-image: url(../images/godGate/god-3.png);
+    background-position: center;
+    background-size: contain;
+}
+
+#god-4 {
+    background-image: url(../images/godGate/god-4.png);
+    background-position: center;
+    background-size: contain;
+}
+
+#god-gate .content-wrapper .text-val {
+    width: 90px;
+    color: #e2952b;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    left: 50%;
+}
+
+#godGate-rank {
+    width: 40px;
+    height: 60px;
+    left: 25px;
+    top: 0px;
+    position: absolute;
+    background-image: url(../images/icon-menu/6_n.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#godGate-rank:hover {
+    background-image: url(../images/icon-menu/6_h.png);
+}
+
+#godGate-rank:active {
+    background-image: url(../images/icon-menu/6_a.png);
+}
+
+#godGate-rank .text {
+    color: #e2952b;
+    font-size: 12px;
+    text-align: center;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    font-weight: bold;
+}
+
+#god-gate .content-wrapper .player-points {
+    width: 160px;
+    height: 35px;
+    background-image: url(../images/btns/ui_timer.png);
+    position: absolute;
+    left: 50%;
+    margin-left: -80px;
+    top: 50%;
+    margin-top: -17.5px;
+    background-size: 100% 100%;
+    color: white;
+}
+
+#god-gate .content-wrapper .player-points label {
+    display: block;
+    float: left;
+    width: 75%;
+    height: 100%;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+#god-gate .content-wrapper .player-points .wrapper {
+    display: block;
+    float: right;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+#god-gate .content-wrapper .player-points .wrapper {
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+#god-gate .content-wrapper .player-points .wrapper .pluse {
+    width: 22px;
+    height: 22px;
+    display: block;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 22px 22px;
+    margin-top: 6px;
+}
+
+.pluse {
+    background-image: url(../images/icons/pluse.png);
+}
+
+.pluse:hover {
+    background-image: url(../images/icons/pluse-h.png);
+}
+
+.pluse:active {
+    background-image: url(../images/icons/pluse-a.png);
+}
+
+#godGateBtnWrapper {
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    left: 5px;
+    bottom: 210px;
+    z-index: 9;
+}
+
+#godGateBtnWrapper button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: url(../images/godGate/godGate.png);
+}
+
+#godGateBtnWrapper button:hover {
+    transform: scale(1.03);
+    transition: all linear 0.2s;
+}
+
+.gray-filter {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.score-1 {
+    color: white;
+}
+
+.score-2 {
+    color: #769c24;
+}
+
+.score-3 {
+    color: #13acac;
+}
+
+.score-4 {
+    color: #aa00aa;
+}
+
+.score-5 {
+    color: #e2952b;
+}
+
+#godGateBox {
+    width: 480px;
+    height: 350px;
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    margin-left: -240px;
+    background-image: url(../images/skins/palace.png);
+    background-size: 100% 100%;
+}
+
+#godGateBox .content-wrapper {
+    width: 87%;
+    height: 65%;
+    margin: auto;
+
+    background-size: 100% 100%;
+    margin-top: 54px;
+    overflow: auto;
+}
+
+#godGateBox .btn-wrapper {
+    width: 87%;
+    margin: auto;
+    height: 55px;
+    background-image: url("../images/background/sitenav-bar-bg.jpg");
+    background-size: auto 80%;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+#godGateBox .btn-wrapper .btns-group {
+    width: 40%;
+    height: 100%;
+    float: right;
+}
+
+#godGateBox .btn-wrapper .text-group {
+    width: 55%;
+    height: 100%;
+    float: right;
+}
+
+#godGateBox .btn-wrapper .text-group label {
+    width: 45%;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 55px;
+    color: white
+}
+
+#godGateBox .btn-wrapper .text-group label span {
+    color: #4c7f47;
+}
+
+#change-gate-cell {
+    display: block;
+    float: right;
+    margin-right: 15px;
+    height: 32px;
+    margin-top: 10px;
+    width: 106px;
+    background-color: transparent;
+    color: white;
+    line-height: 32px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#godGateBox .btn-wrapper .pluse {
+    width: 25px;
+    height: 25px;
+    display: block;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 25px 25px;
+    margin-top: 15px;
+    float: right;
+    margin-right: 15px;
+}
+
+#godGateBox .content-wrapper .scoreBord {
+    width: 70px;
+    height: 73px;
+
+    position: absolute;
+    background-size: 100% 100%;
+    top: 30px;
+    left: 15px;
+}
+
+#godGateBox .content-wrapper .scoreBord {
+    width: 70px;
+    height: 73px;
+
+    position: absolute;
+    background-size: 100% 100%;
+    top: 30px;
+    left: 15px;
+    color: #ac340f;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold
+}
+
+#godGateBox .content-wrapper .scoreBord div {
+    margin-top: 32px;
+}
+
+#godGateBox .content-wrapper .godName {
+    height: 40px;
+    width: 80%;
+    margin: auto;
+    margin-top: 12px;
+}
+
+#godGateBox .content-wrapper .godName .name {
+    height: 100%;
+    width: 45%;
+    float: right;
+    text-align: center;
+    line-height: 40px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #e2952b;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#godGateBox .content-wrapper ul {
+    margin-top: 6px;
+    overflow: auto;
+}
+
+#godGateBox .content-wrapper ul li {
+    width: 80%;
+    height: 32px;
+    margin: auto;
+    margin-top: 5px;
+
+    background-size: 100% 100%;
+}
+
+#godGateBox .content-wrapper ul li .lock {
+    height: 100%;
+    width: 15%;
+    float: right;
+    margin-right: 1%;
+}
+
+#godGateBox .content-wrapper ul li .lock label {
+    background-image: url(../images/box/lock.png);
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 94%;
+}
+
+#godGateBox .content-wrapper ul li .effect {
+    width: 55%;
+    height: 100%;
+    float: right;
+}
+
+#godGateBox .content-wrapper ul li .effect div {
+    float: right;
+    margin-left: 6px;
+    line-height: 32px;
+    font-size: 14px;
+    width: 30%;
+    text-align: center;
+}
+
+#godGateBox .content-wrapper ul li .checkBox {
+    float: right;
+    width: 8%;
+    height: 100%;
+    position: relative
+}
+
+#godGateBox .content-wrapper ul li .checkBox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+#godGateBox .content-wrapper ul li .checkBox .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background-size: 100% 100%;
+    background-color: transparent;
+}
+
+#godGateBox .content-wrapper ul li .open-fourth-cell .pluse {
+    width: 22px;
+    height: 32px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    margin: auto;
+}
+
+#godGateBox .content-wrapper ul li .closeWord {
+    color: #ac340f;
+    width: 20%;
+    float: right;
+    text-align: center;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+#godGateBox .content-wrapper .close-godGateBox {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 25px;
+    right: 7px;
+    background: url(../images/btns/close_b.png) no-repeat transparent;
+    background-position: center;
+    background-size: 80%;
+}
+
+#helpGateBtnWrapper {
+    width: 55px;
+    height: 56px;
+    position: fixed;
+    left: 74px;
+    bottom: 212px;
+    z-index: 9;
+}
+
+#helpGateBtnWrapper button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: url(../images/btns/helpGate.png);
+    border-radius: 50%;
+    position: absolute
+}
+
+#helpGateBtnWrapper button:hover {
+    background-position-y: -56px;
+}
+
+#helpGateBtnWrapper button:active {
+    background-position-y: -112px;
+}
+
+#ArenaChallangeBtnWrapper {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    left: 135px;
+    bottom: 212px;
+    z-index: 9;
+}
+
+#ArenaChallangeBtnWrapper button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: url(../images/btns/arenaChallange.png);
+    position: absolute;
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-position: center
+}
+
+#ArenaChallangeBtnWrapper button:hover {
+    transform: scale(1.02);
+    transition: all linear 0.1s;
+}
+
+#godGateBtnWrapper button:hover {
+    transform: scale(1.03);
+    transition: all linear 0.2s;
+}
+
+#godGateBtnWrapper .fire {
+    width: 64px;
+    height: 54px;
+    position: absolute;
+    background-image: url(../images/animation/fireBtn.png);
+    position: absolute;
+    top: 20px;
+    left: 7px;
+    z-index: -1
+}
+
+#helpGateBtnWrapper .fire-tail {
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/helpGate/fireTail.png);
+    position: absolute;
+    /*animation: antiClockwiseSpin 2.5s infinite linear;*/
+    pointer-events: none;
+}
+
+#equip-blessing {
+    background-image: url(../images/skins/palace.png);
+    background-size: 100% 100%;
+    border: none;
+    width: 96%;
+    margin-top: -24px;
+    height: 89.5%;
+    position: relative;
+}
+
+#equip-blessing .full {
+    width: 92% !important;
+    float: none;
+    position: absolute;
+    margin-left: 4%;
+    height: 85%;
+    top: 49px;
+}
+
+#equip-blessing .up-wrapper .col-1 .up .section .title,
+#equip-blessing .up-wrapper .col-3 .up .section .title {
+    color: #5e341b;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bolder;
+    margin-top: 22px;
+}
+
+#equip-blessing .up-wrapper .col-1 .up .section ul li,
+#equip-blessing .up-wrapper .col-3 .up .section ul li {
+    text-align: right;
+    font-size: 14px;
+    color: #5f8c00;
+    width: 75%;
+    margin: auto
+}
+
+#equip-blessing .up-wrapper .col-1 .up .section,
+#equip-blessing .up-wrapper .col-3 .up .section {
+    height: 100%;
+    width: 50%;
+}
+
+#equip-blessing .up-wrapper,
+#equip-blessing .up-wrapper .col-1 .up,
+#equip-blessing .up-wrapper .col-1 .down,
+#equip-blessing .up-wrapper .col-3 .up,
+#equip-blessing .up-wrapper .col-3 .down,
+#equip-blessing .down-wrapper {
+    width: 100%;
+    height: 50%;
+}
+
+#equip-blessing .up-wrapper .col-1 .down .desc,
+#equip-blessing .up-wrapper .col-3 .down .desc {
+    font-size: 14px;
+    color: #5f8c00;
+    text-align: right;
+    width: 90%;
+    margin: auto;
+    margin-top: 15px;
+}
+
+#equip-blessing .up-wrapper .col-1 .up .image-wrapper .image,
+#equip-blessing .up-wrapper .col-3 .up .image-wrapper .image {
+    height: 82%;
+    width: 93%;
+    margin: auto;
+    margin-top: 5px;
+    border-radius: 5px;
+    background-size: 100% 100%;
+}
+
+#equip-blessing .up-wrapper .col-1 .up .image-wrapper,
+#equip-blessing .up-wrapper .col-3 .up .image-wrapper {
+    width: 90%;
+    margin: auto;
+    height: 71px;
+    margin-top: 21px;
+    background-image: url(../images/back-shape/rect.png);
+    background-size: 100% auto;
+    overflow: auto;
+    background-repeat: no-repeat;
+}
+
+#equip-blessing .up-wrapper .col-1,
+#equip-blessing .up-wrapper .col-3 {
+    width: 38%;
+    height: 100%;
+    background: url(../images/background/paperCenter.jpg);
+}
+
+#equip-blessing .up-wrapper .col-2 {
+    width: 24%;
+    height: 100%;
+    background-image: url(../images/skins/solidRect.png);
+    background-size: 100% 100%;
+}
+
+#equip-blessing .up-wrapper .col-2 .arrow {
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+}
+
+#equip-blessing .up-wrapper .col-2 .arrow button {
+    width: 80px;
+    height: 30px;
+    background-size: 100% auto;
+
+    background-color: transparent;
+    margin: auto;
+    display: block;
+}
+
+#equip-blessing .up-wrapper .col-2 .arrow button:hover {
+    background-position-y: -29px;
+}
+
+#equip-blessing .up-wrapper .col-2 .arrow button:active {
+    background-position-y: -57.5px;
+}
+
+#equip-blessing .up-wrapper .col-2 .big-btn {
+    float: none;
+    margin: 15px auto;
+}
+
+#equip-blessing .down-wrapper .left {
+    width: 38%;
+    height: 96%;
+    background-image: url(../images/skins/solidSquare.png);
+    background-size: 100% 100%;
+}
+
+#equip-blessing .down-wrapper .left ul {
+    width: 90%;
+    margin: auto;
+    padding-top: 15px;
+}
+
+#equip-blessing .down-wrapper .left ul li button {
+    width: 40%;
+    height: 28px;
+    font-size: 14px;
+    color: #5e341b;
+    margin: auto;
+    margin-top: 10px;
+    display: block
+}
+
+#equip-blessing .left-content {
+    background: none
+}
+
+@keyframes antiClockwiseSpin {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+#menu-bar .left .wrapper-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url(../images/btns/bg/round_button_normal.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#menu-bar .left .wrapper-icon .icon {
+    width: 100%;
+    height: 100%;
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#menu-bar .left .wrapper-icon:hover {
+    background-image: url(../images/btns/bg/round_button_hover.png)
+}
+
+.red-btn-wide {
+
+    background-position-y: center;
+    background-position-x: left, right, center;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    background-size: auto 100%;
+}
+
+.smallAcce {
+
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.select-input {
+    background-image: url(../images/input/select-btn.png);
+    background-size: 100% 100%;
+    background-position: center;
+    min-height: 32px;
+    min-width: 160px;
+}
+
+.select-input .value {
+    width: 80%;
+    float: left;
+    text-align: center;
+}
+
+.select-input:hover {
+    background-image: url(../images/input/select-btn-h.png);
+}
+
+#move-city-to {
+    padding-top: 15px;
+}
+
+#move-city-to .header-wrapper .select-input .value {
+    line-height: 28px;
+}
+
+#move-city-to .header-wrapper .wrapper {
+    width: 84%;
+    margin: auto;
+    justify-content: space-between
+}
+
+#move-city-to .header-wrapper .wrapper .con-btn .relocate {
+    color: white;
+    font-weight: bold;
+    padding: 7px 5px
+}
+
+#move-city-to .body-wrapper .content {
+    width: 84%;
+    height: 150px;
+    background: url(../images/background/paperCenter.jpg);
+    margin: auto;
+    margin-top: 5px;
+}
+
+.select-list .option {
+    background-image: url(../images/background/column.png);
+    position: absolute;
+    background-size: 100% 100%;
+    z-index: 0;
+    height: 0px;
+}
+
+.select-list .option ul {
+    width: 85%;
+    margin: auto;
+    margin: 8px auto;
+}
+
+.select-list .option ul li {
+    text-align: center;
+    line-height: 25px;
+    background-size: 100% 100%;
+}
+
+.select-list .option ul li.selected-op {
+    color: white;
+    font-weight: bold;
+    background-image: url(../images/selelct/select-row.png);
+    text-align: center;
+    line-height: 25px;
+}
+
+.select-list .option ul li:hover {
+
+    color: white
+}
+
+#move-city-to .select-list .option {
+    width: 160px;
+    overflow: hidden;
+    background-size: 100% 100%;
+}
+
+#dialg_box.guild_dialog_box .nav_icon {
+    position: static;
+}
+
+#dialg_box.guild_dialog_box .nav_icon .guild_lead_wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#dialg_box.guild_dialog_box .nav_icon .drop-list {
+    top: 36px;
+    right: 0;
+}
+
+#msg-area .msg-body .quote::before {
+    content: '\201C';
+}
+
+#msg-area .msg-body .quote::after {
+    content: '\201D';
+}
+
+#msg-area .msg-body .quote {
+    color: black;
+    background-color: #9d6700;
+    padding: 3px 5px;
+    color: black;
+    font-weight: bold;
+    border-radius: 3px;
+    max-width: 126px;
+}
+
+#msg-area .msg-body .q-r {
+    margin-top: -8px;
+    text-indent: 140px;
+}
+
+.solidBg {
+    background-image: url(../images/skins/SolidBg.png);
+    background-size: 100% 100%;
+}
+
+#dialg_box .contributeBox .topBox {
+    height: 50%;
+}
+
+#dialg_box .contributeBox .bottomBox {
+    height: 50%;
+}
+
+#dialg_box .contributeBox .col-i {
+    width: 25%;
+    height: 100%;
+    background-image: url(../images/skins/solidRect.png);
+    background-size: 100% 100%;
+}
+
+#dialg_box .contributeBox .col-ii {
+    width: 38%;
+    height: 100%;
+    background-image: url(../images/skins/solidSquare.png);
+    background-size: 100% 100%;
+}
+
+#dialg_box .contributeBox .col-iii {
+    width: 75%;
+    height: 100%;
+    background-image: url(../images/skins/SolidBg.png);
+    background-size: 100% 100%;
+}
+
+#dialg_box .contributeBox .buttonWrapper:first-child {
+    margin-top: 15px;
+}
+
+#dialg_box .contributeBox .buttonWrapper {
+    width: 50%;
+    line-height: 25px;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList {
+    width: 100%;
+    height: 100%;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul {
+    height: 60%;
+    width: 96%;
+    margin: auto
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul li {
+    width: 20%;
+    height: 100%;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit {
+    margin: 0px 5px;
+    height: 100%;
+    overflow: hidden
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .Reqimage {
+    height: 60%
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .Reqimg {
+    height: 100%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    margin: 1px 3px;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .ReqBg {
+    height: 100%;
+    width: 100%;
+    background-image: url(../images/back-shape/rect.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.uiCheckedBox {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiUnCheckBox {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiCheckedRadio {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiUnCheckRadio {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiBtnCloseDown {
+    background-image: url(../images/BtnCover/closeDownN.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiBtnCloseDown:hover {
+    background-image: url(../images/BtnCover/closeDownH.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiBtnCloseDown:active {
+    background-image: url(../images/BtnCover/closeDownA.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uiBtnCloseDown:disabled {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.rightMark {
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .ReqAmount {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .ReqTitle {
+    line-height: 25px;
+    text-align: center;
+}
+
+#dialg_box .contributeBox .col-i .success-rate {
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center
+}
+
+#dialg_box .contributeBox .col-i .full-btn-3x {
+    width: 60%;
+    line-height: 50px;
+    margin: auto;
+    margin-top: 35px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#dialg_box .contributeBox .wordsCol {
+    font-size: 16px;
+    text-align: right;
+    margin-right: 15px;
+    line-height: 20px;
+    color: #008c00
+}
+
+#dialg_box .contributeBox .wordsCol {
+    width: 100%;
+}
+
+#dialg_box .contributeBox .ReqFixed {
+    text-align: right;
+    width: 90%;
+    margin: auto;
+    font-size: 16px;
+}
+
+#dialg_box .contributeBox .achieved {
+    color: #008c10;
+}
+
+#dialg_box .contributeBox .ReqFixed {
+    color: #a67939;
+}
+
+#dialg_box .contributeBox .not-achieved {
+    color: #EF3B3A;
+}
+
+#ContSelectedReqConf button {
+    line-height: 26px;
+    font-size: 14px;
+    width: 100px;
+    margin: auto;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
+
+#ArenaChallangeHome {
+    width: 100%;
+    height: 100%;
+}
+
+#ArenaChallangeHome .col-i {
+    width: 45%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .col-ii {
+    width: 55%;
+    height: 100%;
+    /*background-image: url(../images/skins/solidSquare.png);*/
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .col-ii .row-i {
+    width: 100%;
+    height: 40%;
+    overflow: auto;
+}
+
+#ArenaChallangeHome .col-ii .row-ii {
+    width: 100%;
+    height: 60%;
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .col-i .RankList {
+    background: url(../images/icons/bg_patern.png);
+}
+
+#ArenaChallangeHome .col-i .RankList .tr {
+    height: 37.2px;
+    display: flex;
+}
+
+#ArenaChallangeHome .col-i .RankList .tr div {
+    line-height: 37px;
+}
+
+#ArenaChallangeHome .RankList .guildIcon {
+    width: 30px;
+    height: 30px;
+}
+
+#ArenaChallangeHome .RankList .guildIcon .image-slog {
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .RankList .guildName {
+    width: 60px;
+}
+
+#ArenaChallangeHome .RankList .tr .full-btn-3x {
+    line-height: 24px;
+    padding: 0px 5px;
+}
+
+#ArenaChallangeHome .col-ii .row-i .li {
+    font-size: 16px;
+    line-height: 20px;
+    direction: rtl
+}
+
+#ArenaChallangeHome .col-ii .arenaChallangePrief {
+    width: 90%;
+    margin: auto;
+    margin-top: 15px;
+    color: #79582E
+}
+
+#ArenaChallangeHome .col-ii .arenaChallangePrief .red {
+    color: #e30c0c
+}
+
+#ArenaChallangeHome .col-ii .arenaChallangePrief .green {
+    color: #76b852
+}
+
+#ArenaChallangeHome .col-ii .arenaChallangePrief .buyBtn {
+    line-height: 25px;
+    padding: 0px 10px;
+    margin: 0px 5px;
+    color: #5e341b;
+    font-weight: bold
+}
+
+#ArenaChallangeHome .col-ii .prizeListWrapper {
+    width: 50%;
+    height: 100%;
+    background-image: url(../images/skins/solidRect.png);
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .col-ii .prizeListWrapper ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: auto;
+}
+
+#ArenaChallangeHome .col-ii .prizeListWrapper li {
+    width: 33%;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 3px;
+}
+
+#heroArenaSelectList {
+    width: 27%;
+    height: 100%;
+    background: url(../images/icons/bg_patern.png);
+    background-size: 100% 100%;
+}
+
+#ArenaChallangeHome .heroControlBtns {
+    width: 8%;
+    height: 100%;
+}
+
+#ArenaChallangeHome .heroControlBtns .border {
+    width: 7%;
+    height: 100%;
+    background-image: url(../images/border/sprite_v.png);
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+}
+
+#ArenaChallangeHome .heroControlBtns .content {
+    width: 86%;
+    height: 100%;
+    background-image: url(../images/skins/solidRect.png);
+    background-size: auto 120%;
+    background-position: -50px -50px;
+}
+
+#ArenaChallangeHome .arenaHeroList {
+    width: 25%;
+    height: 100%;
+}
+
+#ArenaChallangeHome .arenaChallangeReview {
+    width: 40%;
+    height: 100%;
+    background-image: url(../images/skins/solidRect.png);
+    background-size: auto 150%;
+    background-position: -50px -50px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .border {
+    width: 2%;
+    height: 100%;
+    background-image: url(../images/border/sprite_v.png);
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+}
+
+#ArenaChallangeHome .prize-row {
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row-reverse
+}
+
+#ArenaChallangeHome .prize-row li,
+#ArenaChallangeHome .prize-row ul {
+    float: none;
+    color: inherit;
+}
+
+#ArenaChallangeHome #selectHeroCity {
+    width: 40%;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#ArenaChallangeHome #selectHeroCity .select-list .option {
+    width: 120px;
+    background-size: 100% 100%;
+    overflow: hidden;
+    z-index: 10
+}
+
+#ArenaChallangeHome #selectHeroCity .select-input {
+    width: 74%;
+    min-width: 100px;
+    min-height: 26px;
+    line-height: 23px;
+}
+
+#ArenaChallangeSlog {
+    width: 120px;
+    height: 80px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+#ArenaChallangeSlog .slog {
+    width: 100%;
+    height: 100%;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+.goRight {
+    background-image: url(../images/btns/right.png);
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.goRight:hover {
+    background-image: url(../images/btns/right.png);
+    filter: brightness(1.15);
+}
+
+.goRight:active {
+    background-image: url(../images/btns/right.png);
+    filter: brightness(0.9);
+}
+
+.goRight:disabled {
+    background-image: url(../images/btns/right.png);
+    filter: grayscale(100%) opacity(0.5);
+}
+
+.goLeft {
+    background-image: url(../images/btns/left.png);
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.goLeft:hover {
+    background-image: url(../images/btns/left.png);
+    filter: brightness(1.15);
+}
+
+.goLeft:active {
+    background-image: url(../images/btns/left.png);
+    filter: brightness(0.9);
+}
+
+.goLeft:disabled {
+    background-image: url(../images/btns/left.png);
+    filter: grayscale(100%) opacity(0.5);
+}
+
+.goDown {
+    background-image: url(../images/btns/right.png);
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+}
+
+.goDown:hover {
+    background-image: url(../images/btns/right.png);
+    filter: brightness(1.15);
+}
+
+.goDown:active {
+    background-image: url(../images/btns/right.png);
+    filter: brightness(0.9);
+}
+
+.goDown:disabled {
+    background-image: url(../images/btns/right.png);
+    filter: grayscale(100%) opacity(0.5);
+}
+
+.goUp {
+    background-image: url(../images/btns/left.png);
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+}
+
+.goUp:hover {
+    background-image: url(../images/btns/left.png);
+    filter: brightness(1.15);
+}
+
+.goUp:active {
+    background-image: url(../images/btns/left.png);
+    filter: brightness(0.9);
+}
+
+.goUp:disabled {
+    background-image: url(../images/btns/left.png);
+    filter: grayscale(100%) opacity(0.5);
+}
+
+#ArenaChallangeHome .heroControlBtns .content .btnBlock {
+    width: 100%;
+    height: 50px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+}
+
+#ArenaChallangeHome .heroControlBtns .content .btnBlock .full-btn-2x {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    display: block;
+    display: flex;
+    align-items: center
+}
+
+#ArenaChallangeHome .heroControlBtns .content .btnBlock .cb {
+    display: block;
+    width: 100%;
+    height: 60%;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content {
+    width: 100%;
+    height: 100%;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .title {
+    width: 45%;
+    margin: auto;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .playerProfileImage {
+    width: 70%;
+    display: flex;
+    flex-flow: column;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .playerProfile {
+    margin-top: -20px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .arenaChallangeProfile {
+    width: 40%;
+    height: 100%;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .avatar-img img {
+    width: 90px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .avatar-img {
+    height: 150px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .content .avatar-name {
+    line-height: 28px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    background-image: url("../images/background/p_name_n.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 35px;
+    color: white;
+    margin-top: -20px
+}
+
+#ArenaChallangeHome .arenaChallangeReview .arenaChallangeProfile {
+    margin-top: 10px;
+    margin-right: 15px;
+    text-align: right;
+    font-size: 14px;
+    color: #79582E;
+    line-height: 24px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .arenaKingPrize {
+    width: 100%;
+    height: 170px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .arenaKingPrize .bg {
+    width: 95%;
+    height: 100%;
+    margin: auto;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .arenaKingPrize ul {
+    display: flex;
+    flex-flow: wrap;
+    margin-top: 24px;
+}
+
+#ArenaChallangeHome .arenaChallangeReview .arenaKingPrize ul li {
+    width: 25%;
+    height: 36px;
+    line-height: 36px;
+}
+
+#ArenaChallangeHome .arenaHeroList .banner-red {
+    width: 80%;
+    margin: auto;
+}
+
+#ArenaChallangeHome .tr {
+    height: 31.5px;
+}
+
+#heroArenaSelectList .heroCityList .ol {
+    height: 347px;
+    overflow: hidden
+}
+
+#ArenaChallangeRankList {
+    width: 100%;
+    height: 100%;
+}
+
+#ArenaChallangeRankList .tr {
+    height: 33px;
+    line-height: 33px;
+    font-size: 16px;
+}
+
+#ArenaChallangeHome .right-content-footer {
+    margin-top: -39px;
+}
+
+#ArenaChallangeRankList.RankList .cont {
+    display: flex;
+    margin: auto;
+    width: 150px;
+    flex-basis: content;
+}
+
+#useAttemptBox {
+    height: 20px;
+    width: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: top;
+    margin-bottom: 8px;
+}
+
+#useArenaExpBox {
+    height: 20px;
+    width: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.showCityHero {
+    width: 80%;
+    height: 60%;
+    text-align: center;
+}
+
+.showCityHero img {
+    margin: auto
+}
+
+#NavSelectList {
+    margin-top: 22px;
+    line-height: 33px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: space-around
+}
+
+#PlayerTeamWrapper {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    left: 200px;
+    bottom: 212px;
+    z-index: 9;
+}
+
+#PlayerTeamWrapper .slog {
+    width: 64px;
+    height: 64px;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#PlayerTeamWrapper .NoTeamIcon {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: url(../images/btns/PlayerTeamBtn-n.png);
+    position: absolute;
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-position: center
+}
+
+#PlayerTeamWrapper .NoTeamIcon:hover {
+    background-image: url(../images/btns/PlayerTeamBtn-h.png);
+}
+
+#PlayerTeamWrapper .NoTeamIcon:active {
+    background-image: url(../images/btns/PlayerTeamBtn-a.png);
+}
+
+#TeamBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row;
+}
+
+#TeamBoxLeft {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+#TeamProfileBox {
+    width: 100%;
+    height: 50%;
+    background-image: url(../images/skins/solidSquare.png);
+    background-size: 100% 100%;
+}
+
+#TeamProfileBox .ProfileData {
+    height: 77%;
+    background-size: 100% 100%;
+    display: flex;
+    flex-flow: row;
+    width: 95%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+#TeamProfileBox .TeamSlog {
+    height: 100%;
+    width: 45%;
+}
+
+#TeamProfileBox .SlogContainer {
+    height: 100%;
+    width: 100%;
+    background-image: url(../images/background/frame.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#TeamProfileBox .SlogContainer .slog {
+    width: 100%;
+    height: 150px;
+    background-position: center;
+    background-size: 80% auto;
+    background-repeat: no-repeat;
+}
+
+#TeamProfileBox .TeamListData {
+    width: 55%;
+    height: 100%;
+}
+
+#TeamProfileBox .TeamListData ul {
+    width: 100%;
+}
+
+#TeamProfileBox .TeamListData ul li {
+    width: 90%;
+    margin-left: 10px;
+    margin-top: 5px;
+    line-height: 32px;
+    height: 32px;
+    background-image: url(../images/background/profile_data.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-flow: row;
+}
+
+#TeamProfileBox .TeamListData ul li .icon {
+    width: 25%;
+    height: 100%;
+    background-position: center;
+    background-size: 60% auto;
+    background-repeat: no-repeat;
+}
+
+#TeamProfileBox .TeamListData ul li .title {
+    font-size: 14px;
+    margin-left: 5px;
+    color: white;
+}
+
+#TeamProfileBox .TeamName .name {
+    width: 60%;
+    display: block;
+    margin: auto;
+    background-image: url(../images/background/p_name_n.png);
+    height: 32px;
+    text-align: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+#TeamProfileBox .TeamName .name div {
+    margin-top: -8px;
+    font-size: 18px;
+}
+
+#TeamIntroBox {
+    width: 100%;
+    height: 50%;
+    background-image: url(../images/skins/solidSquare.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+#TeamIntroBox .Header {
+    background-image: url(../images/border/border-h_.png);
+    background-size: 100% 100%;
+    width: 94%;
+    height: 24px;
+    margin: auto;
+    margin-top: 7px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+#TeamIntroBox .Body {
+    width: 94%;
+    margin: auto;
+    text-align: center;
+}
+
+#TeamBoxRight {
+    width: 65%;
+    height: 100%;
+    background: url(../images/background/paperCenter.jpg);
+}
+
+#TeamBoxRight .PlayerList {
+    width: 100%;
+    height: 100%;
+}
+
+#TeamBoxRight .PlayerList .Header {
+    background-image: url(../images/border/border-h_.png);
+    background-size: 100% 100%;
+    width: 100%;
+    height: 30px;
+    margin: auto;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+#TeamBoxRight .PlayerList .Body .LeaderLi .LPlayerAvaterBg {
+    width: 124px;
+    height: 124px;
+    margin: auto;
+    background-image: url(../images/background/frame.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: auto;
+}
+
+#TeamBoxRight .PlayerList .Body .LeaderLi .LPlayerAvater {
+    width: 82%;
+    height: 82%;
+    border-radius: 50%;
+
+    background-size: 100% 100%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#TeamBoxRight .PlayerList .Body .LeaderLi .LPlayerTitle {
+    margin-top: -14px;
+    ;
+
+    background-size: 100% 700%;
+    width: 80px;
+    float: right;
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    height: 24px;
+}
+
+#TeamBoxRight .PlayerList .Body .LeaderLi .LPlayerName {
+    width: 150px;
+    height: 36px;
+    background-image: url(../images/background/p_name_n.png);
+    text-align: center;
+    line-height: 24px;
+    margin: auto;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi {
+    flex-flow: row;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi li {
+    margin: 0px 10px;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerAvaterBg {
+    width: 124px;
+    height: 62px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerAvater {
+    width: 124px;
+    height: 100%;
+    border-radius: 5px;
+    background-size: 100% 100%;
+    margin: auto;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerTitle {
+    margin-top: -22px;
+
+    background-size: 100% 700%;
+    width: 80px;
+    float: right;
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    height: 24px;
+}
+
+#TeamBoxRight .PlayerList .Body .TeamMateLi .PlayerName {
+    width: 150px;
+    height: 30px;
+    background-image: url(../images/btns/ui_timer.png);
+    text-align: center;
+    line-height: 30px;
+    margin: auto;
+    background-size: 100% 100%;
+    margin-top: 10px;
+}
+
+#TeamBoxRight .TeamEneFrieList .tr {
+    height: 40px !important;
+}
+
+#TeamBoxRight .tc-team {
+    width: 25%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#TeamBoxRight .team-name {
+    width: 60%;
+    height: 100%;
+    line-height: 40px;
+    font-size: 16px;
+}
+
+#TeamBoxRight .team-slog {
+    height: 100%;
+    width: 40%;
+}
+
+#TeamBoxRight .team-slog .slog {
+    background-size: auto 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+#TeamBoxRight .tc-leader {
+    width: 25%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#TeamBoxRight .tc-leader .image {
+    width: 35%;
+    height: 100%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#TeamBoxRight .tc-leader .image .border {
+    width: 100%;
+    height: 100%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../images/border/RectBorder_a.png);
+}
+
+#TeamBoxRight .tc-leader .name {
+    width: 65%;
+    height: 100%;
+    line-height: 40px;
+    text-align: center;
+}
+
+#TeamBoxRight .tc-pres {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#TeamBoxRight .tc-honor {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#TeamBoxRight .tc-memNum {
+    width: 10%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#TeamBoxRight .tc-show {
+    width: 20%;
+    height: 100%;
+    display: block;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#TeamBoxRight .tc-show .btn {
+    width: 40%;
+    line-height: 25px;
+}
+
+#TeamBoxLeft .TeamInvJoinBox {
+    width: 100%;
+    height: 50%;
+    background-image: url(../images/skins/solidSquare.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .Header {
+    background-image: url(../images/border/border-h_.png);
+    background-size: 100% 100%;
+    width: 94%;
+    height: 24px;
+    margin: auto;
+    margin-top: 7px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .Body {
+    width: 94%;
+    margin: auto;
+    text-align: center;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .Body .tr {
+    height: 32px !important;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .tc-player-avater {
+    width: 20%;
+    height: 100%;
+    background-size: 90% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .tc-player-avater {
+    width: 20%;
+    height: 100%;
+    background-size: 90% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .tc-player-name {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .tc-edit-req {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#TeamBoxLeft .TeamInvJoinBox .tc-edit-req .btn {
+    line-height: 24px;
+    width: 30%;
+    ;
+}
+
+#RankList {
+    width: 100%;
+}
+
+#RankList.RankPage .tc-team {
+    width: 20%;
+}
+
+#RankList.RankPage .tr {
+    height: 37px !important;
+}
+
+#RankList.RankPage .tc-rank,
+#RankList.RankPage .tc-show {
+    width: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#RankList.RankPage .tc-leader {
+    width: 22%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#RankList.RankPage .tc-pres,
+#RankList.RankPage .tc-honor,
+#RankList.RankPage .tc-memNum {
+    width: 14%;
+}
+
+#RankList.RankPage .tc-leader .image {
+    width: 30%;
+    height: 80%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+
+#RankList.RankPage .tc-show .btn {
+    width: 80%;
+    display: block;
+}
+
+#DialBoxHeader {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#BesideNavBtns {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#BesideNavBtns .NavContBtns {
+    width: 780px;
+    height: 34px;
+    margin-top: -9px;
+    background-image: url(../images/background/sitenav-bar-bg.jpg);
+    background-size: 100% 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#BesideNavBtns .NavContBtns .nav-arrows {
+    align-items: center;
+}
+
+#goToBtnRankCo .btn {
+    width: 60px;
+    height: 28px;
+}
+
+#goToBtnRankCo .input {
+    height: 22px;
+    width: 44px;
+}
+
+#RankSearchSelect .select-input {
+    height: 24px;
+    min-height: 24px;
+    line-height: 24px;
+    min-width: 100px;
+    width: 100px;
+}
+
+#RankList .Header {
+    background-image: url(../images/border/border-h_.png);
+    background-size: 100% 100%;
+    width: 100%;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+#RankList .tr {
+    height: 37px !important;
+}
+
+#RankList .tc-team {
+    width: 25%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#RankList .team-name {
+    width: 60%;
+    height: 100%;
+    line-height: 40px;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+#RankList .team-slog {
+    height: 100%;
+    width: 40%;
+}
+
+#RankList .team-slog .slog {
+    background-size: auto 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+#RankList .tc-leader {
+    width: 25%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#RankList .tc-leader .image {
+    width: 35%;
+    height: 100%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#RankList .tc-leader .image .border {
+    width: 100%;
+    height: 100%;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../images/border/RectBorder_a.png);
+}
+
+#RankList .tc-leader .name {
+    width: 65%;
+    height: 100%;
+    line-height: 40px;
+    text-align: center;
+}
+
+#RankList .tc-pres {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#RankList .tc-honor {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#RankList .tc-memNum {
+    width: 10%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#RankList .tc-show {
+    width: 20%;
+    height: 100%;
+    display: block;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#RankList .tc-hero-lvl {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50% auto;
+}
+
+#RankList .tr .tc-hero-lvl {
+    color: white;
+    font-weight: bold;
+    background-image: url(../images/hero/icon_Lv.png);
+}
+
+#RankList .tc-hero-point_a {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #008c10;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#RankList .tc-hero-point_b {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #b43d02;
+}
+
+#RankList .tc-hero-point_c {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0065ac;
+}
+
+#RankList .tc-show .btn {
+    width: 40%;
+    line-height: 25px;
+}
+
+#TeamNavBarList .drop-list {
+    margin-top: 54px;
+}
+
+#TeamNavBarList .btn {
+    margin-top: 25px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#save-t-intro {
+    width: 100px;
+    margin: auto;
+}
+
+#PlayerTeamInvList .btnList,
+#PlayerTeamReqList .btnList {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+}
+
+#PlayerTeamInvList .btn,
+#PlayerTeamReqList .btn {
+    height: 22px;
+    width: 40px;
+}
+
+#send-team-req .full-btn {
+    padding: 0px 15px;
+}
+
+.team-ann {
+    color: #074206;
+    font-size: 14px;
+}
+
+.PlayerAvater .playerSettingIcon {
+    height: 30px;
+    margin-bottom: -30px;
+}
+
+.PlayerAvater .playerSettingIcon .btn {
+    height: 30px;
+    width: 30px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    float: right;
+    margin-right: 3px;
+    margin-top: 3px;
+}
+
+.PlayerAvater .settingList {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 90px;
+    margin-top: 30px;
+    display: none;
+}
