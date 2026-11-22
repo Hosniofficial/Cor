@@ -36889,6 +36889,16 @@ Caesar.World.Map.deltaDrag = {
 };
 
 
+function clearCityFlagEntities(unit) {
+    if (unit.CityFlagEntite)
+        unit.CityFlagEntite.destroy();
+    delete unit.CityFlagEntite;
+
+    if (unit.CityFlagTextEntite)
+        unit.CityFlagTextEntite.destroy();
+    delete unit.CityFlagTextEntite;
+}
+
 
 Caesar.World.Map.DeletUnit = function(xCoord, yCoord) {
     var Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
@@ -36902,10 +36912,7 @@ Caesar.World.Map.DeletUnit = function(xCoord, yCoord) {
         delete(Unit.UnitFire);
     }
 
-    if (Unit.CityFlagEntite) {
-        Unit.CityFlagEntite.destroy();
-        delete Unit.CityFlagEntite;
-    }
+    clearCityFlagEntities(Unit);
 
     if (Unit.SecondaryFlagEntite) {
         Unit.SecondaryFlagEntite.destroy();
@@ -49661,7 +49668,7 @@ $("#WorldCity").click(function() {
 
                 delete unit.entite;
                 delete unit.floor;
-                delete unit.CityFlagEntite;
+                clearCityFlagEntities(unit);
                 if (unit.SecondaryFlagEntite)
                     unit.SecondaryFlagEntite.destroy();
                 if (unit.SecondaryFlagExpiryTimer)

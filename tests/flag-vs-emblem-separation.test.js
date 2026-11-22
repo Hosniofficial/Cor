@@ -134,19 +134,12 @@ test('Animation.cityFlag renders player flag text on first creation and subseque
     const fnSource = clientSource.slice(animFlagStart, animFlagEnd);
 
     const textPositions = [];
-    const textEntity = {
-        setOrigin() { return this; },
-        setDepth() { return this; },
-        setPosition(x, y) {
-            textPositions.push([x, y]);
-            return this;
-        },
-        setText() { return this; }
-    };
+    const textEntities = [];
     const flagEntity = {
         setOrigin() { return this; },
         play() { return this; },
-        setDepth() { return this; }
+        setDepth() { return this; },
+        destroy() {}
     };
     const unit = {
         ut: 3,
@@ -166,7 +159,19 @@ test('Animation.cityFlag renders player flag text on first creation and subseque
                         sprite() { return flagEntity; },
                         text(x, y) {
                             textPositions.push([x, y]);
-                            return textEntity;
+                            const entity = {
+                                destroyed: false,
+                                setOrigin() { return this; },
+                                setDepth() { return this; },
+                                setPosition(x, y) {
+                                    textPositions.push([x, y]);
+                                    return this;
+                                },
+                                setText() { return this; },
+                                destroy() { this.destroyed = true; }
+                            };
+                            textEntities.push(entity);
+                            return entity;
                         }
                     }
                 }
@@ -181,9 +186,23 @@ test('Animation.cityFlag renders player flag text on first creation and subseque
         clearTimeout() {}
     };
 
+    const clearEntitiesStart = clientSource.indexOf('function clearCityFlagEntities(unit) {');
+    assert.ok(clearEntitiesStart >= 0, 'clearCityFlagEntities helper must exist');
+    const clearEntitiesEnd = clientSource.indexOf('\n}', clearEntitiesStart) + 2;
+    assert.ok(clearEntitiesEnd > clearEntitiesStart, 'clearCityFlagEntities helper must exist');
+    const cleanupSource = clientSource.slice(clearEntitiesStart, clearEntitiesEnd);
+
     vm.runInNewContext(fnSource, context);
+    vm.runInNewContext(cleanupSource, context);
     context.Animation.cityFlag();
+    context.Animation.cityFlag();
+    const firstTextEntity = unit.CityFlagTextEntite;
+    context.clearCityFlagEntities(unit);
     context.Animation.cityFlag();
 
-    assert.deepEqual(textPositions, [[147, 249], [147, 249]]);
+    assert.equal(firstTextEntity.destroyed, true);
+    assert.equal(textEntities.length, 2, 'Returning to the world map must create a fresh player flag text entity');
+    assert.notEqual(unit.CityFlagTextEntite, firstTextEntity);
+    assert.deepEqual(textPositions, [[147, 249], [147, 249], [147, 249]]);
+    assert.ok(clientSource.includes('clearCityFlagEntities(unit);'), 'Leaving the world scene must clear stale flag entities');
 });
