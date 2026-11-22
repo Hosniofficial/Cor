@@ -50221,6 +50221,18 @@ Animation.cityFlag = function() {
         const x = Caesar.World.Map.posX(xCoord, yCoord);
         const y = Caesar.World.Map.posY(xCoord, yCoord);
         const z = Caesar.World.Map.posZ(xCoord, yCoord);
+        let Pos = {
+            x: x + 36,
+            y: y + 50,
+            z: z + 10
+        };
+        if (Number(Unit.ut) === WUT_CITY_LVL_3)
+            Pos = {
+                x: x + 30,
+                y: y + 45,
+                z: z + 10
+            };
+
         if (!Unit.CityFlagEntite) {
             let FramName = "CityFlag.Nut";
             if (Unit.idPlayer == Caesar.DPlayer.Player.id_player)
@@ -50240,18 +50252,6 @@ Animation.cityFlag = function() {
                     }
                 }
             }
-
-            let Pos = {
-                x: x + 36,
-                y: y + 50,
-                z: z + 10
-            };
-            if (Number(Unit.ut) === WUT_CITY_LVL_3)
-                Pos = {
-                    x: x + 30,
-                    y: y + 45,
-                    z: z + 10
-                };
 
             Unit.CityFlagEntite = Caesar.GE.WorldScene.add.sprite(Pos.x, Pos.y, 'flagOverCity').setOrigin(0, 0).play(FramName).setDepth(Pos.z);
         }

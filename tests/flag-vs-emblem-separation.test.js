@@ -126,3 +126,64 @@ test('Animation.cityFlag handles both playerFlag 3-letter text and secondary 7-d
     assert.ok(animFlagSnippet.includes('SecondaryFlagEntite'), 'Animation.cityFlag must maintain SecondaryFlagEntite for national badge');
     assert.ok(!animFlagSnippet.includes('Unit.CityFlagTag'), 'city emblems must not fall back to a city-specific text tag');
 });
+
+test('Animation.cityFlag renders player flag text on first creation and subsequent refreshes', () => {
+    const animFlagStart = clientSource.indexOf('Animation.cityFlag = function() {');
+    const animFlagEnd = clientSource.indexOf('Animation.cityColonizerFlag = function()', animFlagStart);
+    assert.ok(animFlagEnd > animFlagStart, 'End of Animation.cityFlag block found');
+    const fnSource = clientSource.slice(animFlagStart, animFlagEnd);
+
+    const textPositions = [];
+    const textEntity = {
+        setOrigin() { return this; },
+        setDepth() { return this; },
+        setPosition(x, y) {
+            textPositions.push([x, y]);
+            return this;
+        },
+        setText() { return this; }
+    };
+    const flagEntity = {
+        setOrigin() { return this; },
+        play() { return this; },
+        setDepth() { return this; }
+    };
+    const unit = {
+        ut: 3,
+        idPlayer: 42,
+        CityFlag: '0',
+        CityFlagExpiresAt: 0
+    };
+    const context = {
+        Animation: {},
+        Caesar: {
+            DPlayer: { Player: { id_player: 42, city_flag: 'ABC' } },
+            Guild: { GuildData: null, Allay: [] },
+            GE: {
+                WorldScene: {
+                    children: { list: [{ data: { get: key => key === 'xCoord' ? 1 : 2 } }] },
+                    add: {
+                        sprite() { return flagEntity; },
+                        text(x, y) {
+                            textPositions.push([x, y]);
+                            return textEntity;
+                        }
+                    }
+                }
+            },
+            World: { Map: { posX: () => 100, posY: () => 200, posZ: () => 5 } }
+        },
+        WorldUnit: {
+            getWorldUnit: () => unit,
+            isCity: () => true
+        },
+        WUT_CITY_LVL_3: 3,
+        clearTimeout() {}
+    };
+
+    vm.runInNewContext(fnSource, context);
+    context.Animation.cityFlag();
+    context.Animation.cityFlag();
+
+    assert.deepEqual(textPositions, [[147, 249], [147, 249]]);
+});
