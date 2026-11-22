@@ -581,22 +581,6 @@ class ItemController {
                     return;
                 }
 
-                $flagTag = $_REQUEST['flagTag'] ?? null;
-                if (!is_string($flagTag)) {
-                    sendJson(['state' => 'error_invalid_flag_tag']);
-                    return;
-                }
-                $flagTag = trim($flagTag);
-                if (preg_match('/\A\p{L}{3}\z/u', $flagTag) !== 1) {
-                    sendJson(['state' => 'error_invalid_flag_tag']);
-                    return;
-                }
-                $flagTag = mb_strtoupper($flagTag, 'UTF-8');
-                if (preg_match('/\A\p{L}{3}\z/u', $flagTag) !== 1) {
-                    sendJson(['state' => 'error_invalid_flag_tag']);
-                    return;
-                }
-
                 $db->beginTransaction();
                 try {
                     $cityStmt = $db->prepare(
@@ -606,6 +590,7 @@ class ItemController {
                     if ($cityStmt->fetchColumn() === false) {
                         $db->rollBack();
                         sendJson(['state' => 'error_auth']);
+                        return;
                     }
 
                     $deduct = $db->prepare(
@@ -617,6 +602,7 @@ class ItemController {
                     if ($deduct->rowCount() !== 1) {
                         $db->rollBack();
                         sendJson(['state' => 'error_no_item']);
+                        return;
                     }
 
                     $db->prepare(
@@ -625,9 +611,9 @@ class ItemController {
                     )->execute([$playerId, $item]);
                     $db->prepare(
                         'UPDATE `city`
-                         SET `flag` = ?, `flag_expires_at` = ?, `flag_tag` = ?
+                         SET `flag` = ?, `flag_expires_at` = ?, `flag_tag` = \'\'
                          WHERE `id_city` = ? AND `id_player` = ?'
-                    )->execute([$item, $now + (7 * 86400), $flagTag, $idCity, $playerId]);
+                    )->execute([$item, $now + (7 * 86400), $idCity, $playerId]);
                     $db->commit();
 
                     $freshCityStmt = $db->prepare('SELECT * FROM `city` WHERE `id_city` = ?');
@@ -644,6 +630,7 @@ class ItemController {
                         'FlagExpiresAt' => (int)$freshCity['flag_expires_at'],
                         'FlagTag' => (string)$freshCity['flag_tag'],
                     ]);
+                    return;
                 } catch (Throwable $error) {
                     if ($db->inTransaction()) {
                         $db->rollBack();

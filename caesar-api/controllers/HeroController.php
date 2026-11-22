@@ -340,6 +340,27 @@ class HeroController {
             sendJson(['state' => 'error_3']);
         }
 
+        $frontSlots   = ['f_1', 'f_2', 'f_3'];
+        $backSlots    = ['b_1', 'b_2', 'b_3'];
+        $frontAllowed = [1, 2, 3]; // مشاة، فرسان، مدرعين
+        $backAllowed  = [3, 4, 5, 6]; // مدرعين، رماة، مقاليع، منجنيق
+
+        if (in_array($heroPlace, $frontSlots, true) && !in_array($solType, $frontAllowed, true)) {
+            sendJson([
+                'state' => 'error_slot_restricted',
+                'msg'   => 'الصفوف الأمامية للبطل مخصصة للمشاة والفرسان والمدرعين فقط'
+            ]);
+            return;
+        }
+
+        if (in_array($heroPlace, $backSlots, true) && !in_array($solType, $backAllowed, true)) {
+            sendJson([
+                'state' => 'error_slot_restricted',
+                'msg'   => 'الصفوف الخلفية للبطل مخصصة للرماة والمقاليع والمنجنيق والمدرعين فقط'
+            ]);
+            return;
+        }
+
         // Fetch City
         if ($idCity <= 0) {
             $cStmt = $db->query("SELECT id_city FROM city ORDER BY id_city ASC LIMIT 1");
@@ -504,6 +525,27 @@ class HeroController {
 
         if ($toNum > 0 && $toType !== $fromType) {
             sendJson(['state' => 'error_3']);
+        }
+
+        $frontSlots   = ['f_1', 'f_2', 'f_3'];
+        $backSlots    = ['b_1', 'b_2', 'b_3'];
+        $frontAllowed = [1, 2, 3];
+        $backAllowed  = [3, 4, 5, 6];
+
+        if (in_array($armyPlaceTo, $frontSlots, true) && !in_array($fromType, $frontAllowed, true)) {
+            sendJson([
+                'state' => 'error_slot_restricted',
+                'msg'   => 'الصفوف الأمامية للبطل مخصصة للمشاة والفرسان والمدرعين فقط'
+            ]);
+            return;
+        }
+
+        if (in_array($armyPlaceTo, $backSlots, true) && !in_array($fromType, $backAllowed, true)) {
+            sendJson([
+                'state' => 'error_slot_restricted',
+                'msg'   => 'الصفوف الخلفية للبطل مخصصة للرماة والمقاليع والمنجنيق والمدرعين فقط'
+            ]);
+            return;
         }
 
         if ($idHeroFrom !== $idHeroTo) {

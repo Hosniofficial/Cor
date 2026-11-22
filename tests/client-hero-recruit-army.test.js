@@ -364,3 +364,87 @@ test('city army totals include only troops assigned to heroes currently in that 
     cityProfile.refresh_army_view();
     assert.equal(rendered.army_a, '100');
 });
+
+test('hero army drop restricts front slots to infantry/cavalry/armored and back slots to ranged/siege/armored', () => {
+    let failedMessages = [];
+    let dialogOpened = false;
+    const hero = {
+        Hero: { id_hero: 7, in_city: 1 },
+        Army: { f_1_type: 0, f_1_num: 0, b_1_type: 0, b_1_num: 0 }
+    };
+    const context = {
+        Caesar: {
+            CurrentCity: { City: { console: 7, army_a: 100, army_d: 100, army_c: 100 } },
+            DPlayer: { Heros: [hero] },
+            Hero: { getHero: () => hero },
+            HeroArmy: {
+                StartDialogBox: () => { dialogOpened = true; }
+            }
+        },
+        soldier_cap: { 1: 1, 3: 2, 4: 1 },
+        getAvailPlaces: () => 1000,
+        alert_box: {
+            confirmMessage() {},
+            failMessage(msg) { failedMessages.push(msg); }
+        }
+    };
+
+    const availabilityStart = clientSource.indexOf('function heroAvailableForTask(id_hero) {');
+    const availabilityEnd = clientSource.indexOf('\n}\n/*', availabilityStart) + 2;
+    const transferStart = clientSource.indexOf(
+        'Caesar.HeroArmy.dropArmyToHero = function(DragPlace, DropPlace) {'
+    );
+    const transferEnd = clientSource.indexOf(
+        '\n\n\nCaesar.HeroArmy.dropArmyToCity = function',
+        transferStart
+    );
+    vm.runInNewContext(
+        `${clientSource.slice(availabilityStart, availabilityEnd)}\n${clientSource.slice(transferStart, transferEnd)}`,
+        context
+    );
+
+    const makeDrag = (type, place) => ({
+        attr: name => {
+            if (name === 'army-type') return `sol-${type}`;
+            if (name === 'data-drag-place') return 'city';
+            if (name === 'data-army-place') return place;
+            return undefined;
+        }
+    });
+
+    const makeDrop = place => ({
+        attr: name => {
+            if (name === 'data-army-place') return place;
+            if (name === 'data-id-hero') return '7';
+            return undefined;
+        }
+    });
+
+    // 1. Archers (type 4) cannot drop into front slot f_1
+    dialogOpened = false;
+    failedMessages = [];
+    const rFrontArchers = context.Caesar.HeroArmy.dropArmyToHero(makeDrag(4, 'army_d'), makeDrop('f_1'));
+    assert.equal(rFrontArchers, false);
+    assert.equal(dialogOpened, false);
+    assert.ok(failedMessages.some(m => m.includes('الصفوف الأمامية')));
+
+    // 2. Infantry (type 1) cannot drop into back slot b_1
+    dialogOpened = false;
+    failedMessages = [];
+    const rBackInfantry = context.Caesar.HeroArmy.dropArmyToHero(makeDrag(1, 'army_a'), makeDrop('b_1'));
+    assert.equal(rBackInfantry, false);
+    assert.equal(dialogOpened, false);
+    assert.ok(failedMessages.some(m => m.includes('الصفوف الخلفية')));
+
+    // 3. Armored (type 3) CAN drop into front slot f_1
+    dialogOpened = false;
+    failedMessages = [];
+    context.Caesar.HeroArmy.dropArmyToHero(makeDrag(3, 'army_c'), makeDrop('f_1'));
+    assert.equal(dialogOpened, true);
+
+    // 4. Armored (type 3) CAN drop into back slot b_1
+    dialogOpened = false;
+    failedMessages = [];
+    context.Caesar.HeroArmy.dropArmyToHero(makeDrag(3, 'army_c'), makeDrop('b_1'));
+    assert.equal(dialogOpened, true);
+});

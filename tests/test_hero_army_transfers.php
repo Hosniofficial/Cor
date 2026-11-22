@@ -39,7 +39,7 @@ $db->exec('CREATE TABLE hero_medal (
 $db->exec("INSERT INTO city_hero VALUES
     (1, 3, 7, 1, 0, 20, 0),
     (2, 3, 7, 1, 1, 20, 0)");
-$db->exec('INSERT INTO hero_army (id_hero, id_player, f_1_type, f_1_num) VALUES (1, 7, 1, 50)');
+$db->exec('INSERT INTO hero_army (id_hero, id_player, f_1_type, f_1_num) VALUES (1, 7, 3, 50)');
 $db->exec('INSERT INTO hero_army (id_hero, id_player) VALUES (2, 7)');
 $db->exec('INSERT INTO player_edu VALUES (7, 0)');
 $db->exec('INSERT INTO hero_medal (id_hero) VALUES (1), (2)');
@@ -79,6 +79,24 @@ function moveHeroArmy(PDO $db, int $fromHero, int $toHero, string $fromPlace, st
     throw new RuntimeException('Army transfer did not return JSON');
 }
 
+function moveArmyFromCity(PDO $db, string $armyType, string $heroPlace): array {
+    $_REQUEST = [
+        'idCity' => 3,
+        'idHero' => 1,
+        'amount' => 1,
+        'ArmyPlace' => $heroPlace,
+        'ArmyType' => $armyType
+    ];
+
+    try {
+        HeroController::transArmyFromCityToHero($db);
+    } catch (HeroArmyTransferTestResponse $response) {
+        return $response->payload;
+    }
+
+    throw new RuntimeException('City-to-hero army transfer did not return JSON');
+}
+
 $result = moveHeroArmy($db, 1, 2, 'f_1', 'b_2', 20);
 if (($result['state'] ?? null) !== 'ok'
     || (int)$result['HeroArmyFrom']['f_1_num'] !== 30
@@ -93,11 +111,34 @@ if (($result['state'] ?? null) !== 'ok'
     throw new RuntimeException('A full-capacity hero should be able to rearrange troops between rows');
 }
 
-$db->exec('UPDATE hero_army SET b_2_num = 0, b_1_type = 1, b_1_num = 40000 WHERE id_hero = 2');
-$db->exec('UPDATE hero_army SET f_1_type = 1, f_1_num = 10 WHERE id_hero = 1');
+$db->exec('UPDATE hero_army SET b_2_num = 0, b_1_type = 3, b_1_num = 40000 WHERE id_hero = 2');
+$db->exec('UPDATE hero_army SET f_1_type = 3, f_1_num = 10 WHERE id_hero = 1');
 $result = moveHeroArmy($db, 1, 2, 'f_1', 'b_3', 1);
 if (($result['state'] ?? null) !== 'error_4') {
     throw new RuntimeException('A transfer exceeding the destination hero capacity should be rejected');
+}
+
+// Verify slot restrictions: Archers cannot move to front row, Infantry cannot move to back row
+$db->exec('UPDATE hero_army SET b_1_type = 4, b_1_num = 100 WHERE id_hero = 1');
+$result = moveHeroArmy($db, 1, 1, 'b_1', 'f_2', 10);
+if (($result['state'] ?? null) !== 'error_slot_restricted') {
+    throw new RuntimeException('Archers must not be allowed in front slots f_1..f_3');
+}
+
+$db->exec('UPDATE hero_army SET f_1_type = 1, f_1_num = 100 WHERE id_hero = 1');
+$result = moveHeroArmy($db, 1, 1, 'f_1', 'b_2', 10);
+if (($result['state'] ?? null) !== 'error_slot_restricted') {
+    throw new RuntimeException('Infantry must not be allowed in back slots b_1..b_3');
+}
+
+$result = moveArmyFromCity($db, 'army_d', 'f_1');
+if (($result['state'] ?? null) !== 'error_slot_restricted') {
+    throw new RuntimeException('City archers must not be allowed in front slots f_1..f_3');
+}
+
+$result = moveArmyFromCity($db, 'army_a', 'b_1');
+if (($result['state'] ?? null) !== 'error_slot_restricted') {
+    throw new RuntimeException('City infantry must not be allowed in back slots b_1..b_3');
 }
 
 echo "Hero army transfer tests passed\n";

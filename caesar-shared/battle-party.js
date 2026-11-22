@@ -1,4 +1,11 @@
 const ARMY_SLOTS = ['f_1', 'f_2', 'f_3', 'b_1', 'b_2', 'b_3'];
+const FRONT_SLOTS = ['f_1', 'f_2', 'f_3'];
+const BACK_SLOTS = ['b_1', 'b_2', 'b_3'];
+const TYPE_INFANTRY = 1;
+const TYPE_CAVALRY = 2;
+const TYPE_ARMORED = 3;
+const TYPE_ARCHERS = 4;
+const TYPE_SPIES = 7;
 const ARMY_CAPACITY = { 1: 40, 2: 100, 3: 120, 4: 25, 5: 35, 6: 75, 7: 1 };
 const UNIT_EXP_WEIGHTS = { 1: 4, 2: 18, 3: 36, 4: 5, 5: 20, 6: 150, 7: 6 };
 const NPC_DEFENDER_SLOT_ORDER = [1, 2, 4, 3, 5, 6, 7];
@@ -110,10 +117,15 @@ function simulateTacticalCombat(attackers, defenderTroops, options = {}) {
         if (!equipmentBonuses.length) continue;
         const equipment = getEquipmentCombatStats(state.member);
         const side = state.member.side === 1 ? 'المهاجم' : 'المدافع';
-        roundsLog.push(
-            `معدات بطل ${side} (${equipmentBonuses.length} قطع مجهزة) منحت الجيش تعزيزات حربية: ` +
-            `هجوم +${equipment.attack}، دفاع +${equipment.defence}، حيوية +${equipment.vitality}، ضرر +${equipment.damage}.`
-        );
+        let equipLog = `معدات بطل ${side} (${equipmentBonuses.length} قطع مجهزة) منحت الجيش تعزيزات حربية: ` +
+            `هجوم +${equipment.attack}، دفاع +${equipment.defence}، حيوية +${equipment.vitality}، ضرر +${equipment.damage}.`;
+        const specialFeatures = [];
+        if (state.combat.spBarrage > 0) specialFeatures.push(`وابل السهام (${state.combat.spBarrage}x)`);
+        if (state.combat.spShield > 0) specialFeatures.push(`الدرع (${state.combat.spShield}x)`);
+        if (specialFeatures.length > 0) {
+            equipLog += ` [الخواص التكتيكية المفعلة: ${specialFeatures.join('، ')}]`;
+        }
+        roundsLog.push(equipLog);
     }
 
     let roundsCount = 0;
@@ -239,12 +251,25 @@ function getMemberCombatProfile(member) {
     let defense = (Number(hero.point_c) || 0) + (Number(hero.point_c_plus) || 0);
     if (hero.medalDenActive) bravery += Math.ceil(bravery * 0.25);
     if (hero.medalLeoActive) defense += Math.ceil(defense * 0.25);
+
+    const spCounts = (member.equipmentBonuses || []).reduce((counts, bonus) => {
+        const sp = Number(bonus.sp_attr) || 0;
+        if (sp === 1 || sp === 2) {
+            counts.barrage = (counts.barrage || 0) + 1;
+        } else if (sp === 3) {
+            counts.shield = (counts.shield || 0) + 1;
+        }
+        return counts;
+    }, { barrage: 0, shield: 0 });
+
     return {
         attackModifier: 1 + (bravery + level * 2 + equipment.attack) / 100,
         defenseModifier: Math.max(0.01, 1 + (defense + level * 2 + equipment.defence) / 100),
         equipmentDamage: equipment.damage * 12 + equipment.break * 8 + equipment.strike * 5,
         equipmentHp: equipment.vitality * 10 + equipment.anti_break * 8 + equipment.immunity * 6,
-        equipmentBonuses: member.equipmentBonuses || []
+        equipmentBonuses: member.equipmentBonuses || [],
+        spBarrage: spCounts.barrage,
+        spShield: spCounts.shield
     };
 }
 
@@ -286,7 +311,17 @@ function getMemberAttackPowers(members, soldierStats) {
             const attack = Number(soldierStats[type] && soldierStats[type].att) || 0;
             if (!type || !amount || !attack) continue;
             hasTroops = true;
-            power += amount * attack * state.combat.attackModifier;
+
+            let slotModifier = state.combat.attackModifier;
+
+            // خاصية: وابل السهام (الموحدة للمعدات - تمنح الرماة تعزيز هجومي بنسبة +25% لكل قطعة)
+            if (state.combat.spBarrage > 0) {
+                if (type === TYPE_ARCHERS) {
+                    slotModifier *= (1 + 0.25 * state.combat.spBarrage);
+                }
+            }
+
+            power += amount * attack * slotModifier;
         }
         if (hasTroops) power += state.combat.equipmentDamage;
         byMember.set(state, power);
@@ -325,9 +360,19 @@ function getEffectiveTeamDamage(rawDamage, members, npcTroops, soldierStats) {
         addProfile(amount * (Number(soldierStats[type] && soldierStats[type].hp) || 60), 1, 0);
     }
     if (!totalHealth) return 0;
+
+    // خاصية: الدرع (sp_attr = 3) - تقليص ضرر الهجمات المتلقاة بنسبة 12% لكل قطعة درع (بحد أقصى 60%)
+    let shieldCount = 0;
+    for (const state of members) {
+        if (state.combat && state.combat.spShield > 0) {
+            shieldCount += state.combat.spShield;
+        }
+    }
+    const teamShieldMitigation = Math.max(0.40, 1 - 0.12 * shieldCount);
+
     const defenseModifier = weightedDefense / totalHealth;
     const equipmentReduction = weightedEquipmentHp / totalHealth * 0.05;
-    return Math.max(0, rawDamage / defenseModifier - equipmentReduction);
+    return Math.max(0, (rawDamage * teamShieldMitigation) / defenseModifier - equipmentReduction);
 }
 
 function getTeamCasualties(rawDamage, members, npcTroops, soldierStats, applyDefenses = true, allowChip = false) {
@@ -341,7 +386,15 @@ function getTeamCasualties(rawDamage, members, npcTroops, soldierStats, applyDef
     };
     const applyDamageToTarget = target => {
         if (target.amount <= 0 || damage <= 0) return;
-        const defenderHp = Number(soldierStats[target.type] && soldierStats[target.type].hp) || 60;
+        let defenderHp = Number(soldierStats[target.type] && soldierStats[target.type].hp) || 60;
+
+        // خاصية: الدرع (sp_attr = 3) - تعزيز صلابة المشاة والمدرعين في وجه الضربات بنسبة 30%
+        if (target.member && target.member.combat && target.member.combat.spShield > 0) {
+            if (target.type === TYPE_ARMORED || target.type === TYPE_INFANTRY) {
+                defenderHp *= (1 + 0.30 * target.member.combat.spShield);
+            }
+        }
+
         let killed = Math.min(target.amount, Math.floor(damage / defenderHp));
         if (allowChip && killed <= 0 && damage > 0) killed = 1;
         if (killed <= 0) return;
@@ -553,6 +606,12 @@ function calculateArmyPower(army, hero, soldierStats, equipmentBonuses = []) {
             + (bonus.damage || 0) * 2
             + (bonus.break || 0) * 1.5
             + (bonus.strike || 0);
+        const sp = Number(bonus.sp_attr) || 0;
+        if (sp === 1 || sp === 2) {
+            power += 50;
+        } else if (sp === 3) {
+            power += 60;
+        }
     }
     return power;
 }

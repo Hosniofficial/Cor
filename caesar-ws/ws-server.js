@@ -1637,6 +1637,7 @@ async function handleHttp(req, res) {
                 "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag ELSE '0' END AS f, " +
                 "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag_expires_at ELSE 0 END AS fe, " +
                 "CASE WHEN c.flag_expires_at > UNIX_TIMESTAMP() THEN c.flag_tag ELSE '' END AS ft, " +
+                "p.city_flag AS cf, " +
                 "p.id_guild AS ig " +
                 "FROM city c JOIN player p ON c.id_player = p.id_player"
             );
@@ -1649,7 +1650,8 @@ async function handleHttp(req, res) {
                 l:  Number(r.l),
                 f:  String(r.f || "0"),
                 fe: Number(r.fe) || 0,
-                ft: String(r.ft || "")
+                ft: String(r.ft || ""),
+                cf: String(r.cf || "")
             }));
             res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
             res.end(JSON.stringify(cities));
@@ -1940,6 +1942,58 @@ function handleWs(ws) {
                         f: String(city.f || '0'),
                         fe: Number(city.fe) || 0,
                         tag: String(city.tag || '')
+                    }
+                });
+                broadcast(update);
+            }
+
+            if (msg.url === 'Player/changePlayerFlag' || msg.url === 'World/refreshPlayerFlag') {
+                if (!idPlayer || !token) return;
+                const db = await getDb();
+                const [players] = await db.query(
+                    'SELECT city_flag FROM player WHERE id_player = ? AND p_token = ? LIMIT 1',
+                    [idPlayer, token]
+                );
+                if (!players.length) return;
+                const update = JSON.stringify({
+                    classPath: 'Base.refreshPlayerFlag',
+                    data: {
+                        idPlayer: Number(idPlayer),
+                        city_flag: String(players[0].city_flag || '')
+                    }
+                });
+                broadcast(update);
+            }
+
+            if (msg.url === 'Guild/changeGuildName' || msg.url === 'Guild/nameChanged') {
+                if (!idPlayer || !token) return;
+                const idGuild = Number(msg.data && msg.data.idGuild);
+                const requestedName = String(msg.data && msg.data.newName || '').trim();
+                const oldName = String(msg.data && msg.data.oldName || '').trim();
+                if (!Number.isSafeInteger(idGuild) || idGuild <= 0 || !requestedName || !oldName) return;
+
+                const db = await getDb();
+                const [guilds] = await db.query(
+                    'SELECT g.id_guild, g.name, p.name AS player_name ' +
+                    'FROM guild g JOIN player p ON p.id_player = ? AND p.p_token = ? AND p.id_guild = g.id_guild ' +
+                    'JOIN guild_member gm ON gm.id_guild = g.id_guild AND gm.id_player = p.id_player ' +
+                    'WHERE g.id_guild = ? AND gm.`rank` >= 6 LIMIT 1',
+                    [idPlayer, token, idGuild]
+                );
+                if (!guilds.length) return;
+
+                const guildName = String(guilds[0].name || '').trim();
+                if (!guildName || guildName !== requestedName || guildName === oldName) return;
+
+                const update = JSON.stringify({
+                    classPath: 'Guild.GuildNameChanged',
+                    data: {
+                        idGuild: Number(guilds[0].id_guild),
+                        newName: guildName,
+                        oldName: oldName,
+                        NewName: guildName,
+                        OldName: oldName,
+                        ChangeBy: String(guilds[0].player_name || '')
                     }
                 });
                 broadcast(update);

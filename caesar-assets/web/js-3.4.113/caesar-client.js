@@ -8566,7 +8566,10 @@ var Player_profile = {
         $("#player_prestige span").html(Caesar.DPlayer.Player.prestige);
         $("#player_rank span").html(Caesar.DPlayer.Player.rank);
         $("#player_gold span").html(Caesar.DPlayer.Player.gold);
-        $("#player_guild span").text(Caesar.DPlayer.GuildData ? Caesar.DPlayer.GuildData.name : "");
+        var guildName = (Caesar.DPlayer.GuildData && Caesar.DPlayer.GuildData.name) || (Caesar.DPlayer.Player && Caesar.DPlayer.Player.guild) || "";
+        var guildId = (Caesar.DPlayer.GuildData && Caesar.DPlayer.GuildData.id_guild) || (Caesar.DPlayer.Player && Caesar.DPlayer.Player.id_guild) || "";
+        $("#player_guild").attr("id_guild", guildId);
+        $("#player_guild span").text(guildName);
         $("#player_title span").html(Caesar.BaseData.Promotion[Caesar.DPlayer.Player.porm].Title);
         $(".avatar-img img").attr("src", Caesar.BaseData.HeroAvatar[Caesar.DPlayer.Player.avatar]);
 
@@ -8652,6 +8655,10 @@ var Player_profile = {
 
                 var jsonObj = JSON.parse(data);
                 Caesar.DPlayer.GuildData = jsonObj.GuildData;
+                if (jsonObj.GuildData && Caesar.DPlayer.Player) {
+                    Caesar.DPlayer.Player.guild = jsonObj.GuildData.name;
+                    Caesar.DPlayer.Player.id_guild = jsonObj.GuildData.id_guild;
+                }
                 Player_profile.refresh_view();
 
             },
@@ -23285,13 +23292,29 @@ Caesar.HeroArmy.dragArmy = function(e, el) {
         return ev.preventDefault();
 
 
-    var hold_type = dragPlace.attr("army-type");
+    var hold_type = dragPlace.attr("army-type") || "";
+    var solNum = Number(hold_type.replace("sol-", "")) || 0;
+    var frontSlots = ["f_1", "f_2", "f_3"];
+    var backSlots = ["b_1", "b_2", "b_3"];
+    var frontAllowed = [1, 2, 3];
+    var backAllowed = [3, 4, 5, 6];
 
     $(".sol").each(function() {
-        if ($(this).attr("army-type") === hold_type || $(this).attr("army-type") === "sol-0") {
+        var place = $(this).attr("data-army-place");
+        var dropPlace = $(this).attr("data-drop-place");
+        var isSlotAllowed = true;
+        if (dropPlace === "hero") {
+            if (frontSlots.indexOf(place) !== -1 && frontAllowed.indexOf(solNum) === -1) {
+                isSlotAllowed = false;
+            }
+            if (backSlots.indexOf(place) !== -1 && backAllowed.indexOf(solNum) === -1) {
+                isSlotAllowed = false;
+            }
+        }
+        var sameTypeOrEmpty = $(this).attr("army-type") === hold_type || $(this).attr("army-type") === "sol-0";
+        if (sameTypeOrEmpty && isSlotAllowed) {
             $(this).children(".permit-layer").hide();
             $(this).attr("canDropOver", "false");
-
         } else {
             $(this).children(".permit-layer").show();
             $(this).attr("canDropOver", "true");
@@ -23361,9 +23384,25 @@ Caesar.HeroArmy.dropArmyToHero = function(DragPlace, DropPlace) {
     var idHero = DropPlace.attr("data-id-hero");
     var DropHero = Caesar.Hero.getHero(idHero);
     var availablePlace = getAvailPlaces(idHero);
-    var solCap = soldier_cap[DragPlace.attr("army-type").split("-")[1]];
+    var dragSolType = Number(((DragPlace.attr("army-type") || "").split("-")[1])) || 0;
+    var solCap = soldier_cap[dragSolType];
     var sameHeroTransfer = DragPlace.attr("data-drag-place") == "hero"
         && Number(DragPlace.attr("data-id-hero")) === Number(idHero);
+
+    var dropArmyPlace = DropPlace.attr("data-army-place");
+    var frontSlots = ["f_1", "f_2", "f_3"];
+    var backSlots = ["b_1", "b_2", "b_3"];
+    var frontAllowed = [1, 2, 3];
+    var backAllowed = [3, 4, 5, 6];
+
+    if (frontSlots.indexOf(dropArmyPlace) !== -1 && frontAllowed.indexOf(dragSolType) === -1) {
+        alert_box.failMessage("الصفوف الأمامية للبطل مخصصة للمشاة والفرسان والمدرعين فقط");
+        return false;
+    }
+    if (backSlots.indexOf(dropArmyPlace) !== -1 && backAllowed.indexOf(dragSolType) === -1) {
+        alert_box.failMessage("الصفوف الخلفية للبطل مخصصة للرماة والمقاليع والمنجنيق والمدرعين فقط");
+        return false;
+    }
 
     if (!heroAvailableForTask(idHero)) {
         alert_box.confirmMessage("لا يمكن نقل القوات </br> البطل فى مهمة");
@@ -24479,7 +24518,7 @@ function useMatrial(user_for, matrial, other) {
 
         $.ajax({
 
-            url: `https://${WS_HOST}:${WS_PORT}/api/AGuild/changeGuildName`,
+            url: (typeof API_URL !== "undefined" ? API_URL : `https://${WS_HOST}:${WS_PORT}`) + "/api/AGuild/changeGuildName",
             data: {
                 slog_top,
                 slog_cnt,
@@ -24516,6 +24555,15 @@ function useMatrial(user_for, matrial, other) {
                     if (Caesar.DPlayer.Player) {
                         Caesar.DPlayer.Player.guild = JsonObjet.newName;
                     }
+                    if (typeof $("#player_guild span").text === "function") {
+                        $("#player_guild span").text(JsonObjet.newName);
+                    }
+                    if (typeof $("#A-A-P-guild").text === "function") {
+                        $("#A-A-P-guild").text(JsonObjet.newName);
+                    }
+                    if (typeof $(".guild-name-wrap h1").text === "function") {
+                        $(".guild-name-wrap h1").text(JsonObjet.newName);
+                    }
                     Player_profile.refresh_view();
                     $("#nav_search input").val(JsonObjet.newName);
                     $(".close-alert_container").click();
@@ -24524,6 +24572,17 @@ function useMatrial(user_for, matrial, other) {
                     alert_box.succesMessage("تم تعديل الشعار بنجاح");
                     $("#over_lay_alert").remove();
                     $("#over_lay").remove();
+                    if (typeof ws !== "undefined" && ws && ws.readyState === 1) {
+                        ws.send(JSON.stringify({
+                            url: "Guild/changeGuildName",
+                            data: {
+                                idGuild: JsonObjet.idGuild || (Caesar.DPlayer.Player && Caesar.DPlayer.Player.id_guild),
+                                newName: JsonObjet.newName,
+                                oldName: JsonObjet.oldName,
+                                changeBy: JsonObjet.changeBy || (Caesar.DPlayer.Player && Caesar.DPlayer.Player.name)
+                            }
+                        }));
+                    }
                 } else if (JsonObjet.state == "error_0") {
                     alert_box.failMessage("لست عضو فى الحلف")
                 } else if (JsonObjet.state == "error_1") {
@@ -25259,28 +25318,25 @@ $(document).on("click", "#buyNewItem", function() {
 });
 Caesar.Item.useItemFunc = function() {
 
+    if (Caesar.BaseData.Items["flag"]) {
+        Caesar.BaseData.Items["flag"][`UseFunc`] = function() {
+            return promptChangePlayerFlag();
+        };
+    }
+
     [
         "flag_england", "flag_france", "flag_germany", "flag_magul",
         "flag_macdoni", "flag_roma", "flag_spain", "flag_cartaga",
         "flag_egypt", "flag_greek"
     ].forEach(function(item) {
+        if (!Caesar.BaseData.Items[item])
+            return;
         Caesar.BaseData.Items[item][`UseFunc`] = function() {
             var result = $.Deferred();
-            alert_box.confirmWithInput(
-                "اكتب اختصارًا من 3 أحرف ليظهر فوق العلم على الخريطة",
-                '<input id="city-flag-tag-input" class="input" type="text" maxlength="3" autocomplete="off">',
+            var itemName = Caesar.BaseData.Items[item] ? Caesar.BaseData.Items[item].name : "الشعار";
+            alert_box.confirmDialog(
+                "هل تريد تفعيل " + itemName + " كشعار فوق راية مدينتك الحالية لمدة 7 أيام؟",
                 function() {
-                    var flagTag = String($("#city-flag-tag-input").val() || "").trim();
-                    if (!/^\p{L}{3}$/u.test(flagTag)) {
-                        result.resolve(JSON.stringify({ state: "error_invalid_flag_tag" }));
-                        return;
-                    }
-                    flagTag = flagTag.toLocaleUpperCase();
-                    if (!/^\p{L}{3}$/u.test(flagTag)) {
-                        result.resolve(JSON.stringify({ state: "error_invalid_flag_tag" }));
-                        return;
-                    }
-
                     $.ajax({
                         url: `${API_URL}/api/AItemUse/useFlag`,
                         type: 'POST',
@@ -25288,7 +25344,6 @@ Caesar.Item.useItemFunc = function() {
                             Item: item,
                             amount: 1,
                             idCity: Caesar.CurrentCity.City.id_city,
-                            flagTag: flagTag,
                             token: Caesar.Config.AuthToken,
                             server: Caesar.Config.idServer
                         }
@@ -25297,8 +25352,8 @@ Caesar.Item.useItemFunc = function() {
                             var response = JSON.parse(data);
                             if (response.state === "ok") {
                                 Caesar.CurrentCity.City = response.City;
-                                refreshEditablePlayerProfileFlag();
-                                if (ws && ws.readyState === 1) {
+                                alert_box.succesMessage("تم تفعيل الشعار على المدينة بنجاح لمدة 7 أيام");
+                                if (typeof ws !== "undefined" && ws && ws.readyState === 1) {
                                     ws.send(JSON.stringify({
                                         url: "World/refreshCityFlag",
                                         data: { idCity: response.City.id_city }
@@ -25307,10 +25362,15 @@ Caesar.Item.useItemFunc = function() {
                                 Caesar.World.Map.getWorldCity().done(function() {
                                     Caesar.World.Map.RefreshWorld();
                                 });
+                            } else if (response.state === "error_no_item") {
+                                alert_box.failMessage("لا تمتلك هذا الشعار");
+                            } else {
+                                alert_box.failMessage("تعذر تفعيل الشعار");
                             }
                         }
                         result.resolve(data);
                     }).fail(function(jqXHR) {
+                        alert_box.failMessage("تعذر الاتصال بالخادم لتفعيل الشعار");
                         result.reject(jqXHR);
                     });
                 }
@@ -31504,9 +31564,22 @@ Caesar.WsLib.Guild.PrizeSent = function(data) {
 
 Caesar.WsLib.Guild.GuildNameChanged = function(data) {
 
-    var msg = `قام الملك <span class="ann-red">&nbsp;${data.ChangeBy}&nbsp;</span> بتغير إسم حلفه <span class="ann-red">&nbsp;(${escapeHtml(data.OldName)})&nbsp;</span> إلى <span class="ann-red">&nbsp;${escapeHtml(data.NewName)}&nbsp;</span> !`;
+    var msg = `قام الملك <span class="ann-red">&nbsp;${escapeHtml(data.ChangeBy)}&nbsp;</span> بتغير إسم حلفه <span class="ann-red">&nbsp;(${escapeHtml(data.OldName)})&nbsp;</span> إلى <span class="ann-red">&nbsp;${escapeHtml(data.NewName)}&nbsp;</span> !`;
     alert_box.systemChatMessage(msg);
-    if (Number(data.idGuild) === Number(Caesar.DPlayer.Player.id_guild)) {
+    if (!data.idGuild || Number(data.idGuild) === Number(Caesar.DPlayer.Player.id_guild)) {
+        if (Caesar.DPlayer.Player) Caesar.DPlayer.Player.guild = data.NewName;
+        if (Caesar.DPlayer.GuildData) Caesar.DPlayer.GuildData.name = data.NewName;
+        if (Caesar.Guild.GuildData) Caesar.Guild.GuildData.name = data.NewName;
+        if (typeof $("#player_guild span").text === "function") {
+            $("#player_guild span").text(data.NewName);
+        }
+        if (typeof $("#A-A-P-guild").text === "function") {
+            $("#A-A-P-guild").text(data.NewName);
+        }
+        if (typeof $(".guild-name-wrap h1").text === "function") {
+            $(".guild-name-wrap h1").text(data.NewName);
+        }
+        Player_profile.refresh_view();
         Guild.getGuildData();
     }
 }
@@ -32303,6 +32376,34 @@ Caesar['WsLib']['Base']['WorldFireUnit'] = function(data) {
     WORLD_NUIT_ON_FIRE = activeFires;
     Caesar['World']['Map']['Scroll'](false);
     Caesar['World']['Map']['RefreshWorld']();
+};
+
+Caesar.WsLib.Base.refreshPlayerFlag = function(data) {
+    if (!data || !data.idPlayer)
+        return;
+    var pId = Number(data.idPlayer);
+    var newFlag = String(data.city_flag || "");
+    if (Caesar.DPlayer && Caesar.DPlayer.Player && Number(Caesar.DPlayer.Player.id_player) === pId) {
+        Caesar.DPlayer.Player.city_flag = newFlag;
+        if (typeof refreshEditablePlayerProfileFlag === "function") {
+            refreshEditablePlayerProfileFlag();
+        }
+    }
+    if (Caesar.worldAllUnits) {
+        for (var key in Caesar.worldAllUnits) {
+            var u = Caesar.worldAllUnits[key];
+            if (!u) continue;
+            if (Number(u.idPlayer) === pId) {
+                u.city_flag = newFlag;
+            }
+            if (Number(u.ColonizerIdPlayer) === pId) {
+                u.CityColonizerFlag = newFlag;
+            }
+        }
+    }
+    if (Caesar.World && Caesar.World.Map && typeof Caesar.World.Map.RefreshWorld === "function") {
+        Caesar.World.Map.RefreshWorld();
+    }
 };
 
 Caesar['WsLib']['Base']['DailyRest'] = function() {
@@ -33304,7 +33405,7 @@ $(document).on("click", "#new-city-confirm button", function() {
                                 CityFlagExpiresAt: Number(json_data.City.flag_expires_at) || 0,
                                 CityFlagTag: String(json_data.City.flag_tag || "")
                             });
-                            if (ws && ws.readyState === 1) {
+                            if (typeof ws !== "undefined" && ws && ws.readyState === 1) {
                                 ws.send(JSON.stringify({
                                     url: "World/refreshWorldCitiesForPlayers",
                                     data: { idCity: json_data.City.id_city }
@@ -37092,6 +37193,7 @@ Caesar.World.Map.getWorldCity = function() {
                 Unit.CityFlag = JsonObject[iii].f;
                 Unit.CityFlagExpiresAt = Number(JsonObject[iii].fe) || 0;
                 Unit.CityFlagTag = String(JsonObject[iii].ft || "");
+                Unit.city_flag = String(JsonObject[iii].cf || "");
                 Unit.ut = Number(JsonObject[iii].l) + WUT_CITY_LVL_0;
                 Unit.l = JsonObject[iii].l;
                 Unit.t = Number(JsonObject[iii].l) + 17;
@@ -39141,7 +39243,18 @@ var Guild = {
                     if (JsonObject.state === "ok") {
 
                         $(".close-alert_container").trigger("click");
-
+                        var newGuildName = JsonObject.GuildData && JsonObject.GuildData.GuildData ? JsonObject.GuildData.GuildData.name : $("#guild-name").val();
+                        if (Caesar.DPlayer.Player) {
+                            Caesar.DPlayer.Player.guild = newGuildName;
+                            if (JsonObject.GuildData && JsonObject.GuildData.GuildData) {
+                                Caesar.DPlayer.Player.id_guild = JsonObject.GuildData.GuildData.id_guild;
+                            }
+                        }
+                        if (Caesar.DPlayer.GuildData) {
+                            Caesar.DPlayer.GuildData.name = newGuildName;
+                        }
+                        $("#player_guild span").text(newGuildName);
+                        Player_profile.refresh_view();
 
                         Player_profile.getPlayerGuildData();
                         Guild.getGuildData();
@@ -39196,6 +39309,29 @@ var Guild = {
                     Caesar.Guild.LeaderName = JsonObject.Guild.leaderName;
                     Caesar.Guild.Allay = JsonObject.Guild.Allay;
                     Caesar.Guild.prizeShare = JsonObject.Guild.prizeShare;
+
+                    if (!Caesar.DPlayer.GuildData) {
+                        Caesar.DPlayer.GuildData = {};
+                    }
+                    if (JsonObject.Guild && JsonObject.Guild.GuildData) {
+                        Caesar.DPlayer.GuildData.name = JsonObject.Guild.GuildData.name;
+                        Caesar.DPlayer.GuildData.id_guild = JsonObject.Guild.GuildData.id_guild;
+                        if (Caesar.DPlayer.Player) {
+                            Caesar.DPlayer.Player.guild = JsonObject.Guild.GuildData.name;
+                            Caesar.DPlayer.Player.id_guild = JsonObject.Guild.GuildData.id_guild;
+                        }
+                    }
+                    Player_profile.refresh_view();
+                } else if (JsonObject.state === "noGuild") {
+                    Caesar.Guild.GuildData = null;
+                    Caesar.DPlayer.GuildData = null;
+                    if (Caesar.DPlayer.Player) {
+                        Caesar.DPlayer.Player.guild = "";
+                        Caesar.DPlayer.Player.id_guild = null;
+                    }
+                    $("#player_guild span").text("");
+                    $("#player_guild").attr("id_guild", "");
+                    Player_profile.refresh_view();
                 }
 
 
@@ -41158,10 +41294,18 @@ $(document).on("click", '#get-out-guild , #leave-g', function() {
 
                 if (JsonObject.state === "ok") {
 
+                    Caesar.Guild.GuildData = null;
+                    Caesar.DPlayer.GuildData = null;
+                    if (Caesar.DPlayer.Player) {
+                        Caesar.DPlayer.Player.guild = "";
+                        Caesar.DPlayer.Player.id_guild = null;
+                    }
+                    $("#player_guild span").text("");
+                    $("#player_guild").attr("id_guild", "");
                     $(".close_dialog").click();
+                    Player_profile.refresh_view();
                     Player_profile.getPlayerGuildData();
                     Player_profile.getPlayerBaseData();
-                    $("#player_guild span").html("");
                 }
 
             },
@@ -41252,6 +41396,15 @@ $(document).on("click", "#destroy-g", function() {
 
                 if (JsonObject.state === "ok") {
 
+                    Caesar.Guild.GuildData = null;
+                    Caesar.DPlayer.GuildData = null;
+                    if (Caesar.DPlayer.Player) {
+                        Caesar.DPlayer.Player.guild = "";
+                        Caesar.DPlayer.Player.id_guild = null;
+                    }
+                    $("#player_guild span").text("");
+                    $("#player_guild").attr("id_guild", "");
+                    Player_profile.refresh_view();
                     Player_profile.getPlayerGuildData();
                     alert_box.succesMessage("تم تفكيك الحلف بنجاح");
                     $(".close_dialog").click();
@@ -45172,12 +45325,12 @@ function showEditablePlayerProfile() {
 }
 
 function refreshEditablePlayerProfileFlag() {
-    var city = Caesar.CurrentCity && Caesar.CurrentCity.City;
-    var flag = city && city.flag ? Caesar.BaseData.Items[city.flag] : null;
+    var pFlag = Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.city_flag;
+    var flagText = (pFlag && pFlag !== "0") ? pFlag : "لا يوجد";
     $("#player-profile-flag-image")
-        .attr("src", flag ? flag.image : "")
-        .prop("hidden", !flag);
-    $("#player-profile-flag-tag").text(city && city.flag_tag ? city.flag_tag : (flag ? "مفعّل" : "لا يوجد علم مفعّل"));
+        .attr("src", "images/items/item025.jpg")
+        .prop("hidden", false);
+    $("#player-profile-flag-tag").text(flagText);
 }
 
 $(document).on("click", "#edit-player-name-btn", function() {
@@ -45332,59 +45485,81 @@ $(document).on("click", "#confirm-player-new-img", function() {
     });
 });
 
-$(document).on("click", "#profile-change-flag", function() {
-    if (!Caesar.CurrentCity || !Caesar.CurrentCity.City) {
-        alert_box.failMessage("تعذر تحديد المدينة الحالية");
-        return;
-    }
-
-    var flags = [
-        "flag_england", "flag_france", "flag_germany", "flag_magul",
-        "flag_macdoni", "flag_roma", "flag_spain", "flag_cartaga",
-        "flag_egypt", "flag_greek"
-    ];
-
+function promptChangePlayerFlag() {
     Player_profile.refreshMatrialBox().done(function() {
-        var availableFlags = flags.filter(function(item) {
-            return Caesar.BaseData.Items[item] && Matrial.getPlayerAmount(item) > 0;
-        });
-        if (availableFlags.length === 0) {
-            alert_box.failMessage("لا تمتلك أعلامًا في صندوق المواد");
+        var flagAmount = Matrial.getPlayerAmount("flag");
+        if (flagAmount <= 0) {
+            alert_box.confirmDialog(
+                "لا تمتلك غرض (العلم) لتغيير علمك. هل تريد شراءه مقابل 20 من الذهب؟",
+                function() {
+                    if (Number(Caesar.DPlayer.Player.gold) < 20) {
+                        alert_box.failMessage("لا تمتلك الذهب الكافي لشراء العلم");
+                        return;
+                    }
+                    buyMatrial("flag").done(function() {
+                        promptChangePlayerFlag();
+                    });
+                }
+            );
             return;
         }
 
-        var choices = availableFlags.map(function(item) {
-            var data = Caesar.BaseData.Items[item];
-            return `<li>
-                        <div class="pull-L left">
-                            <div class="ar_title">${data.name}</div>
-                            <div class="quant">${getArabicNumbers(Matrial.getPlayerAmount(item))}</div>
-                            <div class="image"><img src="${data.image}" alt=""></div>
-                        </div>
-                        <div class="pull-R right">
-                            <div class="header">
-                                <button type="button" class="full-btn full-btn-3x player-flag-choice" data-item="${item}">اختيار العلم</button>
-                            </div>
-                            <div class="desc">${data.desc || ""}</div>
-                        </div>
-                    </li>`;
-        }).join("");
-        var picker = `<div id="over_lay" class="select_over_lay player-profile-flag-picker">
-                          <div id="select_from">
-                              <div class="head_bar">
-                                  <img src="images/style/head_bar.png" class="banner">
-                                  <div class="title">اختر علم المدينة الحالية</div>
-                                  <img class="close close_select_menu" src="images/btns/close_b.png">
-                              </div>
-                              <p style="clear: both"></p>
-                              <ul class="select_item">${choices}</ul>
-                          </div>
-                      </div>`;
-        $(".player-profile-overlay").hide();
-        $("body").append(picker);
+        var currentFlag = Caesar.DPlayer.Player.city_flag && Caesar.DPlayer.Player.city_flag !== '0'
+            ? Caesar.DPlayer.Player.city_flag : "";
+        alert_box.confirmWithInput(
+            "اكتب اختصارًا من 3 أحرف ليظهر أعلى راية جميع مدنك والمدن المستعمرة:",
+            '<input id="player-flag-tag-input" class="input" type="text" maxlength="3" autocomplete="off" value="' + currentFlag + '">',
+            function() {
+                var flagTag = String($("#player-flag-tag-input").val() || "").trim();
+                if (!/^\p{L}{3}$/u.test(flagTag)) {
+                    alert_box.failMessage("يجب أن يتكون العلم من 3 أحرف بالضبط");
+                    return;
+                }
+                flagTag = flagTag.toLocaleUpperCase();
+
+                $.ajax({
+                    url: `${API_URL}/api/APlayer/changePlayerFlag`,
+                    type: "POST",
+                    data: {
+                        flag: flagTag,
+                        token: Caesar.Config.AuthToken,
+                        server: Caesar.Config.idServer
+                    }
+                }).done(function(data) {
+                    if (Caesar.LBase.isJson(data)) {
+                        var response = JSON.parse(data);
+                        if (response.state === "ok") {
+                            Matrial.takeFrom("flag", 1);
+                            Caesar.DPlayer.Player.city_flag = response.city_flag;
+                            refreshEditablePlayerProfileFlag();
+                            alert_box.succesMessage("تم تغيير علم الملك بنجاح");
+                            if (typeof ws !== "undefined" && ws && ws.readyState === 1) {
+                                ws.send(JSON.stringify({
+                                    url: "Player/changePlayerFlag",
+                                    data: { city_flag: response.city_flag }
+                                }));
+                            }
+                            Caesar.World.Map.RefreshWorld();
+                        } else if (response.state === "error_no_item") {
+                            alert_box.failMessage("لا تمتلك غرض (العلم)");
+                        } else if (response.state === "error_flag_length") {
+                            alert_box.failMessage("يجب أن يتكون العلم من 3 أحرف");
+                        } else {
+                            alert_box.failMessage("تعذر تغيير العلم");
+                        }
+                    }
+                }).fail(function() {
+                    alert_box.failMessage("تعذر الاتصال بالخادم لتغيير العلم");
+                });
+            }
+        );
     }).fail(function() {
-        alert_box.failMessage("تعذر تحميل الأعلام من صندوق المواد");
+        alert_box.failMessage("تعذر فحص صندوق المواد");
     });
+}
+
+$(document).on("click", "#profile-change-flag", function() {
+    promptChangePlayerFlag();
 });
 
 $(document).on("click", ".player-flag-choice", function() {
@@ -48852,7 +49027,7 @@ $(document).on("click", "#expan-city button", function() {
                         CityFlagExpiresAt: Number(expandedCity.flag_expires_at) || 0,
                         CityFlagTag: String(expandedCity.flag_tag || "")
                     });
-                    if (ws && ws.readyState === 1) {
+                    if (typeof ws !== "undefined" && ws && ws.readyState === 1) {
                         ws.send(JSON.stringify({
                             url: "World/refreshWorldCitiesForPlayers",
                             data: { idCity: expandedCity.id_city }
@@ -50081,6 +50256,42 @@ Animation.cityFlag = function() {
             Unit.CityFlagEntite = Caesar.GE.WorldScene.add.sprite(Pos.x, Pos.y, 'flagOverCity').setOrigin(0, 0).play(FramName).setDepth(Pos.z);
         }
 
+        let playerFlag = "";
+        if (Unit.CityColonized && Unit.CityColonizerFlag && Unit.CityColonizerFlag !== "0") {
+            playerFlag = String(Unit.CityColonizerFlag).trim();
+        } else if (Unit.idPlayer == Caesar.DPlayer.Player.id_player) {
+            playerFlag = String(Caesar.DPlayer.Player.city_flag || "").trim();
+        } else if (Unit.city_flag && Unit.city_flag !== "0") {
+            playerFlag = String(Unit.city_flag).trim();
+        }
+
+        if (playerFlag && playerFlag !== "0") {
+            playerFlag = playerFlag.substring(0, 3);
+            let textX = Pos.x + 17;
+            let textY = Pos.y + 4;
+            if (Unit.CityFlagTextEntite) {
+                Unit.CityFlagTextEntite.setPosition(textX, textY).setText(playerFlag);
+            } else {
+                Unit.CityFlagTextEntite = Caesar.GE.WorldScene.add.text(
+                    textX,
+                    textY,
+                    playerFlag,
+                    {
+                        fontFamily: "Arial",
+                        fontSize: "10px",
+                        fontStyle: "bold",
+                        color: "#ffffff",
+                        stroke: "#000000",
+                        strokeThickness: 2,
+                        align: "center"
+                    }
+                ).setOrigin(0.5, 0).setDepth(Pos.z + 2);
+            }
+        } else if (Unit.CityFlagTextEntite) {
+            Unit.CityFlagTextEntite.destroy();
+            delete Unit.CityFlagTextEntite;
+        }
+
         const validFlags = [
             "flag_england", "flag_france", "flag_germany", "flag_magul",
             "flag_macdoni", "flag_roma", "flag_spain", "flag_cartaga",
@@ -50115,30 +50326,6 @@ Animation.cityFlag = function() {
                 .setDisplaySize(20, 14)
                 .setDepth(z + 12);
             Unit.SecondaryFlagItem = Unit.CityFlag;
-        }
-        const flagTag = String(Unit.CityFlagTag || "").trim();
-        if (flagTag) {
-            if (Unit.SecondaryFlagTagEntite) {
-                Unit.SecondaryFlagTagEntite.setText(flagTag);
-            } else {
-                Unit.SecondaryFlagTagEntite = Caesar.GE.WorldScene.add.text(
-                    x + 64,
-                    y + 13,
-                    flagTag,
-                    {
-                        fontFamily: "Arial",
-                        fontSize: "9px",
-                        fontStyle: "bold",
-                        color: "#ffffff",
-                        stroke: "#000000",
-                        strokeThickness: 2,
-                        align: "center"
-                    }
-                ).setOrigin(0.5, 0).setDepth(z + 13);
-            }
-        } else if (Unit.SecondaryFlagTagEntite) {
-            Unit.SecondaryFlagTagEntite.destroy();
-            delete Unit.SecondaryFlagTagEntite;
         }
         if (Unit.SecondaryFlagExpiryTimerAt !== expiresAt) {
             if (Unit.SecondaryFlagExpiryTimer)
@@ -50598,10 +50785,10 @@ Caesar.Equip.EquipFeature = {
         Title: "لا توجد"
     },
     1: {
-        Title: "وابل السهام أمام"
+        Title: "وابل السهام"
     },
     2: {
-        Title: "وابل سهام خلف"
+        Title: "وابل السهام"
     },
     3: {
         Title: "الدرع"

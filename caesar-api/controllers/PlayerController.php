@@ -39,6 +39,9 @@ class PlayerController {
             case '/api/APlayer/changePlayerAvatar':
                 self::changePlayerAvatar($db);
                 return true;
+            case '/api/APlayer/changePlayerFlag':
+                self::changePlayerFlag($db);
+                return true;
             case '/api/APlayer/getAllNotif':
                 self::getAllNotif($db);
                 return true;
@@ -674,6 +677,56 @@ class PlayerController {
         $db->prepare('UPDATE `player` SET `avatar` = ? WHERE `id_player` = ?')
             ->execute([$avatar, (int)$player['id_player']]);
         sendJson(['state' => 'ok', 'avatar' => $avatar]);
+    }
+
+    public static function changePlayerFlag($db) {
+        $flag = trim((string)($_REQUEST['flag'] ?? $_REQUEST['Flag'] ?? ''));
+        if (preg_match('/\A\p{L}{3}\z/u', $flag) !== 1) {
+            sendJson(['state' => 'error_flag_length']);
+            return;
+        }
+        $flag = mb_strtoupper($flag, 'UTF-8');
+        if (preg_match('/\A\p{L}{3}\z/u', $flag) !== 1) {
+            sendJson(['state' => 'error_flag_length']);
+            return;
+        }
+        $player = self::resolvePlayer($db);
+        $idPlayer = (int)$player['id_player'];
+
+        $db->beginTransaction();
+        try {
+            $deduct = $db->prepare(
+                'UPDATE `player_item`
+                 SET `amount` = `amount` - 1
+                 WHERE `id_player` = ? AND `id_item` = ? AND `amount` >= 1'
+            );
+            $deduct->execute([$idPlayer, 'flag']);
+            if ($deduct->rowCount() !== 1) {
+                $db->rollBack();
+                sendJson(['state' => 'error_no_item']);
+                return;
+            }
+
+            $db->prepare(
+                'DELETE FROM `player_item`
+                 WHERE `id_player` = ? AND `id_item` = ? AND `amount` <= 0'
+            )->execute([$idPlayer, 'flag']);
+
+            $db->prepare('UPDATE `player` SET `city_flag` = ? WHERE `id_player` = ?')
+               ->execute([$flag, $idPlayer]);
+            $db->commit();
+
+            sendJson([
+                'state'     => 'ok',
+                'city_flag' => $flag,
+                'id_player' => $idPlayer
+            ]);
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
     }
 
     public static function getFavoriteCoords($db) {

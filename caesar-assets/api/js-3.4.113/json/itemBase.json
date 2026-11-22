@@ -38,7 +38,7 @@
     "flag": {
         "image": "images/items/item025.jpg",
         "Texture2D": "Texture2D'/Game/images/items/item025.item025'",
-        "use": "none",
+        "use": "once",
         "Key": "flag"
     },
     "help_house_chng": {
