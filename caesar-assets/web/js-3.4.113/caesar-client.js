@@ -2461,13 +2461,11 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('wall_2', BASE_ASSET_BATH + 'images/city/wall_2_.png');
     Caesar.GE.LoadingScene.load.image('wall_3', BASE_ASSET_BATH + 'images/city/wall_3_.png');
     Caesar.GE.LoadingScene.load.image('wall_4', BASE_ASSET_BATH + 'images/city/wall_4_.png');
-    Caesar.GE.LoadingScene.load.image('seaport', BASE_ASSET_BATH + 'images/city/_seaport.png');
     Caesar.GE.LoadingScene.load.image('market', BASE_ASSET_BATH + 'images/city/_market.png');
     Caesar.GE.LoadingScene.load.image('farm', BASE_ASSET_BATH + 'images/city/_farm.png');
     Caesar.GE.LoadingScene.load.image('mine', BASE_ASSET_BATH + 'images/city/_mine.png');
     Caesar.GE.LoadingScene.load.image('stone', BASE_ASSET_BATH + 'images/city/_mahger.png');
     Caesar.GE.LoadingScene.load.image('wood', BASE_ASSET_BATH + 'images/city/_wood_maker.png');
-    Caesar.GE.LoadingScene.load.image('lighthouse', BASE_ASSET_BATH + 'images/city/_lighthouse.png');
     Caesar.GE.LoadingScene.load.image('B1', BASE_ASSET_BATH + 'images/city/_B1.png');
     Caesar.GE.LoadingScene.load.image('B2', BASE_ASSET_BATH + 'images/city/_B2.png');
     Caesar.GE.LoadingScene.load.image('B3', BASE_ASSET_BATH + 'images/city/_B3.png');
@@ -3942,13 +3940,6 @@ const THINGS_TO_LOAD = {
                 "wall_4": [0, 0, 1, 1]
             }
         },
-        "images/city/_seaport.png": {
-            "tile": 518,
-            "tileh": 285,
-            "map": {
-                "seaport": [0, 0, 1, 1]
-            }
-        },
         "images/city/_market.png": {
             "tile": 256,
             "tileh": 256,
@@ -3982,13 +3973,6 @@ const THINGS_TO_LOAD = {
             "tileh": 128,
             "map": {
                 "wood_maker": [0, 0, 1, 1]
-            }
-        },
-        "images/city/_lighthouse.png": {
-            "tile": 160,
-            "tileh": 353,
-            "map": {
-                "lighthouse": [0, 0, 1, 1]
             }
         },
         "images/city/_B1.png": { // 

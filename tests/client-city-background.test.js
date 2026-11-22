@@ -18,14 +18,15 @@ test('city level-zero background reuses the identical preloaded city floor asset
     assert.match(clientSource, /var curBgKey = "city_floor";/);
 });
 
-test('city harbor and lighthouse assets remain available to the Phaser preload', () => {
+test('unused harbor and lighthouse assets are not loaded or shipped', () => {
     const imagesPath = path.join(__dirname, '..', 'caesar-assets', 'web', 'images', 'city');
 
     for (const [key, filename] of [
         ['seaport', '_seaport.png'],
         ['lighthouse', '_lighthouse.png']
     ]) {
-        assert.match(clientSource, new RegExp(`load\\.image\\('${key}'.*${filename.replace('.', '\\.')}'\\)`));
-        assert.ok(fs.existsSync(path.join(imagesPath, filename)), `${filename} is required by the client`);
+        assert.doesNotMatch(clientSource, new RegExp(`load\\.image\\('${key}'`));
+        assert.doesNotMatch(clientSource, new RegExp(`images/city/${filename.replace('.', '\\.')}`));
+        assert.equal(fs.existsSync(path.join(imagesPath, filename)), false, `${filename} is unused`);
     }
 });
