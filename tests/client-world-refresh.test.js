@@ -115,6 +115,48 @@ test('world city updates still redraw the map when its scene is active', () => {
     assert.deepEqual(calls, ['destroy', 'delete', 'scroll:true', 'refresh']);
 });
 
+test('world scene cleanup only visits unique units with active display objects', () => {
+    const firstUnit = { id: 1 };
+    const secondUnit = { id: 2 };
+    const unitsByCoord = new Map([
+        ['3:4', firstUnit],
+        ['5:6', secondUnit]
+    ]);
+    const context = {
+        WorldUnit: {
+            getWorldUnit: (x, y) => unitsByCoord.get(`${x}:${y}`)
+        }
+    };
+
+    const helperStart = clientSource.indexOf('function getWorldSceneUnits(scene) {');
+    const helperEnd = clientSource.indexOf('\n}', helperStart) + 2;
+    assert.ok(helperStart >= 0 && helperEnd > helperStart, 'visible world unit collector should exist');
+    vm.runInNewContext(clientSource.slice(helperStart, helperEnd), context);
+
+    const entity = (x, y) => ({ data: { get: key => key === 'xCoord' ? x : y } });
+    const visibleUnits = context.getWorldSceneUnits({
+        children: {
+            list: [
+                entity(3, 4),
+                entity(3, 4),
+                entity(5, 6),
+                { data: null }
+            ]
+        }
+    });
+
+    assert.equal(visibleUnits.size, 2);
+    assert.ok(visibleUnits.has(firstUnit));
+    assert.ok(visibleUnits.has(secondUnit));
+
+    const switchStart = clientSource.indexOf('$("#WorldCity").click(function() {');
+    const switchEnd = clientSource.indexOf('\n\n$(document).on("click", "#player-city-list ul li"', switchStart);
+    assert.ok(switchStart >= 0 && switchEnd > switchStart, 'world scene switch handler should exist');
+    const switchSource = clientSource.slice(switchStart, switchEnd);
+    assert.ok(switchSource.includes('getWorldSceneUnits(Caesar.GE.WorldScene)'), 'scene cleanup must use active world units');
+    assert.ok(!switchSource.includes('for (var index in Caesar.worldAllUnits)'), 'scene cleanup must not scan the full world unit collection');
+});
+
 test('city expansion updates the active city view immediately', () => {
     const city = { City: { id_city: 22, lvl: 1 } };
     const unit = { CityFlag: '0' };

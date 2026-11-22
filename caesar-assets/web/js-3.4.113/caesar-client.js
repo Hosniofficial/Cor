@@ -2529,10 +2529,6 @@ Caesar.GE.LPreLoad = function() {
 
 
     Caesar.GE.LoadingScene.load.image('SFaceA1', BASE_ASSET_BATH + 'images/hero/faceA1.png');
-    Caesar.GE.LoadingScene.load.image('SFaceA1', BASE_ASSET_BATH + 'images/hero/faceA1.png');
-    Caesar.GE.LoadingScene.load.image('SFaceA1', BASE_ASSET_BATH + 'images/hero/faceA1.png');
-    Caesar.GE.LoadingScene.load.image('SFaceA1', BASE_ASSET_BATH + 'images/hero/faceA1.png');
-    Caesar.GE.LoadingScene.load.image('SFaceA1', BASE_ASSET_BATH + 'images/hero/faceA1.png');
 
     Caesar.GE.LoadingScene.load.spritesheet('FarmLabor', BASE_ASSET_BATH + 'images/animation/City/FarmLabor.png', {
         frameWidth: 42,
@@ -36889,6 +36885,26 @@ Caesar.World.Map.deltaDrag = {
 };
 
 
+function getWorldSceneUnits(scene) {
+    var units = new Set();
+    scene.children.list.forEach(function(entity) {
+        if (!entity.data || typeof entity.data.get !== "function")
+            return;
+
+        var xCoord = entity.data.get("xCoord");
+        var yCoord = entity.data.get("yCoord");
+        if (xCoord === undefined || xCoord === null || yCoord === undefined || yCoord === null
+            || !Number.isFinite(Number(xCoord)) || !Number.isFinite(Number(yCoord)))
+            return;
+
+        var unit = WorldUnit.getWorldUnit(Number(xCoord), Number(yCoord));
+        if (unit)
+            units.add(unit);
+    });
+    return units;
+}
+
+
 function clearCityFlagEntities(unit) {
     if (unit.CityFlagEntite)
         unit.CityFlagEntite.destroy();
@@ -49645,6 +49661,7 @@ $("#WorldCity").click(function() {
 
     if ($(this).attr("data-view") === "world") {
 
+        var activeWorldUnits = getWorldSceneUnits(Caesar.GE.WorldScene);
 
         Caesar.GE.WorldScene.scene.start("City");
 
@@ -49661,11 +49678,7 @@ $("#WorldCity").click(function() {
         $("#smallMap-icon").fadeOut();
         $(".nav-to-city").fadeOut();
         setTimeout(function() {
-            for (var index in Caesar.worldAllUnits) {
-                var unit = Caesar.worldAllUnits[index];
-                if (!unit)
-                    continue;
-
+            activeWorldUnits.forEach(function(unit) {
                 delete unit.entite;
                 delete unit.floor;
                 clearCityFlagEntities(unit);
@@ -49678,7 +49691,7 @@ $("#WorldCity").click(function() {
                 delete unit.SecondaryFlagExpiryTimerAt;
                 delete unit.SecondaryFlagItem;
                 delete unit.UnitFire;
-            }
+            });
         });
 
     } else if ($(this).attr("data-view") === "city" || $(this).data("view") === "city") {
