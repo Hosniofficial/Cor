@@ -198,7 +198,7 @@
         "Key": "buy_voucher"
     },
     "sell_voucher": {
-        "image": "images/items/sellVoucher.jpg",
+        "image": "images/items/SecretLetter.jpg",
         "Texture2D": "Texture2D'/Game/images/items/sellVoucher.sellVoucher'",
         "use": "none",
         "Key": "sell_voucher"

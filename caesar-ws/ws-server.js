@@ -531,9 +531,9 @@ async function saveWsBattleReport(db, details) {
         player, hero, battleId, xCoord, yCoord, unitType, unitLvl, attackTask,
         isVictory, expGained, honorGained, resourceLoot, itemLoot,
         attackerSlots, defenderSlots, writeBattleLog = true,
-        logAttackerSlots = attackerSlots, logDefenderSlots = defenderSlots,
+        logAttackerSlots, logDefenderSlots,
         heroSide = 1, opponentName = 'حامية الأعداء', battleStartTime, returnDuration,
-        roundCount = 0, roundsLog = [], killsByType = {}
+        roundCount = 0, roundsLog = [], killsByType = {}, combatSnapshot
     } = details;
     const resolvedAt = Math.floor(Date.now() / 1000);
     const asReportHero = (slots, side, name, avatar, idPlayer, xp, kills = {}) => {
@@ -549,6 +549,16 @@ async function saveWsBattleReport(db, details) {
         }
         return reportHero;
     };
+    const playerReportHero = asReportHero(
+        attackerSlots,
+        heroSide,
+        hero.name || 'البطل سيزر',
+        Number(hero.avatar) || 1,
+        Number(player.id_player),
+        expGained,
+        killsByType
+    );
+    playerReportHero.id_hero = Number(hero.id_hero) || 0;
     const reportDetail = {
         encId: '0',
         general_data: {
@@ -559,7 +569,7 @@ async function saveWsBattleReport(db, details) {
             side_win: isVictory ? 1 : 0
         },
         heros: [
-            asReportHero(attackerSlots, heroSide, hero.name || 'البطل سيزر', Number(hero.avatar) || 1, Number(player.id_player), expGained, killsByType),
+            playerReportHero,
             asReportHero(defenderSlots, 1 - heroSide, opponentName, 2, 0, 0)
         ],
         prize: {
@@ -570,11 +580,18 @@ async function saveWsBattleReport(db, details) {
         rounds: roundsLog,
         rounds_log: roundsLog
     };
+    if (combatSnapshot) reportDetail.combat_snapshot = combatSnapshot;
 
     // Build Cocos2d-html5 Battle Replay protocol
     const slotToBlock = { f_1: 0, f_2: 1, f_3: 2, b_1: 3, b_2: 4, b_3: 5 };
-    const atkHeroId = Number(hero && hero.id_hero) || 1;
-    const defHeroId = 200000 + (Number(unitType) || 1) * 100 + (Number(unitLvl) || 1);
+    const reportHeroId = Number(hero && hero.id_hero) || 1;
+    const unitHeroId = 200000 + (Number(unitType) || 1) * 100 + (Number(unitLvl) || 1);
+    const atkHeroId = heroSide === 1 ? reportHeroId : unitHeroId;
+    const defHeroId = heroSide === 1 ? unitHeroId : reportHeroId;
+    const replayAttackerSlots = logAttackerSlots
+        || (heroSide === 1 ? attackerSlots : defenderSlots);
+    const replayDefenderSlots = logDefenderSlots
+        || (heroSide === 1 ? defenderSlots : attackerSlots);
 
     const atkTypes = {};
     const atkPre = {};
@@ -584,22 +601,25 @@ async function saveWsBattleReport(db, details) {
     const defPost = {};
 
     for (const [slotKey, blockIdx] of Object.entries(slotToBlock)) {
-        atkTypes[blockIdx] = Number(attackerSlots[slotKey] && attackerSlots[slotKey].type) || 0;
-        atkPre[blockIdx] = Number(attackerSlots[slotKey] && attackerSlots[slotKey].pre) || 0;
-        atkPost[blockIdx] = Number(attackerSlots[slotKey] && attackerSlots[slotKey].cur) || 0;
+        atkTypes[blockIdx] = Number(replayAttackerSlots[slotKey] && replayAttackerSlots[slotKey].type) || 0;
+        atkPre[blockIdx] = Number(replayAttackerSlots[slotKey] && replayAttackerSlots[slotKey].pre) || 0;
+        atkPost[blockIdx] = Number(replayAttackerSlots[slotKey] && replayAttackerSlots[slotKey].cur) || 0;
 
-        defTypes[blockIdx] = Number(defenderSlots[slotKey] && defenderSlots[slotKey].type) || 0;
-        defPre[blockIdx] = Number(defenderSlots[slotKey] && defenderSlots[slotKey].pre) || 0;
-        defPost[blockIdx] = Number(defenderSlots[slotKey] && defenderSlots[slotKey].cur) || 0;
+        defTypes[blockIdx] = Number(replayDefenderSlots[slotKey] && replayDefenderSlots[slotKey].type) || 0;
+        defPre[blockIdx] = Number(replayDefenderSlots[slotKey] && replayDefenderSlots[slotKey].pre) || 0;
+        defPost[blockIdx] = Number(replayDefenderSlots[slotKey] && replayDefenderSlots[slotKey].cur) || 0;
     }
 
-    const effectiveRounds = Math.max(1, (roundsLog && roundsLog.length) || roundCount || 1);
+    const loggedRoundCount = roundsLog.filter(line =>
+        typeof line === 'string' && /^الجولة\s*\d+:/u.test(line)
+    ).length;
+    const effectiveRounds = Math.max(1, Number(roundCount) || loggedRoundCount || 1);
     const roundList = [];
     const curAtk = {};
     const curDef = {};
     for (const [slotKey] of Object.entries(slotToBlock)) {
-        const attackerSlot = attackerSlots[slotKey] || { type: 0, pre: 0, cur: 0 };
-        const defenderSlot = defenderSlots[slotKey] || { type: 0, pre: 0, cur: 0 };
+        const attackerSlot = replayAttackerSlots[slotKey] || { type: 0, pre: 0, cur: 0 };
+        const defenderSlot = replayDefenderSlots[slotKey] || { type: 0, pre: 0, cur: 0 };
         curAtk[slotKey] = { ...attackerSlot, cur: Number(attackerSlot.pre) || 0 };
         curDef[slotKey] = { ...defenderSlot, cur: Number(defenderSlot.pre) || 0 };
     }
@@ -611,28 +631,28 @@ async function saveWsBattleReport(db, details) {
         let roundDefLosses = 0;
 
         for (const [slotKey, blockIdx] of Object.entries(slotToBlock)) {
-            const totDeadAtk = Math.max(0, (attackerSlots[slotKey]?.pre || 0) - (attackerSlots[slotKey]?.cur || 0));
+            const totDeadAtk = Math.max(0, (replayAttackerSlots[slotKey]?.pre || 0) - (replayAttackerSlots[slotKey]?.cur || 0));
             const deadAtk = (r === effectiveRounds)
-                ? Math.max(0, (curAtk[slotKey]?.cur || 0) - (attackerSlots[slotKey]?.cur || 0))
+                ? Math.max(0, (curAtk[slotKey]?.cur || 0) - (replayAttackerSlots[slotKey]?.cur || 0))
                 : Math.round(totDeadAtk / effectiveRounds);
             const actualDeadAtk = Math.max(0, Math.min(curAtk[slotKey]?.cur || 0, deadAtk));
             roundAtkBlocks[blockIdx] = {
                 unit: Number(curAtk[slotKey]?.cur) || 0,
                 dead: actualDeadAtk,
-                armyType: Number(attackerSlots[slotKey]?.type) || 0
+                armyType: Number(replayAttackerSlots[slotKey]?.type) || 0
             };
             curAtk[slotKey].cur = (curAtk[slotKey].cur || 0) - actualDeadAtk;
             roundAtkLosses += actualDeadAtk;
 
-            const totDeadDef = Math.max(0, (defenderSlots[slotKey]?.pre || 0) - (defenderSlots[slotKey]?.cur || 0));
+            const totDeadDef = Math.max(0, (replayDefenderSlots[slotKey]?.pre || 0) - (replayDefenderSlots[slotKey]?.cur || 0));
             const deadDef = (r === effectiveRounds)
-                ? Math.max(0, (curDef[slotKey]?.cur || 0) - (defenderSlots[slotKey]?.cur || 0))
+                ? Math.max(0, (curDef[slotKey]?.cur || 0) - (replayDefenderSlots[slotKey]?.cur || 0))
                 : Math.round(totDeadDef / effectiveRounds);
             const actualDeadDef = Math.max(0, Math.min(curDef[slotKey]?.cur || 0, deadDef));
             roundDefBlocks[blockIdx] = {
                 unit: Number(curDef[slotKey]?.cur) || 0,
                 dead: actualDeadDef,
-                armyType: Number(defenderSlots[slotKey]?.type) || 0
+                armyType: Number(replayDefenderSlots[slotKey]?.type) || 0
             };
             curDef[slotKey].cur = (curDef[slotKey].cur || 0) - actualDeadDef;
             roundDefLosses += actualDeadDef;
@@ -695,11 +715,11 @@ async function saveWsBattleReport(db, details) {
         {
             Hero: {
                 id_hero: atkHeroId,
-                id_city: Number(hero?.id_city) || 0,
-                id_player: Number(player.id_player),
-                name: hero.name || 'البطل سيزر',
-                lvl: Number(hero.lvl) || 1,
-                avatar: Number(hero.avatar) || 1,
+                id_city: heroSide === 1 ? Number(hero?.id_city) || 0 : 0,
+                id_player: heroSide === 1 ? Number(player.id_player) : 0,
+                name: heroSide === 1 ? hero.name || 'البطل سيزر' : opponentName,
+                lvl: heroSide === 1 ? Number(hero.lvl) || 1 : Number(unitLvl) || 1,
+                avatar: heroSide === 1 ? Number(hero.avatar) || 1 : 2,
                 side: 1
             },
             City: {},
@@ -710,11 +730,11 @@ async function saveWsBattleReport(db, details) {
         {
             Hero: {
                 id_hero: defHeroId,
-                id_city: 0,
-                id_player: 0,
-                name: opponentName,
-                lvl: Number(unitLvl) || 1,
-                avatar: 2,
+                id_city: heroSide === 0 ? Number(hero?.id_city) || 0 : 0,
+                id_player: heroSide === 0 ? Number(player.id_player) : 0,
+                name: heroSide === 0 ? hero.name || 'البطل سيزر' : opponentName,
+                lvl: heroSide === 0 ? Number(hero.lvl) || 1 : Number(unitLvl) || 1,
+                avatar: heroSide === 0 ? Number(hero.avatar) || 1 : 2,
                 side: 0
             },
             City: {},

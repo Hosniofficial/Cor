@@ -8,7 +8,7 @@
     height: 45px;
     position: fixed;
     top: 0px;
-    background-image: url(../images/border/menu_bar.jpg);
+    background-image: url(../images/background/menu_bar.jpg);
     background-size: contain;
     z-index: 2000;
 }
@@ -540,7 +540,7 @@
 }
 
 .for_building_box .left-content {
-    background: url(../images/icons/left-content.png);
+    background: url(../images/background/back-shape/left-content.png);
     background-size: 98% 100%;
 }
 
@@ -574,7 +574,7 @@
 }
 
 .for_mat_trade .left-content {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -620,7 +620,7 @@
     margin: auto;
     margin-top: 15px;
     border-radius: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 5px;
 }
@@ -756,7 +756,7 @@
     border-image-slice: 100%;
     border-image-source: none;
     border-image-width: 1;
-    border-image: url(../images/border/sml_btn.jpg);
+    border-image: url(../images/background/sml_btn.jpg);
     border-image-slice: 7;
     border-image-repeat: round;
     box-sizing: content-box;
@@ -825,7 +825,7 @@
 #player-profile {
     position: fixed;
     bottom: -3px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     width: 425px;
     height: 200px;
@@ -848,7 +848,7 @@
     content: " ";
     width: 100%;
     height: 30px;
-    background-image: url(../images/border/roof.png);
+    background-image: url(../images/background/roof.png);
     position: absolute;
     left: 0px;
     margin-top: -38px;
@@ -876,7 +876,7 @@
     margin-top: 13px;
     margin-left: 26px;
     width: 112px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 8px;
     padding: 4px;
@@ -1191,7 +1191,7 @@
     background-color: #fcf7e5;
     /*border: solid 11px transparent;*/
     padding: 10px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1369,7 +1369,7 @@
     display: block;
     margin: auto;
     margin-top: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 4px;
     border-radius: 8px;
@@ -1382,7 +1382,7 @@
     direction: rtl;
     clear: both;
     margin-top: 20px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -1557,7 +1557,7 @@
 }
 
 .req_table_container {
-    background: url(../images/skins/palace.png);
+    background: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 50%;
@@ -1634,7 +1634,7 @@
     margin-top: 16px;
     margin-bottom: 2px;
     border-radius: 5px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 4px;
 }
@@ -1684,7 +1684,7 @@
 }
 
 .mili_building .leftOfRight .army_req_table {
-    background: url(../images/skins/palace.png);
+    background: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding: 25px 0px 10px 0px;
     margin-left: 5px
@@ -1703,7 +1703,7 @@
     width: 68%;
     margin: auto;
     border-radius: 5px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 4px;
 }
@@ -1797,7 +1797,7 @@
     float: left;
     padding-right: 3px;
     border-radius: 5px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -1824,7 +1824,7 @@
 
 .roof-decor {
     content: " ";
-    background-image: url(../images/border/roof.png);
+    background-image: url(../images/background/roof.png);
     display: block;
     background-position: center;
     background-size: 100% 100%;
@@ -1854,7 +1854,7 @@
 }
 
 #palace_content .left-content {
-    background: url(../images/icons/left-content.png);
+    background: url(../images/background/back-shape/left-content.png);
     background-size: auto;
     background-size: 98% 100%;
 }
@@ -1866,7 +1866,7 @@
 #palace_content #req-table-wrapper {
     width: 60%;
     margin: auto;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding-top: 25px;
     padding-bottom: 10px;
@@ -1926,7 +1926,7 @@ body {
 }
 
 .city-unit-tooltip {
-    background-image: url(../images/icons/left-content.png), url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png), url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     background-color: transparent;
     border-radius: initial;
@@ -2047,7 +2047,7 @@ body {
     border-image-slice: 30;
     border-image-repeat: round;
     border-bottom: none;
-    background: url(../images/skins/palace.png);
+    background: url(../images/background/roman_panel_frame.jpg);
     border-radius: 12px;
     background-position: -50px;
 }
@@ -2268,7 +2268,7 @@ body {
     position: absolute;
     right: 58%;
     height: inherit;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
 }
 
@@ -2417,7 +2417,7 @@ body {
     width: 90%;
     margin: auto;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 2px;
 }
@@ -2431,7 +2431,7 @@ body {
 .camp-data .right {
     width: 45%;
     height: 100%;
-    background-image: url(../images/border/roof.png), url(../images/background/colonna.png), url(../images/background/colonna.png);
+    background-image: url(../images/background/roof.png), url(../images/background/colonna.png), url(../images/background/colonna.png);
     background-size: 103% 35px, 16px 83%, 16px 83%;
     background-position: top, right 35px, left 35px;
     background-repeat: no-repeat, no-repeat, no-repeat;
@@ -2452,7 +2452,7 @@ body {
     background-color: white;
     margin: auto;
     margin-top: 41px;
-    background: url(../images/icons/left-content.png);
+    background: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -2556,7 +2556,7 @@ body {
 }
 
 #camp-panal-equip-row ul li .image-wrapper {
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -3202,7 +3202,7 @@ body {
 .new-city-req-table {
     width: 100%;
     height: 78%;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     overflow: auto;
 }
@@ -3447,7 +3447,7 @@ body {
     font-size: 16px;
 }
 #city-profile-tooltipe {
-    background-image: url(../images/back-shape/right.png), url(../images/back-shape/left.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png), url(../images/back-shape/left-content.png);
+    background-image: url(../images/background/back-shape/right.png), url(../images/background/back-shape/left.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png), url(../images/background/back-shape/left-content.png);
     background-repeat: repeat-y, repeat-y, repeat-x, repeat-x, repeat, no-repeat;
     background-position: right, left, top, bottom, center, center;
     background-size: auto, auto, auto, auto, auto, 100% 100%;
@@ -3457,7 +3457,7 @@ body {
 }
 
 .tooltip-hero-cont {
-    background-image: url(../images/back-shape/right.png), url(../images/back-shape/left.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png), url(../images/back-shape/left-content.png);
+    background-image: url(../images/background/back-shape/right.png), url(../images/background/back-shape/left.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png), url(../images/background/back-shape/left-content.png);
     background-repeat: repeat-y, repeat-y, repeat-x, repeat-x, repeat, no-repeat;
     background-position: right, left, top, bottom, center, center;
     background-size: auto, auto, auto, auto, auto, 100% 100%;
@@ -3496,7 +3496,7 @@ body {
     margin: auto;
     margin-top: 8px;
     padding: 4px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -3582,7 +3582,7 @@ body {
 .tooltip-hero .bottom ol li .wrapper {
     width: 80%;
     margin: auto;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 3px;
 }
@@ -3658,7 +3658,7 @@ body {
     height: auto;
     padding: 15px 10px;
     direction: rtl;
-    background-image: url(../images/back-shape/left-content.png), url(../images/back-shape/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png), url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     position: absolute;
     z-index: 1500;
@@ -3732,7 +3732,7 @@ body {
 #hero-select-list .tr:hover,
 .hero-select-list .tr:hover,
 .hero-select-list .selected {
-    background: url(../images/selelct/select-row-3x.png);
+    background: url(../images/input/select-row-3x.png);
     background-size: 100% 110%;
     background-position-y: -1px;
     color: white;
@@ -3747,7 +3747,7 @@ body {
     float: none;
     margin-top: 2.5px;
     width: 50px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: auto 100%;
 }
 
@@ -3801,7 +3801,7 @@ body {
 #overview-palace-bg {
     width: 680px;
     height: 350px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     margin: auto;
     margin-top: 120px;
@@ -3882,7 +3882,7 @@ body {
 #hero-over-view .right .equip-review ul li .wrapper {
     width: 85%;
     margin: auto;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     height: 100%;
     background-size: 100% auto;
     background-position: center;
@@ -3922,7 +3922,7 @@ body {
 #hero-over-view .right .army-review ul li .wrapper {
     width: 85%;
     margin: auto;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     height: 100%;
     background-size: 100% auto;
     background-position: center;
@@ -3978,7 +3978,7 @@ body {
     width: 95%;
     margin: auto;
     height: 100%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -3988,7 +3988,7 @@ body {
     margin: auto;
     height: 100%;
     border-radius: 15px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-repeat: no-repeat;
     background-position: center;
     overflow: auto;
@@ -4039,7 +4039,7 @@ body {
 }
 
 #hero-over-view .middel {
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: 100% 100%;
     ;
     width: 8px;
@@ -4071,7 +4071,7 @@ body {
 
 .army-review li .wrapper {
     width: 95%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-position: center;
     background-size: 100% auto;
     height: 100%;
@@ -4104,7 +4104,7 @@ body {
 #hero-dial-over-view .hero-profile > .part-2,
 #hero-dial-over-view .hero-profile > .equi_preveiw,
 #hero-dial-over-view #after-ajax-hero-army {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -4142,7 +4142,7 @@ body {
 }
 
 #hero-dial-equip .equip table td .EquiUnitWrapper {
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
 }
 
 #hero-dial-equip .equip table td .wrapper button {
@@ -4201,7 +4201,7 @@ body {
 #hero-dial-equip #HeroEquipBox,
 #hero-dial-equip #after-ajax-hero-army,
 #hero-dial-camp #after-ajax-hero-army {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -4220,7 +4220,7 @@ body {
 .box_content .right-content .equi_preveiw ul li .wrapper {
     width: 92%;
     margin: auto;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% auto;
     height: 100%;
     background-position: center;
@@ -4270,7 +4270,7 @@ body {
 #hero-right-ol .unit-wrapper {
     width: 95%;
     height: 100%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 42px;
     background-repeat: no-repeat;
     background-position: center;
@@ -4502,7 +4502,7 @@ body {
     top: 180px;
     left: 50%;
     margin-left: -240px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
 }
 
@@ -4647,7 +4647,7 @@ body {
 }
 
 #godGateBox .content-wrapper ul li .lock label {
-    background-image: url(../images/box/lock.png);
+    background-image: url(../images/icons/hero/lock.png);
     display: block;
     width: 100%;
     height: 100%;
@@ -4804,7 +4804,7 @@ body {
 }
 
 #equip-blessing {
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     border: none;
     width: 96%;
@@ -4882,7 +4882,7 @@ body {
     margin: auto;
     height: 71px;
     margin-top: 21px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% auto;
     overflow: auto;
     background-repeat: no-repeat;
@@ -4898,7 +4898,7 @@ body {
 #equip-blessing .up-wrapper .col-2 {
     width: 24%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: 100% 100%;
 }
 
@@ -4934,7 +4934,7 @@ body {
 #equip-blessing .down-wrapper .left {
     width: 38%;
     height: 96%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-size: 100% 100%;
 }
 
@@ -5071,7 +5071,7 @@ body {
 .select-list .option ul li.selected-op {
     color: white;
     font-weight: bold;
-    background-image: url(../images/selelct/select-row.png);
+    background-image: url(../images/input/select-row.png);
     text-align: center;
     line-height: 25px;
 }
@@ -5125,7 +5125,7 @@ body {
 }
 
 .solidBg {
-    background-image: url(../images/skins/SolidBg.png);
+    background-image: url(../images/background/SolidBg.png);
     background-size: 100% 100%;
 }
 
@@ -5140,21 +5140,21 @@ body {
 #dialg_box .contributeBox .col-i {
     width: 25%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: 100% 100%;
 }
 
 #dialg_box .contributeBox .col-ii {
     width: 38%;
     height: 100%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-size: 100% 100%;
 }
 
 #dialg_box .contributeBox .col-iii {
     width: 75%;
     height: 100%;
-    background-image: url(../images/skins/SolidBg.png);
+    background-image: url(../images/background/SolidBg.png);
     background-size: 100% 100%;
 }
 
@@ -5208,7 +5208,7 @@ body {
 #dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .ReqBg {
     height: 100%;
     width: 100%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center;
@@ -5239,19 +5239,19 @@ body {
 }
 
 .uiBtnCloseDown {
-    background-image: url(../images/BtnCover/closeDownN.png);
+    background-image: url(../images/btns/closeDownN.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiBtnCloseDown:hover {
-    background-image: url(../images/BtnCover/closeDownH.png);
+    background-image: url(../images/btns/closeDownH.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiBtnCloseDown:active {
-    background-image: url(../images/BtnCover/closeDownA.png);
+    background-image: url(../images/btns/closeDownA.png);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -5349,7 +5349,7 @@ body {
 #ArenaChallangeHome .col-ii {
     width: 55%;
     height: 100%;
-    /*background-image: url(../images/skins/solidSquare.png);*/
+    /*background-image: url(../images/background/solidSquare.png);*/
     background-size: 100% 100%;
 }
 
@@ -5430,7 +5430,7 @@ body {
 #ArenaChallangeHome .col-ii .prizeListWrapper {
     width: 50%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: 100% 100%;
 }
 
@@ -5463,7 +5463,7 @@ body {
 #ArenaChallangeHome .heroControlBtns .border {
     width: 7%;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-repeat: repeat-y;
     background-size: 100% auto;
 }
@@ -5471,7 +5471,7 @@ body {
 #ArenaChallangeHome .heroControlBtns .content {
     width: 86%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: auto 120%;
     background-position: -50px -50px;
 }
@@ -5484,7 +5484,7 @@ body {
 #ArenaChallangeHome .arenaChallangeReview {
     width: 40%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: auto 150%;
     background-position: -50px -50px;
 }
@@ -5492,7 +5492,7 @@ body {
 #ArenaChallangeHome .arenaChallangeReview .border {
     width: 2%;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-repeat: repeat-y;
     background-size: 100% auto;
 }
@@ -5844,7 +5844,7 @@ body {
 }
 
 #PlayerTeamWrapper .NoTeamIcon:hover {
-    background-image: url(../images/btns/PlayerTeamBtn-h.png);
+    background-image: url(../images/btns/PlayerTeamBtn-a.png);
 }
 
 #PlayerTeamWrapper .NoTeamIcon:active {
@@ -5868,7 +5868,7 @@ body {
 #TeamProfileBox {
     width: 100%;
     height: 50%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-size: 100% 100%;
 }
 
@@ -5959,14 +5959,14 @@ body {
 #TeamIntroBox {
     width: 100%;
     height: 50%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 }
 
 #TeamIntroBox .Header {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     width: 94%;
     height: 24px;
@@ -5995,7 +5995,7 @@ body {
 }
 
 #TeamBoxRight .PlayerList .Header {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     width: 100%;
     height: 30px;
@@ -6149,7 +6149,7 @@ body {
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../images/border/RectBorder_a.png);
+    background-image: url(../images/background/RectBorder_a.png);
 }
 
 #TeamBoxRight .tc-leader .name {
@@ -6197,14 +6197,14 @@ body {
 #TeamBoxLeft .TeamInvJoinBox {
     width: 100%;
     height: 50%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 }
 
 #TeamBoxLeft .TeamInvJoinBox .Header {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     width: 94%;
     height: 24px;
@@ -6360,7 +6360,7 @@ body {
 }
 
 #RankList .Header {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     width: 100%;
     height: 24px;
@@ -6422,7 +6422,7 @@ body {
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../images/border/RectBorder_a.png);
+    background-image: url(../images/background/RectBorder_a.png);
 }
 
 #RankList .tc-leader .name {

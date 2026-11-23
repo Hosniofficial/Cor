@@ -4,6 +4,29 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
+test('battle replay retains the sell-voucher image referenced by its bundle', () => {
+    const repositoryRoot = path.join(__dirname, '..');
+    const replayDirectory = path.join(repositoryRoot, 'caesar-assets', 'web', 'battle-replay');
+    const replayBundle = fs.readFileSync(
+        path.join(replayDirectory, 'BRAsset', 'battle-replay.bundle.js'),
+        'utf8'
+    );
+    const routerSource = fs.readFileSync(path.join(repositoryRoot, 'caesar-web', 'router.php'), 'utf8');
+
+    assert.match(replayBundle, /image:\s*"Res\/items\/sellVoucher\.jpg"/);
+    assert.ok(
+        fs.existsSync(path.join(replayDirectory, 'Res', 'items', 'sellVoucher.jpg')),
+        'the replay-specific sell-voucher image should exist'
+    );
+    assert.ok(
+        fs.existsSync(path.join(replayDirectory, 'Res', 'player', 'Rank', 'Military_Rank_01.png')),
+        'the replay-specific battle-rank image should exist'
+    );
+    assert.match(routerSource, /preg_match\('#\^\/Res\/\(items\|player\|tech\)\/\(\.\+\)\$#i', \$decodedUri, \$resourceMatch\)/);
+    assert.match(routerSource, /technology01 \(1\)\.jpg/);
+    assert.match(routerSource, /faceMatch/);
+});
+
 test('battle reports show the terrain resource and replace legacy garrison names', () => {
     const clientSource = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
@@ -90,7 +113,7 @@ test('battle reports show the terrain resource and replace legacy garrison names
     assert.match(wildernessReport, /stone\.png"><span>\s*\+\s+123456/);
     assert.match(wildernessReport, /food\.png"><span>\s*\+\s+0/);
     assert.match(wildernessReport, /wood\.png"><span>\s*\+\s+0/);
-    assert.match(wildernessReport, /iron\.png"><span>\s*\+\s+0/);
+    assert.match(wildernessReport, /resource\/metal\.png"><span>\s*\+\s+0/);
     assert.match(wildernessReport, /coin\.png"><span>\s*\+\s+0/);
     assert.ok(wildernessReport.indexOf('class="resource-row"') < wildernessReport.indexOf('class="prize-row flex"'));
     assert.match(wildernessReport, /class="amount stroke">1/);
@@ -287,6 +310,14 @@ test('WebSocket battle reports store original loss counts and own injuries', asy
     );
     assert.equal(reportSlots.attackerSlots.f_1.injured, 2);
     assert.equal(reportSlots.defenderSlots.f_1.injured, 1);
+    const logAttackerSlots = {
+        ...reportSlots.attackerSlots,
+        f_1: { type: 4, pre: 50, cur: 30, injured: 0 }
+    };
+    const logDefenderSlots = {
+        ...reportSlots.defenderSlots,
+        f_1: { type: 2, pre: 5, cur: 0, injured: 0 }
+    };
 
     const aggregated = helpers.aggregateMemberArmy([{
         army,
@@ -320,14 +351,19 @@ test('WebSocket battle reports store original loss counts and own injuries', asy
         itemLoot: [],
         attackerSlots: reportSlots.attackerSlots,
         defenderSlots: reportSlots.defenderSlots,
+        logAttackerSlots,
+        logDefenderSlots,
         writeBattleLog: false,
         heroSide: 1,
         returnDuration: 60,
         roundCount: 2,
-        roundsLog: ['round one', 'round two']
+        roundsLog: ['equipment log', 'round one', 'round two'],
+        combatSnapshot: { version: 1, reportHeroId: 9 }
     });
 
     const savedDetail = JSON.parse(queries[1].params[0]);
+    assert.equal(savedDetail.heros[0].id_hero, 9);
+    assert.deepEqual(savedDetail.combat_snapshot, { version: 1, reportHeroId: 9 });
     assert.equal(savedDetail.heros[0].f_1_loss, '3');
     assert.equal(savedDetail.heros[0].f_1_injured, '2');
     assert.equal(savedDetail.heros[1].f_1_loss, '2');
@@ -335,10 +371,56 @@ test('WebSocket battle reports store original loss counts and own injuries', asy
 
     const attackerBlocks = savedDetail.round_list.map(round => round.Heros['3'].ArmyBlocks[0]);
     const defenderBlocks = savedDetail.round_list.map(round => round.Heros['0'].ArmyBlocks[0]);
-    assert.deepEqual(attackerBlocks.map(block => block.unit), [10, 8]);
-    assert.deepEqual(attackerBlocks.map(block => block.dead), [2, 1]);
-    assert.deepEqual(defenderBlocks.map(block => block.unit), [5, 4]);
-    assert.deepEqual(defenderBlocks.map(block => block.dead), [1, 1]);
+    assert.equal(savedDetail.round_list.length, 2);
+    assert.deepEqual(attackerBlocks.map(block => block.unit), [50, 40]);
+    assert.deepEqual(attackerBlocks.map(block => block.dead), [10, 10]);
+    assert.deepEqual(defenderBlocks.map(block => block.unit), [5, 2]);
+    assert.deepEqual(defenderBlocks.map(block => block.dead), [3, 2]);
+
+    await helpers.saveWsBattleReport(db, {
+        player: { id_player: 2, name: 'Defender' },
+        hero: { id_hero: 10, id_city: 4, name: 'Defender Hero', avatar: 2, lvl: 5 },
+        battleId: 7,
+        xCoord: 443,
+        yCoord: 261,
+        unitType: 1,
+        unitLvl: 1,
+        attackTask: 0,
+        isVictory: true,
+        expGained: 0,
+        honorGained: 0,
+        resourceLoot: { food: 0, wood: 0, stone: 0, metal: 0, coin: 0 },
+        itemLoot: [],
+        attackerSlots: reportSlots.attackerSlots,
+        defenderSlots: reportSlots.defenderSlots,
+        logAttackerSlots,
+        logDefenderSlots,
+        writeBattleLog: false,
+        heroSide: 0,
+        opponentName: 'قوات المهاجمين',
+        returnDuration: 60,
+        roundCount: 2,
+        roundsLog: ['equipment log', 'round one', 'round two']
+    });
+    const defenderDetail = JSON.parse(queries[3].params[0]);
+    assert.equal(defenderDetail.heros[0].side, 0);
+    assert.equal(defenderDetail.hero_list[0].Hero.id_hero, 200101);
+    assert.equal(defenderDetail.hero_list[1].Hero.id_hero, 10);
+    assert.equal(defenderDetail.round_list[0].Heros['3'].ArmyBlocks[0].armyType, 4);
+});
+
+test('battle report APIs do not expose internal combat snapshots', () => {
+    const reportApi = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-web', 'api', 'battelReport.php'),
+        'utf8'
+    );
+    const replayApi = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-web', 'GetBattle.php'),
+        'utf8'
+    );
+
+    assert.match(reportApi, /unset\(\$decoded\['combat_snapshot'\]\)/);
+    assert.match(replayApi, /unset\(\$detail\['combat_snapshot'\]\)/);
 });
 
 test('battle report resource and prize rows use high contrast text and authentic Roman frame styling', () => {

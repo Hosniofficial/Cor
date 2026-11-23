@@ -37,7 +37,7 @@ if ($idReport <= 0) {
   <link rel="icon" type="image/png" href="/Res/favicon.png" sizes="128x128" />
   <meta name="viewport"
     content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width,height=device-height, user-scalable=yes" />
-  <link rel="stylesheet" href="/css/battle.all.bundle.cff0be5e-ab5c-4b3e-bc9c-a69fc5b52263.css" />
+  <link rel="stylesheet" href="/css/battle.all.bundle.b8ba79c4-fdab-48ef-b0f1-323a482311e8.css" />
   <style>
     html, body {
       width: 100%;
@@ -97,6 +97,10 @@ if ($idReport <= 0) {
 </head>
 
 <body style="background-color: #000000; margin: 0px; padding: 0px; overflow: hidden">
+  <a href="/caesar-admin/index.php?tab=battle-analyzer&report=<?php echo (int)$idReport; ?>" target="_blank"
+     style="position: fixed; top: 12px; right: 12px; z-index: 99999; background: rgba(20,23,28,0.88); color: #dfba6b; border: 1.5px solid #8c6721; border-radius: 6px; padding: 7px 14px; font-family: 'Cairo', Tahoma, Arial, sans-serif; font-size: 13px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); backdrop-filter: blur(4px); transition: all 0.2s ease;">
+    <span>🔍 تحليل المعركة للإدارة</span>
+  </a>
   <canvas id="GameWindow"></canvas>
   <div id="battle-report-container" style="position: fixed; z-index: 500; top: 0; left: 0;"></div>
 

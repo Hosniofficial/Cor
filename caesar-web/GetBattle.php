@@ -57,6 +57,7 @@ if (empty($detail['round_list']) && !empty($reportRow)) {
 
 // Format final response
 $detail = BattleReportService::addReplayDeaths($detail);
+unset($detail['combat_snapshot']);
 $detail['id_battle'] = (int)($reportRow['id_report'] ?? $detail['id_battle'] ?? 1);
 $detail['id_battle_char'] = (string)($detail['encId'] ?? $detail['id_battle']);
 $detail['id_server'] = (int)($_GET['server'] ?? 1);

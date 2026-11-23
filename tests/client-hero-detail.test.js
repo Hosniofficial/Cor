@@ -164,7 +164,7 @@ test('hero equipment and army management panels use the exchange panel frame bac
     );
 
     assert.ok(managementPanels, 'equipment and army management panels should share a frame style');
-    assert.match(managementPanels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(managementPanels[1], /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(managementPanels[1], /background-size:\s*100%\s+100%/);
     assert.match(managementPanels[1], /border:\s*6px\s+solid\s+transparent/);
 });
@@ -182,7 +182,7 @@ test('hero profile data, equipment, and army panels use the frame without extend
     );
 
     assert.ok(overviewPanels, 'hero overview panels should share the frame style');
-    assert.match(overviewPanels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(overviewPanels[1], /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(overviewPanels[1], /background-size:\s*100%\s+100%/);
     assert.ok(equipmentPanel, 'hero equipment preview should be contained within its row');
     assert.match(equipmentPanel[1], /overflow:\s*hidden/);

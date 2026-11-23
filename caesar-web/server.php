@@ -371,7 +371,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                         <span>0</span>
                     </li>
                     <li id="player_gold">
-                        <img  ondragstart="return false;" src="images/icons/gold.png"> 
+                        <img  ondragstart="return false;" src="images/icons/resource/gold.png">
                         <span>0</span>
                     </li>
                 </ul>
@@ -548,85 +548,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
             
             
         </script>
-        <!--
-        <script type="text/javascript" src="js-3.4.113/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="js-3.4.113/lib/jquery.nicescroll.min.js"></script>
-        <script type="text/javascript" src="js-3.4.113/lib/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js-3.4.113/lib/phaser.min.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/translate.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/userLan.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/navBar.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/LPreLoad.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/LBaseData.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/base.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/boxWrapper.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/rank.js"></script>
-        <script type="text/javascript" src="js-3.4.113/player.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/province.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/city.js"></script>
-        <script type="text/javascript" src="js-3.4.113/fullscr.js"></script>
-        <script type="text/javascript" src="js-3.4.113/alert.js"></script>
-        <script type="text/javascript" src="js-3.4.113/city/city_profile.js"></script>
-        <script type="text/javascript" src="js-3.4.113/city/army_building.js"></script>
-        <script type="text/javascript" src="js-3.4.113/interatction.js"></script>
-        <script type="text/javascript" src="js-3.4.113/base/schadular.js"></script>
-        <script type="text/javascript" src="js-3.4.113/building.js"></script>
-        <script type="text/javascript" src="js-3.4.113/city/cityBuilding.js"></script>
-        <script type="text/javascript" src="js-3.4.113/city/PlayerHero.js"></script>
-        <script type="text/javascript" src="js-3.4.113/army.js"></script>
-        <script type="text/javascript" src="js-3.4.113/hero.js"></script>
-        <script type="text/javascript" src="js-3.4.113/heroArmy.js"></script>
-        <script type="text/javascript" src="js-3.4.113/matrial.js"></script>
-        <script type="text/javascript" src="js-3.4.113/LItemUse.js"></script>
-        <script type="text/javascript" src="js-3.4.113/education.js"></script>
-        <script type="text/javascript" src="js-3.4.113/menu-list/menuList.js"></script>
-        <script type="text/javascript" src="js-3.4.113/menu-list/exchange.js"></script>
-        <script type="text/javascript" src="js-3.4.113/menu-list/battelReport.js"></script>
-        <script type="text/javascript" src="js-3.4.113/menu-list/dominant.js"></script>
-        <script type="text/javascript" src="js-3.4.113/menu-list/LItem.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/server.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/wsBattel.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/chat.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/battel.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/guild.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/mail.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/hero.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/player.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/serverAnnounce.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/city.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ws/lib/Base.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/worldUnit.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/worldCampBox.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/WorldUnitIcon.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/WorldUnitArmy.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/worldUtil.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/worldUnitPrize.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/worldMap.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/WorldMapBattel.js"></script>
-        <script type="text/javascript" src="js-3.4.113/world/world.js"></script>
-        <script type="text/javascript" src="js-3.4.113/battel.js"></script>
-        <script type="text/javascript" src="js-3.4.113/guild.js"></script>
-        <script type="text/javascript" src="js-3.4.113/message.js"></script>
-        <script type="text/javascript" src="js-3.4.113/quest.js"></script>
-        <script type="text/javascript" src="js-3.4.113/lastUtil.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/market.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/palace.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/spy.js"></script>
-        <script type="text/javascript" src="js-3.4.113/navigate.js"></script>
-        <script type="text/javascript" src="js-3.4.113/animation.js"></script>
-        <script type="text/javascript" src="js-3.4.113/equipment.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/tradeCenter.js"></script>
-        <script type="text/javascript" src="js-3.4.113/tools/jop.js"></script>
-        <script type="text/javascript" src="js-3.4.113/battel/joinAttack.js"></script>
-        <script type="text/javascript" src="js-3.4.113/battel/battelField.js"></script>
-        <script type="text/javascript" src="js-3.4.113/feature/godGate.js"></script>
-        <script type="text/javascript" src="js-3.4.113/feature/setting.js"></script>
-        <script type="text/javascript" src="js-3.4.113/feature/emjoi.js"></script>
-        <script type="text/javascript" src="js-3.4.113/feature/contribute.js"></script>
-        <script type="text/javascript" src="js-3.4.113/feature/arenaChallange.js"></script>
-        <script type="text/javascript" src="js-3.4.113/ui/ui.js"></script>
-
--->  <script type="text/javascript" src="js-3.4.113/lib/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js-3.4.113/lib/jquery-3.2.1.min.js"></script>
             <script type="text/javascript" src="js-3.4.113/lib/jquery.nicescroll.min.js"></script>
             <script type="text/javascript" src="js-3.4.113/lib/jquery-ui.min.js"></script>
             <script>
@@ -655,15 +577,6 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                 window.player.guild_data = window.LIVE_PLAYER_GUILD;
             }
 
-            // Global Missing Image Warning Listener (captures all 404/broken images with their exact path)
-            window.addEventListener('error', function(event) {
-                var target = event.target;
-                if (target && (target.tagName === 'IMG' || target instanceof HTMLImageElement)) {
-                    var missingSrc = target.src || target.getAttribute('src');
-                    console.warn('%c⚠️ [صورة غير موجودة - Missing Image]: ' + missingSrc, 'background: #b71c1c; color: #ffffff; padding: 3px 8px; font-weight: bold; font-size: 11px; border-radius: 3px;');
-                }
-            }, true);
-
             // 1. Bulletproof JSON.parse
             var _origParse = JSON.parse;
             JSON.parse = function(val, reviver) {
@@ -686,14 +599,13 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
             var _origAlert = window.alert;
             window.alert = function(msg) {
                 if (typeof msg === 'object' && msg !== null) {
-                    console.warn('[DEV alert suppressed]:', msg);
+                    console.warn('[Alert suppressed: unsupported value]');
                     return;
                 }
                 if (typeof msg === 'string' && (msg.indexOf('<!DOCTYPE') !== -1 || msg.indexOf('<html') !== -1 || msg.indexOf('<?php') !== -1)) {
-                    console.warn('[HTML alert suppressed]:', msg);
+                    console.warn('[HTML alert suppressed]');
                     return;
                 }
-                console.log('[DEV alert]:', msg);
                 _origAlert(msg);
             };
 

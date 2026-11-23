@@ -13,7 +13,7 @@
 
 .army-review li .wrapper {
     width: 95%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-position: center;
     background-size: 100% auto;
     height: 100%;
@@ -46,7 +46,7 @@
 #hero-dial-over-view .hero-profile > .part-2,
 #hero-dial-over-view .hero-profile > .equi_preveiw,
 #hero-dial-over-view #after-ajax-hero-army {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -84,7 +84,7 @@
 }
 
 #hero-dial-equip .equip table td .EquiUnitWrapper {
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
 }
 
 #hero-dial-equip .equip table td .wrapper button {
@@ -143,7 +143,7 @@
 #hero-dial-equip #HeroEquipBox,
 #hero-dial-equip #after-ajax-hero-army,
 #hero-dial-camp #after-ajax-hero-army {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -162,7 +162,7 @@
 .box_content .right-content .equi_preveiw ul li .wrapper {
     width: 92%;
     margin: auto;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% auto;
     height: 100%;
     background-position: center;
@@ -212,7 +212,7 @@
 #hero-right-ol .unit-wrapper {
     width: 95%;
     height: 100%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 42px;
     background-repeat: no-repeat;
     background-position: center;

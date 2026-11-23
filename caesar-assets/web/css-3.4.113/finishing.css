@@ -1,4 +1,4 @@
-﻿.learn_hero .row-1 {
+.learn_hero .row-1 {
     height: 96px;
 }
 
@@ -278,7 +278,7 @@
 }
 
 .building_lvl_lable_4 {
-    background-image: url(../images/background/lvl_lable/lable_4.png);
+    background-image: url(../images/panner/study_lvl_h.png);
     background-position: center;
     line-height: 26px !important;
     background-size: 90%;
@@ -308,7 +308,7 @@
     background-color: red;
     position: absolute;
     height: 301px;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
     right: -5px;
 }
@@ -371,7 +371,7 @@
 
 .study_unite {
     position: relative;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -920,7 +920,7 @@
 .for_market .resource-list ul li {
     height: 20%;
     text-align: center;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     width: 90%;
     margin: auto;
     background-size: 100% 100%;
@@ -1004,7 +1004,7 @@
 }
 
 .inner_nav {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     margin-left: 3px;
 }
@@ -1208,7 +1208,7 @@
 }
 
 .my-city-distin .select_option ol li:hover {
-    background-image: url(../images/selelct/select-row.png);
+    background-image: url(../images/input/select-row.png);
     background-size: 100% 100%;
     color: white;
     font-weight: bold;
@@ -1347,7 +1347,7 @@
 }
 
 #jop_req_table {
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding: 20px 0px 10px 0px;
 }
@@ -1355,7 +1355,7 @@
 #downdrade-box .paragraph {
     height: 90px;
     padding: 15px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     width: 80%;
     margin: auto;
@@ -1454,7 +1454,7 @@
     height: 40px;
     padding: 4px;
     margin-top: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -1515,7 +1515,7 @@
     left: 50%;
     margin-left: -170px;
     top: 25%;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding-bottom: 12px;
     box-sizing: border-box;
@@ -1623,7 +1623,7 @@
 #matrial-box-gift .matrial-list li {
     width: 33.3%;
     float: left;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     padding-top: 10px;
     padding-bottom: 18px;
@@ -1634,7 +1634,7 @@
     margin: auto;
     padding: 3.5px;
     padding-bottom: 0px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -1771,7 +1771,7 @@
     width: 80%;
     margin: auto;
     display: block;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 3px;
     border-radius: 5px;
@@ -1804,7 +1804,7 @@
     width: 50%;
     margin: auto;
     margin-top: 10px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding: 30px 10px 15px 10px;
 }
@@ -1915,7 +1915,7 @@
     height: 40px;
     padding: 4px;
     margin-top: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -2107,11 +2107,11 @@
 }
 
 .number-arrow-wrapper .up {
-    background-image: url(../images/btn-small/numberStepUp.png);
+    background-image: url(../images/btns/numberStepUp.png);
 }
 
 .number-arrow-wrapper .down {
-    background-image: url(../images/btn-small/numberStepDown.png);
+    background-image: url(../images/btns/numberStepDown.png);
 }
 
 .number-arrow-wrapper .number-arrow:hover {

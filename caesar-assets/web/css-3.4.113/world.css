@@ -13,7 +13,7 @@ body {
 }
 
 .city-unit-tooltip {
-    background-image: url(../images/icons/left-content.png), url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png), url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     background-color: transparent;
     border-radius: initial;
@@ -134,7 +134,7 @@ body {
     border-image-slice: 30;
     border-image-repeat: round;
     border-bottom: none;
-    background: url(../images/skins/palace.png);
+    background: url(../images/background/roman_panel_frame.jpg);
     border-radius: 12px;
     background-position: -50px;
 }
@@ -355,7 +355,7 @@ body {
     position: absolute;
     right: 58%;
     height: inherit;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
 }
 
@@ -504,7 +504,7 @@ body {
     width: 90%;
     margin: auto;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 2px;
 }
@@ -518,7 +518,7 @@ body {
 .camp-data .right {
     width: 45%;
     height: 100%;
-    background-image: url(../images/border/roof.png), url(../images/background/colonna.png), url(../images/background/colonna.png);
+    background-image: url(../images/background/roof.png), url(../images/background/colonna.png), url(../images/background/colonna.png);
     background-size: 103% 35px, 16px 83%, 16px 83%;
     background-position: top, right 35px, left 35px;
     background-repeat: no-repeat, no-repeat, no-repeat;
@@ -539,7 +539,7 @@ body {
     background-color: white;
     margin: auto;
     margin-top: 41px;
-    background: url(../images/icons/left-content.png);
+    background: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -643,7 +643,7 @@ body {
 }
 
 #camp-panal-equip-row ul li .image-wrapper {
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -1289,7 +1289,7 @@ body {
 .new-city-req-table {
     width: 100%;
     height: 78%;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     overflow: auto;
 }

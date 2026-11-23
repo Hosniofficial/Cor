@@ -434,6 +434,13 @@ test('battle resolution saves kill-based rewards and actual round details', asyn
     assert.equal(savedReports[0].battleArrivalTime, 100);
     assert.equal(savedReports[0].returnDuration, 60);
     assert.equal(savedReports[0].roundCount, 1);
+    assert.equal(savedReports[0].combatSnapshot.version, 1);
+    assert.equal(savedReports[0].combatSnapshot.reportHeroId, 11);
+    assert.equal(savedReports[0].combatSnapshot.attackers.length, 1);
+    assert.equal(savedReports[0].combatSnapshot.attackers[0].hero.id_hero, 11);
+    assert.equal(savedReports[0].combatSnapshot.attackers[0].army.f_1_num, 2);
+    assert.equal(savedReports[0].combatSnapshot.attackers[0].equipmentBonuses[0].sp_attr, equippedSword.sp_attr);
+    assert.equal(savedReports[0].combatSnapshot.wallFortifications.traps, 0);
     assert.deepEqual(receivedEquipmentBonuses, [equippedSword]);
     assert.ok(savedReports[0].roundsLog.some(line => /معدات بطل المهاجم/.test(line)));
     assert.ok(savedReports[0].roundsLog.some(line => /الجولة/.test(line)));

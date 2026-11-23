@@ -798,6 +798,9 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
         <a class="menu-item" data-tab="tab-quick-grant"><i class="fa-solid fa-boxes-stacked"></i> منح الموارد والعتاد</a>
         <a class="menu-item" data-tab="tab-sanctions"><i class="fa-solid fa-gavel"></i> العقوبات والحظر</a>
 
+        <div class="menu-label">المعارك والتكتيك</div>
+        <a class="menu-item" data-tab="tab-battle-analyzer"><i class="fa-solid fa-shield-halved"></i> محلل المعارك التكتيكي</a>
+
         <?php if ($currentUser['role'] === 'super_admin' || $currentUser['role'] === 'admin'): ?>
         <div class="menu-label">إدارة السيرفر الحية (LiveOps)</div>
         <a class="menu-item" data-tab="tab-server-config"><i class="fa-solid fa-sliders"></i> إعدادات السيرفر والمعسكرات</a>
@@ -1436,6 +1439,154 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
         </div>
         <?php endif; ?>
 
+        <!-- ========================================== -->
+        <!-- TAB: BATTLE COMBAT ANALYZER -->
+        <!-- ========================================== -->
+        <div class="tab-pane" id="tab-battle-analyzer">
+            <!-- Search & Quick Picker -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-magnifying-glass-chart"></i> استعلام وتحليل معركة تكتيكية</div>
+                    <div style="font-size: 12px; color: var(--gold-main); font-weight: 700;">محرك التحليل الذكي للعتاد والخواص ومطابقة الجولات</div>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px;">
+                        <div style="display: flex; gap: 8px; flex: 1; min-width: 280px; max-width: 500px;">
+                            <input type="number" id="ba-report-input" class="form-input" placeholder="أدخل رقم تقرير المعركة (مثال: 109 أو 110)..." style="font-size: 15px; font-weight: 700;">
+                            <button class="btn btn-primary" onclick="submitBattleAnalysis()"><i class="fa-solid fa-bolt"></i> فحص وتحليل</button>
+                        </div>
+                        <div id="ba-original-link-wrapper" style="display: none;">
+                            <a id="ba-original-link" href="#" target="_blank" class="btn btn-secondary btn-sm" style="color: var(--gold-bright); border-color: var(--gold-dark);">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح في صفحة العرض الرسمية (battel.php)
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Battle Selector (Recent Battles) -->
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600;">
+                            <i class="fa-solid fa-clock-rotate-left"></i> أحدث المعارك المسجلة بالسيرفر (انقر للفحص الفوري):
+                        </div>
+                        <div id="ba-recent-chips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="color: var(--text-muted); font-size: 12px;">جارِ تحميل المعارك الأخيرة...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Loading Indicator -->
+            <div id="ba-loading" style="display: none; text-align: center; padding: 40px; color: var(--gold-main);">
+                <i class="fa-solid fa-circle-notch fa-spin fa-2x"></i>
+                <div style="margin-top: 10px; font-weight: 700;">جارِ استدعاء بيانات المعركة وتحليل الجولات والعتاد...</div>
+            </div>
+
+            <!-- Analysis Results Container -->
+            <div id="ba-results" style="display: none;">
+                <!-- 1. Smart Diagnostic Verdict Banner -->
+                <div id="ba-verdict-card" class="card" style="margin-bottom: 20px; border-width: 2px;">
+                    <!-- Injected dynamically -->
+                </div>
+
+                <!-- 2. Two-Column Stats: Equipment Audit & Health Balance -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <!-- Equipment & Tactical Perks Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-shield"></i> فحص عتاد البطل والخواص التكتيكية</div>
+                            <span id="ba-equip-pieces-badge" class="badge"></span>
+                        </div>
+                        <div class="card-body" id="ba-equip-body">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Power & Health Balance Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-scale-balanced"></i> نقاط الحياة الأساسية للوحدات (قبل إضافات الأبطال والعتاد)</div>
+                            <span id="ba-rounds-badge" class="badge"></span>
+                        </div>
+                        <div class="card-body" id="ba-hp-body">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Army Formation & Casualties Table -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-users-viewfinder"></i> تشكيلات الجيشين والخسائر والمصابين</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الطرف</th>
+                                    <th>اسم البطل</th>
+                                    <th>إجمالي القوات قبل المعركة</th>
+                                    <th>القتلى</th>
+                                    <th>المصابين (المشفى)</th>
+                                    <th>المتبقي</th>
+                                    <th>نسبة الفقد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ba-army-summary-tbody">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. Detailed Round-by-Round Breakdown Table -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-list-ol"></i> سجل الجولات الميداني التفصيلي</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 70px;">الجولة</th>
+                                    <th>خسائر جيش المدافع (تفصيل القتلى حسب الوحدة)</th>
+                                    <th>خسائر جيش المهاجم (تفصيل القتلى حسب الوحدة)</th>
+                                    <th>النص المسجل</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ba-rounds-tbody">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5. Interactive Sandbox / "What If" Simulator -->
+                <div class="card" style="margin-bottom: 20px; border-color: var(--sky);">
+                    <div class="card-header" style="background: rgba(56, 189, 248, 0.08);">
+                        <div class="card-title" style="color: var(--sky);"><i class="fa-solid fa-flask-vial"></i> محاكي الـ Sandbox ("ماذا لو؟" - مقارنة سيناريوهات العتاد)</div>
+                        <span style="font-size: 11px; color: var(--text-muted);">إعادة حساب المعركة فورياً بنفس محرك اللعبة لمقارنة النتيجة</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 16px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--gold-bright); font-weight: 600;">
+                                <input type="checkbox" id="ba-sim-barrage" checked>
+                                تفعيل خاصية وابل السهام (+25% ضرر للرماة)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--emerald); font-weight: 600;">
+                                <input type="checkbox" id="ba-sim-shield">
+                                تفعيل خاصية الدرع التكتيكي (امتصاص 12% ضرر)
+                            </label>
+                            <button class="btn btn-secondary" onclick="runBattleSandbox()" style="border-color: var(--sky); color: var(--sky);">
+                                <i class="fa-solid fa-play"></i> إعادة المحاكاة التكتيكية
+                            </button>
+                        </div>
+                        <div id="ba-sim-results" style="display: none; background: rgba(0,0,0,0.35); border-radius: var(--radius-sm); border: 1px dashed var(--sky); padding: 16px;">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </main>
 
@@ -1789,7 +1940,8 @@ function switchNav(tabId) {
         'tab-server-config': 'إعدادات السيرفر والمعسكرات الحية (LiveOps)',
         'tab-live-events': 'إدارة الفعاليات ومضاعفات الرفاهية المجدولة',
         'tab-staff': 'المشرفين والصلاحيات الإدارية',
-        'tab-logs': 'سجل العمليات الإدارية (Audit Logs)'
+        'tab-logs': 'سجل العمليات الإدارية (Audit Logs)',
+        'tab-battle-analyzer': 'محلل المعارك التكتيكي والتحقيق في النتائج'
     };
     document.getElementById('topbar-title').innerText = titleMap[tabId] || 'لوحة التحكم';
 
@@ -1805,6 +1957,15 @@ function switchNav(tabId) {
     if (tabId === 'tab-live-events') fetchServerEvents();
     if (tabId === 'tab-staff') fetchStaffList();
     if (tabId === 'tab-logs') fetchAuditLogs(1);
+    if (tabId === 'tab-battle-analyzer') {
+        loadRecentBattles();
+        const urlParams = new URLSearchParams(window.location.search);
+        const reportParam = urlParams.get('report') || urlParams.get('id_report');
+        if (reportParam && !activeBattleReportId) {
+            document.getElementById('ba-report-input').value = reportParam;
+            fetchBattleAnalysis(reportParam);
+        }
+    }
 }
 
 document.querySelectorAll('.menu-item').forEach(item => {
@@ -2997,10 +3158,467 @@ async function deleteServerEvent(id) {
     }
 }
 
+// ============================================================
+// BATTLE COMBAT ANALYZER JAVASCRIPT CONTROLLER
+// ============================================================
+let activeBattleReportId = null;
+let currentBattleAnalysis = null;
+
+function escapeBattleHtml(value) {
+    const entities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    };
+    return String(value == null ? '' : value).replace(/[&<>"']/g, character => entities[character]);
+}
+
+async function loadRecentBattles() {
+    const container = document.getElementById('ba-recent-chips');
+    if (!container) return;
+    try {
+        const res = await fetch('api.php?action=get_recent_battles&limit=15');
+        const json = await res.json();
+        if (json.state === 'ok' && json.data && json.data.battles) {
+            if (json.data.battles.length === 0) {
+                container.innerHTML = '<span style="color: var(--text-muted); font-size: 12px;">لا توجد معارك مسجلة مؤخراً.</span>';
+                return;
+            }
+            container.innerHTML = json.data.battles.map(b => {
+                const reportId = Number(b.id_report);
+                if (!Number.isSafeInteger(reportId) || reportId <= 0) return '';
+                const wonClass = b.won ? 'badge-active' : 'badge-banned';
+                const wonText = b.won ? 'فوز' : 'هزيمة';
+                const barrageBadge = b.has_barrage ? '<span style="color: var(--gold-bright); font-size: 10px; margin-right: 4px;">🎯 وابل السهام</span>' : '';
+                return `
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="selectRecentBattle(${reportId})" style="font-size: 12px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 6px; border-color: ${b.won ? 'var(--emerald)' : 'var(--ruby-dark)'};">
+                        <strong>#${reportId}</strong>
+                        <span>${escapeBattleHtml(b.hero_name)} vs ${escapeBattleHtml(b.enemy_name)}</span>
+                        <span class="badge ${wonClass}" style="font-size: 10px; padding: 1px 6px;">${wonText} (${b.rounds_count}ج)</span>
+                        ${barrageBadge}
+                    </button>
+                `;
+            }).join('');
+        }
+    } catch (e) {
+        container.innerHTML = '<span style="color: var(--ruby-bright); font-size: 12px;">تعذر تحميل أحدث المعارك.</span>';
+    }
+}
+
+function selectRecentBattle(idReport) {
+    document.getElementById('ba-report-input').value = idReport;
+    fetchBattleAnalysis(idReport);
+}
+
+function submitBattleAnalysis() {
+    const input = document.getElementById('ba-report-input');
+    const id = parseInt(input.value, 10);
+    if (!id || id <= 0) {
+        notify('يرجى إدخال رقم تقرير معركة صالح', 'warning');
+        input.focus();
+        return;
+    }
+    fetchBattleAnalysis(id);
+}
+
+async function fetchBattleAnalysis(idReport) {
+    const reportId = Number.parseInt(idReport, 10);
+    if (!Number.isSafeInteger(reportId) || reportId <= 0) {
+        notify('رقم تقرير المعركة غير صالح', 'warning');
+        return;
+    }
+
+    const loading = document.getElementById('ba-loading');
+    const results = document.getElementById('ba-results');
+    const linkWrapper = document.getElementById('ba-original-link-wrapper');
+    const origLink = document.getElementById('ba-original-link');
+
+    loading.style.display = 'block';
+    results.style.display = 'none';
+
+    try {
+        const res = await fetch(`api.php?action=get_battle_analysis&id_report=${reportId}`);
+        const json = await res.json();
+        loading.style.display = 'none';
+
+        if (json.state !== 'ok' || !json.data) {
+            notify(escapeBattleHtml(json.message || 'فشل جلب بيانات تحليل المعركة'), 'error');
+            return;
+        }
+
+        activeBattleReportId = reportId;
+        currentBattleAnalysis = json.data;
+        results.style.display = 'block';
+
+        // Update battel.php link
+        if (origLink && linkWrapper) {
+            origLink.href = `../battel.php?report=${reportId}&server=1`;
+            linkWrapper.style.display = 'inline-block';
+        }
+
+        renderBattleVerdict(currentBattleAnalysis);
+        renderBattleEquipment(currentBattleAnalysis);
+        renderBattleHealthBalance(currentBattleAnalysis);
+        renderBattleArmySummary(currentBattleAnalysis);
+        renderBattleRounds(currentBattleAnalysis);
+
+        // Reset sandbox section
+        document.getElementById('ba-sim-results').style.display = 'none';
+        document.getElementById('ba-sim-barrage').checked =
+            currentBattleAnalysis.equipment.data_available && currentBattleAnalysis.equipment.has_barrage;
+        document.getElementById('ba-sim-shield').checked =
+            currentBattleAnalysis.equipment.data_available && currentBattleAnalysis.equipment.has_shield;
+        const sandboxAvailable = currentBattleAnalysis.simulation_available === true;
+        document.getElementById('ba-sim-barrage').disabled = !sandboxAvailable;
+        document.getElementById('ba-sim-shield').disabled = !sandboxAvailable;
+        const sandboxButton = document.querySelector('#tab-battle-analyzer button[onclick="runBattleSandbox()"]');
+        sandboxButton.disabled = !sandboxAvailable;
+        if (!sandboxAvailable) {
+            const simResults = document.getElementById('ba-sim-results');
+            simResults.style.display = 'block';
+            simResults.innerHTML = 'لا يمكن محاكاة هذا التقرير؛ لا تتوفر لقطة تاريخية كاملة لبيانات القتال.';
+        }
+
+    } catch (e) {
+        loading.style.display = 'none';
+        notify(escapeBattleHtml(e.message || 'حدث خطأ في الاتصال أثناء استرجاع بيانات المعركة'), 'error');
+    }
+}
+
+function renderBattleVerdict(data) {
+    const v = data.verdict;
+    const isWon = data.player_won;
+    const attackerWon = data.attacker_won;
+    const borderCol = isWon ? 'var(--emerald)' : 'var(--ruby-bright)';
+    const bgGrad = isWon
+        ? 'linear-gradient(135deg, rgba(0,255,115,0.08) 0%, rgba(20,23,28,0.95) 100%)'
+        : 'linear-gradient(135deg, rgba(255,43,78,0.08) 0%, rgba(20,23,28,0.95) 100%)';
+
+    const card = document.getElementById('ba-verdict-card');
+    card.style.borderColor = borderCol;
+    card.style.background = bgGrad;
+
+    const icon = isWon ? 'fa-trophy' : 'fa-skull-crossbones';
+    const iconCol = isWon ? 'var(--emerald)' : 'var(--ruby-bright)';
+
+    let reasonsHtml = '';
+    if (v.reasons && v.reasons.length > 0) {
+        reasonsHtml = `
+            <div style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                <div style="font-size: 12px; color: var(--gold-main); font-weight: 700; margin-bottom: 6px;"><i class="fa-solid fa-microscope"></i> التشخيص التكتيكي والسبب الميداني للنتيجة:</div>
+                <ul style="padding-right: 20px; font-size: 13px; line-height: 1.8; color: var(--text-primary);">
+                    ${v.reasons.map(r => `<li>${escapeBattleHtml(r)}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    let recHtml = '';
+    if (v.recommendations && v.recommendations.length > 0) {
+        recHtml = `
+            <div style="margin-top: 10px; background: rgba(223,186,107,0.08); border-right: 3px solid var(--gold-main); padding: 8px 12px; border-radius: 4px; font-size: 12.5px; color: var(--gold-bright);">
+                <strong><i class="fa-solid fa-lightbulb"></i> التوصية التكتيكية:</strong> ${v.recommendations.map(escapeBattleHtml).join(' | ')}
+            </div>
+        `;
+    }
+
+    card.innerHTML = `
+        <div class="card-body">
+            <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+                <div style="font-size: 32px; color: ${iconCol}; padding: 10px 14px; background: rgba(0,0,0,0.3); border-radius: 50%; border: 1.5px solid ${borderCol};">
+                    <i class="fa-solid ${icon}"></i>
+                </div>
+                <div style="flex: 1; min-width: 260px;">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 6px;">
+                        <span class="badge ${isWon ? 'badge-active' : 'badge-banned'}" style="font-size: 13px; padding: 3px 10px;">
+                            ${attackerWon ? 'انتصار المهاجم' : 'انتصار المدافع'}
+                        </span>
+                        <h2 style="font-size: 18px; font-weight: 800; color: var(--text-primary); margin: 0;">${escapeBattleHtml(v.title)}</h2>
+                        <span style="font-size: 12px; color: var(--text-muted); margin-right: auto;">معركة رقم #${data.report_id} | ${escapeBattleHtml(data.time_stamp)} | الإحداثيات: [${data.coords.x}, ${data.coords.y}]</span>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">${escapeBattleHtml(v.summary)}</div>
+                    ${reasonsHtml}
+                    ${recHtml}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderBattleEquipment(data) {
+    const eq = data.equipment;
+    const piecesBadge = document.getElementById('ba-equip-pieces-badge');
+    const container = document.getElementById('ba-equip-body');
+
+    if (!eq.data_available) {
+        piecesBadge.className = 'badge';
+        piecesBadge.innerText = 'غير متاح تاريخياً';
+        container.innerHTML = 'لا يحتوي هذا التقرير على لقطة تاريخية للعتاد والخواص؛ لا يمكن استنتاجها من العتاد الحالي للبطل.';
+        return;
+    }
+
+    piecesBadge.className = eq.pieces_count >= 5 ? 'badge badge-active' : (eq.pieces_count > 0 ? 'badge badge-supervisor' : 'badge badge-banned');
+    piecesBadge.innerText = `${eq.pieces_count} قطع مجهزة`;
+
+    const barrageStatus = eq.has_barrage
+        ? `<div style="background: rgba(0,255,115,0.08); border: 1px solid var(--emerald); border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-circle-check" style="color: var(--emerald); font-size: 18px;"></i>
+            <div>
+                <strong style="color: var(--emerald);">وابل السهام مفعل (${eq.barrage_count}x)</strong>
+                <div style="font-size: 11.5px; color: var(--text-secondary);">يمنح الرماة تعزيز هجومي إضافي بنسبة +${eq.barrage_count * 25}%.</div>
+            </div>
+           </div>`
+        : `<div style="background: rgba(255,150,0,0.08); border: 1px solid rgba(255,150,0,0.3); border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #ff9900; font-size: 18px;"></i>
+            <div>
+                <strong style="color: #ff9900;">وابل السهام غير مفعل</strong>
+                <div style="font-size: 11.5px; color: var(--text-muted);">لا تسجل لقطة القتال تفعيل وابل السهام على البطل.</div>
+            </div>
+           </div>`;
+
+    const shieldStatus = eq.has_shield
+        ? `<div style="background: rgba(0,255,115,0.08); border: 1px solid var(--emerald); border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--emerald); font-size: 18px;"></i>
+            <div>
+                <strong style="color: var(--emerald);">الدرع التكتيكي مفعل (${eq.shield_count}x)</strong>
+                <div style="font-size: 11.5px; color: var(--text-secondary);">تخفيف ضرر متلقى بنسبة ${eq.shield_count * 12}% + تعزيز صلابة المدرعين/المشاة بنسبة 30%.</div>
+            </div>
+           </div>`
+        : `<div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-shield" style="color: var(--text-muted); font-size: 18px;"></i>
+            <div>
+                <strong style="color: var(--text-muted);">الدرع التكتيكي غير مفعل</strong>
+                <div style="font-size: 11.5px; color: var(--text-muted);">لا تسجل لقطة القتال تفعيل الدرع التكتيكي.</div>
+            </div>
+           </div>`;
+
+    let notesHtml = '';
+    if (eq.tactical_notes && eq.tactical_notes.length > 0) {
+        notesHtml = `
+            <div style="margin-top: 10px; font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                ${eq.tactical_notes.map(n => `<div style="margin-bottom: 4px;">${escapeBattleHtml(n)}</div>`).join('')}
+            </div>
+        `;
+    }
+
+    container.innerHTML = `
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 4px; border-radius: 4px; border: 1px solid #332616;">
+                <div style="font-size: 11px; color: var(--text-muted);">الهجوم</div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--gold-bright);">+${eq.attack}</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 4px; border-radius: 4px; border: 1px solid #332616;">
+                <div style="font-size: 11px; color: var(--text-muted);">الدفاع</div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--gold-bright);">+${eq.defence}</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 4px; border-radius: 4px; border: 1px solid #332616;">
+                <div style="font-size: 11px; color: var(--text-muted);">الحيوية</div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--gold-bright);">+${eq.vitality}</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 4px; border-radius: 4px; border: 1px solid #332616;">
+                <div style="font-size: 11px; color: var(--text-muted);">الضرر الصافي</div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--gold-bright);">+${eq.damage}</div>
+            </div>
+        </div>
+        ${barrageStatus}
+        ${shieldStatus}
+        ${notesHtml}
+    `;
+}
+
+function renderBattleHealthBalance(data) {
+    const roundsBadge = document.getElementById('ba-rounds-badge');
+    const container = document.getElementById('ba-hp-body');
+
+    roundsBadge.className = 'badge badge-supervisor';
+    roundsBadge.innerText = `${data.rounds_count} جولات قتالية`;
+
+    const atkHp = data.attacker_army.total_hp;
+    const defHp = data.defender_army.total_hp;
+    const totalCombinedHp = Math.max(1, atkHp + defHp);
+    const atkHpPct = Math.round((atkHp / totalCombinedHp) * 100);
+    const defHpPct = 100 - atkHpPct;
+
+    const atkTroops = data.attacker_army.total_pre;
+    const defTroops = data.defender_army.total_pre;
+
+    const atkLoss = data.attacker_army.total_loss;
+    const defLoss = data.defender_army.total_loss;
+
+    container.innerHTML = `
+        <div style="margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+                <span>المهاجم: <strong>${atkHp.toLocaleString()} HP</strong> (${atkHpPct}%)</span>
+                <span>المدافع: <strong>${defHp.toLocaleString()} HP</strong> (${defHpPct}%)</span>
+            </div>
+            <div style="height: 12px; background: rgba(0,0,0,0.4); border-radius: 6px; overflow: hidden; display: flex;">
+                <div style="width: ${atkHpPct}%; background: var(--emerald);"></div>
+                <div style="width: ${defHpPct}%; background: var(--ruby-bright);"></div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12.5px;">
+            <div style="background: rgba(0,0,0,0.25); padding: 10px; border-radius: 4px; border-right: 3px solid var(--emerald);">
+                <div style="color: var(--text-muted); font-size: 11px;">جيش المهاجم (${escapeBattleHtml(data.attacker_hero.name)})</div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--emerald); margin: 3px 0;">${atkTroops.toLocaleString()} جندي</div>
+                <div style="color: var(--text-secondary); font-size: 11.5px;">القتلى: <strong style="color: var(--ruby-bright);">${atkLoss.toLocaleString()}</strong> (${Math.round((atkLoss/Math.max(1, atkTroops))*100)}%)</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 10px; border-radius: 4px; border-right: 3px solid var(--ruby-bright);">
+                <div style="color: var(--text-muted); font-size: 11px;">جيش العدو (${escapeBattleHtml(data.defender_hero.name)})</div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--ruby-bright); margin: 3px 0;">${defTroops.toLocaleString()} جندي</div>
+                <div style="color: var(--text-secondary); font-size: 11.5px;">القتلى: <strong style="color: var(--ruby-bright);">${defLoss.toLocaleString()}</strong> (${Math.round((defLoss/Math.max(1, defTroops))*100)}%)</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderBattleArmySummary(data) {
+    const tbody = document.getElementById('ba-army-summary-tbody');
+    const atk = data.attacker_army;
+    const def = data.defender_army;
+
+    const atkPct = Math.round((atk.total_loss / Math.max(1, atk.total_pre)) * 100);
+    const defPct = Math.round((def.total_loss / Math.max(1, def.total_pre)) * 100);
+
+    const atkTroopsList = atk.by_type.map(t => `${escapeBattleHtml(t.name)}: ${t.pre.toLocaleString()}`).join(' | ');
+    const defTroopsList = def.by_type.map(t => `${escapeBattleHtml(t.name)}: ${t.pre.toLocaleString()}`).join(' | ');
+
+    tbody.innerHTML = `
+        <tr>
+            <td><span class="badge badge-active">المهاجم</span></td>
+            <td><strong>${escapeBattleHtml(data.attacker_hero.name)}</strong> (${escapeBattleHtml(data.player.name)})<div style="font-size: 11px; color: var(--text-muted);">${atkTroopsList}</div></td>
+            <td><strong>${atk.total_pre.toLocaleString()}</strong></td>
+            <td style="color: var(--ruby-bright); font-weight: 700;">${atk.total_loss.toLocaleString()}</td>
+            <td style="color: var(--gold-bright);">${atk.total_injured.toLocaleString()}</td>
+            <td style="color: var(--emerald); font-weight: 700;">${atk.total_post.toLocaleString()}</td>
+            <td><span class="badge ${atkPct > 50 ? 'badge-banned' : 'badge-supervisor'}">${atkPct}%</span></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-banned">المدافع</span></td>
+            <td><strong>${escapeBattleHtml(data.defender_hero.name)}</strong><div style="font-size: 11px; color: var(--text-muted);">${defTroopsList}</div></td>
+            <td><strong>${def.total_pre.toLocaleString()}</strong></td>
+            <td style="color: var(--ruby-bright); font-weight: 700;">${def.total_loss.toLocaleString()}</td>
+            <td style="color: var(--gold-bright);">${def.total_injured.toLocaleString()}</td>
+            <td style="color: var(--emerald); font-weight: 700;">${def.total_post.toLocaleString()}</td>
+            <td><span class="badge ${defPct > 50 ? 'badge-banned' : 'badge-supervisor'}">${defPct}%</span></td>
+        </tr>
+    `;
+}
+
+function renderBattleRounds(data) {
+    const tbody = document.getElementById('ba-rounds-tbody');
+    const rounds = data.rounds_table;
+
+    if (!rounds || rounds.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 18px;">لا توجد تفاصيل جولات مسجلة في هذا التقرير.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = rounds.map(r => `
+        <tr>
+            <td style="font-weight: 800; color: var(--gold-bright); text-align: center;">${r.round}</td>
+            <td style="color: var(--ruby-bright);">
+                <strong>${r.def_loss.toLocaleString()}</strong>
+                ${r.def_detail ? `<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">(${escapeBattleHtml(r.def_detail)})</div>` : ''}
+            </td>
+            <td style="color: var(--gold-bright);">
+                <strong>${r.atk_loss.toLocaleString()}</strong>
+                ${r.atk_detail ? `<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">(${escapeBattleHtml(r.atk_detail)})</div>` : ''}
+            </td>
+            <td style="font-size: 11px; color: var(--text-muted); direction: rtl;">${escapeBattleHtml(r.raw_text)}</td>
+        </tr>
+    `).join('');
+}
+
+async function runBattleSandbox() {
+    if (!activeBattleReportId) {
+        notify('يرجى اختيار تقرير معركة أولاً', 'warning');
+        return;
+    }
+
+    const simResultsBox = document.getElementById('ba-sim-results');
+    const enableBarrage = document.getElementById('ba-sim-barrage').checked;
+    const enableShield = document.getElementById('ba-sim-shield').checked;
+
+    simResultsBox.style.display = 'block';
+    simResultsBox.innerHTML = '<div style="color: var(--sky); text-align: center; padding: 14px;"><i class="fa-solid fa-spinner fa-spin"></i> جارِ تشغيل المحاكاة التكتيكية بحسابات المحرك الحقيقية...</div>';
+
+    const formData = new FormData();
+    formData.append('action', 'simulate_battle_sandbox');
+    formData.append('id_report', activeBattleReportId);
+    formData.append('csrf_token', adminCsrfToken);
+    if (enableBarrage) formData.append('enable_barrage', '1');
+    if (enableShield) formData.append('enable_shield', '1');
+
+    try {
+        const res = await fetch('api.php', { method: 'POST', body: formData });
+        const json = await res.json();
+
+        if (json.state !== 'ok' || !json.data) {
+            simResultsBox.innerHTML = `<div style="color: var(--ruby-bright);">${escapeBattleHtml(json.message || 'فشلت المحاكاة')}</div>`;
+            return;
+        }
+
+        const sim = json.data;
+        const origRounds = currentBattleAnalysis ? currentBattleAnalysis.rounds_count : 0;
+        const origLosses = currentBattleAnalysis ? currentBattleAnalysis.player_army.total_loss : 0;
+        const simRounds = sim.simulated_rounds;
+        const simLosses = sim.total_losses;
+
+        const roundsDiff = origRounds - simRounds;
+        const lossesDiff = origLosses - simLosses;
+
+        simResultsBox.innerHTML = `
+            <div style="font-size: 14px; font-weight: 800; color: var(--sky); margin-bottom: 10px;">
+                <i class="fa-solid fa-square-poll-vertical"></i> نتيجة المحاكاة المقارنة (Simulation Outcome):
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08);">
+                    <div style="font-size: 11px; color: var(--text-muted);">عدد الجولات</div>
+                    <div style="font-size: 18px; font-weight: 800; color: ${simRounds <= origRounds ? 'var(--emerald)' : 'var(--ruby-bright)'};">
+                        ${simRounds} جولات <span style="font-size: 12px; color: var(--text-muted);">(الأصل: ${origRounds})</span>
+                    </div>
+                    ${roundsDiff > 0 ? `<div style="font-size: 11px; color: var(--emerald);">أسرع بـ ${roundsDiff} جولات!</div>` : ''}
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08);">
+                    <div style="font-size: 11px; color: var(--text-muted);">خسائر صاحب التقرير</div>
+                    <div style="font-size: 18px; font-weight: 800; color: ${lossesDiff >= 0 ? 'var(--emerald)' : 'var(--ruby-bright)'};">
+                        ${simLosses.toLocaleString()} <span style="font-size: 12px; color: var(--text-muted);">(الأصل: ${origLosses.toLocaleString()})</span>
+                    </div>
+                    ${lossesDiff > 0 ? `<div style="font-size: 11px; color: var(--emerald);">تم توفير ${lossesDiff.toLocaleString()} مقاتل!</div>` : ''}
+                </div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                <strong>الخواص المفعلة في هذه التجربة:</strong>
+                ${enableBarrage ? '<span style="color: var(--gold-bright); margin-left: 8px;">🎯 وابل السهام (+25% ضرر للرماة)</span>' : '<span style="color: var(--text-muted); margin-left: 8px;">بدون وابل السهام</span>'}
+                ${enableShield ? '<span style="color: var(--emerald); margin-left: 8px;">🛡️ الدرع (امتصاص 12%)</span>' : '<span style="color: var(--text-muted); margin-left: 8px;">بدون درع</span>'}
+            </div>
+        `;
+    } catch (e) {
+        simResultsBox.innerHTML = `<div style="color: var(--ruby-bright);">${escapeBattleHtml(e.message || 'خطأ أثناء تنفيذ المحاكاة.')}</div>`;
+    }
+}
+
 // بدء التشغيل التلقائي
 document.addEventListener('DOMContentLoaded', () => {
     fetchStats();
     fetchCatalogAndPlayers();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    const reportParam = urlParams.get('report') || urlParams.get('id_report');
+
+    if (tabParam === 'battle-analyzer' || reportParam) {
+        switchNav('tab-battle-analyzer');
+        if (reportParam) {
+            document.getElementById('ba-report-input').value = reportParam;
+            fetchBattleAnalysis(reportParam);
+        }
+    }
 });
 </script>
 

@@ -526,18 +526,48 @@ async function resolveBattle(context, dependencies) {
         } else if (unitType >= 150 && unitType <= 236) {
             enemyEquipBonus = unitLvl * 600;
         }
+        const wallFortifications = {
+            traps: Number(targetCityRows[0] && targetCityRows[0].wall_a) || 0,
+            towers: Number(targetCityRows[0] && targetCityRows[0].wall_b) || 0,
+            stones: Number(targetCityRows[0] && targetCityRows[0].wall_c) || 0
+        };
         const combatResult = simulateTacticalCombat(attackers, allDefenderTroops, {
             solStats: SOL_STATS,
             commanderAttackBonus: enemyEquipBonus,
             npcCombatPowerMultiplier: 1 + unitLvl * 0.05,
             npcDefenderTroops,
             defendingMembers: joinedDefenders,
-            wallFortifications: {
-                traps: Number(targetCityRows[0] && targetCityRows[0].wall_a) || 0,
-                towers: Number(targetCityRows[0] && targetCityRows[0].wall_b) || 0,
-                stones: Number(targetCityRows[0] && targetCityRows[0].wall_c) || 0
-            }
+            wallFortifications
         });
+        const snapshotMember = member => ({
+            id_member: Number(member.id_member),
+            side: Number(member.side),
+            hero: {
+                id_hero: Number(member.hero.id_hero),
+                lvl: Number(member.hero.lvl) || 1,
+                point_b: Number(member.hero.point_b) || 0,
+                point_b_plus: Number(member.hero.point_b_plus) || 0,
+                point_c: Number(member.hero.point_c) || 0,
+                point_c_plus: Number(member.hero.point_c_plus) || 0,
+                medalDenActive: Boolean(member.hero.medalDenActive),
+                medalLeoActive: Boolean(member.hero.medalLeoActive)
+            },
+            army: Object.fromEntries(slots.flatMap(slot => [
+                [`${slot}_type`, Number(member.army[`${slot}_type`]) || 0],
+                [`${slot}_num`, Math.max(0, Number(member.army[`${slot}_num`]) || 0)]
+            ])),
+            equipmentBonuses: (member.equipmentBonuses || []).map(bonus => ({ ...bonus }))
+        });
+        const combatSnapshot = {
+            version: 1,
+            attackers: attackers.map(snapshotMember),
+            defendingMembers: joinedDefenders.map(snapshotMember),
+            npcDefenderTroops: { ...npcDefenderTroops },
+            solStats: SOL_STATS,
+            commanderAttackBonus: enemyEquipBonus,
+            npcCombatPowerMultiplier: 1 + unitLvl * 0.05,
+            wallFortifications
+        };
         const simulatedAttackerArmies = new Map(
             combatResult.remainingAttackers.map(result => [result.member.id_member, result.army])
         );
@@ -1024,6 +1054,10 @@ async function resolveBattle(context, dependencies) {
                     ...(member.resourceLoot || {})
                 },
                 itemLoot: member.itemLoot,
+                combatSnapshot: {
+                    ...combatSnapshot,
+                    reportHeroId: Number(member.hero.id_hero)
+                },
                 attackerSlots: memberSlots.attackerSlots,
                 defenderSlots: memberSlots.defenderSlots,
                 writeBattleLog: member.hero.id_hero === Number(idHero),

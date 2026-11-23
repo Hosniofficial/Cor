@@ -125,7 +125,7 @@ test('player profile information panel is opaque and world close control uses th
     );
 
     assert.ok(playerPanel, 'player information panel should have an opaque frame style');
-    assert.match(playerPanel[1], /background:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(playerPanel[1], /background:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(playerPanel[1], /100%\s+100%/);
 
     assert.match(clientSource, /class="close_RB"|close_RB/);

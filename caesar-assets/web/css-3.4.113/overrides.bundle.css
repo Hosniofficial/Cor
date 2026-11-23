@@ -1,4 +1,4 @@
-﻿.learn_hero .row-1 {
+.learn_hero .row-1 {
     height: 96px;
 }
 
@@ -278,7 +278,7 @@
 }
 
 .building_lvl_lable_4 {
-    background-image: url(../images/background/lvl_lable/lable_4.png);
+    background-image: url(../images/panner/study_lvl_h.png);
     background-position: center;
     line-height: 26px !important;
     background-size: 90%;
@@ -308,7 +308,7 @@
     background-color: red;
     position: absolute;
     height: 301px;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
     right: -5px;
 }
@@ -371,7 +371,7 @@
 
 .study_unite {
     position: relative;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -920,7 +920,7 @@
 .for_market .resource-list ul li {
     height: 20%;
     text-align: center;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     width: 90%;
     margin: auto;
     background-size: 100% 100%;
@@ -1004,7 +1004,7 @@
 }
 
 .inner_nav {
-    background-image: url(../images/border/border-h_.png);
+    background-image: url(../images/background/border-h_.png);
     background-size: 100% 100%;
     margin-left: 3px;
 }
@@ -1208,7 +1208,7 @@
 }
 
 .my-city-distin .select_option ol li:hover {
-    background-image: url(../images/selelct/select-row.png);
+    background-image: url(../images/input/select-row.png);
     background-size: 100% 100%;
     color: white;
     font-weight: bold;
@@ -1347,7 +1347,7 @@
 }
 
 #jop_req_table {
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding: 20px 0px 10px 0px;
 }
@@ -1355,7 +1355,7 @@
 #downdrade-box .paragraph {
     height: 90px;
     padding: 15px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     width: 80%;
     margin: auto;
@@ -1454,7 +1454,7 @@
     height: 40px;
     padding: 4px;
     margin-top: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -1515,7 +1515,7 @@
     left: 50%;
     margin-left: -170px;
     top: 25%;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding-bottom: 12px;
     box-sizing: border-box;
@@ -1623,7 +1623,7 @@
 #matrial-box-gift .matrial-list li {
     width: 33.3%;
     float: left;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     padding-top: 10px;
     padding-bottom: 18px;
@@ -1634,7 +1634,7 @@
     margin: auto;
     padding: 3.5px;
     padding-bottom: 0px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -1771,7 +1771,7 @@
     width: 80%;
     margin: auto;
     display: block;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 3px;
     border-radius: 5px;
@@ -1804,7 +1804,7 @@
     width: 50%;
     margin: auto;
     margin-top: 10px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
     padding: 30px 10px 15px 10px;
 }
@@ -1915,7 +1915,7 @@
     height: 40px;
     padding: 4px;
     margin-top: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 5px;
 }
@@ -2107,11 +2107,11 @@
 }
 
 .number-arrow-wrapper .up {
-    background-image: url(../images/btn-small/numberStepUp.png);
+    background-image: url(../images/btns/numberStepUp.png);
 }
 
 .number-arrow-wrapper .down {
-    background-image: url(../images/btn-small/numberStepDown.png);
+    background-image: url(../images/btns/numberStepDown.png);
 }
 
 .number-arrow-wrapper .number-arrow:hover {
@@ -2181,7 +2181,7 @@
 
 #battel_r_upper .resource-row {
     height: 30px;
-    background-image: url(../images/back-shape/freg-top-left.png), url(../images/back-shape/freg-top-right.png), url(../images/back-shape/freg-btm-left.png), url(../images/back-shape/freg-btm-right.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png);
+    background-image: url(../images/background/back-shape/freg-top-left.png), url(../images/background/back-shape/freg-top-right.png), url(../images/background/back-shape/freg-btm-left.png), url(../images/background/back-shape/freg-btm-right.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png);
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat;
     background-position: left top, top right, bottom left, bottom right, top center, bottom center, center;
     box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
@@ -2224,7 +2224,7 @@
 }
 
 #battel_r_upper {
-    background-image: url(../images/border/roof.png);
+    background-image: url(../images/background/roof.png);
     background-position-x: center;
     background-size: 99% 50%;
     background-repeat: no-repeat;
@@ -2248,7 +2248,7 @@
     min-height: 30px;
     height: auto;
     margin-top: 2px;
-    background-image: url(../images/back-shape/freg-top-left.png), url(../images/back-shape/freg-top-right.png), url(../images/back-shape/freg-btm-left.png), url(../images/back-shape/freg-btm-right.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png);
+    background-image: url(../images/background/back-shape/freg-top-left.png), url(../images/background/back-shape/freg-top-right.png), url(../images/background/back-shape/freg-btm-left.png), url(../images/background/back-shape/freg-btm-right.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png);
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat;
     background-position: left top, top right, bottom left, bottom right, top center, bottom center, center;
     width: 98%;
@@ -2304,7 +2304,7 @@
     width: 25px;
     vertical-align: middle;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     box-sizing: border-box;
     border-radius: 2px;
@@ -2326,7 +2326,7 @@
     right: 50%;
     margin-right: -5px;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
 }
 
@@ -2408,7 +2408,7 @@
 #battel-detail ul li .image img {
     width: 91px;
     margin-left: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 6px;
     padding: 4px
@@ -3145,7 +3145,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_guild .down {
     height: 48%;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -3161,7 +3161,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_guild .down p {
     height: 168px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     text-align: center;
     font-size: 16px;
@@ -3807,7 +3807,7 @@ a.for_Ranks .tr .rank-title {
     border-radius: 3px;
     margin: 10px 30px;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
 }
 
@@ -3880,7 +3880,7 @@ a.for_Ranks .tr .rank-title {
 }
 
 .for_report #reports_list {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -3895,7 +3895,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_quest .right-content,
 .for_guild .right-content #rightofright {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -3905,14 +3905,14 @@ a.for_Ranks .tr .rank-title {
 }
 
 #guild-guild_data.for_guild .left-content .upper {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 .for_report #reports_list .selected,
 #reports_list_BF .selected {
-    background-image: url(../images/selelct/select-row-3x.png);
+    background-image: url(../images/input/select-row-3x.png);
     background-size: 100% 100%;
     color: white;
     background-color: transparent;
@@ -4486,7 +4486,7 @@ ol.guild-deposit-cards {
 #helper-choose li .image img {
     border-radius: 5px;
     width: 80%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 4px;
     display: block;
@@ -4535,7 +4535,7 @@ ol.guild-deposit-cards {
     margin-top: 15px;
     border-radius: 8px;
     padding: 4px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
 }
 
@@ -4702,7 +4702,7 @@ ol.guild-deposit-cards {
 #trade-list .image .wrapper {
     width: 54px;
     height: 27px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: auto 100%;
 }
 
@@ -4864,7 +4864,7 @@ ol.guild-deposit-cards {
 
 #job-typs tr td {
     text-align: center;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -4884,7 +4884,7 @@ ol.guild-deposit-cards {
 }
 
 #job-typs tr .over-text h2 {
-    background-image: url("../images/selelct/select-row.png");
+    background-image: url("../images/input/select-row.png");
     width: 60px;
     margin: auto;
     background-size: 60px 20px;
@@ -5473,7 +5473,7 @@ ol.guild-deposit-cards {
     position: absolute;
     margin-top: 15px;
     width: 78.2%;
-    background-image: url(../images/border/top_panel_helmet_decor.png);
+    background-image: url(../images/background/top_panel_helmet_decor.png);
     background-repeat: no-repeat;
     background-position: center;
     height: 50px;
@@ -5485,7 +5485,7 @@ ol.guild-deposit-cards {
 }
 
 .player-review .down {
-    background: url(../images/icons/left-content.png) center / 100% 100% no-repeat, url(../images/background/paperCenter.jpg) center / cover repeat;
+    background: url(../images/background/back-shape/left-content.png) center / 100% 100% no-repeat, url(../images/background/paperCenter.jpg) center / cover repeat;
     background-color: #2b1d14;
 }
 
@@ -5503,7 +5503,7 @@ ol.guild-deposit-cards {
 
 .player-avatar img {
     border: 6px solid transparent;
-    border-image: url(../images/border/sml_btn.jpg);
+    border-image: url(../images/background/sml_btn.jpg);
     border-image-slice: 7;
     border-image-repeat: round;
     box-sizing: content-box;
@@ -5690,7 +5690,7 @@ ol.guild-deposit-cards {
     color: white;
     border-left: solid 5px transparent;
     border-right: solid 5px transparent;
-    border-image: url(../images/border/border_red.png);
+    border-image: url(../images/background/border_red.png);
     border-image-slice: 7;
     border-image-repeat: round;
     box-sizing: border-box;
@@ -5836,7 +5836,7 @@ ol.guild-deposit-cards {
     width: 25%;
     float: right;
     border-top-right-radius: 15px;
-    background: url(../images/border/roof.png) no-repeat bottom, url(../images/border/roof.png) no-repeat top;
+    background: url(../images/background/roof.png) no-repeat bottom, url(../images/background/roof.png) no-repeat top;
     background-size: contain
 }
 
@@ -6094,7 +6094,7 @@ ol.guild-deposit-cards {
 #dialogBox3 {
     width: 820px;
     height: 410px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     position: fixed;
     z-index: 15;
     top: 150px;
@@ -6228,7 +6228,7 @@ ol.guild-deposit-cards {
 }
 
 #SelectContributeList .unit-contribute {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     width: 24%;
     display: flex;
     flex-flow: column;
@@ -7711,7 +7711,7 @@ button:disabled {
 .upgrade_req_tooltip .req_table_container,
 .study_req_tooltip .req_table,
 .req_table_container {
-    background: url(../images/skins/palace.png) !important;
+    background: url(../images/background/roman_panel_frame.jpg) !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
     padding: 25px 0px 10px 0px;

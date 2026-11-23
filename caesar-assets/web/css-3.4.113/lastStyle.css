@@ -53,7 +53,7 @@
 
 #battel_r_upper .resource-row {
     height: 30px;
-    background-image: url(../images/back-shape/freg-top-left.png), url(../images/back-shape/freg-top-right.png), url(../images/back-shape/freg-btm-left.png), url(../images/back-shape/freg-btm-right.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png);
+    background-image: url(../images/background/back-shape/freg-top-left.png), url(../images/background/back-shape/freg-top-right.png), url(../images/background/back-shape/freg-btm-left.png), url(../images/background/back-shape/freg-btm-right.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png);
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat;
     background-position: left top, top right, bottom left, bottom right, top center, bottom center, center;
     box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
@@ -96,7 +96,7 @@
 }
 
 #battel_r_upper {
-    background-image: url(../images/border/roof.png);
+    background-image: url(../images/background/roof.png);
     background-position-x: center;
     background-size: 99% 50%;
     background-repeat: no-repeat;
@@ -120,7 +120,7 @@
     min-height: 30px;
     height: auto;
     margin-top: 2px;
-    background-image: url(../images/back-shape/freg-top-left.png), url(../images/back-shape/freg-top-right.png), url(../images/back-shape/freg-btm-left.png), url(../images/back-shape/freg-btm-right.png), url(../images/back-shape/top.png), url(../images/back-shape/bottom.png), url(../images/back-shape/center.png);
+    background-image: url(../images/background/back-shape/freg-top-left.png), url(../images/background/back-shape/freg-top-right.png), url(../images/background/back-shape/freg-btm-left.png), url(../images/background/back-shape/freg-btm-right.png), url(../images/background/back-shape/top.png), url(../images/background/back-shape/bottom.png), url(../images/background/back-shape/center.png);
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat;
     background-position: left top, top right, bottom left, bottom right, top center, bottom center, center;
     width: 98%;
@@ -176,7 +176,7 @@
     width: 25px;
     vertical-align: middle;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     box-sizing: border-box;
     border-radius: 2px;
@@ -198,7 +198,7 @@
     right: 50%;
     margin-right: -5px;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-size: contain;
 }
 
@@ -280,7 +280,7 @@
 #battel-detail ul li .image img {
     width: 91px;
     margin-left: 10px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     border-radius: 6px;
     padding: 4px
@@ -1017,7 +1017,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_guild .down {
     height: 48%;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -1033,7 +1033,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_guild .down p {
     height: 168px;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
     text-align: center;
     font-size: 16px;
@@ -1679,7 +1679,7 @@ a.for_Ranks .tr .rank-title {
     border-radius: 3px;
     margin: 10px 30px;
     padding: 2px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
 }
 
@@ -1752,7 +1752,7 @@ a.for_Ranks .tr .rank-title {
 }
 
 .for_report #reports_list {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -1767,7 +1767,7 @@ a.for_Ranks .tr .rank-title {
 
 .for_quest .right-content,
 .for_guild .right-content #rightofright {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: border-box;
@@ -1777,14 +1777,14 @@ a.for_Ranks .tr .rank-title {
 }
 
 #guild-guild_data.for_guild .left-content .upper {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 .for_report #reports_list .selected,
 #reports_list_BF .selected {
-    background-image: url(../images/selelct/select-row-3x.png);
+    background-image: url(../images/input/select-row-3x.png);
     background-size: 100% 100%;
     color: white;
     background-color: transparent;

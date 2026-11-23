@@ -2500,7 +2500,7 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('unit_floor', BASE_ASSET_BATH + 'images/world/unit_floor.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_1', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_1.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_2', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_2.png');
-    Caesar.GE.LoadingScene.load.image('building_lvl_lable_4', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_4.png');
+    Caesar.GE.LoadingScene.load.image('building_lvl_lable_4', BASE_ASSET_BATH + 'images/panner/study_lvl_h.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_5', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_5.png');
     Caesar.GE.LoadingScene.load.image('building_level_badge', BASE_ASSET_BATH + 'images/city/building_levelBg.png');
 
@@ -4224,9 +4224,9 @@ const THINGS_TO_LOAD = {
         'images/btns/global/full-btn-1x.png', 'images/btns/global/full-btn-1x-a.png',
         'images/btns/global/full-btn-1x-h.png', 'images/btns/global/full-btn-2x.png',
         'images/btns/global/full-btn-a-2x.png', 'images/btns/global/full-btn-h-2x.png',
-        'images/btn-small/speed-up.png', 'images/btn-small/speed-up-active.png',
-        'images/btn-small/speed-up-hover.png', 'images/skins/palace.png',
-        'images/skins/table-rect.png',
+        'images/btns/speed-up.png', 'images/btns/speed-up-active.png',
+        'images/btns/speed-up-hover.png', 'images/background/roman_panel_frame.jpg',
+        'images/background/table-rect.png',
         'images/tools/luck_wheel.png', 'images/tools/image-frame.png',
         'images/tools/gete-left.png', 'images/tools/gate-right.png',
         'images/tools/gate-left-lion.png', 'images/tools/gate-right-lion.png',
@@ -5001,43 +5001,43 @@ Caesar.BaseData.PlayerStateData = {
         en_title: ""
     },
     wheat: {
-        image: "images/style/food.png",
+        image: "images/icons/resource/food.png",
         title: "انتاح الغذاء",
         ar_title: "",
         en_title: ""
     },
     metal: {
-        image: "images/icons/list/metal.png",
+        image: "images/icons/resource/metal.png",
         title: "زبادة انتاج الحديد",
         ar_title: "",
         en_title: ""
     },
     stone: {
-        image: "images/icons/list/stone.png",
+        image: "images/icons/resource/stone.png",
         title: "زبادة انتاج الصخور",
         ar_title: "",
         en_title: ""
     },
     wood: {
-        image: "images/icons/list/wood.png",
+        image: "images/icons/resource/wood.png",
         title: "زبادة انتاج الاخشاب",
         ar_title: "",
         en_title: ""
     },
     attack_10: {
-        image: "images/icons/list/attack.png",
+        image: "images/icons/army/attack.png",
         title: "زبادة نسبة الهجوم",
         ar_title: "",
         en_title: ""
     },
     defence_10: {
-        image: "images/icons/list/deff.png",
+        image: "images/icons/army/defence.png",
         title: "زبادة نسبة الدفاع",
         ar_title: "",
         en_title: ""
     },
     peace: {
-        image: "images/icons/list/peace.png",
+        image: "images/items/PeaceFlag.jpg",
         title: " الحماية",
         ar_title: "",
         en_title: ""
@@ -11585,7 +11585,6 @@ var city_profile = {
             return;
         if (!Caesar.City.getCity().Jop)
             return;
-        // console.log();
         var taxs = 100 - Number(Caesar.CurrentCity.City["taxs"]);
         var pop = Caesar.CurrentCity.City.pop;
         var avail_pop = Math.max(0,
@@ -11623,7 +11622,7 @@ var city_profile = {
                                 </td>
                                 <td>
                                     <div class="left" title=""تعداد السكان>
-                                        <lable class="img" style="background-image: url(images/style/population.png);"></lable>
+                                        <lable class="img" style="background-image: url(images/icons/army/pop.png);"></lable>
                                         <span class="count">${getArabicNumbers(parseInt(pop))}</span>
                                     </div>
                                     <div class="right">
@@ -11635,7 +11634,7 @@ var city_profile = {
                             <tr>
                                 <td class="resource" data-count="coin_cap" title="سعة القصر للعملات" data-cap="${Caesar.CurrentCity.City.coin_cap}" data-resource="coin">
                                     <div class="left">
-                                         <lable class="img" style="background-image: url(images/style/coin.png);"></lable>
+                                         <lable class="img" style="background-image: url(images/icons/resource/coin.png);"></lable>
                                          <span class="count-wrapper ${coin >= Caesar.CurrentCity.City.coin_cap ? "over-rate" : "count"}"> ${Math.floor(coin)} </span>
                                     </div>
                                     <div class="right">
@@ -11656,7 +11655,7 @@ var city_profile = {
                             <tr>
                                 <td class="resource" data-count="food_cap" data-resource="food" data-cap="${Caesar.CurrentCity.City["food_cap"]}">
                                     <div class="left">
-                                        <lable class="img" style="background-image: url(images/style/food.png);"></lable>
+                                        <lable class="img" style="background-image: url(images/icons/resource/food.png);"></lable>
                                         <span class="count-wrapper ${food >= Caesar.CurrentCity.City.food_cap ? "over-rate" : "count"}" title="المحاصيل">
                                             ${Math.floor(food)}
                                         </span>
@@ -11670,7 +11669,7 @@ var city_profile = {
                                 </td>
                                 <td class="resource" data-count="stone_cap" data-resource="stone" data-cap="${Caesar.CurrentCity.City["stone_cap"]}">
                                     <div class="left">
-                                        <lable class="img" style="background-image: url(images/style/stone.png);"></lable>
+                                        <lable class="img" style="background-image: url(images/icons/resource/stone.png);"></lable>
                                         <span class="count-wrapper ${stone >= Caesar.CurrentCity.City.stone_cap ? "over-rate" : "count"}" title="احجار"> 
                                             ${Math.floor(stone)} 
                                         </span>
@@ -11686,7 +11685,7 @@ var city_profile = {
                             <tr>
                                 <td class="resource" data-count="wood_cap" data-resource="wood" data-cap=" ${Caesar.CurrentCity.City["wood_cap"]}">
                                     <div class="left">
-                                        <lable class="img" style="background-image: url(images/style/wood.png);"></lable>
+                                        <lable class="img" style="background-image: url(images/icons/resource/wood.png);"></lable>
                                         <span class="count-wrapper ${wood >= Caesar.CurrentCity.City.wood_cap ? "over-rate" : "count"}" title="اخشاب">
                                             ${Math.floor(wood)}
                                         </span>
@@ -11700,7 +11699,7 @@ var city_profile = {
                                 </td>
                                 <td class="resource" data-count="metal_cap" data-resource="metal" data-cap="${Caesar.CurrentCity.City["metal_cap"]}">
                                     <div class="left">
-                                        <lable class="img" style="background-image: url(images/style/iron.png);"></lable>
+                                        <lable class="img" style="background-image: url(images/icons/resource/metal.png);"></lable>
                                         <span class="count-wrapper ${metal >= Caesar.CurrentCity.City.metal_cap ? "over-rate" : "count"}" title="معادن">
                                             ${Math.floor(metal)} 
                                         </span>
@@ -11907,17 +11906,17 @@ var city_profile = {
             var wildlandImage = "";
 
             if (/^w_\d+$/.test(tileName)) {
-                wildlandImage = "images/raw-ui/field-wildlands-01.jpg";
+                wildlandImage = "images/world/wildlands/field-wildlands-01.jpg";
             } else if (/^m_\d+$/.test(tileName)) {
-                wildlandImage = "images/raw-ui/field-wildlands-02.jpg";
+                wildlandImage = "images/world/wildlands/field-wildlands-02.jpg";
             } else if (/^d_\d+$/.test(tileName)) {
-                wildlandImage = "images/raw-ui/field-wildlands-03.jpg";
+                wildlandImage = "images/world/wildlands/field-wildlands-03.jpg";
             } else if (/^river_\d+$/.test(tileName)) {
-                wildlandImage = "images/raw-ui/field-wildlands-04.jpg";
+                wildlandImage = "images/world/wildlands/field-wildlands-04.jpg";
             }
             var image = wildlandImage || (fieldType.WSnapShoot
                 ? "images/world/snap-shot/" + fieldType.WSnapShoot
-                : "images/raw-ui/field-wildlands-05.jpg");
+                : "images/world/wildlands/field-wildlands-05.jpg");
 
             all_list += `<div class="wild_type">
                             <div class="wild_img" style="background-image: url(${image})">
@@ -12000,7 +11999,6 @@ var city_profile = {
 
                 if (!isJson(data)) {
 
-                    console.log(data);
                     return;
 
                 }
@@ -12230,7 +12228,6 @@ var city_profile = {
 
                 } else {
                     Caesar.LBase.Error(data);
-                    console.log(data);
                 }
 
                 for (var iii in PLAYER_ALL_CITIES) {
@@ -12243,7 +12240,7 @@ var city_profile = {
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                console.error(errorThrown);
             }
         });
 
@@ -12667,7 +12664,7 @@ function getServerData() {
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
     });
 
@@ -12693,7 +12690,7 @@ $(document).on("PlayerReady", "html", function() {
             EDUCATION_REQ = data;
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
     });
 
@@ -12709,10 +12706,9 @@ $(document).on("PlayerReady", "html", function() {
         },
         success: function(data, textStatus, jqXHR) {
             matrial_trade = data;
-            // console.log((data));
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
     });
 
@@ -12849,7 +12845,6 @@ function change_content(content, condtion, for_) {
 
 
     var all_content_unite = "";
-    // console.log(condtion);
     var content_keys = Object.keys(content);
     var counter = 0;
     if (content_keys.length > 13) {
@@ -12893,7 +12888,6 @@ function change_content_player_box(content, offset_mat) {
 
 
     var all_content_unite = "";
-    // console.log(condtion);
     var content_keys = [];
     for (var key in content) {
         if (Number(content[key].playerAmount) > 0) {
@@ -13346,7 +13340,6 @@ $(document).on("click", ".left-nav ul  li", function() {
             $("#dialg_box .right-content .total").html(Caesar.Item.ItemBox("matrial_main"));
             $("#dialg_box .right-content .total").attr("mat_table", "matrial_main");
 
-            // console.log(new_content)
             break;
             // فيها التسريع ف الموارد
         case "finishing":
@@ -13392,7 +13385,6 @@ $(document).on("click", ".left-nav ul  li", function() {
             $("#dialg_box .right-content .total").html(Caesar.Item.ItemMallBox("matrial_main"));
             $("#dialg_box .right-content .total").attr("mat_table", "matrial_main");
 
-            // console.log(new_content)
             break;
             // فيها التسريع ف الموارد
         case "mall-finishing":
@@ -15001,22 +14993,6 @@ function checkTimeFinish(time, place, type, lvl, time_end, el) {
     }
 }
 
-function test_time() {
-    $.ajax({
-        url: "api/player.php",
-        data: {
-            test_time: true
-        },
-        type: 'POST',
-        success: function(data, textStatus, jqXHR) {
-            console.log(data);
-            console.log(Date.now());
-        }
-    });
-}
-
-
-
 Max_of = {
 
     city_jop: function(jop, building_place) {
@@ -15097,7 +15073,7 @@ $.ajax({
 
     },
     error: function(jqXHR, textStatus, errorThrown) {
-        console.log(errorThrown);
+        console.error(errorThrown);
     }
 });
 
@@ -15409,13 +15385,13 @@ function getReqTable(type, lvl) {
                         <tbody>      
                             <tr>     
                                 <td>   
-                                    <img src="images/style/food.png">     
+                                    <img src="images/icons/resource/food.png">
                                     <div class="amount ${Caesar.CurrentCity.City.food < Number(food) ? "not_enough" : ""}">         
                                            ${food}
                                     </div>      
                                 </td>        
                                 <td>          
-                                    <img src="images/style/iron.png">  
+                                    <img src="images/icons/resource/metal.png">
                                     <div class="amount ${Caesar.CurrentCity.City.metal < Number(metal) ? "not_enough" : ""}">           
                                            ${metal}
                                     </div>       
@@ -15423,13 +15399,13 @@ function getReqTable(type, lvl) {
                             </tr>  
                             <tr>       
                                 <td>      
-                                    <img src="images/style/wood.png">   
+                                    <img src="images/icons/resource/wood.png">
                                     <div class="amount ${Caesar.CurrentCity.City.wood < Number(wood) ? "not_enough" : ""}">               
                                           ${ wood}
                                     </div>       
                                 </td>
                                 <td>            
-                                    <img src="images/style/stone.png">      
+                                    <img src="images/icons/resource/stone.png">
                                     <div class="amount ${Caesar.CurrentCity.City.stone < Number(stone) ? "not_enough" : ""}">           
                                            ${stone}
                                     </div>          
@@ -15437,7 +15413,7 @@ function getReqTable(type, lvl) {
                             </tr>     
                             <tr>      
                                 <td>   
-                                    <img src="images/style/coin.png"> 
+                                    <img src="images/icons/resource/coin.png">
                                     <div class="amount ${Caesar.CurrentCity.City.coin < Number(coin) ? "not_enough" : ""}">             
                                            ${coin}
                                     </div>      
@@ -16283,13 +16259,13 @@ var Building = {
                                                         <tbody> 
                                                             <tr> 
                                                                 <td > 
-                                                                    <img src="images/style/food.png"/> 
+                                                                    <img src="images/icons/resource/food.png"/>
                                                                     <div class="amount sol-food"> 
                                                                        --- 
                                                                     </div> 
                                                                 </td> 
                                                                 <td> 
-                                                                    <img src="images/style/stone.png"/> 
+                                                                    <img src="images/icons/resource/stone.png"/>
                                                                     <div class="amount sol-stone"> 
                                                                         ---- 
                                                                     </div> 
@@ -16297,13 +16273,13 @@ var Building = {
                                                             </tr> 
                                                             <tr> 
                                                                 <td> 
-                                                                    <img src="images/style/wood.png"/> 
+                                                                    <img src="images/icons/resource/wood.png"/>
                                                                     <div class="amount sol-wood"> 
                                                                         --- 
                                                                     </div> 
                                                                 </td> 
                                                                 <td> 
-                                                                    <img src="images/style/iron.png"/> 
+                                                                    <img src="images/icons/resource/metal.png"/>
                                                                     <div class="amount sol-metal"> 
                                                                         --- 
                                                                     </div> 
@@ -16311,13 +16287,13 @@ var Building = {
                                                             </tr> 
                                                             <tr> 
                                                                 <td> 
-                                                                    <img src="images/style/coin.png"/> 
+                                                                    <img src="images/icons/resource/coin.png"/>
                                                                     <div class="amount sol-coin"> 
                                                                         ---- 
                                                                     </div> 
                                                                 </td> 
                                                                 <td> 
-                                                                    <img src="images/style/population.png"/> 
+                                                                    <img src="images/icons/army/pop.png"/>
                                                                     <div class="amount sol-people"> 
                                                                         ----
                                                                     </div> 
@@ -16714,13 +16690,13 @@ var Building = {
                                             <tbody>       
                                                 <tr>        
                                                     <td>     
-                                                        <img src="images/style/food.png">    
+                                                        <img src="images/icons/resource/food.png">
                                                         <div class="amount food">
                                                             ${getArabicNumbers(BuildingConstData[building_type].res_for_jop.food)}
                                                         </div>     
                                                     </td>                
                                                     <td>                 
-                                                        <img src="images/style/iron.png">   
+                                                        <img src="images/icons/resource/metal.png">
                                                         <div class="amount metal">
                                                             ${getArabicNumbers(BuildingConstData[building_type].res_for_jop.metal)}
                                                         </div>    
@@ -16728,13 +16704,13 @@ var Building = {
                                                 </tr>       
                                                 <tr>          
                                                     <td>          
-                                                        <img src="images/style/wood.png">         
+                                                        <img src="images/icons/resource/wood.png">
                                                         <div class="amount wood">
                                                             ${getArabicNumbers(BuildingConstData[building_type].res_for_jop.wood)}
                                                         </div>     
                                                     </td>  
                                                     <td>         
-                                                        <img src="images/style/stone.png">           
+                                                        <img src="images/icons/resource/stone.png">
                                                         <div class="amount stone">
                                                             ${getArabicNumbers(BuildingConstData[building_type].res_for_jop.stone)}
                                                         </div>    
@@ -16742,7 +16718,7 @@ var Building = {
                                                 </tr>           
                                                 <tr>            
                                                     <td>           
-                                                        <img src="images/style/coin.png">         
+                                                        <img src="images/icons/resource/coin.png">
                                                         <div class="amount">
                                                             ----
                                                         </div>    
@@ -16899,7 +16875,7 @@ Building.dialogBoxContent_forstore = function(place) {
                         <ul>
                             <li class="font-2">
                                 <div class="resource-icon">
-                                    <img src="images/style/food.png"/>
+                                    <img src="images/icons/resource/food.png"/>
                                 </div>
                                 <div class="resource-qun">
                                     ${Math.floor(Caesar.CurrentCity.City.food)}
@@ -16917,7 +16893,7 @@ Building.dialogBoxContent_forstore = function(place) {
                             </li>
                             <li class="font-2">
                                 <div class="resource-icon">
-                                    <img src="images/style/wood.png"/>
+                                    <img src="images/icons/resource/wood.png"/>
                                 </div>
                                 <div class="resource-qun">
                                     ${Math.floor(Caesar.CurrentCity.City.wood)}
@@ -16935,7 +16911,7 @@ Building.dialogBoxContent_forstore = function(place) {
                             </li>
                             <li class="font-2">
                                 <div class="resource-icon">
-                                    <img src="images/style/stone.png"/>
+                                    <img src="images/icons/resource/stone.png"/>
                                 </div>
                                 <div class="resource-qun">
                                     ${Math.floor(Caesar.CurrentCity.City.stone)}
@@ -16953,7 +16929,7 @@ Building.dialogBoxContent_forstore = function(place) {
                             </li>
                             <li class="font-2">
                                 <div class="resource-icon">
-                                    <img src="images/style/iron.png"/>
+                                    <img src="images/icons/resource/metal.png"/>
                                 </div>
                                 <div class="resource-qun">
                                     ${Math.floor(Caesar.CurrentCity.City.metal)}
@@ -17020,7 +16996,6 @@ Caesar.Building.lvlFunc = function(type, lvl, thirdPar, forthPar, fifthPar, sixt
     func = func.replace(/\{0\}/g, lvl);
     func = func.replace(/\{2\}/g, thirdPar);
     if (forthPar) {
-        console.log(forthPar)
         func = func.replace(/\{3\}/g, forthPar);
     }
     if (fifthPar) {
@@ -17869,7 +17844,6 @@ $(document).on("click", "#accept-store-new-val button", function() {
 
             /*if (isJson(data)) {
                 var json_data = typeof data === "string" ? JSON.parse(data) : data;
-                console.log(json_data)
                 if (json_data.state === "ok") {
                     alert_box.succesMessage("تم تعديل نسب التخزين بنجاح");
                     Caesar.CurrentCity.City.food_cap = json_data.food_cap;
@@ -17896,14 +17870,12 @@ $(document).on("click", "#accept-store-new-val button", function() {
 
                 } else {
 
-                    console.log(data);
                     alert_box.failMessage("فشل تعديل نسب التخزين");
                 }
 
 
             } else {
                 Caesar.LBase.Error(data);
-                console.log(data);
             }*/
 
         },
@@ -18210,13 +18182,13 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                         <tbody>         
                                             <tr>         
                                                 <td>       
-                                                    <img src="images/style/food.png">     
+                                                    <img src="images/icons/resource/food.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.food) >= (Number(Caesar.CurrentCity.City.lvl) + 1) * 3000 ? "enough" : "not_enough"}">
                                                         ${getArabicNumbers((Number(Caesar.CurrentCity.City.lvl) + 1) * 3000)}
                                                     </div> 
                                                 </td>    
                                                 <td>         
-                                                    <img src="images/style/iron.png">   
+                                                    <img src="images/icons/resource/metal.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.metal) >= (Number(Caesar.CurrentCity.City.lvl) + 1) * 3000 ? "enough" : "not_enough"}"> 
                                                         ${getArabicNumbers((parseInt(Caesar.CurrentCity.City.lvl) + 1) * 3000)}              
                                                     </div>
@@ -18224,13 +18196,13 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                             </tr>        
                                             <tr>          
                                                 <td>      
-                                                    <img src="images/style/wood.png">   
+                                                    <img src="images/icons/resource/wood.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.wood) >= (Number(Caesar.CurrentCity.City.lvl) + 1) * 3000 ? "enough" : "not_enough"}">     
                                                         ${getArabicNumbers((parseInt(Caesar.CurrentCity.City.lvl) + 1) * 3000)}               
                                                     </div>                
                                                 </td>        
                                                 <td>       
-                                                    <img src="images/style/stone.png">     
+                                                    <img src="images/icons/resource/stone.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.stone) >= (Number(Caesar.CurrentCity.City.lvl) + 1) * 3000 ? "enough" : "not_enough"}">      
                                                         ${getArabicNumbers((parseInt(Caesar.CurrentCity.City.lvl) + 1) * 3000)}               
                                                     </div>                 
@@ -18238,7 +18210,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                             </tr>          
                                             <tr>             
                                                 <td>          
-                                                    <img src="images/style/coin.png">  
+                                                    <img src="images/icons/resource/coin.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.coin) >= (Number(Caesar.CurrentCity.City.lvl) + 1) * 3000 ? "enough" : "not_enough"}">   
                                                         ${getArabicNumbers((parseInt(Caesar.CurrentCity.City.lvl) + 1) * 3000)}                
                                                     </div>   
@@ -18636,7 +18608,6 @@ $(document).on("click", ".upgrade-btn", function() {
                 alert_box.failMessage("عليك توظيف المزيد من البنائين");
             } else if (json_data.state === "error_2") {
                 alert_box.failMessage("شروط البناء غير كافية");
-                console.log(data);
             } else if (json_data.state === "error_3") {
                 alert_box.failMessage("اقصى مستوى للوصول اليه هو 30");
             } else if (json_data.state === "error_in_progress") {
@@ -19734,7 +19705,7 @@ var army = {
 
             error: function(jqXHR, textStatus, errorThrown) {
 
-                console.log(errorThrown);
+                console.error(errorThrown);
 
             }
         });
@@ -20828,7 +20799,7 @@ $(document).on("click", ".build_army", function() {
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                console.error(errorThrown);
             }
         });
 
@@ -22045,7 +22016,6 @@ var Hero = {
                     Caesar.Hero.getHero(id_hero).Equip = JSON.parse(data);
                 } else {
                     Caesar.LBase.Error(data);
-                    console.log(data);
                     return;
                 }
 
@@ -22053,7 +22023,7 @@ var Hero = {
                 $("#after-ajax-equip-view").html(equip_review);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                console.error(errorThrown);
             }
         });
     },
@@ -23530,7 +23500,7 @@ Caesar.HeroArmy.TransArmyFromHeroToHero = function() {
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
 
     });
@@ -23607,7 +23577,7 @@ Caesar.HeroArmy.TransArmyFromHeroToCity = function() {
             city_profile.refresh_army_view();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
     });
 };
@@ -23666,8 +23636,6 @@ Caesar.HeroArmy.TransArmyFromCityToHero = function() {
                 alert_box.failMessage("لا يمكن نقل هذه الكمية");
             } else if (json_data.state === "error_4") {
                 alert_box.failMessage("سعة البطل لا تكفى");
-                console.log(json_data);
-                console.log(getHeroCapById(Number(id_hero)) - getHeroMaxCap(Caesar.Hero.getHero(id_hero)));
             } else if (json_data.state === "error_5") {
                 alert_box.failMessage("البطل ليس فى المدينة");
             } else if (json_data.state === "error_6") {
@@ -23685,7 +23653,7 @@ Caesar.HeroArmy.TransArmyFromCityToHero = function() {
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         }
     });
 };
@@ -23876,7 +23844,7 @@ $(document).on("click", "#left-down , #right-down", function() {
             $("#down-trade-army").html(army.downTradeArmy());
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
+            console.error(jqXHR);
         }
     });
 
@@ -24705,7 +24673,6 @@ function useMatrial(user_for, matrial, other) {
 
         if (isNaN(other)) {
             alert_box.failMessage("تعذر تحديد كمية العنصر");
-            console.log(other);
             return;
         }
 
@@ -24726,7 +24693,6 @@ function useMatrial(user_for, matrial, other) {
             success: function(data, textStatus, jqXHR) {
                 $("#useItemButton").removeAttr("disabled");
                 if (isJson(data)) {
-                    console.log(data);
                     var json_data = typeof data === "string" ? JSON.parse(data) : data;
 
                     Caesar.CurrentCity.City = json_data.cityRes;
@@ -25747,7 +25713,6 @@ Caesar.Item.useItemFunc = function() {
                     }, 500)
                 } else {
                     Caesar.LBase.Error(data);
-                    console.log(data)
                 }
             }
         });
@@ -28006,13 +27971,13 @@ var edu = {
                             <tbody>             
                                 <tr>                 
                                     <td>                  
-                                        <img src="images/style/food.png">                     
+                                        <img src="images/icons/resource/food.png">
                                         <div class="amount ${Caesar.CurrentCity.City.food < Number(food) ? "not_enough" : ""}">
                                             ${lvl >= 30 ? "--" : food}
                                         </div>                  
                                     </td>                    
                                     <td>                          
-                                        <img src="images/style/stone.png">                  
+                                        <img src="images/icons/resource/stone.png">
                                         <div class="amount ${Caesar.CurrentCity.City.stone < Number(stone) ? "not_enough" : ""}">
                                             ${lvl >= 30 ? "--" : stone}
                                         </div>                   
@@ -28020,13 +27985,13 @@ var edu = {
                                 </tr>          
                                 <tr>                
                                     <td>                 
-                                        <img src="images/style/wood.png">                  
+                                        <img src="images/icons/resource/wood.png">
                                         <div class="amount ${Caesar.CurrentCity.City.wood < Number(wood) ? "not_enough" : ""}">
                                             ${lvl >= 30 ? "--" : wood}
                                         </div>                   
                                     </td>            
                                     <td>                  
-                                        <img src="images/style/iron.png">                      
+                                        <img src="images/icons/resource/metal.png">
                                         <div class="amount ${Caesar.CurrentCity.City.metal < Number(metal) ? "not_enough" : ""}">
                                             ${lvl >= 30 ? "--" : metal}
                                         </div>                      
@@ -28034,7 +27999,7 @@ var edu = {
                                 </tr>             
                                 <tr>                  
                                     <td>                   
-                                        <img src="images/style/coin.png">                 
+                                        <img src="images/icons/resource/coin.png">
                                             <div class="amount ${Caesar.CurrentCity.City.coin < Number(coin) ? "not_enough" : ""}">
                                                 ${lvl >= 30 ? "--" : coin}
                                             </div>                  
@@ -28667,13 +28632,13 @@ $("html").on("PlayerReady", function() {
 var DailyTradeMatrialPlayer = {};
 var EXCHANGE_ITEM;
 const RESOURCE_IMAGE = {
-    coin: "images/style/coin.png",
-    food: "images/style/food.png",
-    wood: "images/style/wood.png",
-    stone: "images/style/stone.png",
-    metal: "images/style/iron.png",
-    population: "images/style/population.png",
-    gold: 'images/icons/gold.png'
+    coin: "images/icons/resource/coin.png",
+    food: "images/icons/resource/food.png",
+    wood: "images/icons/resource/wood.png",
+    stone: "images/icons/resource/stone.png",
+    metal: "images/icons/resource/metal.png",
+    population: "images/icons/army/pop.png",
+    gold: 'images/icons/resource/gold.png'
 };
 
 
@@ -28697,7 +28662,7 @@ var Trading = {
                 EXCHANGE_ITEM = JSON.parse(data);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                console.error(errorThrown);
             }
         });
 
@@ -30299,7 +30264,6 @@ Caesar.Rank.PlayerGeneralRank = function(offset) {
 
         },
         success: function(data, textStatus, jqXHR) {
-            console.log(data)
             if (isJson(data)) {
                 Caesar.Rank.playerRow(offset, JSON.parse(data));
             } else {
@@ -32184,9 +32148,6 @@ Caesar.WsLib.Base.CrossReq = function(data) {
 
     if ($.isFunction(Caesar.WsLib.Base.CrossReqFun[data.url]))
         Caesar.WsLib.Base.CrossReqFun[data.url](data.Res);
-    else
-        console.log(data);
-
 }
 
 Caesar.WsLib.Base.CrossReqFun = {};
@@ -33971,62 +33932,62 @@ campDB.equipRow = function(equip) {
             <li equi_type="helmet"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("helmet")})"></div>
-                        <div class="icon" style="background-image: url(images/box/helmet.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/helmet.png)"></div>
                     </div>
                 </li>
                 <li equi_type="necklace"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("necklace")})"></div>
-                        <div class="icon" style="background-image: url(images/box/lock.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/lock.png)"></div>
                     </div>
                 </li>
                 <li equi_type="armor"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("armor")})"></div>
-                        <div class="icon" style="background-image: url(images/box/armor.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/armor.png)"></div>
                     </div>
                 </li>
                 <li equi_type="boot"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("boot")})"></div>
-                        <div class="icon" style="background-image: url(images/box/boots.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/boots.png)"></div>
                     </div>
                 </li>
                 <li equi_type="sword"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("sword")})"></div>
-                        <div class="icon" style="background-image: url(images/box/sword.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/sword.png)"></div>
                     </div>
                 </li>
                 <li equi_type="shield"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("shield")})"></div>
-                        <div class="icon" style="background-image: url(images/box/shield.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/shield.png)"></div>
                     </div>
                 </li>
                 <li equi_type="horse"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("steed")})"></div>
-                        <div class="icon" style="background-image: url(images/box/lock.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/lock.png)"></div>
                     </div>
                 </li>
 
                 <li equi_type="ring"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("ring")})"></div>
-                        <div class="icon" style="background-image: url(images/box/lock.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/lock.png)"></div>
                     </div>
                 </li>
                 <li equi_type="belt"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("belt")})"></div>
-                        <div class="icon" style="background-image: url(images/box/lock.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/lock.png)"></div>
                     </div>
                 </li>
                 <li equi_type="niche"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("pendant")})"></div>
-                        <div class="icon" style="background-image: url(images/box/lock.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/lock.png)"></div>
                     </div>
                 </li>
             </ul>`);
@@ -34073,7 +34034,6 @@ campDB.getQueAttackList = function(xCoord, yCoord) {
             yCoord: yCoord
         },
         success: function(data, textStatus, jqXHR) {
-            console.log(data)
             if (!Caesar.LBase.isJson(data))
                 return Caesar.LBase.Error(data);
 
@@ -34491,7 +34451,6 @@ Caesar.World.WorldMapIcon.tweenWorldUnitIcons = function(x, y, IconList) {
         x: {
             getStart: function(target, key, value, targetIndex, totalTargets, tween) {
                 if (!IconList[targetIndex]) {
-                    console.log(targetIndex, target, key)
                     return 0;
                 }
 
@@ -34500,7 +34459,6 @@ Caesar.World.WorldMapIcon.tweenWorldUnitIcons = function(x, y, IconList) {
             },
             getEnd: function(target, key, value, targetIndex, totalTargets, tween) {
                 if (!IconList[targetIndex]) {
-                    console.log(targetIndex, target, key)
                     return 0;
                 }
                 return x + Rad * Math.cos(Phaser.Math.DegToRad(IconList[targetIndex].Deg));
@@ -34509,14 +34467,12 @@ Caesar.World.WorldMapIcon.tweenWorldUnitIcons = function(x, y, IconList) {
         y: {
             getStart: function(target, key, value, targetIndex, totalTargets, tween) {
                 if (!IconList[targetIndex]) {
-                    console.log(targetIndex, target, key)
                     return 0;
                 }
                 return y + 52.5 * Math.sin(Phaser.Math.DegToRad(IconList[targetIndex].Deg));
             },
             getEnd: function(target, key, value, targetIndex, totalTargets, tween) {
                 if (!IconList[targetIndex]) {
-                    console.log(targetIndex, target, key)
                     return 0;
                 }
                 return y + Rad * Math.sin(Phaser.Math.DegToRad(IconList[targetIndex].Deg)) + IconList[targetIndex].YOffset;
@@ -35702,12 +35658,10 @@ function canBuildNewCity(x_coord, y_coord) {
 function getDistance(x, y) {
     var difX = Math.abs(Caesar.CurrentCity.City.x - x);
     var difY = Math.abs(Caesar.CurrentCity.City.y - y);
-    console.log(difX, difY)
     if (difX > 249)
         difX -= 500;
     if (difY > 249)
         difY -= 500;
-    console.log(difX, difY)
     return (Math.floor(Math.sqrt(Math.pow((difX), 2) + Math.pow((difY), 2))) * 6000);
 }
 
@@ -37276,13 +37230,13 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                         <tbody> 
                                             <tr> 
                                                 <td> 
-                                                    <img src="images/style/food.png"> 
+                                                    <img src="images/icons/resource/food.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.food) < requiredResources ? "not_enough" : "enough"}">
                                                         ${requiredResources}
                                                     </div> 
                                                 </td> 
                                                 <td> 
-                                                    <img src="images/style/stone.png"> 
+                                                    <img src="images/icons/resource/stone.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.stone) < requiredResources ? "not_enough" : "enough"}">
                                                         ${requiredResources}
                                                     </div> 
@@ -37290,13 +37244,13 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                             </tr> 
                                             <tr> 
                                                 <td> 
-                                                    <img src="images/style/wood.png"> 
+                                                    <img src="images/icons/resource/wood.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.wood) < requiredResources ? "not_enough" : "enough"}">
                                                         ${requiredResources}
                                                     </div> 
                                                 </td> 
                                                 <td> 
-                                                    <img src="images/style/iron.png"> 
+                                                    <img src="images/icons/resource/metal.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.metal) < requiredResources ? "not_enough" : "enough"} ">
                                                         ${requiredResources}
                                                     </div> 
@@ -37304,7 +37258,7 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                             </tr> 
                                             <tr> 
                                                 <td> 
-                                                    <img src="images/style/coin.png"> 
+                                                    <img src="images/icons/resource/coin.png">
                                                     <div class="amount ${Number(Caesar.CurrentCity.City.coin) < requiredResources ? "not_enough" : "enough"}">
                                                         ${requiredResources}
                                                     </div> 
@@ -37404,7 +37358,7 @@ Caesar.World.Map.OnCityClicked = function(Unit) {
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown)
+            console.error(errorThrown);
         }
     });
 
@@ -38406,7 +38360,6 @@ $(document).on("click", "#REFRESH_BATTEL_DATA", function() {
             },
             type: 'GET',
             beforeSend: function(xhr) {
-                console.log(this.data)
             },
             success: function(data, textStatus, jqXHR) {
                 if (!Caesar.LBase.isJson(data))
@@ -38452,7 +38405,6 @@ Battel = {
             },
             type: 'POST',
             beforeSend: function(xhr) {
-                console.log(this.data)
             },
             success: function(data, textStatus, jqXHR) {
                 if (isJson(data)) {
@@ -39151,7 +39103,7 @@ var Guild = {
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
-                console.log(errorThrown);
+                console.error(errorThrown);
 
             },
             success: function(data, textStatus, jqXHR) {
@@ -39164,7 +39116,6 @@ var Guild = {
                 }
 
 
-                console.log(json_data)
 
                 if (json_data.guild_req.length > 0) {
 
@@ -39703,19 +39654,19 @@ var Guild = {
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <img src="images/style/food.png"/>
+                                                    <img src="images/icons/resource/food.png"/>
                                                 </td>
                                                 <td class="${guild_data.food >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
                                                     ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
                                                 </td>
                                                 <td>
-                                                    <img src="images/style/stone.png"/>
+                                                    <img src="images/icons/resource/stone.png"/>
                                                 </td>
                                                 <td class="${guild_data.stone >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
                                                     ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
                                                 </td>
                                                 <td>
-                                                    <img src="images/style/coin.png"/>
+                                                    <img src="images/icons/resource/coin.png"/>
                                                 </td>
                                                 <td class="${guild_data.coin >= guild_data.lvl * 1000000 ? 'enough' : 'not_enough'}">
                                                     ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1000000) : "----"}
@@ -39723,13 +39674,13 @@ var Guild = {
                                             </tr>
                                             <tr>
                                                <td>
-                                                    <img src="images/style/wood.png"/>
+                                                    <img src="images/icons/resource/wood.png"/>
                                                 </td>
                                                 <td class="${guild_data.wood >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
                                                     ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
                                                 </td>
                                                 <td>
-                                                    <img src="images/style/iron.png"/>
+                                                    <img src="images/icons/resource/metal.png"/>
                                                 </td>
                                                 <td class="${guild_data.metal >= guild_data.lvl * 1250000 ? 'enough' : 'not_enough'}">
                                                     ${guild_data.lvl < 10 ? getArabicNumbers(guild_data.lvl * 1250000) : "----"}
@@ -39775,31 +39726,31 @@ var Guild = {
                                         </div>
                                         <ol id="input-guild-donate" class="guild-deposit-cards">
                                             <li class="guild-deposit-card">
-                                                <div class="card-icon"><img src="images/style/food.png" alt="طعام"></div>
+                                                <div class="card-icon"><img src="images/icons/resource/food.png" alt="طعام"></div>
                                                 <div class="card-label">طعام</div>
                                                 <div class="card-stored" data-resource="food" data-count="${guild_data.food}" title="رصيد الحلف">${getArabicNumbers(guild_data.food)}</div>
                                                 <input type="text" value="0" class="only_num numeric input" min="0" data-resource="food" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.food), guild_data.lvl * 1250000 - guild_data.food))}" step="${Math.floor(Caesar.CurrentCity.City.food)}"/>
                                             </li>
                                             <li class="guild-deposit-card">
-                                                <div class="card-icon"><img src="images/style/wood.png" alt="خشب"></div>
+                                                <div class="card-icon"><img src="images/icons/resource/wood.png" alt="خشب"></div>
                                                 <div class="card-label">خشب</div>
                                                 <div class="card-stored" data-resource="wood" data-count="${guild_data.wood}" title="رصيد الحلف">${getArabicNumbers(guild_data.wood)}</div>
                                                 <input type="text" value="0" class="only_num numeric input" min="0" data-resource="wood" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.wood), guild_data.lvl * 1250000 - guild_data.wood))}" step="${Math.floor(Caesar.CurrentCity.City.wood)}"/>
                                             </li>
                                             <li class="guild-deposit-card">
-                                                <div class="card-icon"><img src="images/style/stone.png" alt="حجر"></div>
+                                                <div class="card-icon"><img src="images/icons/resource/stone.png" alt="حجر"></div>
                                                 <div class="card-label">حجر</div>
                                                 <div class="card-stored" data-resource="stone" data-count="${guild_data.stone}" title="رصيد الحلف">${getArabicNumbers(guild_data.stone)}</div>
                                                 <input type="text" value="0" class="only_num numeric input" min="0" data-resource="stone" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.stone), guild_data.lvl * 1250000 - guild_data.stone))}" step="${Math.floor(Caesar.CurrentCity.City.stone)}"/>
                                             </li>
                                             <li class="guild-deposit-card">
-                                                <div class="card-icon"><img src="images/style/iron.png" alt="حديد"></div>
+                                                <div class="card-icon"><img src="images/icons/resource/metal.png" alt="حديد"></div>
                                                 <div class="card-label">حديد</div>
                                                 <div class="card-stored" data-resource="metal" data-count="${guild_data.metal}" title="رصيد الحلف">${getArabicNumbers(guild_data.metal)}</div>
                                                 <input type="text" value="0" class="only_num numeric input" min="0" data-resource="metal" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.metal), guild_data.lvl * 1250000 - guild_data.metal))}" step="${Math.floor(Caesar.CurrentCity.City.metal)}"/>
                                             </li>
                                             <li class="guild-deposit-card">
-                                                <div class="card-icon"><img src="images/style/coin.png" alt="عملات"></div>
+                                                <div class="card-icon"><img src="images/icons/resource/coin.png" alt="عملات"></div>
                                                 <div class="card-label">عملات</div>
                                                 <div class="card-stored" data-resource="coin" data-count="${guild_data.coin}" title="رصيد الحلف">${getArabicNumbers(guild_data.coin)}</div>
                                                 <input type="text" value="0" class="only_num numeric input" min="0" data-resource="coin" max="${Math.max(0, Math.min(Math.floor(Caesar.CurrentCity.City.coin), guild_data.lvl * 1000000 - guild_data.coin))}" step="${Math.floor(Caesar.CurrentCity.City.coin)}"/>
@@ -41988,7 +41939,6 @@ var message = {
 
             },
             success: function(data, textStatus, jqXHR) {
-                console.log(data)
                 var json_data = typeof data === "string" ? JSON.parse(data) : data;
 
 
@@ -43236,23 +43186,23 @@ message.contentForSpyReport = function(json_data, data_obj, parent_offset) {
                                 <hr style="width: 70%"/>
                                 <ul>
                                     <li>
-                                        <img src="images/style/food.png"/>
+                                        <img src="images/icons/resource/food.png"/>
                                         <label>${json_data.food_res}</label>
                                     </li>
                                     <li>
-                                        <img src="images/style/wood.png"/>
+                                        <img src="images/icons/resource/wood.png"/>
                                         <label>${json_data.wood_res}</label>
                                     </li>
                                     <li>
-                                        <img src="images/style/stone.png"/>
+                                        <img src="images/icons/resource/stone.png"/>
                                         <label>${json_data.stone_res}</label>
                                     </li>
                                     <li>
-                                        <img src="images/style/iron.png"/>
+                                        <img src="images/icons/resource/metal.png"/>
                                         <label>${json_data.metal_res}</label>
                                     </li>
                                     <li>
-                                        <img src="images/style/coin.png"/>
+                                        <img src="images/icons/resource/coin.png"/>
                                         <label>${json_data.coin_res}</label>
                                     </li>
                                 </ul>
@@ -43763,8 +43713,6 @@ function getBattleTroopLossTitle(injured) {
 
 //الملك ${detail.general_data.p_name} انشئ ${parseInt(detail.general_data.task) === 0 ? "غزو" : "استيلاء"} الى جبل [ ${getArabicNumbers(data_obj.y_coord)} , ${getArabicNumbers(data_obj.x_coord)} ]
 function getReportContent(detail, data_obj, offset) {
-    console.log(detail);
-    console.log(data_obj);
     var resources = detail.prize && detail.prize.resource || {};
     var resourceTargetType = Number(data_obj.target_type);
     var showResourceLoot = resourceTargetType >= 1 && resourceTargetType <= 63
@@ -43812,11 +43760,11 @@ function getReportContent(detail, data_obj, offset) {
                             </div>
                             ${showResourceLoot ? `<div class="resource-row">
                                 <ul>
-                                    <li><img ondragstart="return false;" src="images/style/food.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.food) || 0)} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/wood.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.wood) || 0)} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/stone.png"><span>${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.stone) || 0)} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/iron.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.metal) || 0)} </span></li>
-                                    <li><img ondragstart="return false;" src="images/style/coin.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.coin) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/icons/resource/food.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.food) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/icons/resource/wood.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.wood) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/icons/resource/stone.png"><span>${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.stone) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/icons/resource/metal.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.metal) || 0)} </span></li>
+                                    <li><img ondragstart="return false;" src="images/icons/resource/coin.png"><span> ${checkWinner(Caesar.DPlayer.Player.id_player , detail.heros , detail.general_data.side_win) ? "+" : "-"}  ${getArabicNumbers((detail.prize && detail.prize.resource && detail.prize.resource.coin) || 0)} </span></li>
                                 </ul>
                             </div>` : ""}
                             <div class="prize-row flex">
@@ -44711,7 +44659,6 @@ Quest = {
                 prizeString += ` ${Caesar.BaseData.Promotion[Math.min(Number(Caesar.DPlayer.Player.porm) + 1, 29)].Title} `;
 
             } else {
-                console.log(questPrize)
                 prizeString += "ERROR_NOT_FOUND";
             }
         }
@@ -44926,7 +44873,6 @@ $(document).on("click", "#sub_quest .tr", function() {
     var package = $(this).data("id-package");
     var idQuest = $(this).data("id-quest");
 
-    console.log(section, package, idQuest)
 
     Quest.changeContent(section, package, idQuest);
 
@@ -46796,19 +46742,19 @@ var MARKET_TRANSPORTED_RESOURCE = {
 const DATA_RESOURCES = {
 
     food: {
-        icon: "images/style/food.png",
+        icon: "images/icons/resource/food.png",
         title: "غذاء"
     },
     wood: {
-        icon: "images/style/wood.png",
+        icon: "images/icons/resource/wood.png",
         title: "اخشاب"
     },
     stone: {
-        icon: "images/style/stone.png",
+        icon: "images/icons/resource/stone.png",
         title: "حجارة"
     },
     metal: {
-        icon: "images/style/iron.png",
+        icon: "images/icons/resource/metal.png",
         title: "حديد"
     }
 
@@ -46854,19 +46800,19 @@ var Market = {
                                 <div class="resource-list">
                                     <ul>
                                         <li ${resource === "food" ? 'class="selected"' : ""} data-resoure-name="food">
-                                            <img src="images/style/food.png"/>
+                                            <img src="images/icons/resource/food.png"/>
                                             <h2>غذاء</h2>
                                         </li>
                                         <li ${resource === "wood" ? 'class="selected"' : ""} data-resoure-name="wood">
-                                            <img src="images/style/wood.png" />
+                                            <img src="images/icons/resource/wood.png" />
                                             <h2>اخشاب</h2>
                                         </li>
                                         <li ${resource === "stone" ? 'class="selected"' : ""} data-resoure-name="stone">
-                                            <img src="images/style/stone.png"/>
+                                            <img src="images/icons/resource/stone.png"/>
                                             <h2>صخور</h2>
                                         </li>
                                         <li ${resource === "metal" ? 'class="selected"' : ""} data-resoure-name="metal">
-                                            <img src="images/style/iron.png"/>
+                                            <img src="images/icons/resource/metal.png"/>
                                             <h2>حديد</h2>
                                         </li>
                                     </ul>
@@ -46992,7 +46938,6 @@ var Market = {
                 } else {
 
                     Caesar.LBase.Error(data);
-                    console.log(data);
                     return;
 
                 }
@@ -47071,7 +47016,6 @@ var Market = {
                 } else {
 
                     Caesar.LBase.Error(data);
-                    console.log(data);
                     return;
 
                 }
@@ -47184,7 +47128,7 @@ var Market = {
                                     <ul>
                                         <li>
                                             <div class="resource">
-                                                <img src="images/style/food.png"/>
+                                                <img src="images/icons/resource/food.png"/>
                                                 <span>${Math.floor(Caesar.CurrentCity.City.food)}</span>
                                             </div>
                                             <div class="input-warpper">
@@ -47200,7 +47144,7 @@ var Market = {
                                         </li>
                                         <li>
                                             <div class="resource">
-                                                <img src="images/style/wood.png"/>
+                                                <img src="images/icons/resource/wood.png"/>
                                                 <span>${Math.floor(Caesar.CurrentCity.City.wood)}</span>
                                             </div>
                                             <div class="input-warpper">
@@ -47216,7 +47160,7 @@ var Market = {
                                         </li>
                                         <li>
                                             <div class="resource">
-                                                <img src="images/style/stone.png"/>
+                                                <img src="images/icons/resource/stone.png"/>
                                                 <span>${Math.floor(Caesar.CurrentCity.City.stone)}</span>
                                             </div>
                                             <div class="input-warpper">
@@ -47232,7 +47176,7 @@ var Market = {
                                         </li>
                                         <li>
                                             <div class="resource">
-                                                <img src="images/style/iron.png"/>
+                                                <img src="images/icons/resource/metal.png"/>
                                                 <span>${Math.floor(Caesar.CurrentCity.City.metal)}</span>
                                             </div>
                                             <div class="input-warpper">
@@ -47248,7 +47192,7 @@ var Market = {
                                         </li>
                                         <li>
                                             <div class="resource">
-                                                <img src="images/style/coin.png"/>
+                                                <img src="images/icons/resource/coin.png"/>
                                                 <span>${Math.floor(Caesar.CurrentCity.City.coin)}</span>
                                             </div>
                                             <div class="input-warpper">
@@ -47345,25 +47289,25 @@ var Market = {
             List += `<li class="unit-trans-table" data-id-trans="${Trans.id_trans}">
                     <div class="row">
                         <div class="td">
-                            <img src="images/style/food.png"/>
+                            <img src="images/icons/resource/food.png"/>
                             <span>${Trans.food}</span>
                         </div>
                         <div class="td">
-                            <img src="images/style/wood.png"/>
+                            <img src="images/icons/resource/wood.png"/>
                             <span>${Trans.wood}</span>
                         </div>
                         <div class="td">
-                            <img src="images/style/stone.png"/>
+                            <img src="images/icons/resource/stone.png"/>
                             <span>${Trans.stone}</span>
                         </div>
                     </div>
                     <div class="row">
                          <div class="td">
-                             <img src="images/style/iron.png"/>
+                             <img src="images/icons/resource/metal.png"/>
                             <span>${Trans.metal}</span>
                         </div>
                         <div class="td">
-                            <img src="images/style/coin.png"/>
+                            <img src="images/icons/resource/coin.png"/>
                             <span>${Trans.coin}</span>
                         </div>
                         <div class="td">
@@ -49123,7 +49067,6 @@ $(document).on("click", "#bar_list .abandon", function() {
                     var json_data = typeof data === "string" ? JSON.parse(data) : data;
 
                 } else {
-                    console.log(data);
                     Caesar.LBase.Error(data);
                     return;
                 }
@@ -50369,7 +50312,6 @@ Animation.cityColonizerFlag = function() {
             return;
         }
 
-        console.log(world_unit);
         var x = Caesar.World.Map.posX(this.coord_x, this.coord_y);
         var y = Caesar.World.Map.posY(this.coord_x, this.coord_y);
         var z = Caesar.World.Map.posZ(this.coord_x, this.coord_y);
@@ -50570,7 +50512,6 @@ Animation.cityColonizerFlag = function() {
                     .textAlign("center"));
 
         } else {
-            console.log(world_unit)
         }
     });
 
@@ -50880,7 +50821,7 @@ var Equipment = {
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                console.error(errorThrown);
             }
 
         });
@@ -51526,7 +51467,6 @@ $(document).on("click", "#navigate-trade-list button", function() {
 
         var firstOffset = $("#trade-list .tr:first-child").data("offset");
 
-        console.log(firstOffset);
 
         if (firstOffset >= TradeCenter.totalCount - 7) {
             return;
@@ -52111,7 +52051,6 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
 
             if (!Caesar.LBase.isJson(data))
                 return Caesar.LBase.Error(data);
-            console.log(data)
             var JsonObject = JSON.parse(data);
 
             if (JsonObject.state === "ok") {
@@ -52130,7 +52069,7 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
 
         },
         error: function(data, textStatus, jqXHR) {
-            console.log(textStatus);
+            console.error(textStatus);
         }
 
     });
@@ -52242,7 +52181,6 @@ BattelField.battelField = function(battel, currentBattels) {
                     return;
                 }
 
-                console.log(BattelField.battelList)
 
                 BattelField.addToWatchList(battel.x_coord, battel.y_coord);
 
@@ -52482,7 +52420,6 @@ BattelField.getBattelForWorldUnit = function(x_coord, y_coord) {
 
             BattelField.battelList = jsonData;
 
-            console.log(BattelField.battelList);
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -52926,12 +52863,6 @@ GodGate.BoxContent = function(gate) {
         var state = "c_" + iii + "_s";
         var score = "cell_" + iii + "_score";
         var type = "cell_" + iii + "_type";
-        if (!GodGate.data.point[godGate[type]]) {
-            console.log(godGate[type])
-            console.log(type)
-            console.log(godGate)
-        }
-
         listItem += `<li class="${Number(godGate[state]) == 2 ? "gray-filter" : ""}" data-index="${iii}" data-score="${score}">
                         <div class="lock">
                             ${Number(godGate[state]) === 0 ? '<label class="chackable"></label>' : ""}
@@ -53399,7 +53330,6 @@ $(document).on("click", "#change-gate-cell", function() {
         var score = "cell_" + iii + "_score";
         var type = "cell_" + iii + "_type";
 
-        console.log(type)
 
         var score_precent = (godGate[score] / GodGate.data.point[godGate[type]].max) * 100;
 
@@ -53903,7 +53833,6 @@ $(document).on("click", "#msg-area .msg-from  .rank-title", function() {
 
 Chat.append = function(message) {
 
-    console.log(message)
 
     var msg = `<div class="msg-unit"  >
                             <div class="msg-body">
@@ -53943,7 +53872,6 @@ Announce.global = function(text) {
 
 
         $("#global-announce .wrapper .text").html(Announce.queu[0]);
-        console.log(Announce.queu[0])
         container.css("transform", "rotateX(0deg)");
 
 
@@ -54129,7 +54057,6 @@ Chat.openMediaDevices = async (constraints) => {
 
 try {
     const stream = Chat.openMediaDevices({'video':false,'audio':true});
-    console.log('Got MediaStream:', stream);
 } catch(error) {
     console.error('Error accessing media devices.', error);
 }*/
@@ -54344,7 +54271,7 @@ Caesar['Contribute']['ContributeBox'] = function(idCont) {
                             <div class="full-btn-3x">شراء ذهب</div>
                         </div>
                         <div class="buttonWrapper font-2" style="width: 70%">
-                             <img src="images/icons/gold.png" style="width: 18px; vertical-align: middle;"> <label style="line-height: 40px;"> لديك: ${Caesar['DPlayer']['Player']['gold']}</label>
+                             <img src="images/icons/resource/gold.png" style="width: 18px; vertical-align: middle;"> <label style="line-height: 40px;"> لديك: ${Caesar['DPlayer']['Player']['gold']}</label>
                         </div>
                     </div>
                 </div>
@@ -56130,7 +56057,6 @@ Caesar.Team.showTeamReview = function(idTeam) {
             if (!JsonObject.id_team)
                 return alert_box.failMessage("هذا الفريق غير موجود");
 
-            console.log(JsonObject)
 
             const OverLay = `  <div id="over_lay">
                                         <div id="select_from">
@@ -57228,7 +57154,6 @@ $(document).on("keyup", "#TeamEneFriInput", function() {
                 return Caesar.LBase.Error(data);
 
             var json_data = JSON.parse(data);
-            console.log(data);
 
             var list = "";
 
@@ -57541,7 +57466,6 @@ $(document).on("click", ".rejectTeamInv", function() {
 
             var JsonObject = JSON.parse(data);
 
-            console.log(JsonObject)
 
             if (JsonObject.state == "ok") {
                 alert_box.succesMessage("تم الغاء  دعوة الانضمام بنجاح");
@@ -57573,7 +57497,6 @@ $(document).on("click", ".acceptTeamInv", function() {
 
             var JsonObject = JSON.parse(data);
 
-            console.log(JsonObject)
 
             if (JsonObject.state == "ok") {
                 alert_box.succesMessage("تم قبول دعوة الانضمام بنجاح");
@@ -57985,7 +57908,3 @@ $(document)['on']('click', '.uiCheckedRadio', function() {
 $(document)['on']('click', '.uiUnCheckedRadio', function() {
     $(this)['addClass']('uiCheckedRadio'), $(this)['removeClass']('uiUnCheckedRadio');
 });
-
-if (window.CAESAR_ENV === "production") {
-    console.log = function() {};
-}

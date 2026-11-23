@@ -133,7 +133,7 @@ test('food and unselected-city images point to assets that exist', () => {
     for (const stylesheet of [
         path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'world.css'),
         path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay', 'css', 'battle.all.bundle.css'),
-        path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay', 'css', 'battle.all.bundle.cff0be5e-ab5c-4b3e-bc9c-a69fc5b52263.css')
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay', 'css', 'battle.all.bundle.b8ba79c4-fdab-48ef-b0f1-323a482311e8.css')
     ]) {
         const stylesheetSource = fs.readFileSync(stylesheet, 'utf8');
         const imagePath = stylesheetSource.match(/url\(([^)]+no-console\.png)\)/);

@@ -103,7 +103,7 @@
 .select-list .option ul li.selected-op {
     color: white;
     font-weight: bold;
-    background-image: url(../images/selelct/select-row.png);
+    background-image: url(../images/input/select-row.png);
     text-align: center;
     line-height: 25px;
 }
@@ -157,7 +157,7 @@
 }
 
 .solidBg {
-    background-image: url(../images/skins/SolidBg.png);
+    background-image: url(../images/background/SolidBg.png);
     background-size: 100% 100%;
 }
 
@@ -172,21 +172,21 @@
 #dialg_box .contributeBox .col-i {
     width: 25%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: 100% 100%;
 }
 
 #dialg_box .contributeBox .col-ii {
     width: 38%;
     height: 100%;
-    background-image: url(../images/skins/solidSquare.png);
+    background-image: url(../images/background/solidSquare.png);
     background-size: 100% 100%;
 }
 
 #dialg_box .contributeBox .col-iii {
     width: 75%;
     height: 100%;
-    background-image: url(../images/skins/SolidBg.png);
+    background-image: url(../images/background/SolidBg.png);
     background-size: 100% 100%;
 }
 
@@ -240,7 +240,7 @@
 #dialg_box .contributeBox .col-iii .ReqList ul .ReqUnit .ReqBg {
     height: 100%;
     width: 100%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center;
@@ -271,19 +271,19 @@
 }
 
 .uiBtnCloseDown {
-    background-image: url(../images/BtnCover/closeDownN.png);
+    background-image: url(../images/btns/closeDownN.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiBtnCloseDown:hover {
-    background-image: url(../images/BtnCover/closeDownH.png);
+    background-image: url(../images/btns/closeDownH.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .uiBtnCloseDown:active {
-    background-image: url(../images/BtnCover/closeDownA.png);
+    background-image: url(../images/btns/closeDownA.png);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -381,7 +381,7 @@
 #ArenaChallangeHome .col-ii {
     width: 55%;
     height: 100%;
-    /*background-image: url(../images/skins/solidSquare.png);*/
+    /*background-image: url(../images/background/solidSquare.png);*/
     background-size: 100% 100%;
 }
 
@@ -462,7 +462,7 @@
 #ArenaChallangeHome .col-ii .prizeListWrapper {
     width: 50%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: 100% 100%;
 }
 
@@ -495,7 +495,7 @@
 #ArenaChallangeHome .heroControlBtns .border {
     width: 7%;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-repeat: repeat-y;
     background-size: 100% auto;
 }
@@ -503,7 +503,7 @@
 #ArenaChallangeHome .heroControlBtns .content {
     width: 86%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: auto 120%;
     background-position: -50px -50px;
 }
@@ -516,7 +516,7 @@
 #ArenaChallangeHome .arenaChallangeReview {
     width: 40%;
     height: 100%;
-    background-image: url(../images/skins/solidRect.png);
+    background-image: url(../images/background/solidRect.png);
     background-size: auto 150%;
     background-position: -50px -50px;
 }
@@ -524,7 +524,7 @@
 #ArenaChallangeHome .arenaChallangeReview .border {
     width: 2%;
     height: 100%;
-    background-image: url(../images/border/sprite_v.png);
+    background-image: url(../images/background/sprite_v.png);
     background-repeat: repeat-y;
     background-size: 100% auto;
 }

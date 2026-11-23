@@ -76,7 +76,7 @@
 #helper-choose li .image img {
     border-radius: 5px;
     width: 80%;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
     padding: 4px;
     display: block;
@@ -125,7 +125,7 @@
     margin-top: 15px;
     border-radius: 8px;
     padding: 4px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
 }
 
@@ -292,7 +292,7 @@
 #trade-list .image .wrapper {
     width: 54px;
     height: 27px;
-    background-image: url(../images/back-shape/rect.png);
+    background-image: url(../images/background/back-shape/rect.png);
     background-size: auto 100%;
 }
 
@@ -454,7 +454,7 @@
 
 #job-typs tr td {
     text-align: center;
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     background-size: 100% 100%;
 }
 
@@ -474,7 +474,7 @@
 }
 
 #job-typs tr .over-text h2 {
-    background-image: url("../images/selelct/select-row.png");
+    background-image: url("../images/input/select-row.png");
     width: 60px;
     margin: auto;
     background-size: 60px 20px;
@@ -1063,7 +1063,7 @@
     position: absolute;
     margin-top: 15px;
     width: 78.2%;
-    background-image: url(../images/border/top_panel_helmet_decor.png);
+    background-image: url(../images/background/top_panel_helmet_decor.png);
     background-repeat: no-repeat;
     background-position: center;
     height: 50px;
@@ -1075,7 +1075,7 @@
 }
 
 .player-review .down {
-    background: url(../images/icons/left-content.png) center / 100% 100% no-repeat, url(../images/background/paperCenter.jpg) center / cover repeat;
+    background: url(../images/background/back-shape/left-content.png) center / 100% 100% no-repeat, url(../images/background/paperCenter.jpg) center / cover repeat;
     background-color: #2b1d14;
 }
 
@@ -1093,7 +1093,7 @@
 
 .player-avatar img {
     border: 6px solid transparent;
-    border-image: url(../images/border/sml_btn.jpg);
+    border-image: url(../images/background/sml_btn.jpg);
     border-image-slice: 7;
     border-image-repeat: round;
     box-sizing: content-box;
@@ -1280,7 +1280,7 @@
     color: white;
     border-left: solid 5px transparent;
     border-right: solid 5px transparent;
-    border-image: url(../images/border/border_red.png);
+    border-image: url(../images/background/border_red.png);
     border-image-slice: 7;
     border-image-repeat: round;
     box-sizing: border-box;
@@ -1426,7 +1426,7 @@
     width: 25%;
     float: right;
     border-top-right-radius: 15px;
-    background: url(../images/border/roof.png) no-repeat bottom, url(../images/border/roof.png) no-repeat top;
+    background: url(../images/background/roof.png) no-repeat bottom, url(../images/background/roof.png) no-repeat top;
     background-size: contain
 }
 
@@ -1684,7 +1684,7 @@
 #dialogBox3 {
     width: 820px;
     height: 410px;
-    background-image: url(../images/skins/palace.png);
+    background-image: url(../images/background/roman_panel_frame.jpg);
     position: fixed;
     z-index: 15;
     top: 150px;
@@ -1818,7 +1818,7 @@
 }
 
 #SelectContributeList .unit-contribute {
-    background-image: url(../images/icons/left-content.png);
+    background-image: url(../images/background/back-shape/left-content.png);
     width: 24%;
     display: flex;
     flex-flow: column;
@@ -3301,7 +3301,7 @@ button:disabled {
 .upgrade_req_tooltip .req_table_container,
 .study_req_tooltip .req_table,
 .req_table_container {
-    background: url(../images/skins/palace.png) !important;
+    background: url(../images/background/roman_panel_frame.jpg) !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
     padding: 25px 0px 10px 0px;

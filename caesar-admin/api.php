@@ -2,6 +2,7 @@
 // caesar-admin/api.php
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/../caesar-api/services/BattleAnalyzerService.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 $readOnlyActions = [
@@ -13,6 +14,8 @@ $readOnlyActions = [
     'get_logs',
     'get_server_configs',
     'get_server_events',
+    'get_recent_battles',
+    'get_battle_analysis',
 ];
 $isReadOnlyAction = in_array($action, $readOnlyActions, true);
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? '';
@@ -1189,6 +1192,49 @@ switch ($action) {
             jsonError('تم حذف الفعالية لكن تعذر تحديث خادم اللعبة فوراً.');
         }
         jsonSuccess([], 'تم حذف الفعالية بنجاح');
+        break;
+
+    case 'get_recent_battles':
+        requirePermission('view_logs');
+        $limit = max(5, min(100, (int)($_GET['limit'] ?? 25)));
+        try {
+            $battles = BattleAnalyzerService::getRecentBattles($db, $limit);
+            jsonSuccess(['battles' => $battles]);
+        } catch (Throwable $e) {
+            jsonError('فشل جلب المعارك: ' . $e->getMessage());
+        }
+        break;
+
+    case 'get_battle_analysis':
+        requirePermission('view_logs');
+        $idReport = (int)($_GET['id_report'] ?? $_POST['id_report'] ?? 0);
+        if ($idReport <= 0) {
+            jsonError('رقم تقرير المعركة غير صالح');
+        }
+        try {
+            $analysis = BattleAnalyzerService::analyzeReport($db, $idReport);
+            jsonSuccess($analysis);
+        } catch (Throwable $e) {
+            jsonError($e->getMessage());
+        }
+        break;
+
+    case 'simulate_battle_sandbox':
+        requirePermission('view_logs');
+        $idReport = (int)($_POST['id_report'] ?? 0);
+        if ($idReport <= 0) {
+            jsonError('رقم تقرير المعركة غير صالح');
+        }
+        $options = [
+            'enable_barrage' => !empty($_POST['enable_barrage']),
+            'enable_shield'  => !empty($_POST['enable_shield'])
+        ];
+        try {
+            $simResult = BattleAnalyzerService::simulateSandbox($db, $idReport, $options);
+            jsonSuccess($simResult);
+        } catch (Throwable $e) {
+            jsonError('فشل تشغيل المحاكاة: ' . $e->getMessage());
+        }
         break;
 
     default:

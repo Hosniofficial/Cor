@@ -84,6 +84,7 @@ if (isset($_GET['report_detail']) || isset($_POST['report_detail'])) {
     
     if ($rawDetail && ($decoded = json_decode($rawDetail, true))) {
         $decoded['encId'] = (string)$idReport;
+        unset($decoded['combat_snapshot']);
         echo json_encode($decoded, JSON_UNESCAPED_UNICODE);
         exit;
     }

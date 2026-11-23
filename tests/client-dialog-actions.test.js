@@ -270,7 +270,7 @@ test('building, army, and study acceleration panels use the exchange panel frame
         assert.ok(start >= 0, `${selector} acceleration panel should exist`);
         const end = source.indexOf('}', start);
         const panel = source.slice(start, end + 1);
-        assert.match(panel, /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+        assert.match(panel, /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
         assert.match(panel, /background-size:\s*100%\s+100%/);
         assert.match(panel, /border:\s*6px\s+solid\s+transparent/);
     }
@@ -297,7 +297,7 @@ test('arrow navigation controls use authentic left and right button assets', () 
     assert.match(uiCss, /\.goDown\s*\{[\s\S]*?url\(\.\.\/images\/btns\/right\.png\)/);
 });
 
-test('building upgrade and study requirement containers use palace skin background', () => {
+test('building upgrade and study requirement containers use the shared panel frame', () => {
     const cityCss = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'css-3.4.113', 'city.css'),
         'utf8'
@@ -307,6 +307,6 @@ test('building upgrade and study requirement containers use palace skin backgrou
         'utf8'
     ).replace(/\r\n/g, '\n');
 
-    assert.match(cityCss, /\.req_table_container\s*\{[\s\S]*?url\(\.\.\/images\/skins\/palace\.png\)/);
-    assert.match(lastOfLastCss, /\.upgrade_req_tooltip \.req_table_container[\s\S]*?url\(\.\.\/images\/skins\/palace\.png\)/);
+    assert.match(cityCss, /\.req_table_container\s*\{[\s\S]*?url\(\.\.\/images\/background\/roman_panel_frame\.jpg\)/);
+    assert.match(lastOfLastCss, /\.upgrade_req_tooltip \.req_table_container[\s\S]*?url\(\.\.\/images\/background\/roman_panel_frame\.jpg\)/);
 });

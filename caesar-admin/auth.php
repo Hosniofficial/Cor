@@ -1,9 +1,9 @@
 <?php
 // caesar-admin/auth.php
-require_once __DIR__ . '/../session.php';
+require_once __DIR__ . '/../caesar-web/session.php';
 
 require_once __DIR__ . '/../caesar-api/db.php';
-require_once __DIR__ . '/../auth-security.php';
+require_once __DIR__ . '/../caesar-web/auth-security.php';
 
 if (empty($_SESSION['admin_csrf_token'])) {
     $_SESSION['admin_csrf_token'] = bin2hex(random_bytes(32));

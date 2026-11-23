@@ -44,7 +44,20 @@ test('city wild view uses raw terrain thumbnails for configured wildland types',
         'field-wildlands-03.jpg',
         'field-wildlands-04.jpg'
     ]) {
-        assert.match(html, new RegExp(`images/raw-ui/${image.replace('.', '\\.')}`));
+        assert.match(html, new RegExp(`images/world/wildlands/${image.replace('.', '\\.')}`));
+        assert.ok(
+            fs.existsSync(path.join(
+                __dirname,
+                '..',
+                'caesar-assets',
+                'web',
+                'images',
+                'world',
+                'wildlands',
+                image
+            )),
+            `${image} should be available in the city wildland assets`
+        );
     }
 });
 
@@ -58,7 +71,7 @@ test('city wild view keeps map snapshots for non-field units and handles missing
     );
 
     assert.match(html, /images\/world\/snap-shot\/camps\.png/);
-    assert.match(html, /images\/raw-ui\/field-wildlands-05\.jpg/);
+    assert.match(html, /images\/world\/wildlands\/field-wildlands-05\.jpg/);
 });
 
 test('unused CityFloor atlases are neither loaded nor shipped', () => {

@@ -352,7 +352,7 @@ test('battle report subject panel uses the exchange panel frame background', () 
     );
 
     assert.ok(reportPanel, 'report subject panel should have a dedicated frame style');
-    assert.match(reportPanel[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(reportPanel[1], /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(reportPanel[1], /background-size:\s*100%\s+100%/);
     assert.match(reportPanel[1], /border:\s*6px\s+solid\s+transparent/);
     assert.match(reportPanel[1], /background-clip:\s*border-box/);
@@ -368,7 +368,7 @@ test('guild information panel uses the exchange panel frame background', () => {
     );
 
     assert.ok(guildFrame, 'guild information panel should use the frame background');
-    assert.match(guildFrame[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(guildFrame[1], /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(guildFrame[1], /background-size:\s*100%\s+100%/);
 });
 
@@ -382,7 +382,7 @@ test('quest details and guild relations panels use the exchange panel frame back
     );
 
     assert.ok(panels, 'quest details and guild relations panels should share a frame style');
-    assert.match(panels[1], /background-image:\s*url\(\.\.\/images\/icons\/left-content\.png\)/);
+    assert.match(panels[1], /background-image:\s*url\(\.\.\/images\/background\/back-shape\/left-content\.png\)/);
     assert.match(panels[1], /background-size:\s*100%\s+100%/);
     assert.match(panels[1], /border:\s*6px\s+solid\s+transparent/);
 });

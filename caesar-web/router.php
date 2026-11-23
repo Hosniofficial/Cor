@@ -18,12 +18,21 @@ if (strpos($uri, '/BattleReplay/') === 0 || $uri === '/battel.php') {
     exit;
 }
 
-$isAdminRequest = $uri === '/admin' || strpos($uri, '/admin/') === 0;
+$isAdminRequest = $uri === '/admin' || strpos($uri, '/admin/') === 0
+    || $uri === '/caesar-admin' || strpos($uri, '/caesar-admin/') === 0;
+
+if ($uri === '/admin' || $uri === '/caesar-admin') {
+    $queryString = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+    header('Location: ' . $uri . '/' . $queryString);
+    exit;
+}
+
 $documentRoot = realpath(__DIR__);
 $relativeUri = $uri;
 if ($isAdminRequest) {
     $documentRoot = realpath(dirname(__DIR__) . '/caesar-admin');
-    $relativeUri = ltrim(substr($uri, strlen('/admin')), '/\\');
+    $prefix = (strpos($uri, '/caesar-admin') === 0) ? '/caesar-admin' : '/admin';
+    $relativeUri = ltrim(substr($uri, strlen($prefix)), '/\\');
     if ($relativeUri === '') {
         $relativeUri = 'index.php';
     }
@@ -41,6 +50,30 @@ if (!$isInsideDocumentRoot && !$isAdminRequest) {
     $assetFile = $assetRoot === false
         ? false
         : realpath($assetRoot . DIRECTORY_SEPARATOR . ltrim($uri, '/\\'));
+    $decodedUri = rawurldecode($uri);
+    if ($assetFile === false && $assetRoot !== false
+        && preg_match('#^/Res/(items|player|tech)/(.+)$#i', $decodedUri, $resourceMatch)) {
+        $resourcePath = 'images' . DIRECTORY_SEPARATOR
+            . strtolower($resourceMatch[1]) . DIRECTORY_SEPARATOR
+            . str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $resourceMatch[2]);
+        if (
+            strtolower($resourceMatch[1]) === 'tech'
+            && $resourceMatch[2] === 'technology01 (1).jpg'
+        ) {
+            $resourcePath = 'images' . DIRECTORY_SEPARATOR . 'tech'
+                . DIRECTORY_SEPARATOR . 'technology01.jpg';
+        }
+        $assetFile = realpath($assetRoot . DIRECTORY_SEPARATOR . $resourcePath);
+        if (
+            $assetFile === false
+            && strtolower($resourceMatch[1]) === 'player'
+            && preg_match('/^(face[A-Z]\d+)_\.jpg$/', $resourceMatch[2], $faceMatch)
+        ) {
+            $facePath = 'images' . DIRECTORY_SEPARATOR . 'player'
+                . DIRECTORY_SEPARATOR . $faceMatch[1] . '.jpg';
+            $assetFile = realpath($assetRoot . DIRECTORY_SEPARATOR . $facePath);
+        }
+    }
     if ($assetFile === false && $assetRoot !== false) {
         $replayCandidate = realpath($assetRoot . DIRECTORY_SEPARATOR . 'battle-replay' . DIRECTORY_SEPARATOR . ltrim($uri, '/\\'));
         if ($replayCandidate !== false) {
@@ -194,5 +227,14 @@ if (strpos($uri, '/api/') === 0) {
     exit;
 }
 
-// Default: serve server.php
-require __DIR__ . '/server.php';
+// Support extensionless PHP routes (e.g. /server -> /server.php, /profile -> /profile.php)
+$candidatePhp = realpath($documentRoot . DIRECTORY_SEPARATOR . ltrim($relativeUri, '/\\') . '.php');
+if ($candidatePhp !== false && is_file($candidatePhp)
+    && str_starts_with(strtolower($candidatePhp), strtolower($documentRoot . DIRECTORY_SEPARATOR))) {
+    require $candidatePhp;
+    exit;
+}
+
+// Unrecognized route -> Serve branded 404 error page
+require __DIR__ . '/404.php';
+exit;
