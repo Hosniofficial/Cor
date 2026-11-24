@@ -2242,7 +2242,7 @@ ol.guild-deposit-cards {
     line-height: 1.8;
 }
 
-/* World map popup add-to-fav icon */
+/* World map popup add-to-fav icon and coordinates styling */
 .add-fav-coord-btn {
     width: 20px;
     height: 20px;
@@ -2260,6 +2260,99 @@ ol.guild-deposit-cards {
 
 .add-fav-coord-btn:hover {
     filter: brightness(1.3);
+}
+
+#unit_review .right_cont .dist {
+    padding: 0 34px 0 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    direction: rtl !important;
+}
+
+#unit_review .right_cont .dist .coord-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+}
+
+#unit_review .right_cont .dist .coords,
+#unit_review .right_cont .dist div.coords {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #2b1704 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+#unit_review .right_cont .dist .coords a {
+    color: #2b1704 !important;
+    text-decoration: none !important;
+}
+
+#unit_review .right_cont .dist .mile,
+#unit_review .right_cont .dist div.mile {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #6d4216 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    background: rgba(109, 66, 22, 0.1) !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    border: 1px solid rgba(109, 66, 22, 0.22) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+#unit_review .right_cont .copy-coord-icon,
+#unit_review .right_cont .dist div.copy-coord-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 5px !important;
+    width: auto !important;
+    min-width: 42px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    flex-shrink: 0 !important;
+}
+
+#unit_review .right_cont .copy-coord-icon .copy-coord {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0.85 !important;
+    display: inline-block !important;
+}
+
+#unit_review .right_cont .copy-coord-icon .copy-coord:hover {
+    opacity: 1 !important;
+    filter: brightness(1.2) !important;
+    transform: scale(1.12) !important;
+}
+
+#unit_review .right_cont .copy-coord-icon .add-fav-coord-btn {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0.85 !important;
+    display: inline-block !important;
+}
+
+#unit_review .right_cont .copy-coord-icon .add-fav-coord-btn:hover {
+    opacity: 1 !important;
+    filter: brightness(1.3) !important;
+    transform: scale(1.12) !important;
 }
 
 /* Market transport favorite selector */

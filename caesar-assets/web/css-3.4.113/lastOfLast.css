@@ -58,37 +58,69 @@
     background: url(../images/icons/bg_patern.png);
     height: 70px;
     border-radius: 5px;
-    margin: 5px 5%;
-    /*cursor: pointer;*/
+    margin: 6px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
-#helper-choose .selected {
-
+#helper-choose .selected,
+#helper-choose li.selected {
+    background-image: url("../images/input/select-row.png");
     background-size: 100% 100%;
+    border-color: #d4af37;
 }
 
 #helper-choose li .image {
-    width: 102px;
-    float: left;
-    padding: 12px 3px;
+    width: 72px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    padding: 0;
 }
 
 #helper-choose li .image img {
     border-radius: 5px;
-    width: 80%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     background-image: url(../images/background/back-shape/rect.png);
     background-size: 100% 100%;
-    padding: 4px;
+    padding: 3px;
     display: block;
     margin: auto;
+    box-sizing: border-box;
 }
 
-#helper-choose li h1 {
-    float: right;
-    width: 84px;
-    line-height: 60px;
-    margin: 5px;
+#helper-choose li .helper-title-wrapper,
+#helper-choose li > div:not(.image) {
+    flex: 1;
+    min-width: 0;
     text-align: center;
+}
+
+#helper-choose li h1,
+#helper-choose li .header,
+#helper-choose li .header-1 {
+    font-size: 12.5px !important;
+    font-weight: bold;
+    color: #431b03;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
 }
 
 #helper-desc {
@@ -2005,28 +2037,50 @@ body #luck-wheel-over-lay {
 
 #luck-wheel .control {
     box-sizing: border-box;
-    width: 58%;
-    height: 58%;
-    top: 20%;
-    left: 21%;
+    width: 312px;
+    height: 312px;
+    top: 50% !important;
+    left: 50% !important;
+    position: absolute !important;
+    transform: translate(-50%, -50%) !important;
     padding: 8px 12px;
     border: 1px solid rgba(132, 83, 27, .85);
-    border-radius: 12px;
-    background: linear-gradient(145deg, rgba(89, 55, 25, .92), rgba(54, 31, 16, .94));
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 226, 153, .4);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(54, 31, 16, .95), rgba(30, 16, 7, .96));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 226, 153, .4);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #hide-luck-wheel {
-    width: 30px;
+    width: 26px;
     height: 26px;
-    margin: 0 0 2px auto;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    margin: 0;
     border: 1px solid rgba(255, 223, 157, .6);
     border-radius: 50%;
-    background: rgba(36, 18, 9, .55);
+    background: rgba(36, 18, 9, .75);
     color: #fff0cf;
     font-family: inherit;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 22px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+#hide-luck-wheel:hover {
+    background: rgba(180, 40, 20, 0.85);
+    color: #ffffff;
+    transform: scale(1.1);
 }
 
 #hide-luck-wheel::before {
@@ -2236,12 +2290,12 @@ body #luck-wheel-over-lay {
     cursor: not-allowed;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px), (max-height: 600px) {
     #luck-wheel {
         left: 50%;
         margin-left: -270px;
-        transform: scale(.68);
-        transform-origin: top center;
+        transform: scale(.72);
+        transform-origin: center center;
     }
 
     .for_quest .quset-req,
@@ -2317,10 +2371,10 @@ body #luck-wheel-over-lay {
     }
 
     #luck-wheel-btn {
-        bottom: 156px;
+        bottom: 160px;
         top: auto;
-        left: 226px;
-        transform: scale(0.96);
+        left: 212px;
+        transform: scale(0.78);
         transform-origin: bottom left;
         z-index: 10;
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
@@ -2347,8 +2401,8 @@ body #luck-wheel-over-lay {
     }
 
     #luck-wheel-btn {
-        bottom: 142px;
-        transform: scale(0.86);
+        bottom: 144px;
+        transform: scale(0.70);
     }
 
     #menu-bar .mid {
@@ -2400,8 +2454,8 @@ body #luck-wheel-over-lay {
     }
 
     #luck-wheel-btn {
-        bottom: 132px;
-        transform: scale(0.80);
+        bottom: 134px;
+        transform: scale(0.65);
     }
 }
 
@@ -3307,4 +3361,137 @@ button:disabled {
     padding: 25px 0px 10px 0px;
 }
 
+#palace_content .left-content .btn_2 {
+    width: 84% !important;
+    max-width: 185px !important;
+    margin: 12px auto !important;
+}
+
+#palace_content #add-motiv-palace,
+#add-motiv-palace {
+    font-size: 11px !important;
+    line-height: 27px !important;
+    height: 28px !important;
+    padding: 0 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    letter-spacing: -0.2px !important;
+}
+
+/* Store font & compact input enhancements */
+.building_store .stat-table,
+.building_store .stat-table ul li,
+.building_store .stat-table ul li div,
+.building_store .stat-table .th div {
+    font-family: Tahoma, Arial, "Segoe UI", sans-serif !important;
+    font-weight: normal !important;
+    font-size: 13.5px !important;
+    color: #3b1b06 !important;
+}
+
+.building_store .stat-table .th div {
+    font-weight: bold !important;
+    font-size: 13px !important;
+    color: #431b03 !important;
+}
+
+.building_store .stat-table ul li .resource-qun,
+.building_store .stat-table ul li .stor-cap {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #2b1200 !important;
+}
+
+.building_store .stat-table ul li.total-storage {
+    font-family: Tahoma, Arial, "Segoe UI", sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #4e2200 !important;
+    line-height: 45px !important;
+    text-align: center !important;
+}
+
+.building_store .stat-table ul .stor-percent input,
+.building_store .stat-table ul li .stor-percent input {
+    width: 48px !important;
+    height: 23px !important;
+    line-height: 21px !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    font-family: Tahoma, Arial, sans-serif !important;
+    text-align: center !important;
+    margin-top: 11px !important;
+    margin-left: 45px !important;
+    padding: 0 16px 0 3px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #9c7a52 !important;
+    border-radius: 3px !important;
+    background: #fff8e7 !important;
+    border-image: none !important;
+    border-image-outset: 0 !important;
+    color: #331500 !important;
+}
+
+.building_store .stat-table ul li .stor-percent .number-arrow-wrapper {
+    margin-left: -19px !important;
+    margin-top: 11px !important;
+    height: 22px !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.building_store .stat-table ul li .stor-percent .number-arrow-wrapper .number-arrow {
+    width: 17px !important;
+    height: 10px !important;
+    background-size: 100% auto !important;
+    cursor: pointer !important;
+}
+
+/* Military recruitment resource requirements layout fix */
+.mili_building .leftOfRight .army_req_table {
+    background: url(../images/background/roman_panel_frame.jpg) !important;
+    background-size: 100% 100% !important;
+    padding: 22px 0px 8px 0px !important;
+    margin-left: 5px !important;
+}
+
+.mili_building .leftOfRight .army_req_table .req_table {
+    height: auto !important;
+    width: 95% !important;
+    table-layout: fixed !important;
+}
+
+.mili_building .leftOfRight .army_req_table .req_table tbody td {
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    padding: 2px 4px !important;
+    overflow: hidden !important;
+    border: 1px solid #dddddd !important;
+}
+
+.mili_building .leftOfRight .army_req_table .req_table tr td img {
+    height: 20px !important;
+    width: auto !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    float: none !important;
+    margin: 0 4px 0 2px !important;
+}
+
+.mili_building .leftOfRight .army_req_table .req_table tr td .amount {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    float: none !important;
+    margin: 0 !important;
+    line-height: 26px !important;
+    direction: rtl !important;
+    white-space: nowrap !important;
+    font-size: 11.5px !important;
+    font-weight: bold !important;
+    max-width: calc(100% - 28px) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
 

@@ -470,7 +470,9 @@ test('battle resolution saves kill-based rewards and actual round details', asyn
     assert.ok(!queries.some(sql => /UPDATE (player|guild) SET .*prestige/i.test(sql)));
     assert.deepEqual(colonizationInserts, [[3, 2, 10, 20, 44, 1]]);
     assert.ok(broadcasts.some(message =>
-        message.classPath === 'Base.refreshWorldCityColonization' && message.data.colonized === true
+        message.classPath === 'Base.refreshWorldCityColonization'
+        && message.data.colonized === true
+        && message.data.idCity === 3
     ));
 
     const insertCountAtCapacity = colonizationInserts.length;

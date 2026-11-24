@@ -27,6 +27,104 @@ test('battle replay retains the sell-voucher image referenced by its bundle', ()
     assert.match(routerSource, /faceMatch/);
 });
 
+test('battle replay preloader and sprite atlases reference existing assets', () => {
+    const replayDirectory = path.join(__dirname, '..', 'caesar-assets', 'web', 'battle-replay');
+    const missingAssets = [];
+
+    const replayBundle = fs.readFileSync(
+        path.join(replayDirectory, 'BRAsset', 'battle-replay.bundle.js'),
+        'utf8'
+    );
+    const resourceList = replayBundle.match(/const lRes = \[([\s\S]*?)\n\];/);
+    assert.ok(resourceList, 'the replay preloader resource list should exist');
+
+    for (const match of resourceList[1].matchAll(/"([^"]+)"/g)) {
+        const resource = match[1].trim();
+        const resourcePath = path.join(replayDirectory, resource.replace(/^\/+/, ''));
+        if (!fs.existsSync(resourcePath)) {
+            missingAssets.push(`preloader: ${resource}`);
+            continue;
+        }
+
+        if (!resource.endsWith('.plist')) continue;
+        const plist = fs.readFileSync(resourcePath, 'utf8');
+        const textures = Array.from(
+            plist.matchAll(/<key>(?:realTextureFileName|textureFileName)<\/key>\s*<string>([^<]+)<\/string>/g),
+            texture => texture[1]
+        );
+        for (const texture of new Set(textures)) {
+            if (!fs.existsSync(path.join(path.dirname(resourcePath), texture))) {
+                missingAssets.push(`${resource}: ${texture}`);
+            }
+        }
+    }
+
+    assert.deepEqual(missingAssets, []);
+});
+
+test('battle replay player avatars use the shared images instead of duplicate copies', () => {
+    const repositoryRoot = path.join(__dirname, '..');
+    const sharedPlayerDirectory = path.join(
+        repositoryRoot,
+        'caesar-assets',
+        'web',
+        'images',
+        'player'
+    );
+    const replayPlayerDirectory = path.join(
+        repositoryRoot,
+        'caesar-assets',
+        'web',
+        'battle-replay',
+        'Res',
+        'player'
+    );
+    const routerSource = fs.readFileSync(path.join(repositoryRoot, 'caesar-web', 'router.php'), 'utf8');
+
+    assert.match(routerSource, /preg_match\('#\^\/Res\/\(items\|player\|tech\)\/\(\.\+\)\$#i/);
+    for (const filename of ['faceA1.jpg', 'faceA5.jpg', 'faceA7.jpg', 'faceB1.jpg', 'faceB3.jpg']) {
+        assert.ok(fs.existsSync(path.join(sharedPlayerDirectory, filename)), `${filename} should exist in the shared player directory`);
+        assert.equal(
+            fs.existsSync(path.join(replayPlayerDirectory, filename)),
+            false,
+            `${filename} should not be duplicated in Battle Replay`
+        );
+    }
+});
+
+test('battle replay item and technology icons resolve from shared image directories', () => {
+    const repositoryRoot = path.join(__dirname, '..');
+    const sharedImageDirectory = path.join(repositoryRoot, 'caesar-assets', 'web', 'images');
+    const replayResourceDirectory = path.join(
+        repositoryRoot,
+        'caesar-assets',
+        'web',
+        'battle-replay',
+        'Res'
+    );
+    const routerSource = fs.readFileSync(path.join(repositoryRoot, 'caesar-web', 'router.php'), 'utf8');
+    const sharedAssets = [
+        'items/item104.jpg',
+        'items/item105.jpg',
+        'items/item106.jpg',
+        'items/item107.jpg',
+        'items/item108.jpg',
+        'items/SecretLetter.jpg',
+        ...[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+            .map(level => `tech/technology${String(level).padStart(2, '0')}.jpg`)
+    ];
+
+    assert.match(routerSource, /\$resourcePath = 'images' \. DIRECTORY_SEPARATOR/);
+    for (const asset of sharedAssets) {
+        assert.ok(fs.existsSync(path.join(sharedImageDirectory, asset)), `${asset} should exist in the shared image directory`);
+        assert.equal(
+            fs.existsSync(path.join(replayResourceDirectory, asset)),
+            false,
+            `${asset} should not be duplicated in Battle Replay`
+        );
+    }
+});
+
 test('battle reports show the terrain resource and replace legacy garrison names', () => {
     const clientSource = fs.readFileSync(
         path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),

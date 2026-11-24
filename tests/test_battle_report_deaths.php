@@ -45,4 +45,29 @@ if ($normalized['hero_list'][0]['dead']['0'] !== 9) {
     throw new RuntimeException('Replay round deaths were not used when report troop totals were absent');
 }
 
+// Multi-slot / shifted slot test matching battle 123 & 124
+$multiSlotDetail = [
+    'heros' => [
+        [
+            'side' => 1,
+            'f_1_pre' => '10', 'f_1_post' => '0',
+            'f_2_pre' => '10', 'f_2_post' => '0',
+            'f_3_pre' => '10', 'f_3_post' => '0',
+            'b_2_pre' => '167010', 'b_2_post' => '0'
+        ]
+    ],
+    'hero_list' => [
+        [
+            'Hero' => ['side' => 1],
+            'pre' => ['0' => 30, '1' => 167010, '2' => 0, '3' => 0, '4' => 0, '5' => 0],
+            'post' => ['0' => 0, '1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0]
+        ]
+    ]
+];
+$normalized = BattleReportService::addReplayDeaths($multiSlotDetail);
+if ($normalized['hero_list'][0]['dead']['0'] !== 30
+    || $normalized['hero_list'][0]['dead']['1'] !== 167010) {
+    throw new RuntimeException('Multi-slot replay losses did not align with actual hero block pre/post values');
+}
+
 echo "Battle report death tests passed\n";

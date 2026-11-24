@@ -396,7 +396,7 @@
         "Key": "bronze_cup"
     },
     "silver_cup": {
-        "image": "images/items/SilverCup.png",
+        "image": "images/items/SilverCup.jpg",
         "Texture2D": "Texture2D'/Game/images/items/SilverCup.SilverCup'",
         "use": "none",
         "Key": "silver_cup"

@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/../caesar-api/services/BattleAnalyzerService.php';
+require_once __DIR__ . '/../caesar-api/services/ResourceService.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 $readOnlyActions = [
@@ -467,7 +468,7 @@ switch ($action) {
         $resourceAmounts = [];
         foreach (['food', 'wood', 'stone', 'metal', 'coin'] as $resource) {
             $amount = filter_var($rewards['city_resources'][$resource] ?? 0, FILTER_VALIDATE_INT, [
-                'options' => ['min_range' => 0, 'max_range' => 2147483647],
+                'options' => ['min_range' => 0, 'max_range' => ResourceService::MAX_CITY_BALANCE],
             ]);
             if ($amount === false) {
                 jsonError('بيانات موارد المدن غير صالحة');
@@ -598,7 +599,7 @@ switch ($action) {
                     $params = [];
                     foreach ($resourceAmounts as $resource => $amount) {
                         if ($amount > 0) {
-                            $updates[] = "`$resource` = LEAST(CAST(`$resource` AS DECIMAL(20, 0)) + ?, 2147483647)";
+                            $updates[] = "`$resource` = GREATEST(CAST(`$resource` AS DECIMAL(20, 0)), LEAST(CAST(`$resource` AS DECIMAL(20, 0)) + ?, " . ResourceService::MAX_CITY_BALANCE . '))';
                             $params[] = $amount;
                         }
                     }
@@ -640,7 +641,7 @@ switch ($action) {
             $resourceValues[$resource] = filter_var(
                 $_POST[$resource] ?? null,
                 FILTER_VALIDATE_INT,
-                ['options' => ['min_range' => 0, 'max_range' => 2147483647]]
+                ['options' => ['min_range' => 0, 'max_range' => ResourceService::MAX_CITY_BALANCE]]
             );
         }
         $loy = filter_var($_POST['loy'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 100]]);

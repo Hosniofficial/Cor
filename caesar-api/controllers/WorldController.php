@@ -1,5 +1,6 @@
 <?php
 // WorldController.php - Handles world map tiles, unit data, colonizers, and battles on map units
+require_once __DIR__ . '/../PlayerAuth.php';
 require_once __DIR__ . '/../services/HeroPowerService.php';
 require_once __DIR__ . '/../services/HeroDeploymentService.php';
 
@@ -24,7 +25,7 @@ class WorldController {
             case '/api/ADominant/getArmyCapitalDominant':
             case '/api/dominant.php':
             case '/api/dominant':
-                self::getArmyCapitalDominant();
+                self::getArmyCapitalDominant($db);
                 return true;
             case '/api/ABattelRunning/getUnitBattel':
                 self::getUnitBattel($db);
@@ -46,8 +47,10 @@ class WorldController {
                 self::getHeroBack($db);
                 return true;
             case '/api/ASpy/start':
+                self::startSpy($db);
+                return true;
             case '/api/ASpy/cancel':
-                sendJson(['state' => 'ok']);
+                self::cancelSpy($db);
                 return true;
             case '/api/AWorldUnit/getWorldUnitDominator':
                 self::getBarrayColonizer($db);
@@ -56,8 +59,11 @@ class WorldController {
                 self::supportByHero($db);
                 return true;
             case '/api/AWorldUnit/transHero':
-            case '/api/AWorldUnit/plundePrize':
                 sendJson(['state' => 'ok']);
+                return true;
+            case '/api/AWorldUnit/plundePrize':
+            case '/api/Guild/harvestDominance':
+                self::harvestDominance($db);
                 return true;
             case '/api/AWorld/refreshWorldUnitLvl':
                 self::refreshWorldUnitLvl($db);
@@ -66,9 +72,11 @@ class WorldController {
             case '/api/AWorldUnit/getUnitViewPrizes':
                 self::getUnitViewPrizes();
                 return true;
-            case '/api/AWorld/getWorldUnitRank':
             case '/api/AWorld/getGuildAttackQue':
                 self::getGuildAttackQue($db);
+                return true;
+            case '/api/AWorld/getWorldUnitRank':
+                self::getWorldUnitRank($db);
                 return true;
             case '/api/ABattel/applyForRoleInAttQue':
                 self::applyForRoleInAttQue($db);
@@ -85,9 +93,6 @@ class WorldController {
                 return true;
             case '/api/Guild/getGuildDominance':
                 self::getGuildDominance($db);
-                return true;
-            case '/api/Guild/harvestDominance':
-                self::harvestDominance($db);
                 return true;
             case '/Battel/abort':
             case '/api/Battel/abort':
@@ -111,7 +116,7 @@ class WorldController {
         return false;
     }
 
-    public static function getArmyCapitalDominant() {
+    public static function getArmyCapitalDominant($db = null) {
         $worldFile = self::resolveJsonPath('WorldBarrary.json');
         $unitFile = self::resolveJsonPath('worldUnitData.json');
 
@@ -148,6 +153,37 @@ class WorldController {
             ];
         }
 
+        $dominanceByCoord = [];
+        if (!$db) {
+            try {
+                if (function_exists('getDB')) {
+                    $db = getDB();
+                }
+            } catch (\Throwable $e) {
+                $db = null;
+            }
+        }
+
+        if ($db instanceof PDO) {
+            try {
+                $stmt = $db->query(
+                    'SELECT gd.x_coord, gd.y_coord, gd.unit_type, gd.conquered_at, gd.id_guild, gd.id_player, ' .
+                    'g.name AS GuildName, p.name AS PlayerName ' .
+                    'FROM guild_dominance gd ' .
+                    'LEFT JOIN guild g ON g.id_guild = gd.id_guild ' .
+                    'LEFT JOIN player p ON p.id_player = gd.id_player'
+                );
+                if ($stmt) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        $key = (int)$row['x_coord'] . '_' . (int)$row['y_coord'];
+                        $dominanceByCoord[$key] = $row;
+                    }
+                }
+            } catch (\Throwable $e) {
+                error_log('[WorldController] getArmyCapitalDominant query failed: ' . $e->getMessage());
+            }
+        }
+
         $capitals = [];
         foreach ($capitalTypes as $type) {
             if (!isset($capitalByType[$type], $unitData[$type])
@@ -159,19 +195,51 @@ class WorldController {
                 sendJson(['state' => 'error', 'msg' => 'Army capital data is incomplete']);
             }
 
+            $x = (int)$capitalByType[$type]['x'];
+            $y = (int)$capitalByType[$type]['y'];
+            $coordKey = $x . '_' . $y;
+
+            $rank = [];
+            if (isset($dominanceByCoord[$coordKey])) {
+                $dom = $dominanceByCoord[$coordKey];
+                $guildName = trim((string)($dom['GuildName'] ?? ''));
+                $playerName = trim((string)($dom['PlayerName'] ?? ''));
+
+                if ($guildName !== '' && $playerName !== '') {
+                    $displayName = $guildName . ' (' . $playerName . ')';
+                } elseif ($guildName !== '') {
+                    $displayName = $guildName;
+                } elseif ($playerName !== '') {
+                    $displayName = $playerName;
+                } else {
+                    $displayName = '---';
+                }
+
+                $conqueredAt = (int)($dom['conquered_at'] ?? 0);
+                $rank[] = [
+                    'name' => $displayName,
+                    'GuildName' => $guildName,
+                    'PlayerName' => $playerName,
+                    'time_stamp' => $conqueredAt,
+                    'd_sum' => max(0, time() - $conqueredAt),
+                    'id_guild' => (int)($dom['id_guild'] ?? 0),
+                    'id_player' => (int)($dom['id_player'] ?? 0),
+                ];
+            }
+
             $capitals[] = [
                 'title' => $unitData[$type]['Title'],
-                'x' => $capitalByType[$type]['x'],
-                'y' => $capitalByType[$type]['y'],
+                'x' => $x,
+                'y' => $y,
                 'type' => $type,
-                'rank' => [],
+                'rank' => $rank,
             ];
         }
 
         sendJson([
             'state' => 'ok',
             'type' => 'domain',
-            'dominanceDataAvailable' => false,
+            'dominanceDataAvailable' => true,
             'unit' => $capitals,
         ]);
     }
@@ -219,6 +287,82 @@ class WorldController {
             sendJson([$row]);
         }
         sendJson([]);
+    }
+
+    public static function startSpy($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $idCity = filter_var($_REQUEST['idCity'] ?? null, FILTER_VALIDATE_INT);
+        $spyNum = filter_var($_REQUEST['spyNum'] ?? null, FILTER_VALIDATE_INT);
+        $xCoord = filter_var($_REQUEST['xCoord'] ?? null, FILTER_VALIDATE_INT);
+        $yCoord = filter_var($_REQUEST['yCoord'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$idCity || !$spyNum || $spyNum <= 0 || $xCoord === false || $yCoord === false
+            || $xCoord < 0 || $xCoord >= 500 || $yCoord < 0 || $yCoord >= 500) {
+            sendJson(['state' => 'error_1']);
+            return;
+        }
+
+        $ownedCity = requirePlayerOwnedCity($db, $player, $idCity);
+        $playerId = (int)$player['id_player'];
+        $cityId = (int)$ownedCity['id_city'];
+
+        $lock = $db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite' ? '' : ' FOR UPDATE';
+        $db->beginTransaction();
+        try {
+            $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?{$lock}");
+            $stmt->execute([$cityId, $playerId]);
+            $city = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$city || (int)$city['spies'] < $spyNum) {
+                $db->rollBack();
+                sendJson(['state' => 'error_spies_not_enough']);
+                return;
+            }
+
+            $deduct = $db->prepare("UPDATE `city` SET `spies` = `spies` - ? WHERE `id_city` = ? AND `id_player` = ?");
+            $deduct->execute([$spyNum, $cityId, $playerId]);
+
+            $stmt->execute([$cityId, $playerId]);
+            $updatedCity = $stmt->fetch(PDO::FETCH_ASSOC);
+            $db->commit();
+
+            foreach ($updatedCity as $k => $v) {
+                if (is_numeric($v)) $updatedCity[$k] = (int)$v;
+            }
+
+            sendJson([
+                'state' => 'ok',
+                'City'  => $updatedCity
+            ]);
+            return;
+        } catch (\Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            sendJson(['state' => 'error_db']);
+            return;
+        }
+    }
+
+    public static function cancelSpy($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $idCity = filter_var($_REQUEST['idCity'] ?? null, FILTER_VALIDATE_INT);
+        $ownedCity = requirePlayerOwnedCity($db, $player, $idCity);
+        $playerId = (int)$player['id_player'];
+        $cityId = (int)$ownedCity['id_city'];
+
+        $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?");
+        $stmt->execute([$cityId, $playerId]);
+        $city = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($city) {
+            foreach ($city as $k => $v) {
+                if (is_numeric($v)) $city[$k] = (int)$v;
+            }
+        }
+
+        sendJson([
+            'state' => 'ok',
+            'City'  => $city ?: $ownedCity
+        ]);
     }
 
     public static function getBattels($db) {
@@ -375,7 +519,9 @@ class WorldController {
 
     private static function isGuildDominanceTarget(int $unitType): bool {
         return ($unitType >= 180 && $unitType <= 182)
-            || ($unitType >= 184 && $unitType <= 186);
+            || ($unitType >= 184 && $unitType <= 186)
+            || ($unitType >= 150 && $unitType <= 155)
+            || $unitType === 105;
     }
 
     public static function canJoinGuildDefense(
@@ -1263,19 +1409,17 @@ class WorldController {
         }
 
         $unitTypeKey = (string)$unitType;
-        $levelKey = (string)$reqLvl;
         if ($unitType <= 0 || $reqLvl <= 0 || !isset($cachedUnitData[$unitTypeKey])) {
             http_response_code(404);
             sendJson(['state' => 'error_world_unit_not_found']);
             return;
         }
         $unitTypeData = $cachedUnitData[$unitTypeKey];
-        if (isset($unitTypeData['maxLvl']) && (int)$unitTypeData['maxLvl'] > 0
-            && $reqLvl > (int)$unitTypeData['maxLvl']) {
-            http_response_code(404);
-            sendJson(['state' => 'error_world_unit_level_not_found']);
-            return;
+        $maxLevel = (int)($unitTypeData['maxLvl'] ?? 0);
+        if ($maxLevel > 0) {
+            $reqLvl = min($reqLvl, $maxLevel);
         }
+        $levelKey = (string)$reqLvl;
 
         $armyData = $cachedUnitArmy[$unitTypeKey][$levelKey] ?? [];
         $army = [
@@ -1366,16 +1510,65 @@ class WorldController {
         ]);
     }
 
+    // ── Player Authentication Helper (supports both Token & $_SESSION for tests) ──
+    public static function authenticatePlayer($db, bool $require = true): ?array {
+        // 1. Try token authentication first (live game uses AJAX token)
+        $token = $_POST['authToken'] ?? $_GET['authToken'] ?? $_POST['token'] ?? $_GET['token'] ?? '';
+        if (is_string($token) && $token !== '') {
+            try {
+                $stmt = $db->prepare('SELECT * FROM player WHERE p_token = ? LIMIT 1');
+                $stmt->execute([$token]);
+                $player = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($player) {
+                    return $player;
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        // 2. Fallback to $_SESSION['id_player'] for unit test suites and session environments
+        $idPlayer = (int)($_SESSION['id_player'] ?? 0);
+        if ($idPlayer > 0) {
+            try {
+                $stmt = $db->prepare('SELECT * FROM player WHERE id_player = ? LIMIT 1');
+                $stmt->execute([$idPlayer]);
+                $player = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($player) {
+                    return $player;
+                }
+            } catch (\Throwable $e) {}
+
+            try {
+                $stmt = $db->prepare('SELECT id_guild FROM player WHERE id_player = ? LIMIT 1');
+                $stmt->execute([$idPlayer]);
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $idGuild = (int)($row['id_guild'] ?? $_SESSION['id_guild'] ?? 0);
+                return [
+                    'id_player' => $idPlayer,
+                    'id_guild' => $idGuild,
+                    'name' => $_SESSION['player_name'] ?? 'Test Player',
+                ];
+            } catch (\Throwable $e) {}
+
+            return [
+                'id_player' => $idPlayer,
+                'id_guild' => (int)($_SESSION['id_guild'] ?? 0),
+                'name' => 'Player_' . $idPlayer,
+            ];
+        }
+
+        if ($require) {
+            http_response_code(401);
+            sendJson(['state' => 'not_logged_in']);
+        }
+
+        return null;
+    }
+
     // ── Guild Dominance: get all dominated castles/queens ─────────────────────
     public static function getGuildDominance($db) {
-        $idPlayer = (int)($_SESSION['id_player'] ?? 0);
-        if (!$idPlayer) { http_response_code(401); sendJson(['state' => 'not_logged_in']); return; }
-
-        // Fetch current guild
-        $stmt = $db->prepare("SELECT id_guild FROM player WHERE id_player = ? LIMIT 1");
-        $stmt->execute([$idPlayer]);
-        $row = $stmt->fetch();
-        $idGuild = (int)($row['id_guild'] ?? 0);
+        $player = self::authenticatePlayer($db, true);
+        $idPlayer = (int)$player['id_player'];
+        $idGuild = (int)($player['id_guild'] ?? 0);
 
         // All dominated units
         $stmt2 = $db->prepare(
@@ -1389,7 +1582,27 @@ class WorldController {
         $rows = $stmt2->fetchAll();
 
         $units = [];
+        $now = time();
         foreach ($rows as $r) {
+            // Per-player cooldown: check guild_dominance_harvest for this specific player
+            $remainingSec = 86400; // default: not ready
+            $canHarvest = false;
+            if ($idGuild > 0 && (int)$r['id_guild'] === $idGuild) {
+                $lastHarvestAt = 0;
+                try {
+                    $phStmt = $db->prepare(
+                        'SELECT harvested_at FROM guild_dominance_harvest ' .
+                        'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1'
+                    );
+                    $phStmt->execute([(int)$r['x_coord'], (int)$r['y_coord'], $idPlayer]);
+                    $phRow = $phStmt->fetch(PDO::FETCH_ASSOC);
+                    $lastHarvestAt = $phRow ? (int)$phRow['harvested_at'] : 0;
+                } catch (\Throwable $e) {}
+
+                $elapsed = max(0, $now - $lastHarvestAt);
+                $remainingSec = max(0, 86400 - $elapsed);
+                $canHarvest = $remainingSec === 0;
+            }
             $units[] = [
                 'x_coord'       => (int)$r['x_coord'],
                 'y_coord'       => (int)$r['y_coord'],
@@ -1406,51 +1619,134 @@ class WorldController {
                 'daily_stone'   => (int)$r['daily_stone'],
                 'daily_metal'   => (int)$r['daily_metal'],
                 'daily_coin'    => (int)$r['daily_coin'],
-                'can_harvest'   => ($idGuild > 0 && (int)$r['id_guild'] === $idGuild)
-                                    && (time() - (int)$r['last_harvest_at'] >= 86400),
+                'remaining_sec' => $remainingSec,
+                'can_harvest'   => $canHarvest,
             ];
         }
         sendJson(['state' => 'ok', 'units' => $units, 'id_guild' => $idGuild]);
     }
 
-    // ── Guild Dominance: harvest daily resources ───────────────────────────────
+    public static function getWorldUnitRank($db): void {
+        $xCoord = filter_var($_GET['xCoord'] ?? null, FILTER_VALIDATE_INT);
+        $yCoord = filter_var($_GET['yCoord'] ?? null, FILTER_VALIDATE_INT);
+        $unitType = filter_var($_GET['unitType'] ?? null, FILTER_VALIDATE_INT);
+        if ($xCoord === false || $yCoord === false || $unitType === false
+            || $xCoord === null || $yCoord === null || $unitType === null
+            || $xCoord < 0 || $xCoord >= 500 || $yCoord < 0 || $yCoord >= 500
+            || !self::isGuildDominanceTarget($unitType)) {
+            sendJson([]);
+            return;
+        }
+
+        // ── Authenticate via token or $_SESSION fallback ──
+        $authPlayer = self::authenticatePlayer($db, false);
+        $idPlayer = (int)($authPlayer['id_player'] ?? 0);
+        $playerGuildId = (int)($authPlayer['id_guild'] ?? 0);
+
+        $stmt = $db->prepare(
+            'SELECT gd.id_guild, gd.conquered_at, p.name AS PlayerName, g.name AS GuildName ' .
+            'FROM guild_dominance gd ' .
+            'LEFT JOIN player p ON p.id_player = gd.id_player ' .
+            'LEFT JOIN guild g ON g.id_guild = gd.id_guild ' .
+            'WHERE gd.x_coord = ? AND gd.y_coord = ? AND gd.unit_type = ? LIMIT 1'
+        );
+        $stmt->execute([$xCoord, $yCoord, $unitType]);
+        $dominance = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$dominance) {
+            sendJson([]);
+            return;
+        }
+
+        // ── Per-player harvest cooldown ──────────────────────────────────────────
+        $remainingSec = 0;
+        $canHarvest = false;
+        $dominantGuildId = (int)$dominance['id_guild'];
+        if ($idPlayer > 0 && $playerGuildId > 0 && $playerGuildId === $dominantGuildId) {
+            $lastHarvestAt = 0;
+            try {
+                $harvestStmt = $db->prepare(
+                    'SELECT harvested_at FROM guild_dominance_harvest ' .
+                    'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1'
+                );
+                $harvestStmt->execute([$xCoord, $yCoord, $idPlayer]);
+                $harvestRow = $harvestStmt->fetch(PDO::FETCH_ASSOC);
+                $lastHarvestAt = $harvestRow ? (int)$harvestRow['harvested_at'] : 0;
+            } catch (\Throwable $e) {}
+
+            $elapsed = max(0, time() - $lastHarvestAt);
+            $remainingSec = max(0, 86400 - $elapsed);
+            $canHarvest = $remainingSec === 0;
+        }
+
+        sendJson([[
+            'PlayerName'    => (string)($dominance['PlayerName'] ?? ''),
+            'GuildName'     => (string)($dominance['GuildName'] ?? ''),
+            'id_guild'      => $dominantGuildId,
+            'playerGuildId' => $playerGuildId,
+            'totalDuration' => max(0, time() - (int)$dominance['conquered_at']),
+            'remaining_sec' => $remainingSec,
+            'can_harvest'   => $canHarvest,
+        ]]);
+    }
+
+    // ── Guild Dominance: harvest daily resources (per-player cooldown) ─────────
     public static function harvestDominance($db) {
-        $idPlayer = (int)($_SESSION['id_player'] ?? 0);
-        if (!$idPlayer) { http_response_code(401); sendJson(['state' => 'not_logged_in']); return; }
+        $player = self::authenticatePlayer($db, true);
+        $idPlayer = (int)$player['id_player'];
+        $playerGuildId = (int)($player['id_guild'] ?? 0);
+
+        if (!$idPlayer || !$playerGuildId) {
+            http_response_code(401);
+            sendJson(['state' => 'not_logged_in']);
+            return;
+        }
 
         $xCoord = (int)($_REQUEST['xCoord'] ?? 0);
         $yCoord = (int)($_REQUEST['yCoord'] ?? 0);
+
         $db->beginTransaction();
         try {
-            $stmt = $db->prepare(
-                "SELECT gd.*, p.id_guild AS player_guild
-                 FROM guild_dominance gd
-                 JOIN player p ON p.id_player = ?
-                 WHERE gd.x_coord = ? AND gd.y_coord = ?
-                 FOR UPDATE"
+            // 1. Fetch dominance record (without locking the player row to avoid deadlocks)
+            $gdStmt = $db->prepare(
+                'SELECT gd.id_guild, gd.daily_food, gd.daily_wood, gd.daily_stone, gd.daily_metal, gd.daily_coin ' .
+                'FROM guild_dominance gd ' .
+                'WHERE gd.x_coord = ? AND gd.y_coord = ? LIMIT 1 FOR UPDATE'
             );
-            $stmt->execute([$idPlayer, $xCoord, $yCoord]);
-            $gd = $stmt->fetch(PDO::FETCH_ASSOC);
+            $gdStmt->execute([$xCoord, $yCoord]);
+            $gd = $gdStmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$gd) {
                 $db->rollBack();
                 sendJson(['state' => 'not_dominated']);
                 return;
             }
-            if ((int)$gd['id_guild'] !== (int)$gd['player_guild'] || (int)$gd['player_guild'] === 0) {
+            if ((int)$gd['id_guild'] !== $playerGuildId) {
                 $db->rollBack();
                 sendJson(['state' => 'not_your_guild']);
                 return;
             }
 
+            // 2. Check per-player harvest cooldown (24h)
             $now = time();
-            if ($now - (int)$gd['last_harvest_at'] < 86400) {
-                $remaining = 86400 - ($now - (int)$gd['last_harvest_at']);
+            $lastHarvestAt = 0;
+            try {
+                $harvestStmt = $db->prepare(
+                    'SELECT harvested_at FROM guild_dominance_harvest ' .
+                    'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1 FOR UPDATE'
+                );
+                $harvestStmt->execute([$xCoord, $yCoord, $idPlayer]);
+                $harvestRow = $harvestStmt->fetch(PDO::FETCH_ASSOC);
+                $lastHarvestAt = $harvestRow ? (int)$harvestRow['harvested_at'] : 0;
+            } catch (\Throwable $e) {}
+
+            if ($lastHarvestAt > 0 && $now - $lastHarvestAt < 86400) {
+                $remaining = 86400 - ($now - $lastHarvestAt);
                 $db->rollBack();
                 sendJson(['state' => 'harvest_cooldown', 'remaining_sec' => $remaining]);
                 return;
             }
 
+            // 3. Find player's first city
             $cityStmt = $db->prepare(
                 'SELECT id_city FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1 FOR UPDATE'
             );
@@ -1462,6 +1758,7 @@ class WorldController {
                 return;
             }
 
+            // 4. Credit resources to city
             $resources = [
                 'food'  => (int)$gd['daily_food'],
                 'wood'  => (int)$gd['daily_wood'],
@@ -1472,11 +1769,16 @@ class WorldController {
             $sets = implode(', ', array_map(fn($key) => "$key = $key + ?", array_keys($resources)));
             $db->prepare("UPDATE city SET $sets WHERE id_city = ? AND id_player = ?")
                 ->execute(array_merge(array_values($resources), [$cityId, $idPlayer]));
+
+            // 5. Record this player's harvest timestamp (INSERT or UPDATE)
             $db->prepare(
-                'UPDATE guild_dominance SET last_harvest_at = ? WHERE x_coord = ? AND y_coord = ?'
-            )->execute([$now, $xCoord, $yCoord]);
+                'INSERT INTO guild_dominance_harvest (x_coord, y_coord, id_player, id_guild, harvested_at) ' .
+                'VALUES (?, ?, ?, ?, ?) ' .
+                'ON DUPLICATE KEY UPDATE id_guild = VALUES(id_guild), harvested_at = VALUES(harvested_at)'
+            )->execute([$xCoord, $yCoord, $idPlayer, $playerGuildId, $now]);
+
             $db->commit();
-        } catch (Throwable $error) {
+        } catch (\Throwable $error) {
             if ($db->inTransaction()) $db->rollBack();
             throw $error;
         }

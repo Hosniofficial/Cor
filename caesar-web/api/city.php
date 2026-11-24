@@ -23,7 +23,11 @@ if (!ProductionService::recalculateCityProductionForPlayer($db, $cityId, $player
 }
 
 $stmt = $db->prepare(
-    "SELECT `id_city`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `wall_cap`, `wall_a`, `wall_b`, `wall_c` " .
+    "SELECT `id_city`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_cap`, `pop_max`, " .
+    "`food_in`, `wood_in`, `stone_in`, `metal_in`, `coin_in`, " .
+    "`food_out`, `coin_out`, " .
+    "`food_cap`, `wood_cap`, `stone_cap`, `metal_cap`, `coin_cap`, " .
+    "`wall_cap`, `wall_a`, `wall_b`, `wall_c` " .
     "FROM `city` WHERE `id_city` = ? AND `id_player` = ? LIMIT 1"
 );
 $stmt->execute([$cityId, $playerId]);

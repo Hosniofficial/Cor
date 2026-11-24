@@ -262,7 +262,7 @@
 }
 
 .building_lvl_lable_2 {
-    background-image: url(../images/background/lvl_lable/lable_2.png);
+    background-image: url(../images/background/lable_2.png);
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -270,7 +270,7 @@
 }
 
 .building_lvl_lable_1 {
-    background-image: url(../images/background/lvl_lable/lable_1.png);
+    background-image: url(../images/background/lable_1.png);
     background-position: center;
     background-size: 90%;
     background-repeat: no-repeat;
@@ -285,7 +285,7 @@
 }
 
 .building_lvl_lable_5 {
-    background-image: url(../images/background/lvl_lable/lable_5.png);
+    background-image: url(../images/background/lable_5.png);
     background-position: center;
     background-size: 93%;
     line-height: 33px !important;
@@ -458,14 +458,109 @@
     font-size: 16px;
 }
 
+.alert_for_hero_trade {
+    text-align: center;
+}
+
 .alert_for_hero_trade .row-1 {
     width: 85%;
-    margin: auto;
-    margin-top: 35px;
+    margin: 26px auto 0 auto !important;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.alert_for_hero_trade .row-1 label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #4a270f;
+    margin: 0 !important;
+    line-height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.alert_for_hero_trade .row-1 input[type=range] {
+    width: 170px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .alert_for_hero_trade .row-2 {
-    height: 40px !important;
+    height: 34px !important;
+    width: 85%;
+    margin: 12px auto 0 auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    direction: ltr;
+}
+
+.alert_for_hero_trade #input-army-move {
+    width: 105px !important;
+    height: 26px !important;
+    line-height: 22px !important;
+    padding: 0 24px 0 6px !important;
+    margin: 0 !important;
+    float: none !important;
+    font-size: 13px !important;
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box !important;
+    border: solid 5px transparent !important;
+    border-image: url(../images/background/input.png) 15% round !important;
+    border-image-outset: 2px !important;
+    border-radius: 3px;
+    color: #3b1b06;
+}
+
+.alert_for_hero_trade .number-arrow-wrapper {
+    margin-left: -23px !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    float: none !important;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.alert_for_hero_trade .row-2 label {
+    display: inline-block;
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+    line-height: 26px !important;
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #4a270f;
+    vertical-align: middle;
+}
+
+.alert_for_hero_trade .row-3 {
+    margin-top: 14px !important;
+    padding-bottom: 10px;
+    width: 84%;
+    margin: 14px auto 0 auto !important;
+}
+
+.alert_for_hero_trade .confim-btn {
+    margin: 0 auto !important;
+    width: 90px;
+}
+
+.alert_for_hero_trade .confim-btn .full-btn {
+    width: 100%;
+    height: 28px;
+    line-height: 26px;
+    font-size: 13px;
 }
 
 #CURRENT_CURSOR_COORDS {
@@ -476,21 +571,61 @@
     height: 100%;
 }
 
+.building_store .stat-table,
+.building_store .stat-table ul li,
+.building_store .stat-table ul li div,
+.building_store .stat-table .th div {
+    font-family: Tahoma, Arial, "Segoe UI", sans-serif;
+    font-weight: normal;
+    font-size: 13.5px;
+    color: #3b1b06;
+}
+
+.building_store .stat-table .th div {
+    font-weight: bold;
+    font-size: 13px;
+    color: #431b03;
+}
+
 .building_store .stat-table ul li div {
     width: 25%;
     float: left;
     text-align: center;
     height: 45px;
     line-height: 45px;
-    font-size: 16px;
+    font-size: 13.5px;
 }
 
-.building_store .stat-table ul li .stor-percent input {}
+.building_store .stat-table ul li .resource-qun,
+.building_store .stat-table ul li .stor-cap {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #2b1200;
+}
+
+.building_store .stat-table ul li.total-storage {
+    font-family: Tahoma, Arial, "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e2200;
+    line-height: 45px;
+    text-align: center;
+}
 
 .building_store .stat-table ul li .stor-percent .number-arrow-wrapper {
-    margin-left: -22px;
-    margin-top: 10px;
-    height: 24px;
+    margin-left: -19px;
+    margin-top: 11px;
+    height: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+.building_store .stat-table ul li .stor-percent .number-arrow-wrapper .number-arrow {
+    width: 17px;
+    height: 10px;
+    background-size: 100% auto;
+    cursor: pointer;
 }
 
 .building_store .stat-table ul li .resource-icon img {
@@ -510,13 +645,25 @@
     background: url(../images/icons/bg_patern.png);
 }
 
-.building_store .stat-table ul .stor-percent input {
-    width: 70px;
-    display: block;
-    margin: auto;
-    margin-top: 10px;
-    line-height: 16px;
-    margin-left: 35px;
+.building_store .stat-table ul .stor-percent input,
+.building_store .stat-table ul li .stor-percent input {
+    width: 48px;
+    height: 23px;
+    line-height: 21px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: Tahoma, Arial, sans-serif;
+    text-align: center;
+    margin-top: 11px;
+    margin-left: 45px;
+    padding: 0 16px 0 3px;
+    box-sizing: border-box;
+    border: 1px solid #9c7a52;
+    border-radius: 3px;
+    background: #fff8e7;
+    border-image: none;
+    border-image-outset: 0;
+    color: #331500;
 }
 
 .font-2 {
@@ -875,14 +1022,14 @@
     width: 84px;
     height: 36px;
     position: fixed;
-    bottom: 213px;
-    left: 310px;
+    bottom: 212px;
+    left: 270px;
     background-image: url(../images/tools/luck-wheel-track.png), url(../images/tools/luck-wheel-btn.png);
     background-repeat: no-repeat;
     background-position: center 6px, center;
     z-index: 10;
     cursor: pointer;
-    transition: all 0.8s ease-in-out;
+    transition: left 0.4s ease, opacity 0.3s ease;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
 }
 

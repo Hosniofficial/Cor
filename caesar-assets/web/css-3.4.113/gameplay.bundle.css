@@ -1576,18 +1576,29 @@
     margin-right: 9px;
 }
 
+.req_table tbody td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
 .req_table tr td img {
-    height: 25px;
-    display: block;
-    float: left;
-    margin-left: 7px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-left: 6px;
+    margin-right: 4px;
 }
 
 .req_table tr td .amount {
-    float: left;
-    margin-left: 15px;
-    line-height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin: 0;
+    line-height: 28px;
     direction: rtl;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 .req_table td {
@@ -1686,12 +1697,14 @@
 .mili_building .leftOfRight .army_req_table {
     background: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
-    padding: 25px 0px 10px 0px;
+    padding: 22px 0px 8px 0px;
     margin-left: 5px
 }
 
 .mili_building .leftOfRight .army_req_table .req_table {
     height: auto;
+    width: 95%;
+    table-layout: fixed;
 }
 
 .soldier {
@@ -1857,6 +1870,24 @@
     background: url(../images/background/back-shape/left-content.png);
     background-size: auto;
     background-size: 98% 100%;
+}
+
+#palace_content .left-content .btn_2 {
+    width: 84%;
+    max-width: 185px;
+    margin: 12px auto;
+}
+
+#palace_content #add-motiv-palace,
+#add-motiv-palace {
+    font-size: 11px;
+    line-height: 27px;
+    height: 28px;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.2px;
 }
 
 .production-report .tr {
@@ -2113,38 +2144,122 @@ body {
 
 #unit_review .right_cont .dist {
     width: 95%;
-    height: 40px;
-    margin: auto;
+    height: 38px;
+    margin: 2px auto 6px auto;
     background-image: url(../images/panner/sector_name.png);
     background-size: 100% 100%;
-}
-
-#unit_review .right_cont .dist div {
-    float: right;
-    margin-right: 10px;
-    font-size: 16px;
-    line-height: 24px;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 34px 0 28px;
+    box-sizing: border-box;
     direction: rtl;
 }
 
-#unit_review .right_cont .copy-coord-icon {
-    width: 48px;
-    float: left;
-    height: 28px;
+#unit_review .right_cont .dist .coord-info {
     display: flex;
     align-items: center;
+    gap: 6px;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+#unit_review .right_cont .dist .coords,
+#unit_review .right_cont .dist div.coords {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b1704;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    margin: 0 !important;
+    white-space: nowrap;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+#unit_review .right_cont .dist .coords a {
+    color: #2b1704;
+    text-decoration: none;
+    cursor: default;
+}
+
+#unit_review .right_cont .dist .mile,
+#unit_review .right_cont .dist div.mile {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6d4216;
+    line-height: 1;
+    margin: 0 !important;
+    white-space: nowrap;
+    background: rgba(109, 66, 22, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(109, 66, 22, 0.22);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+#unit_review .right_cont .copy-coord-icon,
+#unit_review .right_cont .dist div.copy-coord-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    width: auto;
+    min-width: 42px;
+    height: 24px;
+    margin: 0 !important;
+    padding: 0;
+    float: none;
+    flex-shrink: 0;
 }
 
 .copy-coord {
-    width: 100%;
-    height: 100%;
+    width: 18px;
+    height: 18px;
     background-image: url(../images/icons/copy-coord.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
-    display: block;
+    border: none;
     cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    opacity: 0.85;
+    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+    vertical-align: middle;
+}
+
+.copy-coord:hover {
+    opacity: 1;
+    filter: brightness(1.2);
+    transform: scale(1.12);
+}
+
+.copy-coord:active {
+    transform: scale(0.95);
+}
+
+#unit_review .right_cont .copy-coord-icon .add-fav-coord-btn {
+    width: 18px;
+    height: 18px;
+    margin: 0 !important;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 0.85;
+    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+}
+
+#unit_review .right_cont .copy-coord-icon .add-fav-coord-btn:hover {
+    opacity: 1;
+    filter: brightness(1.3);
+    transform: scale(1.12);
+}
+
+#unit_review .right_cont .copy-coord-icon .add-fav-coord-btn:active {
+    transform: scale(0.95);
 }
 
 #unit_review .right_cont .dist div img {

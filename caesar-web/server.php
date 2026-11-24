@@ -216,6 +216,35 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
         $isAdmin = true;
     }
 }
+
+// Initial unread notification counts for the player
+$initialPlayerNotif = [
+    'msg_in'          => 0,
+    'msg_diff'        => 0,
+    'msg_report'      => 0,
+    'spy_report'      => 0,
+    'battel_number'   => 0,
+    'hero_in_battel'  => 0,
+    'hero_back'       => 0,
+    'spy_task'        => 0,
+];
+try {
+    $notifStmt = $db->prepare(
+        'SELECT
+            (SELECT COUNT(*) FROM `msg_income` WHERE `id_player` = ? AND `seen` = 0) AS `msg_in`,
+            (SELECT COUNT(*) FROM `msg_diff` WHERE `id_player` = ? AND `seen` = 0) AS `msg_diff`,
+            (SELECT COUNT(*) FROM `report_player` WHERE `id_player` = ? AND `seen` = 0) AS `msg_report`,
+            (SELECT COUNT(*) FROM `spy_report` WHERE `id_player` = ? AND `seen` = 0) AS `spy_report`'
+    );
+    $notifStmt->execute([$idPlayer, $idPlayer, $idPlayer, $idPlayer]);
+    $notifRow = $notifStmt->fetch(PDO::FETCH_ASSOC);
+    if ($notifRow) {
+        $initialPlayerNotif['msg_in']     = (int)($notifRow['msg_in'] ?? 0);
+        $initialPlayerNotif['msg_diff']   = (int)($notifRow['msg_diff'] ?? 0);
+        $initialPlayerNotif['msg_report'] = (int)($notifRow['msg_report'] ?? 0);
+        $initialPlayerNotif['spy_report'] = (int)($notifRow['spy_report'] ?? 0);
+    }
+} catch (\Throwable $e) {}
 ?>
 <!DOCTYPE html>
 <html>
@@ -482,7 +511,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
                             <img src="images/icons/chat/world.png"/>
                         </li>
                         <li data-show="guild">
-                            <img src="images/icons/chat/guild.png"/>
+                            <img src="images/icons/guild.png"/>
                         </li>
                         <li data-show="private">
                             <img src="images/icons/chat/private.png"/>
@@ -537,7 +566,7 @@ if ((int)($livePlayer['user_group'] ?? 0) > 0 || !empty($_SESSION['admin_user'])
             const  WS_HOST         = <?= $publicWsHostJs ?>;
             const  ID_FIRST_CITY   = <?= $idCity ?>;
             const  JS_VERSION      = "-3.4.113";
-            var PLAYER_NOTIF     = {"msg_in":0,"msg_diff":0,"msg_report":0,"spy_report":0,"battel_number":0,"hero_in_battel":0,"hero_back":0,"spy_task":0};
+            var PLAYER_NOTIF     = <?= json_encode($initialPlayerNotif, JSON_UNESCAPED_UNICODE) ?>;
             var isMobile         = false; //initiate as false
 			var EXAMINE_PLAYER_MUTE = false;
             // device detection

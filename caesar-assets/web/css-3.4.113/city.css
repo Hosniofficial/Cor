@@ -1576,18 +1576,29 @@
     margin-right: 9px;
 }
 
+.req_table tbody td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
 .req_table tr td img {
-    height: 25px;
-    display: block;
-    float: left;
-    margin-left: 7px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-left: 6px;
+    margin-right: 4px;
 }
 
 .req_table tr td .amount {
-    float: left;
-    margin-left: 15px;
-    line-height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin: 0;
+    line-height: 28px;
     direction: rtl;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 .req_table td {
@@ -1686,12 +1697,14 @@
 .mili_building .leftOfRight .army_req_table {
     background: url(../images/background/roman_panel_frame.jpg);
     background-size: 100% 100%;
-    padding: 25px 0px 10px 0px;
+    padding: 22px 0px 8px 0px;
     margin-left: 5px
 }
 
 .mili_building .leftOfRight .army_req_table .req_table {
     height: auto;
+    width: 95%;
+    table-layout: fixed;
 }
 
 .soldier {
@@ -1857,6 +1870,24 @@
     background: url(../images/background/back-shape/left-content.png);
     background-size: auto;
     background-size: 98% 100%;
+}
+
+#palace_content .left-content .btn_2 {
+    width: 84%;
+    max-width: 185px;
+    margin: 12px auto;
+}
+
+#palace_content #add-motiv-palace,
+#add-motiv-palace {
+    font-size: 11px;
+    line-height: 27px;
+    height: 28px;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.2px;
 }
 
 .production-report .tr {

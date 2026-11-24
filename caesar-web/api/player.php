@@ -2,6 +2,7 @@
 // Dynamic player.php for caesar-web
 require_once __DIR__ . '/../../caesar-api/db.php';
 require_once __DIR__ . '/../../caesar-api/PlayerAuth.php';
+require_once __DIR__ . '/ws_helper.php';
 
 header('Content-Type: text/plain; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -153,6 +154,7 @@ if (isset($_POST['add_friend']) || isset($_GET['add_friend'])) {
         $msgOut = $db->prepare("INSERT INTO `msg_out` (`id_player`, `to_player`, `to_name`, `subject`, `body`, `time_stamp`) VALUES (?, ?, ?, ?, ?, NOW())");
         $msgOut->execute([$idSender, $idFriend, $targetName, $subject, 'تم إرسال طلب صداقة إلى اللاعب ' . $targetName . '.']);
         $db->commit();
+        notifyWsMail($idFriend, 'Mail.sentTo');
     } catch (Throwable $error) {
         if ($db->inTransaction()) {
             $db->rollBack();

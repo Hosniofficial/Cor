@@ -30,8 +30,8 @@ class BattleReportService {
                     continue;
                 }
 
-                $pre = $sourceHero[$slot . '_pre'] ?? $hero['pre'][$position] ?? null;
-                $post = $sourceHero[$slot . '_post'] ?? $hero['post'][$position] ?? null;
+                $pre = $hero['pre'][$position] ?? $sourceHero[$slot . '_pre'] ?? null;
+                $post = $hero['post'][$position] ?? $sourceHero[$slot . '_post'] ?? null;
                 if (is_numeric($pre) && is_numeric($post)) {
                     $dead[$position] = max(0, (int)$pre - (int)$post);
                     continue;

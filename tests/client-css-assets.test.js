@@ -96,7 +96,11 @@ test('remaining UI image folders are consolidated by asset usage', () => {
     for (const filename of [
         'world/wildlands/field-wildlands-01.jpg',
         'world/wildlands/field-wildlands-05.jpg',
-        'icons/hero/helmet.png',
+        'icons/hero/eq-list-armor.png',
+        'icons/hero/eq-list-boot.png',
+        'icons/hero/eq-list-helmet.png',
+        'icons/hero/eq-list-shield.png',
+        'icons/hero/eq-list-sword.png',
         'icons/hero/lock.png',
         'icons/navigate/m_l_n.png',
         'icons/navigate/m_r_h.png',
@@ -232,8 +236,37 @@ test('unused and byte-identical images are removed or shared', () => {
         'style/population.png',
         'icons/gold.png',
         'items/sellVoucher.jpg',
+        'icons/chat.png',
         'world/forces.png',
-        'world/c_forces.png'
+        'world/c_forces.png',
+        'icons/hero/armor.png',
+        'icons/hero/boots.png',
+        'icons/hero/helmet.png',
+        'icons/hero/shield.png',
+        'icons/hero/sword.png',
+        'bars/green.png',
+        'bars/prog_left.png',
+        'bars/prog_right.png',
+        'icons/war-icon/collection.png',
+        'panner/study_lvl_l.png',
+        'sitenav-bar-bg.jpg',
+        'world/map-icon/icon_cw_fx.png',
+        'world/map-icon/icon_small_wood.png',
+        'world/map-icon/icon_zbfx_fz.png',
+        'world/map-icon/province-castle.png',
+        'world/provinceImage/province_border.png',
+        'world/MapUI/timer_counter.png',
+        'world/MapUI/Bg/frame_main_common.png',
+        'world/MapUI/Bg/frame_map_09.png',
+        'world/MapUI/Bg/frame_map_line_coord.png',
+        'world/MapUI/Bg/frame_SJDT_kuang01.png',
+        'world/MapUI/Bg/frame_SJDT_kuang02.png',
+        'world/MapUI/Frame/frame_map_08.png',
+        'world/MapUI/Frame/frame_map_18.png',
+        'world/MapUI/Icon/btn_map_favorite.png',
+        'world/MapUI/Icon/icon_alliance_mineral_construct.png',
+        'world/MapUI/Icon/icon_alliance_territory_relationship.png',
+        'world/MapUI/Icon/icon_map_armyreturn.png'
     ]) {
         assert.equal(fs.existsSync(path.join(imageDirectory, filename)), false, `${filename} should not be shipped`);
     }
@@ -268,6 +301,55 @@ test('unused and byte-identical images are removed or shared', () => {
         const itemBase = JSON.parse(fs.readFileSync(versionedItemBase, 'utf8'));
         assert.equal(itemBase.sell_voucher.image, 'images/items/SecretLetter.jpg');
     }
+});
+
+test('hero and level label images live in their semantic directories', () => {
+    const heroIcons = ['h_s_attack_2.png', 'h_s_console.png', 'h_s_incity.png', 'h_s_support.png', 'hero_army.png'];
+    const levelLabels = ['lable_1.png', 'lable_2.png', 'lable_5.png'];
+    const clientBundle = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
+        'utf8'
+    );
+    const finishingStyles = fs.readFileSync(path.join(stylesheetDirectory, 'finishing.css'), 'utf8');
+    const overridesBundle = fs.readFileSync(path.join(stylesheetDirectory, 'overrides.bundle.css'), 'utf8');
+
+    for (const filename of heroIcons) {
+        assert.ok(fs.existsSync(path.join(imageDirectory, 'icons', 'hero', filename)), `${filename} should be in icons/hero`);
+        assert.equal(fs.existsSync(path.join(imageDirectory, 'icons', filename)), false, `${filename} should not remain in icons`);
+        assert.ok(clientBundle.includes(`images/icons/hero/${filename}`), `${filename} should use the hero path`);
+        assert.equal(clientBundle.includes(`images/icons/${filename}`), false, `${filename} should not use the old path`);
+    }
+
+    for (const filename of levelLabels) {
+        assert.ok(fs.existsSync(path.join(imageDirectory, 'background', filename)), `${filename} should be in background`);
+        assert.ok(clientBundle.includes(`images/background/${filename}`), `${filename} should use the new client path`);
+        assert.ok(finishingStyles.includes(`../images/background/${filename}`), `${filename} should use the new CSS path`);
+        assert.ok(overridesBundle.includes(`../images/background/${filename}`), `${filename} should use the new bundled CSS path`);
+        assert.equal(
+            fs.existsSync(path.join(imageDirectory, 'background', 'lvl_lable', filename)),
+            false,
+            `${filename} should not remain in background/lvl_lable`
+        );
+    }
+
+    assert.equal(fs.existsSync(path.join(imageDirectory, 'background', 'lvl_lable')), false, 'the empty lvl_lable directory should be removed');
+});
+
+test('guild UI reuses the shared guild icon path', () => {
+    const sharedIcon = path.join(imageDirectory, 'icons', 'guild.png');
+    const duplicateIcon = path.join(imageDirectory, 'icons', 'chat', 'guild.png');
+    const clientBundle = fs.readFileSync(
+        path.join(__dirname, '..', 'caesar-assets', 'web', 'js-3.4.113', 'caesar-client.js'),
+        'utf8'
+    );
+    const server = fs.readFileSync(path.join(__dirname, '..', 'caesar-web', 'server.php'), 'utf8');
+
+    assert.ok(fs.existsSync(sharedIcon), 'the shared guild icon should remain in icons');
+    assert.equal(fs.existsSync(duplicateIcon), false, 'the duplicate guild icon should be removed from icons/chat');
+    assert.ok(clientBundle.includes('images/icons/guild.png'), 'the client should use the shared guild icon');
+    assert.ok(server.includes('images/icons/guild.png'), 'the server should use the shared guild icon');
+    assert.equal(clientBundle.includes('images/icons/chat/guild.png'), false, 'the client should not use the duplicate path');
+    assert.equal(server.includes('images/icons/chat/guild.png'), false, 'the server should not use the duplicate path');
 });
 
 test('all resource icons use the dedicated resource directory', () => {

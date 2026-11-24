@@ -3,6 +3,7 @@
 
 require_once __DIR__ . '/../services/ProductionService.php';
 require_once __DIR__ . '/../services/HeroPowerService.php';
+require_once __DIR__ . '/ItemController.php';
 
 class HeroController {
     private const THEATER_POOL_VERSION = 2;
@@ -958,9 +959,11 @@ class HeroController {
             );
             $itemStmt->execute([$playerId]);
             $hasItem = (int)$itemStmt->fetchColumn();
-            if ($hasItem > 0) {
-                ItemController::deductPlayerItem($db, $playerId, 'retreat_point', min($hasItem, $reqItemAmount));
+            if ($hasItem < $reqItemAmount) {
+                sendJson(['state' => 'error_1', 'msg' => 'لا تمتلك مواد كافية']);
+                return;
             }
+            ItemController::deductPlayerItem($db, $playerId, 'retreat_point', $reqItemAmount);
 
             $diffA = max(0, (int)$hero['point_a'] - (int)$hero['p_b_a']);
             $diffB = max(0, (int)$hero['point_b'] - (int)$hero['p_b_b']);

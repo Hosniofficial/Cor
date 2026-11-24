@@ -1600,6 +1600,51 @@ async function handleHttp(req, res) {
         });
         return;
     }
+    if (uriPath === '/api/internal/notify_mail') {
+        let body = '';
+        req.on('data', chunk => { body += chunk; });
+        req.on('end', () => {
+            let targetPlayers = [];
+            let classPath = 'Mail.sentTo';
+            let extra = {};
+
+            try {
+                if (body.trim().startsWith('{')) {
+                    const parsed = JSON.parse(body);
+                    if (Array.isArray(parsed.player_ids)) {
+                        targetPlayers = parsed.player_ids.map(Number);
+                    } else if (parsed.id_player) {
+                        targetPlayers = [Number(parsed.id_player)];
+                    }
+                    if (parsed.class_path) classPath = parsed.class_path;
+                    if (parsed.data && typeof parsed.data === 'object') extra = parsed.data;
+                } else {
+                    const params = new URLSearchParams(body);
+                    const idStr = params.get('id_player') || params.get('player_ids') || '';
+                    targetPlayers = idStr.split(',').map(s => Number(s.trim())).filter(n => n > 0);
+                    if (params.get('class_path')) classPath = params.get('class_path');
+                }
+            } catch (e) {
+                targetPlayers = [];
+            }
+
+            const payload = JSON.stringify({
+                classPath: classPath,
+                time: Math.floor(Date.now() / 1000),
+                ...extra
+            });
+
+            for (const pid of targetPlayers) {
+                if (pid > 0) {
+                    sendToPlayer(pid, payload);
+                }
+            }
+
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ state: 'ok', sent_count: targetPlayers.length }));
+        });
+        return;
+    }
 
     // 1. Dynamic World Map Cities from MySQL (Only real players' cities!)
     if (uriPath === '/api/AWorld/getWorldCity') {
@@ -1842,7 +1887,7 @@ function handleWs(ws) {
                 const db = await getDb();
                 if (!await authenticateSocketPlayer(db, idPlayer, token)) return;
                 const [rows] = await db.query(
-                    'SELECT b.x_coord AS x, b.y_coord AS y, p.city_flag, p.id_guild, p.id_player ' +
+                    'SELECT b.id_city AS idCity, b.x_coord AS x, b.y_coord AS y, p.city_flag, p.id_guild, p.id_player ' +
                     'FROM city_barray b ' +
                     'JOIN city c ON c.id_city = b.id_city ' +
                     'JOIN player p ON p.id_player = b.id_player ' +
@@ -1855,6 +1900,7 @@ function handleWs(ws) {
                     data: colonized ? {
                         xCoord,
                         yCoord,
+                        idCity: Number(rows[0].idCity),
                         colonized: true,
                         city_flag: String(rows[0].city_flag || '0'),
                         id_guild: rows[0].id_guild ? Number(rows[0].id_guild) : null,
@@ -2349,7 +2395,9 @@ function handleWs(ws) {
                     return;
                 }
                 const isGuildDominanceTarget = (unitType >= 180 && unitType <= 182)
-                    || (unitType >= 184 && unitType <= 186);
+                    || (unitType >= 184 && unitType <= 186)
+                    || (unitType >= 150 && unitType <= 155)
+                    || (unitType === 105);
                 if (isGuildDominanceTarget) {
                     const [dominanceRows] = await db.query(
                         'SELECT id_guild FROM guild_dominance WHERE x_coord = ? AND y_coord = ? LIMIT 1',

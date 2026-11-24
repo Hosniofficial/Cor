@@ -2409,19 +2409,19 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('front_squad', BASE_ASSET_BATH + 'images/world/front_squad.png');
     Caesar.GE.LoadingScene.load.image('front_band', BASE_ASSET_BATH + 'images/world/front_band.png');
     Caesar.GE.LoadingScene.load.image('front_squadron', BASE_ASSET_BATH + 'images/world/front_squadron.png');
-    Caesar.GE.LoadingScene.load.image('front_division', BASE_ASSET_BATH + 'images/world/front_division.png');
-    Caesar.GE.LoadingScene.load.image('armed_light_squad', BASE_ASSET_BATH + 'images/world/armed_light_squad.png');
-    Caesar.GE.LoadingScene.load.image('armed_light_band', BASE_ASSET_BATH + 'images/world/armed_light_band.png');
+    Caesar.GE.LoadingScene.load.image('front_division', BASE_ASSET_BATH + 'images/world/snap-shot/front_division.png');
+    Caesar.GE.LoadingScene.load.image('armed_light_squad', BASE_ASSET_BATH + 'images/world/snap-shot/armed_light_squad.png');
+    Caesar.GE.LoadingScene.load.image('armed_light_band', BASE_ASSET_BATH + 'images/world/snap-shot/armed_light_band.png');
     Caesar.GE.LoadingScene.load.image('armed_light_squadron', BASE_ASSET_BATH + 'images/world/armed_light_squadron.png');
-    Caesar.GE.LoadingScene.load.image('armed_light_division', BASE_ASSET_BATH + 'images/world/armed_light_division.png');
-    Caesar.GE.LoadingScene.load.image('armed_heavy_squad', BASE_ASSET_BATH + 'images/world/armed_heavy_squad.png');
-    Caesar.GE.LoadingScene.load.image('armed_heavy_band', BASE_ASSET_BATH + 'images/world/armed_heavy_band.png');
-    Caesar.GE.LoadingScene.load.image('armed_heavy_squadron', BASE_ASSET_BATH + 'images/world/armed_heavy_squadron.png');
+    Caesar.GE.LoadingScene.load.image('armed_light_division', BASE_ASSET_BATH + 'images/world/snap-shot/armed_light_division.png');
+    Caesar.GE.LoadingScene.load.image('armed_heavy_squad', BASE_ASSET_BATH + 'images/world/snap-shot/armed_heavy_squad.png');
+    Caesar.GE.LoadingScene.load.image('armed_heavy_band', BASE_ASSET_BATH + 'images/world/snap-shot/armed_heavy_band.png');
+    Caesar.GE.LoadingScene.load.image('armed_heavy_squadron', BASE_ASSET_BATH + 'images/world/snap-shot/armed_heavy_squadron.png');
     Caesar.GE.LoadingScene.load.image('armed_heavy_division', BASE_ASSET_BATH + 'images/world/armed_heavy_division.png');
-    Caesar.GE.LoadingScene.load.image('guard_squad', BASE_ASSET_BATH + 'images/world/guard_squad.png');
-    Caesar.GE.LoadingScene.load.image('guard_band', BASE_ASSET_BATH + 'images/world/guard_band.png');
-    Caesar.GE.LoadingScene.load.image('guard_squadron', BASE_ASSET_BATH + 'images/world/guard_squadron.png');
-    Caesar.GE.LoadingScene.load.image('guard_division', BASE_ASSET_BATH + 'images/world/guard_division.png');
+    Caesar.GE.LoadingScene.load.image('guard_squad', BASE_ASSET_BATH + 'images/world/snap-shot/guard_squad.png');
+    Caesar.GE.LoadingScene.load.image('guard_band', BASE_ASSET_BATH + 'images/world/snap-shot/guard_band.png');
+    Caesar.GE.LoadingScene.load.image('guard_squadron', BASE_ASSET_BATH + 'images/world/snap-shot/guard_squadron.png');
+    Caesar.GE.LoadingScene.load.image('guard_division', BASE_ASSET_BATH + 'images/world/snap-shot/guard_division.png');
     Caesar.GE.LoadingScene.load.image('brave_thunder', BASE_ASSET_BATH + 'images/world/brave_thunder.png');
     Caesar.GE.LoadingScene.load.image('gang', BASE_ASSET_BATH + 'images/world/gang.png');
     Caesar.GE.LoadingScene.load.image('mugger', BASE_ASSET_BATH + 'images/world/mugger.png');
@@ -2439,11 +2439,11 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('repleCastle_2', BASE_ASSET_BATH + 'images/world/repleCastle_2.png');
     Caesar.GE.LoadingScene.load.image('repleCastle_3', BASE_ASSET_BATH + 'images/world/repleCastle_3.png');
     Caesar.GE.LoadingScene.load.image('wolfStatue', BASE_ASSET_BATH + 'images/world/wolf.png');
-    Caesar.GE.LoadingScene.load.image('arena', BASE_ASSET_BATH + 'images/world/arena.png');
-    Caesar.GE.LoadingScene.load.image('seaCity_1', BASE_ASSET_BATH + 'images/world/seaCity_1.png');
-    Caesar.GE.LoadingScene.load.image('seaCity_2', BASE_ASSET_BATH + 'images/world/seaCity_2.png');
-    Caesar.GE.LoadingScene.load.image('seaCity_3', BASE_ASSET_BATH + 'images/world/seaCity_3.png');
-    Caesar.GE.LoadingScene.load.image('seaCity_4', BASE_ASSET_BATH + 'images/world/seaCity_4.png');
+    Caesar.GE.LoadingScene.load.image('arena', BASE_ASSET_BATH + 'images/world/snap-shot/arena.png');
+    Caesar.GE.LoadingScene.load.image('seaCity_1', BASE_ASSET_BATH + 'images/world/snap-shot/seaCity_1.png');
+    Caesar.GE.LoadingScene.load.image('seaCity_2', BASE_ASSET_BATH + 'images/world/snap-shot/seaCity_2.png');
+    Caesar.GE.LoadingScene.load.image('seaCity_3', BASE_ASSET_BATH + 'images/world/snap-shot/seaCity_3.png');
+    Caesar.GE.LoadingScene.load.image('seaCity_4', BASE_ASSET_BATH + 'images/world/snap-shot/seaCity_4.png');
     Caesar.GE.LoadingScene.load.image('seaCity_5', BASE_ASSET_BATH + 'images/world/seaCity_5.png');
     Caesar.GE.LoadingScene.load.image('seaCity_6', BASE_ASSET_BATH + 'images/world/seaCity_6.png');
     Caesar.GE.LoadingScene.load.image('challangeFieldPlayer', BASE_ASSET_BATH + 'images/world/challangeFieldPlayer.png');
@@ -2498,10 +2498,10 @@ Caesar.GE.LPreLoad = function() {
 
     Caesar.GE.LoadingScene.load.image('cloud', BASE_ASSET_BATH + 'images/animation/cloud.png');
     Caesar.GE.LoadingScene.load.image('unit_floor', BASE_ASSET_BATH + 'images/world/unit_floor.png');
-    Caesar.GE.LoadingScene.load.image('building_lvl_lable_1', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_1.png');
-    Caesar.GE.LoadingScene.load.image('building_lvl_lable_2', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_2.png');
+    Caesar.GE.LoadingScene.load.image('building_lvl_lable_1', BASE_ASSET_BATH + 'images/background/lable_1.png');
+    Caesar.GE.LoadingScene.load.image('building_lvl_lable_2', BASE_ASSET_BATH + 'images/background/lable_2.png');
     Caesar.GE.LoadingScene.load.image('building_lvl_lable_4', BASE_ASSET_BATH + 'images/panner/study_lvl_h.png');
-    Caesar.GE.LoadingScene.load.image('building_lvl_lable_5', BASE_ASSET_BATH + 'images/background/lvl_lable/lable_5.png');
+    Caesar.GE.LoadingScene.load.image('building_lvl_lable_5', BASE_ASSET_BATH + 'images/background/lable_5.png');
     Caesar.GE.LoadingScene.load.image('building_level_badge', BASE_ASSET_BATH + 'images/city/building_levelBg.png');
 
     Caesar.GE.LoadingScene.load.image('MapIconAttack', BASE_ASSET_BATH + 'images/world/WorldFloorIcon/Attack.png');
@@ -3574,21 +3574,21 @@ const THINGS_TO_LOAD = {
                 "front_squadron": [0, 0, 1, 1]
             }
         },
-        "images/world/front_division.png": {
+        "images/world/snap-shot/front_division.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "front_division": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_light_squad.png": {
+        "images/world/snap-shot/armed_light_squad.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "armed_light_squad": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_light_band.png": {
+        "images/world/snap-shot/armed_light_band.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
@@ -3602,28 +3602,28 @@ const THINGS_TO_LOAD = {
                 "armed_light_squadron": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_light_division.png": {
+        "images/world/snap-shot/armed_light_division.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "armed_light_division": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_heavy_squad.png": {
+        "images/world/snap-shot/armed_heavy_squad.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "armed_heavy_squad": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_heavy_band.png": {
+        "images/world/snap-shot/armed_heavy_band.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "armed_heavy_band": [0, 0, 1, 1]
             }
         },
-        "images/world/armed_heavy_squadron.png": {
+        "images/world/snap-shot/armed_heavy_squadron.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
@@ -3637,28 +3637,28 @@ const THINGS_TO_LOAD = {
                 "armed_heavy_division": [0, 0, 1, 1]
             }
         },
-        "images/world/guard_squad.png": {
+        "images/world/snap-shot/guard_squad.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "guard_squad": [0, 0, 1, 1]
             }
         },
-        "images/world/guard_band.png": {
+        "images/world/snap-shot/guard_band.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "guard_band": [0, 0, 1, 1]
             }
         },
-        "images/world/guard_squadron.png": {
+        "images/world/snap-shot/guard_squadron.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "guard_squadron": [0, 0, 1, 1]
             }
         },
-        "images/world/guard_division.png": {
+        "images/world/snap-shot/guard_division.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
@@ -3786,35 +3786,35 @@ const THINGS_TO_LOAD = {
             }
         },
 
-        "images/world/arena.png": {
+        "images/world/snap-shot/arena.png": {
             "tile": 128,
             "tileh": 128,
             "map": {
                 "arena": [0, 0, 1, 1]
             }
         },
-        'images/world/seaCity_1.png': {
+        'images/world/snap-shot/seaCity_1.png': {
             'tile': 0x180,
             'tileh': 0x180,
             'map': {
                 'seaCity_1': [0x0, 0x0, 0x1, 0x1]
             }
         },
-        'images/world/seaCity_2.png': {
+        'images/world/snap-shot/seaCity_2.png': {
             'tile': 0x180,
             'tileh': 0x180,
             'map': {
                 'seaCity_2': [0x0, 0x0, 0x1, 0x1]
             }
         },
-        'images/world/seaCity_3.png': {
+        'images/world/snap-shot/seaCity_3.png': {
             'tile': 0x180,
             'tileh': 0x180,
             'map': {
                 'seaCity_3': [0x0, 0x0, 0x1, 0x1]
             }
         },
-        'images/world/seaCity_4.png': {
+        'images/world/snap-shot/seaCity_4.png': {
             'tile': 0x180,
             'tileh': 0x180,
             'map': {
@@ -9765,7 +9765,7 @@ var BuildingConstData = [{
                 ar_title: "المساعد الاول ",
                 en_title: "Jupiter",
                 image: "images/city/Jupiter.jpg",
-                desc: " يقصر المدة الزمية اللازمة للباء وتطوير المبانى فى المدينة"
+                desc: " يقصر المدة الزمنية اللازمة للبناء وتطوير المبانى فى المدينة"
             },
             {
                 title: "المساعد الثانى ",
@@ -9779,7 +9779,7 @@ var BuildingConstData = [{
                 ar_title: "المساعد الثالث ",
                 en_title: "Minerva",
                 image: "images/city/Minerva.jpg",
-                desc: "يقصر المدة الزمية اللازمة لبناء وتطوير القوات"
+                desc: "يقصر المدة الزمنية اللازمة لبناء وتطوير القوات"
             }
         ],
         sprit_name: "B10",
@@ -10631,11 +10631,16 @@ function fillCityWithBuilding() {
     Caesar.GE.AddCityBuilding(352, 240, "light_house_7");  // COR p: 18
     Caesar.GE.AddCityBuilding(480, 240, "light_house_8");  // COR p: 19
 
-    if (Number(Caesar.CurrentCity.City.lvl) > 0)
+    var currentCity = (Caesar.CurrentCity && Caesar.CurrentCity.City)
+        ? Caesar.CurrentCity.City
+        : (Caesar.City && typeof Caesar.City.getCity === "function" && Caesar.City.getCity() ? Caesar.City.getCity().City : null);
+    var cityLvl = currentCity ? Number(currentCity.lvl || 0) : 0;
+
+    if (cityLvl > 0)
         fillCityLvl_1();
-    if (Number(Caesar.CurrentCity.City.lvl) > 1)
+    if (cityLvl > 1)
         fillCityLvl_2();
-    if (Number(Caesar.CurrentCity.City.lvl) > 2)
+    if (cityLvl > 2)
         fillCityLvl_3();
 
     // Preserve any existing extra buildings gracefully
@@ -10653,7 +10658,7 @@ function fillCityWithBuilding() {
         }
     }
 
-    if (Caesar.CurrentCity.City.food)
+    if (currentCity && currentCity.food)
         Animation.cityProductionRate();
 
     for (var BuildingPlace in BuildingOnFloor) {
@@ -10793,12 +10798,12 @@ var alert_box = {
                                     </label>
                                 </div>
                                 <div class="row-2">
-                                    <input type="text" max="${max}" min="1" step="${(max-1)}" id="input-army-move"  class="amount-input only_num input numeric pull-L" value="${(max>0 ? 1:0)}"/> 
-                                    <div class="number-arrow-wrapper pull-L" style="margin-left: -31px; margin-top: 4.5px;">
+                                    <input type="text" max="${max}" min="1" step="${(max-1)}" id="input-army-move"  class="amount-input only_num input numeric" value="${(max>0 ? 1:0)}"/>
+                                    <div class="number-arrow-wrapper">
                                         <label class="number-arrow up"></label>
                                         <label class="number-arrow down"></label>
                                     </div>
-                                    <label style="line-height: 38px;"> / ${max}</label>
+                                    <label class="max-avail"> / ${max}</label>
                                     
                                 </div>
                                 <div  class="row-3">
@@ -11522,19 +11527,20 @@ $(document).on("click", "#over_lay_alert .battel-can", function(event) {
 
 /*  
  * هظبط الانبوت بتاع الجيش*/
-$(document).on("keydown", ".amount-input", function() {
+$(document).on("keydown keyup input change", ".amount-input", function() {
 
-    var max_val = parseInt($(this).attr("max"));
+    var max_val = parseInt($(this).attr("max")) || 0;
     var amount = parseInt($(this).val()) || 0;
-    if (amount > max_val) {
+    if (max_val > 0 && amount > max_val) {
         $(this).val(max_val);
+        amount = max_val;
     }
 
     $("#range_input").val(amount);
 });
 
 /*    RANGE INPUT  */
-$(document).on("input", "#range_input", function() {
+$(document).on("input change", "#range_input", function() {
     $(".amount-input").val($(this).val());
 });
 
@@ -11593,16 +11599,16 @@ var city_profile = {
                 Caesar.City.getCity().Jop.stone -
                 Caesar.City.getCity().Jop.metal));
 
-        var coin = Number(Caesar.CurrentCity.City.coin);
-        var food = Number(Caesar.CurrentCity.City.food);
-        var wood = Number(Caesar.CurrentCity.City.wood);
-        var stone = Number(Caesar.CurrentCity.City.stone);
-        var metal = Number(Caesar.CurrentCity.City.metal);
-        var coin_total = (Caesar.CurrentCity.City.coin_in - Caesar.CurrentCity.City.coin_out);
-        var food_total = (Caesar.CurrentCity.City.food_in - Caesar.CurrentCity.City.food_out);
-        var wood_total = (Caesar.CurrentCity.City.wood_in - Caesar.CurrentCity.City.wood_out);
-        var stone_total = (Caesar.CurrentCity.City.stone_in - Caesar.CurrentCity.City.stone_out);
-        var metal_total = (Caesar.CurrentCity.City.metal_in - Caesar.CurrentCity.City.metal_out);
+        var coin = Number(Caesar.CurrentCity.City.coin) || 0;
+        var food = Number(Caesar.CurrentCity.City.food) || 0;
+        var wood = Number(Caesar.CurrentCity.City.wood) || 0;
+        var stone = Number(Caesar.CurrentCity.City.stone) || 0;
+        var metal = Number(Caesar.CurrentCity.City.metal) || 0;
+        var coin_total = (Number(Caesar.CurrentCity.City.coin_in) || 0) - (Number(Caesar.CurrentCity.City.coin_out) || 0);
+        var food_total = (Number(Caesar.CurrentCity.City.food_in) || 0) - (Number(Caesar.CurrentCity.City.food_out) || 0);
+        var wood_total = (Number(Caesar.CurrentCity.City.wood_in) || 0) - (Number(Caesar.CurrentCity.City.wood_out) || 0);
+        var stone_total = (Number(Caesar.CurrentCity.City.stone_in) || 0) - (Number(Caesar.CurrentCity.City.stone_out) || 0);
+        var metal_total = (Number(Caesar.CurrentCity.City.metal_in) || 0) - (Number(Caesar.CurrentCity.City.metal_out) || 0);
 
 
         var output = `<table>
@@ -11726,17 +11732,17 @@ var city_profile = {
             if (Number(Caesar.DPlayer.Heros[idHero].Hero.id_city) !== idCity)
                 continue;
 
-            var state = '<img src="images/icons/h_s_incity.png" >';
+            var state = '<img src="images/icons/hero/h_s_incity.png" >';
             if (parseInt(Caesar.DPlayer.Heros[idHero].Hero.id_hero) === Caesar.CurrentCity.City.console) {
 
-                state = '<img src="images/icons/h_s_console.png">';
+                state = '<img src="images/icons/hero/h_s_console.png">';
             } else if (parseInt(Caesar.DPlayer.Heros[idHero].Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-                state = '<img src="images/icons/h_s_attack_2.png" >';
+                state = '<img src="images/icons/hero/h_s_attack_2.png" >';
 
             } else if (parseInt(Caesar.DPlayer.Heros[idHero].Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-                state = '<img src="images/icons/h_s_support.png">';
+                state = '<img src="images/icons/hero/h_s_support.png">';
 
             }
 
@@ -11749,7 +11755,7 @@ var city_profile = {
                                 <div class="hero_lvl-box" style="float: left ;   font-size: 12px ;  color: white">
                                     ${Caesar.DPlayer.Heros[idHero].Hero.lvl}
                                 </div>
-                                <img src="images/icons/hero_army.png" style="float: right ;" class="modify-hero-army">
+                                <img src="images/icons/hero/hero_army.png" style="float: right ;" class="modify-hero-army">
                             </div>
                         </li>`;
 
@@ -12182,12 +12188,16 @@ var city_profile = {
                     if (!Caesar.CurrentCity.City) {
                         Caesar.CurrentCity.City = {};
                     }
-                    Caesar.CurrentCity.City.food = refreshedCity.food;
-                    Caesar.CurrentCity.City.wood = refreshedCity.wood;
-                    Caesar.CurrentCity.City.stone = refreshedCity.stone;
-                    Caesar.CurrentCity.City.metal = refreshedCity.metal;
-                    Caesar.CurrentCity.City.coin = refreshedCity.coin;
-                    Caesar.CurrentCity.City.food_out = refreshedCity.food_out;
+                    ["food", "wood", "stone", "metal", "coin"].forEach(function(res) {
+                        if (refreshedCity[res] !== undefined && Number.isFinite(Number(refreshedCity[res]))) {
+                            Caesar.CurrentCity.City[res] = Number(refreshedCity[res]);
+                        }
+                    });
+                    ["food_in", "wood_in", "stone_in", "metal_in", "coin_in", "food_out", "coin_out"].forEach(function(rate) {
+                        if (refreshedCity[rate] !== undefined && Number.isFinite(Number(refreshedCity[rate]))) {
+                            Caesar.CurrentCity.City[rate] = Number(refreshedCity[rate]);
+                        }
+                    });
                     if (refreshedCity.wall_cap !== undefined)
                         Caesar.CurrentCity.City.wall_cap = refreshedCity.wall_cap;
                     if (refreshedCity.wall_a !== undefined)
@@ -12927,17 +12937,28 @@ function change_content_player_box(content, offset_mat) {
 
 function resourcesRefresh() {
 
-    var food_rate = (Caesar.CurrentCity.City.food_in - Caesar.CurrentCity.City.food_out) / (60 * 60);
-    var wood_rate = (Caesar.CurrentCity.City.wood_in - Caesar.CurrentCity.City.wood_out) / (60 * 60);
-    var stone_rate = (Caesar.CurrentCity.City.stone_in - Caesar.CurrentCity.City.stone_out) / (60 * 60);
-    var metal_rate = (Caesar.CurrentCity.City.metal_in - Caesar.CurrentCity.City.metal_out) / (60 * 60);
-    var coin_rate = (Caesar.CurrentCity.City.coin_in - Caesar.CurrentCity.City.coin_out) / (60 * 60);
+    var food_rate = ((Number(Caesar.CurrentCity.City.food_in) || 0) - (Number(Caesar.CurrentCity.City.food_out) || 0)) / (60 * 60);
+    var wood_rate = ((Number(Caesar.CurrentCity.City.wood_in) || 0) - (Number(Caesar.CurrentCity.City.wood_out) || 0)) / (60 * 60);
+    var stone_rate = ((Number(Caesar.CurrentCity.City.stone_in) || 0) - (Number(Caesar.CurrentCity.City.stone_out) || 0)) / (60 * 60);
+    var metal_rate = ((Number(Caesar.CurrentCity.City.metal_in) || 0) - (Number(Caesar.CurrentCity.City.metal_out) || 0)) / (60 * 60);
+    var coin_rate = ((Number(Caesar.CurrentCity.City.coin_in) || 0) - (Number(Caesar.CurrentCity.City.coin_out) || 0)) / (60 * 60);
 
-    Caesar.CurrentCity.City.food = food_rate < 0 ? Math.max(0, Number(Caesar.CurrentCity.City.food) + food_rate) : ((Caesar.CurrentCity.City.food >= Caesar.CurrentCity.City.food_cap) ? Number(Caesar.CurrentCity.City.food) : Number(Caesar.CurrentCity.City.food) + food_rate);
-    Caesar.CurrentCity.City.wood = wood_rate < 0 ? Math.max(0, Number(Caesar.CurrentCity.City.wood) + wood_rate) : ((Caesar.CurrentCity.City.wood >= Caesar.CurrentCity.City.wood_cap) ? Number(Caesar.CurrentCity.City.wood) : Number(Caesar.CurrentCity.City.wood) + wood_rate);
-    Caesar.CurrentCity.City.coin = coin_rate < 0 ? Math.max(0, Number(Caesar.CurrentCity.City.coin) + coin_rate) : ((Caesar.CurrentCity.City.coin >= Caesar.CurrentCity.City.coin_cap) ? Number(Caesar.CurrentCity.City.coin) : Number(Caesar.CurrentCity.City.coin) + coin_rate);
-    Caesar.CurrentCity.City.stone = stone_rate < 0 ? Math.max(0, Number(Caesar.CurrentCity.City.stone) + stone_rate) : ((Caesar.CurrentCity.City.stone >= Caesar.CurrentCity.City.stone_cap) ? Number(Caesar.CurrentCity.City.stone) : Number(Caesar.CurrentCity.City.stone) + stone_rate);
-    Caesar.CurrentCity.City.metal = metal_rate < 0 ? Math.max(0, Number(Caesar.CurrentCity.City.metal) + metal_rate) : ((Caesar.CurrentCity.City.metal >= Caesar.CurrentCity.City.metal_cap) ? Number(Caesar.CurrentCity.City.metal) : Number(Caesar.CurrentCity.City.metal) + metal_rate);
+    var curFood = Number(Caesar.CurrentCity.City.food);
+    var curWood = Number(Caesar.CurrentCity.City.wood);
+    var curCoin = Number(Caesar.CurrentCity.City.coin);
+    var curStone = Number(Caesar.CurrentCity.City.stone);
+    var curMetal = Number(Caesar.CurrentCity.City.metal);
+    if (!Number.isFinite(curFood)) curFood = 0;
+    if (!Number.isFinite(curWood)) curWood = 0;
+    if (!Number.isFinite(curCoin)) curCoin = 0;
+    if (!Number.isFinite(curStone)) curStone = 0;
+    if (!Number.isFinite(curMetal)) curMetal = 0;
+
+    Caesar.CurrentCity.City.food = food_rate < 0 ? Math.max(0, curFood + food_rate) : ((curFood >= Caesar.CurrentCity.City.food_cap) ? curFood : curFood + food_rate);
+    Caesar.CurrentCity.City.wood = wood_rate < 0 ? Math.max(0, curWood + wood_rate) : ((curWood >= Caesar.CurrentCity.City.wood_cap) ? curWood : curWood + wood_rate);
+    Caesar.CurrentCity.City.coin = coin_rate < 0 ? Math.max(0, curCoin + coin_rate) : ((curCoin >= Caesar.CurrentCity.City.coin_cap) ? curCoin : curCoin + coin_rate);
+    Caesar.CurrentCity.City.stone = stone_rate < 0 ? Math.max(0, curStone + stone_rate) : ((curStone >= Caesar.CurrentCity.City.stone_cap) ? curStone : curStone + stone_rate);
+    Caesar.CurrentCity.City.metal = metal_rate < 0 ? Math.max(0, curMetal + metal_rate) : ((curMetal >= Caesar.CurrentCity.City.metal_cap) ? curMetal : curMetal + metal_rate);
 
 
 
@@ -12974,6 +12995,14 @@ function dialogBoxClose() {
 
         BattelField.removeFromWatchList(x_coord, y_coord);
     }
+
+    // Clear any active dominance countdown timers
+    Object.keys(window).forEach(function(k) {
+        if (k.indexOf('dominance_timer_') === 0 && window[k]) {
+            clearInterval(window[k]);
+            window[k] = null;
+        }
+    });
 }
 
 function dialogBoxShow(dialog_box, callBack) {
@@ -13260,6 +13289,9 @@ $(document).on("click", ".menu-list", function(e) {
             break;
         case "messages":
 
+            if (typeof refreshMsg === "function") {
+                refreshMsg();
+            }
             var dialog_box = menu_bar.dialogBox(Translate.Title.MenuList.Mail[UserLag.language], NavBar.Mail, "<div class='box_content'></div>", 0, "centered-left-nav");
             dialogBoxShow(dialog_box, function() {
 
@@ -13508,18 +13540,23 @@ $(document).on("click", ".left-nav ul  li", function() {
             /*______________________________________________-FOR_msg_____________________________*/
 
         case "mail_in":
+            if (typeof refreshMsg === "function") refreshMsg();
             message.dialogBoxcontent_msgIncome();
             break;
         case "battel_report":
+            if (typeof refreshMsg === "function") refreshMsg();
             message.dialogBoxContent_battelReport();
             break;
         case "spy_report":
+            if (typeof refreshMsg === "function") refreshMsg();
             message.dialogBoxContent_spyReport();
             break;
         case "coll_report":
+            if (typeof refreshMsg === "function") refreshMsg();
             message.dialogBoxcontent_msgDiff();
             break;
         case "mail_out":
+            if (typeof refreshMsg === "function") refreshMsg();
             message.dialogBoxcontent_msgOutcome();
             break;
         case "mail_write":
@@ -16004,7 +16041,7 @@ var Building = {
                                     </div>
                                     <div class="right-all">
                                          <div class="time-rest">
-                                            <h4> اوقت المتبقى :</h4>
+                                            <h4> الوقت المتبقى :</h4>
                                             <span class="time_counter counter_worker_in_palace" time-end="${Task.time_end}">
                                                 ${changeTimeFormat(Task.time_end - parseInt(Date.now() / 1000))}
                                             </span>
@@ -16028,11 +16065,11 @@ var Building = {
         if (parseInt(Caesar.DPlayer.PlayerState.motiv) > Date.now() / 1000) {
 
             motiv = `<p>
-                        فى الوقت الحالى كل مدينة تستطيع توظيف اثنان من الموظفسن
+                        فى الوقت الحالى كل مدينة تستطيع توظيف اثنان من الموظفين
                         لذا سيكون لديك ثلاثة من البنائين يستطيعوا التعامل معهم
                     </p>
                     <div class="btn_2">
-                        <button class="full-btn full-btn-2x full" id="add-motiv-palace">
+                        <button class="full-btn full-btn-2x full" id="add-motiv-palace" title="تجديد المدة">
                             تجديد المدة
                         </button>
                     </div>
@@ -16045,11 +16082,11 @@ var Building = {
         } else {
 
             motiv = `<p>
-                        يمكنك زيادة عدد عمال البناءالى ثلاثة عمال فى كل المدن
-                        من خلال استخدم الخطب التحفيزية فى صندوق الموارد
+                        يمكنك زيادة عدد عمال البناء إلى ثلاثة عمال فى كل المدن
+                        من خلال استخدام الخطب التحفيزية فى صندوق الموارد
                     </p>
                     <div class="btn_2">
-                        <button class="full-btn full-btn-2x full" id="add-motiv-palace" >${Translate.Button.Building.ContractBuilders[UserLag.language]}</button>
+                        <button class="full-btn full-btn-2x full" id="add-motiv-palace" title="${Translate.Button.Building.ContractBuilders[UserLag.language]}">${Translate.Button.Building.ContractBuilders[UserLag.language]}</button>
                     </div>`;
 
         }
@@ -16348,11 +16385,11 @@ var Building = {
         if (parseInt(Caesar.CurrentCity.City.helper) === 0) {
 
             helper = `<ul id="helper-choose">
-                                <li index="0"  helper-type="1" class="selected">
+                                <li index="0" helper-type="1" class="selected">
                                     <div class="image">
                                         <img src="images/city/Jupiter.jpg"/>
                                     </div>
-                                    <div>
+                                    <div class="helper-title-wrapper">
                                         <h1 class="header">
                                             المساعد الاول
                                         </h1>
@@ -16362,7 +16399,7 @@ var Building = {
                                     <div class="image">
                                         <img src="images/city/Junon.jpg"/>
                                     </div>
-                                    <div>
+                                    <div class="helper-title-wrapper">
                                         <h1 class="header">
                                             المساعد الثانى
                                         </h1>
@@ -16372,17 +16409,17 @@ var Building = {
                                     <div class="image">
                                         <img src="images/city/Minerva.jpg"/>
                                     </div>
-
-                                    <h1 class="header-1">
-                                        المساعد الثالث
-                                    </h1>
-
+                                    <div class="helper-title-wrapper">
+                                        <h1 class="header">
+                                            المساعد الثالث
+                                        </h1>
+                                    </div>
                                 </li>
                             </ul>`;
 
 
             desc = `<div id="helper-desc">
-                                المساعد الاول :>   يقصر المدة الزمية اللازمة للباء وتطوير المبانى   فى المدينة
+                                المساعد الاول :>   يقصر المدة الزمنية اللازمة للبناء وتطوير المبانى   فى المدينة
                             </div>
                             <div id="confirmChoose">
                                 <button class="full-btn full-btn-3x" helper-type="1">${Translate.Button.Building.ChooseDeity[UserLag.language]}</button>
@@ -16873,7 +16910,7 @@ Building.dialogBoxContent_forstore = function(place) {
                             <div class="td_4 ellipsis" style="width: 25%;">${Translate.Title.TH.StorageRatio[UserLag.language]}</div>
                         </div>
                         <ul>
-                            <li class="font-2">
+                            <li class="store-row">
                                 <div class="resource-icon">
                                     <img src="images/icons/resource/food.png"/>
                                 </div>
@@ -16891,7 +16928,7 @@ Building.dialogBoxContent_forstore = function(place) {
                                     </div>
                                 </div>
                             </li>
-                            <li class="font-2">
+                            <li class="store-row">
                                 <div class="resource-icon">
                                     <img src="images/icons/resource/wood.png"/>
                                 </div>
@@ -16909,7 +16946,7 @@ Building.dialogBoxContent_forstore = function(place) {
                                     </div>
                                 </div>
                             </li>
-                            <li class="font-2">
+                            <li class="store-row">
                                 <div class="resource-icon">
                                     <img src="images/icons/resource/stone.png"/>
                                 </div>
@@ -16927,7 +16964,7 @@ Building.dialogBoxContent_forstore = function(place) {
                                     </div>
                                 </div>
                             </li>
-                            <li class="font-2">
+                            <li class="store-row">
                                 <div class="resource-icon">
                                     <img src="images/icons/resource/metal.png"/>
                                 </div>
@@ -16945,7 +16982,7 @@ Building.dialogBoxContent_forstore = function(place) {
                                     </div>
                                 </div>
                             </li>
-                           <li class="font-2 total-storage">
+                           <li class="store-row total-storage">
                                 اجمالى  سعة التخزين: ${Caesar.CurrentCity.Storage.total_cap}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; اجمالى المساحة الفارغة: ${
             Math.floor(Math.max(0, (Caesar.CurrentCity.Storage.total_cap -
                     Math.min(Caesar.CurrentCity.City.food, Caesar.CurrentCity.City.food_cap) -
@@ -19391,18 +19428,18 @@ var army = {
             if (Hero.Hero.id_city != Caesar.CurrentCity.City.id_city)
                 continue;
 
-            var state = '<img src="images/icons/h_s_incity.png" >';
+            var state = '<img src="images/icons/hero/h_s_incity.png" >';
             if (Number(Hero.Hero.id_hero) === Number(consoleHero)) {
 
-                state = '<img src="images/icons/h_s_console.png">';
+                state = '<img src="images/icons/hero/h_s_console.png">';
 
             } else if (Number(Hero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-                state = '<img src="images/icons/h_s_attack_2.png">';
+                state = '<img src="images/icons/hero/h_s_attack_2.png">';
 
             } else if (Number(Hero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-                state = '<img src="images/icons/h_s_support.png">';
+                state = '<img src="images/icons/hero/h_s_support.png">';
 
             }
 
@@ -19459,22 +19496,22 @@ var army = {
         Caesar.CurrentHero.Hero.add_p_c = 0;
 
 
-        var state = '<img src="images/icons/h_s_incity.png" class="img-sml pull-R" >';
+        var state = '<img src="images/icons/hero/h_s_incity.png" class="img-sml pull-R" >';
         var state_ar_title = "فى المدينة";
 
         if (Number(Caesar.CurrentHero.Hero.id_hero) == Caesar.CurrentCity.City.console) {
 
-            state = '<img src="images/icons/h_s_console.png"  class="pull-R">';
+            state = '<img src="images/icons/hero/h_s_console.png"  class="pull-R">';
             state_ar_title = "قنصل المدينة";
 
         } else if (Number(Caesar.CurrentHero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-            state = '<img src="images/icons/h_s_attack_2.png"  class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_attack_2.png"  class="img-sml pull-R">';
             state_ar_title = "يهاجم";
 
         } else if (Number(Caesar.CurrentHero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-            state = '<img src="images/icons/h_s_support.png" class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_support.png" class="img-sml pull-R">';
             state_ar_title = "حراسة";
         }
 
@@ -19984,21 +20021,21 @@ var army = {
             return;
         }
         Caesar.NextHero = sec_hero;
-        var state = '<img src="images/icons/h_s_incity.png" class="img-sml pull-R " >';
+        var state = '<img src="images/icons/hero/h_s_incity.png" class="img-sml pull-R " >';
         var state_ar_title = "فى المدينة";
         if (parseInt(sec_hero.Hero.id_hero) === Caesar.CurrentCity.City.console) {
 
-            state = '<img src="images/icons/h_s_console.png"  class="pull-R">';
+            state = '<img src="images/icons/hero/h_s_console.png"  class="pull-R">';
             state_ar_title = "قنصل المدينة";
 
         } else if (parseInt(sec_hero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-            state = '<img src="images/icons/h_s_attack_2.png"  class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_attack_2.png"  class="img-sml pull-R">';
             state_ar_title = "يهاجم";
 
         } else if (Number(sec_hero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-            state = '<img src="images/icons/h_s_support.png" class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_support.png" class="img-sml pull-R">';
             state_ar_title = "حراسة";
         }
 
@@ -20071,21 +20108,21 @@ var army = {
     },
     dialogBoxContent_forHeroTradeRight: function(hero_sec) {
 
-        var state = '<img src="images/icons/h_s_incity.png" class="img-sml pull-R" >';
+        var state = '<img src="images/icons/hero/h_s_incity.png" class="img-sml pull-R" >';
         var state_ar_title = "فى المدينة";
         if (parseInt(Caesar.CurrentHero.Hero.id_hero) === Caesar.CurrentCity.City.console) {
 
-            state = '<img src="images/icons/h_s_console.png"  class="pull-R">';
+            state = '<img src="images/icons/hero/h_s_console.png"  class="pull-R">';
             state_ar_title = "قنصل المدينة";
 
         } else if (parseInt(Caesar.CurrentHero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-            state = '<img src="images/icons/h_s_attack_2.png"  class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_attack_2.png"  class="img-sml pull-R">';
             state_ar_title = "يهاجم";
 
         } else if (Number(Caesar.CurrentHero.Hero.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-            state = '<img src="images/icons/h_s_support.png" class="img-sml pull-R">';
+            state = '<img src="images/icons/hero/h_s_support.png" class="img-sml pull-R">';
             state_ar_title = "حراسة";
         }
         return `
@@ -20815,16 +20852,30 @@ $(document).on("keyup change", ".sol-2-build-amount", function() {
     if (!army_type) {
         return false;
     }
-    $("#dialg_box .leftOfRight .army_req_table .sol-food").html(Math.max(Caesar.BaseData.Army[army_type].food * $(this).val(), Caesar.BaseData.Army[army_type].food));
-    $("#dialg_box .leftOfRight .army_req_table .sol-wood").html(Math.max(Caesar.BaseData.Army[army_type].wood * $(this).val(), Caesar.BaseData.Army[army_type].wood));
-    $("#dialg_box .leftOfRight .army_req_table .sol-metal").html(Math.max(Caesar.BaseData.Army[army_type].metal * $(this).val(), Caesar.BaseData.Army[army_type].metal));
-    $("#dialg_box .leftOfRight .army_req_table .sol-coin").html(Math.max(Caesar.BaseData.Army[army_type].coin * $(this).val(), Caesar.BaseData.Army[army_type].coin));
-    $("#dialg_box .leftOfRight .army_req_table .sol-stone").html(Math.max(Caesar.BaseData.Army[army_type].stone * $(this).val(), Caesar.BaseData.Army[army_type].stone));
-    $("#dialg_box .leftOfRight .army_req_table .sol-people").html(Math.max(Caesar.BaseData.Army[army_type].people * $(this).val(), Caesar.BaseData.Army[army_type].people));
-    var amount = Math.max(0, parseInt($(this).val(), 10) || 0);
+    var army = Caesar.BaseData.Army[army_type];
+    if (!army) {
+        return false;
+    }
+    var rawVal = $(this).val();
+    var val_ = Math.max(1, parseInt(rawVal, 10) || 0);
+
+    var foodVal = (Number(army.food) || 0) === 0 ? "---" : Math.max(army.food * val_, army.food);
+    var woodVal = (Number(army.wood) || 0) === 0 ? "---" : Math.max(army.wood * val_, army.wood);
+    var metalVal = (Number(army.metal) || 0) === 0 ? "---" : Math.max(army.metal * val_, army.metal);
+    var coinVal = (Number(army.coin) || 0) === 0 ? "---" : Math.max(army.coin * val_, army.coin);
+    var stoneVal = (Number(army.stone) || 0) === 0 ? "---" : Math.max(army.stone * val_, army.stone);
+    var peopleVal = (Number(army.people) || 0) === 0 ? "---" : Math.max(army.people * val_, army.people);
+
+    $("#dialg_box .leftOfRight .army_req_table .sol-food").html(foodVal);
+    $("#dialg_box .leftOfRight .army_req_table .sol-wood").html(woodVal);
+    $("#dialg_box .leftOfRight .army_req_table .sol-metal").html(metalVal);
+    $("#dialg_box .leftOfRight .army_req_table .sol-coin").html(coinVal);
+    $("#dialg_box .leftOfRight .army_req_table .sol-stone").html(stoneVal);
+    $("#dialg_box .leftOfRight .army_req_table .sol-people").html(peopleVal);
+    var amount = Math.max(0, parseInt(rawVal, 10) || 0);
     var duration = Math.max(
-        Caesar.BaseData.Army[army_type].time * amount,
-        Caesar.BaseData.Army[army_type].time
+        army.time * amount,
+        army.time
     );
     $("#dialg_box .leftOfRight .army_req_table .sol-time").html(changeTimeFormat(duration));
 });
@@ -21550,21 +21601,21 @@ $(document).on("click", "#selected_hero", function() {
                 return;
 
 
-            var state = '<img src="images/icons/h_s_incity.png" class="img-sml" >';
+            var state = '<img src="images/icons/hero/h_s_incity.png" class="img-sml" >';
 
             if (parseInt(el.id_hero) === Caesar.CurrentCity.City.console) {
 
-                state = '<img src="images/icons/h_s_console.png">';
+                state = '<img src="images/icons/hero/h_s_console.png">';
 
 
             } else if (parseInt(el.in_city) === Caesar.Hero.HeroState.HERO_IN_BATTEL) {
 
-                state = '<img src="images/icons/h_s_attack_2.png"  class="img-sml">';
+                state = '<img src="images/icons/hero/h_s_attack_2.png"  class="img-sml">';
 
 
             } else if (Number(el.in_city) === Caesar.Hero.HeroState.HERO_IN_GARISON) {
 
-                state = '<img src="images/icons/h_s_support.png" class="img-sml">';
+                state = '<img src="images/icons/hero/h_s_support.png" class="img-sml">';
             }
 
             all_list += `  <li id_hero="${el.Hero.id_hero}">
@@ -22450,23 +22501,23 @@ $(document).on("mouseenter", "#city-profile .page_content ul .hero_profile", fun
 
     var id_hero = $(this).attr('id_hero');
     var hero = getHeroById(id_hero);
-    var image_state = "images/icons/h_s_incity.png";
+    var image_state = "images/icons/hero/h_s_incity.png";
     var state_title = 'فى المدينة';
     var hero_effect = Hero.getEquipEffectsForHero(hero);
 
 
     if (Number(hero.Hero.id_hero) === Caesar.CurrentCity.City.console) {
-        image_state = "images/icons/h_s_console.png";
+        image_state = "images/icons/hero/h_s_console.png";
         state_title = 'قنصل المدينة';
     }
 
     if (Number(hero.Hero.in_city) == Caesar.Hero.HeroState.HERO_IN_BATTEL) {
-        image_state = "images/icons/h_s_attack_2.png";
+        image_state = "images/icons/hero/h_s_attack_2.png";
         state_title = 'خارج المدينة';
     }
 
     if (Number(hero.Hero.in_city) == Caesar.Hero.HeroState.HERO_IN_GARISON) {
-        image_state = "images/icons/h_s_support.png";
+        image_state = "images/icons/hero/h_s_support.png";
         state_title = 'خارج المدينة';
     }
 
@@ -23416,12 +23467,12 @@ Caesar.HeroArmy.StartDialogBox = function(DragPlace, DropPlace, MaxNum) {
                                     </label>
                                 </div>
                                 <div class="row-2">
-                                    <input type="text" max="${MaxNum}" min="1" step="${(MaxNum - 1)}" id="input-army-move"  class="amount-input only_num input numeric pull-L" value="${(MaxNum > 0 ? 1 : 0)}"/> 
-                                    <div class="number-arrow-wrapper pull-L" style="margin-left: -31px; margin-top: 4.5px;">
+                                    <input type="text" max="${MaxNum}" min="1" step="${(MaxNum - 1)}" id="input-army-move"  class="amount-input only_num input numeric" value="${(MaxNum > 0 ? 1 : 0)}"/>
+                                    <div class="number-arrow-wrapper">
                                         <label class="number-arrow up"></label>
                                         <label class="number-arrow down"></label>
                                     </div>
-                                    <label style="line-height: 38px;"> / ${MaxNum}</label>
+                                    <label class="max-avail"> / ${MaxNum}</label>
                                     
                                 </div>
                                 <div  class="row-3">
@@ -24051,7 +24102,7 @@ function useMatrial(user_for, matrial, other) {
                     $("#over_lay_alert").remove();
                     $("#over_lay").remove();
                     $(".middle-content").replaceWith(army.middle_content(Caesar.CurrentHero));
-                    Matrial.takeFrom(matrial, Math.floor(Caesar.CurrentHero.Hero.lvl / 10) - 1);
+                    Matrial.takeFrom(matrial, Math.floor(Caesar.CurrentHero.Hero.lvl / 10) + 1);
                 } else if (JsonObject.state === "error_0") {
                     alert_box.failMessage("البطل ليس ملك لك");
                 } else if (JsonObject.state === "error_1") {
@@ -24382,7 +24433,9 @@ function useMatrial(user_for, matrial, other) {
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
 
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     alert_box.succesMessage("تم تعديل المساعد بنجاح");
                     $(".building_worship").replaceWith(Building.dialogBoxContnet_forworship());
                     city_profile.refresh_resource_view();
@@ -25737,7 +25790,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25764,7 +25819,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25791,7 +25848,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25818,7 +25877,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25845,7 +25906,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25872,7 +25935,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25899,7 +25964,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25926,7 +25993,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25953,7 +26022,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -25980,7 +26051,9 @@ Caesar.Item.useItemFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     Player_profile.getPlayerStateData();
                 }
@@ -26710,7 +26783,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_army_view();
                     city_profile.refresh_resource_view();
                 }
@@ -26905,7 +26980,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -26930,7 +27007,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -26955,7 +27034,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -26980,7 +27061,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27005,7 +27088,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27030,7 +27115,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27055,7 +27142,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27080,7 +27169,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27105,7 +27196,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27130,7 +27223,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27155,7 +27250,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27180,7 +27277,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27205,7 +27304,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27230,7 +27331,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27255,7 +27358,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27280,7 +27385,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27305,7 +27412,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27332,7 +27441,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27357,7 +27468,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27382,7 +27495,9 @@ Caesar.Item.useItemBoxFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                 }
             }
@@ -27410,7 +27525,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27436,7 +27553,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27462,7 +27581,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27488,7 +27609,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27513,7 +27636,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27539,7 +27664,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27565,7 +27692,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27591,7 +27720,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27617,7 +27748,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27643,7 +27776,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27668,7 +27803,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27694,7 +27831,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27720,7 +27859,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27746,7 +27887,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -27772,7 +27915,9 @@ Caesar.Item.useArmyBackFunc = function() {
                     Caesar.LBase.Error(data);
                 var JsonObject = JSON.parse(data);
                 if (JsonObject.state === "ok") {
+                    if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                     city_profile.refresh_resource_view();
                     city_profile.refresh_army_view();
                 }
@@ -29614,7 +29759,9 @@ $(document).on("click", ".cansel_spy", function() {
                 PLAYER_NOTIF.spy_task -= 1;
                 Fixed.refreshPlayerNotif();
 
-                Caesar.City.getCity(idCity).City = JsonObject.City;
+                if (JsonObject.City && typeof JsonObject.City === "object") {
+                    Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                 city_profile.refresh_army_view();
                 city_profile.refresh_resource_view();
 
@@ -29763,12 +29910,19 @@ Dominant.armyCapital = function() {
 
                     }
 
+                    var days = Math.floor(duration / 86400);
+                    var hours = Math.floor((duration % 86400) / 3600);
+                    var minutes = Math.floor((duration % 3600) / 60);
+                    var seconds = duration % 60;
+                    var durationFormatted = days > 0
+                        ? `${days} يوم ${hours} س`
+                        : (hours > 0 ? `${hours} س ${minutes} د` : `${minutes} د ${seconds} ث`);
 
                     list += `<div class="tr">
                                  <div class="td_1" style="width:25%">${jsonData.unit[iii].title}</div>
                                  <div class="td_2" style="width:20%">[${jsonData.unit[iii].x} , ${jsonData.unit[iii].y}]</div>
                                  <div class="td_3" style="width:30%">${jsonData.unit[iii].rank[0].name}</div>
-                                 <div class="td_4 rtl" style="width:10%">${`${Math.floor(duration / 60)} د ${duration % 60} ث`}</div>
+                                 <div class="td_4 rtl" style="width:10%">${durationFormatted}</div>
                                  <div class="td_5" style="width:15%">
                                      <button class="full-btn-3x open-world-unit" data-x-coord="${jsonData.unit[iii].x}" data-y-coord="${jsonData.unit[iii].y}">${Translate.Button.MenuList.View[UserLag.language]}</button>
                                  </div>
@@ -29778,8 +29932,8 @@ Dominant.armyCapital = function() {
                     list += `<div class="tr">
                                 <div class="td_1" style="width:25%">${jsonData.unit[iii].title}</div>
                                 <div class="td_2" style="width:20%">[${jsonData.unit[iii].x} , ${jsonData.unit[iii].y}]</div>
-                                <div class="td_3" style="width:30%">${jsonData.dominanceDataAvailable === false ? "بيانات السيطرة غير متاحة" : "----"}</div>
-                                <div class="td_4" style="width:10%">${jsonData.dominanceDataAvailable === false ? "غير متاح" : "----"}</div>
+                                <div class="td_3" style="width:30%">${UserLag.language === "ar" ? "شاغر" : "----"}</div>
+                                <div class="td_4" style="width:10%">----</div>
                                 <div class="td_5" style="width:15%">
                                     <button class="full-btn-3x open-world-unit"  data-x-coord="${jsonData.unit[iii].x}" data-y-coord="${jsonData.unit[iii].y}">${Translate.Button.MenuList.View[UserLag.language]}</button>
                                 </div>
@@ -31530,6 +31684,31 @@ Caesar.WsLib.Guild.GuildNameChanged = function(data) {
     }
 }
 
+Caesar.WsLib.Guild.DominanceAcquired = function(data) {
+    var guildId = Number(data && data.id_guild);
+    var playerGuildId = Number(Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.id_guild);
+    var xCoord = Number(data && data.xCoord);
+    var yCoord = Number(data && data.yCoord);
+    var unitType = Number(data && data.unitType);
+
+    if (!Number.isSafeInteger(guildId) || guildId <= 0
+        || !Number.isInteger(xCoord) || !Number.isInteger(yCoord)
+        || !Number.isInteger(unitType)) {
+        console.error("[WebSocket] Invalid guild dominance notification", data);
+        return;
+    }
+
+    if (guildId !== playerGuildId) return;
+
+    var unitData = WorldUnit.getUnitData(unitType);
+    var unitTitle = unitData && unitData.Title ? escapeHtml(unitData.Title) : "المعلم";
+    var unitLevel = Number(data.unitLvl);
+    unitLevel = Number.isFinite(unitLevel) ? Math.max(1, unitLevel) : 1;
+    alert_box.systemChatMessage(
+        `🏆 سيطر حلفك على ${unitTitle} مستوى ${getArabicNumbers(unitLevel)} عند [${getArabicNumbers(xCoord)}، ${getArabicNumbers(yCoord)}] وأصبح متاحًا له الحصاد اليومي.`
+    );
+};
+
 
 Caesar.WsLib.Team.announceRelation = function(data) {
 
@@ -31668,6 +31847,14 @@ Caesar.WsLib.Mail = {};
 Caesar.WsLib.Mail.sentTo = function(data) {
     PLAYER_NOTIF.msg_in = Number(PLAYER_NOTIF.msg_in) + 1;
     Fixed.refreshPlayerNotif();
+    if (typeof refreshMsg === "function") {
+        refreshMsg(function() {
+            if ($("#dialg_box").length && $(".right-content-footer[msg_for='msg_income']").length) {
+                var offset = Number($(".for_msg .tr:first").attr("db_offset")) || 0;
+                message.dialogBoxcontent_msgIncome(offset);
+            }
+        });
+    }
 };
 
 Caesar.WsLib.Mail.someOneSpy = function(data) {
@@ -32233,14 +32420,44 @@ Caesar.WsLib.Base.refreshWorldCityColonization = function(data) {
     }
 
     var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
-    if (!Unit)
-        return;
+    if (Unit) {
+        Unit.CityColonized = data.colonized === true;
+        Unit.CityColonizerFlag = data.colonized ? data.city_flag : null;
+        Unit.ColonizerIdGuild = data.colonized ? data.id_guild : null;
+        Unit.ColonizerIdPlayer = data.colonized ? data.id_player : null;
+        WorldUnit.refreshUnitView(data.xCoord, data.yCoord);
+    }
 
-    Unit.CityColonized = data.colonized === true;
-    Unit.CityColonizerFlag = data.colonized ? data.city_flag : null;
-    Unit.ColonizerIdGuild = data.colonized ? data.id_guild : null;
-    Unit.ColonizerIdPlayer = data.colonized ? data.id_player : null;
-    WorldUnit.refreshUnitView(data.xCoord, data.yCoord);
+    var cityId = Number(data.idCity);
+    var playerId = Number(Caesar.DPlayer && Caesar.DPlayer.Player && Caesar.DPlayer.Player.id_player);
+    if (data.colonized === true && Number(data.id_player) === playerId
+        && Number.isSafeInteger(cityId) && cityId > 0) {
+        Caesar.City.getCityBase(cityId).done(function() {
+            var isCurrent = Caesar.CurrentCity && Caesar.CurrentCity.City
+                && Number(Caesar.CurrentCity.City.id_city) === cityId;
+            if (isCurrent) {
+                if (typeof city_profile !== "undefined") {
+                    if (typeof city_profile.refresh_resource_view === "function") city_profile.refresh_resource_view();
+                    if (typeof city_profile.refresh_wild_view === "function") city_profile.refresh_wild_view();
+                }
+                if (typeof Animation !== "undefined" && typeof Animation.cityProductionRate === "function") {
+                    Animation.cityProductionRate();
+                }
+            }
+
+            Caesar.City.getCityBarray(cityId).fail(function(jqXHR) {
+                console.error("Failed to refresh colonized city wildernesses", jqXHR.status, jqXHR.statusText);
+            }).done(function() {
+                if (isCurrent
+                    && $("#dialg_box.for_building .left-nav .selected").attr("head_title") === "production") {
+                    $(".box_content").html(Palace.productionReport());
+                    $("#scroll-production-report").niceScroll(SCROLL_BAR_PROP);
+                }
+            });
+        }).fail(function(jqXHR) {
+            console.error("Failed to refresh production after wilderness colonization", jqXHR.status, jqXHR.statusText);
+        });
+    }
 };
 
 
@@ -33120,7 +33337,10 @@ var WorldUnit = {
                 var jsonData = JSON.parse(data);
                 var u = WorldUnit.getWorldUnit(x, y);
                 if (u) {
-                    if (jsonData.l !== undefined) u.l = Number(jsonData.l);
+                    if (jsonData.l !== undefined) {
+                        u.l = Number(jsonData.l);
+                        u._lvlRefreshed = true;
+                    }
                     if (jsonData.t !== undefined) u.t = jsonData.t;
                     if (jsonData.ut !== undefined) u.ut = jsonData.ut;
                 }
@@ -33196,11 +33416,106 @@ WorldUnit.WorldUnitRank = function(x, y) {
         type: 'GET',
         success: function(data, textStatus, jqXHR) {
 
-            if (isJson(data)) {
-                var jsonData = JSON.parse(data);
+            var jsonData;
+            if (typeof data === "string") {
+                if (!Caesar.LBase.isJson(data)) {
+                    Caesar.LBase.Error(data);
+                    return;
+                }
+                jsonData = JSON.parse(data);
             } else {
-                Caesar.LBase.Error(data);
+                jsonData = data;
             }
+            if (!Array.isArray(jsonData)) {
+                Caesar.LBase.Error("World unit rank response is invalid");
+                return;
+            }
+
+            var unitSelector = `.unit-with-rank[data-world-x="${x}"][data-world-y="${y}"]`;
+            var rankContainer = $(unitSelector);
+            if (!rankContainer.length)
+                return;
+
+            var dominanceStatus = $(`.guild-dominance-status[data-x-coord="${x}"][data-y-coord="${y}"]`);
+            var harvestButton = $(`#PLUNDE_PRIZE[data-x-coord="${x}"][data-y-coord="${y}"]`);
+            if (dominanceStatus.length) {
+                // Clear any existing countdown timer for this location
+                var timerKey = "dominance_timer_" + x + "_" + y;
+                if (window[timerKey]) {
+                    clearInterval(window[timerKey]);
+                    window[timerKey] = null;
+                }
+
+                if (jsonData[0]) {
+                    var dominance = jsonData[0];
+                    var guildName = dominance.GuildName && dominance.GuildName !== "NULL"
+                        ? dominance.GuildName
+                        : "---";
+                    var playerName = dominance.PlayerName
+                        ? dominance.PlayerName
+                        : "---";
+                    var totalSeconds = Math.max(0, Number(dominance.totalDuration) || 0);
+                    var days = Math.floor(totalSeconds / 86400);
+                    var hours = Math.floor((totalSeconds % 86400) / 3600);
+                    var minutes = Math.floor((totalSeconds % 3600) / 60);
+                    var seconds = totalSeconds % 60;
+                    var durationText = days
+                        ? `${days} يوم ${hours} س ${minutes} د ${seconds} ث`
+                        : (hours > 0
+                            ? `${hours} س ${minutes} د ${seconds} ث`
+                            : `${minutes} د ${seconds} ث`);
+
+                    var baseStatusText = `الحلف المسيطر: ${guildName} | الملك: ${playerName} | مدة السيطرة: ${durationText}`;
+                    dominanceStatus.text(baseStatusText);
+
+                    var playerGuildId = Number(dominance.playerGuildId) || 0;
+                    var dominantGuildId = Number(dominance.id_guild) || 0;
+                    if (playerGuildId > 0 && playerGuildId === dominantGuildId) {
+                        var remainingSec = Math.max(0, Number(dominance.remaining_sec) || 0);
+                        harvestButton.show();
+                        harvestButton.prop("disabled", !dominance.can_harvest);
+
+                        if (remainingSec > 0) {
+                            // Build countdown text helper
+                            var buildCountdownText = function(sec) {
+                                var rh = Math.floor(sec / 3600);
+                                var rm = Math.floor((sec % 3600) / 60);
+                                var rs = sec % 60;
+                                return rh > 0
+                                    ? `${rh} س ${rm} د ${rs} ث`
+                                    : (rm > 0 ? `${rm} د ${rs} ث` : `${rs} ث`);
+                            };
+                            var countdown = remainingSec;
+                            dominanceStatus.text(baseStatusText + " | الغنيمة بعد: " + buildCountdownText(countdown));
+
+                            window[timerKey] = setInterval(function() {
+                                countdown--;
+                                if (countdown <= 0) {
+                                    clearInterval(window[timerKey]);
+                                    window[timerKey] = null;
+                                    dominanceStatus.text(baseStatusText + " | الغنيمة متاحة الآن!");
+                                    harvestButton.prop("disabled", false);
+                                } else {
+                                    // Check if the status element still exists (dialog may have been closed)
+                                    var statusEl = $(`.guild-dominance-status[data-x-coord="${x}"][data-y-coord="${y}"]`);
+                                    if (!statusEl.length) {
+                                        clearInterval(window[timerKey]);
+                                        window[timerKey] = null;
+                                        return;
+                                    }
+                                    statusEl.text(baseStatusText + " | الغنيمة بعد: " + buildCountdownText(countdown));
+                                }
+                            }, 1000);
+                        }
+                    } else {
+                        harvestButton.hide().prop("disabled", true);
+                    }
+                } else {
+                    dominanceStatus.text("لا يوجد حلف مسيطر حاليا");
+                    harvestButton.hide().prop("disabled", true);
+                }
+            }
+
             var icon = ["1st", "2nd", "3rd", "4th", "5th"];
 
             var list = "";
@@ -33213,9 +33528,21 @@ WorldUnit.WorldUnitRank = function(x, y) {
 
                 if (jsonData[iii]) {
 
-                    name = escapeHtml(jsonData[iii].PlayerName || jsonData[iii].GuildName);
-                    guild = jsonData[iii].GuildName === "NULL" ? "---" : escapeHtml(jsonData[iii].GuildName);
-                    duration = `${Math.floor(jsonData[iii].totalDuration / 60)}د ${jsonData[iii].totalDuration % 60} ث`;
+                    name = escapeHtml(jsonData[iii].PlayerName || jsonData[iii].GuildName || "");
+                    guild = jsonData[iii].GuildName === "NULL" ? "---" : escapeHtml(jsonData[iii].GuildName || "");
+                    var rankDuration = Math.max(0, Number(jsonData[iii].totalDuration) || 0);
+                    var rd = rankDuration;
+                    var rdDays = Math.floor(rd / 86400);
+                    var rdHours = Math.floor((rd % 86400) / 3600);
+                    var rdMins = Math.floor((rd % 3600) / 60);
+                    var rdSecs = rd % 60;
+                    if (rdDays > 0) {
+                        duration = `${rdDays} يوم ${rdHours} س`;
+                    } else if (rdHours > 0) {
+                        duration = `${rdHours} س ${rdMins} د`;
+                    } else {
+                        duration = `${rdMins} د ${rdSecs} ث`;
+                    }
 
                 } else {
 
@@ -33249,7 +33576,7 @@ WorldUnit.WorldUnitRank = function(x, y) {
 
             }
 
-            var content = ` <div class="unit-with-rank">
+            var content = ` <div class="unit-with-rank" data-world-x="${x}" data-world-y="${y}">
                         
                                 <div class="rank-list">
 
@@ -33272,10 +33599,11 @@ WorldUnit.WorldUnitRank = function(x, y) {
                             </div>`;
 
 
-            $(".unit-with-rank").replaceWith(content);
+            if (!WorldUnit.isRepelCastle(unitType))
+                rankContainer.replaceWith(content);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-
+            console.error("Failed to load world unit rank", jqXHR.status, textStatus, errorThrown);
         }
 
     });
@@ -33430,27 +33758,22 @@ var campDB = {
                                 <div class="th ellipsis">
                                     استخبارات المدينة
                                 </div>
-                                ${this.armyContainer(x_coord, y_coord)}
+                                <div id="lvlChangableUnit">
+                                    ${this.armyContainer(x_coord, y_coord)}
+                                </div>
                             </div>
                             <div id="camp-panal-equip-row" class="footer camp-equip flex"></div>
                         </div>
                     </div>`;
 
-        if ($("#dialg_box").length === 0) {
-            $("body").append(box);
-            $("#dialg_box").animate({
-                top: "150px"
-            }, 200);
-            campDB.equipRow([]);
-        } else {
-            $("#dialg_box").remove(function() {
-                $("body").append(box);
-                $("#dialg_box").animate({
-                    top: "150px"
-                }, 200);
-                campDB.equipRow([]);
-            });
+        if ($("#dialg_box").length > 0) {
+            $("#dialg_box").remove();
         }
+        $("body").append(box);
+        $("#dialg_box").animate({
+            top: "150px"
+        }, 200);
+        campDB.equipRow([]);
     },
 
     armyContainer: function(x_coord, y_coord, armyData) {
@@ -33463,6 +33786,19 @@ var campDB = {
 
         var lvl = unit.l;
         var type = unit.ut;
+        var uTypeData = (Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[type]) ? Caesar.World.UnitTypeData[type] : {};
+        if (uTypeData.lvlChange && !unit._lvlRefreshed && !armyData) {
+            return `<div class="camp-data">
+                        <div style="display: flex; align-items: center; justify-content: center; min-height: 160px; flex-direction: column; color: #5e341b; font-size: 13.5px; font-weight: bold;">
+                            <img src="images/style/wait.png" style="width: 24px; height: 24px; margin-bottom: 8px;"/>
+                            <span>جارِ تحميل مستوى المعسكر وبيانات الجيوش...</span>
+                        </div>
+                    </div>`;
+        }
+        if (armyData) {
+            unit._lvlRefreshed = true;
+        }
+
         var armyAmount = function(armyType) {
             if (armyData && armyData[armyType] !== undefined) {
                 return Number(armyData[armyType]) || 0;
@@ -33477,7 +33813,7 @@ var campDB = {
             WorldUnit.isQueenCity(type)
         ) {
             WorldUnit.WorldUnitRank(x_coord, y_coord);
-            return `<div class="unit-with-rank">
+            return `<div class="unit-with-rank" data-world-x="${x_coord}" data-world-y="${y_coord}">
                         <div class="army-col">
                             <ul>
                                 <li>
@@ -33536,8 +33872,9 @@ var campDB = {
                         </div>
                     </div>`;
         } else if (WorldUnit.isRepelCastle(type)) {
+            WorldUnit.WorldUnitRank(x_coord, y_coord);
             campDB.getQueAttackList(x_coord, y_coord);
-            return `<div class="unit-with-rank">
+            return `<div class="unit-with-rank" data-world-x="${x_coord}" data-world-y="${y_coord}">
                         <div class="rank-list">
                             <div class="inner_nav">
                                 <div class="td_1 font-2" style="width: 40%">${Translate.Button.Chat.League[UserLag.language]}</div>
@@ -33578,7 +33915,7 @@ var campDB = {
                     </div>`;
         } else if (WorldUnit.isArenaGuild(type)) {
             WorldUnit.WorldUnitRank(x_coord, y_coord);
-            return `<div class="unit-with-rank">
+            return `<div class="unit-with-rank" data-world-x="${x_coord}" data-world-y="${y_coord}">
                         <div class="army-col">
                             <ul>
                                 <li>
@@ -33816,7 +34153,8 @@ var campDB = {
 
         var Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
         if (WorldUnit.isQueenCity(Unit.ut) || WorldUnit.isRepelCastle(Unit.ut))
-            return `<div class="attakBtns four-btn-camp">
+            return `<div class="guild-dominance-status" data-x-coord="${xCoord}" data-y-coord="${yCoord}" style="min-height:18px;text-align:center;font-size:12px;">جار تحميل بيانات السيطرة...</div>
+                    <div class="attakBtns four-btn-camp">
                         <div class="container">
                             <div class="attck_start pull-L" id="attack_camp">
                                 <button id="START_ATTACK" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x enter" disabled="disabled"> انشاء</button>
@@ -33828,7 +34166,7 @@ var campDB = {
                                 <button id="REQUEST_ORDER" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> طلب</button>
                             </div>
                             <div class="plunde-prize pull-R">
-                                <button id="PLUNDE_PRIZE"  data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x"> غنيمة</button>
+                                <button id="PLUNDE_PRIZE" data-x-coord="${xCoord}" data-y-coord="${yCoord}" class="full-btn full-btn-3x" style="display:none" disabled="disabled"> غنيمة</button>
                             </div>
                         </div>
                     </div>`;
@@ -33932,7 +34270,7 @@ campDB.equipRow = function(equip) {
             <li equi_type="helmet"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("helmet")})"></div>
-                        <div class="icon" style="background-image: url(images/icons/hero/helmet.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/eq-list-helmet.png)"></div>
                     </div>
                 </li>
                 <li equi_type="necklace"> 
@@ -33944,25 +34282,25 @@ campDB.equipRow = function(equip) {
                 <li equi_type="armor"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("armor")})"></div>
-                        <div class="icon" style="background-image: url(images/icons/hero/armor.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/eq-list-armor.png)"></div>
                     </div>
                 </li>
                 <li equi_type="boot"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("boot")})"></div>
-                        <div class="icon" style="background-image: url(images/icons/hero/boots.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/eq-list-boot.png)"></div>
                     </div>
                 </li>
                 <li equi_type="sword"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("sword")})"></div>
-                        <div class="icon" style="background-image: url(images/icons/hero/sword.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/eq-list-sword.png)"></div>
                     </div>
                 </li>
                 <li equi_type="shield"> 
                     <div class="image-wrapper">
                         <div class="equip" style="background-image: url(${returnEquiImage("shield")})"></div>
-                        <div class="icon" style="background-image: url(images/icons/hero/shield.png)"></div>
+                        <div class="icon" style="background-image: url(images/icons/hero/eq-list-shield.png)"></div>
                     </div>
                 </li>
                 <li equi_type="horse"> 
@@ -34048,6 +34386,9 @@ campDB.getQueAttackList = function(xCoord, yCoord) {
 
 campDB.refreshQueAttackList = function(xCoord, yCoord) {
     var Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
+    var rankContainer = $(`.unit-with-rank[data-world-x="${xCoord}"][data-world-y="${yCoord}"]`);
+    if (!rankContainer.length)
+        return;
 
     var icon = ["1st", "2nd", "3rd", "4th", "5th"];
 
@@ -34089,7 +34430,7 @@ campDB.refreshQueAttackList = function(xCoord, yCoord) {
 
     }
 
-    var content = ` <div class="unit-with-rank">
+    var content = ` <div class="unit-with-rank" data-world-x="${xCoord}" data-world-y="${yCoord}">
                         
                                 <div class="rank-list">
                                         ${
@@ -34113,7 +34454,7 @@ campDB.refreshQueAttackList = function(xCoord, yCoord) {
                             </div>`;
 
 
-    $(".unit-with-rank").replaceWith(content);
+    rankContainer.replaceWith(content);
 };
 Caesar.World.WorldMapIcon.Rad = 70;
 
@@ -35691,13 +36032,11 @@ var reviewBox = {
                             </div>
                              <div class="right_cont">
                                 <div class="dist">
-                                   <div class="coords" style="margin-right: 37px">
-                                       <a href="#">[${y_coord} , ${x_coord}]</a>
-                                   </div>
-                                   <div class="mile">
-                                        ${getDistance(x_coord, y_coord)} ميل
-                                   </div>
-                                   <div class="copy-coord-icon">
+                                    <div class="coord-info">
+                                        <div class="coords" title="الإحداثيات">[${y_coord} , ${x_coord}]</div>
+                                        <div class="mile" title="المسافة">${getDistance(x_coord, y_coord)} ميل</div>
+                                    </div>
+                                    <div class="copy-coord-icon">
                                         <button class="copy-coord" data-x-coord="${x_coord}" data-y-coord="${y_coord}" title="نسخ الإحداثيات"></button>
                                         <button class="add-fav-coord-btn" data-x-coord="${x_coord}" data-y-coord="${y_coord}" data-title="${title}" title="إضافة إلى المفضلة"></button>
                                     </div>
@@ -37214,11 +37553,9 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                         <div class="content">
                             <div class="right_cont">
                                 <div class="dist">
-                                    <div class="coords" style="margin-right: 37px">
-                                        <a href="#">[${Unit.y} , ${Unit.x}]</a>
-                                    </div>
-                                    <div class="mile">
-                                        ${getDistance(Unit.x, Unit.y)} ميل
+                                    <div class="coord-info">
+                                        <div class="coords" title="الإحداثيات">[${Unit.y} , ${Unit.x}]</div>
+                                        <div class="mile" title="المسافة">${getDistance(Unit.x, Unit.y)} ميل</div>
                                     </div>
                                     <div class="copy-coord-icon">
                                         <button class="copy-coord" data-x-coord="${Unit.x}" data-y-coord="${Unit.y}" title="نسخ الإحداثيات"></button>
@@ -37377,15 +37714,28 @@ Caesar.World.Map.OnOtherUnitClicked = function(Unit) {
                 alert_box.failMessage("تعذر تحميل بيانات جيوش الهدف");
                 return;
             }
-            if (jsonData.l !== undefined) Unit.l = Number(jsonData.l);
-            if (jsonData.ut !== undefined) Unit.ut = Number(jsonData.ut);
+            var targetLvl = Number(jsonData.l);
+            var targetUt = Number(jsonData.ut);
+            if (!isNaN(targetLvl)) {
+                Unit.l = targetLvl;
+                var u = WorldUnit.getWorldUnit(Unit.x, Unit.y);
+                if (u) u.l = targetLvl;
+            }
+            if (!isNaN(targetUt)) {
+                Unit.ut = targetUt;
+                var u = WorldUnit.getWorldUnit(Unit.x, Unit.y);
+                if (u) u.ut = targetUt;
+            }
+            Unit._lvlRefreshed = true;
+            var u = WorldUnit.getWorldUnit(Unit.x, Unit.y);
+            if (u) u._lvlRefreshed = true;
         } else {
             alert_box.failMessage("استجابة غير صالحة من الخادم عند تحميل جيوش الهدف");
             return;
         }
         campDB.equipRow(jsonData.equip || []);
 
-        $('#lvlChangableUnit')['html'](campDB['armyContainer'](Unit.x, Unit.y, jsonData.army));
+        $('#lvlChangableUnit').html(campDB.armyContainer(Unit.x, Unit.y, jsonData.army));
         if ($('#camp-prize ul').length) {
             $('#camp-prize ul').html(WorldUnit.prize.prizeAllLvlsList(Unit.x, Unit.y));
         }
@@ -41479,9 +41829,9 @@ $(document).on("click", "#updateGuildSlog", function() {
 var MSG_NUM;
 
 
-function refreshMsg() {
+function refreshMsg(callBack) {
 
-    $.ajax({
+    return $.ajax({
         url: "api/message.php",
         data: {
             MSG_NUMBERS: true,
@@ -41493,9 +41843,44 @@ function refreshMsg() {
 
         },
         success: function(data, textStatus, jqXHR) {
+            try {
+                MSG_NUM = typeof data === "string" ? JSON.parse(data) : data;
+            } catch (e) {
+                MSG_NUM = data;
+            }
 
-            MSG_NUM = JSON.parse(data);
+            // Sync unread counts with PLAYER_NOTIF if available
+            if (MSG_NUM && typeof MSG_NUM === "object") {
+                if (MSG_NUM.unread_income !== undefined) {
+                    PLAYER_NOTIF.msg_in = Number(MSG_NUM.unread_income) || 0;
+                }
+                if (MSG_NUM.unread_diff !== undefined) {
+                    PLAYER_NOTIF.msg_diff = Number(MSG_NUM.unread_diff) || 0;
+                }
+                if (MSG_NUM.unread_report !== undefined) {
+                    PLAYER_NOTIF.msg_report = Number(MSG_NUM.unread_report) || 0;
+                }
+                if (MSG_NUM.unread_spy !== undefined) {
+                    PLAYER_NOTIF.spy_report = Number(MSG_NUM.unread_spy) || 0;
+                }
+                Fixed.refreshPlayerNotif();
+            }
 
+            // Update footer page navigator if currently open
+            var nav = $("#msg-navigator");
+            if (nav.length && nav.closest(".right-content-footer").length) {
+                var table = nav.closest(".right-content-footer").attr("msg_for");
+                if (table && MSG_NUM && MSG_NUM[table] !== undefined) {
+                    var offset = Number($(".for_msg .tr:first").attr("db_offset")) || 0;
+                    var currentPage = Math.floor(offset / 10) + 1;
+                    var totalPages = Math.ceil((Number(MSG_NUM[table]) || 0) / 10) || 1;
+                    nav.html(`<span>${getArabicNumbers(currentPage)}</span>/${getArabicNumbers(totalPages)}`);
+                }
+            }
+
+            if (typeof callBack === "function") {
+                callBack(MSG_NUM);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
 
@@ -41677,7 +42062,7 @@ function getSystemHeroAvatar(hero) {
     var avatars = Caesar.BaseData && Caesar.BaseData.HeroAvatar;
     return Number.isInteger(avatar) && Array.isArray(avatars) && avatars[avatar]
         ? avatars[avatar]
-        : "images/icons/hero_army.png";
+        : "images/icons/hero/hero_army.png";
 }
 
 function findSystemHeroByName(name) {
@@ -41721,7 +42106,7 @@ function renderSystemDesertionMessage(payload) {
             : null;
         var image = armyData
             ? armyData.image
-            : (unit.heroName ? "images/icons/hero_army.png" : "images/tech/no_army.png");
+            : (unit.heroName ? "images/icons/hero/hero_army.png" : "images/tech/no_army.png");
         var name = (armyType && canonicalArmyNames[armyType])
             || (armyData && armyData.ar_title)
             || unit.name
@@ -42214,31 +42599,31 @@ var message = {
             success: function(data, textStatus, jqXHR) {
 
                 var json_data = typeof data === "string" ? JSON.parse(data) : data;
-                if (json_data.length > 0) {
-                    for (var iii = 0; iii < 10; iii++) {
+                if (!Array.isArray(json_data)) json_data = [];
 
-                        if (json_data[iii]) {
-                            output += `<div class="tr" id_msg="${json_data[iii].id_msg}" data-seen="${json_data[iii].seen}" table="msg_out" db_offset="${parseInt(offset)+iii}">
-                                        <div class="td_1">
-                                            <input name="msg_sel" id="check_${iii}" class="msg-action" type="checkbox" style="display:none">
-                                            <label for="check_${iii}" class="checker"></label>
-                                        </div>
-                                        <div class="td_2">${escapeHtml(json_data[iii].name)}</div>
-                                        <div class="td_3">${escapeHtml(json_data[iii].head)}</div>
-                                        <div class="td_5">${escapeHtml(json_data[iii].time_stamp)}</div>
-                                        <div class="td_6"><div class="full-btn full-btn-3x  show_msg_income ">${Translate.Button.MenuList.View[UserLag.language]}</div></div>
-                                    </div>`;
-                        } else {
-                            output += `<div class="tr"></div>`;
-                        }
+                for (var iii = 0; iii < 10; iii++) {
+
+                    if (json_data[iii]) {
+                        output += `<div class="tr" id_msg="${json_data[iii].id_msg}" data-seen="${json_data[iii].seen}" table="msg_out" db_offset="${parseInt(offset)+iii}">
+                                    <div class="td_1">
+                                        <input name="msg_sel" id="check_${iii}" class="msg-action" type="checkbox" style="display:none">
+                                        <label for="check_${iii}" class="checker"></label>
+                                    </div>
+                                    <div class="td_2">${escapeHtml(json_data[iii].name)}</div>
+                                    <div class="td_3">${escapeHtml(json_data[iii].head)}</div>
+                                    <div class="td_5">${escapeHtml(json_data[iii].time_stamp)}</div>
+                                    <div class="td_6"><div class="full-btn full-btn-3x  show_msg_income ">${Translate.Button.MenuList.View[UserLag.language]}</div></div>
+                                </div>`;
+                    } else {
+                        output += `<div class="tr"></div>`;
                     }
-                    output += `
-
-                               </div>
-                               ${message.footer("msg_out" , offset)}
-                           </div>`;
-                    $(".box_content").replaceWith(output);
                 }
+                output += `
+
+                           </div>
+                           ${message.footer("msg_out" , offset)}
+                       </div>`;
+                $(".box_content").replaceWith(output);
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -42401,7 +42786,7 @@ var message = {
                                     table !== undefined ? 
                                         `<li>
                                             <div id="move_msg_left" msg_type="${table}"  class="left pull-L move_msg left-btn"> </div>
-                                            <h1 class="pull-L" id="msg-navigator"> <span>${getArabicNumbers(parseInt(offset)/10+1)}</span>/${getArabicNumbers(Math.ceil(MSG_NUM[table]/10) || 0)}</h1>
+                                            <h1 class="pull-L" id="msg-navigator"> <span>${getArabicNumbers(parseInt(offset)/10+1)}</span>/${getArabicNumbers(Math.ceil((MSG_NUM && MSG_NUM[table] !== undefined ? Number(MSG_NUM[table]) : 0)/10) || 1)}</h1>
                                             <div id="move_msg_right" msg_type="${table}" class="right pull-R move_msg right-btn" ></div>
                                         </li>` : ""
                                     
@@ -42427,12 +42812,12 @@ $(document).on("click", ".show_msg_income", function() {
     if (table === "msg_diff") {
         message.diffMsgShow(id_msg, offset);
         if (Number(seen) === 0) {
-            PLAYER_NOTIF.msg_diff--;
+            PLAYER_NOTIF.msg_diff = Math.max(0, Number(PLAYER_NOTIF.msg_diff) - 1);
         }
     } else if (table === "msg_income") {
         message.incomeMsgShow(id_msg, offset);
         if (Number(seen) === 0) {
-            PLAYER_NOTIF.msg_in--;
+            PLAYER_NOTIF.msg_in = Math.max(0, Number(PLAYER_NOTIF.msg_in) - 1);
         }
     } else if (table === "msg_out") {
         message.outcomeMsgShow(id_msg, offset);
@@ -42494,10 +42879,11 @@ $(document).on("click", "#del_selected", function() {
                     message.dialogBoxcontent_msgOutcome();
                 } else if (total_msg.table === "report_player") {
                     message.dialogBoxContent_battelReport();
-                } else if (total_msg.table === "report_player") {
+                } else if (total_msg.table === "spy_report") {
                     message.dialogBoxContent_spyReport();
                 }
                 Player_profile.refreshPlayerNotif();
+                if (typeof refreshMsg === "function") refreshMsg();
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -42515,7 +42901,7 @@ $(document).on("click", "#delete-all button", function() {
         table: null,
         id_msgs: []
     };
-    total_msg.table = $(".right-content-footer").attr("msg_for")
+    total_msg.table = $(this).closest(".right-content-footer").attr("msg_for") || $(".right-content-footer").attr("msg_for");
 
     alert_box.confirmDialog("تأكيد حذف جميع الرسائل!..", function() {
         $.ajax({
@@ -42537,15 +42923,16 @@ $(document).on("click", "#delete-all button", function() {
                     message.dialogBoxcontent_msgIncome();
                 } else if (total_msg.table === "msg_diff") {
                     message.dialogBoxcontent_msgDiff();
-                } else if (total_msg.table === "msg_out") {
+                } else if (total_msg.table === "msg_out" || total_msg.table === "msg_outcome") {
                     message.dialogBoxcontent_msgOutcome();
                 } else if (total_msg.table === "report_player") {
                     message.dialogBoxContent_battelReport();
-                } else if (total_msg.table === "report_player") {
+                } else if (total_msg.table === "spy_report") {
                     message.dialogBoxContent_spyReport();
                 }
 
                 Player_profile.refreshPlayerNotif();
+                if (typeof refreshMsg === "function") refreshMsg();
 
 
             },
@@ -42690,7 +43077,8 @@ $(document).on("click", "#send_mail_to", function() {
                     $("#search_by_name").val("");
                     $("#subject_to_mail").val("");
                     $(".msg_body textarea").val("");
-
+                    alert_box.succesMessage("تم إرسال الرسالة بنجاح");
+                    if (typeof refreshMsg === "function") refreshMsg();
                 } else {
                     Caesar.LBase.Error(data);
                 }
@@ -43024,6 +43412,7 @@ $(document).on("click", "#send_mail_to_guild", function() {
                 $("#search_by_name").val("");
                 $("#subject_to_mail").val("");
                 $(".msg_body textarea").val("");
+                if (typeof refreshMsg === "function") refreshMsg();
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
@@ -45611,7 +46000,7 @@ $(document).on("click", "#chat-to", function() {
     if (chat_to === "world") {
 
         $(this).attr("data-chat-to", "guild");
-        $(this).html(`<img src="images/icons/chat/guild.png"/>
+        $(this).html(`<img src="images/icons/guild.png"/>
                         <label>${Translate.Button.Chat.League[UserLag.language]}</label>`);
     } else {
 
@@ -46333,6 +46722,9 @@ LuckWheel.show = function() {
 
     var ticketImg = (Caesar.BaseData && Caesar.BaseData.Items && Caesar.BaseData.Items["luck_play"]) ? Caesar.BaseData.Items["luck_play"].image : "images/items/luck_play.png";
 
+    // Clean up any existing overlay first to avoid duplicates
+    $("#luck-wheel-over-lay").remove();
+
     var content = '<div id="luck-wheel-over-lay">' +
         '<div id="luck-wheel" data-gate-open="false">' +
             '<div class="holes">' +
@@ -46378,8 +46770,12 @@ LuckWheel.show = function() {
     // No spoiler hover - keeps wheel contents a surprise
     $(document).off("mouseenter mouseleave", "#luck-wheel .cell");
 
-    $("#luck-wheel").animate({ top: "80px" }, 150, "linear", function() {
-        $(this).animate({ top: "100px" }, 100, "linear");
+    var winH = $(window).height();
+    var finalTop = Math.max(15, Math.floor((winH - 540) / 2));
+    var overshootTop = Math.max(10, finalTop - 15);
+
+    $("#luck-wheel").css({ top: "100%" }).animate({ top: overshootTop + "px" }, 160, "linear", function() {
+        $(this).animate({ top: finalTop + "px" }, 90, "linear");
     });
 };
 
@@ -46393,13 +46789,8 @@ LuckWheel.hide = function() {
         Caesar.GE.Game.input.enabled = true;
     }
 
-    $("#luck-wheel").animate({ top: "70px" }, 200, "linear", function() {
-        $(this).animate({ top: "60%" }, 180, "linear", function() {
-            $("#luck-wheel-btn").animate({ bottom: "213px" }, 180, "linear");
-            $(this).animate({ top: "100%" }, 100, "linear", function() {
-                $("#luck-wheel-over-lay").remove();
-            });
-        });
+    $("#luck-wheel").animate({ top: "100%" }, 200, "linear", function() {
+        $("#luck-wheel-over-lay").remove();
     });
 };
 
@@ -46440,9 +46831,7 @@ $("#luck-wheel-btn").off("click").on("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
     }
-    $(this).animate({ bottom: "180px" }, 250, "linear", function() {
-        LuckWheel.show();
-    });
+    LuckWheel.show();
 });
 
 LuckWheel.playLuck = function(amount) {
@@ -48516,20 +48905,22 @@ Palace.getBarrayEffect = function() {
     var stone_bar_effect = 0;
     var metal_bar_effect = 0;
 
+    var barrays = Caesar.CurrentCity.Barray || [];
+    for (var index in barrays) {
+        var barray = barrays[index];
+        var type = Number(barray.Type);
+        var level = Number(barray.lvl);
+        if (!Number.isFinite(type) || !Number.isFinite(level)) continue;
 
-
-    for (var index in Caesar.CurrentCity.Barray) {
-
-        var Unit = WorldUnit.getWorldUnit(Caesar.CurrentCity.Barray[index].x_coord, Caesar.CurrentCity.Barray[index].y_coord);
-
-        if (WorldUnit.isRiver(Unit.ut)) {
-            food_bar_effect += 0.03 * Unit.l;
-        } else if (WorldUnit.isWood(Unit.ut)) {
-            wood_bar_effect += 0.03 * Unit.l;
-        } else if (WorldUnit.isDesert(Unit.ut)) {
-            stone_bar_effect += 0.03 * Unit.l;
-        } else if (WorldUnit.isMountain(Unit.ut)) {
-            metal_bar_effect += 0.03 * Unit.l;
+        var effect = 0.03 * Math.max(1, level);
+        if ((type >= 1 && type <= 10) || type === 231) {
+            food_bar_effect += effect;
+        } else if ((type >= 50 && type <= 59) || type === 232) {
+            wood_bar_effect += effect;
+        } else if ((type >= 40 && type <= 49) || type === 233) {
+            stone_bar_effect += effect;
+        } else if ((type >= 30 && type <= 39) || type === 234) {
+            metal_bar_effect += effect;
         }
     }
 
@@ -48860,7 +49251,9 @@ $(document).on("click", "#change-city-taxs", function() {
 
             if (JsonObject.state === "ok") {
 
-                Caesar.City.getCity(idCity).City = JsonObject.City;
+                if (JsonObject.City && typeof JsonObject.City === "object") {
+                    Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                 city_profile.refresh_resource_view();
                 alert_box.succesMessage("تم تعديل قيمة الضرائب بنجاح");
                 $("#dialg_box .left-nav ul .selected").click();
@@ -48911,7 +49304,9 @@ $(document).on("click", "#change-city-name", function() {
 
             if (JsonObject.state === "ok") {
 
-                Caesar.City.getCity(idCity).City = JsonObject.City;
+                if (JsonObject.City && typeof JsonObject.City === "object") {
+                    Caesar.City.getCity(idCity).City = JsonObject.City;
+                }
                 alert_box.succesMessage("تم تعديل اسم الدينة بنجاح");
                 $("#city-data .name").html(new_name);
             }
@@ -49561,7 +49956,11 @@ SPY = {
 
                         if (JsonObject.state === "ok") {
 
-                            Caesar.City.getCity(idCity).City = JsonObject.City;
+                            if (JsonObject.City && typeof JsonObject.City === "object") {
+                                Caesar.City.getCity(idCity).City = JsonObject.City;
+                            } else if (Caesar.City.getCity(idCity) && Caesar.City.getCity(idCity).City) {
+                                Caesar.City.getCity(idCity).City.spies = Math.max(0, Number(Caesar.City.getCity(idCity).City.spies || 0) - Number(number_to_use));
+                            }
                             PLAYER_NOTIF.spy_task = Number(PLAYER_NOTIF.spy_task) + 1;
                             Fixed.refreshPlayerNotif();
                             city_profile.refresh_army_view();
@@ -49845,36 +50244,43 @@ Animation.cityProductionRate = function() {
     Animation.ProductionTweens = [];
 
     /* resource  in city animation*/
-    const coin_in_ratio = parseFloat(Math.round(((Caesar.CurrentCity.City.coin_in - Caesar.CurrentCity.City.coin_out) / (30 * 60)) * 100) / 100);
+    const coin_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.coin_in) || 0;
+    const coin_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.coin_out) || 0;
+    const coin_in_ratio = parseFloat(Math.round(((coin_in - coin_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
         BuildingOnFloor.palace.x + 0.6 * X_GRID,
         BuildingOnFloor.palace.y + 1.85 * Y_GRID,
         coin_in_ratio >= 0 ? "+" + coin_in_ratio : String(coin_in_ratio),
         coin_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
-    const food_in_ratio = parseFloat(Math.round(((Caesar.CurrentCity.City.food_in - Caesar.CurrentCity.City.food_out) / (30 * 60)) * 100) / 100);
+    const food_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.food_in) || 0;
+    const food_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.food_out) || 0;
+    const food_in_ratio = parseFloat(Math.round(((food_in - food_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
         BuildingOnFloor.farm.x + 0.6 * X_GRID,
         BuildingOnFloor.farm.y + 1.85 * Y_GRID,
         food_in_ratio >= 0 ? "+" + food_in_ratio : String(food_in_ratio),
         food_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
-    var wood_in_ratio = parseFloat(Math.round(((Caesar.CurrentCity.City.wood_in - Caesar.CurrentCity.City.wood_out) / (30 * 60)) * 100) / 100);
+    const wood_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.wood_in) || 0;
+    const wood_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.wood_out) || 0;
+    var wood_in_ratio = parseFloat(Math.round(((wood_in - wood_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
         BuildingOnFloor.wood.x + 0.6 * X_GRID,
         BuildingOnFloor.wood.y + 1.85 * Y_GRID,
         wood_in_ratio >= 0 ? "+" + wood_in_ratio : String(wood_in_ratio),
         wood_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
-
-    var stone_in_ratio = parseFloat(Math.round((Caesar.CurrentCity.City.stone_in / (30 * 60)) * 100) / 100);
+    const stone_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.stone_in) || 0;
+    var stone_in_ratio = parseFloat(Math.round((stone_in / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
         BuildingOnFloor.stone.x + 0.6 * X_GRID,
         BuildingOnFloor.stone.y + 1.85 * Y_GRID,
         stone_in_ratio >= 0 ? "+" + stone_in_ratio : String(stone_in_ratio),
         stone_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
-    var metal_in_ratio = parseFloat(Math.round((Caesar.CurrentCity.City.metal_in / (30 * 60)) * 100) / 100);
+    const metal_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.metal_in) || 0;
+    var metal_in_ratio = parseFloat(Math.round((metal_in / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
         BuildingOnFloor.mine.x + 1.6 * X_GRID,
         BuildingOnFloor.mine.y + 2.25 * Y_GRID,
@@ -50953,6 +51359,7 @@ var TradeCenter = {};
 TradeCenter.currentList = [];
 TradeCenter.forbiddenList = [];
 TradeCenter.playerList = [];
+TradeCenter.totalCount = 0;
 
 TradeCenter.getTradeList = function(offset) {
 
@@ -51009,7 +51416,8 @@ TradeCenter.getTradeListTotalCount = function() {
         success: function(data, textStatus, jqXHR) {
 
             if (isJson(data)) {
-                TradeCenter.totalCount = JSON.parse(data).item_count;
+                var res = JSON.parse(data);
+                TradeCenter.totalCount = Number(res && res.item_count !== undefined ? res.item_count : 0) || 0;
             } else {
                 Caesar.LBase.Error(data);
             }
@@ -51096,16 +51504,18 @@ TradeCenter.getPlayerTradeList();
 
 TradeCenter.TradeListContent = function(list, offset) {
 
-    if (!offset)
-        offset = 0;
+    var curOffset = Math.max(0, Number(offset) || 0);
+    var totalCount = Math.max(0, Number(TradeCenter.totalCount) || 0);
+    var totalPages = Math.max(1, Math.ceil(totalCount / 7) || 1);
+    var currentPage = Math.min(totalPages, Math.max(1, Math.floor(curOffset / 7) + 1));
 
     var tradeList = "";
 
     for (var iii = 0; iii < 7; iii++) {
 
-        if (list[iii]) {
+        if (list && list[iii]) {
 
-            tradeList += `<li class="tr " data-offset="${Number(offset) + iii}" data-id-hero="25">
+            tradeList += `<li class="tr " data-offset="${Number(curOffset) + iii}" data-id-hero="25">
                             <div class="td_1" style="width: 24%; margin-left: 2%;">
                                 <div class="image">
                                     <div class="wrapper">
@@ -51173,7 +51583,7 @@ TradeCenter.TradeListContent = function(list, offset) {
                         <div class="middle">
                             <div id="navigate-trade-list" class="wrapper">
                                 <button class="GO_L_1" data-direction="dec"></button>
-                                <label>${Math.floor( offset/ 7) + 1}/${Math.floor(TradeCenter.totalCount/7) + 1}</label>
+                                <label>${currentPage}/${totalPages}</label>
                                 <button class="GO_R_1" data-direction="inc"></button>
                             </div>
                         </div>
@@ -51460,42 +51870,34 @@ $(document).on("click", ".sell-matrial", function(e) {
 
 $(document).on("click", "#navigate-trade-list button", function() {
 
-
     var direction = $(this).data("direction");
+    var totalCount = Math.max(0, Number(TradeCenter.totalCount) || 0);
+    var rawOffset = $("#trade-list .tr[data-offset]:first-child").data("offset");
+    var firstOffset = (rawOffset !== undefined && !isNaN(Number(rawOffset))) ? Number(rawOffset) : 0;
 
     if (direction === "inc") {
 
-        var firstOffset = $("#trade-list .tr:first-child").data("offset");
-
-
-        if (firstOffset >= TradeCenter.totalCount - 7) {
+        if (totalCount <= 7 || firstOffset >= totalCount - 7) {
             return;
         }
 
-
-        TradeCenter.getTradeList(Number(firstOffset) + 7).done(function() {
-
-            $("#city-trade-center").replaceWith(TradeCenter.TradeListContent(TradeCenter.currentList, Number(firstOffset) + 7));
-
+        var nextOffset = firstOffset + 7;
+        TradeCenter.getTradeList(nextOffset).done(function() {
+            $("#city-trade-center").replaceWith(TradeCenter.TradeListContent(TradeCenter.currentList, nextOffset));
         });
 
-
     } else if (direction === "dec") {
-        var firstOffset = $("#trade-list .tr:first-child");
 
         if (firstOffset <= 0) {
             return;
         }
 
-
-        TradeCenter.getTradeList(Number(firstOffset) - 7).done(function() {
-
-            $("#city-trade-center").replaceWith(TradeCenter.TradeListContent(TradeCenter.currentList, Number(firstOffset) - 7));
-
+        var prevOffset = Math.max(0, firstOffset - 7);
+        TradeCenter.getTradeList(prevOffset).done(function() {
+            $("#city-trade-center").replaceWith(TradeCenter.TradeListContent(TradeCenter.currentList, prevOffset));
         });
 
     }
-
 
 });
 
@@ -52035,11 +52437,11 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
 
     var xCoord = Number($(this).attr("data-x-coord"));
     var yCoord = Number($(this).attr("data-y-coord"));
-
+    var button = $(this);
+    button.prop("disabled", true);
 
     $.ajax({
-
-        url: `https://${WS_HOST}:${WS_PORT}/api/AWorldUnit/plundePrize`,
+        url: `${API_URL}/api/Guild/harvestDominance`,
         data: {
             xCoord: xCoord,
             yCoord: yCoord,
@@ -52049,27 +52451,47 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
         type: 'POST',
         success: function(data, textStatus, jqXHR) {
 
-            if (!Caesar.LBase.isJson(data))
-                return Caesar.LBase.Error(data);
-            var JsonObject = JSON.parse(data);
+            var JsonObject;
+            if (typeof data === "string") {
+                if (!Caesar.LBase.isJson(data)) {
+                    Caesar.LBase.Error(data);
+                    button.prop("disabled", false);
+                    return;
+                }
+                JsonObject = JSON.parse(data);
+            } else {
+                JsonObject = data;
+            }
 
             if (JsonObject.state === "ok") {
-                alert_box.succesMessage(Matrial.prizeToString(JsonObject.PrizeList));
-            } else if (JsonObject.state === "error_1_0") {
+                alert_box.succesMessage("تم جمع غنيمة المملكة");
+                city_profile.refresh_city_resources();
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
+            } else if (JsonObject.state === "not_your_guild") {
                 alert_box.confirmMessage("لست عضو فى الحلف المسيطر");
-            } else if (JsonObject.state === "error_1_1") {
-                alert_box.confirmMessage("لست عضوا فى اى حلف");
-            } else if (JsonObject.state === "error_1_2") {
-                alert_box.confirmMessage("لست عضو فى الحلف المسيطر");
-            } else if (JsonObject.state === "error_1_3") {
-                alert_box.confirmMessage("لقد حصلت على غنيمة بالفعل");
-            } else if (JsonObject.state === "error_1_4") {
-                alert_box.confirmMessage("عليك انتظار 72 ساعة داخل الحلف");
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
+            } else if (JsonObject.state === "harvest_cooldown") {
+                alert_box.confirmMessage("لم يحن موعد الغنيمة بعد");
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
+            } else if (JsonObject.state === "not_dominated") {
+                alert_box.confirmMessage("لا يوجد حلف مسيطر على هذه المملكة");
+                button.hide();
+            } else if (JsonObject.state === "no_city") {
+                alert_box.confirmMessage("لا توجد لديك مدينة لاستلام الغنيمة");
+                button.prop("disabled", false);
+            } else if (JsonObject.state === "not_logged_in") {
+                alert_box.failMessage("انتهت جلسة الدخول، أعد تسجيل الدخول");
+                button.prop("disabled", false);
+            } else {
+                alert_box.failMessage("تعذر جمع غنيمة المملكة");
+                button.prop("disabled", false);
             }
 
         },
         error: function(data, textStatus, jqXHR) {
             console.error(textStatus);
+            alert_box.failMessage("تعذر الاتصال بالخادم لجمع الغنيمة");
+            button.prop("disabled", false);
         }
 
     });
@@ -54979,16 +55401,16 @@ Caesar.ArenaChallange.HeroList = function(idCity) {
     var Count = 0;
 
     for (var Index in Caesar['DPlayer']['Heros']) {
-        var HStateImg = 'images/icons/h_s_incity.png';
+        var HStateImg = 'images/icons/hero/h_s_incity.png';
         if (Caesar['DPlayer']['Heros'][Index]['Hero']['id_city'] != idCity)
             continue;
         if (Number(Caesar['DPlayer']['Heros'][Index]['Hero']['in_city']) == Caesar['Hero']['HeroState']['HERO_IN_BATTEL'])
-            HStateImg = 'images/icons/h_s_attack_2.png';
+            HStateImg = 'images/icons/hero/h_s_attack_2.png';
         else if (Caesar['DPlayer']['Heros'][Index]['Hero']['in_city'] == Caesar['Hero']['HeroState']['HERO_IN_GARISON']) {
-            HStateImg = 'images/icons/h_s_support.png';
+            HStateImg = 'images/icons/hero/h_s_support.png';
         }
         if (Caesar['Hero']['isConsole'](Caesar['DPlayer']['Heros'][Index]['Hero']['id_hero']))
-            HStateImg = 'images/icons/h_s_console.png';
+            HStateImg = 'images/icons/hero/h_s_console.png';
 
         HeroListHt += `
                     <li class="tr" data-id-hero="${ Caesar['DPlayer']['Heros'][Index]['Hero']['id_hero'] }">

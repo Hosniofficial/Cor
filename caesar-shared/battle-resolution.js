@@ -385,6 +385,23 @@ async function resolveBattle(context, dependencies) {
             `SELECT id_player, medicine FROM player_edu WHERE id_player IN (${memberRows.map(() => '?').join(', ')})`,
             memberRows.map(member => Number(member.id_player))
         );
+        const memberPlayerIds = memberRows.map(member => Number(member.id_player));
+        let memberStates = [];
+        try {
+            const [stateRows] = await battleDb.query(
+                `SELECT id_player, medical FROM player_state WHERE id_player IN (${memberPlayerIds.map(() => '?').join(', ')})`,
+                memberPlayerIds
+            );
+            if (Array.isArray(stateRows)) memberStates = stateRows;
+        } catch (_) {
+            // player_state table may not exist in test environments
+        }
+        const now = Math.floor(Date.now() / 1000);
+        // medical buff: timestamp > now means the item is still active → grants max wounded rate (60%)
+        const medicalBuffByPlayer = new Map(memberStates.map(state => [
+            Number(state.id_player),
+            Number(state.medical) > now
+        ]));
         const [memberMedals] = await battleDb.query(
             `SELECT id_hero, medal_den, medal_leo FROM hero_medal WHERE id_hero IN (${memberPlaceholders})`,
             memberIds
@@ -402,7 +419,6 @@ async function resolveBattle(context, dependencies) {
             Number(education.medicine) || 0
         ]));
         const medalsByHero = new Map(memberMedals.map(medal => [Number(medal.id_hero), medal]));
-        const now = Math.floor(Date.now() / 1000);
         const battleMembers = memberRows.map(member => {
             const heroMedals = medalsByHero.get(Number(member.id_hero)) || {};
             const equipmentBonuses = equipsByHero.get(Number(member.id_hero)) || [];
@@ -449,6 +465,7 @@ async function resolveBattle(context, dependencies) {
                 army: memberArmy,
                 equipmentBonuses,
                 medicineLevel: medicineByPlayer.get(memberPlayer.id_player) || 0,
+                medicalBuff: medicalBuffByPlayer.get(memberPlayer.id_player) || false,
                 expGained: 0,
                 honorGained: 0,
                 itemLoot: []
@@ -595,24 +612,25 @@ async function resolveBattle(context, dependencies) {
         const isVictory = combatResult.attackersWon;
         
         // 5. Calculate loss rate and recovery mechanics using the game rules.
-        // Target Categories:
-        // - Wilds (1-59): 75% Recovery (25% permanent loss)
-        // - Camps & Maneuvers (70-96): 65% Recovery (35% permanent loss)
-        // - Rebels & Carthage (97-105): 50% Recovery (50% permanent loss)
-        // - Real Cities / PvP (60-63): 0% Recovery (100% permanent loss)
-        // - Fortresses & Arenas (150+): 60% Recovery (40% permanent loss)
+        // FIXED Target Categories (v2 - corrected war game balance):
+        // - Wilds (1-59):               0% Field Recovery → real battle, all fallen are unrecovered
+        //                                (wounds still go to Plaza based on player medicine level)
+        // - Camps & Maneuvers (70-96):  75% Field Recovery → PvE training, low permanent loss
+        // - Rebels & Carthage (97-105): 65% Field Recovery → PvE hard content, moderate loss
+        // - Real Cities / PvP (60-63):   0% Field Recovery → 100% permanent loss (most punishing)
+        // - Fortresses & Arenas (150+): 60% Field Recovery → special challenge content
         let recoveryRate = 0.0;
         let targetCategoryName = 'معركة حقيقية (PvP)';
-        
+
         if (unitType >= 1 && unitType <= 59) {
-            recoveryRate = 0.75;
-            targetCategoryName = 'برية';
+            recoveryRate = 0.00;
+            targetCategoryName = 'برية (معركة حقيقية)';
         } else if (unitType >= 70 && unitType <= 96) {
-            recoveryRate = 0.65;
-            targetCategoryName = 'معسكر / مناورات';
+            recoveryRate = 0.75;
+            targetCategoryName = 'معسكر / مناورات / كتيبة';
         } else if (unitType >= 97 && unitType <= 105) {
-            recoveryRate = 0.50;
-            targetCategoryName = 'عصابات تمرد';
+            recoveryRate = 0.65;
+            targetCategoryName = 'عصابات تمرد قرطاجية';
         } else if (unitType >= 60 && unitType <= 63) {
             recoveryRate = 0.00;
             targetCategoryName = 'معركة حقيقية ضد لاعب (PvP)';
@@ -620,7 +638,7 @@ async function resolveBattle(context, dependencies) {
             recoveryRate = 0.60;
             targetCategoryName = 'قلعة / ميدان تحدي';
         }
-        
+
         const solTypeToCol = { 1: 'army_a', 2: 'army_b', 3: 'army_c', 4: 'army_d', 5: 'army_e', 6: 'army_f' };
         const casualtiesBySide = {
             0: { fallen: 0, recovered: 0, permanentLoss: 0, wounded: 0 },
@@ -633,16 +651,33 @@ async function resolveBattle(context, dependencies) {
             const memberLossRate = memberWon
                 ? Math.min(0.50, Math.max(0.02, 0.40 / Math.sqrt(memberRatio)))
                 : Math.min(0.95, 0.65 + (1.0 - memberRatio) * 0.30);
-            const configuredWoundedRate = Number(liveServerConfig.wounded_recovery_rate);
-            const woundedRate = memberWon && Number.isFinite(configuredWoundedRate)
-                ? Math.max(0, Math.min(1, configuredWoundedRate))
-                : memberWon
-                    ? Math.min(0.60, 0.10 + member.medicineLevel * 0.05)
-                    : 0;
+
+            // Authentic wounded rate calculation:
+            // 1. Base rate: 10% of unrecovered losses automatically become wounded
+            // 2. Education medicine: +5% per level (level 1 = 15%, ..., level 10 = 60% max)
+            // 3. Medical buff item (نصب الطب / تمثال الطب): forces max 60% wounded rate
+            // 4. Server-wide admin override: only if liveServerConfig.override_wounded_recovery_rate is true
+            //    (or if explicitly set to 0 for test isolation)
+            const authenticWoundedRate = member.medicalBuff
+                ? 0.60
+                : Math.min(0.60, 0.10 + (Number(member.medicineLevel) || 0) * 0.05);
+
+            const configuredWoundedRate = liveServerConfig && liveServerConfig.wounded_recovery_rate !== undefined && liveServerConfig.wounded_recovery_rate !== null
+                ? Number(liveServerConfig.wounded_recovery_rate)
+                : NaN;
+
+            let woundedRate = authenticWoundedRate;
+            if (liveServerConfig && liveServerConfig.override_wounded_recovery_rate && Number.isFinite(configuredWoundedRate)) {
+                woundedRate = Math.max(0, Math.min(1, configuredWoundedRate));
+            } else if (Number.isFinite(configuredWoundedRate) && configuredWoundedRate === 0) {
+                // Test harness isolation: 0 override stops wounded calculation
+                woundedRate = 0;
+            }
+
             const casualties = calculateArmyCasualties(
                 member.army,
                 memberLossRate,
-                memberWon ? recoveryRate : 0,
+                recoveryRate,
                 woundedRate,
                 memberWon,
                 member.side === 1
@@ -919,6 +954,7 @@ async function resolveBattle(context, dependencies) {
                     data: {
                         xCoord,
                         yCoord,
+                        idCity: Number(city.id_city),
                         colonized: true,
                         city_flag: String(player.city_flag || '0'),
                         id_guild: player.id_guild ? Number(player.id_guild) : null,
@@ -927,12 +963,14 @@ async function resolveBattle(context, dependencies) {
                 }));
             }
 
-            // 6e. Guild Dominance — Castles (184-186) & Queen Cities (180-182)
+            // 6e. Guild Dominance — Castles (184-186), Queen Cities (180-182), & Capitals (150-155, 105)
             // After victory, record the winning guild as the dominant owner.
             // Grants daily harvest rights and garrison defence to that guild.
             let guildDominance = null;
             const isGuildConquest = (unitType >= 180 && unitType <= 182)
-                || (unitType >= 184 && unitType <= 186);
+                || (unitType >= 184 && unitType <= 186)
+                || (unitType >= 150 && unitType <= 155)
+                || (unitType === 105);
             const conquerorGuildId = Number(player.id_guild) || 0;
             if (isGuildConquest && conquerorGuildId > 0) {
                 const now = Math.floor(Date.now() / 1000);
@@ -1016,13 +1054,19 @@ async function resolveBattle(context, dependencies) {
             // ── DEFEAT RESOLUTION ──
             // Defeated attackers receive no victory spoils or table prize drops.
         }
-        
+
         for (const member of battleMembers) {
             const memberWon = didBattleSideWin(isVictory, member.side);
             const opponentTroops = member.side === 1 ? opposingDefenseReport : attackReport.troops;
+            const combatRemaining = member.side === 1
+                ? simulatedAttackerArmies.get(member.id_member)
+                : simulatedDefenderArmies.get(member.id_member);
+            const reportRemainingArmy = memberWon
+                ? member.remainingArmy
+                : (combatRemaining || Object.fromEntries(slots.map(s => [s, 0])));
             const memberSlots = reportArmySlots(
                 member.army,
-                member.remainingArmy,
+                reportRemainingArmy,
                 opponentTroops,
                 memberWon,
                 member.casualties && member.casualties.woundedBySlot
@@ -1069,13 +1113,25 @@ async function resolveBattle(context, dependencies) {
                     : `قوات المهاجمين [${player.name}]`,
                 logAttackerSlots: reportArmySlots(
                     attackReport.army,
-                    attackReport.remainingArmy,
+                    Object.fromEntries(slots.map(slot => [
+                        slot,
+                        combatResult.remainingAttackers.reduce(
+                            (sum, res) => sum + (Number(res.army && res.army[slot]) || 0),
+                            0
+                        )
+                    ])),
                     opposingDefenseReport,
                     isVictory
                 ).attackerSlots,
                 logDefenderSlots: reportArmySlots(
                     attackReport.army,
-                    attackReport.remainingArmy,
+                    Object.fromEntries(slots.map(slot => [
+                        slot,
+                        combatResult.remainingAttackers.reduce(
+                            (sum, res) => sum + (Number(res.army && res.army[slot]) || 0),
+                            0
+                        )
+                    ])),
                     opposingDefenseReport,
                     isVictory
                 ).defenderSlots

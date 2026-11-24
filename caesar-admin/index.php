@@ -2,7 +2,9 @@
 // caesar-admin/index.php
 // Professional Human-Crafted Admin Console for CAESER OF ARABS
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/../caesar-api/services/ResourceService.php';
 requireLogin();
+$maxCityBalance = ResourceService::MAX_CITY_BALANCE;
 $adminCsrfToken = htmlspecialchars($_SESSION['admin_csrf_token'], ENT_QUOTES, 'UTF-8');
 
 $currentUser = getAdminUser();
@@ -1040,23 +1042,23 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
                         <div class="three-col">
                             <div>
                                 <label class="form-label" for="grant-all-food">الغذاء</label>
-                                <input type="number" id="grant-all-food" class="form-input" min="0" max="2147483647" value="0">
+                                <input type="number" id="grant-all-food" class="form-input" min="0" max="<?= $maxCityBalance ?>" value="0">
                             </div>
                             <div>
                                 <label class="form-label" for="grant-all-wood">الأخشاب</label>
-                                <input type="number" id="grant-all-wood" class="form-input" min="0" max="2147483647" value="0">
+                                <input type="number" id="grant-all-wood" class="form-input" min="0" max="<?= $maxCityBalance ?>" value="0">
                             </div>
                             <div>
                                 <label class="form-label" for="grant-all-stone">الصخور</label>
-                                <input type="number" id="grant-all-stone" class="form-input" min="0" max="2147483647" value="0">
+                                <input type="number" id="grant-all-stone" class="form-input" min="0" max="<?= $maxCityBalance ?>" value="0">
                             </div>
                             <div>
                                 <label class="form-label" for="grant-all-metal">الحديد</label>
-                                <input type="number" id="grant-all-metal" class="form-input" min="0" max="2147483647" value="0">
+                                <input type="number" id="grant-all-metal" class="form-input" min="0" max="<?= $maxCityBalance ?>" value="0">
                             </div>
                             <div>
                                 <label class="form-label" for="grant-all-coin">العملات</label>
-                                <input type="number" id="grant-all-coin" class="form-input" min="0" max="2147483647" value="0">
+                                <input type="number" id="grant-all-coin" class="form-input" min="0" max="<?= $maxCityBalance ?>" value="0">
                             </div>
                         </div>
                     </div>
@@ -1658,23 +1660,23 @@ $userRoleInfo = $roleBadges[$currentUser['role']] ?? ['label' => $currentUser['r
                     <div class="three-col" style="margin-bottom: 16px;">
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">🌾 الغذاء</label>
-                            <input type="number" id="c-food" class="form-input">
+                            <input type="number" id="c-food" class="form-input" min="0" max="<?= $maxCityBalance ?>">
                         </div>
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">🪵 الأخشاب</label>
-                            <input type="number" id="c-wood" class="form-input">
+                            <input type="number" id="c-wood" class="form-input" min="0" max="<?= $maxCityBalance ?>">
                         </div>
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">🪨 الصخور</label>
-                            <input type="number" id="c-stone" class="form-input">
+                            <input type="number" id="c-stone" class="form-input" min="0" max="<?= $maxCityBalance ?>">
                         </div>
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">⛏️ الحديد</label>
-                            <input type="number" id="c-metal" class="form-input">
+                            <input type="number" id="c-metal" class="form-input" min="0" max="<?= $maxCityBalance ?>">
                         </div>
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">🪙 العملات</label>
-                            <input type="number" id="c-coin" class="form-input">
+                            <input type="number" id="c-coin" class="form-input" min="0" max="<?= $maxCityBalance ?>">
                         </div>
                         <div class="form-group" style="margin-bottom: 8px;">
                             <label class="form-label">❤️ الولاء (1-100)</label>
@@ -2313,7 +2315,7 @@ function renderPlayerHubEquips() {
     grid.innerHTML = equips.map(eq => `
         <div class="item-card">
             <i class="fa-solid fa-trash del-btn" onclick="playerModalDeleteEquip(${eq.id_equip})" title="حذف"></i>
-            <img src="../${eq.image}" onerror="this.src='images/equip/equip0.jpg'">
+            <img src="../caesar-assets/web/${eq.image}" onerror="this.onerror=null;this.src='../caesar-assets/web/images/equip/equip0.jpg'">
             <div class="name">${eq.name}</div>
             <div class="count">+${eq.lvl}</div>
         </div>
@@ -2364,7 +2366,7 @@ function renderPlayerHubItems() {
     grid.innerHTML = items.map(it => `
         <div class="item-card">
             <i class="fa-solid fa-trash del-btn" onclick="playerModalDeleteItem('${it.id_item}')" title="حذف"></i>
-            <img src="../${it.image}" onerror="this.src='images/items/item000.jpg'">
+            <img src="../caesar-assets/web/${it.image}" onerror="this.onerror=null;this.src='../caesar-assets/web/images/items/item000.jpg'">
             <div class="name">${it.name}</div>
             <div class="count">العدد: ${Number(it.amount).toLocaleString()}</div>
         </div>

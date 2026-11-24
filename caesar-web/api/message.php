@@ -3,24 +3,45 @@
 header('Content-Type: text/plain; charset=utf-8');
 require_once __DIR__ . '/../../caesar-api/db.php';
 require_once __DIR__ . '/../../caesar-api/PlayerAuth.php';
+require_once __DIR__ . '/ws_helper.php';
 
 $db = getDB();
 $player = requireAuthenticatedPlayer($db);
 $idPlayer = (int)$player['id_player'];
 
-// 1. Unread Counts
+// 1. Message Counts (Total counts for pagination, Unread counts for badges)
 if (isset($_GET['MSG_NUMBERS']) || isset($_POST['MSG_NUMBERS'])) {
-    $inCount   = (int)$db->query("SELECT COUNT(*) FROM `msg_income` WHERE `id_player` = $idPlayer AND `seen` = 0")->fetchColumn();
-    $diffCount = (int)$db->query("SELECT COUNT(*) FROM `msg_diff` WHERE `id_player` = $idPlayer AND `seen` = 0")->fetchColumn();
-    $repCount  = (int)$db->query("SELECT COUNT(*) FROM `report_player` WHERE `id_player` = $idPlayer AND `seen` = 0")->fetchColumn();
-    $spyCount  = (int)$db->query("SELECT COUNT(*) FROM `spy_report` WHERE `id_player` = $idPlayer AND `seen` = 0")->fetchColumn();
-    
+    $stmtTotals = $db->prepare(
+        'SELECT
+            (SELECT COUNT(*) FROM `msg_income` WHERE `id_player` = ?) AS `msg_income`,
+            (SELECT COUNT(*) FROM `msg_out` WHERE `id_player` = ?) AS `msg_out`,
+            (SELECT COUNT(*) FROM `msg_diff` WHERE `id_player` = ?) AS `msg_diff`,
+            (SELECT COUNT(*) FROM `report_player` WHERE `id_player` = ?) AS `report_player`,
+            (SELECT COUNT(*) FROM `spy_report` WHERE `id_player` = ?) AS `spy_report`'
+    );
+    $stmtTotals->execute([$idPlayer, $idPlayer, $idPlayer, $idPlayer, $idPlayer]);
+    $totals = $stmtTotals->fetch(PDO::FETCH_ASSOC) ?: [];
+
+    $stmtUnread = $db->prepare(
+        'SELECT
+            (SELECT COUNT(*) FROM `msg_income` WHERE `id_player` = ? AND `seen` = 0) AS `unread_income`,
+            (SELECT COUNT(*) FROM `msg_diff` WHERE `id_player` = ? AND `seen` = 0) AS `unread_diff`,
+            (SELECT COUNT(*) FROM `report_player` WHERE `id_player` = ? AND `seen` = 0) AS `unread_report`,
+            (SELECT COUNT(*) FROM `spy_report` WHERE `id_player` = ? AND `seen` = 0) AS `unread_spy`'
+    );
+    $stmtUnread->execute([$idPlayer, $idPlayer, $idPlayer, $idPlayer]);
+    $unreads = $stmtUnread->fetch(PDO::FETCH_ASSOC) ?: [];
+
     echo json_encode([
-        'msg_out'       => 0,
-        'msg_income'    => $inCount,
-        'msg_diff'      => $diffCount,
-        'report_player' => $repCount,
-        'spy_report'    => $spyCount
+        'msg_out'        => (int)($totals['msg_out'] ?? 0),
+        'msg_income'     => (int)($totals['msg_income'] ?? 0),
+        'msg_diff'       => (int)($totals['msg_diff'] ?? 0),
+        'report_player'  => (int)($totals['report_player'] ?? 0),
+        'spy_report'     => (int)($totals['spy_report'] ?? 0),
+        'unread_income'  => (int)($unreads['unread_income'] ?? 0),
+        'unread_diff'    => (int)($unreads['unread_diff'] ?? 0),
+        'unread_report'  => (int)($unreads['unread_report'] ?? 0),
+        'unread_spy'     => (int)($unreads['unread_spy'] ?? 0),
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -133,7 +154,9 @@ if (isset($_POST['send_mail_to']) || isset($_GET['send_mail_to'])) {
     // Add to sender outbox
     $stmtOut = $db->prepare("INSERT INTO `msg_out` (`id_player`, `to_player`, `to_name`, `subject`, `body`, `time_stamp`) VALUES (?, ?, ?, ?, ?, NOW())");
     $stmtOut->execute([$idPlayer, $idTo, $receiverName, $subject, $body]);
-    
+
+    notifyWsMail($idTo, 'Mail.sentTo');
+
     echo "done";
     exit;
 }
@@ -166,6 +189,9 @@ if (isset($_POST['SEND_GUILD_MAIL']) || isset($_GET['SEND_GUILD_MAIL'])) {
         
         $db->prepare("INSERT INTO `msg_out` (`id_player`, `to_player`, `to_name`, `subject`, `body`, `time_stamp`) VALUES (?, 0, 'أعضاء التحالف', ?, ?, NOW())")
            ->execute([$idPlayer, "[التحالف] " . $subject, $body]);
+
+        $recipients = array_values(array_filter($members, fn($m) => (int)$m !== $idPlayer));
+        notifyWsMail($recipients, 'Mail.sentTo');
     }
     
     echo "done";
@@ -191,7 +217,7 @@ if (isset($_POST['delete_msg']) || isset($_GET['delete_msg'])) {
                 $deletedCount = (int)$db->exec("DELETE FROM `msg_income` WHERE `id_player` = $idPlayer AND `id_msg` IN ($inClause)");
             } elseif ($table === 'msg_diff') {
                 $deletedCount = (int)$db->exec("DELETE FROM `msg_diff` WHERE `id_player` = $idPlayer AND `id_msg` IN ($inClause)");
-            } elseif ($table === 'msg_out') {
+            } elseif ($table === 'msg_out' || $table === 'msg_outcome') {
                 $deletedCount = (int)$db->exec("DELETE FROM `msg_out` WHERE `id_player` = $idPlayer AND `id_msg` IN ($inClause)");
             }
         }
@@ -207,7 +233,7 @@ if (isset($_POST['delete_msg']) || isset($_GET['delete_msg'])) {
                 $deletedCount += (int)$db->exec("DELETE FROM `msg_income` WHERE `id_msg` = $idMsg AND `id_player` = $idPlayer");
             } elseif ($table === 'msg_diff') {
                 $deletedCount += (int)$db->exec("DELETE FROM `msg_diff` WHERE `id_msg` = $idMsg AND `id_player` = $idPlayer");
-            } elseif ($table === 'msg_out') {
+            } elseif ($table === 'msg_out' || $table === 'msg_outcome') {
                 $deletedCount += (int)$db->exec("DELETE FROM `msg_out` WHERE `id_msg` = $idMsg AND `id_player` = $idPlayer");
             }
         }
@@ -231,7 +257,7 @@ if (isset($_POST['DELETE_ALL_UNREAD']) || isset($_GET['DELETE_ALL_UNREAD'])) {
         $db->prepare("DELETE FROM `msg_income` WHERE `id_player` = ?")->execute([$idPlayer]);
     } elseif ($table === 'msg_diff') {
         $db->prepare("DELETE FROM `msg_diff` WHERE `id_player` = ?")->execute([$idPlayer]);
-    } elseif ($table === 'msg_out') {
+    } elseif ($table === 'msg_out' || $table === 'msg_outcome') {
         $db->prepare("DELETE FROM `msg_out` WHERE `id_player` = ?")->execute([$idPlayer]);
     }
     echo "1";
