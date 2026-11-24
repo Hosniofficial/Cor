@@ -106,9 +106,15 @@ if (isset($_GET['spy_report_detail']) || isset($_POST['spy_report_detail'])) {
         exit;
     }
 
+    $decoded = json_decode((string)$content, true);
+    if (is_array($decoded)) {
+        echo json_encode($decoded, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     echo json_encode([
         'side'    => 'attacker',
-        'content' => $content
+        'content' => (string)$content
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }

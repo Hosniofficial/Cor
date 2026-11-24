@@ -154,6 +154,139 @@ class TaskService {
                     }
                 }
                 ProductionService::recalculateCityProduction($db, $cityId);
+            } elseif ($type === 'spy') {
+                $db->prepare(
+                    'UPDATE city SET spies = spies + ? WHERE id_city = ?'
+                )->execute([$lvlTo, $cityId]);
+
+                $xTarget = (int)($details['x_to'] ?? 0);
+                $yTarget = (int)($details['y_to'] ?? 0);
+                $spyFor = (string)($details['spy_for'] ?? 'barrary');
+                $targetType = (int)($details['target_type'] ?? 0);
+                $targetLevel = (int)($details['target_level'] ?? 0);
+                $targetPlayerId = (int)($details['target_player_id'] ?? 0);
+
+                if ($spyFor === 'city') {
+                    $targetCityId = (int)($details['target_city_id'] ?? 0);
+                    $targetStmt = $db->prepare(
+                        'SELECT id_city, id_player, name, x, y, food, wood, stone, metal, coin FROM city WHERE id_city = ? LIMIT 1'
+                    );
+                    $targetStmt->execute([$targetCityId]);
+                    $targetCity = $targetStmt->fetch() ?: [];
+
+                    $report = [
+                        'side' => 'attacker',
+                        'food_res' => (int)($targetCity['food'] ?? 0),
+                        'wood_res' => (int)($targetCity['wood'] ?? 0),
+                        'stone_res' => (int)($targetCity['stone'] ?? 0),
+                        'metal_res' => (int)($targetCity['metal'] ?? 0),
+                        'coin_res' => (int)($targetCity['coin'] ?? 0),
+                    ];
+                    foreach ([
+                        'palace',
+                        'hill_1', 'hill_2', 'hill_3', 'hill_4', 'hill_5', 'hill_6',
+                        'hill_7', 'hill_8', 'hill_9', 'hill_10', 'hill_11', 'hill_12',
+                        'under_wall_1', 'under_wall_2', 'under_wall_3', 'under_wall_4',
+                        'under_wall_5', 'under_wall_6', 'under_wall_7', 'under_wall_8',
+                        'under_wall_9', 'under_wall_10', 'under_wall_11', 'under_wall_12',
+                        'under_palace_1', 'under_palace_2', 'under_palace_3',
+                        'under_palace_4', 'under_palace_5', 'under_palace_6',
+                        'under_palace_7', 'under_palace_8', 'under_palace_9',
+                        'under_palace_10', 'under_palace_11', 'under_palace_12',
+                        'light_house_1', 'light_house_2', 'light_house_3',
+                        'light_house_4',
+                    ] as $buildingKey) {
+                        $report[$buildingKey] = '0-0';
+                    }
+                    if ($targetCityId > 0) {
+                        $buildingStmt = $db->prepare(
+                            'SELECT place, type, lvl FROM city_building WHERE id_city = ?'
+                        );
+                        $buildingStmt->execute([$targetCityId]);
+                        foreach ($buildingStmt->fetchAll() ?: [] as $building) {
+                            $place = (string)($building['place'] ?? '');
+                            if ($place !== '') {
+                                $report[$place] = (int)$building['type'] . '-' . (int)$building['lvl'];
+                            }
+                            if ((int)$building['type'] === 12) {
+                                $report['palace'] = '12-' . (int)$building['lvl'];
+                            }
+                        }
+                    }
+                } else {
+                    $armyType = $targetType;
+                    $armyLevel = $targetLevel;
+                    $barStmt = $db->prepare(
+                        'SELECT Type, lvl FROM city_barray WHERE x_coord = ? AND y_coord = ? LIMIT 1'
+                    );
+                    $barStmt->execute([$xTarget, $yTarget]);
+                    $barRow = $barStmt->fetch();
+                    if ($barRow) {
+                        $armyType = (int)$barRow['Type'];
+                        $armyLevel = (int)$barRow['lvl'];
+                    } else {
+                        $mapCandidates = [
+                            dirname(__DIR__, 2) . '/caesar-assets/api/js-0.0.24/json/WorldBarrary.json',
+                            dirname(__DIR__, 2) . '/caesar-assets/web/js-3.4.113/json/WorldBarrary.json',
+                            dirname(__DIR__, 2) . '/caesar-assets/api/js-3.4.113/json/WorldBarrary.json',
+                        ];
+                        foreach ($mapCandidates as $mapPath) {
+                            if (!is_readable($mapPath)) continue;
+                            $map = json_decode(file_get_contents($mapPath), true);
+                            if (!is_string($map)) continue;
+                            foreach (explode(',', $map) as $entry) {
+                                $parts = explode('_', $entry);
+                                if (count($parts) >= 6
+                                    && (int)$parts[0] === $xTarget
+                                    && (int)$parts[1] === $yTarget) {
+                                    $armyType = (int)$parts[2];
+                                    $armyLevel = (int)$parts[3];
+                                    break 2;
+                                }
+                            }
+                        }
+                    }
+
+                    $armyData = [];
+                    $unitArmyCandidates = [
+                        dirname(__DIR__, 2) . '/caesar-assets/api/js-0.0.24/json/UnitArmy.json',
+                        dirname(__DIR__, 2) . '/caesar-assets/web/js-3.4.113/json/UnitArmy.json',
+                        dirname(__DIR__, 2) . '/caesar-assets/api/js-3.4.113/json/UnitArmy.json',
+                    ];
+                    foreach ($unitArmyCandidates as $armyPath) {
+                        if (!is_readable($armyPath)) continue;
+                        $unitArmy = json_decode(file_get_contents($armyPath), true);
+                        if (is_array($unitArmy)) {
+                            $armyData = $unitArmy[(string)$armyType][(string)$armyLevel] ?? [];
+                            break;
+                        }
+                    }
+                    $report = [
+                        'side' => 'attacker',
+                        'army_a' => (int)($armyData['army_a'] ?? $armyData['1'] ?? 0),
+                        'army_b' => (int)($armyData['army_b'] ?? $armyData['2'] ?? 0),
+                        'army_c' => (int)($armyData['army_c'] ?? $armyData['3'] ?? 0),
+                        'army_d' => (int)($armyData['army_d'] ?? $armyData['4'] ?? 0),
+                        'army_e' => (int)($armyData['army_e'] ?? $armyData['5'] ?? 0),
+                        'army_f' => (int)($armyData['army_f'] ?? $armyData['6'] ?? 0),
+                    ];
+                }
+
+                $db->prepare(
+                    'INSERT INTO spy_report ' .
+                    '(id_player, seen, victim, x, y, time_stamp, type, t, l, spy_for, content) ' .
+                    'VALUES (?, 0, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)'
+                )->execute([
+                    $playerId,
+                    $targetPlayerId,
+                    $xTarget,
+                    $yTarget,
+                    $targetType,
+                    $targetType,
+                    $targetLevel,
+                    $spyFor,
+                    json_encode($report, JSON_UNESCAPED_UNICODE),
+                ]);
             }
 
                 // Delete completed task

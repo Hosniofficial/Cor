@@ -41,7 +41,7 @@ class WorldController {
                 self::getGarrisonHeros($db);
                 return true;
             case '/api/ABattelRunning/getSpyRuning':
-                sendJson([]);
+                self::getSpyRunning($db);
                 return true;
             case '/api/ABattelRunning/getHeroBack':
                 self::getHeroBack($db);
@@ -321,6 +321,47 @@ class WorldController {
             $deduct = $db->prepare("UPDATE `city` SET `spies` = `spies` - ? WHERE `id_city` = ? AND `id_player` = ?");
             $deduct->execute([$spyNum, $cityId, $playerId]);
 
+            $targetCityStmt = $db->prepare(
+                'SELECT id_city, id_player, name, x, y, food, wood, stone, metal, coin ' .
+                'FROM city WHERE x = ? AND y = ? LIMIT 1'
+            );
+            $targetCityStmt->execute([$xCoord, $yCoord]);
+            $targetCity = $targetCityStmt->fetch(PDO::FETCH_ASSOC);
+
+            $targetUnit = self::getStaticWorldUnit($xCoord, $yCoord);
+            $targetType = (int)($targetUnit['ut'] ?? 0);
+            $targetLevel = (int)($targetUnit['lvl'] ?? 0);
+            $spyFor = $targetCity ? 'city' : 'barrary';
+            $distance = abs((int)$ownedCity['x'] - $xCoord) + abs((int)$ownedCity['y'] - $yCoord);
+            $duration = max(60, min(3600, $distance * 10));
+            $now = time();
+            $details = json_encode([
+                'x_to' => $xCoord,
+                'y_to' => $yCoord,
+                'spy_num' => $spyNum,
+                'spy_for' => $spyFor,
+                'target_type' => $targetType,
+                'target_level' => $targetLevel,
+                'target_city_id' => $targetCity ? (int)$targetCity['id_city'] : 0,
+                'target_player_id' => $targetCity ? (int)$targetCity['id_player'] : 0,
+            ], JSON_UNESCAPED_UNICODE);
+
+            $taskStmt = $db->prepare(
+                'INSERT INTO timed_task ' .
+                '(id_city, id_player, task_type, item_id, lvl_to, start_time, time_arrive, details) ' .
+                'VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+            );
+            $taskStmt->execute([
+                $cityId,
+                $playerId,
+                'spy',
+                'spy',
+                $spyNum,
+                $now,
+                $now + $duration,
+                $details,
+            ]);
+
             $stmt->execute([$cityId, $playerId]);
             $updatedCity = $stmt->fetch(PDO::FETCH_ASSOC);
             $db->commit();
@@ -346,9 +387,40 @@ class WorldController {
     public static function cancelSpy($db) {
         $player = requireAuthenticatedPlayer($db);
         $idCity = filter_var($_REQUEST['idCity'] ?? null, FILTER_VALIDATE_INT);
+        $idSpy = filter_var($_REQUEST['idSpy'] ?? null, FILTER_VALIDATE_INT);
         $ownedCity = requirePlayerOwnedCity($db, $player, $idCity);
         $playerId = (int)$player['id_player'];
         $cityId = (int)$ownedCity['id_city'];
+
+        $db->beginTransaction();
+        try {
+            $lock = $db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite' ? '' : ' FOR UPDATE';
+            $taskStmt = $db->prepare(
+                "SELECT id_task, id_city, id_player, lvl_to FROM timed_task " .
+                "WHERE id_task = ? AND id_city = ? AND id_player = ? AND task_type = 'spy'{$lock}"
+            );
+            $taskStmt->execute([$idSpy, $cityId, $playerId]);
+            $task = $taskStmt->fetch(PDO::FETCH_ASSOC);
+            if (!$task) {
+                $db->rollBack();
+                sendJson(['state' => 'error_spy_not_found']);
+                return;
+            }
+
+            $refund = (int)$task['lvl_to'];
+            $db->prepare(
+                'UPDATE city SET spies = spies + ? WHERE id_city = ? AND id_player = ?'
+            )->execute([$refund, $cityId, $playerId]);
+            $db->prepare("DELETE FROM timed_task WHERE id_task = ? AND task_type = 'spy'")
+                ->execute([(int)$task['id_task']]);
+            $db->commit();
+        } catch (\Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            sendJson(['state' => 'error_db']);
+            return;
+        }
 
         $stmt = $db->prepare("SELECT * FROM `city` WHERE `id_city` = ? AND `id_player` = ?");
         $stmt->execute([$cityId, $playerId]);
@@ -363,6 +435,36 @@ class WorldController {
             'state' => 'ok',
             'City'  => $city ?: $ownedCity
         ]);
+    }
+
+    public static function getSpyRunning($db) {
+        $player = requireAuthenticatedPlayer($db);
+        $playerId = (int)$player['id_player'];
+        $stmt = $db->prepare(
+            "SELECT id_task, id_city, lvl_to, time_arrive, details " .
+            "FROM timed_task WHERE id_player = ? AND task_type = 'spy' " .
+            "ORDER BY time_arrive ASC"
+        );
+        $stmt->execute([$playerId]);
+        $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+        $running = [];
+        foreach ($tasks as $task) {
+            $details = json_decode((string)($task['details'] ?? ''), true);
+            if (!is_array($details)) {
+                continue;
+            }
+            $running[] = [
+                'id_spy' => (int)$task['id_task'],
+                'id_city' => (int)$task['id_city'],
+                'x_to' => (int)($details['x_to'] ?? 0),
+                'y_to' => (int)($details['y_to'] ?? 0),
+                'spy_num' => (int)($details['spy_num'] ?? $task['lvl_to']),
+                'time_arrive' => (int)$task['time_arrive'],
+                'spy_for' => (string)($details['spy_for'] ?? 'barrary'),
+            ];
+        }
+        sendJson($running);
     }
 
     public static function getBattels($db) {

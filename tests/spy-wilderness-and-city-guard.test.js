@@ -52,11 +52,20 @@ test('WorldController implements startSpy and cancelSpy returning updated City o
         worldCtrl.includes("'City'  => $updatedCity") || worldCtrl.includes("'City' => $updatedCity"),
         'startSpy must return updated City in response'
     );
+    assert.ok(
+        worldCtrl.includes("task_type = 'spy'") &&
+        worldCtrl.includes("INSERT INTO timed_task") &&
+        worldCtrl.includes("public static function getSpyRunning($db)") &&
+        worldCtrl.includes("DELETE FROM timed_task"),
+        'Spy missions must be persisted, listed, and cancelable through timed tasks'
+    );
 });
 
 test('Wilderness spying is authentic and fully supported in client and report APIs', () => {
     const clientJs = fs.readFileSync(clientJsPath, 'utf8');
     const reportPhp = fs.readFileSync(reportPhpPath, 'utf8');
+    const taskServicePath = path.join(__dirname, '..', 'caesar-api', 'services', 'TaskService.php');
+    const taskService = fs.readFileSync(taskServicePath, 'utf8');
 
     // BarrayAttack includes MapIconSpy
     assert.ok(
@@ -76,5 +85,19 @@ test('Wilderness spying is authentic and fully supported in client and report AP
     assert.ok(
         reportPhp.includes('spy_for'),
         'battelReport.php must select and support spy_for'
+    );
+    assert.ok(
+        taskService.includes("} elseif ($type === 'spy')") &&
+        taskService.includes('INSERT INTO spy_report'),
+        'Completed spy timed tasks must create reports and return the deployed spies'
+    );
+    assert.ok(
+        taskService.includes('FROM city_building WHERE id_city = ?') &&
+        taskService.includes('UnitArmy.json'),
+        'Spy reports must use real target buildings and wilderness army data'
+    );
+    assert.ok(
+        reportPhp.includes('json_decode((string)$content, true)'),
+        'Spy report detail API must decode stored JSON instead of double-wrapping it'
     );
 });
