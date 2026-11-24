@@ -97,6 +97,17 @@ test('Wilderness spying is authentic and fully supported in client and report AP
         'Spy reports must use real target buildings and wilderness army data'
     );
     assert.ok(
+        taskService.includes("'class_path' => 'Battel.Spy'") &&
+        taskService.includes("'spy_num' => $spyNum"),
+        'Completed spy missions must notify the player to update spies and reports'
+    );
+    assert.ok(
+        taskService.includes("'light_house_5', 'light_house_6'") &&
+        taskService.includes("'above_palace_1', 'above_palace_2'") &&
+        taskService.includes("'around_wood_1', 'around_wood_2'"),
+        'City spy reports must initialize every building slot used by the report UI'
+    );
+    assert.ok(
         reportPhp.includes('json_decode((string)$content, true)'),
         'Spy report detail API must decode stored JSON instead of double-wrapping it'
     );

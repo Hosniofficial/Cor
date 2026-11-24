@@ -4,6 +4,33 @@
 require_once __DIR__ . '/ProductionService.php';
 
 class TaskService {
+    private static function notifySpyCompleted(int $playerId, int $spyNum): void {
+        if (!function_exists('curl_init') || $playerId <= 0) {
+            return;
+        }
+        $token = getenv('CAESAR_INTERNAL_API_TOKEN') ?: '';
+        $headers = ['Content-Type: application/json'];
+        if ($token !== '') {
+            $headers[] = 'Authorization: Bearer ' . trim($token);
+        }
+        $ch = curl_init('http://127.0.0.1:8081/api/internal/notify_mail');
+        if ($ch === false) {
+            return;
+        }
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            'player_ids' => [$playerId],
+            'class_path' => 'Battel.Spy',
+            'data' => ['spy_num' => $spyNum],
+        ], JSON_UNESCAPED_UNICODE));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 300);
+        curl_exec($ch);
+        curl_close($ch);
+    }
+
     public static function processCompletedTasks($db) {
         $ownsTransaction = !$db->inTransaction();
         if ($ownsTransaction) {
@@ -12,6 +39,7 @@ class TaskService {
 
         try {
             $now = time();
+            $spyNotifications = [];
             $stmt = $db->prepare(
                 "SELECT * FROM `timed_task` WHERE `time_arrive` <= ? " .
                 "AND `task_type` NOT IN ('battle', 'battle_processing') " .
@@ -193,8 +221,12 @@ class TaskService {
                         'under_palace_4', 'under_palace_5', 'under_palace_6',
                         'under_palace_7', 'under_palace_8', 'under_palace_9',
                         'under_palace_10', 'under_palace_11', 'under_palace_12',
-                        'light_house_1', 'light_house_2', 'light_house_3',
-                        'light_house_4',
+                        'light_house_1', 'light_house_2', 'light_house_3', 'light_house_4',
+                        'light_house_5', 'light_house_6', 'light_house_7', 'light_house_8',
+                        'light_house_9', 'light_house_10',
+                        'around_wood_1', 'around_wood_2', 'around_wood_3',
+                        'above_palace_1', 'above_palace_2', 'above_palace_3',
+                        'above_palace_4', 'above_palace_5', 'above_palace_6',
                     ] as $buildingKey) {
                         $report[$buildingKey] = '0-0';
                     }
@@ -270,6 +302,8 @@ class TaskService {
                         'army_e' => (int)($armyData['army_e'] ?? $armyData['5'] ?? 0),
                         'army_f' => (int)($armyData['army_f'] ?? $armyData['6'] ?? 0),
                     ];
+                    $targetType = $armyType;
+                    $targetLevel = $armyLevel;
                 }
 
                 $db->prepare(
@@ -287,6 +321,10 @@ class TaskService {
                     $spyFor,
                     json_encode($report, JSON_UNESCAPED_UNICODE),
                 ]);
+                $spyNotifications[] = [
+                    'player_id' => $playerId,
+                    'spy_num' => $lvlTo,
+                ];
             }
 
                 // Delete completed task
@@ -296,6 +334,14 @@ class TaskService {
 
             if ($ownsTransaction) {
                 $db->commit();
+            }
+            if ($ownsTransaction) {
+                foreach ($spyNotifications as $notification) {
+                    self::notifySpyCompleted(
+                        (int)$notification['player_id'],
+                        (int)$notification['spy_num']
+                    );
+                }
             }
         } catch (Throwable $e) {
             if ($ownsTransaction && $db->inTransaction()) {
