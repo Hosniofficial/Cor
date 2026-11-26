@@ -1612,5 +1612,59 @@
         "Texture2D": "Texture2D'/Game/images/items/item058.item058'",
         "use": "many",
         "Key": "god_point_50k"
+    },
+    "hidden_box": {
+        "image": "images/items/Hiddenbox.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/Hiddenbox.Hiddenbox'",
+        "use": "once",
+        "Key": "hidden_box"
+    },
+    "victory_medal": {
+        "image": "images/items/VictoryMedal.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/VictoryMedal.VictoryMedal'",
+        "use": "none",
+        "Key": "victory_medal"
+    },
+    "arena_attempt_1": {
+        "image": "images/items/festival_blue.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_blue.festival_blue'",
+        "use": "many",
+        "Key": "arena_attempt_1"
+    },
+    "arena_attempt_5": {
+        "image": "images/items/festival_gray.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_gray.festival_gray'",
+        "use": "many",
+        "Key": "arena_attempt_5"
+    },
+    "arena_attempt_10": {
+        "image": "images/items/festival_green.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_green.festival_green'",
+        "use": "many",
+        "Key": "arena_attempt_10"
+    },
+    "arena_exp_1": {
+        "image": "images/items/festival_orange.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_orange.festival_orange'",
+        "use": "many",
+        "Key": "arena_exp_1"
+    },
+    "arena_exp_5": {
+        "image": "images/items/festival_purple.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_purple.festival_purple'",
+        "use": "many",
+        "Key": "arena_exp_5"
+    },
+    "arena_exp_10": {
+        "image": "images/items/festival_special.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_special.festival_special'",
+        "use": "many",
+        "Key": "arena_exp_10"
+    },
+    "arena_exp_25": {
+        "image": "images/items/festival_yellow.jpg",
+        "Texture2D": "Texture2D'/Game/images/items/festival_yellow.festival_yellow'",
+        "use": "many",
+        "Key": "arena_exp_25"
     }
 }

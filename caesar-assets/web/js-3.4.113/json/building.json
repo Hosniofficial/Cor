@@ -125,7 +125,7 @@
         ]
     },
     "4":{ 
-        "title": "اسطبل",
+        "title": "إسطبل",
         "icon": "images/building/building01.jpg",
         
         "lvl_req":[
@@ -335,7 +335,7 @@
     
         
         "image": "images/workshop.png",   
-        "title": "اكاديمية",
+        "title": "أكاديمية",
         "lvl_req":[
             {"food":306,     "wood":662,     "stone":636,     "metal":882},
             {"food":892,     "wood":2059,    "stone":1848,    "metal":2565},
@@ -420,7 +420,7 @@
     
         
         "image": "images/workshop.png",   
-        "title": "البلازة",
+        "title": "البلازا",
         "lvl_req":[
             
             {"food":61,     "wood":331,     "stone":631,     "metal":89},

@@ -5,7 +5,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "floor",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -15,7 +24,8 @@
         "reqProm": 0,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك بناء مدينة جديدة هنا."
     },
     "1": {
         "Title": "بحيرة",
@@ -24,7 +34,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -43,7 +62,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -62,7 +90,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -81,7 +118,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -100,7 +146,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -119,7 +174,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -138,7 +202,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -157,7 +230,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -176,7 +258,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -195,7 +286,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/floor_1_Sprite.floor_1_Sprite'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -213,7 +313,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/Busy_unit.Busy_unit'",
         "tileName": "river_1",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -232,7 +341,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_1.mountain_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_1_Sprite.m_1_Sprite'",
         "tileName": "m_1",
-        "hitArea": [101, 94, 67, 115, 27, 96, 63, 72],
+        "hitArea": [
+            101,
+            94,
+            67,
+            115,
+            27,
+            96,
+            63,
+            72
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -251,7 +369,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_1.mountain_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_2_Sprite.m_2_Sprite'",
         "tileName": "m_2",
-        "hitArea": [101, 94, 67, 115, 27, 96, 63, 72],
+        "hitArea": [
+            101,
+            94,
+            67,
+            115,
+            27,
+            96,
+            63,
+            72
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -270,7 +397,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_1.mountain_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_3_Sprite.m_3_Sprite'",
         "tileName": "m_3",
-        "hitArea": [101, 94, 67, 115, 27, 96, 63, 72],
+        "hitArea": [
+            101,
+            94,
+            67,
+            115,
+            27,
+            96,
+            63,
+            72
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -289,7 +425,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_1.mountain_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_4_Sprite.m_4_Sprite'",
         "tileName": "m_4",
-        "hitArea": [101, 94, 67, 115, 27, 96, 63, 72],
+        "hitArea": [
+            101,
+            94,
+            67,
+            115,
+            27,
+            96,
+            63,
+            72
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -308,7 +453,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_2.mountain_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_5_Sprite.m_5_Sprite'",
         "tileName": "m_5",
-        "hitArea": [123, 96, 67, 123, 12, 96, 49, 66, 74, 52],
+        "hitArea": [
+            123,
+            96,
+            67,
+            123,
+            12,
+            96,
+            49,
+            66,
+            74,
+            52
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -327,7 +483,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_2.mountain_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_6_Sprite.m_6_Sprite'",
         "tileName": "m_6",
-        "hitArea": [123, 96, 67, 123, 12, 96, 49, 66, 74, 52],
+        "hitArea": [
+            123,
+            96,
+            67,
+            123,
+            12,
+            96,
+            49,
+            66,
+            74,
+            52
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -346,7 +513,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_2.mountain_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_7_Sprite.m_7_Sprite'",
         "tileName": "m_7",
-        "hitArea": [123, 96, 67, 123, 12, 96, 49, 66, 74, 52],
+        "hitArea": [
+            123,
+            96,
+            67,
+            123,
+            12,
+            96,
+            49,
+            66,
+            74,
+            52
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -365,7 +543,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_3.mountain_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_8_Sprite.m_8_Sprite'",
         "tileName": "m_8",
-        "hitArea": [119, 92, 70, 122, 11, 90, 61, 27, 88, 31],
+        "hitArea": [
+            119,
+            92,
+            70,
+            122,
+            11,
+            90,
+            61,
+            27,
+            88,
+            31
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -384,7 +573,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_3.mountain_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_9_Sprite.m_9_Sprite'",
         "tileName": "m_9",
-        "hitArea": [119, 92, 70, 122, 11, 90, 61, 27, 88, 31],
+        "hitArea": [
+            119,
+            92,
+            70,
+            122,
+            11,
+            90,
+            61,
+            27,
+            88,
+            31
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -403,7 +603,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mountain_3.mountain_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/m_10_Sprite.m_10_Sprite'",
         "tileName": "m_10",
-        "hitArea": [119, 92, 70, 122, 11, 90, 61, 27, 88, 31],
+        "hitArea": [
+            119,
+            92,
+            70,
+            122,
+            11,
+            90,
+            61,
+            27,
+            88,
+            31
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -422,7 +633,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_1.desert_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_1_Sprite.d_1_Sprite'",
         "tileName": "d_1",
-        "hitArea": [65, 67, 20, 91, 73, 118, 105, 92],
+        "hitArea": [
+            65,
+            67,
+            20,
+            91,
+            73,
+            118,
+            105,
+            92
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -441,7 +661,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_1.desert_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_2_Sprite.d_2_Sprite'",
         "tileName": "d_2",
-        "hitArea": [65, 67, 20, 91, 73, 118, 105, 92],
+        "hitArea": [
+            65,
+            67,
+            20,
+            91,
+            73,
+            118,
+            105,
+            92
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -460,7 +689,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_1.desert_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_3_Sprite.d_3_Sprite'",
         "tileName": "d_3",
-        "hitArea": [65, 67, 20, 91, 73, 118, 105, 92],
+        "hitArea": [
+            65,
+            67,
+            20,
+            91,
+            73,
+            118,
+            105,
+            92
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -479,7 +717,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_1.desert_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_4_Sprite.d_4_Sprite'",
         "tileName": "d_4",
-        "hitArea": [65, 67, 20, 91, 73, 118, 105, 92],
+        "hitArea": [
+            65,
+            67,
+            20,
+            91,
+            73,
+            118,
+            105,
+            92
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -498,7 +745,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_2.desert_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_5_Sprite.d_5_Sprite'",
         "tileName": "d_5",
-        "hitArea": [112, 98, 60, 120, 15, 96, 60, 72, 86, 66],
+        "hitArea": [
+            112,
+            98,
+            60,
+            120,
+            15,
+            96,
+            60,
+            72,
+            86,
+            66
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -517,7 +775,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_2.desert_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_6_Sprite.d_6_Sprite'",
         "tileName": "d_6",
-        "hitArea": [112, 98, 60, 120, 15, 96, 60, 72, 86, 66],
+        "hitArea": [
+            112,
+            98,
+            60,
+            120,
+            15,
+            96,
+            60,
+            72,
+            86,
+            66
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -536,7 +805,18 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_2.desert_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_7_Sprite.d_7_Sprite'",
         "tileName": "d_7",
-        "hitArea": [112, 98, 60, 120, 15, 96, 60, 72, 86, 66],
+        "hitArea": [
+            112,
+            98,
+            60,
+            120,
+            15,
+            96,
+            60,
+            72,
+            86,
+            66
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -555,7 +835,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_3.desert_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_8_Sprite.d_8_Sprite'",
         "tileName": "d_8",
-        "hitArea": [119, 97, 62, 120, 19, 95, 41, 77, 47, 56, 86, 58],
+        "hitArea": [
+            119,
+            97,
+            62,
+            120,
+            19,
+            95,
+            41,
+            77,
+            47,
+            56,
+            86,
+            58
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -574,7 +867,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_3.desert_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_9_Sprite.d_9_Sprite'",
         "tileName": "d_9",
-        "hitArea": [119, 97, 62, 120, 19, 95, 41, 77, 47, 56, 86, 58],
+        "hitArea": [
+            119,
+            97,
+            62,
+            120,
+            19,
+            95,
+            41,
+            77,
+            47,
+            56,
+            86,
+            58
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -593,7 +899,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/desert_3.desert_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/d_10_Sprite.d_10_Sprite'",
         "tileName": "d_10",
-        "hitArea": [119, 97, 62, 120, 19, 95, 41, 77, 47, 56, 86, 58],
+        "hitArea": [
+            119,
+            97,
+            62,
+            120,
+            19,
+            95,
+            41,
+            77,
+            47,
+            56,
+            86,
+            58
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -613,7 +932,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_1_Sprite.w_1_Sprite'",
         "tileName": "w_1",
         "AnimKey": "Forest.1",
-        "hitArea": [63, 72, 90, 83, 92, 97, 67, 112, 39, 99, 47, 84],
+        "hitArea": [
+            63,
+            72,
+            90,
+            83,
+            92,
+            97,
+            67,
+            112,
+            39,
+            99,
+            47,
+            84
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -633,7 +965,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_2_Sprite.w_2_Sprite'",
         "tileName": "w_2",
         "AnimKey": "Forest.1",
-        "hitArea": [63, 72, 90, 83, 92, 97, 67, 112, 39, 99, 47, 84],
+        "hitArea": [
+            63,
+            72,
+            90,
+            83,
+            92,
+            97,
+            67,
+            112,
+            39,
+            99,
+            47,
+            84
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -653,7 +998,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_3_Sprite.w_3_Sprite'",
         "tileName": "w_3",
         "AnimKey": "Forest.1",
-        "hitArea": [63, 72, 90, 83, 92, 97, 67, 112, 39, 99, 47, 84],
+        "hitArea": [
+            63,
+            72,
+            90,
+            83,
+            92,
+            97,
+            67,
+            112,
+            39,
+            99,
+            47,
+            84
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -673,7 +1031,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_4_Sprite.w_4_Sprite'",
         "tileName": "w_4",
         "AnimKey": "Forest.1",
-        "hitArea": [63, 72, 90, 83, 92, 97, 67, 112, 39, 99, 47, 84],
+        "hitArea": [
+            63,
+            72,
+            90,
+            83,
+            92,
+            97,
+            67,
+            112,
+            39,
+            99,
+            47,
+            84
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -693,7 +1064,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_5_Sprite.w_5_Sprite'",
         "tileName": "w_5",
         "AnimKey": "Forest.2",
-        "hitArea": [64, 64, 106, 86, 109, 101, 66, 122, 27, 97, 33, 80],
+        "hitArea": [
+            64,
+            64,
+            106,
+            86,
+            109,
+            101,
+            66,
+            122,
+            27,
+            97,
+            33,
+            80
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -713,7 +1097,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_6_Sprite.w_6_Sprite'",
         "tileName": "w_6",
         "AnimKey": "Forest.2",
-        "hitArea": [64, 64, 106, 86, 109, 101, 66, 122, 27, 97, 33, 80],
+        "hitArea": [
+            64,
+            64,
+            106,
+            86,
+            109,
+            101,
+            66,
+            122,
+            27,
+            97,
+            33,
+            80
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -733,7 +1130,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_7_Sprite.w_7_Sprite'",
         "tileName": "w_7",
         "AnimKey": "Forest.2",
-        "hitArea": [64, 64, 106, 86, 109, 101, 66, 122, 27, 97, 33, 80],
+        "hitArea": [
+            64,
+            64,
+            106,
+            86,
+            109,
+            101,
+            66,
+            122,
+            27,
+            97,
+            33,
+            80
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -753,7 +1163,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_8_Sprite.w_8_Sprite'",
         "tileName": "w_8",
         "AnimKey": "Forest.3",
-        "hitArea": [62, 48, 116, 77, 120, 97, 65, 127, 15, 100, 16, 74],
+        "hitArea": [
+            62,
+            48,
+            116,
+            77,
+            120,
+            97,
+            65,
+            127,
+            15,
+            100,
+            16,
+            74
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -773,7 +1196,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_9_Sprite.w_9_Sprite'",
         "tileName": "w_9",
         "AnimKey": "Forest.3",
-        "hitArea": [62, 48, 116, 77, 120, 97, 65, 127, 15, 100, 16, 74],
+        "hitArea": [
+            62,
+            48,
+            116,
+            77,
+            120,
+            97,
+            65,
+            127,
+            15,
+            100,
+            16,
+            74
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -793,7 +1229,20 @@
         "Texture2D": "Texture2D'/Game/images/world/Sprites/w_10_Sprite.w_10_Sprite'",
         "tileName": "w_10",
         "AnimKey": "Forest.3",
-        "hitArea": [62, 48, 116, 77, 120, 97, 65, 127, 15, 100, 16, 74],
+        "hitArea": [
+            62,
+            48,
+            116,
+            77,
+            120,
+            97,
+            65,
+            127,
+            15,
+            100,
+            16,
+            74
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -811,7 +1260,16 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_0_Sprite.city_0_Sprite'",
         "tileName": "city_0",
-        "hitArea": [112, 95, 70, 118, 23, 92, 65, 70],
+        "hitArea": [
+            112,
+            95,
+            70,
+            118,
+            23,
+            92,
+            65,
+            70
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -829,7 +1287,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_1_Sprite.city_1_Sprite'",
         "tileName": "city_1",
-        "hitArea": [103, 78, 106, 100, 63, 118, 18, 98, 17, 83, 58, 56],
+        "hitArea": [
+            103,
+            78,
+            106,
+            100,
+            63,
+            118,
+            18,
+            98,
+            17,
+            83,
+            58,
+            56
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -847,7 +1318,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_2_Sprite.city_2_Sprite'",
         "tileName": "city_2",
-        "hitArea": [105, 72, 107, 100, 63, 125, 15, 97, 21, 72, 61, 50],
+        "hitArea": [
+            105,
+            72,
+            107,
+            100,
+            63,
+            125,
+            15,
+            97,
+            21,
+            72,
+            61,
+            50
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -865,7 +1349,20 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/river_3.river_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_3_Sprite.city_3_Sprite'",
         "tileName": "city_3",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
         "Desc": null,
         "heroLvl": 1,
         "heroNum": 250,
@@ -884,8 +1381,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/monwrat.monwrat'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/30_Sprite.30_Sprite'",
         "tileName": "mnawrat",
-        "hitArea": [64, 0, 128, 32, 128, 96, 64, 128, 0, 96, 0, 32],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            64,
+            0,
+            128,
+            32,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96,
+            0,
+            32
+        ],
+        "Desc": "يمكنك الحصول هنا على هدايا قيّمة من مجلس الشيوخ، مثل تسريع التدريب، والخبز، والقلادات الحمراء.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -899,7 +1409,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على هدايا قيّمة من مجلس الشيوخ، مثل تسريع التدريب، والخبز، والقلادات الحمراء."
     },
     "71": {
         "Title": "المعسكر البريطانى",
@@ -908,8 +1419,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -923,7 +1447,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "72": {
         "Title": "المعسكر الالمانى",
@@ -932,8 +1457,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -947,7 +1485,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "73": {
         "Title": "المعسكر الاسيوى",
@@ -956,8 +1495,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -971,7 +1523,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "74": {
         "Title": "المعسكر الفرنسى",
@@ -980,8 +1533,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -995,7 +1561,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "75": {
         "Title": "المعسكر المقدونى",
@@ -1004,8 +1571,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1019,7 +1599,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "76": {
         "Title": "المعسكر الاسبانى",
@@ -1028,8 +1609,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1043,7 +1637,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "77": {
         "Title": "المعسكر الايطالى",
@@ -1052,8 +1647,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1067,7 +1675,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "78": {
         "Title": "المعسكر الفارسى",
@@ -1076,8 +1685,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1091,7 +1713,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "79": {
         "Title": "المعسكر القرطاجى",
@@ -1100,8 +1723,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1115,7 +1751,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "80": {
         "Title": "المعسكر المصرى",
@@ -1124,8 +1761,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/camps.camps'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/city_4_Sprite.city_4_Sprite'",
         "tileName": "city_4",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1139,7 +1789,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول هنا على الشعارات لاستبدالها بمواد من صندوق المواد، بالإضافة إلى الحصول على معدات."
     },
     "81": {
         "Title": "الفرقة الامامية",
@@ -1148,8 +1799,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/front_squad.front_squad'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/front_squad_Sprite.front_squad_Sprite'",
         "tileName": "front_squad",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1163,7 +1827,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "82": {
         "Title": "السرية الامامية",
@@ -1172,8 +1837,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/front_band.front_band'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/front_band_Sprite.front_band_Sprite'",
         "tileName": "front_band",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1187,7 +1865,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "83": {
         "Title": "الجماعة الامامية",
@@ -1196,8 +1875,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/front_band.front_squadron'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/front_squadron_Sprite.front_squadron_Sprite'",
         "tileName": "front_squadron",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1211,17 +1903,31 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "84": {
         "Title": "الكتيبة الامامية",
-        "WSnapShoot": "front_division.png", 
+        "WSnapShoot": "front_division.png",
         "SnapShoot": "Texture2D'/Game/images/world/snapShoots/front_division.front_division'",
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/front_division.front_division'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/front_division_Sprite.front_division_Sprite'",
         "tileName": "front_division",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1235,17 +1941,31 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "85": {
         "Title": "فرقة التسليح الخفيف",
-        "WSnapShoot": "armed_light_squad.png",   
+        "WSnapShoot": "armed_light_squad.png",
         "SnapShoot": "Texture2D'/Game/images/world/snapShoots/armed_light_squad.armed_light_squad'",
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_light_squad.armed_light_squad'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_light_squad_Sprite.armed_light_squad_Sprite'",
         "tileName": "armed_light_squad",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1259,17 +1979,31 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "86": {
         "Title": "سرية التسليح الخفيف",
-        "WSnapShoot": "armed_light_band.png",   
+        "WSnapShoot": "armed_light_band.png",
         "SnapShoot": "Texture2D'/Game/images/world/snapShoots/armed_light_band.armed_light_band'",
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_light_band.armed_light_band'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_light_band_Sprite.armed_light_band_Sprite'",
         "tileName": "armed_light_band",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1283,7 +2017,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "87": {
         "Title": "جماعة التسليح الخفيف",
@@ -1292,8 +2027,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_light_squadron.armed_light_squadron'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_light_squadron_Sprite.armed_light_squadron_Sprite'",
         "tileName": "armed_light_squadron",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1307,7 +2055,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "88": {
         "Title": "كتيبة التسليح الخفيف",
@@ -1316,8 +2065,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_light_division.armed_light_division'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_light_division_Sprite.armed_light_division_Sprite'",
         "tileName": "armed_light_division",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1331,7 +2093,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "89": {
         "Title": "فرقة التسليح الثقيل",
@@ -1340,8 +2103,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_heavy_squad.armed_heavy_squad'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_heavy_squad_Sprite.armed_heavy_squad_Sprite'",
         "tileName": "armed_heavy_squad",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1355,7 +2131,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "90": {
         "Title": "سرية التسليح الثقيل",
@@ -1364,8 +2141,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_heavy_band.armed_heavy_band'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_heavy_band_Sprite.armed_heavy_band_Sprite'",
         "tileName": "armed_heavy_band",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1379,7 +2169,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "91": {
         "Title": "جماعة التسليح الثقيل",
@@ -1388,8 +2179,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_heavy_squadron.armed_heavy_squadron'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_heavy_squadron_Sprite.armed_heavy_squadron_Sprite'",
         "tileName": "armed_heavy_squadron",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1403,7 +2207,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "92": {
         "Title": "كتيبة التسليح الثقيل",
@@ -1412,8 +2217,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armed_heavy_division.armed_heavy_division'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/armed_heavy_division_Sprite.armed_heavy_division_Sprite'",
         "tileName": "armed_heavy_division",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1427,7 +2245,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "93": {
         "Title": "فرقة الحراسة",
@@ -1436,8 +2255,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/guard_squad.guard_squad'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/guard_squad_Sprite.guard_squad_Sprite'",
         "tileName": "guard_squad",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1451,7 +2283,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "94": {
         "Title": "سرية الحراسة",
@@ -1460,8 +2293,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/guard_band.guard_band'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/guard_band_Sprite.guard_band_Sprite'",
         "tileName": "guard_band",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1475,7 +2321,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "95": {
         "Title": "جماعة الحراسة",
@@ -1484,8 +2331,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/guard_squadron.guard_squadron'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/guard_squadron_Sprite.guard_squadron_Sprite'",
         "tileName": "guard_squadron",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1499,7 +2359,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "96": {
         "Title": "كتيبة الحراسة",
@@ -1508,8 +2369,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/guard_division.guard_division'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/guard_division_Sprite.guard_division_Sprite'",
         "tileName": "guard_division",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1523,7 +2397,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "97": {
         "Title": "الساندرز الشجاع",
@@ -1532,8 +2407,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/thunder.thunder'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/brave_thunder_Sprite.brave_thunder_Sprite'",
         "tileName": "brave_thunder",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "\n            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.\n\n            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.\n             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.\n             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.\n             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.\n             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.\n              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. \n            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1547,7 +2435,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة في آسيا."
     },
     "98": {
         "Title": "العصابات",
@@ -1556,8 +2445,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/gang.gang'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/gang_Sprite.gang_Sprite'",
         "tileName": "gang",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1571,7 +2473,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "99": {
         "Title": "قطاع الطريق",
@@ -1580,8 +2483,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/mugger.mugger'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/mugger_Sprite.mugger_Sprite'",
         "tileName": "mugger",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1595,7 +2511,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "100": {
         "Title": "اللصوص",
@@ -1604,8 +2521,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/thief.thief'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/thief_Sprite.thief_Sprite'",
         "tileName": "thief",
-        "hitArea": [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            63,
+            37,
+            11,
+            60,
+            6,
+            94,
+            66,
+            126,
+            124,
+            100,
+            115,
+            66
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1619,7 +2549,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "101": {
         "Title": "العصابات القرطاجية",
@@ -1628,8 +2559,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/c_gang.c_gang'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/carthage_gang_Sprite.carthage_gang_Sprite'",
         "tileName": "carthage_gang",
-        "hitArea": [69, 110, 90, 101, 90, 69, 63, 53, 42, 64, 41, 97],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            69,
+            110,
+            90,
+            101,
+            90,
+            69,
+            63,
+            53,
+            42,
+            64,
+            41,
+            97
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1643,12 +2587,13 @@
                 "amount": 1
             }
         ],
-        "JoinReq": [ 
+        "JoinReq": [
             {
                 "Item": "repel_trumpet_1",
                 "amount": 1
             }
-        ]
+        ],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "102": {
         "Title": "فرق العصيان القرطاجى",
@@ -1657,8 +2602,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/c_teams.c_teams'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/carthage_teams_Sprite.carthage_teams_Sprite'",
         "tileName": "carthage_teams",
-        "hitArea": [63, 112, 97, 96, 94, 71, 65, 54, 35, 68, 34, 98],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            63,
+            112,
+            97,
+            96,
+            94,
+            71,
+            65,
+            54,
+            35,
+            68,
+            34,
+            98
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1677,7 +2635,8 @@
                 "Item": "repel_trumpet_1",
                 "amount": 1
             }
-        ]
+        ],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "103": {
         "Title": "متمردى قرطاجة",
@@ -1686,8 +2645,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/c_rebels.c_rebels'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/carthage_rebels_Sprite.carthage_rebels_Sprite'",
         "tileName": "carthage_rebels",
-        "hitArea": [69, 115, 104, 102, 97, 68, 61, 48, 34, 64, 31, 98],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            69,
+            115,
+            104,
+            102,
+            97,
+            68,
+            61,
+            48,
+            34,
+            64,
+            31,
+            98
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1706,7 +2678,8 @@
                 "Item": "repel_trumpet_2",
                 "amount": 1
             }
-        ]
+        ],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "104": {
         "Title": "القوات الخاصة القرطاجية",
@@ -1715,8 +2688,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/c_forces.c_forces'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/carthage_forces_Sprite.carthage_forces_Sprite'",
         "tileName": "carthage_forces",
-        "hitArea": [67, 116, 110, 100, 101, 67, 69, 47, 31, 65, 29, 100],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            67,
+            116,
+            110,
+            100,
+            101,
+            67,
+            69,
+            47,
+            31,
+            65,
+            29,
+            100
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1735,7 +2721,8 @@
                 "Item": "repel_trumpet_2",
                 "amount": 1
             }
-        ]
+        ],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "105": {
         "Title": "عاصمة التمرد",
@@ -1744,8 +2731,21 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/c_capital.c_capital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/carthage_capital_Sprite.carthage_capital_Sprite'",
         "tileName": "carthage_capital",
-        "hitArea": [62, 116, 108, 97, 102, 67, 71, 46, 29, 64, 27, 98],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            62,
+            116,
+            108,
+            97,
+            102,
+            67,
+            71,
+            46,
+            29,
+            64,
+            27,
+            98
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1764,7 +2764,8 @@
                 "Item": "repel_medal",
                 "amount": 1
             }
-        ]
+        ],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة."
     },
     "150": {
         "Title": "عاصمة المشاة",
@@ -1773,8 +2774,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1789,7 +2801,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "151": {
         "Title": "عاصمة الفرسان",
@@ -1798,8 +2811,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1814,7 +2838,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "152": {
         "Title": "عاصمة المدرعين",
@@ -1823,8 +2848,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1839,7 +2875,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "153": {
         "Title": "عاصمة رماة السهم",
@@ -1848,8 +2885,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1864,7 +2912,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "154": {
         "Title": "عاصمة المقاليع",
@@ -1873,8 +2922,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1889,7 +2949,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "155": {
         "Title": "عاصمة المنجنيق",
@@ -1898,8 +2959,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/armyCapital.armyCapital'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/army_capital_Sprite.army_capital_Sprite'",
         "tileName": "army_capital",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1914,7 +2986,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة."
     },
     "175": {
         "Title": "حلبة التحدى",
@@ -1923,8 +2996,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/arena.arena'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/arena_Sprite.arena_Sprite'",
         "tileName": "arena",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1933,7 +3017,8 @@
         "reqProm": 1,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار."
     },
     "176": {
         "Title": "حلبة الموت",
@@ -1942,8 +3027,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/arena.arena'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/arena_Sprite.arena_Sprite'",
         "tileName": "arena",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1952,7 +3048,8 @@
         "reqProm": 1,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار."
     },
     "177": {
         "Title": "حلبة تحدى الاحلاف",
@@ -1961,8 +3058,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/arena.arena'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/arena_Sprite.arena_Sprite'",
         "tileName": "arena",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1971,7 +3079,8 @@
         "reqProm": 1,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار."
     },
     "180": {
         "Title": "الملكة الصغرى",
@@ -1980,8 +3089,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/queenCityS.queenCityS'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/queenCity_1_Sprite.queenCity_1_Sprite'",
         "tileName": "queenCity_1",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -1995,7 +3115,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "181": {
         "Title": "الملكة الوسطى",
@@ -2004,8 +3125,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/queenCityM.queenCityM'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/queenCity_2_Sprite.queenCity_2_Sprite'",
         "tileName": "queenCity_2",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2019,7 +3151,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "182": {
         "Title": "الملكة الكبرى",
@@ -2028,8 +3161,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/queenCityH.queenCityH'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/queenCity_3_Sprite.queenCity_3_Sprite'",
         "tileName": "queenCity_3",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2043,7 +3187,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "184": {
         "Title": "القلاع الصغرى",
@@ -2052,8 +3197,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/repleCastleS.repleCastleS'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/repleCastle_1_Sprite.repleCastle_1_Sprite'",
         "tileName": "repleCastle_1",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2067,7 +3223,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "185": {
         "Title": "القلاع الوسطى",
@@ -2076,8 +3233,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/repleCastleM.repleCastleM'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/repleCastle_2_Sprite.repleCastle_2_Sprite'",
         "tileName": "repleCastle_2",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2091,7 +3259,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "186": {
         "Title": "القلاع الكبرى",
@@ -2100,8 +3269,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/repleCastleH.repleCastleH'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/repleCastle_3_Sprite.repleCastle_3_Sprite'",
         "tileName": "repleCastle_3",
-        "hitArea": [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            81,
+            30,
+            39,
+            32,
+            26,
+            110,
+            62,
+            129,
+            106,
+            118
+        ],
+        "Desc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2115,7 +3295,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة."
     },
     "200": {
         "Title": "تمثال الحرب الاصغر",
@@ -2124,8 +3305,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/statueWar_1.statueWar_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2139,7 +3331,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة."
     },
     "201": {
         "Title": "تمثال الحرب الاوسط",
@@ -2148,8 +3341,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/statueWar_2.statueWar_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2163,7 +3367,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة."
     },
     "202": {
         "Title": "تمثال الحرب الاكبر",
@@ -2172,8 +3377,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/statueWar_3.statueWar_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2187,7 +3403,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة."
     },
     "203": {
         "Title": "مجموعة الذئب 1",
@@ -2196,8 +3413,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_1.wolf_1'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2211,7 +3439,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة."
     },
     "204": {
         "Title": "مجموعة الذئب 2",
@@ -2220,8 +3449,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_2.wolf_2'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2235,7 +3475,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة."
     },
     "205": {
         "Title": "مجموعة الذئب 3",
@@ -2244,8 +3485,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "Texture2D'/Game/images/world/Sprites/wolfStatue_Sprite.wolfStatue_Sprite'",
         "tileName": "wolfStatue",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2259,7 +3511,8 @@
                 "amount": 1
             }
         ],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة."
     },
     "220": {
         "Title": "ميدان تحدى القيصر",
@@ -2268,8 +3521,17 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/challangeFieldPlayer_Sprite.challangeFieldPlayer_Sprite'",
         "tileName": "challangeFieldPlayer",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2278,7 +3540,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "221": {
         "Title": "ميدان تحدى الفريق",
@@ -2287,8 +3550,19 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/challangeFieldTeam_Sprite.challangeFieldTeam_Sprite'",
         "tileName": "challangeFieldTeam",
-        "hitArea": [33, 111, 56, 126, 85, 113, 78, 37, 53, 34],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            33,
+            111,
+            56,
+            126,
+            85,
+            113,
+            78,
+            37,
+            53,
+            34
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2297,7 +3571,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "222": {
         "Title": "ميدان تحدى الحلف",
@@ -2306,7 +3581,7 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/challangeFieldGuild_Sprite.challangeFieldGuild_Sprite'",
         "tileName": "challangeFieldGuild",
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2315,7 +3590,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "223": {
         "Title": "ميدان تحدى العالم",
@@ -2324,8 +3600,17 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/challangeFieldServer_Sprite.challangeFieldServer_Sprite'",
         "tileName": "challangeFieldServer",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2334,7 +3619,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "224": {
         "Title": "ميدان حرب القيصر",
@@ -2343,8 +3629,17 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/fightChallangePlayer_Sprite.fightChallangePlayer_Sprite'",
         "tileName": "fightChallangePlayer",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2353,7 +3648,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "225": {
         "Title": "ميدان حرب الفريق",
@@ -2362,8 +3658,17 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/fightChallangeTeam_Sprite.fightChallangeTeam_Sprite'",
         "tileName": "fightChallangeTeam",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2372,7 +3677,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "226": {
         "Title": "ميدان حرب الحلف",
@@ -2381,8 +3687,17 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/fightChallangeGuild_Sprite.fightChallangeGuild_Sprite'",
         "tileName": "fightChallangeGuild",
-        "hitArea": [64, 64, 128, 96, 64, 128, 0, 96],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            64,
+            64,
+            128,
+            96,
+            64,
+            128,
+            0,
+            96
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2391,7 +3706,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "227": {
         "Title": "ميدان حرب العالم",
@@ -2400,8 +3716,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/fightChallangeServer_Sprite.fightChallangeServer_Sprite'",
         "tileName": "fightChallangeServer",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2410,7 +3741,8 @@
         "lvlChange": false,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "ميدان تحدٍّ وقتال للحصول على الميداليات والمواد القيّمة وإثبات التفوق في المعارك."
     },
     "231": {
         "Title": "قلعة الغذاء",
@@ -2419,8 +3751,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_1_Sprite.seaCity_1_Sprite'",
         "tileName": "seaCity_1",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الغذاء.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2429,7 +3776,8 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الغذاء."
     },
     "232": {
         "Title": "قلعة الاخشاب",
@@ -2438,8 +3786,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_2_Sprite.seaCity_2_Sprite'",
         "tileName": "seaCity_2",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الأخشاب.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2448,7 +3811,8 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الأخشاب."
     },
     "233": {
         "Title": "قلعة الاحجار",
@@ -2457,8 +3821,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_3_Sprite.seaCity_3_Sprite'",
         "tileName": "seaCity_3",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الأحجار.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2467,7 +3846,8 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الأحجار."
     },
     "234": {
         "Title": "قلعة الحديد",
@@ -2476,8 +3856,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_4_Sprite.seaCity_4_Sprite'",
         "tileName": "seaCity_4",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الحديد.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2486,7 +3881,8 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على موارد الحديد."
     },
     "235": {
         "Title": "قلعة العملات",
@@ -2495,8 +3891,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_5_Sprite.seaCity_5_Sprite'",
         "tileName": "seaCity_5",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على عملات السسترس.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2505,7 +3916,8 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على عملات السسترس."
     },
     "236": {
         "Title": "قلعة الذهب",
@@ -2514,8 +3926,23 @@
         "SnapShootRect": "Texture2D'/Game/images/world/SnapShootRect/wolf_3.wolf_3'",
         "Texture2D": "PaperSprite'/Game/images/world/Sprites/seaCity_6_Sprite.seaCity_6_Sprite'",
         "tileName": "seaCity_6",
-        "hitArea": [7, 261, 61, 136, 228, 54, 348, 114, 377, 241, 264, 371, 49, 344],
-        "Desc": "التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.\n\nالجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.\n             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.\n            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،\n             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.\n            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.\n            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.",
+        "hitArea": [
+            7,
+            261,
+            61,
+            136,
+            228,
+            54,
+            348,
+            114,
+            377,
+            241,
+            264,
+            371,
+            49,
+            344
+        ],
+        "Desc": "قلعة بحرية مخصصة للمنافسة والحصول على الذهب.",
         "heroLvl": 1,
         "heroNum": 250,
         "techLvl": 1,
@@ -2524,6 +3951,7 @@
         "lvlChange": true,
         "reqFitness": 10,
         "MakeReq": [],
-        "JoinReq": []
+        "JoinReq": [],
+        "shortDesc": "قلعة بحرية مخصصة للمنافسة والحصول على الذهب."
     }
 }

@@ -3,6 +3,81 @@ const { allocateProportionally, allocateResourceLoot } = require('./battle-party
 const RESOURCES = ['food', 'wood', 'stone', 'metal', 'coin'];
 const PRIZE_RATE_SCALE = 1000;
 
+function isSpecialScaledPrizeUnit(unitType) {
+    const ut = Number(unitType);
+    return (ut >= 150 && ut <= 155)
+        || (ut >= 180 && ut <= 182)
+        || (ut >= 184 && ut <= 186)
+        || (ut >= 220 && ut <= 222);
+}
+
+function getMatchingUnitPrizes(prizes, options = {}) {
+    if (!Array.isArray(prizes) || !prizes.length) return [];
+    const unitType = Number(options.unitType);
+    const unitLvl = Number(options.unitLvl);
+    const prizeUt = Number(options.prizeUt);
+    const unitSubtype = options.unitSubtype !== undefined && options.unitSubtype !== null
+        ? Number(options.unitSubtype)
+        : 0;
+    const isWilderness = Boolean(options.isWilderness);
+
+    const matchesType = prize => {
+        const pType = Number(prize && prize.unitType);
+        if (pType === unitType) return true;
+        if (!isWilderness) return false;
+        return pType === prizeUt || (unitSubtype > 0 && pType === unitSubtype);
+    };
+
+    const typeRows = prizes.filter(matchesType);
+    if (!typeRows.length) return [];
+
+    const exact = typeRows.filter(prize => Number(prize.lvl) === unitLvl);
+    if (exact.length || isWilderness || !isSpecialScaledPrizeUnit(unitType)) {
+        return exact;
+    }
+
+    // Queens (180-182), Castles (184-186), and Arenas (220-222) may carry map tile
+    // levels such as 0 or 8-10 while their prize table entries use fixed lvl tiers.
+    const clampedTarget = Math.max(1, Number.isFinite(unitLvl) ? unitLvl : 1);
+    const definedLevels = [...new Set(typeRows.map(prize => Number(prize.lvl) || 1))].sort((a, b) => a - b);
+    let fallbackLvl = definedLevels[0];
+    for (const lvl of definedLevels) {
+        if (lvl <= clampedTarget) fallbackLvl = lvl;
+    }
+    return typeRows.filter(prize => (Number(prize.lvl) || 1) === fallbackLvl);
+}
+
+function mergeItemLootEntries(entries) {
+    if (!Array.isArray(entries) || !entries.length) return [];
+    const merged = new Map();
+    for (const entry of entries) {
+        if (!entry) continue;
+        const itemKey = String(entry.prize || entry.Item || '');
+        const amount = Number(entry.amount) || 0;
+        if (!itemKey || amount <= 0) continue;
+        if (!merged.has(itemKey)) {
+            merged.set(itemKey, { prize: itemKey, amount });
+        } else {
+            merged.get(itemKey).amount += amount;
+        }
+    }
+    return [...merged.values()];
+}
+
+async function creditPlayerItems(db, playerId, items) {
+    const idPlayer = Number(playerId);
+    if (!idPlayer || !Array.isArray(items) || !items.length) return [];
+    const merged = mergeItemLootEntries(items);
+    for (const item of merged) {
+        await db.query(
+            'INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) ' +
+            'ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)',
+            [idPlayer, item.prize, item.amount]
+        );
+    }
+    return merged;
+}
+
 function isPrizeDropSuccessful(rate, randomValue = Math.random()) {
     const threshold = Math.max(0, Math.min(PRIZE_RATE_SCALE, Number(rate) || 0));
     return Math.floor(randomValue * PRIZE_RATE_SCALE) + 1 <= threshold;
@@ -155,9 +230,13 @@ async function transferBattleLoot({ db, targetCity, attackers, wildernessLoot, c
 
 module.exports = {
     calculateWildernessSpoils,
+    creditPlayerItems,
+    getMatchingUnitPrizes,
     getWildernessResource,
     getWildernessPrizeUnitType,
     isPrizeDropSuccessful,
+    isSpecialScaledPrizeUnit,
+    mergeItemLootEntries,
     randomInteger,
     transferBattleLoot
 };

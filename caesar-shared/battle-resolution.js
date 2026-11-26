@@ -1,5 +1,7 @@
 const {
     calculateWildernessSpoils,
+    creditPlayerItems,
+    getMatchingUnitPrizes,
     getWildernessResource,
     getWildernessPrizeUnitType,
     isPrizeDropSuccessful,
@@ -299,6 +301,80 @@ function shouldBroadcastBattleVictory(unitType, unitLvl, options = {}) {
 
     // Exclude all wilderness (1..59), gangs (97..105), intermediate camps, and regular units
     return false;
+}
+
+/**
+ * Builds the authentic server chat announcement payload for a victorious battle,
+ * matching the raw client ServerAnnounce handlers without fake player chatter or casualty details.
+ */
+function buildVictoryAnnouncement({
+    unitType,
+    unitLvl,
+    xCoord,
+    yCoord,
+    player,
+    guildDominance,
+    cityColonization,
+    targetCityRows,
+    defenderPlayerName,
+    attackers,
+    joinedDefenders,
+    hostMember,
+    honorGained
+}) {
+    if (!shouldBroadcastBattleVictory(unitType, unitLvl, { cityColonization })) {
+        return null;
+    }
+
+    if (guildDominance) {
+        return {
+            classPath: 'ServerAnnounce.Battel.GuildWin',
+            xCoord,
+            yCoord,
+            unitType,
+            unitLvl,
+            GuildName: guildDominance.guildName || '---',
+            PlayerName: String((player && player.name) || '')
+        };
+    }
+
+    if (cityColonization && cityColonization.subordinated) {
+        return {
+            classPath: 'ServerAnnounce.CityColonized',
+            xCoord,
+            yCoord,
+            CityColonizerFlag: String((player && player.city_flag) || '0'),
+            ColonizerIdGuild: Number(player && player.id_guild) || 0,
+            ColonizerIdPlayer: Number(player && player.id_player) || 0,
+            ColonizerName: String((player && player.name) || ''),
+            CityColonizedName: String((targetCityRows && targetCityRows[0] && targetCityRows[0].name) || ''),
+            ColonizedName: String(defenderPlayerName || '')
+        };
+    }
+
+    return {
+        classPath: 'ServerAnnounce.Battel.Win',
+        Attacker: {
+            id_player: Number(player && player.id_player) || 0,
+            name: String((player && player.name) || '')
+        },
+        Joiners: (attackers || [])
+            .filter(member => !hostMember || member.hero.id_hero !== hostMember.hero.id_hero)
+            .map(member => ({
+                id_player: Number(member.player && member.player.id_player) || 0,
+                name: String((member.player && member.player.name) || '')
+            })),
+        Defender: (joinedDefenders || []).map(member => ({
+            id_player: Number(member.player && member.player.id_player) || 0,
+            name: String((member.player && member.player.name) || '')
+        })),
+        WorldUnit: { ut: unitType, l: unitLvl, x: xCoord, y: yCoord },
+        WinPrize: ((hostMember && hostMember.itemLoot) || []).map(item => ({
+            Item: item.prize,
+            amount: item.amount
+        })),
+        honor: Number(honorGained) || 0
+    };
 }
 
 async function resolveBattle(context, dependencies) {
@@ -620,23 +696,17 @@ async function resolveBattle(context, dependencies) {
         // - Real Cities / PvP (60-63):   0% Field Recovery → 100% permanent loss (most punishing)
         // - Fortresses & Arenas (150+): 60% Field Recovery → special challenge content
         let recoveryRate = 0.0;
-        let targetCategoryName = 'معركة حقيقية (PvP)';
 
         if (unitType >= 1 && unitType <= 59) {
             recoveryRate = 0.00;
-            targetCategoryName = 'برية (معركة حقيقية)';
         } else if (unitType >= 70 && unitType <= 96) {
             recoveryRate = 0.75;
-            targetCategoryName = 'معسكر / مناورات / كتيبة';
         } else if (unitType >= 97 && unitType <= 105) {
             recoveryRate = 0.65;
-            targetCategoryName = 'عصابات تمرد قرطاجية';
         } else if (unitType >= 60 && unitType <= 63) {
             recoveryRate = 0.00;
-            targetCategoryName = 'معركة حقيقية ضد لاعب (PvP)';
         } else {
             recoveryRate = 0.60;
-            targetCategoryName = 'قلعة / ميدان تحدي';
         }
 
         const solTypeToCol = { 1: 'army_a', 2: 'army_b', 3: 'army_c', 4: 'army_d', 5: 'army_e', 6: 'army_f' };
@@ -736,15 +806,17 @@ async function resolveBattle(context, dependencies) {
             throw new Error(`Battle ${battelId} is missing the initiating hero`);
         }
         let defenderPrestige = 0;
+        let defenderPlayerName = '';
         const defenderPlayerId = Number(targetCityRows[0] && targetCityRows[0].id_player) || 0;
         if (defenderPlayerId > 0) {
             const [defenderPlayers] = await battleDb.query(
-                "SELECT prestige FROM player WHERE id_player = ?",
+                "SELECT name, prestige FROM player WHERE id_player = ?",
                 [defenderPlayerId]
             );
-            defenderPrestige = Number(defenderPlayers[0] && defenderPlayers[0].prestige) || 0;
+            const defenderPlayer = Array.isArray(defenderPlayers) ? defenderPlayers[0] : null;
+            defenderPrestige = Number(defenderPlayer && defenderPlayer.prestige) || 0;
+            defenderPlayerName = String((defenderPlayer && defenderPlayer.name) || '');
         }
-        const attackingCasualties = casualtiesBySide[1];
         const averageAttackerPrestige = attackers.reduce(
             (total, member) => total + (Number(member.player.prestige) || 0),
             0
@@ -776,15 +848,13 @@ async function resolveBattle(context, dependencies) {
             /^(food|wood|stone|metal|coin)_[a-e]$/.test(String(prizeKey || ''));
         const prizeUt = isWilderness ? getWildernessPrizeUnitType(unitType, unitLvl) : unitType;
         const useSubtypeMatch = isWilderness && unitSubtype;
-        const matchingPrizes = prizeData.Win
-            ? prizeData.Win.filter(prize => {
-                const matchesLvl = Number(prize.lvl) === Number(unitLvl);
-                const matchesType = Number(prize.unitType) === Number(unitType)
-                    || Number(prize.unitType) === Number(prizeUt)
-                    || (useSubtypeMatch && Number(prize.unitType) === Number(unitSubtype));
-                return matchesLvl && matchesType;
-            })
-            : [];
+        const matchingPrizes = getMatchingUnitPrizes(prizeData && prizeData.Win, {
+            unitType,
+            unitLvl,
+            prizeUt,
+            unitSubtype,
+            isWilderness
+        });
         const eventMultipliers = liveServerConfig.event_multipliers || {};
         const globalMult = Math.max(0.1, Number(liveServerConfig.global_drop_rate_multiplier) || 1.0)
             * Math.max(1, Number(eventMultipliers.global) || 1);
@@ -901,29 +971,19 @@ async function resolveBattle(context, dependencies) {
                 // Per-attacker independent prize rolls with pure raw probability.
                 // Prizes with win_rate >= 1000 are capped to 1000 = 100% guaranteed.
                 for (const attacker of attackers) {
-                    if (!attacker.itemLoot) attacker.itemLoot = [];
+                    const rolled = [];
                     for (const p of matchingPrizes) {
                         const result = rollPrize(p);
-                        if (!result) continue;
-                        await battleDb.query(
-                            "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
-                            "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
-                            [attacker.player.id_player, result.prize, result.amount]
-                        );
-                        attacker.itemLoot.push(result);
+                        if (result) rolled.push(result);
                     }
+                    const credited = await creditPlayerItems(battleDb, attacker.player.id_player, rolled);
+                    if (!attacker.itemLoot) attacker.itemLoot = [];
+                    attacker.itemLoot.push(...credited);
                 }
             } else {
                 // Wilderness, barray, or city: host only, using pre-rolled droppedItems.
-                for (const drop of droppedItems) {
-                    if (!drop.amount) continue;
-                    await battleDb.query(
-                        "INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) " +
-                        "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)",
-                        [hostMember.player.id_player, drop.prize, drop.amount]
-                    );
-                    hostMember.itemLoot.push({ prize: drop.prize, amount: drop.amount });
-                }
+                const credited = await creditPlayerItems(battleDb, hostMember.player.id_player, droppedItems);
+                hostMember.itemLoot.push(...credited);
             }
         
             // 6d. Colonize / Dominate Wild (استيلاء على البرية)
@@ -1004,7 +1064,16 @@ async function resolveBattle(context, dependencies) {
                         dailyHarvest ? dailyHarvest.coin  : 0,
                     ]
                 );
-                guildDominance = { guildId: conquerorGuildId, unitType, xCoord, yCoord };
+                let conquerorGuildName = String(player.guild_name || '');
+                if (!conquerorGuildName) {
+                    const [guildRows] = await battleDb.query(
+                        'SELECT name FROM guild WHERE id_guild = ? LIMIT 1',
+                        [conquerorGuildId]
+                    );
+                    const guildRow = Array.isArray(guildRows) ? guildRows[0] : null;
+                    conquerorGuildName = String((guildRow && guildRow.name) || '');
+                }
+                guildDominance = { guildId: conquerorGuildId, unitType, xCoord, yCoord, guildName: conquerorGuildName };
                 // حذف دور هذا الحلف من الطابور بعد نجاح الهجوم
                 await battleDb.query(
                     'DELETE FROM castle_attack_queue WHERE x_coord = ? AND y_coord = ? AND id_guild = ?',
@@ -1024,30 +1093,108 @@ async function resolveBattle(context, dependencies) {
                     }
                 }));
             }
-        
-            // 6e. Send Client Completion Messages
-            {
-                const itemsSummary = droppedItems.length > 0 
-                    ? ` + غنائم أدوات (${droppedItems.map(d => d.prize + ' ×' + d.amount).join('، ')})` 
-                    : '';
-                const woundedSummary = attackingCasualties.wounded > 0
-                    ? ` + تم نقل [${attackingCasualties.wounded}] جريح إلى مشفى المدينة`
-                    : '';
-                const lossReport = recoveryRate > 0 
-                        ? `سقط في المعركة [${attackingCasualties.fallen}] جندي، استعاد المهاجمون [${attackingCasualties.recovered}]، أُرسل [${attackingCasualties.wounded}] للمشفى، والخسائر النهائية [${attackingCasualties.permanentLoss}] جندي`
-                        : `الخسائر النهائية: [${attackingCasualties.permanentLoss} جندي] (100% في حرب ضد لاعبين)`;
-        
-                if (shouldBroadcastBattleVictory(unitType, unitLvl, { cityColonization })) {
+
+            // 6e-bis. Special Conquest / Challenge Prizes (prizeData.Sp: Queens 180-182, Capitals 150-155, Arenas 220-222)
+            const matchingSpPrizes = !isWilderness && !targetCityRows.length
+                ? getMatchingUnitPrizes(prizeData && prizeData.Sp, { unitType, unitLvl })
+                : [];
+            if (matchingSpPrizes.length > 0) {
+                const isQueenTarget = unitType >= 180 && unitType <= 182;
+                let spRecipients = [];
+                if (guildDominance && guildDominance.guildId > 0) {
+                    const [guildMembers] = await battleDb.query(
+                        'SELECT id_player FROM guild_member WHERE id_guild = ?',
+                        [guildDominance.guildId]
+                    );
+                    const memberIds = Array.isArray(guildMembers)
+                        ? guildMembers.map(row => Number(row && row.id_player)).filter(id => id > 0)
+                        : [];
+                    spRecipients = memberIds.length > 0
+                        ? [...new Set(memberIds)]
+                        : [...new Set(
+                            attackers
+                                .filter(m => Number(m.player && m.player.id_guild) === guildDominance.guildId)
+                                .map(m => Number(m.player.id_player))
+                                .filter(id => id > 0)
+                        )];
+                } else {
+                    spRecipients = [...new Set(
+                        attackers.map(m => Number(m.player && m.player.id_player)).filter(id => id > 0)
+                    )];
+                }
+
+                let sentCount = 0;
+                for (const recipientId of spRecipients) {
+                    const rolledSp = [];
+                    for (const p of matchingSpPrizes) {
+                        const result = rollPrize(p);
+                        if (result) rolledSp.push(result);
+                    }
+                    const creditedSp = await creditPlayerItems(battleDb, recipientId, rolledSp);
+                    if (!creditedSp.length) continue;
+
+                    sentCount++;
+                    const subject = isQueenTarget
+                        ? 'هدايا السيطرة على المملكة'
+                        : 'هدايا الفوز بالمعلم';
+                    const body = JSON.stringify({
+                        format: 'system_event_v1',
+                        type: 'sp_prize',
+                        unitType,
+                        unitTitle: String(context.unitTitle || (unitTypeData && unitTypeData.Title) || ''),
+                        xCoord,
+                        yCoord,
+                        guildName: guildDominance ? String(guildDominance.guildName || '') : '',
+                        items: creditedSp.map(item => ({ Item: item.prize, amount: item.amount }))
+                    });
+                    await battleDb.query(
+                        'INSERT INTO msg_diff (id_player, subject, body, seen, time_stamp) VALUES (?, ?, ?, 0, NOW())',
+                        [recipientId, subject, body]
+                    );
+                    sendToPlayer(recipientId, JSON.stringify({
+                        classPath: isQueenTarget ? 'Chat.QueenPrizeSent' : 'Chat.PrizeSent',
+                        xCoord,
+                        yCoord,
+                        unitType,
+                        data: { xCoord, yCoord, unitType }
+                    }));
+                }
+
+                if (sentCount > 0 && guildDominance && guildDominance.guildId > 0) {
                     broadcast(JSON.stringify({
-                        classPath: 'Chat.WorldMsg',
+                        classPath: 'Guild.PrizeSent',
+                        GuildName: guildDominance.guildName || '',
+                        xCoord,
+                        yCoord,
+                        unitType,
                         data: {
-                            id_player: 0,
-                            name: 'النظام الحربي',
-                            msg: `🏆 انتصار مجيد! سحق البطل [${hero.name}] قوات [${unitTitle} مستوى ${unitLvl}] (${targetCategoryName}). ${lossReport}${woundedSummary}، غنائم الموارد: ${Object.entries(creditedLoot).map(([resource, amount]) => `${resource} ${amount}`).join('، ')}، +${honorGained} شرف${itemsSummary}!${dominated ? ' 🚩 تم الاستيلاء على البرية وضمها للمدينة بنجاح!' : ''}${guildDominance ? ` 🏰 استولى تحالف اللاعب على ${unitTitle} وأصبح يحق له الحصاد اليومي!` : ''}${cityColonization ? (cityColonization.subordinated ? ' أصبحت المدينة تابعة لمدينتك السيادية مع بقاء ملكيتها لصاحبها الأصلي.' : ` انخفض ولاء المدينة إلى ${cityColonization.loyalty}%.`) : ''}`,
-                            time: Math.floor(Date.now() / 1000)
+                            GuildName: guildDominance.guildName || '',
+                            xCoord,
+                            yCoord,
+                            unitType
                         }
                     }));
                 }
+            }
+
+            // 6f. Broadcast authentic ServerAnnounce world announcement
+            const victoryAnnouncement = buildVictoryAnnouncement({
+                unitType,
+                unitLvl,
+                xCoord,
+                yCoord,
+                player,
+                guildDominance,
+                cityColonization,
+                targetCityRows,
+                defenderPlayerName,
+                attackers,
+                joinedDefenders,
+                hostMember,
+                honorGained
+            });
+            if (victoryAnnouncement) {
+                broadcast(JSON.stringify(victoryAnnouncement));
             }
         
         } else {
@@ -1208,6 +1355,7 @@ async function resolveBattle(context, dependencies) {
 
 module.exports = {
     applyCityConquest,
+    buildVictoryAnnouncement,
     calculateCityConquestLoyalty,
     enlistCityGarrisonDefenders,
     resolveBattle,

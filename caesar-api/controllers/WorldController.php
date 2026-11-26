@@ -6,6 +6,9 @@ require_once __DIR__ . '/../services/HeroDeploymentService.php';
 
 class WorldController {
     public const MAX_BATTLE_PARTICIPANTS_PER_SIDE = 250;
+    public const MAX_DAILY_FREE_REAP_TIMES = 1;
+    public const MAX_DAILY_EXTRA_REAP_TIMES = 5;
+    public const PRIZE_RATE_SCALE = 1000;
 
     public static function handle($uri, $db) {
         switch ($uri) {
@@ -64,6 +67,10 @@ class WorldController {
             case '/api/AWorldUnit/plundePrize':
             case '/api/Guild/harvestDominance':
                 self::harvestDominance($db);
+                return true;
+            case '/api/AWorldUnit/checkReapCharge':
+            case '/api/Guild/checkReapCharge':
+                self::checkReapCharge($db);
                 return true;
             case '/api/AWorld/refreshWorldUnitLvl':
                 self::refreshWorldUnitLvl($db);
@@ -1171,19 +1178,21 @@ class WorldController {
                 'under_wall_1', 'under_wall_2', 'under_wall_3', 'under_wall_4', 'under_wall_5', 'under_wall_6', 'under_wall_7', 'under_wall_8', 'under_wall_9', 'under_wall_10', 'under_wall_11', 'under_wall_12'
             ];
 
+            $starterBuildings = [
+                'palace'     => ['type' => 12, 'lvl' => 1],
+                'wall'       => ['type' => 13, 'lvl' => 0],
+                'farm'       => ['type' => 16, 'lvl' => 1],
+                'wood'       => ['type' => 15, 'lvl' => 1],
+                'stone'      => ['type' => 18, 'lvl' => 1],
+                'mine'       => ['type' => 17, 'lvl' => 1],
+                // These are map/city placeholders only; naval combat, sea transport, and lighthouse scouting are not implemented.
+                'lighthouse' => ['type' => 20, 'lvl' => 0],
+                'seaport'    => ['type' => 19, 'lvl' => 0],
+            ];
             $bIns = $db->prepare("INSERT INTO city_building (id_city, place, type, lvl) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE type = VALUES(type), lvl = VALUES(lvl)");
             foreach ($standardPlaces as $place) {
-                $type = 0;
-                $lvl = 0;
-                if ($place === 'palace')     { $type = 12; $lvl = 1; }
-                elseif ($place === 'wall')   { $type = 13; $lvl = 1; }
-                elseif ($place === 'farm')   { $type = 16; $lvl = 1; }
-                elseif ($place === 'wood')   { $type = 15; $lvl = 1; }
-                elseif ($place === 'stone')  { $type = 18; $lvl = 1; }
-                elseif ($place === 'mine')   { $type = 17; $lvl = 1; }
-                // These are map/city placeholders only; naval combat, sea transport, and lighthouse scouting are not implemented.
-                elseif ($place === 'lighthouse') { $type = 20; $lvl = 0; }
-                elseif ($place === 'seaport')    { $type = 19; $lvl = 0; }
+                $type = $starterBuildings[$place]['type'] ?? 0;
+                $lvl  = $starterBuildings[$place]['lvl'] ?? 0;
                 $bIns->execute([$newCityId, $place, $type, $lvl]);
             }
 
@@ -1594,12 +1603,23 @@ class WorldController {
 
         if ($unitType !== null && $unitType !== false) {
             $targetBucket = $prizeFor && isset($data[$prizeFor]) ? $prizeFor : 'Win';
-            $sanitized = $sanitize($data[$targetBucket] ?? [], (int)$unitType, $lvl !== false ? $lvl : null);
+            $sanitized = $targetBucket === 'Lose'
+                ? []
+                : $sanitize($data[$targetBucket] ?? [], (int)$unitType, $lvl !== false ? $lvl : null);
+            $allBuckets = ['Lose' => []];
+            foreach (['Win', 'Sp', 'Plunder'] as $bucketName) {
+                $allBuckets[$bucketName] = $sanitize(
+                    $data[$bucketName] ?? [],
+                    (int)$unitType,
+                    $lvl !== false ? $lvl : null
+                );
+            }
             sendJson([
                 'state'    => 'ok',
                 'unitType' => (int)$unitType,
                 'prizeFor' => $targetBucket,
-                'prizes'   => $sanitized
+                'prizes'   => $sanitized,
+                'buckets'  => $allBuckets,
             ]);
             return;
         }
@@ -1666,6 +1686,166 @@ class WorldController {
         return null;
     }
 
+    private static function loadWorldUnitPrizes(): array {
+        $path = dirname(__DIR__, 2) . '/caesar-private/data/world-unit-prizes.json';
+        if (!file_exists($path) || !is_readable($path)) {
+            $path = __DIR__ . '/../../caesar-private/data/world-unit-prizes.json';
+        }
+        if (!file_exists($path) || !is_readable($path)) {
+            return [];
+        }
+        $decoded = json_decode((string)file_get_contents($path), true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private static function getPlunderEntriesForUnit(int $unitType, int $unitLvl = 1): array {
+        if ($unitType <= 0) {
+            return [];
+        }
+        $prizeData = self::loadWorldUnitPrizes();
+        $list = $prizeData['Plunder'] ?? [];
+        if (!is_array($list) || empty($list)) {
+            return [];
+        }
+        $typeRows = [];
+        foreach ($list as $row) {
+            if ((int)($row['unitType'] ?? 0) === $unitType) {
+                $typeRows[] = $row;
+            }
+        }
+        if (empty($typeRows)) {
+            return [];
+        }
+        $exact = [];
+        foreach ($typeRows as $row) {
+            if ((int)($row['lvl'] ?? 0) === $unitLvl) {
+                $exact[] = $row;
+            }
+        }
+        if (!empty($exact)) {
+            return $exact;
+        }
+        $clampedLvl = max(1, $unitLvl);
+        $fallbackLvl = (int)($typeRows[0]['lvl'] ?? 1);
+        foreach ($typeRows as $row) {
+            $rLvl = max(1, (int)($row['lvl'] ?? 1));
+            if ($rLvl <= $clampedLvl && $rLvl >= $fallbackLvl) {
+                $fallbackLvl = $rLvl;
+            }
+        }
+        $matched = [];
+        foreach ($typeRows as $row) {
+            if (max(1, (int)($row['lvl'] ?? 1)) === $fallbackLvl) {
+                $matched[] = $row;
+            }
+        }
+        return $matched;
+    }
+
+    private static function rollPlunderPrizes(array $entries, int $amountMultiplier = 1): array {
+        if (empty($entries)) {
+            return [];
+        }
+        $mult = max(1, $amountMultiplier);
+        $totals = [];
+        foreach ($entries as $entry) {
+            $itemKey = (string)($entry['prize'] ?? '');
+            if ($itemKey === '') continue;
+            $rate = max(0, min(self::PRIZE_RATE_SCALE, (int)($entry['win_rate'] ?? 0)));
+            if (mt_rand(1, self::PRIZE_RATE_SCALE) > $rate) {
+                continue;
+            }
+            $min = max(1, (int)($entry['amount_min'] ?? 1));
+            $max = max($min, (int)($entry['amount_max'] ?? $min));
+            $amount = mt_rand($min, $max) * $mult;
+            if ($amount <= 0) continue;
+            $totals[$itemKey] = ($totals[$itemKey] ?? 0) + $amount;
+        }
+        $result = [];
+        foreach ($totals as $itemKey => $amount) {
+            $result[] = ['Item' => $itemKey, 'amount' => $amount];
+        }
+        return $result;
+    }
+
+    private static function getDominanceRepeatItemKey(int $unitType): ?string {
+        $map = [
+            180 => 'bronze_horn',
+            181 => 'silver_horn',
+            182 => 'gold_horn',
+            184 => 'bronze_order',
+            185 => 'silver_order',
+            186 => 'gold_order',
+        ];
+        return $map[$unitType] ?? null;
+    }
+
+    private static function fetchPlayerHarvestState($db, int $xCoord, int $yCoord, int $idPlayer, int $unitType, bool $forUpdate = false): array {
+        $lockClause = $forUpdate ? ' FOR UPDATE' : '';
+        $harvestRow = false;
+        try {
+            $stmt = $db->prepare(
+                'SELECT harvested_at, harvest_count, window_started_at FROM guild_dominance_harvest ' .
+                'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1' . $lockClause
+            );
+            $stmt->execute([$xCoord, $yCoord, $idPlayer]);
+            $harvestRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (\Throwable $e) {
+            try {
+                $stmt = $db->prepare(
+                    'SELECT harvested_at FROM guild_dominance_harvest ' .
+                    'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1' . $lockClause
+                );
+                $stmt->execute([$xCoord, $yCoord, $idPlayer]);
+                $harvestRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            } catch (\Throwable $ignored) {}
+        }
+
+        $now = time();
+        $lastHarvestAt = $harvestRow ? (int)($harvestRow['harvested_at'] ?? 0) : 0;
+        $windowStartedAt = $harvestRow ? (int)($harvestRow['window_started_at'] ?? 0) : 0;
+        if ($windowStartedAt <= 0) {
+            $windowStartedAt = $lastHarvestAt;
+        }
+        $rawCount = $harvestRow ? (int)($harvestRow['harvest_count'] ?? 0) : 0;
+        if ($rawCount <= 0 && $lastHarvestAt > 0) {
+            $rawCount = 1;
+        }
+
+        $elapsed = $windowStartedAt > 0 ? max(0, $now - $windowStartedAt) : 86400;
+        $inWindow = ($windowStartedAt > 0 && $elapsed < 86400);
+        $dailyCount = $inWindow ? $rawCount : 0;
+        $remainingSec = $inWindow ? max(0, 86400 - $elapsed) : 0;
+
+        $freeLimit = self::MAX_DAILY_FREE_REAP_TIMES;
+        $extraLimit = self::MAX_DAILY_EXTRA_REAP_TIMES;
+        $maxLimit = $freeLimit + $extraLimit;
+        $isFree = $dailyCount < $freeLimit;
+        $reachDailyLimit = $dailyCount >= $maxLimit;
+        $nextExtraIndex = max(1, $dailyCount - $freeLimit + 1);
+        $coinCost = $isFree ? 0 : (10 * $nextExtraIndex);
+
+        return [
+            'now'              => $now,
+            'inWindow'         => $inWindow,
+            'windowStartedAt'  => $windowStartedAt,
+            'lastHarvestAt'    => $lastHarvestAt,
+            'dailyCount'       => $dailyCount,
+            'dailyFreeLimit'   => $freeLimit,
+            'dailyExtraLimit'  => $extraLimit,
+            'dailyMaxLimit'    => $maxLimit,
+            'chargeCount'      => max(0, $dailyCount - $freeLimit),
+            'remainingSec'     => $remainingSec,
+            'canHarvestFree'   => $isFree,
+            'canRepeatHarvest' => !$isFree && !$reachDailyLimit,
+            'reachDailyLimit'  => $reachDailyLimit,
+            'reapNeedPay'      => !$isFree && !$reachDailyLimit,
+            'nextExtraIndex'   => $nextExtraIndex,
+            'coinCost'         => $coinCost,
+            'requiredItemKey'  => self::getDominanceRepeatItemKey($unitType),
+        ];
+    }
+
     // ── Guild Dominance: get all dominated castles/queens ─────────────────────
     public static function getGuildDominance($db) {
         $player = self::authenticatePlayer($db, true);
@@ -1684,45 +1864,48 @@ class WorldController {
         $rows = $stmt2->fetchAll();
 
         $units = [];
-        $now = time();
         foreach ($rows as $r) {
             // Per-player cooldown: check guild_dominance_harvest for this specific player
             $remainingSec = 86400; // default: not ready
             $canHarvest = false;
+            $canRepeat = false;
+            $dailyCount = 0;
+            $dailyMax = self::MAX_DAILY_FREE_REAP_TIMES + self::MAX_DAILY_EXTRA_REAP_TIMES;
             if ($idGuild > 0 && (int)$r['id_guild'] === $idGuild) {
-                $lastHarvestAt = 0;
-                try {
-                    $phStmt = $db->prepare(
-                        'SELECT harvested_at FROM guild_dominance_harvest ' .
-                        'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1'
-                    );
-                    $phStmt->execute([(int)$r['x_coord'], (int)$r['y_coord'], $idPlayer]);
-                    $phRow = $phStmt->fetch(PDO::FETCH_ASSOC);
-                    $lastHarvestAt = $phRow ? (int)$phRow['harvested_at'] : 0;
-                } catch (\Throwable $e) {}
-
-                $elapsed = max(0, $now - $lastHarvestAt);
-                $remainingSec = max(0, 86400 - $elapsed);
-                $canHarvest = $remainingSec === 0;
+                $hState = self::fetchPlayerHarvestState(
+                    $db,
+                    (int)$r['x_coord'],
+                    (int)$r['y_coord'],
+                    $idPlayer,
+                    (int)$r['unit_type'],
+                    false
+                );
+                $remainingSec = $hState['remainingSec'];
+                $canHarvest = $hState['canHarvestFree'];
+                $canRepeat = $hState['canRepeatHarvest'];
+                $dailyCount = $hState['dailyCount'];
             }
             $units[] = [
-                'x_coord'       => (int)$r['x_coord'],
-                'y_coord'       => (int)$r['y_coord'],
-                'unit_type'     => (int)$r['unit_type'],
-                'unit_lvl'      => (int)$r['unit_lvl'],
-                'id_guild'      => (int)$r['id_guild'],
-                'id_player'     => (int)$r['id_player'],
-                'guild_name'    => (string)($r['guild_name'] ?? ''),
-                'player_name'   => (string)($r['player_name'] ?? ''),
-                'conquered_at'  => (int)$r['conquered_at'],
-                'last_harvest_at' => (int)$r['last_harvest_at'],
-                'daily_food'    => (int)$r['daily_food'],
-                'daily_wood'    => (int)$r['daily_wood'],
-                'daily_stone'   => (int)$r['daily_stone'],
-                'daily_metal'   => (int)$r['daily_metal'],
-                'daily_coin'    => (int)$r['daily_coin'],
-                'remaining_sec' => $remainingSec,
-                'can_harvest'   => $canHarvest,
+                'x_coord'            => (int)$r['x_coord'],
+                'y_coord'            => (int)$r['y_coord'],
+                'unit_type'          => (int)$r['unit_type'],
+                'unit_lvl'           => (int)$r['unit_lvl'],
+                'id_guild'           => (int)$r['id_guild'],
+                'id_player'          => (int)$r['id_player'],
+                'guild_name'         => (string)($r['guild_name'] ?? ''),
+                'player_name'        => (string)($r['player_name'] ?? ''),
+                'conquered_at'       => (int)$r['conquered_at'],
+                'last_harvest_at'    => (int)$r['last_harvest_at'],
+                'daily_food'         => (int)$r['daily_food'],
+                'daily_wood'         => (int)$r['daily_wood'],
+                'daily_stone'        => (int)$r['daily_stone'],
+                'daily_metal'        => (int)$r['daily_metal'],
+                'daily_coin'         => (int)$r['daily_coin'],
+                'remaining_sec'      => $remainingSec,
+                'can_harvest'        => $canHarvest,
+                'can_repeat_harvest' => $canRepeat,
+                'daily_harvest_count'=> $dailyCount,
+                'daily_max_harvests' => $dailyMax,
             ];
         }
         sendJson(['state' => 'ok', 'units' => $units, 'id_guild' => $idGuild]);
@@ -1746,7 +1929,7 @@ class WorldController {
         $playerGuildId = (int)($authPlayer['id_guild'] ?? 0);
 
         $stmt = $db->prepare(
-            'SELECT gd.id_guild, gd.conquered_at, p.name AS PlayerName, g.name AS GuildName ' .
+            'SELECT gd.id_guild, gd.unit_type, gd.conquered_at, p.name AS PlayerName, g.name AS GuildName ' .
             'FROM guild_dominance gd ' .
             'LEFT JOIN player p ON p.id_player = gd.id_player ' .
             'LEFT JOIN guild g ON g.id_guild = gd.id_guild ' .
@@ -1759,39 +1942,133 @@ class WorldController {
             return;
         }
 
-        // ── Per-player harvest cooldown ──────────────────────────────────────────
+        // ── Per-player harvest cooldown & repeat plunder status ──────────────────
         $remainingSec = 0;
         $canHarvest = false;
+        $canRepeat = false;
+        $reachLimit = false;
+        $dailyCount = 0;
+        $dailyMax = self::MAX_DAILY_FREE_REAP_TIMES + self::MAX_DAILY_EXTRA_REAP_TIMES;
+        $nextCoin = 0;
+        $nextItem = self::getDominanceRepeatItemKey((int)$unitType);
         $dominantGuildId = (int)$dominance['id_guild'];
         if ($idPlayer > 0 && $playerGuildId > 0 && $playerGuildId === $dominantGuildId) {
-            $lastHarvestAt = 0;
-            try {
-                $harvestStmt = $db->prepare(
-                    'SELECT harvested_at FROM guild_dominance_harvest ' .
-                    'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1'
-                );
-                $harvestStmt->execute([$xCoord, $yCoord, $idPlayer]);
-                $harvestRow = $harvestStmt->fetch(PDO::FETCH_ASSOC);
-                $lastHarvestAt = $harvestRow ? (int)$harvestRow['harvested_at'] : 0;
-            } catch (\Throwable $e) {}
-
-            $elapsed = max(0, time() - $lastHarvestAt);
-            $remainingSec = max(0, 86400 - $elapsed);
-            $canHarvest = $remainingSec === 0;
+            $hState = self::fetchPlayerHarvestState($db, $xCoord, $yCoord, $idPlayer, (int)$unitType, false);
+            $remainingSec = $hState['remainingSec'];
+            $canHarvest = $hState['canHarvestFree'];
+            $canRepeat = $hState['canRepeatHarvest'];
+            $reachLimit = $hState['reachDailyLimit'];
+            $dailyCount = $hState['dailyCount'];
+            $nextCoin = $hState['coinCost'];
         }
 
         sendJson([[
-            'PlayerName'    => (string)($dominance['PlayerName'] ?? ''),
-            'GuildName'     => (string)($dominance['GuildName'] ?? ''),
-            'id_guild'      => $dominantGuildId,
-            'playerGuildId' => $playerGuildId,
-            'totalDuration' => max(0, time() - (int)$dominance['conquered_at']),
-            'remaining_sec' => $remainingSec,
-            'can_harvest'   => $canHarvest,
+            'PlayerName'            => (string)($dominance['PlayerName'] ?? ''),
+            'GuildName'             => (string)($dominance['GuildName'] ?? ''),
+            'id_guild'              => $dominantGuildId,
+            'playerGuildId'         => $playerGuildId,
+            'totalDuration'         => max(0, time() - (int)$dominance['conquered_at']),
+            'remaining_sec'         => $remainingSec,
+            'can_harvest'           => $canHarvest,
+            'can_repeat_harvest'    => $canRepeat,
+            'reach_daily_reap_limit'=> $reachLimit,
+            'daily_harvest_count'   => $dailyCount,
+            'daily_max_harvests'    => $dailyMax,
+            'next_reap_coin'        => $nextCoin,
+            'next_reap_item'        => $nextItem,
         ]]);
     }
 
-    // ── Guild Dominance: harvest daily resources (per-player cooldown) ─────────
+    public static function checkReapCharge($db): void {
+        $player = self::authenticatePlayer($db, true);
+        $idPlayer = (int)$player['id_player'];
+        $playerGuildId = (int)($player['id_guild'] ?? 0);
+        if (!$idPlayer || !$playerGuildId) {
+            http_response_code(401);
+            sendJson(['state' => 'not_logged_in', 'success' => false]);
+            return;
+        }
+
+        $xCoord = (int)($_REQUEST['xCoord'] ?? 0);
+        $yCoord = (int)($_REQUEST['yCoord'] ?? 0);
+
+        $gdStmt = $db->prepare(
+            'SELECT gd.id_guild, gd.unit_type, gd.unit_lvl FROM guild_dominance gd ' .
+            'WHERE gd.x_coord = ? AND gd.y_coord = ? LIMIT 1'
+        );
+        $gdStmt->execute([$xCoord, $yCoord]);
+        $gd = $gdStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$gd) {
+            sendJson(['state' => 'not_dominated', 'success' => false]);
+            return;
+        }
+        if ((int)$gd['id_guild'] !== $playerGuildId) {
+            sendJson(['state' => 'not_your_guild', 'success' => false]);
+            return;
+        }
+
+        $unitType = (int)($gd['unit_type'] ?? $_REQUEST['unitType'] ?? 0);
+        $unitLvl = max(1, (int)($gd['unit_lvl'] ?? 1));
+        $hState = self::fetchPlayerHarvestState($db, $xCoord, $yCoord, $idPlayer, $unitType, false);
+
+        $playerGold = (int)($player['gold'] ?? 0);
+        if (!array_key_exists('gold', $player)) {
+            try {
+                $gStmt = $db->prepare('SELECT gold FROM player WHERE id_player = ? LIMIT 1');
+                $gStmt->execute([$idPlayer]);
+                $gVal = $gStmt->fetchColumn();
+                if ($gVal !== false) $playerGold = (int)$gVal;
+            } catch (\Throwable $ignored) {}
+        }
+
+        $reqItemKey = $hState['requiredItemKey'];
+        $reqOwned = 0;
+        if ($reqItemKey !== null) {
+            try {
+                $iStmt = $db->prepare('SELECT amount FROM player_item WHERE id_player = ? AND id_item = ? LIMIT 1');
+                $iStmt->execute([$idPlayer, $reqItemKey]);
+                $iVal = $iStmt->fetchColumn();
+                if ($iVal !== false) $reqOwned = (int)$iVal;
+            } catch (\Throwable $ignored) {}
+        }
+
+        $plunderEntries = self::getPlunderEntriesForUnit($unitType, $unitLvl);
+        $previewMult = $hState['canHarvestFree'] ? 1 : (1 + $hState['nextExtraIndex']);
+        $previewItems = array_map(static function ($row) use ($previewMult) {
+            return [
+                'Item'       => (string)($row['prize'] ?? ''),
+                'amount_min' => max(1, (int)($row['amount_min'] ?? 1)) * $previewMult,
+                'amount_max' => max(1, (int)($row['amount_max'] ?? 1)) * $previewMult,
+            ];
+        }, $plunderEntries);
+
+        sendJson([
+            'state'                => 'ok',
+            'success'              => true,
+            'unitType'             => $unitType,
+            'reapNeedPay'          => $hState['reapNeedPay'],
+            'reachDailyReapLimit'  => $hState['reachDailyLimit'],
+            'dailyFreeLimit'       => $hState['dailyFreeLimit'],
+            'dailyExtraLimit'      => $hState['dailyExtraLimit'],
+            'dailyHarvestCount'    => $hState['dailyCount'],
+            'dailyMaxLimit'        => $hState['dailyMaxLimit'],
+            'dailyChargeReapCount' => $hState['chargeCount'],
+            'remainingFreeCount'   => max(0, $hState['dailyFreeLimit'] - $hState['dailyCount']),
+            'remainingExtraCount'  => max(0, $hState['dailyExtraLimit'] - $hState['chargeCount']),
+            'remaining_sec'        => $hState['remainingSec'],
+            'coin'                 => $hState['coinCost'],
+            'playerGold'           => $playerGold,
+            'requiredItem'         => $reqItemKey !== null ? [
+                'Item'   => $reqItemKey,
+                'amount' => 1,
+                'owned'  => $reqOwned,
+            ] : null,
+            'previewMultiplier'    => $previewMult,
+            'previewItems'         => $previewItems,
+        ]);
+    }
+
+    // ── Guild Dominance: harvest daily rewards & repeat plunder ───────────────
     public static function harvestDominance($db) {
         $player = self::authenticatePlayer($db, true);
         $idPlayer = (int)$player['id_player'];
@@ -1805,12 +2082,13 @@ class WorldController {
 
         $xCoord = (int)($_REQUEST['xCoord'] ?? 0);
         $yCoord = (int)($_REQUEST['yCoord'] ?? 0);
+        $payMethod = trim((string)($_REQUEST['payMethod'] ?? ''));
 
         $db->beginTransaction();
         try {
             // 1. Fetch dominance record (without locking the player row to avoid deadlocks)
             $gdStmt = $db->prepare(
-                'SELECT gd.id_guild, gd.daily_food, gd.daily_wood, gd.daily_stone, gd.daily_metal, gd.daily_coin ' .
+                'SELECT gd.id_guild, gd.unit_type, gd.unit_lvl, gd.daily_food, gd.daily_wood, gd.daily_stone, gd.daily_metal, gd.daily_coin ' .
                 'FROM guild_dominance gd ' .
                 'WHERE gd.x_coord = ? AND gd.y_coord = ? LIMIT 1 FOR UPDATE'
             );
@@ -1828,56 +2106,154 @@ class WorldController {
                 return;
             }
 
-            // 2. Check per-player harvest cooldown (24h)
-            $now = time();
-            $lastHarvestAt = 0;
-            try {
-                $harvestStmt = $db->prepare(
-                    'SELECT harvested_at FROM guild_dominance_harvest ' .
-                    'WHERE x_coord = ? AND y_coord = ? AND id_player = ? LIMIT 1 FOR UPDATE'
-                );
-                $harvestStmt->execute([$xCoord, $yCoord, $idPlayer]);
-                $harvestRow = $harvestStmt->fetch(PDO::FETCH_ASSOC);
-                $lastHarvestAt = $harvestRow ? (int)$harvestRow['harvested_at'] : 0;
-            } catch (\Throwable $e) {}
+            $unitType = (int)($gd['unit_type'] ?? $_REQUEST['unitType'] ?? 0);
+            $unitLvl = max(1, (int)($gd['unit_lvl'] ?? 1));
 
-            if ($lastHarvestAt > 0 && $now - $lastHarvestAt < 86400) {
-                $remaining = 86400 - ($now - $lastHarvestAt);
-                $db->rollBack();
-                sendJson(['state' => 'harvest_cooldown', 'remaining_sec' => $remaining]);
-                return;
+            // 2. Check per-player harvest window & daily repeat count
+            $hState = self::fetchPlayerHarvestState($db, $xCoord, $yCoord, $idPlayer, $unitType, true);
+            $now = $hState['now'];
+            $isFree = $hState['canHarvestFree'];
+            $plunderEntries = self::getPlunderEntriesForUnit($unitType, $unitLvl);
+
+            if (!$isFree) {
+                if ($hState['reachDailyLimit']) {
+                    $db->rollBack();
+                    sendJson([
+                        'state'               => 'daily_reap_limit',
+                        'reachDailyReapLimit' => true,
+                        'remaining_sec'       => $hState['remainingSec'],
+                        'dailyHarvestCount'   => $hState['dailyCount'],
+                        'dailyMaxLimit'       => $hState['dailyMaxLimit'],
+                    ]);
+                    return;
+                }
+
+                if ($payMethod === '') {
+                    $db->rollBack();
+                    sendJson([
+                        'state'               => 'harvest_cooldown',
+                        'remaining_sec'       => $hState['remainingSec'],
+                        'reapNeedPay'         => true,
+                        'reachDailyReapLimit' => false,
+                        'coin'                => $hState['coinCost'],
+                        'dailyHarvestCount'   => $hState['dailyCount'],
+                        'dailyMaxLimit'       => $hState['dailyMaxLimit'],
+                        'dailyChargeReapCount'=> $hState['chargeCount'],
+                        'requiredItem'        => $hState['requiredItemKey'] !== null ? [
+                            'Item'   => $hState['requiredItemKey'],
+                            'amount' => 1,
+                        ] : null,
+                    ]);
+                    return;
+                }
+
+                if ($payMethod === 'gold') {
+                    $goldCost = $hState['coinCost'];
+                    $goldStmt = $db->prepare('UPDATE player SET gold = gold - ? WHERE id_player = ? AND gold >= ?');
+                    $goldStmt->execute([$goldCost, $idPlayer, $goldCost]);
+                    if ($goldStmt->rowCount() !== 1) {
+                        $db->rollBack();
+                        sendJson(['state' => 'not_enough_gold', 'requiredGold' => $goldCost]);
+                        return;
+                    }
+                } elseif ($payMethod === 'item') {
+                    $reqItem = $hState['requiredItemKey'];
+                    if ($reqItem === null) {
+                        $db->rollBack();
+                        sendJson(['state' => 'error_invalid_item']);
+                        return;
+                    }
+                    $deductStmt = $db->prepare(
+                        'UPDATE player_item SET amount = amount - 1 WHERE id_player = ? AND id_item = ? AND amount >= 1'
+                    );
+                    $deductStmt->execute([$idPlayer, $reqItem]);
+                    if ($deductStmt->rowCount() !== 1) {
+                        $db->rollBack();
+                        sendJson(['state' => 'not_enough_items', 'requiredItem' => $reqItem, 'requiredAmount' => 1]);
+                        return;
+                    }
+                    $db->prepare(
+                        'DELETE FROM player_item WHERE id_player = ? AND id_item = ? AND amount <= 0'
+                    )->execute([$idPlayer, $reqItem]);
+                } else {
+                    $db->rollBack();
+                    sendJson(['state' => 'error_invalid_pay_method']);
+                    return;
+                }
             }
 
-            // 3. Find player's first city
-            $cityStmt = $db->prepare(
-                'SELECT id_city FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1 FOR UPDATE'
-            );
-            $cityStmt->execute([$idPlayer]);
-            $cityId = (int)$cityStmt->fetchColumn();
-            if ($cityId <= 0) {
-                $db->rollBack();
-                sendJson(['state' => 'no_city']);
-                return;
-            }
-
-            // 4. Credit resources to city
+            // 3. On free daily harvest, find player's first city & credit daily resources
             $resources = [
-                'food'  => (int)$gd['daily_food'],
-                'wood'  => (int)$gd['daily_wood'],
-                'stone' => (int)$gd['daily_stone'],
-                'metal' => (int)$gd['daily_metal'],
-                'coin'  => (int)$gd['daily_coin'],
+                'food'  => 0,
+                'wood'  => 0,
+                'stone' => 0,
+                'metal' => 0,
+                'coin'  => 0,
             ];
-            $sets = implode(', ', array_map(fn($key) => "$key = $key + ?", array_keys($resources)));
-            $db->prepare("UPDATE city SET $sets WHERE id_city = ? AND id_player = ?")
-                ->execute(array_merge(array_values($resources), [$cityId, $idPlayer]));
+            if ($isFree) {
+                $cityStmt = $db->prepare(
+                    'SELECT id_city FROM city WHERE id_player = ? ORDER BY id_city ASC LIMIT 1 FOR UPDATE'
+                );
+                $cityStmt->execute([$idPlayer]);
+                $cityId = (int)$cityStmt->fetchColumn();
+                if ($cityId <= 0) {
+                    $db->rollBack();
+                    sendJson(['state' => 'no_city']);
+                    return;
+                }
 
-            // 5. Record this player's harvest timestamp (INSERT or UPDATE)
-            $db->prepare(
-                'INSERT INTO guild_dominance_harvest (x_coord, y_coord, id_player, id_guild, harvested_at) ' .
-                'VALUES (?, ?, ?, ?, ?) ' .
-                'ON DUPLICATE KEY UPDATE id_guild = VALUES(id_guild), harvested_at = VALUES(harvested_at)'
-            )->execute([$xCoord, $yCoord, $idPlayer, $playerGuildId, $now]);
+                $resources = [
+                    'food'  => (int)$gd['daily_food'],
+                    'wood'  => (int)$gd['daily_wood'],
+                    'stone' => (int)$gd['daily_stone'],
+                    'metal' => (int)$gd['daily_metal'],
+                    'coin'  => (int)$gd['daily_coin'],
+                ];
+                $sets = implode(', ', array_map(fn($key) => "$key = $key + ?", array_keys($resources)));
+                $db->prepare("UPDATE city SET $sets WHERE id_city = ? AND id_player = ?")
+                    ->execute(array_merge(array_values($resources), [$cityId, $idPlayer]));
+            }
+
+            // 4. Roll Plunder prizes from raw Plunder table (keeping high PRIZE_RATE_SCALE = 1000)
+            $plunderMult = $isFree ? 1 : (1 + $hState['nextExtraIndex']);
+            $prizeList = self::rollPlunderPrizes($plunderEntries, $plunderMult);
+            if (!empty($prizeList)) {
+                $itemStmt = $db->prepare(
+                    'INSERT INTO player_item (id_player, id_item, amount) VALUES (?, ?, ?) ' .
+                    'ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)'
+                );
+                foreach ($prizeList as $prizeRow) {
+                    $itemStmt->execute([$idPlayer, $prizeRow['Item'], (int)$prizeRow['amount']]);
+                }
+            }
+
+            // 5. Record this player's harvest timestamp & daily window count
+            $newWindowStart = $hState['inWindow'] ? $hState['windowStartedAt'] : $now;
+            $newHarvestCount = $hState['inWindow'] ? ($hState['dailyCount'] + 1) : 1;
+            try {
+                $db->prepare(
+                    'INSERT INTO guild_dominance_harvest (x_coord, y_coord, id_player, id_guild, harvested_at, harvest_count, window_started_at) ' .
+                    'VALUES (?, ?, ?, ?, ?, ?, ?) ' .
+                    'ON DUPLICATE KEY UPDATE id_guild = VALUES(id_guild), harvested_at = VALUES(harvested_at), ' .
+                    'harvest_count = VALUES(harvest_count), window_started_at = VALUES(window_started_at)'
+                )->execute([$xCoord, $yCoord, $idPlayer, $playerGuildId, $now, $newHarvestCount, $newWindowStart]);
+            } catch (\Throwable $e) {
+                $db->prepare(
+                    'INSERT INTO guild_dominance_harvest (x_coord, y_coord, id_player, id_guild, harvested_at) ' .
+                    'VALUES (?, ?, ?, ?, ?) ' .
+                    'ON DUPLICATE KEY UPDATE id_guild = VALUES(id_guild), harvested_at = VALUES(harvested_at)'
+                )->execute([$xCoord, $yCoord, $idPlayer, $playerGuildId, $now]);
+            }
+
+            $goldRemaining = null;
+            if ($payMethod === 'gold') {
+                try {
+                    $gStmt = $db->prepare('SELECT gold FROM player WHERE id_player = ? LIMIT 1');
+                    $gStmt->execute([$idPlayer]);
+                    $gVal = $gStmt->fetchColumn();
+                    if ($gVal !== false) $goldRemaining = (int)$gVal;
+                } catch (\Throwable $ignored) {}
+            }
 
             $db->commit();
         } catch (\Throwable $error) {
@@ -1885,7 +2261,24 @@ class WorldController {
             throw $error;
         }
 
-        sendJson(['state' => 'ok', 'harvested' => $resources]);
+        $response = [
+            'state'         => 'ok',
+            'harvested'     => $resources,
+            'PrizeList'     => $prizeList,
+            'isRepeat'      => !$isFree,
+            'payMethod'     => $payMethod !== '' ? $payMethod : 'free',
+            'harvestCount'  => $newHarvestCount,
+            'dailyMaxLimit' => self::MAX_DAILY_FREE_REAP_TIMES + self::MAX_DAILY_EXTRA_REAP_TIMES,
+        ];
+        if ($payMethod === 'gold') {
+            $response['goldCost'] = $hState['coinCost'];
+            if ($goldRemaining !== null) {
+                $response['goldRemaining'] = $goldRemaining;
+            }
+        } elseif ($payMethod === 'item') {
+            $response['consumedItem'] = ['Item' => $hState['requiredItemKey'], 'amount' => 1];
+        }
+        sendJson($response);
     }
 
     // ══════════════════════════════════════════════════════════════════════════════

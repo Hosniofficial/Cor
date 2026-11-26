@@ -1263,10 +1263,11 @@ async function getBattleResolutionContext(task) {
     const [rows] = await db.query(
         'SELECT b.id_battel, b.id_player, b.id_city, b.id_hero, b.task, b.x_city, b.y_city, b.time_start, b.time_arrive, ' +
         'b.x_coord, b.y_coord, b.return_duration, b.state, h.name AS hero_name, h.avatar AS hero_avatar, ' +
-        'p.name AS player_name, p.id_guild, p.city_flag, p.prestige AS player_prestige, ' +
+        'p.name AS player_name, p.id_guild, COALESCE(g.name, \'\') AS guild_name, p.city_flag, p.prestige AS player_prestige, ' +
         'c.name AS city_name, c.x AS city_x, c.y AS city_y ' +
         'FROM world_battel b ' +
         'JOIN player p ON p.id_player = b.id_player ' +
+        'LEFT JOIN guild g ON g.id_guild = p.id_guild ' +
         'JOIN city c ON c.id_city = b.id_city ' +
         'JOIN city_hero h ON h.id_hero = b.id_hero AND h.id_player = b.id_player ' +
         'WHERE b.id_battel = ? LIMIT 1',
@@ -1312,6 +1313,7 @@ async function getBattleResolutionContext(task) {
             id_player: Number(battle.id_player),
             name: battle.player_name,
             id_guild: Number(battle.id_guild) || 0,
+            guild_name: String(battle.guild_name || ''),
             city_flag: battle.city_flag,
             prestige: Number(battle.player_prestige) || 0
         },

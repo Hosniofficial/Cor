@@ -568,7 +568,7 @@ $sessionNotice = ($_GET['reason'] ?? '') === 'account_replaced'
 
                     <!-- رابط العودة لتسجيل الدخول -->
                     <div class="tablet-links">
-                        <button type="button" class="tablet-link-btn" data-switch="login">لديك حساب بالفعل ؟ تسجيل الدخول</button>
+                        <button type="button" class="tablet-link-btn" data-switch="login">لديك حساب بالفعل؟ تسجيل الدخول</button>
                     </div>
                 </form>
             </section>

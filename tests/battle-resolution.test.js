@@ -853,3 +853,203 @@ test('castle and kingdom armies scale correctly while defense remains opt-in', a
     assert.equal(defendedCastle.getJoinedDefenders().length, 1, 'Joined guild defenders participate in combat');
     assert.equal(defendedCastle.getDominanceWrites().length, 0, 'A successful defence preserves the current owner');
 });
+
+test('guild conquest of queens and castles broadcasts authentic ServerAnnounce.Battel.GuildWin without System War chat details', async () => {
+    const runVictoryBroadcastScenario = async ({
+        unitType,
+        unitLvl = 1,
+        unitTitle = 'الملكة الصغرى',
+        attackTask = 1,
+        guildId = 4,
+        guildName = '',
+        queriedGuildName = 'أبطال روما',
+        itemLoot = [],
+        attackers = null,
+        joinedDefenders = [],
+        targetCity = null
+    }) => {
+        const broadcasts = [];
+        const attackerMember = {
+            id_member: 1, id_player: 2, id_city: 3, id_hero: 11, side: 1, task: attackTask,
+            return_duration: 60, hero_name: 'ليونيداس', hero_avatar: 1, hero_power: 50,
+            hero_power_max: 100, point_b: 0, point_b_plus: 0, player_name: 'القائد',
+            player_id_guild: guildId, city_flag: 'ROM', player_prestige: 100, city_name: 'روما',
+            city_x: 1, city_y: 1
+        };
+        const allyMember = {
+            id_member: 2, id_player: 5, id_city: 6, id_hero: 12, side: 1, task: attackTask,
+            return_duration: 60, hero_name: 'ماركوس', hero_avatar: 2, hero_power: 50,
+            hero_power_max: 100, point_b: 0, point_b_plus: 0, player_name: 'الحليف',
+            player_id_guild: guildId, city_flag: 'ROM', player_prestige: 100, city_name: 'أوستيا',
+            city_x: 2, city_y: 2
+        };
+        const memberRows = attackers
+            ? [attackerMember, allyMember, ...joinedDefenders]
+            : [attackerMember, ...joinedDefenders];
+        const heroIds = memberRows.map(m => m.id_hero);
+        const connection = {
+            async beginTransaction() {},
+            async commit() {},
+            async rollback() {},
+            release() {},
+            async query(sql, params = []) {
+                if (sql.startsWith('SELECT state, time_arrive FROM world_battel')) {
+                    return [[{ state: 'marching', time_arrive: 100 }], []];
+                }
+                if (sql.startsWith('SELECT id_guild FROM guild_dominance')) {
+                    return [[], []];
+                }
+                if (sql.startsWith('SELECT m.id_member')) {
+                    return [memberRows, []];
+                }
+                if (sql.startsWith('SELECT * FROM hero_army')) {
+                    return [heroIds.map(id_hero => ({ id_hero, f_1_type: 6, f_1_num: 100 })), []];
+                }
+                if (sql.startsWith('SELECT * FROM player_equip')) return [[], []];
+                if (sql.startsWith('SELECT id_player, medicine')) return [[], []];
+                if (sql.startsWith('SELECT id_hero, medal_den')) return [[], []];
+                if (sql.startsWith('SELECT name, prestige FROM player WHERE id_player = ?')) {
+                    return [[{ name: 'صاحب المدينة', prestige: 50 }], []];
+                }
+                if (sql.startsWith('SELECT id_city, id_player, loy, loy_max, dis_loy')) {
+                    return [[{ id_city: 90, id_player: 9, loy: 5, loy_max: 90, dis_loy: 0 }], []];
+                }
+                if (sql.startsWith('SELECT id_city FROM city_tributary')) return [[], []];
+                if (sql.startsWith('SELECT name FROM guild WHERE id_guild = ? LIMIT 1')) {
+                    return [[{ name: queriedGuildName }], []];
+                }
+                if (sql.startsWith('SELECT COUNT(*) AS amount FROM world_battel_member')) {
+                    return [[{ amount: 0 }], []];
+                }
+                if (sql.startsWith('SELECT id_city, id_player, food')) {
+                    return [[{ id_city: 3, id_player: 2, food: 100, wood: 100, stone: 100, metal: 100, coin: 100 }], []];
+                }
+                if (sql.startsWith('SELECT')) return [[], []];
+                return [{ affectedRows: 1 }, []];
+            }
+        };
+
+        await resolveBattle({
+            battelId: 300,
+            idHero: 11,
+            battleStartTime: 40,
+            battleArrivalTime: 100,
+            returnDuration: 60,
+            unitType,
+            unitLvl,
+            unitTitle,
+            attackTask,
+            xCoord: 25,
+            yCoord: 35,
+            targetCityRows: targetCity ? [targetCity] : [],
+            isBarray: false,
+            unitTypeData: {},
+            baseUnit: null,
+            hero: { id_hero: 11, name: 'ليونيداس' },
+            player: { id_player: 2, name: 'القائد', id_guild: guildId, guild_name: guildName, city_flag: 'ROM' },
+            city: { id_city: 3, x: 1, y: 1 }
+        }, {
+            getDb: async () => ({ getConnection: async () => connection }),
+            worldUnits: new Map(),
+            unitData: {},
+            unitArmy: { [unitType]: { [unitLvl]: { 1: 1 } } },
+            prizeData: { Win: itemLoot },
+            equipPowerMap: equipmentPowerMap,
+            liveServerConfig: { wounded_recovery_rate: 0, event_multipliers: {} },
+            SOL_STATS: solStats,
+            slots,
+            aggregateMemberArmy: () => ({ army: { f_1_type: 6, f_1_num: 100 }, remainingArmy: { f_1: 100 }, troops: { 6: { pre: 100, cur: 100 } } }),
+            reportArmySlots: () => ({ attackerSlots: {}, defenderSlots: {} }),
+            creditCityResources: async (db, idCity, resources) => resources,
+            advanceWorldUnitLevel: async () => 1,
+            allocateProportionally: () => ({ 1: 1 }),
+            calculateArmyPower: () => 100,
+            calculateArmyCapacity: () => 100,
+            calculateKillBasedRewards: ({ attackers: sideMembers }) => sideMembers.map(member => ({
+                member,
+                expGained: 50,
+                honorGained: 120
+            })),
+            distributeMemberTroopLosses: () => ({ 1: { f_1: 0 }, 2: { f_1: 0 } }),
+            didBattleSideWin: (victory, side) => side === 1 ? victory : !victory,
+            calculateArmyCasualties,
+            simulateTacticalCombat: (...args) => {
+                const res = simulateTacticalCombat(...args);
+                res.attackersWon = true;
+                return res;
+            },
+            hasActiveBattleAt: async () => false,
+            randomInteger: () => 1,
+            publishBroadcast: message => broadcasts.push(JSON.parse(message)),
+            publishToPlayer: () => {},
+            saveWsBattleReport: async () => {}
+        });
+
+        return broadcasts;
+    };
+
+    const queenBroadcasts = await runVictoryBroadcastScenario({ unitType: 180, unitTitle: 'الملكة الصغرى', guildName: '' });
+    assert.equal(queenBroadcasts.some(m => m.classPath === 'Chat.WorldMsg'), false, 'Queen conquest must not broadcast fake النظام الحربي chat');
+    const queenGuildWin = queenBroadcasts.find(m => m.classPath === 'ServerAnnounce.Battel.GuildWin');
+    assert.deepEqual(queenGuildWin, {
+        classPath: 'ServerAnnounce.Battel.GuildWin',
+        xCoord: 25,
+        yCoord: 35,
+        unitType: 180,
+        unitLvl: 1,
+        GuildName: 'أبطال روما',
+        PlayerName: 'القائد'
+    });
+
+    const castleBroadcasts = await runVictoryBroadcastScenario({ unitType: 184, unitTitle: 'القلاع الصغرى', guildName: 'نسور القيصر' });
+    assert.equal(castleBroadcasts.some(m => m.classPath === 'Chat.WorldMsg'), false, 'Castle conquest must not broadcast fake النظام الحربي chat');
+    assert.deepEqual(castleBroadcasts.find(m => m.classPath === 'ServerAnnounce.Battel.GuildWin'), {
+        classPath: 'ServerAnnounce.Battel.GuildWin',
+        xCoord: 25,
+        yCoord: 35,
+        unitType: 184,
+        unitLvl: 1,
+        GuildName: 'نسور القيصر',
+        PlayerName: 'القائد'
+    });
+
+    const campBroadcasts = await runVictoryBroadcastScenario({
+        unitType: 71,
+        unitLvl: 10,
+        unitTitle: 'المعسكر البريطانى',
+        guildId: 0,
+        attackers: true,
+        itemLoot: [{ unitType: 71, lvl: 10, prize: 'necklace_4', amount_min: 1, amount_max: 1, win_rate: 10000 }]
+    });
+    assert.equal(campBroadcasts.some(m => m.classPath === 'Chat.WorldMsg'), false, 'Milestone camp win must not broadcast النظام الحربي chat');
+    const battleWin = campBroadcasts.find(m => m.classPath === 'ServerAnnounce.Battel.Win');
+    assert.deepEqual(battleWin, {
+        classPath: 'ServerAnnounce.Battel.Win',
+        Attacker: { id_player: 2, name: 'القائد' },
+        Joiners: [{ id_player: 5, name: 'الحليف' }],
+        Defender: [],
+        WorldUnit: { ut: 71, l: 10, x: 25, y: 35 },
+        WinPrize: [{ Item: 'necklace_4', amount: 1 }],
+        honor: 240
+    });
+
+    const colonizedBroadcasts = await runVictoryBroadcastScenario({
+        unitType: 60,
+        unitLvl: 10,
+        attackTask: 0,
+        guildId: 4,
+        targetCity: { id_city: 90, id_player: 9, name: 'مدينة الخصم', loy: 5, wall_a: 0, wall_b: 0, wall_c: 0 }
+    });
+    assert.equal(colonizedBroadcasts.some(m => m.classPath === 'Chat.WorldMsg'), false, 'City colonization must not broadcast النظام الحربي chat');
+    assert.deepEqual(colonizedBroadcasts.find(m => m.classPath === 'ServerAnnounce.CityColonized'), {
+        classPath: 'ServerAnnounce.CityColonized',
+        xCoord: 25,
+        yCoord: 35,
+        CityColonizerFlag: 'ROM',
+        ColonizerIdGuild: 4,
+        ColonizerIdPlayer: 2,
+        ColonizerName: 'القائد',
+        CityColonizedName: 'مدينة الخصم',
+        ColonizedName: 'صاحب المدينة'
+    });
+});
