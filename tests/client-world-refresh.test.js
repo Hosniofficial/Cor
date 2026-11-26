@@ -153,7 +153,7 @@ test('world scene cleanup only visits unique units with active display objects',
     const switchEnd = clientSource.indexOf('\n\n$(document).on("click", "#player-city-list ul li"', switchStart);
     assert.ok(switchStart >= 0 && switchEnd > switchStart, 'world scene switch handler should exist');
     const switchSource = clientSource.slice(switchStart, switchEnd);
-    assert.ok(switchSource.includes('getWorldSceneUnits(Caesar.GE.WorldScene)'), 'scene cleanup must use active world units');
+    assert.ok(switchSource.includes('Caesar.GE.switchSceneView("World", "City")'), 'scene switch must put World scene to sleep instead of tearing down active world units');
     assert.ok(!switchSource.includes('for (var index in Caesar.worldAllUnits)'), 'scene cleanup must not scan the full world unit collection');
 });
 

@@ -30,7 +30,7 @@ Translate.General.Lumber = {
     "de": "Holz",
     "zh": "木材",
     "en": "Lumber",
-    "ar": "اخشاب"
+    "ar": "أخشاب"
 };
 Translate.General.Stone = {
     "pt": "Pedra",
@@ -38,7 +38,7 @@ Translate.General.Stone = {
     "de": "Stein",
     "zh": "石料",
     "en": "Stone",
-    "ar": "احجار"
+    "ar": "أحجار"
 };
 Translate.General.Iron = {
     "pt": "Ferro",
@@ -73,7 +73,7 @@ Translate.Button.General.GoTo = {
     "de": "wechseln",
     "zh": "跳转",
     "en": "Go To",
-    "ar": "اذهب الى"
+    "ar": "اذهب إلى"
 };
 Translate.Button.General.Search = {
     "pt": "Procurar",
@@ -97,7 +97,7 @@ Translate.Button.General.JoinAttack = {
     "de": "Eintritt beim Angreifer",
     "zh": "加入进攻",
     "en": "Join Assailant",
-    "ar": "الانظمام للهجوم"
+    "ar": "الانضمام للهجوم"
 };
 Translate.Button.General.JoinDefence = {
     "pt": "Junte-se A Defender",
@@ -105,7 +105,7 @@ Translate.Button.General.JoinDefence = {
     "de": "An Verteidigung teilnehmen",
     "zh": "加入防守",
     "en": "Join Defender",
-    "ar": "الإنظمام للدفاع"
+    "ar": "الانضمام للدفاع"
 };
 Translate.Button.General.Use = {
     "pt": "Usar",
@@ -129,7 +129,7 @@ Translate.Button.General.Cancel = {
     "de": "Abbr.",
     "zh": "取消",
     "en": "Cancel",
-    "ar": "الغاء"
+    "ar": "إلغاء"
 };
 Translate.Button.General.Confirm = {
     "pt": "Confirma",
@@ -137,7 +137,7 @@ Translate.Button.General.Confirm = {
     "de": "Ja",
     "zh": "确定",
     "en": "Confirm",
-    "ar": "تاكيد"
+    "ar": "تأكيد"
 };
 Translate.Button.MenuList.GetSomeGold = {
     "pt": "Obt.Ouro",
@@ -145,7 +145,7 @@ Translate.Button.MenuList.GetSomeGold = {
     "de": "Gold auf.",
     "zh": "充值",
     "en": "Get Some Gold Now!",
-    "ar": "احصل على الذهب الان"
+    "ar": "احصل على الذهب الآن"
 };
 Translate.Button.MenuList.BuyItems = {
     "pt": "Comprar Item",
@@ -177,7 +177,7 @@ Translate.Button.MenuList.AcceptReward = {
     "de": "Auszeichnung erhalten",
     "zh": "领取奖励",
     "en": "Accept Reward",
-    "ar": "قبول المكافاة"
+    "ar": "قبول المكافأة"
 };
 Translate.Button.MenuList.DeleteSelected = {
     "pt": "Deletar Selecionados",
@@ -201,7 +201,7 @@ Translate.Button.MenuList.LeagueManagement = {
     "de": "Allianz-Verwaltung",
     "zh": "联盟管理",
     "en": "League Management",
-    "ar": "ادارة الحلف"
+    "ar": "إدارة الحلف"
 };
 Translate.Button.MenuList.View = {
     "pt": "Ver",
@@ -273,7 +273,7 @@ Translate.Button.Hero.Reset = {
     "de": "Erneut",
     "zh": "重置",
     "en": "Reset",
-    "ar": "اعادة تشغيل"
+    "ar": "إعادة تشغيل"
 };
 Translate.Button.Hero.AppointConsul = {
     "pt": "Apontar Cônsul",
@@ -297,7 +297,7 @@ Translate.Button.Hero.Reverse = {
     "de": "Anfang",
     "zh": "初始化",
     "en": "Reverse",
-    "ar": "اعادة التهيئة"
+    "ar": "إعادة التهيئة"
 };
 Translate.Button.Hero.Launch = {
     "pt": "Lançar",
@@ -305,7 +305,7 @@ Translate.Button.Hero.Launch = {
     "de": "Angreifen",
     "zh": "发动进攻",
     "en": "Launch",
-    "ar": "إبدأ الهجوم"
+    "ar": "ابدأ الهجوم"
 };
 Translate.Button.Hero.Exercise = {
     "pt": "Exercício",
@@ -345,7 +345,7 @@ Translate.Button.Chat.RoamTo = {
     "de": "Check",
     "zh": "跳转",
     "en": "Roam To",
-    "ar": "تجول الى"
+    "ar": "تجول إلى"
 };
 Translate.Button.Building.Confirm = {
     "pt": "Confirma",
@@ -353,7 +353,7 @@ Translate.Button.Building.Confirm = {
     "de": "Ja",
     "zh": "确定",
     "en": "Confirm",
-    "ar": "تاكيد"
+    "ar": "تأكيد"
 };
 Translate.Button.Building.Produce = {
     "pt": "Produzir",
@@ -361,7 +361,7 @@ Translate.Button.Building.Produce = {
     "de": "herstellen",
     "zh": "生产",
     "en": "Produce",
-    "ar": "انتاج"
+    "ar": "إنتاج"
 };
 Translate.Button.Building.Erect = {
     "pt": "Erguer",
@@ -369,7 +369,7 @@ Translate.Button.Building.Erect = {
     "de": "Errichten",
     "zh": "建造",
     "en": "Erect",
-    "ar": "انشاء"
+    "ar": "إنشاء"
 };
 Translate.Button.Building.ChooseDeity = {
     "pt": "Escolher Divind.",
@@ -385,7 +385,7 @@ Translate.Button.Building.Maximize = {
     "de": "Maximieren",
     "zh": "最大",
     "en": "Maximize",
-    "ar": "الحد الاقصي"
+    "ar": "الحد الأقصى"
 };
 Translate.Button.Building.TransportResources = {
     "pt": "Transp.Recursos",
@@ -665,7 +665,7 @@ Translate.Title.TH.Potential = {
     "de": "Potential",
     "zh": "潜力",
     "en": "Potential (POT)",
-    "ar": "الامكانيات"
+    "ar": "الإمكانات"
 };
 Translate.Title.TH.Sway = {
     "pt": "Destrez",
@@ -705,7 +705,7 @@ Translate.Title.TH.SignUpFee = {
     "de": "Anstellungsgebühr",
     "zh": "雇佣费用",
     "en": "Sign Up Fee",
-    "ar": "اجرة الاستعمال"
+    "ar": "أجرة الاستعمال"
 };
 Translate.Title.TH.Retainer = {
     "pt": "Retentor",
@@ -761,7 +761,7 @@ Translate.Title.TH.PendingLeagueApplication = {
     "de": "Allianzen, die du beantragst",
     "zh": "您申请加入的联盟",
     "en": "Pending League Application (good luck!)",
-    "ar": "في طور معالجة اقامة الحلف (تمنياتي بالتوفيق!)ا"
+    "ar": "قيد إنشاء الحلف (تمنياتي بالتوفيق!)"
 };
 Translate.Title.TH.PendingLeagueInvitation = {
     "pt": "Convite Pendente (Aceitar 1 irá declinar os outros!)",
@@ -769,7 +769,7 @@ Translate.Title.TH.PendingLeagueInvitation = {
     "de": "Allianzen, die dich einladen",
     "zh": "邀请您加入的联盟",
     "en": "Pending Invitation (Accepting one will decline others!)",
-    "ar": "ارسال طلب الانضمام ( انضمام عضوقد يلغي اخر!)ا"
+    "ar": "إرسال طلب الانضمام (قد يحل قبول عضو محل طلب آخر)"
 };
 Translate.Title.TH.Friendly = {
     "pt": "Amigável",
@@ -809,7 +809,7 @@ Translate.Title.TH.Member = {
     "de": "Mitglied",
     "zh": "成员",
     "en": "Member(s)",
-    "ar": "اعضاء"
+    "ar": "أعضاء"
 };
 Translate.Title.TH.Post = {
     "pt": "Postar",
@@ -849,7 +849,7 @@ Translate.Title.TH.SignUpRequire = {
     "de": "Rekrutierungsbedingung",
     "zh": "招募条件",
     "en": "Sign Up Require",
-    "ar": "شروط التاجير"
+    "ar": "شروط التأجير"
 };
 Translate.Title.TH.NeadedAmount = {
     "pt": "Quantidade Necessária",
@@ -897,7 +897,7 @@ Translate.Title.TH.Members = {
     "de": "Mitglied",
     "zh": "成员",
     "en": "Member(s)",
-    "ar": "اعضاء"
+    "ar": "أعضاء"
 };
 Translate.Title.TH.Expedition = {
     "pt": "Expedição",
@@ -913,7 +913,7 @@ Translate.Title.TH.HomeCity = {
     "de": "Heimatstadt",
     "zh": "所属城市",
     "en": "Home City",
-    "ar": "المدينة الام"
+    "ar": "المدينة الأم"
 };
 Translate.Title.TH.TargetArena = {
     "pt": "Arena Alvo",
@@ -953,7 +953,7 @@ Translate.Title.TH.Duration = {
     "de": "Dauer",
     "zh": "持续时间",
     "en": "Duration",
-    "ar": "مده"
+    "ar": "مدة"
 };
 Translate.Title.TH.Select = {
     "pt": "Selecionar",
@@ -1065,7 +1065,7 @@ Translate.Button.Building.AddItem = {
     "de": "",
     "zh": "",
     "en": "Add Item",
-    "ar": "اضافة مادة"
+    "ar": "إضافة مادة"
 };
 Translate.Button.Building.AddHero = {
     "pt": "",
@@ -1073,7 +1073,7 @@ Translate.Button.Building.AddHero = {
     "de": "",
     "zh": "",
     "en": "Add Hero",
-    "ar": "اضافة بطل"
+    "ar": "إضافة بطل"
 };
 Translate.Title.Alert.ShowHero = {
     "pt": "",
@@ -1097,7 +1097,7 @@ Translate.Title.MenuList.GodGate = {
     "de": "",
     "zh": "",
     "en": "Gods Gate",
-    "ar": "بوابات التسليح"
+    "ar": "بوابات الآلهة"
 };
 Translate.Title.TH.TotalPoints = {
     "pt": "",
@@ -1129,7 +1129,7 @@ Translate.Title.TH.LastSeen = {
     "de": "",
     "zh": "",
     "en": "Last Seen",
-    "ar": "اخر تواجد"
+    "ar": "آخر تواجد"
 };
 Translate.Title.TH.Info = {
     "pt": "",
@@ -1164,7 +1164,7 @@ Translate.Msg.ConfirmChanegeLanguage = {
     "de": "Bestätigen Sie, um die Standardsprache in Deutsch zu ändern",
     "zh": "确认将默认语言更改为中文",
     "en": "Confirm to Change Default Language to English",
-    "ar": "تأكيد تغير اللغة الى العربية"
+    "ar": "تأكيد تغيير اللغة إلى العربية"
 };
 
 Translate.Title.Box.pleaseSelect = {
@@ -1332,7 +1332,7 @@ NavBar.FavoriteCoords = [{
 }];
 
 NavBar.Report = [{
-        "title_ar": "ارض المعركة",
+        "title_ar": "أرض المعركة",
         "title_en": "Arena",
         "title": "battle",
         "title_es": "Arena",
@@ -1385,12 +1385,12 @@ NavBar.Quest = [{
     },
     {
     "title_en": "<div class=\"nav-notif\" id=\"Quest-daily-notif\"></div>            <lable>Daily</lable>",
-    "title_ar": "<div class=\"nav-notif\" id=\"Quest-daily-notif\"></div>            <lable>مهمات يومية</lable>",
+    "title_ar": "<div class=\"nav-notif\" id=\"Quest-daily-notif\"></div>            <lable>مهام يومية</lable>",
         "title": "daily_quest"
     },
     {
     "title_en": "<div class=\"nav-notif\" id=\"Quest-trade-notif\"></div>            <lable>Daily Barter</lable>",
-    "title_ar": "<div class=\"nav-notif\" id=\"Quest-trade-notif\"></div>            <lable>التبادل اليومى</lable>",
+    "title_ar": "<div class=\"nav-notif\" id=\"Quest-trade-notif\"></div>            <lable>التبادل اليومي</lable>",
         "title": "daily_quest_trade"
     }
 ];
@@ -1437,7 +1437,7 @@ NavBar.Mail = [{
     },
     {
         "title_en": "Write Mail",
-        "title_ar": "انشئ رسالة",
+        "title_ar": "إنشاء رسالة",
         "title": "mail_write",
         "title_es": "Escribir Mensaje",
         "title_pt": "Escrever Email",
@@ -1465,7 +1465,7 @@ NavBar.League = [{
     },
     {
         "title_en": "Upgrade League / Depository",
-        "title_ar": "تطوير الحلف - الايداع",
+        "title_ar": "تطوير الحلف - الإيداع",
         "title": "upgrade_guild",
         "title_es": "Mejorar Liga / Depósito",
         "title_pt": "Aprimorar Liga/ Depósito",
@@ -1772,7 +1772,7 @@ NavBar.Building.Warehouse = [{
 
 NavBar.Building.Barracks = [{
         "title_en": "Troops List",
-        "title_ar": "انتاج القوات",
+        "title_ar": "إنتاج القوات",
         "title": "build_army",
         "title_es": "Lista de Tropas",
         "title_pt": "Lista De Tropas",
@@ -1790,7 +1790,7 @@ NavBar.Building.Barracks = [{
     },
     {
         "title_en": "Stable",
-        "title_ar": "الاسطبل",
+        "title_ar": "الإسطبل",
         "title": "go_stabl",
         "title_es": "Estable",
         "title_pt": "Estável",
@@ -1806,7 +1806,7 @@ NavBar.Building.Barracks = [{
 
 NavBar.Building.Stable = [{
         "title_en": "Troops List",
-        "title_ar": "انتاج القوات",
+        "title_ar": "إنتاج القوات",
         "title": "build_army",
         "title_es": "Lista de Tropas",
         "title_pt": "Lista De Tropas",
@@ -1836,7 +1836,7 @@ NavBar.Building.Stable = [{
 
 NavBar.Building.Workshop = [{
         "title_en": "Barracks",
-        "title_ar": "انتاج القوات",
+        "title_ar": "إنتاج القوات",
         "title": "build_army"
     },
     {
@@ -1855,7 +1855,7 @@ NavBar.Building.Workshop = [{
     },
     {
         "title_en": "Stable",
-        "title_ar": "الاسطبل",
+        "title_ar": "الإسطبل",
         "title": "go_stabl",
         "title_es": "Estable",
         "title_pt": "Estável",
@@ -1866,7 +1866,7 @@ NavBar.Building.Workshop = [{
 
 NavBar.Building.Amphitheatre = [{
         "title_en": "Recruitable Hero List",
-        "title_ar": "انتاج الابطال",
+        "title_ar": "إنتاج الأبطال",
         "title": "produce_heros",
         "title_es": "Lista de Héroes Reclutables",
         "title_pt": "Lista de Heróis Recrutáveis",
@@ -1940,7 +1940,7 @@ NavBar.Building.University = [{
     },
     {
         "title_en": "Academy",
-        "title_ar": "الاكاديمية",
+        "title_ar": "الأكاديمية",
         "title": "go_acad"
     }
 ];
@@ -2049,7 +2049,7 @@ NavBar.Building.Palace = [{
     },
     {
         "title_en": "Expand City",
-        "title_ar": "توسيع ",
+        "title_ar": "توسيع",
         "title": "expantion",
         "title_es": "Expandir Ciudad",
         "title_pt": "Expandir Cidade",
@@ -2058,7 +2058,7 @@ NavBar.Building.Palace = [{
     },
     {
         "title_en": "Wilds",
-        "title_ar": "البرارى",
+        "title_ar": "البراري",
         "title": "city_wilds"
     },
     {
@@ -2478,10 +2478,6 @@ Caesar.GE.LPreLoad = function() {
     Caesar.GE.LoadingScene.load.image('B10', BASE_ASSET_BATH + 'images/city/_B10.png');
     Caesar.GE.LoadingScene.load.image('B11', BASE_ASSET_BATH + 'images/city/_B11.png');
     Caesar.GE.LoadingScene.load.image('no_building', BASE_ASSET_BATH + 'images/city/no_building.png');
-    Caesar.GE.LoadingScene.load.image('city_floor', BASE_ASSET_BATH + 'images/city/city_floor.jpg');
-    Caesar.GE.LoadingScene.load.image('town_bg_1', BASE_ASSET_BATH + 'images/city/background_townBackground1.jpg');
-    Caesar.GE.LoadingScene.load.image('town_bg_2', BASE_ASSET_BATH + 'images/city/background_townBackground2.jpg');
-    Caesar.GE.LoadingScene.load.image('town_bg_3', BASE_ASSET_BATH + 'images/city/background_townBackground3.jpg');
 
 
     Caesar.GE.LoadingScene.load.image('fountain', BASE_ASSET_BATH + 'images/animation/fountain.png');
@@ -2588,6 +2584,58 @@ Caesar.GE.LPreLoad = function() {
         frameWidth: 42,
         frameHeight: 42
     });
+    Caesar.GE.LoadingScene.load.spritesheet('noCarryWorkerL', BASE_ASSET_BATH + 'images/animation/City/noCarryWorkerL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('noCarryWorkerUL', BASE_ASSET_BATH + 'images/animation/City/noCarryWorkerUL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('WoodLaborCarryL', BASE_ASSET_BATH + 'images/animation/City/WoodLaborCarryL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('WoodLaborCarryUL', BASE_ASSET_BATH + 'images/animation/City/WoodLaborCarryUL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('IronLaborCarryDL', BASE_ASSET_BATH + 'images/animation/City/IronLaborCarryDL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('IronLaborCarryUL', BASE_ASSET_BATH + 'images/animation/City/IronLaborCarryUL.png', {
+        frameWidth: 42,
+        frameHeight: 42
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('PenstockWater', BASE_ASSET_BATH + 'images/animation/City/PenstockWater.png', {
+        frameWidth: 23,
+        frameHeight: 30
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('HouseSmoke', BASE_ASSET_BATH + 'images/animation/City/HouseSmoke.png', {
+        frameWidth: 33,
+        frameHeight: 41
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('MineSmoke', BASE_ASSET_BATH + 'images/animation/City/MineSmoke.png', {
+        frameWidth: 25,
+        frameHeight: 39
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('TempleFlame', BASE_ASSET_BATH + 'images/animation/City/TempleFlame.png', {
+        frameWidth: 12,
+        frameHeight: 16
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('WorkshopElevator', BASE_ASSET_BATH + 'images/animation/City/WorkshopElevator.png', {
+        frameWidth: 26,
+        frameHeight: 47
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('PiazzaFlag', BASE_ASSET_BATH + 'images/animation/City/PiazzaFlag.png', {
+        frameWidth: 48,
+        frameHeight: 24
+    });
+    Caesar.GE.LoadingScene.load.spritesheet('DakFlag', BASE_ASSET_BATH + 'images/animation/City/DakFlag.png', {
+        frameWidth: 12,
+        frameHeight: 9
+    });
 
     Caesar.GE.LoadingScene.load.spritesheet('UpgradingHammer', BASE_ASSET_BATH + 'images/animation/City/UpgradingHammer.png', {
         frameWidth: 161,
@@ -2602,13 +2650,13 @@ Caesar.GE.LPreLoad = function() {
         frameWidth: 42,
         frameHeight: 42
     });
+    Caesar.GE.LoadingScene.load.image('UpgradingFenceU', BASE_ASSET_BATH + 'images/animation/City/UpgradingFenceU.png');
+    Caesar.GE.LoadingScene.load.image('UpgradingFenceD', BASE_ASSET_BATH + 'images/animation/City/UpgradingFenceD.png');
     Caesar.GE.LoadingScene.load.image('UpgradingSupportsU', BASE_ASSET_BATH + 'images/animation/City/UpgradingSupportsU.png');
     Caesar.GE.LoadingScene.load.image('UpgradingSupportsD', BASE_ASSET_BATH + 'images/animation/City/UpgradingSupportsD.png');
     Caesar.GE.LoadingScene.load.image('UpgradingPalaceSupU', BASE_ASSET_BATH + 'images/animation/City/UpgradingPalaceSupU.png');
     Caesar.GE.LoadingScene.load.image('UpgradingPalaceSupD', BASE_ASSET_BATH + 'images/animation/City/UpgradingPalaceSupD.png');
     Caesar.GE.LoadingScene.load.image('ConstructingHammer', BASE_ASSET_BATH + 'images/city/ConstructingHammer.png');
-    Caesar.GE.LoadingScene.load.image('city_backdrop', BASE_ASSET_BATH + 'images/city/bg0.jpg');
-    Caesar.GE.LoadingScene.load.image('city_wallpage', BASE_ASSET_BATH + 'images/city/wallpage_2.jpg');
 
 };
 
@@ -2616,7 +2664,8 @@ Caesar.GE.ConfigCityAnims = function() {
 
 
     var Scene = Caesar.GE.CityScene;
-    Scene.anims.create({
+    if (typeof Scene.anims.exists !== 'function' || !Scene.anims.exists('FarmLabor.A')) {
+        Scene.anims.create({
         key: 'FarmLabor.A',
         frames: Scene.anims.generateFrameNumbers('FarmLabor'),
         frameRate: 6,
@@ -2647,6 +2696,18 @@ Caesar.GE.ConfigCityAnims = function() {
         frameRate: 6,
         repeat: -1
     });
+    Scene.anims.create({
+        key: 'noCarryWorkerL.A',
+        frames: Scene.anims.generateFrameNumbers('noCarryWorkerL'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'noCarryWorkerUL.A',
+        frames: Scene.anims.generateFrameNumbers('noCarryWorkerUL'),
+        frameRate: 6,
+        repeat: -1
+    });
 
     Scene.anims.create({
         key: 'StoneLabor.A',
@@ -2660,10 +2721,28 @@ Caesar.GE.ConfigCityAnims = function() {
         frameRate: 6,
         repeat: -1
     });
+    Scene.anims.create({
+        key: 'StoneLaborCarryD.A',
+        frames: Scene.anims.generateFrameNumbers('StoneLaborCarryD'),
+        frameRate: 6,
+        repeat: -1
+    });
 
     Scene.anims.create({
         key: 'IronLabor.A',
         frames: Scene.anims.generateFrameNumbers('IronLabor'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'IronLaborCarryDL.A',
+        frames: Scene.anims.generateFrameNumbers('IronLaborCarryDL'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'IronLaborCarryUL.A',
+        frames: Scene.anims.generateFrameNumbers('IronLaborCarryUL'),
         frameRate: 6,
         repeat: -1
     });
@@ -2674,17 +2753,71 @@ Caesar.GE.ConfigCityAnims = function() {
         repeat: -1
     });
     Scene.anims.create({
+        key: 'WoodLaborCarryL.A',
+        frames: Scene.anims.generateFrameNumbers('WoodLaborCarryL'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'WoodLaborCarryUL.A',
+        frames: Scene.anims.generateFrameNumbers('WoodLaborCarryUL'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
         key: 'WoodTool.A',
         frames: Scene.anims.generateFrameNumbers('WoodTool'),
         frameRate: 6,
         repeat: -1
     });
 
+    Scene.anims.create({
+        key: 'PenstockWater.A',
+        frames: Scene.anims.generateFrameNumbers('PenstockWater'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'HouseSmoke.A',
+        frames: Scene.anims.generateFrameNumbers('HouseSmoke'),
+        frameRate: 7,
+        repeat: 1
+    });
+    Scene.anims.create({
+        key: 'MineSmoke.A',
+        frames: Scene.anims.generateFrameNumbers('MineSmoke'),
+        frameRate: 7,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'TempleFlame.A',
+        frames: Scene.anims.generateFrameNumbers('TempleFlame'),
+        frameRate: 8,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'WorkshopElevator.A',
+        frames: Scene.anims.generateFrameNumbers('WorkshopElevator'),
+        frameRate: 5,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'PiazzaFlag.A',
+        frames: Scene.anims.generateFrameNumbers('PiazzaFlag'),
+        frameRate: 6,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'DakFlag.A',
+        frames: Scene.anims.generateFrameNumbers('DakFlag'),
+        frameRate: 6,
+        repeat: -1
+    });
 
     Scene.anims.create({
         key: 'Horse.A',
         frames: Scene.anims.generateFrameNumbers('Horse'),
-        frameRate: 6,
+        frameRate: 5,
         repeat: -1
     });
     Scene.anims.create({
@@ -2710,8 +2843,26 @@ Caesar.GE.ConfigCityAnims = function() {
         repeat: -1
     });
     Scene.anims.create({
+        key: 'WomanIdle.A',
+        frames: Scene.anims.generateFrameNumbers('Woman', {
+            frames: [20, 21, 22, 23, 24, 25, 26, 27]
+        }),
+        frameRate: 4,
+        repeat: -1
+    });
+    Scene.anims.create({
+        key: 'WomanWave.A',
+        frames: Scene.anims.generateFrameNumbers('Woman', {
+            frames: [30, 31, 32, 33, 34, 35, 36, 37]
+        }),
+        frameRate: 4,
+        repeat: -1
+    });
+    Scene.anims.create({
         key: 'Woman.A',
-        frames: Scene.anims.generateFrameNumbers('Woman'),
+        frames: Scene.anims.generateFrameNumbers('Woman', {
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 30, 31, 32, 33, 34, 35, 36, 37]
+        }),
         frameRate: 6,
         repeat: -1
     });
@@ -2734,6 +2885,7 @@ Caesar.GE.ConfigCityAnims = function() {
         frameRate: 6,
         repeat: -1
     });
+    }
 
     Animation.FixedCityAnimation();
 };
@@ -2741,7 +2893,8 @@ Caesar.GE.ConfigCityAnims = function() {
 Caesar.GE.ConfigAnims = function() {
 
     var Scene = Caesar.GE.WorldScene;
-    Caesar.GE.WorldScene.anims.create({
+    if (typeof Scene.anims.exists !== 'function' || !Scene.anims.exists('Forest.1')) {
+        Caesar.GE.WorldScene.anims.create({
         key: 'Forest.1',
         frames: Caesar.GE.WorldScene.anims.generateFrameNumbers('f_1'),
         frameRate: 3,
@@ -2807,22 +2960,106 @@ Caesar.GE.ConfigAnims = function() {
         frameRate: 6,
         repeat: -1
     });
-    Caesar.GE.WorldScene.anims.create({
-        key: 'WorldUnitFire.Ani',
-        frames: Caesar.GE.WorldScene.anims.generateFrameNumbers('WorldUnitFire', {
-            frames: [0, 1, 2, 3, 4, 5, 6, 7]
-        }),
-        frameRate: 6,
-        repeat: -1
-    });
+        Caesar.GE.WorldScene.anims.create({
+            key: 'WorldUnitFire.Ani',
+            frames: Caesar.GE.WorldScene.anims.generateFrameNumbers('WorldUnitFire', {
+                frames: [0, 1, 2, 3, 4, 5, 6, 7]
+            }),
+            frameRate: 6,
+            repeat: -1
+        });
+    }
 };
 
 
+Caesar.GE.CITY_BG_KEY_FOR_LVL = function(lvl) {
+    var n = Number(lvl || 0);
+    if (n > 2) return "town_bg_3";
+    if (n > 1) return "town_bg_2";
+    if (n > 0) return "town_bg_1";
+    return "city_floor";
+};
+
+Caesar.GE.CITY_BG_PATHS = {
+    city_floor: "images/city/city_floor.jpg",
+    town_bg_1: "images/city/background_townBackground1.jpg",
+    town_bg_2: "images/city/background_townBackground2.jpg",
+    town_bg_3: "images/city/background_townBackground3.jpg"
+};
+
+Caesar.GE.ensureCityBackground = function(bgKey, onReady) {
+    var game = Caesar.GE && Caesar.GE.Game;
+    var textures = game && game.textures;
+    var key = bgKey || "city_floor";
+    var relPath = Caesar.GE.CITY_BG_PATHS[key] || Caesar.GE.CITY_BG_PATHS.city_floor;
+    if (!textures || typeof textures.exists !== "function" || textures.exists(key)) {
+        if (typeof onReady === "function") onReady(key);
+        return;
+    }
+    Caesar.GE._pendingBgLoads = Caesar.GE._pendingBgLoads || {};
+    if (Caesar.GE._pendingBgLoads[key]) {
+        if (typeof onReady === "function") Caesar.GE._pendingBgLoads[key].push(onReady);
+        return;
+    }
+    Caesar.GE._pendingBgLoads[key] = typeof onReady === "function" ? [onReady] : [];
+    var finish = function(ok) {
+        var cbs = (Caesar.GE._pendingBgLoads && Caesar.GE._pendingBgLoads[key]) || [];
+        if (Caesar.GE._pendingBgLoads) delete Caesar.GE._pendingBgLoads[key];
+        for (var i = 0; i < cbs.length; i++) {
+            cbs[i](ok ? key : null);
+        }
+    };
+    var basePath = typeof BASE_ASSET_BATH !== "undefined" ? BASE_ASSET_BATH : "";
+    var loadViaPhaser = function() {
+        var scene = Caesar.GE.CityScene || Caesar.GE.LoadingScene;
+        if (!scene || !scene.load) {
+            finish(false);
+            return;
+        }
+        scene.load.image(key, basePath + relPath);
+        scene.load.once("filecomplete-image-" + key, function() { finish(true); });
+        scene.load.once("loaderror", function(fileObj) { if (fileObj && fileObj.key === key) finish(false); });
+        scene.load.start();
+    };
+    if (typeof fetch === "function" && typeof createImageBitmap === "function") {
+        fetch(basePath + relPath)
+            .then(function(res) {
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                return res.blob();
+            })
+            .then(function(blob) {
+                return createImageBitmap(blob);
+            })
+            .then(function(bitmap) {
+                if (!textures.exists(key)) {
+                    textures.addImage(key, bitmap);
+                }
+                finish(true);
+            })
+            .catch(loadViaPhaser);
+        return;
+    }
+    loadViaPhaser();
+};
+
 Caesar.GE.Loading = function(percent) {
-    $("#load-percent").html(Math.floor(percent) + "%");
-    $("#load-bar div").css({
-        width: percent + "%"
-    });
+    var pct = Math.max(0, Math.min(100, Math.floor(percent)));
+    if (Caesar.GE._lastLoadPct === pct) {
+        return;
+    }
+    Caesar.GE._lastLoadPct = pct;
+    if (!Caesar.GE._loadPercentEl || !Caesar.GE._loadPercentEl.isConnected) {
+        Caesar.GE._loadPercentEl = document.getElementById("load-percent");
+    }
+    if (!Caesar.GE._loadBarEl || !Caesar.GE._loadBarEl.isConnected) {
+        Caesar.GE._loadBarEl = document.querySelector("#load-bar div");
+    }
+    if (Caesar.GE._loadPercentEl) {
+        Caesar.GE._loadPercentEl.textContent = pct + "%";
+    }
+    if (Caesar.GE._loadBarEl) {
+        Caesar.GE._loadBarEl.style.width = percent + "%";
+    }
 };
 
 
@@ -2921,6 +3158,13 @@ var speedMult = 0.7;
 var friction = 0.99;
 
 
+Caesar.GE.CITY_BG_BOUNDS = {
+    left: -275.81,
+    top: -203.23,
+    width: 1548.39,
+    height: 870.97
+};
+
 Caesar.GE.CCityScene = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function() {
@@ -2936,6 +3180,15 @@ Caesar.GE.CCityScene = new Phaser.Class({
         this.events.on('transitionstart', function(fromScene, duration) {});
         var floor_width = 1000;
         var floor_height = 400;
+        var bgBounds = Caesar.GE.CITY_BG_BOUNDS || { left: -275.81, top: -203.23, width: 1548.39, height: 870.97 };
+        var bgLeft = bgBounds.left;
+        var bgTop = bgBounds.top;
+        var bgWidth = bgBounds.width;
+        var bgHeight = bgBounds.height;
+        var bgRight = bgLeft + bgWidth;
+        var bgBottom = bgTop + bgHeight;
+        var bgCenterX = bgLeft + (bgWidth * 0.5);
+        var bgCenterY = bgTop + (bgHeight * 0.5);
         this.ConstructingHammer = null;
         this.currentHoverPlace = null;
         this.currentHoverSlot = null;
@@ -2946,39 +3199,105 @@ Caesar.GE.CCityScene = new Phaser.Class({
         var cam = this.cameras.main;
         var scaleManager = this.scale;
         var minCityZoom = 1;
-        var centerCityCam = function() {
-            var winW = cam.width || window.innerWidth;
-            var winH = cam.height || window.innerHeight;
-            // Authentic Call of Roma city dimensions: 1000 x 400
-            // Fit city to viewport to eliminate empty margins and match classic display
-            var zoomX = winW / floor_width;
-            var zoomY = (winH - 45) / floor_height;
-            minCityZoom = Math.max(zoomX, zoomY, 1.0);
-            cam.setZoom(minCityZoom);
-            var vertOffset = 20 / minCityZoom;
-            cam.centerOn(floor_width / 2, (floor_height / 2) - vertOffset);
+        var clampCityCamera = function(overrideW, overrideH) {
+            var z = cam.zoom || minCityZoom;
+            var winW = overrideW || cam.width || window.innerWidth;
+            var winH = overrideH || cam.height || window.innerHeight;
+            var halfW = winW * 0.5;
+            var halfH = winH * 0.5;
+            var visibleW = winW / z;
+            var visibleH = winH / z;
+            var menuWorldOffset = 42 / z;
+            var vertOffset = 21 / z;
+            // Phaser 3 Camera zoom pivots around (width * 0.5, height * 0.5), so scrollX = midX - (width * 0.5)
+            // Strictly clamp within extended 16:9 countryside bounds [bgLeft..bgRight] x [bgTop - menuWorldOffset..bgBottom]
+            if (visibleW >= bgWidth) {
+                cam.scrollX = bgCenterX - halfW;
+            } else {
+                var minMidX = bgLeft + (visibleW * 0.5);
+                var maxMidX = bgRight - (visibleW * 0.5);
+                cam.scrollX = Phaser.Math.Clamp(cam.scrollX + halfW, minMidX, maxMidX) - halfW;
+            }
+            var minMidY = bgTop + (visibleH * 0.5) - menuWorldOffset;
+            var maxMidY = bgBottom - (visibleH * 0.5);
+            if (minMidY >= maxMidY) {
+                cam.scrollY = bgCenterY - vertOffset - halfH;
+            } else {
+                cam.scrollY = Phaser.Math.Clamp(cam.scrollY + halfH, minMidY, maxMidY) - halfH;
+            }
         };
-        centerCityCam();
+        var cityScene = this;
+        var centerCityCam = function(gameSize, force) {
+            if (!force && Caesar.GE && typeof Caesar.GE.isSceneSleeping === "function" && Caesar.GE.isSceneSleeping(cityScene)) {
+                return;
+            }
+            var winW = (gameSize && gameSize.width) || cam.width || window.innerWidth;
+            var winH = (gameSize && gameSize.height) || cam.height || window.innerHeight;
+            Caesar.MAX_SCREEN_WIDTH = winW;
+            Caesar.MAX_SCREEN_HEIGHT = winH;
+            // Cover extended 16:9 scenic world bounds so buildings match World Map scale with zero cropped slots or borders
+            var zoomX = winW / bgWidth;
+            var zoomY = Math.max(0.75, (winH - 42) / bgHeight);
+            minCityZoom = Math.max(zoomX, zoomY, 0.90) * 1.24;
+            cam.setZoom(minCityZoom);
+            var vertOffset = 21 / minCityZoom;
+            cam.centerOn(floor_width / 2, (bgCenterY + 24) - vertOffset);
+            clampCityCamera(winW, winH);
+        };
+        centerCityCam(null, true);
+        var onCityWake = function() {
+            cityScene.isMapDraging = false;
+            if (cityScene.ConstructingHammer && typeof cityScene.ConstructingHammer.setVisible === "function") {
+                cityScene.ConstructingHammer.setVisible(false);
+            }
+            cityScene.ConstructingHammerPlace = null;
+            cityScene.currentHoverPlace = null;
+            cityScene.currentHoverSlot = null;
+            centerCityCam(null, true);
+            var curCityId = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.id_city : 0);
+            if (Caesar.GE.CityDirty || Caesar.GE.LastCityIdRendered !== curCityId) {
+                fillCityWithBuilding();
+            }
+        };
         scaleManager.on('resize', centerCityCam);
+        this.events.on('wake', onCityWake);
         this.events.once('shutdown', function() {
             scaleManager.off('resize', centerCityCam);
+            cityScene.events.off('wake', onCityWake);
         });
 
-        // Infinite seamless Roman stone backdrop around the city so no black borders appear
-        this.cityBackdrop = this.add.tileSprite(500, 200, 4000, 3000, 'city_backdrop').setOrigin(0.5, 0.5).setDepth(-10);
 
         var cityLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
         var bgKey = "city_floor";
         if (cityLvl > 2) bgKey = "town_bg_3";
         else if (cityLvl > 1) bgKey = "town_bg_2";
         else if (cityLvl > 0) bgKey = "town_bg_1";
-        this.cityBackground = this.add.image(0, 0, bgKey).setOrigin(0, 0).setDepth(0);
+        var texMgr = this.textures || (Caesar.GE.Game && Caesar.GE.Game.textures);
+        var initialKey = (!texMgr || typeof texMgr.exists !== "function" || texMgr.exists(bgKey)) ? bgKey : "__DEFAULT";
+        this.cityBackground = this.add.image(bgLeft, bgTop, initialKey).setOrigin(0, 0).setDepth(0).setDisplaySize(bgWidth, bgHeight);
+        if (initialKey !== bgKey && typeof Caesar.GE.ensureCityBackground === "function") {
+            Caesar.GE.ensureCityBackground(bgKey, function(loadedKey) {
+                var activeLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
+                var activeKey = typeof Caesar.GE.CITY_BG_KEY_FOR_LVL === "function" ? Caesar.GE.CITY_BG_KEY_FOR_LVL(activeLvl) : loadedKey;
+                if (loadedKey && loadedKey === activeKey && cityScene.cityBackground && cityScene.cityBackground.scene && cityScene.cityBackground.scene.sys && typeof cityScene.cityBackground.setTexture === "function") {
+                    cityScene.cityBackground.setTexture(loadedKey).setPosition(bgLeft, bgTop).setDisplaySize(bgWidth, bgHeight);
+                }
+            });
+        }
 
         Caesar.GE.ConfigCityAnims();
         fillCityWithBuilding();
 
         var This = this;
         var downObj;
+        this.isMapDraging = false;
+        this.input.on('pointerdown', function() {
+            This.isMapDraging = false;
+        });
+        this.input.on('pointerup', function() {
+            This.isMapDraging = false;
+            downObj = null;
+        });
         this.input.on('gameobjectdown', function(p, obj, E) {
             if (This.isMapDraging)
                 return;
@@ -2988,16 +3307,30 @@ Caesar.GE.CCityScene = new Phaser.Class({
         this.input.on('gameobjectup', function(P, Obj, E) {
             var pressedObj = downObj;
             downObj = null;
-            if (P.downElement !== Caesar.GE.Game.canvas || P.getDuration() > 400 || Obj !== pressedObj)
+            var dx = (P && P.downX !== undefined) ? (P.x - P.downX) : 0;
+            var dy = (P && P.downY !== undefined) ? (P.y - P.downY) : 0;
+            var dragged = This.isMapDraging || (dx * dx + dy * dy) > 36;
+            if (dragged || P.downElement !== Caesar.GE.Game.canvas || P.getDuration() > 400 || Obj !== pressedObj) {
+                This.isMapDraging = false;
                 return;
+            }
             Obj.emit("click", Obj, P, E);
             E.stopPropagation();
         });
 
+        var hideHoverHammer = function() {
+            if (This.ConstructingHammer && typeof This.ConstructingHammer.setVisible === "function") {
+                This.ConstructingHammer.setVisible(false);
+            }
+            This.ConstructingHammerPlace = null;
+            This.currentHoverPlace = null;
+            This.currentHoverSlot = null;
+        };
+
         this.input.on('gameobjectover', function(Pointer, GameObject, Event) {
             if (Pointer.isDown)
                 return;
-            if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0)
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(false))
                 return;
 
             var BuildingPlace = (GameObject && GameObject.data && typeof GameObject.data.get === "function")
@@ -3011,28 +3344,32 @@ Caesar.GE.CCityScene = new Phaser.Class({
                 : 0;
 
             if (!bType || bType == BUILDING_TYPS.SPACE) {
-                if (This.currentHoverPlace === BuildingPlace && This.ConstructingHammer)
+                if (This.currentHoverPlace === BuildingPlace && This.ConstructingHammer && This.ConstructingHammer.visible)
                     return;
-
-                if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
-                    This.ConstructingHammer.destroy();
-                    This.ConstructingHammer = null;
-                }
 
                 This.currentHoverPlace = BuildingPlace;
                 This.currentHoverSlot = GameObject;
+                This.ConstructingHammerPlace = BuildingPlace;
 
-                This.ConstructingHammer = This.add.image(GameObject.x, GameObject.y - 32, "ConstructingHammer")
-                    .setDepth(Math.floor(GameObject.y) + 35)
-                    .setOrigin(0, 0)
-                    .setInteractive({ useHandCursor: true });
+                if (!This.ConstructingHammer || !This.ConstructingHammer.scene) {
+                    This.ConstructingHammer = This.add.image(GameObject.x, GameObject.y - 32, "ConstructingHammer")
+                        .setDepth(Math.floor(GameObject.y) + 35)
+                        .setOrigin(0, 0)
+                        .setInteractive({ useHandCursor: true });
 
-                This.ConstructingHammer.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
-                    if ($("#dialg_box:visible, #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
-                    if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
-                    if (event && event.stopPropagation) event.stopPropagation();
-                    buildingClick(BuildingPlace);
-                });
+                    This.ConstructingHammer.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, function(p, x_pos, y_pos, event) {
+                        if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(false)) return;
+                        if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
+                        if (event && event.stopPropagation) event.stopPropagation();
+                        if (This.ConstructingHammerPlace) {
+                            buildingClick(This.ConstructingHammerPlace);
+                        }
+                    });
+                } else {
+                    This.ConstructingHammer.setPosition(GameObject.x, GameObject.y - 32)
+                        .setDepth(Math.floor(GameObject.y) + 35)
+                        .setVisible(true);
+                }
             }
         });
 
@@ -3049,38 +3386,45 @@ Caesar.GE.CCityScene = new Phaser.Class({
                 if (px >= gx && px <= gx + 128 && py >= gy - 32 && py <= gy + 64) {
                     return;
                 }
-                if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
-                    This.ConstructingHammer.destroy();
-                    This.ConstructingHammer = null;
-                }
-                This.currentHoverPlace = null;
-                This.currentHoverSlot = null;
+                hideHoverHammer();
             }
         });
 
         this.input.on('pointermove', function(p) {
-            if (This.currentHoverSlot && This.ConstructingHammer) {
-                var px = p.worldX !== undefined ? p.worldX : p.x;
-                var py = p.worldY !== undefined ? p.worldY : p.y;
-                var gx = This.currentHoverSlot.x;
-                var gy = This.currentHoverSlot.y;
-                if (px < gx - 8 || px > gx + 136 || py < gy - 38 || py > gy + 70) {
-                    if (This.ConstructingHammer && This.ConstructingHammer.destroy) {
-                        This.ConstructingHammer.destroy();
-                        This.ConstructingHammer = null;
+            if (!p.isDown) {
+                if (This.currentHoverSlot && This.ConstructingHammer && This.ConstructingHammer.visible) {
+                    var px = p.worldX !== undefined ? p.worldX : p.x;
+                    var py = p.worldY !== undefined ? p.worldY : p.y;
+                    var gx = This.currentHoverSlot.x;
+                    var gy = This.currentHoverSlot.y;
+                    if (px < gx - 8 || px > gx + 136 || py < gy - 38 || py > gy + 70) {
+                        hideHoverHammer();
                     }
-                    This.currentHoverPlace = null;
-                    This.currentHoverSlot = null;
                 }
+                return;
+            }
+            var curW = cam.width || window.innerWidth;
+            var curH = cam.height || window.innerHeight;
+            var curZoom = cam.zoom || minCityZoom;
+            var canPanCity = curZoom > minCityZoom + 0.01 || (curW / curZoom) < bgWidth - 1 || (curH / curZoom) < bgHeight - 1;
+            if (canPanCity && p.downElement === Caesar.GE.Game.canvas) {
+                var moveDx = (p.downX !== undefined) ? (p.x - p.downX) : 0;
+                var moveDy = (p.downY !== undefined) ? (p.y - p.downY) : 0;
+                if (!This.isMapDraging && (moveDx * moveDx + moveDy * moveDy) <= 36) {
+                    return;
+                }
+                This.isMapDraging = true;
+                cam.scrollX -= (p.x - p.prevPosition.x) / curZoom;
+                cam.scrollY -= (p.y - p.prevPosition.y) / curZoom;
+                clampCityCamera();
             }
         });
 
         this.input.on('wheel', function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
-            var maxCityZoom = Math.max(minCityZoom * 1.5, 2.5);
+            var maxCityZoom = Math.max(minCityZoom * 2.2, 2.8);
             var nextZoom = Phaser.Math.Clamp(cam.zoom + (deltaY < 0 ? 0.08 : -0.08), minCityZoom, maxCityZoom);
             cam.setZoom(nextZoom);
-            var vertOffset = 20 / nextZoom;
-            cam.centerOn(floor_width / 2, (floor_height / 2) - vertOffset);
+            clampCityCamera();
         });
     }
 });
@@ -3098,8 +3442,58 @@ Caesar.GE.CWorldScene = new Phaser.Class({
     preload: function() {},
     create: function() {
 
+        var worldScene = this;
         Caesar.GE.ConfigAnims();
         var cam = this.cameras.main;
+        var worldScaleManager = this.scale;
+        var onWorldResize = function(gameSize, force) {
+            if (!force && Caesar.GE && typeof Caesar.GE.isSceneSleeping === "function" && Caesar.GE.isSceneSleeping(worldScene)) {
+                return;
+            }
+            var nextW = (gameSize && gameSize.width) || cam.width || window.innerWidth;
+            var nextH = (gameSize && gameSize.height) || cam.height || window.innerHeight;
+            Caesar.MAX_SCREEN_WIDTH = nextW;
+            Caesar.MAX_SCREEN_HEIGHT = nextH;
+            if (Caesar.World && Caesar.World.Map && typeof Caesar.World.Map.Scroll === "function") {
+                Caesar.World.Map.Scroll(true);
+            }
+        };
+        var onWorldWake = function() {
+            worldScene.isMapDraging = false;
+            var nextW = (cam && cam.width) || window.innerWidth;
+            var nextH = (cam && cam.height) || window.innerHeight;
+            Caesar.MAX_SCREEN_WIDTH = nextW;
+            Caesar.MAX_SCREEN_HEIGHT = nextH;
+            var curCity = Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City : null;
+            if (curCity) {
+                var inputX = parseInt($("#x_coord-input input").val(), 10);
+                var inputY = parseInt($("#y_coord-input input").val(), 10);
+                var isPanning = !!(cam.panEffect && cam.panEffect.isRunning);
+                var isNavigatingElsewhere = isPanning || (!isNaN(inputX) && !isNaN(inputY) && (inputX !== Number(curCity.x) || inputY !== Number(curCity.y)));
+                if (!isNavigatingElsewhere) {
+                    cam.scrollX = Caesar.World.Map.posX(curCity.x, curCity.y) - Caesar.MAX_SCREEN_WIDTH / 2 + 64;
+                    cam.scrollY = Caesar.World.Map.posY(Number(curCity.x), Number(curCity.y)) - Caesar.MAX_SCREEN_HEIGHT / 2 + 128;
+                    if (typeof Animation !== "undefined" && Animation.currentUnitArrow && typeof Animation.currentUnitArrow.put === "function") {
+                        Animation.currentUnitArrow.put(curCity.x, curCity.y);
+                    }
+                }
+            }
+            if (Caesar.World && Caesar.World.Map && typeof Caesar.World.Map.Scroll === "function") {
+                Caesar.World.Map.Scroll(false);
+            }
+            if (Caesar.World && Caesar.World.MapBattel && typeof Caesar.World.MapBattel.AddBattels === "function") {
+                Caesar.World.MapBattel.AddBattels();
+            }
+            if (Caesar.World && Caesar.World.Map && Caesar.World.Map._dirtyFlags) {
+                Caesar.World.Map.RefreshWorld();
+            }
+        };
+        worldScaleManager.on('resize', onWorldResize);
+        this.events.on('wake', onWorldWake);
+        this.events.once('shutdown', function() {
+            worldScaleManager.off('resize', onWorldResize);
+            worldScene.events.off('wake', onWorldWake);
+        });
         cam.scrollX = Caesar.World.Map.posX(Caesar.CurrentCity.City.x, Caesar.CurrentCity.City.y) - Caesar.MAX_SCREEN_WIDTH / 2 + 64;
         cam.scrollY = Caesar.World.Map.posY(Number(Caesar.CurrentCity.City.x), Number(Caesar.CurrentCity.City.y)) - Caesar.MAX_SCREEN_HEIGHT / 2 + 128;
         Animation.currentUnitArrow.add();
@@ -3115,6 +3509,7 @@ Caesar.GE.CWorldScene = new Phaser.Class({
         });
 
         Caesar.World.Map.Scroll(true);
+        Caesar.World.Map.RefreshWorld();
 
         var This = this;
         var downObj;
@@ -3224,20 +3619,101 @@ Caesar.GE.CWorldScene = new Phaser.Class({
 
 
 
+Caesar.GE.syncGameScale = function() {
+    var gw = document.getElementById("GameWindow");
+    var nextW = (gw && gw.clientWidth) || window.innerWidth;
+    var nextH = (gw && gw.clientHeight) || window.innerHeight;
+    Caesar.MAX_SCREEN_WIDTH = nextW;
+    Caesar.MAX_SCREEN_HEIGHT = nextH;
+    if (Caesar.GE && Caesar.GE.Game && Caesar.GE.Game.scale) {
+        if (typeof Caesar.GE.Game.scale.getParentBounds === "function") {
+            Caesar.GE.Game.scale.getParentBounds();
+        }
+        Caesar.GE.Game.scale.resize(nextW, nextH);
+    }
+};
+
+Caesar.GE.isSceneSleeping = function(scene) {
+    return !!(scene && scene.sys && typeof scene.sys.isSleeping === "function" && scene.sys.isSleeping());
+};
+
+Caesar.GE.switchSceneView = function(fromKey, toKey) {
+    var game = Caesar.GE && Caesar.GE.Game;
+    var mgr = game && game.scene;
+    if (!mgr) {
+        return;
+    }
+    var fromScene = mgr.getScene(fromKey);
+    if (fromScene && fromScene.scene && typeof fromScene.scene.switch === "function" && mgr.isProcessing) {
+        fromScene.scene.switch(toKey);
+        return;
+    }
+    if (typeof mgr.switch === "function") {
+        mgr.switch(fromKey, toKey);
+    } else if (fromScene && fromScene.scene && typeof fromScene.scene.switch === "function") {
+        fromScene.scene.switch(toKey);
+    }
+};
+
+Caesar.GE.isModalBlockingCityInput = function(allowBuildingDialog) {
+    if (typeof document === "undefined") {
+        return false;
+    }
+    var isShown = function(el) {
+        return !!(el && el.isConnected !== false && (!el.style || el.style.display !== "none") && !el.hidden);
+    };
+    var dlg = document.getElementById("dialg_box");
+    if (isShown(dlg) && (!allowBuildingDialog || !dlg.classList || !dlg.classList.contains("for_building"))) {
+        return true;
+    }
+    if (isShown(document.getElementById("Box-mid"))) {
+        return true;
+    }
+    if (isShown(document.getElementById("alert_container"))) {
+        return true;
+    }
+    if (isShown(document.getElementById("luck-wheel-over-lay"))) {
+        return true;
+    }
+    var overlays = document.getElementsByClassName("modal-overlay");
+    for (var i = 0; i < overlays.length; i++) {
+        if (isShown(overlays[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+
 $(document).ready(function() {
+    var containerEl = document.getElementById("GameWindow");
+    var initW = (containerEl && containerEl.clientWidth) || window.innerWidth;
+    var initH = (containerEl && containerEl.clientHeight) || window.innerHeight;
+    Caesar.MAX_SCREEN_WIDTH = initW;
+    Caesar.MAX_SCREEN_HEIGHT = initH;
+
     const phaserConfig = {
         type: Phaser.AUTO,
         parent: "GameWindow",
-        width: window.innerWidth,
-        height: window.innerHeight,
-        backgroundColor: "#000000",
+        width: initW,
+        height: initH,
+        backgroundColor: "#0e0a07",
+        scale: {
+            mode: Phaser.Scale.RESIZE,
+            autoCenter: Phaser.Scale.NO_CENTER
+        },
+        render: {
+            antialias: true,
+            pixelArt: false,
+            roundPixels: false,
+            mipmapFilter: "LINEAR_MIPMAP_LINEAR"
+        },
+        loader: {
+            maxParallelDownloads: 8
+        },
         scene: [Caesar.GE.CLoadingScene, Caesar.GE.CCityScene, Caesar.GE.CWorldScene],
         audio: {
             noAudio: true
         },
-        /* input: {
-         windowEvents: false
-         }*/
         fps: {
             min: 10,
             target: 20
@@ -3245,6 +3721,14 @@ $(document).ready(function() {
     };
 
     Caesar.GE.Game = new Phaser.Game(phaserConfig);
+    var glPipelines = Caesar.GE.Game && Caesar.GE.Game.renderer && Caesar.GE.Game.renderer.pipelines && Caesar.GE.Game.renderer.pipelines.classes;
+    var pipelineConst = typeof Phaser !== "undefined" && Phaser.Renderer && Phaser.Renderer.WebGL && Phaser.Renderer.WebGL.Pipelines;
+    if (glPipelines && pipelineConst && typeof glPipelines.delete === "function") {
+        glPipelines.delete(pipelineConst.LIGHT_PIPELINE);
+        glPipelines.delete(pipelineConst.POINTLIGHT_PIPELINE);
+        glPipelines.delete(pipelineConst.ROPE_PIPELINE);
+    }
+    window.addEventListener("resize", Caesar.GE.syncGameScale);
 });
 
 Caesar.LBase.Error = function(data) {
@@ -4422,10 +4906,42 @@ $(document).on("PlayerReady", "html", function() {
                                 return Caesar.LBase.Error(ItemPrize);
                             var ItemArr = JSON.parse(ItemPrize);
 
-                            for (var iii in ItemArr) {
-                                if (Items[ItemArr[iii].id_item])
-                                    Items[ItemArr[iii].id_item].gold = ItemArr[iii].gold;
+                            for (var itemKey in Items) {
+                                if (!Object.prototype.hasOwnProperty.call(Items, itemKey)) continue;
+                                var baseEntry = ItemBase && ItemBase[itemKey];
+                                if (baseEntry) {
+                                    if (!Items[itemKey].image && baseEntry.image)
+                                        Items[itemKey].image = baseEntry.image;
+                                    if (!Items[itemKey].Texture2D && baseEntry.Texture2D)
+                                        Items[itemKey].Texture2D = baseEntry.Texture2D;
+                                    if (!Items[itemKey].use && baseEntry.use)
+                                        Items[itemKey].use = baseEntry.use;
+                                    if (!Items[itemKey].Key && baseEntry.Key)
+                                        Items[itemKey].Key = baseEntry.Key;
+                                }
+                            }
 
+                            var adminTabToMatrialTable = {
+                                main: "matrial_main",
+                                speed_up: "matrial_acce",
+                                production: "matrial_product",
+                                chest: "matrial_box",
+                                luxury: "matrial_luxury",
+                                event_zone: "matrial_flags"
+                            };
+
+                            for (var iii in ItemArr) {
+                                var priceRow = ItemArr[iii];
+                                if (priceRow && Items[priceRow.id_item]) {
+                                    Items[priceRow.id_item].gold = priceRow.gold;
+                                    if (priceRow.prizeLimit !== undefined)
+                                        Items[priceRow.id_item].prizeLimit = priceRow.prizeLimit;
+                                    var mappedTable = adminTabToMatrialTable[priceRow.tab] || priceRow.tab;
+                                    if (!Items[priceRow.id_item].table && mappedTable)
+                                        Items[priceRow.id_item].table = mappedTable;
+                                    if (!Items[priceRow.id_item].db_tab && mappedTable)
+                                        Items[priceRow.id_item].db_tab = mappedTable;
+                                }
                             }
 
                             Caesar.BaseData.Items = Items;
@@ -4595,8 +5111,7 @@ Caesar.BaseData.Army = {
         ],
         ar_title: "جواسيس",
         image: "images/tech/no_army.png",
-        desc: `الفرسا اسرع الفرسان مش عارف اى 
-                                    ليس على كل لاعب الالتذام بذالك `,
+        desc: `أسرع الوحدات الخفيفة؛ يُنصح بعدم المبالغة في إرسالها إلا عند الحاجة.`,
         vit: 0,
         attack: 0,
         defence: 0,
@@ -4631,8 +5146,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "جواسيس",
         image: "images/items/item027.jpg",
-        desc: `كانت الجواسيس هى سلاح الاستخبارت فى العصور الوسطى و كانت اهميتها تكمن فى جب الاخبار من المدن الاخرى 
-            ولكن لا يمكنك الوثوق بهذه المعلومات بسسب قلة كفائة الجواسيس لديك`,
+        desc: `الجواسيس سلاح الاستخبارات لجمع الأخبار عن مدن الخصوم؛ وتزداد دقة تقاريرهم بارتفاع مستوى الاستخبارات.`,
         vit: 80,
         attack: 10,
         defence: 12,
@@ -4667,8 +5181,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "مشاه",
         image: "images/tech/soldier01.jpg",
-        desc: `اكثر انواع الجيوش استعمالا اثناء الامبراطورية الرومانية 
-                وذلك بسسب سهولة تدريبها  وتسليحها وتكمن قوتها  فى  الاسرار الحربية لديها`,
+        desc: `أكثر أنواع القوات انتشارًا في الإمبراطورية الرومانية لسهولة تدريبها وتسليحها وكفاءتها في القتال.`,
         vit: 60,
         attack: 8,
         defence: 8,
@@ -4738,8 +5251,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "مدرعين",
         image: "images/tech/soldier03.jpg",
-        desc: `المدرعين هم اساس القوات الرومانية بتسليحهم المعقد وتدريباتهم المكثفة يمكن الاعتبار انها من اقوى انواع الجيوش
-            يستغرق تدريب الابطال كمية كبيرة كدا من الوقت وذلك بسبب الالتزام لصنع اقوى الابطال`,
+        desc: `المدرّعون عماد القوات الرومانية؛ يتميزون بتسليحهم المتين وتدريبهم المكثف وصلابتهم العالية، وإن استغرق تدريبهم وقتًا أطول.`,
         vit: 400,
         attack: 25,
         defence: 30,
@@ -4774,9 +5286,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "رماه",
         image: "images/tech/soldier04.jpg",
-        desc: `رماة السهم او  النبالين كانوا زمرة الجيش الرومانى.
-                يمكنك الاعتماد عليهم فى الهجوم اما  بالنسبة الى الى الدفاع فلا يمكن ابدا الاعتماد عليهم.
-                بسبب ضعف البنية الجسمانية لديهم ولكن يمكن لهذة القوات تنفيذ العديد من الاصابات البالغة  للاعداء`,
+        desc: `الرماة عماد الضربات البعيدة في الجيش الروماني؛ قوتهم في الهجوم وإحداث الإصابات البالغة، بينما يضعفون في الدفاع القريب.`,
         vit: 45,
         attack: 9,
         defence: 5,
@@ -4811,9 +5321,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "مقاليع",
         image: "images/tech/soldier05.jpg",
-        desc: `كانت العصور الرومانية عصور ازدهار هندسى ومعمارى .
-                احد الأدلة على ذلك هو  سلاح المقاليع لدى الجيوش الرمانية .
-                يلحق هذا النوع ضرر كبير جدا  بالاعداء  مهما كانت قوتهم ويشتت جمعهم`,
+        desc: `تُجسّد المقاليع التقدم الهندسي والعسكري الروماني، وتُلحق أضرارًا جسيمة بصفوف الأعداء وتشتّت تجمعاتهم.`,
         vit: 100,
         attack: 19,
         defence: 25,
@@ -4848,9 +5356,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "منجنيق",
         image: "images/tech/soldier06.jpg",
-        desc: `اقوى  انوع القوات على الاطلاق .
-                لا شك فى ذلك حيث ان هذه القوات مسؤلة عن هدم الاسوار والمبانى الشاهقة.
-                فليس من الصعب عليها سحق  الاعداء`,
+        desc: `أقوى آلات الحصار على الإطلاق، مخصصة لدكّ الأسوار والحصون وإلحاق خسائر فادحة بالخصوم.`,
         vit: 600,
         attack: 40,
         defence: 20,
@@ -4885,8 +5391,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "كمائن",
         image: "images/tech/defense01.jpg",
-        desc: `يتم دس الكمائن داخ السور لعرقلة الاعداء.
-                ولكن لا يمكن الاعتماد عليها  فى صد الهجمات`,
+        desc: `تُنصب الكمائن داخل السور لعرقلة القوات المهاجمة وإرباكها أثناء الاقتحام.`,
         vit: 0,
         attack: 0,
         defence: 0,
@@ -4923,9 +5428,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "ابراج",
         image: "images/tech/defense02.jpg",
-        desc: `لا تنحصر وظيفة الابراج فى الرقابة على المدن, 
-            ولكن تلعب دور هام فى الدفاع عن المدينة عند الهجوم عليها.
-            تتميز الابراج بارتفاعتها الشاهقة مما يجعل منها افضلية هجومية ودفاعية ايضا`,
+        desc: `تتولى الأبراج مراقبة محيط المدينة والدفاع عنها من ارتفاعات عالية تمنحها أفضلية قتالية.`,
         vit: 200,
         attack: 18,
         defence: 15,
@@ -4961,8 +5464,7 @@ Caesar.BaseData.Army = {
         },
         ar_title: "احجار متساقطة",
         image: "images/tech/defense03.jpg",
-        desc: `الاحجار المتساقطة من اقوى الاسلحة الدفاعية للمدينة .
-                يمكن الاعتماد عليها بالحاق الضرر الجسيم للمعتدى`,
+        desc: `الأحجار المتساقطة من أقوى دفاعات السور لردع المهاجمين وإلحاق أضرار بالغة بهم.`,
         vit: 0,
         attack: 0,
         defence: 40,
@@ -5002,37 +5504,37 @@ Caesar.BaseData.PlayerStateData = {
     },
     wheat: {
         image: "images/icons/resource/food.png",
-        title: "انتاح الغذاء",
+        title: "زيادة إنتاج الغذاء",
         ar_title: "",
         en_title: ""
     },
     metal: {
         image: "images/icons/resource/metal.png",
-        title: "زبادة انتاج الحديد",
+        title: "زيادة إنتاج الحديد",
         ar_title: "",
         en_title: ""
     },
     stone: {
         image: "images/icons/resource/stone.png",
-        title: "زبادة انتاج الصخور",
+        title: "زيادة إنتاج الصخور",
         ar_title: "",
         en_title: ""
     },
     wood: {
         image: "images/icons/resource/wood.png",
-        title: "زبادة انتاج الاخشاب",
+        title: "زيادة إنتاج الأخشاب",
         ar_title: "",
         en_title: ""
     },
     attack_10: {
         image: "images/icons/army/attack.png",
-        title: "زبادة نسبة الهجوم",
+        title: "زيادة نسبة الهجوم",
         ar_title: "",
         en_title: ""
     },
     defence_10: {
         image: "images/icons/army/defence.png",
-        title: "زبادة نسبة الدفاع",
+        title: "زيادة نسبة الدفاع",
         ar_title: "",
         en_title: ""
     },
@@ -5506,7 +6008,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5548,13 +6050,13 @@ Caesar.BaseData.Edu = {
         getCondetion: function(lvl) {
             var condtions = [];
             condtions[0] = {
-                title: "الاسطبل مستوى " + getArabicNumbers(Math.max(1, lvl)),
+                title: "الإسطبل مستوى " + getArabicNumbers(Math.max(1, lvl)),
                 con_type: "building",
                 building_type: BUILDING_TYPS.STABL,
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5601,7 +6103,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5642,13 +6144,13 @@ Caesar.BaseData.Edu = {
         getCondetion: function(lvl) {
             var condtions = [];
             condtions[0] = {
-                title: "الاسطبل مستوى " + getArabicNumbers(Math.max(1, lvl)),
+                title: "الإسطبل مستوى " + getArabicNumbers(Math.max(1, lvl)),
                 con_type: "building",
                 building_type: BUILDING_TYPS.STABL,
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5695,7 +6197,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5742,7 +6244,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5789,7 +6291,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5877,7 +6379,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -5924,7 +6426,7 @@ Caesar.BaseData.Edu = {
                 building_lvl: Math.max(1, lvl)
             };
             condtions[1] = {
-                title: "الاكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
+                title: "الأكاديمية مستوى " + getArabicNumbers(Number(lvl) + 1),
                 con_type: "building",
                 building_type: BUILDING_TYPS.ACADEMY,
                 building_lvl: Number(lvl) + 1
@@ -6409,16 +6911,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "مناورات";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `تمنحك هدايا قيّمة من مجلس الشيوخ مثل تسريع التدريب والخبز والقلائد الحمراء.`,
         maxLvl: 50,
         hitArea: [64, 0, 128, 32, 128, 96, 64, 128, 0, 96, 0, 32],
         tileName: {
@@ -6460,16 +6953,7 @@ Caesar.World.UnitData = {
                 return `المعسكر الالمانى المتمرد`;
             }
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `تُكتسب من هذه المعسكرات الشعارات القابلة للتبادل بالمواد، كما تمنح فرصًا للحصول على المعدات.`,
 
         maxLvl: 50,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6487,16 +6971,7 @@ Caesar.World.UnitData = {
         fitness: 40,
         make_req: ["truce_pack"],
         join_req: [""],
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         getTitle: function(x_coord, y_coord) {
             return "الفرقة الامامية";
@@ -6517,16 +6992,7 @@ Caesar.World.UnitData = {
         fitness: 40,
         make_req: ["truce_pack"],
         join_req: [""],
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         getTitle: function(x_coord, y_coord) {
             return "السرية الامامية";
@@ -6547,16 +7013,7 @@ Caesar.World.UnitData = {
         fitness: 40,
         make_req: ["truce_pack"],
         join_req: [""],
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         getTitle: function(x_coord, y_coord) {
             return "الجماعة الامامية";
@@ -6580,16 +7037,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "الكتيبة الامامية";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 40,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6610,16 +7058,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "فرقة التسليح الخفيف";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 30,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6640,16 +7079,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "سرية التسليح الخفيف";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 30,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6670,16 +7100,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "جماعة التسليح الخفيف";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 30,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6700,16 +7121,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "كتيبة التسليح الخفيف";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 30,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6730,16 +7142,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "فرقة التسليح الثقيل";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6760,16 +7163,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "سرية التسليح الثقيل";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6790,16 +7184,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "جماعة التسليح الثقيل";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6820,16 +7205,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "كتيبة التسليح الثقيل";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6850,16 +7226,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "فرقة الحراسة";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6880,16 +7247,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "سرية الحراسة";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6910,16 +7268,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "جماعة الحراسة";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6940,16 +7289,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "كتيبة الحراسة";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 20,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -6970,16 +7310,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "الساندرز الشجاع";
         },
-        desc: `
-            مرحبا بكم في فتح باب الدم. ثق بي ، هذه مجرد البداية.
-
-            بعد سلسلة من الحروب الطويلة ، أصبحت قوة قوات المتمردين في الجمهورية الرومانية أضعف وأضعف.
-             النجاح الكبير لا يرجع فقط إلى تصميم مجلس الشيوخ ، ولكن أيضًا يرتبط ارتباطًا وثيقًا باستراتيجية عسكرية جديدة وافق عليها جميع قضاة المقاطعات سابقًا.
-             وفقًا للاستراتيجية ، يلعب مجلس الشيوخ في الواقع لعبة القط والفأر مع المتمردين ، بهدف القضاء عليهم جميعًا في وقت واحد في المستقبل.
-             هنا تأتي الفرصة الآن. لقد جمع المتمردون أخيرًا في الشمال الشرقي شديد البرودة كما هو متوقع.
-             ومع ذلك ، فقد شكلوا مجموعة قوية للغاية تسمى محور الاستقلال وأعلنت Fearless Skullbearer كزعيم.
-              Fearless Skullbearer هو مقاتلة حديدية الوحد الذي يوحد الغشاشين ويلهم قوات المتمردين. 
-            مع نظر العالم إلى الشمال الشرقي للجمهورية الرومانية ، ينادي مجلس الشيوخ بهجوم عام ضد محور الاستقلال.`,
+        desc: `يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.`,
 
         maxLvl: 10,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -7000,14 +7331,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "العصابات";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمنحك الانتصارات على هذه العصابات المتمردة حزم جيوش ومواد رفاهية وهدايا قيّمة.`,
 
         maxLvl: 2,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -7028,14 +7352,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "قطاع الطريق";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمنحك الانتصارات على قطاع الطرق حزم جيوش ومواد رفاهية وهدايا قيّمة.`,
 
         maxLvl: 2,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -7056,14 +7373,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "اللصوص";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمنحك الانتصارات على اللصوص حزم جيوش ومواد رفاهية وهدايا قيّمة.`,
 
         maxLvl: 2,
         hitArea: [63, 37, 11, 60, 6, 94, 66, 126, 124, 100, 115, 66],
@@ -7084,14 +7394,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "العصابات القرطاجية";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.`,
 
         maxLvl: 10,
         hitArea: [69, 110, 90, 101, 90, 69, 63, 53, 42, 64, 41, 97],
@@ -7112,14 +7415,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "فرق العصيان القرطاجى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.`,
 
         maxLvl: 10,
         hitArea: [63, 112, 97, 96, 94, 71, 65, 54, 35, 68, 34, 98],
@@ -7140,14 +7436,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "متمردى قرطاجة";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.`,
 
         maxLvl: 10,
         hitArea: [69, 115, 104, 102, 97, 68, 61, 48, 34, 64, 31, 98],
@@ -7168,14 +7457,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "القوات الخاصة القرطاجية";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.`,
 
         maxLvl: 10,
         hitArea: [67, 116, 110, 100, 101, 67, 69, 47, 31, 65, 29, 100],
@@ -7196,14 +7478,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة التمرد";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه المجموعات المتمردة.`,
 
         maxLvl: 10,
         hitArea: [62, 116, 108, 97, 102, 67, 71, 46, 29, 64, 27, 98],
@@ -7225,14 +7500,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة المشاة";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7254,14 +7522,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة الفرسان";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7283,14 +7544,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة المدرعين";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7312,14 +7566,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة رماة السهم";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7341,14 +7588,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة المقاليع";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7370,14 +7610,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "عاصمة المنجنيق";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7398,14 +7631,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "حلبة التحدى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7426,14 +7652,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "حلبة الموت";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7454,14 +7673,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "حلبة تحدى الاحلاف";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الانتصار.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7482,14 +7694,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "الملكة الصغرى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7508,16 +7713,9 @@ Caesar.World.UnitData = {
         make_req: ["silver_horn"],
         join_req: ["silver_horn"],
         getTitle: function(x_coord, y_coord) {
-            return "الملكة الصغرى";
+            return "الملكة الوسطى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7536,16 +7734,9 @@ Caesar.World.UnitData = {
         make_req: ["gold_horn"],
         join_req: ["gold_horn"],
         getTitle: function(x_coord, y_coord) {
-            return "الملكة الصغرى";
+            return "الملكة الكبرى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7566,14 +7757,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "القلاع الصغرى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7594,14 +7778,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "القلاع الوسطى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7622,14 +7799,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "القلاع الكبرى";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة.`,
 
         maxLvl: 10,
         hitArea: [81, 30, 39, 32, 26, 110, 62, 129, 106, 118],
@@ -7650,14 +7820,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "تمثال الحرب الاصغر";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.`,
 
         maxLvl: 75,
         heroNum: 250,
@@ -7681,14 +7844,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "تمثال الحرب الاوسط";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.`,
 
         maxLvl: 50,
         heroNum: 250,
@@ -7712,14 +7868,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "تمثال الحرب الاكبر";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.`,
 
         maxLvl: 25,
         heroNum: 250,
@@ -7743,14 +7892,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "مجموعة الذئب 1";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.`,
 
         maxLvl: 10,
         heroNum: 250,
@@ -7774,14 +7916,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "مجموعة الذئب 2";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.`,
 
         maxLvl: 10,
         heroNum: 250,
@@ -7805,14 +7940,7 @@ Caesar.World.UnitData = {
         getTitle: function(x_coord, y_coord) {
             return "مجموعة الذئب 3";
         },
-        desc: `التخلي عن النضال عديمة الفائدة! أنا هنا لإنهاء حياتك السلمية.
-
-الجمهورية الرومانية تتعرض للهجوم من قبل              Skullbearer Fearless ويشارك اللوردات في المعركة مع قوات المتمردين.
-             وبالتالي لا يوجد عدد كاف من القوات للحفاظ على النظام في المدن.
-            في هذا الوقت ، تتعرض الثروة الشعبية للتهديد من قبل مجرمين مثل اللصوص وعصابات العصابات المتجولين وعصابات العصابات ،
-             وكلهم يختبئون في الجمهورية الرومانية لفترة طويلة. إنهم يقرعون ويقتلون السكان ، مما يجعل الناس يعانون.
-            أيضا ، يحرقون المنازل لإخراج الناس من المكان الذي يعيشون فيه ، مما يسبب عدم استقرار المجتمع.
-            الآن المواطنون الرومانيون يتوقون إلى الحياة السلمية وينتظرون المنقذ الذي يمكنه القضاء على الجرائم وتقديمهم إلى الحياة السعيدة السابقة.`,
+        desc: `نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.`,
 
         maxLvl: 10,
         heroNum: 250,
@@ -8713,14 +8841,17 @@ var Player_profile = {
                 }
 
                 for (var ii in json_data) {
-                    if (!matrial_player[json_data[ii].table])
-                        matrial_player[json_data[ii].table] = {};
+                    var itemId = json_data[ii].id_item;
+                    var catalogItem = Caesar.BaseData.Items ? Caesar.BaseData.Items[itemId] : null;
+                    var itemTable = json_data[ii].table || (catalogItem && catalogItem.table) || "matrial_main";
+                    if (!matrial_player[itemTable])
+                        matrial_player[itemTable] = {};
 
-                    matrial_player[json_data[ii].table][json_data[ii].id_item] = json_data[ii].amount;
-                    Caesar.DPlayer.Items[json_data[ii].id_item] = json_data[ii].amount;
+                    matrial_player[itemTable][itemId] = json_data[ii].amount;
+                    Caesar.DPlayer.Items[itemId] = json_data[ii].amount;
 
-                    if (Caesar.BaseData.Items[json_data[ii].id_item])
-                        Caesar.BaseData.Items[json_data[ii].id_item].playerAmount = json_data[ii].amount;
+                    if (catalogItem)
+                        catalogItem.playerAmount = json_data[ii].amount;
 
                 }
                 Matrial.refreshPlayerAmountViews();
@@ -8986,7 +9117,7 @@ $(document)['on']('click', '#relocate-city-now', function() {
                 alert_box['failMessage'](JsonData['msg'] || 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة');
             } else if (JsonData['state'] === 'error_no_place_empty') {
                 setTimeout(function() {
-                    alert_box['confirmMessage']('للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]');
+                    alert_box['confirmMessage']('عذرًا، لا يمكنك نقل المدينة إلى هذا الموقع لأنه غير فارغ.');
                 }, 0x64)
             } else {
                 (Caesar.LBase.Error(data));
@@ -9468,21 +9599,32 @@ Caesar.City.prepareCity = function(idCity) {
                     refreshTime();
                 }, 1000);
             }
+            if (Number(idCity) === Number(Caesar.Config.idCities[0]) && Caesar.GE && typeof Caesar.GE.ensureCityBackground === "function") {
+                var earlyBgKey = Caesar.GE.CITY_BG_KEY_FOR_LVL(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
+                Caesar.GE.ensureCityBackground(earlyBgKey);
+            }
             Caesar.City.getCityBuilding(idCity).done(function() {
                 Caesar.City.getCityGarrison(idCity);
                 Caesar.Building.getJsonData().done(function() {
                     if (Number(idCity) === Number(Caesar.Config.idCities[0])) {
+                        var enterInitialCity = function() {
+                            Caesar.GE.LoadingScene.scene.transition({
+                                target: "City",
+                                duration: 1000,
+                                remove: true,
+                                data: {
+                                    idCity: 0
+                                }
+                            });
 
-                        Caesar.GE.LoadingScene.scene.transition({
-                            target: "City",
-                            duration: 1000,
-                            remove: true,
-                            data: {
-                                idCity: 0
-                            }
-                        });
-
-                        $("#loader-layer").remove();
+                            $("#loader-layer").remove();
+                        };
+                        if (Caesar.GE && typeof Caesar.GE.ensureCityBackground === "function") {
+                            var readyBgKey = Caesar.GE.CITY_BG_KEY_FOR_LVL(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
+                            Caesar.GE.ensureCityBackground(readyBgKey, enterInitialCity);
+                        } else {
+                            enterInitialCity();
+                        }
                     }
                 });
 
@@ -9896,13 +10038,13 @@ var BuildingConstData = [{
         getHitArea: function() {
             var wallLvl = Number(Caesar.City.getCity().BuildingLvl.wall);
             if (wallLvl >= 10) {
-                return [0, 40, 0, 150, 172, 235, 285, 290, 440, 290, 440, 200, 285, 165, 215, 105, 172, 35, 130, 105];
+                return [20, 50, 20, 165, 244, 271, 357, 326, 582, 425, 582, 308, 357, 201, 287, 141, 244, 71, 202, 141];
             } else if (wallLvl >= 8) {
-                return [0, 45, 0, 150, 172, 235, 285, 290, 430, 290, 430, 205, 285, 170, 210, 110, 172, 40, 135, 110];
+                return [24, 60, 24, 165, 244, 271, 357, 326, 578, 422, 578, 314, 357, 206, 282, 146, 244, 76, 207, 146];
             } else if (wallLvl >= 4) {
-                return [0, 50, 0, 150, 172, 235, 285, 290, 420, 290, 420, 210, 285, 175, 205, 115, 172, 45, 140, 115];
+                return [24, 66, 24, 165, 244, 271, 357, 326, 578, 420, 578, 318, 357, 211, 277, 151, 244, 81, 212, 151];
             } else {
-                return [0, 60, 0, 150, 172, 235, 285, 290, 410, 290, 410, 215, 285, 180, 172, 150];
+                return [24, 76, 24, 165, 244, 271, 357, 326, 576, 418, 576, 328, 357, 216, 244, 186];
             }
         },
         sprit_name: "wall_1",
@@ -10260,7 +10402,7 @@ function building_lvl_lable(x, y, place) {
         .setDepth(baseDepth + 4)
         .setInteractive({ useHandCursor: true })
         .on("click", function() {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             buildingClick(place);
         });
 
@@ -10289,151 +10431,181 @@ function cityBuildingInteractiveConfig(buildingType) {
     return config;
 }
 
-function building_hammer_animate(BuildingPlace) {
-    if (typeof isUpgradingNow === "function" && !isUpgradingNow(BuildingPlace))
+Caesar.GE.clearBuildingUpgradeAnimations = function(bObj) {
+    if (!bObj)
         return;
-
-    if (!BuildingOnFloor || !BuildingOnFloor[BuildingPlace] || !Caesar.GE || !Caesar.GE.CityScene)
-        return;
-
-    var bObj = BuildingOnFloor[BuildingPlace];
-    var x = bObj.x;
-    var y = bObj.y;
-    var baseDepth = (bObj.depth !== undefined) ? bObj.depth : (Math.floor(y) + 20);
-
     if (bObj.BuildingAni) {
         for (var ii in bObj.BuildingAni) {
             if (bObj.BuildingAni[ii] && bObj.BuildingAni[ii].destroy)
                 bObj.BuildingAni[ii].destroy();
-            delete bObj.BuildingAni[ii];
         }
     }
     bObj.BuildingAni = [];
+};
+
+Caesar.GE.clearBuildingAmbientAnimations = function(bObj) {
+    if (!bObj)
+        return;
+    if (bObj.AmbientTimers) {
+        for (var ti in bObj.AmbientTimers) {
+            if (bObj.AmbientTimers[ti] && bObj.AmbientTimers[ti].remove)
+                bObj.AmbientTimers[ti].remove(false);
+        }
+    }
+    bObj.AmbientTimers = [];
+    if (bObj.AmbientAni) {
+        for (var ai in bObj.AmbientAni) {
+            if (bObj.AmbientAni[ai] && bObj.AmbientAni[ai].destroy)
+                bObj.AmbientAni[ai].destroy();
+        }
+    }
+    bObj.AmbientAni = [];
+};
+
+Caesar.GE.refreshCityBuildingAnimations = function() {
+    if (!BuildingOnFloor)
+        return;
+    for (var place in BuildingOnFloor) {
+        if (Object.prototype.hasOwnProperty.call(BuildingOnFloor, place))
+            building_hammer_animate(place);
+    }
+};
+
+function pushBuilderSprite(bObj, scene, x, y, textureKey, animKey, delay, depth) {
+    bObj.BuildingAni.push(scene.add.sprite(x, y, textureKey)
+        .playAfterDelay(animKey, delay || 0)
+        .setOrigin(0, 0)
+        .setDepth(depth));
+}
+
+function building_hammer_animate(BuildingPlace) {
+    if (!BuildingOnFloor || !BuildingOnFloor[BuildingPlace] || !Caesar.GE || !Caesar.GE.CityScene)
+        return;
+
+    var bObj = BuildingOnFloor[BuildingPlace];
+    Caesar.GE.clearBuildingUpgradeAnimations(bObj);
+
+    if (typeof isUpgradingNow === "function" && !isUpgradingNow(BuildingPlace))
+        return;
+
+    var scene = Caesar.GE.CityScene;
+    var x = bObj.x;
+    var y = bObj.y;
+    var baseDepth = (bObj.depth !== undefined) ? bObj.depth : (Math.floor(y) + 20);
 
     if (BuildingPlace === "palace") {
-        // Palace: 256x192 px, authentic CoR palace scaffolding and workers
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 39, y + 45, "UpgradingPalaceSupU")
+        // Call of Roma TownHall construction scaffolding (UpgradingPalaceSupU/D + 4 builders)
+        bObj.BuildingAni.push(scene.add.image(x + 56, y + 42, "UpgradingPalaceSupU")
             .setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 39, y + 45, "UpgradingPalaceSupD")
+        bObj.BuildingAni.push(scene.add.image(x + 56, y + 42, "UpgradingPalaceSupD")
             .setOrigin(0, 0).setDepth(baseDepth + 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 70, y + 115, "UpgradingLaborL")
-            .setScale(0.85).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 155, y + 115, "UpgradingLaborR")
-            .setScale(0.85).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 195, y + 95, "UpgradingLaborR")
-            .setScale(0.85).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-
-        // Hammers positioned directly above the central palace roof and main dome (apex at x=160, y=10)
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 135, y + 12, "UpgradingHammer")
-            .setScale(0.60).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 185, y + 12, "UpgradingHammer")
-            .setScale(0.60).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-
-    } else if (BuildingPlace === "wall") {
-        var wallLvl = Number(Caesar.City.getCity().BuildingLvl.wall || 0);
-        var leftWallTopY = wallLvl >= 10 ? 120 : wallLvl >= 8 ? 137 : wallLvl >= 4 ? 124 : 137;
-        var rightWallTopY = wallLvl >= 10 ? 154 : wallLvl >= 8 ? 182 : wallLvl >= 4 ? 169 : 211;
-        var leftWorkDepth = Math.floor(y + leftWallTopY + 6) + 20;
-        var rightWorkDepth = Math.floor(y + rightWallTopY + 6) + 20;
-
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 140, y + leftWallTopY + 6, "UpgradingLaborL")
-            .setScale(0.70).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 1).setDepth(leftWorkDepth));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 230, y + rightWallTopY + 6, "UpgradingLaborR")
-            .setScale(0.70).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 1).setDepth(rightWorkDepth));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 133, y + leftWallTopY - 6, "UpgradingHammer")
-            .setScale(0.50).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(leftWorkDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 237, y + rightWallTopY - 6, "UpgradingHammer")
-            .setScale(0.50).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(rightWorkDepth + 2));
-
-    } else if (BuildingPlace === "farm") {
-        // Farm: 128x96 px (bounds 104x94), structure on left with fields on right
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x - 5, y, "UpgradingSupportsU")
-            .setScale(0.70).setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x - 5, y, "UpgradingSupportsD")
-            .setScale(0.70).setOrigin(0, 0).setDepth(baseDepth + 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 20, y + 42, "UpgradingLaborL")
-            .setScale(0.70).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 65, y + 55, "UpgradingLaborR")
-            .setScale(0.70).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 28, y + 12, "UpgradingHammer")
-            .setScale(0.50).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 72, y + 32, "UpgradingHammer")
-            .setScale(0.50).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-
-    } else if (BuildingPlace === "mine") {
-        // Iron Mine: 128x96 px (bounds 98x63 at offset +17, +21), timber headframe and ore bins
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 10, y + 10, "UpgradingSupportsU")
-            .setScale(0.65).setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 10, y + 10, "UpgradingSupportsD")
-            .setScale(0.65).setOrigin(0, 0).setDepth(baseDepth + 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 35, y + 50, "UpgradingLaborL")
-            .setScale(0.70).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 75, y + 55, "UpgradingLaborR")
-            .setScale(0.70).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 45, y + 18, "UpgradingHammer")
-            .setScale(0.50).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 85, y + 30, "UpgradingHammer")
-            .setScale(0.50).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-
-    } else if (BuildingPlace === "stone") {
-        // Stone Quarry: 128x96 px (bounds 86x46 at offset +27, +18), low stone pit
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 20, y + 8, "UpgradingSupportsU")
-            .setScale(0.58).setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x + 20, y + 8, "UpgradingSupportsD")
-            .setScale(0.58).setOrigin(0, 0).setDepth(baseDepth + 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 45, y + 40, "UpgradingLaborL")
-            .setScale(0.65).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 75, y + 42, "UpgradingLaborR")
-            .setScale(0.65).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 48, y + 18, "UpgradingHammer")
-            .setScale(0.48).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 88, y + 25, "UpgradingHammer")
-            .setScale(0.48).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-
-    } else if (BuildingPlace === "wood") {
-        // Sawmill / Forest: 128x96 px full lot
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x, y, "UpgradingSupportsU")
-            .setScale(0.80).setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x, y, "UpgradingSupportsD")
-            .setScale(0.80).setOrigin(0, 0).setDepth(baseDepth + 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 20, y + 48, "UpgradingLaborL")
-            .setScale(0.75).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 95, y + 48, "UpgradingLaborR")
-            .setScale(0.75).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 35, y + 15, "UpgradingHammer")
-            .setScale(0.50).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 90, y + 15, "UpgradingHammer")
-            .setScale(0.50).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-
-    } else {
-        // Standard city buildings (128x96 px) + Sawmill/Wood:
-        // Scaffolding scaled from 160x120 down to exactly 128x96 (scale 0.80) to match building slot
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x, y, "UpgradingSupportsU")
-            .setScale(0.80).setOrigin(0, 0).setDepth(baseDepth - 1));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.image(x, y, "UpgradingSupportsD")
-            .setScale(0.80).setOrigin(0, 0).setDepth(baseDepth + 1));
-
-        // Proportional laborers walking on scaffolding platforms
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 18, y + 48, "UpgradingLaborL")
-            .setScale(0.75).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 40, y + 66, "UpgradingLaborL")
-            .setScale(0.75).play("UpgradingLaborL.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 106, y + 48, "UpgradingLaborR")
-            .setScale(0.75).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 66, y + 66, "UpgradingLaborR")
-            .setScale(0.75).play("UpgradingLaborR.A", Math.random() * 500).setOrigin(0.5, 0.5).setDepth(baseDepth + 2));
-
-        // Left hammer (flipped) and right hammer tapping on roof, scaled to 0.50 (20px hammer head)
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 30, y + 22, "UpgradingHammer")
-            .setScale(0.50).setFlipX(true).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
-        bObj.BuildingAni.push(Caesar.GE.CityScene.add.sprite(x + 98, y + 22, "UpgradingHammer")
-            .setScale(0.50).setOrigin(0.5, 0.5).play("UpgradingHammer.A", Math.random() * 500).setDepth(baseDepth + 3));
+        pushBuilderSprite(bObj, scene, x + 56, y + 114, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 120, y + 125, "UpgradingLaborR", "UpgradingLaborR.A", 160, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 178, y + 114, "UpgradingLaborR", "UpgradingLaborR.A", 320, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 208, y + 99, "UpgradingLaborR", "UpgradingLaborR.A", 480, baseDepth + 2);
+        return;
     }
 
-    return;
+    if (BuildingPlace === "wall") {
+        // Call of Roma Wall.initAni() builder positions along parapet
+        pushBuilderSprite(bObj, scene, x + 12, y + 135, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 52, y + 155, "UpgradingLaborL", "UpgradingLaborL.A", 150, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 204, y + 237, "UpgradingLaborL", "UpgradingLaborL.A", 300, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 244, y + 257, "UpgradingLaborL", "UpgradingLaborL.A", 450, baseDepth + 2);
+        return;
+    }
+
+    if (BuildingPlace === "farm") {
+        pushBuilderSprite(bObj, scene, x + 25, y + 60, "UpgradingLaborR", "UpgradingLaborR.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 80, y + 48, "UpgradingLaborR", "UpgradingLaborR.A", 240, baseDepth + 2);
+        return;
+    }
+
+    if (BuildingPlace === "mine") {
+        pushBuilderSprite(bObj, scene, x + 10, y + 48, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 80, y + 48, "UpgradingLaborR", "UpgradingLaborR.A", 240, baseDepth + 2);
+        return;
+    }
+
+    if (BuildingPlace === "stone") {
+        pushBuilderSprite(bObj, scene, x + 10, y + 40, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 80, y + 40, "UpgradingLaborR", "UpgradingLaborR.A", 240, baseDepth + 2);
+        return;
+    }
+
+    if (BuildingPlace === "wood") {
+        pushBuilderSprite(bObj, scene, x, y + 40, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+        pushBuilderSprite(bObj, scene, x + 80, y + 48, "UpgradingLaborR", "UpgradingLaborR.A", 240, baseDepth + 2);
+        return;
+    }
+
+    // Standard 128x96 town buildings: Call of Roma backFence + frontFence + left/right builders
+    bObj.BuildingAni.push(scene.add.image(x, y, "UpgradingFenceU")
+        .setOrigin(0, 0).setDepth(baseDepth - 1));
+    bObj.BuildingAni.push(scene.add.image(x, y, "UpgradingFenceD")
+        .setOrigin(0, 0).setDepth(baseDepth + 1));
+    pushBuilderSprite(bObj, scene, x + 12, y + 50, "UpgradingLaborL", "UpgradingLaborL.A", 0, baseDepth + 2);
+    pushBuilderSprite(bObj, scene, x + 74, y + 50, "UpgradingLaborR", "UpgradingLaborR.A", 240, baseDepth + 2);
 }
 
 var Check = true;
+
+Caesar.GE.attachBuildingAmbientAnimation = function(bObj, spriteKey, x, y, baseDepth) {
+    if (!bObj || !Caesar.GE || !Caesar.GE.CityScene)
+        return;
+    Caesar.GE.clearBuildingAmbientAnimations(bObj);
+    var scene = Caesar.GE.CityScene;
+    var addAmbSprite = function(ox, oy, textureKey, animKey, delay, depthOffset) {
+        var sp = scene.add.sprite(x + ox, y + oy, textureKey)
+            .setOrigin(0, 0)
+            .setDepth(baseDepth + (depthOffset || 1))
+            .playAfterDelay(animKey, delay || 0);
+        bObj.AmbientAni.push(sp);
+        return sp;
+    };
+
+    if (spriteKey === "B1") {
+        // House chimney smoke puffs (Call of Roma HouseAniSet: SmokeAni at 40, 0 with cooldown)
+        var smoke = addAmbSprite(40, 0, "HouseSmoke", "HouseSmoke.A", Math.floor(Math.random() * 1200), 1);
+        smoke.on("animationcomplete", function() {
+            if (!smoke.scene || !smoke.active)
+                return;
+            smoke.setVisible(false);
+            if (scene.time && typeof scene.time.delayedCall === "function") {
+                bObj.AmbientTimers.push(scene.time.delayedCall(2800 + Math.floor(Math.random() * 1800), function() {
+                    if (!smoke.scene || !smoke.active)
+                        return;
+                    smoke.setVisible(true);
+                    smoke.play("HouseSmoke.A");
+                }));
+            }
+        });
+    } else if (spriteKey === "B4") {
+        // Stable horse standing inside front courtyard paddock of _B4
+        addAmbSprite(46, 68, "Horse", "Horse.A", Math.floor(Math.random() * 600), 1);
+    } else if (spriteKey === "B5") {
+        // Workshop cargo hoist (Call of Roma WorkShopAniSet: elevator at 61, 28)
+        addAmbSprite(61, 28, "WorkshopElevator", "WorkshopElevator.A", Math.floor(Math.random() * 400), 1);
+    } else if (spriteKey === "B7") {
+        // Dak / Embassy roof pennant (Call of Roma DakAniSet: dakflag at 87, 38)
+        addAmbSprite(87, 38, "DakFlag", "DakFlag.A", Math.floor(Math.random() * 400), 1);
+    } else if (spriteKey === "B9") {
+        // Temple twin altar braziers (Call of Roma TempleAniSet: flame at 37,45 and 52,52)
+        addAmbSprite(37, 45, "TempleFlame", "TempleFlame.A", 0, 1);
+        addAmbSprite(52, 52, "TempleFlame", "TempleFlame.A", 200, 1);
+    } else if (spriteKey === "B10") {
+        // Plaza / Training field fluttering banners (Call of Roma TrainningFieldAniSet: 40, 25)
+        addAmbSprite(40, 25, "PiazzaFlag", "PiazzaFlag.A", Math.floor(Math.random() * 300), 1);
+    } else if (spriteKey === "palace") {
+        // TownHall twin courtyard fountains (Call of Roma TownhalllBuilding: 25,110 and 85,148)
+        addAmbSprite(25, 110, "Fountain", "Fountain.A", 0, 1);
+        addAmbSprite(85, 148, "Fountain", "Fountain.A", 180, 1);
+    } else if (spriteKey === "mine") {
+        // Iron mine twin furnace smoke plumes (Call of Roma IronMineAniSet: 19,-13 and 28,-16)
+        addAmbSprite(19, -13, "MineSmoke", "MineSmoke.A", 0, 1);
+        addAmbSprite(28, -16, "MineSmoke", "MineSmoke.A", 350, 1);
+    }
+};
 
 Caesar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
     var bType = (Caesar.City.getCity().BuildingType && Caesar.City.getCity().BuildingType[BuildingPlace] !== undefined)
@@ -10451,7 +10623,7 @@ Caesar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
         .setOrigin(0, 0)
         .setDepth(depth)
         .on("click", function(p, x_pos, y_pos, event) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             if (event && event.stopPropagation) event.stopPropagation();
             buildingClick(BuildingPlace);
@@ -10464,6 +10636,8 @@ Caesar.GE.AddCityBuilding = function(x, y, BuildingPlace) {
     BuildingOnFloor[BuildingPlace].data.set("BuildingPlace", BuildingPlace);
 
     BuildingOnFloor[BuildingPlace].Lable = building_lvl_lable(x, y, BuildingPlace);
+    if (bType && bType !== BUILDING_TYPS.SPACE)
+        Caesar.GE.attachBuildingAmbientAnimation(BuildingOnFloor[BuildingPlace], spriteName, x, drawY, depth);
     building_hammer_animate(BuildingPlace);
     return BuildingOnFloor[BuildingPlace];
 };
@@ -10475,13 +10649,14 @@ Caesar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(150)
         .on("click", function(p) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("palace");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
         .on(Phaser.Input.Events.GAMEOBJECT_OUT, MouseOutBuilding);
     building_lvl_lable(416 + 115, 12 + 65, "palace");
+    Caesar.GE.attachBuildingAmbientAnimation(BuildingOnFloor.palace, "palace", 416, 12, 150);
     building_hammer_animate("palace");
 
     var wallSprite = "wall_0";
@@ -10490,10 +10665,10 @@ Caesar.GE.AddCityFixedBuilding = function() {
     }
     BuildingOnFloor.wall = Caesar.GE.CityScene.add.image(0, 110, wallSprite)
         .setInteractive(cityBuildingInteractiveConfig(BUILDING_TYPS.WALL))
-        .setOrigin(0, 0)
+        .setOrigin(72 / 620, 36 / 430)
         .setDepth(200)
         .on("click", function(obj, p, event) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             var pointer = p || obj;
             var evt = (pointer && pointer.event) || event;
             if (evt && evt.target && evt.target.tagName && evt.target.tagName !== "CANVAS") return;
@@ -10506,10 +10681,10 @@ Caesar.GE.AddCityFixedBuilding = function() {
 
     BuildingOnFloor.farm = Caesar.GE.CityScene.add.image(0, 273, "farm")
         .setInteractive({ useHandCursor: true })
-        .setOrigin(0, 0)
+        .setOrigin(48 / 176, 0)
         .setDepth(350)
         .on("click", function(p) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("farm");
         })
@@ -10523,13 +10698,14 @@ Caesar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(90)
         .on("click", function(p) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("mine");
         })
         .on(Phaser.Input.Events.GAMEOBJECT_OVER, MouseOverBuilding)
         .on(Phaser.Input.Events.GAMEOBJECT_OUT, MouseOutBuilding);
     building_lvl_lable(850, 55, "mine");
+    Caesar.GE.attachBuildingAmbientAnimation(BuildingOnFloor.mine, "mine", 810, 25, 90);
     building_hammer_animate("mine");
 
     BuildingOnFloor.stone = Caesar.GE.CityScene.add.image(600, 5, "stone")
@@ -10537,7 +10713,7 @@ Caesar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(70)
         .on("click", function(p) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("stone");
         })
@@ -10551,7 +10727,7 @@ Caesar.GE.AddCityFixedBuilding = function() {
         .setOrigin(0, 0)
         .setDepth(220)
         .on("click", function(p) {
-            if ($("#dialg_box:visible:not(.for_building), #Box-mid:visible, #alert_container:visible, .modal-overlay:visible, #luck-wheel-over-lay:visible").length > 0) return;
+            if (Caesar.GE && typeof Caesar.GE.isModalBlockingCityInput === "function" && Caesar.GE.isModalBlockingCityInput(true)) return;
             if (p && p.event && p.event.target && p.event.target.tagName !== "CANVAS") return;
             buildingClick("wood");
         })
@@ -10577,13 +10753,40 @@ Caesar.GE.TextConfig = {
 };
 
 function fillCityWithBuilding() {
+    if (Caesar.GE && typeof Caesar.GE.isSceneSleeping === "function" && Caesar.GE.isSceneSleeping(Caesar.GE.CityScene)) {
+        Caesar.GE.CityDirty = true;
+        return;
+    }
     if (Caesar.GE.CityScene && Caesar.GE.CityScene.cityBackground && Caesar.GE.CityScene.cityBackground.scene && Caesar.GE.CityScene.cityBackground.scene.sys && typeof Caesar.GE.CityScene.cityBackground.setTexture === "function") {
         var cLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
         var curBgKey = "city_floor";
         if (cLvl > 2) curBgKey = "town_bg_3";
         else if (cLvl > 1) curBgKey = "town_bg_2";
         else if (cLvl > 0) curBgKey = "town_bg_1";
-        Caesar.GE.CityScene.cityBackground.setTexture(curBgKey);
+        var bgBounds = (Caesar.GE && Caesar.GE.CITY_BG_BOUNDS) || { left: -275.81, top: -203.23, width: 1548.39, height: 870.97 };
+        var applyCityBgTexture = function(targetKey) {
+            if (Caesar.GE.CityScene && Caesar.GE.CityScene.cityBackground && Caesar.GE.CityScene.cityBackground.scene && Caesar.GE.CityScene.cityBackground.scene.sys && typeof Caesar.GE.CityScene.cityBackground.setTexture === "function") {
+                Caesar.GE.CityScene.cityBackground.setTexture(targetKey);
+                if (typeof Caesar.GE.CityScene.cityBackground.setPosition === "function") {
+                    Caesar.GE.CityScene.cityBackground.setPosition(bgBounds.left, bgBounds.top);
+                }
+                if (typeof Caesar.GE.CityScene.cityBackground.setDisplaySize === "function") {
+                    Caesar.GE.CityScene.cityBackground.setDisplaySize(bgBounds.width, bgBounds.height);
+                }
+            }
+        };
+        var bgTexMgr = Caesar.GE.CityScene.textures || (Caesar.GE.Game && Caesar.GE.Game.textures);
+        if (!bgTexMgr || typeof bgTexMgr.exists !== "function" || bgTexMgr.exists(curBgKey) || typeof Caesar.GE.ensureCityBackground !== "function") {
+            applyCityBgTexture(curBgKey);
+        } else {
+            Caesar.GE.ensureCityBackground(curBgKey, function(loadedKey) {
+                var latestLvl = Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
+                var latestKey = typeof Caesar.GE.CITY_BG_KEY_FOR_LVL === "function" ? Caesar.GE.CITY_BG_KEY_FOR_LVL(latestLvl) : curBgKey;
+                if (loadedKey && loadedKey === latestKey) {
+                    applyCityBgTexture(loadedKey);
+                }
+            });
+        }
     }
     for (var prop in BuildingOnFloor) {
         BuildingOnFloor[prop].destroy();
@@ -10591,9 +10794,8 @@ function fillCityWithBuilding() {
             BuildingOnFloor[prop].LvlImage.destroy();
         if (BuildingOnFloor[prop].LvlText)
             BuildingOnFloor[prop].LvlText.destroy();
-        for (var iii in BuildingOnFloor[prop].BuildingAni)
-            if (BuildingOnFloor[prop].BuildingAni[iii] && BuildingOnFloor[prop].BuildingAni[iii].destroy)
-                BuildingOnFloor[prop].BuildingAni[iii].destroy();
+        Caesar.GE.clearBuildingUpgradeAnimations(BuildingOnFloor[prop]);
+        Caesar.GE.clearBuildingAmbientAnimations(BuildingOnFloor[prop]);
         delete BuildingOnFloor[prop];
     }
 
@@ -10658,6 +10860,9 @@ function fillCityWithBuilding() {
         }
     }
 
+    if (typeof Animation !== "undefined" && typeof Animation.refreshLevelEffects === "function")
+        Animation.refreshLevelEffects(cityLvl);
+
     if (currentCity && currentCity.food)
         Animation.cityProductionRate();
 
@@ -10665,6 +10870,8 @@ function fillCityWithBuilding() {
         BuildingOnFloor[BuildingPlace].setDataEnabled();
         BuildingOnFloor[BuildingPlace].data.set("BuildingPlace", BuildingPlace);
     }
+    Caesar.GE.CityDirty = false;
+    Caesar.GE.LastCityIdRendered = currentCity ? Number(currentCity.id_city || 0) : 0;
 }
 
 function fillCityLvl_1() {
@@ -11117,7 +11324,7 @@ alert_box.downGradeBuilding = function(place) {
 
     var content = ` <div id="downdrade-box">
                         <div class="paragraph">
-                            هل انت متاكد من انزل  المستوى الحالى للمبنى
+                            هل أنت متأكد من خفض المستوى الحالي للمبنى؟
                         </div>
                         <div class="two-btn">
                             <button class="full-btn pull-R full-btn-2x ellipsis" id="closeAlertBoxButton">${Translate.Button.General.Cancel[UserLag.language]}</button>
@@ -11627,7 +11834,7 @@ var city_profile = {
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="left" title=""تعداد السكان>
+                                    <div class="left" title="تعداد السكان">
                                         <lable class="img" style="background-image: url(images/icons/army/pop.png);"></lable>
                                         <span class="count">${getArabicNumbers(parseInt(pop))}</span>
                                     </div>
@@ -11970,8 +12177,14 @@ var city_profile = {
 
             $(".page_content ul").html(this.heroList());
 
-            if ($(".page_content ul").getNiceScroll(0)) {
-                $(".page_content ul").getNiceScroll(0).resize();
+            var heroListEl = $(".page_content ul");
+            if (heroListEl.length && typeof heroListEl.getNiceScroll === "function" && heroListEl.getNiceScroll(0)) {
+                var heroNs = heroListEl.getNiceScroll(0);
+                if (typeof requestAnimationFrame === "function") {
+                    requestAnimationFrame(function() { heroNs.resize(); });
+                } else {
+                    heroNs.resize();
+                }
             }
 
 
@@ -12568,16 +12781,24 @@ $(document).on("click", "#dismis-army", function() {
 });
 var PLAYER_ALL_HEROS;
 $(document).ready(function() {
-
-    $("#msg-area").niceScroll({
-        autohidemode: false,
-        cursorwidth: "10px",
-        background: "url(images/bars/scroll_rail.png) center",
-        railalign: "left",
-        cursorborderradius: "0px",
-        cursorborder: "none"
-    });
-
+    var initMsgAreaScroll = function() {
+        var msgArea = $("#msg-area");
+        if (msgArea.length && typeof msgArea.niceScroll === "function") {
+            msgArea.niceScroll({
+                autohidemode: false,
+                cursorwidth: "10px",
+                background: "url(images/bars/scroll_rail.png) center",
+                railalign: "left",
+                cursorborderradius: "0px",
+                cursorborder: "none"
+            });
+        }
+    };
+    if (typeof setTimeout === "function") {
+        setTimeout(initMsgAreaScroll, 150);
+    } else {
+        initMsgAreaScroll();
+    }
 });
 // get city from data base
 
@@ -12730,7 +12951,7 @@ $(document).on("PlayerReady", "html", function() {
 
 
 const image_for_fa3lia = "images/style/t-map.png";
-const paragraph_for_fa3lia = "الفاعلية ممتدة حتى هاية مارس";
+const paragraph_for_fa3lia = "الفعالية متاحة لفترة محدودة";
 // get  matrial 
 
 
@@ -14186,20 +14407,21 @@ $(document).on("click", "#usePlayerItemBox", function() {
 
 
 window.addEventListener("orientationchange", function() {
-    // Announce the new orientation number
-    MAX_SCREEN_WIDTH = $(document).width();
-    MAX_SCREEN_HEIGHT = $(document).height();
-
+    if (Caesar.GE && typeof Caesar.GE.syncGameScale === "function") {
+        Caesar.GE.syncGameScale();
+    }
 }, false);
 
 $(document)['on']('click', '#openPlayerItemBox', function() {
     var idItem = $(this)['attr']('data-item-name');
+    var idCity = (Caesar.CurrentCity && Caesar.CurrentCity.City) ? Number(Caesar.CurrentCity.City.id_city) || 0 : 0;
     $['ajax']({
         'url': API_URL + '/api/AItem/openItemBox',
         'data': {
             'server': Caesar['Config']['idServer'],
             'token': Caesar['Config']['AuthToken'],
-            'idItem': idItem
+            'idItem': idItem,
+            'idCity': idCity
         },
         'type': 'POST',
         'success': function(data, _0x106300, _0x509fc4) {
@@ -14216,9 +14438,18 @@ $(document)['on']('click', '#openPlayerItemBox', function() {
                     }
 
                 }
+                if (JsonObject.City && typeof JsonObject.City === "object" && idCity > 0 && Caesar.City && Caesar.City.getCity(idCity)) {
+                    Caesar.City.getCity(idCity).City = JsonObject.City;
+                    if (typeof city_profile !== "undefined" && typeof city_profile.refresh_resource_view === "function") {
+                        city_profile.refresh_resource_view();
+                    }
+                }
+                Matrial['takeFrom'](idItem, 1);
                 Caesar['Item']['ItemBox']('matrial_box', $('#nav-item-box-left')['attr']('data-current-offset'));
                 Player_profile['refreshMatrialBox']()['done'](function() {
-                    Caesar['Item']['ItemBox']('matrial_box', $('#nav-item-box-left')['attr']('data-current-offset'));
+                    $("#dialg_box .right-content .total").html(
+                        Caesar['Item']['ItemBox']('matrial_box', $('#nav-item-box-left')['attr']('data-current-offset') || 1)
+                    );
                 });
             } else if (JsonObject['state'] === 'error_1') {
                 alert_box['failMessage']('ليس لديك مواد كافية');
@@ -14235,17 +14466,16 @@ Caesar.WsLib.TimedTask = {};
 
 
 Caesar.TimedTask.refreshListView = function() {
-    $("#build-tsk").html("");
-    $("#study-tsk").html("");
-    $("#jop-tsk").html("");
-
     var idCity = Number(Caesar.CurrentCity.idCity);
+    var buildHtml = "";
+    var studyHtml = "";
+    var jopHtml = "";
 
     for (var iii in this.TaskList.Building) {
         var Task = this.TaskList.Building[iii];
         if (idCity !== Number(Task.id_city))
             continue;
-        $("#build-tsk").append(` <div class="task-unite upgrade-task" type ="${Task.type}"  place="${Task.place}" lvl_to="${Task.lvl_to}">
+        buildHtml += ` <div class="task-unite upgrade-task" type ="${Task.type}"  place="${Task.place}" lvl_to="${Task.lvl_to}">
                                 <div class="wrapper">
                                     <div  class="prog-bar"></div>
                                     <div class="over-prog-bar">
@@ -14261,13 +14491,13 @@ Caesar.TimedTask.refreshListView = function() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>`);
+                            </div>`;
     }
     for (var iii in this.TaskList.Study) {
         var Task = this.TaskList.Study[iii];
         if (idCity !== Number(Task.id_city))
             continue;
-        $("#study-tsk").append(` <div class="task-unite upgrade-task" type ="${Task.study}"  place="${Task.study_in}" lvl_to="${Task.lvl_to}">
+        studyHtml += ` <div class="task-unite upgrade-task" type ="${Task.study}"  place="${Task.study_in}" lvl_to="${Task.lvl_to}">
                                 <div class="wrapper">
                                     <div  class="prog-bar"></div>
                                     <div class="over-prog-bar">
@@ -14283,13 +14513,13 @@ Caesar.TimedTask.refreshListView = function() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>`);
+                            </div>`;
     }
     for (var iii in this.TaskList.Jop) {
         var Task = this.TaskList.Jop[iii];
         if (idCity !== Number(Task.id_city))
             continue;
-        $("#jop-tsk").append(` <div class="task-unite upgrade-task" type ="${Task.jop_place}"  place="${Task.jop_place}" lvl_to="${Task.lvl_to}">
+        jopHtml += ` <div class="task-unite upgrade-task" type ="${Task.jop_place}"  place="${Task.jop_place}" lvl_to="${Task.lvl_to}">
                                 <div class="wrapper">
                                     <div  class="prog-bar"></div>
                                     <div class="over-prog-bar">
@@ -14305,9 +14535,12 @@ Caesar.TimedTask.refreshListView = function() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>`);
+                            </div>`;
     }
 
+    $("#build-tsk").html(buildHtml);
+    $("#study-tsk").html(studyHtml);
+    $("#jop-tsk").html(jopHtml);
 
     refreshTime();
 };
@@ -14350,6 +14583,11 @@ Caesar.TimedTask.getCityBuildingTasks = function(idCity) {
             for (var iii in JsonData)
                 Caesar.TimedTask.TaskList.Building[JsonData[iii].id] = JsonData[iii];
             Caesar.TimedTask.refreshListView();
+
+            if (Caesar.CurrentCity && Caesar.CurrentCity.City && Number(Caesar.CurrentCity.City.id_city) === Number(idCity)
+                && Caesar.GE && typeof Caesar.GE.refreshCityBuildingAnimations === "function") {
+                Caesar.GE.refreshCityBuildingAnimations();
+            }
 
             if (completedTask) {
                 Player_profile.getPlayerBaseData().fail(function(jqXHR) {
@@ -14736,22 +14974,37 @@ function refreshTime() {
     if (Caesar.TimedTask && Caesar.TimedTask.TaskList)
         Caesar.TimedTask.refreshExpiredTasks();
 
+    var now = Date.now() / 1000;
     $(".time_counter").each(function() {
-
-        var timeEnd = parseInt($(this).attr("time-end"));
-        var now = Date.now() / 1000;
+        var $el = $(this);
+        var timeEnd = parseInt($el.attr("time-end"));
         var time_diff = Math.floor((timeEnd - now));
 
-
-
         if (time_diff > 0) {
-            $(this).html(changeTimeFormat(time_diff));
+            var formatted = changeTimeFormat(time_diff);
+            if (typeof this.innerHTML === "string") {
+                if (this.innerHTML !== formatted) {
+                    this.innerHTML = formatted;
+                }
+            } else {
+                $el.html(formatted);
+            }
 
-            if ($(this).hasClass("tc-with-prog")) {
-                var timeStart = $(this).attr("time-start");
-                var timeEndOrg = $(this).attr("time-end-org");
-                var progWidth = (((timeEndOrg - timeEnd) + (now - timeStart)) / (timeEndOrg - timeStart)) * 100;
-                $(this).parents(".task-unite").children(".wrapper").children(".prog-bar").width(progWidth + "%");
+            if ($el.hasClass("tc-with-prog")) {
+                var timeStart = Number($el.attr("time-start"));
+                var timeEndOrg = Number($el.attr("time-end-org"));
+                var denom = timeEndOrg - timeStart;
+                var progWidth = denom ? (((timeEndOrg - timeEnd) + (now - timeStart)) / denom) * 100 : 0;
+                var clampedW = Math.max(0, Math.min(100, progWidth)).toFixed(2) + "%";
+                var $progBar = $el.parents(".task-unite").children(".wrapper").children(".prog-bar");
+                var progBarEl = $progBar[0];
+                if (progBarEl && progBarEl.style) {
+                    if (progBarEl.style.width !== clampedW) {
+                        progBarEl.style.width = clampedW;
+                    }
+                } else {
+                    $progBar.width(progWidth + "%");
+                }
             }
 
         } else {
@@ -15018,7 +15271,7 @@ function lastSeen(last_seen) {
     } else if (time_diff < 60 * 60 * 24) {
         return `منذ ${Math.floor(time_diff / (60 * 60))} ساعة`;
     } else if (time_diff < 60 * 60 * 24 * 7) {
-        return "يوم" + Math.floor(time_diff / (60 * 60 * 24)) + "منذ ";
+        return `منذ ${Math.floor(time_diff / (60 * 60 * 24))} يوم`;
     } else {
         return "منذ فترة طويلة";
     }
@@ -15072,7 +15325,7 @@ function dateTimeFormat(time) {
     ];
 
 
-    return `${time.getUTCDate()} ${monthNames[time.getUTCMonth()]} ${time.getUTCFullYear()}  &nbsp; &nbsp; &nbsp; &nbsp; ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`;
+    return `${time.getUTCDate()} ${monthNames[time.getUTCMonth()]} ${time.getUTCFullYear()}  \u00A0 \u00A0 \u00A0 \u00A0 ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`;
 
 }
 
@@ -15088,9 +15341,21 @@ function dateTimeFormatShort(time) {
 }
 
 var SERVER_CLOCK = $("#server-name .time");
+var SERVER_CLOCK_EL = SERVER_CLOCK.length ? SERVER_CLOCK[0] : null;
+var LAST_SERVER_CLOCK_TEXT = "";
 
 setInterval(function() {
-    SERVER_CLOCK.html(dateTimeFormat(new Date(Date.now())));
+    if (!SERVER_CLOCK_EL || !SERVER_CLOCK_EL.isConnected) {
+        SERVER_CLOCK_EL = document.querySelector("#server-name .time");
+    }
+    if (!SERVER_CLOCK_EL) {
+        return;
+    }
+    var nextClockText = dateTimeFormat(new Date(Date.now()));
+    if (nextClockText !== LAST_SERVER_CLOCK_TEXT) {
+        LAST_SERVER_CLOCK_TEXT = nextClockText;
+        SERVER_CLOCK_EL.textContent = nextClockText;
+    }
 }, 1000); /* global Caesar.CurrentCity.City, alert_box */
 
 $.ajax({
@@ -15162,52 +15427,52 @@ function getUpgradeData(place) {
         case 3: // ثكنات
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : ثكنات مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: الثكنات مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">  ثكنات مستوى' +
+                '<h1 class="header-2 green">الثكنات مستوى ' +
                 getArabicNumbers(lvl + 1) +
-                ' تسريع التدريب القوات بمقدار ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
-                '%   و سوف  يسمح بتدريب ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
-                '</h1>' +
+                ' تسرّع تدريب القوات بنسبة ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
+                '% وتتيح جدولة ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
+                ' دفعات تدريب</h1>' +
                 '</div>';
             break;
 
         case 4: // اسطبل
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : اسطبل مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: الإسطبل مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">  اسطبل مستوى' +
+                '<h1 class="header-2 green">الإسطبل مستوى ' +
                 getArabicNumbers(lvl + 1) +
-                ' تسريع التدريب القوات بمقدار ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
-                '%   و سوف  يسمح بتدريب ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
-                '</h1>' +
+                ' يسرّع تدريب القوات بنسبة ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
+                '% ويتيح جدولة ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
+                ' دفعات تدريب</h1>' +
                 '</div>';
             break;
 
         case 5: // ورشة عمل
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : ورشة عمل مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: ورشة العمل مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">   ورشة عمل مستوى' +
+                '<h1 class="header-2 green">ورشة العمل مستوى ' +
                 getArabicNumbers(lvl + 1) +
-                '  تسريع التدريب القوات بمقدار ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
-                '%   و سوف  يسمح بتدريب ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
-                '</h1>' +
+                ' تسرّع التصنيع بنسبة ' + getArabicNumbers(lvl < 7 ? (lvl + 1) * 5 : 30) +
+                '% وتتيح جدولة ' + getArabicNumbers(lvl > 9 ? 10 : lvl + 1) +
+                ' دفعات صنع</h1>' +
                 '</div>';
             break;
 
         case 6: // مسرح
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : المسرح مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: المسرح مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
                 '<h1 class="header-2 green">المسرح مستوى ' +
                 getArabicNumbers(lvl + 1) +
-                ' يسمح بخروج ' +
+                ' يتيح تجنيد ' +
                 getArabicNumbers(lvl > 14 ? 15 : lvl + 1) +
-                ' بطل مستوى ١ الى ' + getArabicNumbers((lvl + 1) * 5) + ' كل ' + getArabicNumbers(lvl > 8 ? 12 : 84 - (lvl * 12)) + ' دقيقة</h1>' +
+                ' أبطال من مستوى 1 إلى ' + getArabicNumbers((lvl + 1) * 5) + ' كل ' + getArabicNumbers(lvl > 8 ? 12 : 84 - (lvl * 12)) + ' دقيقة</h1>' +
                 '</div>';
             break;
 
@@ -15215,9 +15480,9 @@ function getUpgradeData(place) {
         case 7: // مركز
             var info = `<div class="upgrade-info">
                             <div class="header-1">
-                                <h1>تحديث الى :  المركز مستوى${getArabicNumbers(lvl + 1)}</h1>
+                                <h1>تحديث إلى: المركز مستوى ${getArabicNumbers(lvl + 1)}</h1>
                             </div>
-                            <h1 class="header-2 green">يمكنك عرض ${getArabicNumbers(lvl + 1)}  من المواد الخاصة بك فى صندوق المواد واختيارها للبيع</h1>
+                            <h1 class="header-2 green">المركز مستوى ${getArabicNumbers(lvl + 1)} يدعم خطوط الإمداد والتبادل بين مدنك حتى ${getArabicNumbers((lvl + 1) * 10000)} مورد</h1>
                         </div>`;
             break;
 
@@ -15237,12 +15502,12 @@ function getUpgradeData(place) {
         case 9: // اكاديمية
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى :  الاكاديمية مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: الأكاديمية مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">الاكاديمية مستوى ' +
+                '<h1 class="header-2 green">الأكاديمية مستوى ' +
                 getArabicNumbers(lvl + 1) +
-                ' تقلل المدة الدراسية  بمقدار' +
-                getArabicNumbers(lvl > 20 ? 60 : (lvl + 1) * 3) + '% وهذا  المستوى للاكاديمية يتيح لك دراسة التكنولوجيا المتاحة حتى مستوى ' +
+                ' تقلل مدة الدراسة بنسبة ' +
+                getArabicNumbers(lvl > 20 ? 60 : (lvl + 1) * 3) + '%، وتتيح دراسة التقنيات العسكرية حتى المستوى ' +
                 getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>';
             break;
@@ -15275,9 +15540,9 @@ function getUpgradeData(place) {
         case 12: // القصر
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى :  القصر  مستوى' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: القصر مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">القصر مستوى  يزيد مخزون السسترسس وعدد البرارى المملوكة</h1>' +
+                '<h1 class="header-2 green">القصر مستوى ' + getArabicNumbers(lvl + 1) + ' يزيد سعة السسترس، وعدد البراري المملوكة، وسرعة البناء</h1>' +
                 '</div>';
             break;
 
@@ -15297,10 +15562,10 @@ function getUpgradeData(place) {
         case 14: // السوق
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : السور مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: السوق مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">السور مستوى ' + getArabicNumbers(lvl + 1) +
-                ' يمتلك مساحة ' + getArabicNumbers((lvl + 1) * 100000) + ' لبناء الدفاعات  ويتحمل ايضاً ' + getArabicNumbers((lvl) * (lvl + 1) * 100000) + '</h1>' +
+                '<h1 class="header-2 green">السوق مستوى ' + getArabicNumbers(lvl + 1) +
+                ' يستطيع إرسال ' + getArabicNumbers(Math.min(lvl + 1, 10)) + ' إرساليات ويدير حتى ' + getArabicNumbers((lvl + 1) * 10000) + ' من المعاملات</h1>' +
                 '</div>';
 
             break;
@@ -15309,10 +15574,10 @@ function getUpgradeData(place) {
         case 15: // الغابات
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : السور مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: الورشة مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">السور مستوى ' + getArabicNumbers(lvl + 1) +
-                ' يمتلك مساحة ' + getArabicNumbers((lvl + 1) * 100000) + ' لبناء الدفاعات  ويتحمل ايضاً ' + getArabicNumbers((lvl) * (lvl + 1) * 100000) + '</h1>' +
+                '<h1 class="header-2 green">الورشة مستوى ' + getArabicNumbers(lvl + 1) +
+                ' تتيح توظيف ' + getArabicNumbers((lvl + 1) * 100) + ' عاملًا في الطلب وتقلل الزمن بمقدار ' + getArabicNumbers(lvl + 1) + ' ثانية</h1>' +
                 '</div>';
 
             break;
@@ -15321,22 +15586,22 @@ function getUpgradeData(place) {
         case 16: // الحقل
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : السور مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: الحقل مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">السور مستوى ' + getArabicNumbers(lvl + 1) +
-                ' يمتلك مساحة ' + getArabicNumbers((lvl + 1) * 100000) + ' لبناء الدفاعات  ويتحمل ايضاً ' + getArabicNumbers((lvl) * (lvl + 1) * 100000) + '</h1>' +
+                '<h1 class="header-2 green">الحقل مستوى ' + getArabicNumbers(lvl + 1) +
+                ' يتيح توظيف ' + getArabicNumbers((lvl + 1) * 100) + ' عاملًا في الطلب ويقلل الزمن بمقدار ' + getArabicNumbers(lvl + 1) + ' ثانية</h1>' +
                 '</div>';
 
             break;
 
 
-        case 17: // المنجمم
+        case 17: // المنجم
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : السور مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: المنجم مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">السور مستوى ' + getArabicNumbers(lvl + 1) +
-                ' يمتلك مساحة ' + getArabicNumbers((lvl + 1) * 100000) + ' لبناء الدفاعات  ويتحمل ايضاً ' + getArabicNumbers((lvl) * (lvl + 1) * 100000) + '</h1>' +
+                '<h1 class="header-2 green">المنجم مستوى ' + getArabicNumbers(lvl + 1) +
+                ' يتيح توظيف ' + getArabicNumbers((lvl + 1) * 100) + ' عاملًا في الطلب ويقلل الزمن بمقدار ' + getArabicNumbers(lvl + 1) + ' ثانية</h1>' +
                 '</div>';
 
             break;
@@ -15345,10 +15610,10 @@ function getUpgradeData(place) {
         case 18: // المحجر
             var info = '<div class="upgrade-info">' +
                 '<div class="header-1">' +
-                '<h1>تحديث الى : السور مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
+                '<h1>تحديث إلى: المحجر مستوى ' + getArabicNumbers(lvl + 1) + '</h1>' +
                 '</div>' +
-                '<h1 class="header-2 green">السور مستوى ' + getArabicNumbers(lvl + 1) +
-                ' يمتلك مساحة ' + getArabicNumbers((lvl + 1) * 100000) + ' لبناء الدفاعات  ويتحمل ايضاً ' + getArabicNumbers((lvl) * (lvl + 1) * 100000) + '</h1>' +
+                '<h1 class="header-2 green">المحجر مستوى ' + getArabicNumbers(lvl + 1) +
+                ' يتيح توظيف ' + getArabicNumbers((lvl + 1) * 100) + ' عاملًا في الطلب ويقلل الزمن بمقدار ' + getArabicNumbers(lvl + 1) + ' ثانية</h1>' +
                 '</div>';
 
 
@@ -16065,8 +16330,7 @@ var Building = {
         if (parseInt(Caesar.DPlayer.PlayerState.motiv) > Date.now() / 1000) {
 
             motiv = `<p>
-                        فى الوقت الحالى كل مدينة تستطيع توظيف اثنان من الموظفين
-                        لذا سيكون لديك ثلاثة من البنائين يستطيعوا التعامل معهم
+                        في الوقت الحالي تستطيع المدينة بناء مبانٍ أسرع مع توافر ثلاثة بنائين لإدارتها.
                     </p>
                     <div class="btn_2">
                         <button class="full-btn full-btn-2x full" id="add-motiv-palace" title="تجديد المدة">
@@ -16093,7 +16357,7 @@ var Building = {
 
         var output = `<div class="box_content" id="palace_content">
                             <div class="left-content ">
-                                <h1>وظيفة المزيد من البنائين</h1>
+                                <h1>توظيف المزيد من البنائين</h1>
                                 ${motiv}
                             </div>
                             <div class="right-content">
@@ -16435,7 +16699,7 @@ var Building = {
                         </div>
                         <div id="changeChoose">
                             <button class="full-btn full-btn-3x">
-                               تغير المساعد
+                                تغيير المساعد
                             </button>
                         </div> 
                     </div>`;
@@ -16479,11 +16743,11 @@ var Building = {
                                             data-building-lvl="${Caesar.City.getCity().BuildingLvl[place]}">
                                         <div class="left-content ">
                                                     <h1> معالجة القوات </h1>
-                                                    <p>  10 % من القوات التى تفقدها فى المعركة<br>
-                                                        يتم تحويلها تلقائيا الى مشفى الموجود فى المدينة
+                                                    <p>10% من القوات التي تفقدها في المعركة<br>
+                                                        يتم تحويلها تلقائيًا إلى المشفى الموجود في المدينة
                                                         <br>
-                                                        يمكنك زيادة نسبة الاجنود المصابة من خلال تفعيل نصب الطب 
-                                                        او تمثال الطب لزيادة النسبة الى 60%
+                                                        يمكنك زيادة نسبة الجنود المصابين من خلال تفعيل نصب الطب 
+                                                        أو تمثال الطب لرفع النسبة إلى 60%
                                                         <br>
                                                         تتم المعالجة باستخدام العملات فقط   
                                                     </p>
@@ -16499,7 +16763,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${Caesar.CurrentCity.Wounded.army_a}</div>
                                                     <div class="cure" army_type="army_a"  amount="${Caesar.CurrentCity.Wounded.army_a}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16509,7 +16773,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${getArabicNumbers(Caesar.CurrentCity.Wounded.army_b)}</div>
                                                     <div class="cure" army_type="army_b" amount="${Caesar.CurrentCity.Wounded.army_b}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16519,7 +16783,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${getArabicNumbers(Caesar.CurrentCity.Wounded.army_c)}</div>
                                                     <div class="cure" army_type="army_c" amount="${Caesar.CurrentCity.Wounded.army_c}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16529,7 +16793,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${getArabicNumbers(Caesar.CurrentCity.Wounded.army_d)}</div>
                                                     <div class="cure" army_type="army_d" amount="${Caesar.CurrentCity.Wounded.army_d}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16539,7 +16803,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${getArabicNumbers(Caesar.CurrentCity.Wounded.army_e)}</div>
                                                     <div class="cure"  army_type="army_e" amount="${Caesar.CurrentCity.Wounded.army_e}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16549,7 +16813,7 @@ var Building = {
                                                     </div>
                                                     <div class="amount">${getArabicNumbers(Caesar.CurrentCity.Wounded.army_f)}</div>
                                                     <div class="cure" army_type="army_f" amount="${Caesar.CurrentCity.Wounded.army_f}">
-                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداوة</button>
+                                                        <button class="full-btn full-btn-1x ellipsis therapy pull-L">مداواة</button>
                                                         <button class="full-btn full-btn-1x ellipsis fire-wounded pull-R">${Translate.Button.Hero.Dismiss[UserLag.language]}</button>
                                                     </div>
                                                 </li>
@@ -16770,7 +17034,7 @@ var Building = {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <h1 class="header-2"> اقصى عدد للوظايف فى المدينة: <span>${getArabicNumbers(Max_of.city_jop(CITY_JOP_REQ[place.toUpperCase()], place))}</span></h1>
+                                    <h1 class="header-2">أقصى عدد للوظائف في المدينة: <span>${getArabicNumbers(Max_of.city_jop(CITY_JOP_REQ[place.toUpperCase()], place))}</span></h1>
                                     <div id="jop-num-input">
                                         <span>
                                             المبلغ المطلوب
@@ -16784,12 +17048,9 @@ var Building = {
                                 </div>
                                 <div id="jop_desc">
                                     <p>
-                                        الجدول المقابل يوضح  الموارد  المطلوبة لتوظيف 
-                                        عدد معين من الموظفين ليعمل فى الحقول او انتاج الصخور او انتاج الحديدوالخشب من الغابات
-                                        وكذالك ايضا يوضح المدة المستغرقة لانشاء هذه الوظائف
-                                        اذا كان عدد السكان كافى وعدد الوظائف كبيرة فان ذالك يذيد من انتاجية الموارد فى المدينة 
-                                        اما اذا كان عدد السكان اقل من عدد الوظائف المتوفرةفذالك يقلل انتاج الموارد فى المدينة
-                                        يمكنك تعديل نسب  الوظائف من خلال نشاطات الانتاج فى القصر
+                                        يوضّح الجدول المقابل الموارد والمدة المطلوبة لتوظيف عدد محدد من العمال في مرافق الإنتاج.
+                                        كلما توفر عدد كافٍ من السكان وزادت الوظائف المتاحة ارتفع إنتاج موارد المدينة.
+                                        وإذا قلّ السكان عن عدد الوظائف المتاحة انخفض الإنتاج؛ ويمكنك تعديل نسب التشغيل من القصر.
                                     </p>
                                     <div id="hire-btn">
                                         <button class="full-btn full-btn-2x ">${Translate.Button.Building.CreatJops[UserLag.language]}</button>
@@ -17481,7 +17742,7 @@ $(document).on("click", "#confirmChoose button", function() {
 
             } else {
 
-                alert_box.confirmMessage(" لم يتم تغير المساعد");
+                alert_box.confirmMessage("لم يتم تغيير المساعد");
 
             }
 
@@ -17521,7 +17782,7 @@ $(document).on("click", ".cure .therapy ", function() {
 
     if (Number(amount) === 0) {
 
-        alert_box.confirmMessage("لا  يوجد قوات لمداواتها");
+        alert_box.confirmMessage("لا توجد قوات لمداواتها");
         return;
 
     }
@@ -17559,15 +17820,15 @@ $(document).on("click", ".cure .therapy ", function() {
                     });
 
                 } else if (json_data.state === "error_1") {
-                    alert_box.confirmMessage(`ليس لديك عملات كافية لمداوة الجرحى </br> 
-                                                    كمية العملات المطلوية ${json_data.coinAmount}`);
+                    alert_box.confirmMessage(`ليس لديك عملات كافية لمداواة الجرحى </br>
+                                                    كمية العملات المطلوبة ${json_data.coinAmount}`);
                 } else if (json_data.state === "error_0") {
 
-                    alert_box.confirmMessage("لا يمكن   مداوة هذة القوات");
+                    alert_box.confirmMessage("لا يمكن مداواة هذه القوات");
 
                 } else {
 
-                    alert_box.confirmMessage("لا يمكن   مداوة هذة القوات");
+                    alert_box.confirmMessage("لا يمكن مداواة هذه القوات");
 
                 }
 
@@ -17634,7 +17895,7 @@ $(document).on("click", ".cure .fire-wounded", function() {
 
                 } else {
 
-                    alert_box.confirmMessage("لا يمكن طرد او مداوة هذة القوات");
+                    alert_box.confirmMessage("لا يمكن طرد أو مداواة هذه القوات");
 
                 }
                 city_profile.refresh_army_view();
@@ -17719,7 +17980,7 @@ $(document).on("click", ".construct_building", function() {
         /*   this buildings sould be one in the city*/
     } else if (cityHasType(building_to_build) !== false && (building_to_build >= 6)) {
 
-        alert_box.confirmMessage(`لا يمكنك بناء اكثر من ${BuildingConstData[building_to_build].title} فى المدينة`);
+        alert_box.confirmMessage(`لا يمكنك بناء أكثر من ${BuildingConstData[building_to_build].title} واحد في المدينة`);
         return;
 
     } else {
@@ -17826,7 +18087,7 @@ $(document).on("click", "#accept-store-new-val button", function() {
     if (food_val < 0 || wood_val < 0 || stone_val < 0 || metal_val < 0) {
 
 
-        alert_box.failMessage("احد القيم غير صحيحية ");
+        alert_box.failMessage("إحدى القيم غير صحيحة");
         return;
     }
 
@@ -17876,7 +18137,7 @@ $(document).on("click", "#accept-store-new-val button", function() {
             } else if (JsonObject.state === "error_0") {
                 alert_box.failMessage("لا يمكن ان يكون  مجموع النسب اعلى من 100%");
             } else if (JsonObject.state === "error_1") {
-                alert_box.failMessage("احد القيم غير صحيحية ");
+                alert_box.failMessage("إحدى القيم غير صحيحة");
             }
 
             /*if (isJson(data)) {
@@ -18131,7 +18392,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                    تعديل اسم المدينة
                                 </h1>
                                 <p>
-                                   من هنا تستطيع تغير اسم مدينتك
+                                   من هنا تستطيع تغيير اسم مدينتك
                                 </p>
                             </div>`;
             $(".box_content").html(left_content + right_content);
@@ -18156,7 +18417,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                    تعديل الضريبة فى  المدينة
                                 </h1>
                                 <p>
-                                   من هنا تستطيع تغير الضريبة فى المدينة مدينتك<br>
+                                   من هنا تستطيع تغيير نسبة الضريبة في مدينتك<br>
                                    الضريبة المتحصلة من السكان <span id="collected-taxs">${getArabicNumbers(Math.floor(Caesar.CurrentCity.City.pop * Caesar.CurrentCity.City.taxs / 100))}</span> عملة  بالساعة <br>
                                    زيادة الضرائب فى المدينة تعنى زيادة عملات سسترسس!<br>
                                    كلما زاد عدد السكان زاد انتاج العملات فى المدينة
@@ -18184,15 +18445,15 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                                 <div class="li">
                                     <h5>${Translate.Button.Building.ExpandCity[UserLag.language]}</h5>
                                     <p>
-                                        توسيع المدينة للمستوى الثانى للحصول على    12 اماكن اضافية <br/>
+                                        توسيع المدينة إلى المستوى التالي يمنحك 12 مكانًا إضافيًا للبناء.<br/>
                                     </p>
-                                    <h5>المستوى الحالى </h5>
+                                    <h5>المستوى الحالي</h5>
                                     <p>
-                                        المستوى احالى يتيح لك ${getArabicNumbers(22 + 12 * Caesar.CurrentCity.City.lvl)} مكان خالى <br/>
+                                        المستوى الحالي يتيح لك ${getArabicNumbers(22 + 12 * Caesar.CurrentCity.City.lvl)} مكانًا للبناء.<br/>
                                     </p>
                                     <h5>اعلى مستوى</h5>
                                     <p>
-                                         يتيح لك المستوى الرابع 55 مكان خالى<br/>
+                                         يتيح لك الحد الأقصى للتوسعة أعلى عدد من مساحات البناء في المدينة.<br/>
                                     </p>
                                 </div>
                             </div>`;
@@ -18268,7 +18529,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
 
             if (Caesar.CurrentCity.City.lvl > 2) {
                 right_content = `<div class="right-content ">
-                                                    <h1 class="header-1">لا يمكنك توسيع المدينة المستوى الحالى اعلى مستوى</h1>   
+                                                    <h1 class="header-1">لا يمكنك توسيع المدينة؛ المستوى الحالي هو الأعلى</h1>   
                                                 </div>`;
             }
 
@@ -18318,7 +18579,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                 }
             }
             if (found === false) {
-                alert_box.confirmMessage("لا يوجد  اسطبل  فى المدينة");
+                alert_box.confirmMessage("لا يوجد إسطبل في المدينة");
             }
             break;
 
@@ -18332,7 +18593,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                 }
             }
             if (found === false) {
-                alert_box.confirmMessage("لا يوجد ورش عمل  فى المدينة");
+                alert_box.confirmMessage("لا توجد ورشة عمل في المدينة");
             }
             break;
 
@@ -18347,7 +18608,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                 }
             }
             if (found === false) {
-                alert_box.confirmMessage("لا يوجد  ثكنات  فى المدينة");
+                alert_box.confirmMessage("لا توجد ثكنات في المدينة");
             }
             break;
 
@@ -18371,7 +18632,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                 }
             }
             if (found === false) {
-                alert_box.confirmMessage("لا يوجد  جامعة  فى المدينة");
+                alert_box.confirmMessage("لا توجد جامعة في المدينة");
             }
 
             break;
@@ -18387,7 +18648,7 @@ $(document).on("click", ".for_building .nav_bar .left-nav ul li", function() {
                 }
             }
             if (found === false) {
-                alert_box.confirmMessage("لا يوجد  اكاديمية  فى المدينة");
+                alert_box.confirmMessage("لا توجد أكاديمية في المدينة");
             }
 
             break;
@@ -18605,7 +18866,7 @@ $(document).on("click", ".upgrade-btn", function() {
 
             if (!isJson(data)) {
                 Caesar.LBase.Error(data);
-                alert_box.confirmMessage("حدث خطاء");
+                alert_box.confirmMessage("حدث خطأ");
                 buildingClick(building_place, true);
                 return;
             }
@@ -18702,7 +18963,7 @@ $(document).on("click", "#downgrade-building-lvl", function() {
 
                 if (!isJson(data)) {
                     Caesar.LBase.Error(data);
-                    alert_box.confirmMessage("حدث خطاء");
+                    alert_box.confirmMessage("حدث خطأ");
                     buildingClick(building_place, true);
                     return;
                 }
@@ -18767,7 +19028,7 @@ $(document).on("click", "#cansel-building-upgrade", function() {
 
             if (!isJson(data)) {
                 Caesar.LBase.Error(data);
-                alert_box.confirmMessage("حدث خطاء");
+                alert_box.confirmMessage("حدث خطأ");
                 buildingClick(building_place, true);
                 return;
             }
@@ -20435,7 +20696,7 @@ var army = {
                             <p>
                                  بعد اختيار احدى صفات البطل  ( الشجاعة , قوة السيطرة , الدفاع)
                                  التى تريد تطويرها عليك اختيار نوع الميدالية ثم اضغط تعليم
-                                 لانهاء العملية لكل نوع من الميداليات  نسب مختلفة من النجح والفشل
+                                 لإنهاء العملية؛ لكل نوع من الميداليات نسب مختلفة من النجاح والفشل.
                             </p>
                             <ul>
                                 <li>    
@@ -20684,7 +20945,7 @@ function findMaxNumForArmyBuild(army_type) {
 $(document).on("dragover dragenter drop paste", "input, .only_num", function(e) {
     if ($(this).attr("data-pastable") !== "true") {
         e.preventDefault();
-        alert_box.failMessage("لا يمكنك النسخ بهذة الطريقة");
+        alert_box.failMessage("لا يمكنك النسخ بهذه الطريقة");
     }
 
 
@@ -20704,7 +20965,7 @@ $(document).on("click", ".build_army", function() {
     var dividBy = $("#select-production select").val();
 
     if (isNaN(amount) || amount < 1) {
-        alert_box.confirmMessage("لا يمكنك تجنيد هذة الكمية ");
+        alert_box.confirmMessage("لا يمكنك تجنيد هذه الكمية");
         return;
     }
 
@@ -20752,7 +21013,7 @@ $(document).on("click", ".build_army", function() {
 
     if (army_type === null) {
 
-        alert_box.confirmMessage("عليك اختيار نوع جيش حتى يتم انتاجة");
+        alert_box.confirmMessage("عليك اختيار نوع القوات لإنتاجه");
 
     } else if (amount > findMaxNumForArmyBuild(army_type)) {
 
@@ -20760,7 +21021,7 @@ $(document).on("click", ".build_army", function() {
 
     } else if (!amount) {
 
-        alert_box.confirmMessage("عليك اختيار عدد  لانتاجة");
+        alert_box.confirmMessage("عليك تحديد العدد المطلوب إنتاجه");
 
     } else {
         var idCity = Caesar.CurrentCity.City.id_city;
@@ -20946,7 +21207,7 @@ $(document).on("click", '.cancel-army-build', function() {
 
                 } else {
 
-                    alert_box.failMessage("حدث خطاء");
+                    alert_box.failMessage("حدث خطأ");
 
                 }
 
@@ -21107,7 +21368,7 @@ $(document).on("click", ".hero_up_lvl", function() {
                 $('.hero-profile').replaceWith(army.middle_content(Caesar.CurrentHero));
                 $("#city-hero-list").html(army.hero_list());
                 $("#city-hero-list").niceScroll(SCROLL_BAR_PROP);
-                alert_box.succesMessage("نم تطوير البطل بنجاح");
+                alert_box.succesMessage("تم تطوير البطل بنجاح");
 
                 city_profile.refresh_hero_view();
                 city_profile.refresh_resource_view();
@@ -21406,7 +21667,7 @@ $(document).on("click", ".return_points_all", function() {
                                         <button class="full-btn use_matrial_hero" use_for="retreat_points"  matrial_name="retreat_point" amount="${Math.floor(Caesar.CurrentHero.Hero.lvl / 10 + 1)}"> ${Translate.Button.General.Use[UserLag.language]}</button>
                                     </div> 
                                     <div class="desc">
-                                        يستخدم فى استراجع النقط الخاصة بالبطل لترتيبها وفق ما تحتاج
+                                        يُستخدم لإرجاع نقاط البطل الموزعة وإعادة ترتيبها وفق حاجتك.
                                     </div>
                                 </div>
                             </li>
@@ -21425,7 +21686,7 @@ $(document).on("click", ".add_console", function() {
 
     if (Number(Caesar.CurrentHero.Hero.in_city) !== 1) {
 
-        alert_box.confirmMessage("لا يمكنك تعين البطل قنصل ( البطل ليس بالمدينة)");
+        alert_box.confirmMessage("لا يمكنك تعيين البطل قنصلًا لأن البطل خارج المدينة");
         return;
     }
 
@@ -21901,7 +22162,7 @@ function showHero(hero, recruit) {
                                             
                                         </div>
                                         <div class="hero_ultra_p ${Number(hero.ultra_p) > 0 ? "POT-HERO" : ""}">
-                                            <h1>نقاط الامكانية  (${ hero.ultra_p })</h1>
+                                            <h1>نقاط الإمكانية (${ hero.ultra_p })</h1>
                                         </div>
                                     </div>
                                     <div class="right pull-R">
@@ -21976,7 +22237,7 @@ var Hero = {
         } else {
 
             if (Number(Caesar.CurrentCity.City.coin) < lvl * 100) {
-                alert_box.confirmMessage("لا يوجد سسترسس كافى تجنيد البطل");
+                alert_box.confirmMessage("لا يوجد سسترس كافٍ لتجنيد البطل");
                 return;
             }
 
@@ -22432,7 +22693,7 @@ $(document).on("click", "#confirm-change-hero-name", function() {
     }
 
     var heroId = Caesar.CurrentHero.Hero.id_hero;
-    alert_box.confirmDialog("تاكيد تغير اسم البطل ", function() {
+    alert_box.confirmDialog("تأكيد تغيير اسم البطل", function() {
 
         $.ajax({
 
@@ -22462,7 +22723,7 @@ $(document).on("click", "#confirm-change-hero-name", function() {
                     return;
                 }
                 hero.Hero.name = data.name;
-                alert_box.succesMessage("تم تغير اسم البطل بنجاح");
+                alert_box.succesMessage("تم تغيير اسم البطل بنجاح");
                 if (Number(Caesar.CurrentHero.Hero.id_hero) === Number(heroId)) {
                     Caesar.CurrentHero = hero;
                     $(".middle-content").replaceWith(army.middle_content(Caesar.CurrentHero));
@@ -23361,7 +23622,7 @@ Caesar.HeroArmy.dropArmy = function(e, el_to) {
     var available_place = 0;
 
     if (solCap <= 0) {
-        alert_box.failMessage("خطاء نوع الجيش");
+        alert_box.failMessage("خطأ في نوع الجيش");
         $("#dialg_box .left-nav .selected").click();
         return;
     }
@@ -23426,7 +23687,7 @@ Caesar.HeroArmy.dropArmyToHero = function(DragPlace, DropPlace) {
 
 
     if (!sameHeroTransfer && Math.floor(availablePlace / solCap) < 1) {
-        alert_box.failMessage("لا توجد امكان خالية للقوات");
+        alert_box.failMessage("لا توجد أماكن خالية للقوات");
         return false;
     } else if (maxAmount < 1) {
         alert_box.failMessage("لا توجد قوات لنقلها");
@@ -23541,9 +23802,9 @@ Caesar.HeroArmy.TransArmyFromHeroToHero = function() {
             } else if (json_data.state === "error_4") {
                 alert_box.failMessage("سعة البطل غير كافية");
             } else if (json_data.state === "error_5") {
-                alert_box.failMessage("الابطال ليست بالمدينة");
+                alert_box.failMessage("الأبطال ليسوا في المدينة");
             } else if (json_data.state === "error_6") {
-                alert_box.failMessage("الابطال ليست بمدينة واحدة");
+                alert_box.failMessage("الأبطال ليسوا في مدينة واحدة");
             } else {
                 Caesar.LBase.Error(data);
             }
@@ -24440,7 +24701,7 @@ function useMatrial(user_for, matrial, other) {
                     $(".building_worship").replaceWith(Building.dialogBoxContnet_forworship());
                     city_profile.refresh_resource_view();
                 } else if (JsonObject.state === "error_0") {
-                    alert_box.failMessage("خطاء بالمدينة");
+                    alert_box.failMessage("خطأ في المدينة");
                 } else if (JsonObject.state === "error_1") {
                     alert_box.failMessage("لا يوجد مساعد بالمدينة");
                 } else if (JsonObject.state === "error_2") {
@@ -24591,7 +24852,7 @@ function useMatrial(user_for, matrial, other) {
                 } else if (JsonObjet.state == "error_1") {
                     alert_box.failMessage("رتبتك لا تسمح");
                 } else if (JsonObjet.state == "error_2") {
-                    alert_box.failMessage("لا يمكن لإسم الخلف أن يكون أكثر من 15 حرف ")
+                    alert_box.failMessage("لا يمكن لاسم الحلف أن يتجاوز 15 حرفًا")
                 } else if (JsonObjet.state == "error_3") {
                     alert_box.failMessage("لا يوجد مواد كافية");
                 } else if (JsonObjet.state === "error_no_item") {
@@ -24659,7 +24920,7 @@ function useMatrial(user_for, matrial, other) {
                                 console.error("Failed to refresh player data after changing name", jqXHR.status, jqXHR.statusText);
                             });
                         }
-                        alert_box.succesMessage("تم تغير الإسم بنجاح");
+                        alert_box.succesMessage("تم تغيير الاسم بنجاح");
 
                     } else if (JsonObject.state === "error_2")
                         alert_box.failMessage("يوجد لاعب يحمل نفس الاسم");
@@ -24801,7 +25062,7 @@ function useMatrial(user_for, matrial, other) {
                     alert_box.close();
                     $('.close_select_menu').trigger("click");
                     $('.close_dialog').trigger("click");
-                    alert_box.succesMessage("تم  ازالة المبنى بنجاح");
+                    alert_box.succesMessage("تمت إزالة المبنى بنجاح");
                     Matrial.takeFrom(matrial, 1);
                     Caesar.City.getCityBase(idCity).done(function() {
                         if (building_type === BUILDING_TYPS.STORE) {
@@ -24880,7 +25141,7 @@ function useMatrialBox(matrial_name) {
             case "certain_move":
 
                 if (isNaN($("#new-city-y-coord").val()) || isNaN($("#new-city-x-coord").val())) {
-                    alert_box.confirmMessage("عفوا عليك تحديد امكان المراد الانتقال له");
+                    alert_box.confirmMessage("عذرًا، عليك تحديد الموقع المراد الانتقال إليه");
                     return;
                 }
 
@@ -24983,7 +25244,7 @@ function buyMatrial(matrial, amount) {
     }
 
     if (amount <= 0) {
-        alert_box.failMessage("لا يمكن  شراء هذة الكمية");
+        alert_box.failMessage("لا يمكن شراء هذه الكمية");
         return;
     }
 
@@ -25135,7 +25396,7 @@ function showMatrialGiftList(list) {
     for (var iii in list) {
         list_item += `<li>
                         <div class="image">
-                            <img  src="${Caesar.BaseData.Items[list[iii].Item].image}"/>
+                            <img  src="${Matrial.image(list[iii].Item)}"/>
                         </div>
                         <div class="amount stroke">
                             ${list[iii].amount} X
@@ -25207,8 +25468,8 @@ var Matrial = {
         return Caesar.BaseData.Items[matrial];
     },
     getMatrialName: function(matrial) {
-
-        return Caesar.BaseData.Items[matrial].name;
+        var item = Caesar.BaseData && Caesar.BaseData.Items ? Caesar.BaseData.Items[matrial] : null;
+        return (item && item.name) ? item.name : String(matrial || '');
     },
     givePlayer: function(matrial, amount) {
         if (!amount) {
@@ -25258,14 +25519,18 @@ var Matrial = {
 
 };
 Matrial.prizeToString = function(PrizeList) {
-
-    var stringArray = [];
-    for (var jjj in PrizeList) {
-
-        stringArray.push(` x ${PrizeList[jjj].amount} ${this.getMatrialName(PrizeList[jjj].Item)}`);
+    if (!Array.isArray(PrizeList) || !PrizeList.length) {
+        return "";
     }
-
-
+    var stringArray = [];
+    for (var jjj = 0; jjj < PrizeList.length; jjj++) {
+        var entry = PrizeList[jjj];
+        if (!entry) continue;
+        var itemKey = entry.Item || entry.prize;
+        var amount = Number(entry.amount) || 1;
+        if (!itemKey) continue;
+        stringArray.push(` x ${getArabicNumbers(amount)} ${this.getMatrialName(itemKey)}`);
+    }
 
     return stringArray.join(" , ");
 };
@@ -25521,7 +25786,7 @@ Caesar.Item.useItemFunc = function() {
                 if (JsonObject.state === "ok") {
                     Caesar.CurrentCity.City = JsonObject.City;
                     city_profile.refresh_resource_view();
-                    alert_box.succesMessage("تم رفع الإستعمار بنجاح");
+                    alert_box.succesMessage("تم رفع الاستعمار بنجاح");
                     Caesar.World.Map.getWorldCityColonized();
                 }
 
@@ -25706,7 +25971,7 @@ Caesar.Item.useItemFunc = function() {
                             alert_box.failMessage(JsonData['msg'] || 'لا يمكن نقل المدينة أثناء وجود قوات أو أبطال في مهمات خارج المدينة');
                         } else if (JsonData['state'] === 'error_no_place_empty') {
                             setTimeout(function() {
-                                alert_box['confirmMessage']('للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]');
+                                alert_box['confirmMessage']('عذرًا، لا يمكنك نقل المدينة إلى هذا الموقع لأنه غير فارغ.');
                             }, 0x64)
                         } else {
                             alert_box.failMessage(typeof _0x73e02b === "string"
@@ -25762,7 +26027,7 @@ Caesar.Item.useItemFunc = function() {
                     alert_box.failMessage("الإحداثيات غير صحيحة، يجب أن تكون بين 0 و 499");
                 } else if (JsonObject.state === "error_no_place_empty") {
                     setTimeout(function() {
-                        alert_box.confirmMessage("للاسف لا يمكنك نقل المدينة فى هذ المكان حيث ان المكان ليس خالى :]");
+                        alert_box.confirmMessage("عذرًا، لا يمكنك نقل المدينة إلى هذا الموقع لأنه غير فارغ.");
                     }, 500)
                 } else {
                     Caesar.LBase.Error(data);
@@ -26282,7 +26547,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaField").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 5 محاولة للميدان");
+                    alert_box.succesMessage("تمت إضافة 5 محاولات للميدان");
                 }
             }
         });
@@ -26309,7 +26574,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaField").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 10 محاولة للميدان");
+                    alert_box.succesMessage("تمت إضافة 10 محاولات للميدان");
                 }
             }
         });
@@ -26337,7 +26602,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaTroops").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 1 خبرة للميدان");
+                    alert_box.succesMessage("تمت إضافة نقطة خبرة واحدة للميدان");
 
                 }
             }
@@ -26365,7 +26630,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaTroops").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 5 خبرة للميدان");
+                    alert_box.succesMessage("تمت إضافة 5 نقاط خبرة للميدان");
 
                 }
             }
@@ -26394,7 +26659,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaTroops").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 10 خبرة للميدان");
+                    alert_box.succesMessage("تمت إضافة 10 نقاط خبرة للميدان");
                 }
             }
         });
@@ -26421,7 +26686,7 @@ Caesar.Item.useItemFunc = function() {
                         $("#SArenaTroops").click();
                     });
                     $(".close-alert").click();
-                    alert_box.succesMessage("تم إضافة 25 خبرة للميدان");
+                    alert_box.succesMessage("تمت إضافة 25 نقطة خبرة للميدان");
                 }
             }
         });
@@ -27504,6 +27769,54 @@ Caesar.Item.useItemBoxFunc = function() {
         });
     };
 
+    var rewardBoxItems = [
+        'hidden_box',
+        'king_chest',
+        'roma_colosseum_box',
+        'senate_golden_box',
+        'senate_platinum_box',
+        'senate_silver_box',
+        'golden_supply_crate',
+        'silver_supply_crate',
+        'sol_chest',
+        'vertumnus_box',
+        'winter_pack'
+    ];
+    for (var bIdx = 0; bIdx < rewardBoxItems.length; bIdx++) {
+        (function(boxKey) {
+            if (!Caesar.BaseData.Items[boxKey]) return;
+            Caesar.BaseData.Items[boxKey].UseFunc = function(amount) {
+                var idCity = Caesar.CurrentCity.City.id_city;
+                return $.ajax({
+                    url: `${NODE_URL}/api/AItemBoxUse/useGiftBox`,
+                    type: 'POST',
+                    data: {
+                        Item: boxKey,
+                        amount: amount,
+                        idCity: idCity,
+                        token: Caesar.Config.AuthToken,
+                        server: Caesar.Config.idServer
+                    },
+                    success: function(data) {
+                        if (!Caesar.LBase.isJson(data))
+                            Caesar.LBase.Error(data);
+                        var JsonObject = JSON.parse(data);
+                        if (JsonObject.state === "ok") {
+                            showMatrialGiftList(JsonObject.Item);
+                            for (var iii in JsonObject.Item) {
+                                Matrial.givePlayer(JsonObject.Item[iii].Item, JsonObject.Item[iii].amount);
+                            }
+                            if (JsonObject.City && typeof JsonObject.City === "object") {
+                                Caesar.City.getCity(idCity).City = JsonObject.City;
+                            }
+                            city_profile.refresh_resource_view();
+                        }
+                    }
+                });
+            };
+        })(rewardBoxItems[bIdx]);
+    }
+
 };
 
 Caesar.Item.useArmyBackFunc = function() {
@@ -28166,9 +28479,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم الزراعة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: علم الزراعة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                               <h1 class="header-2 green">الزراعة  مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من انتاج المحاصيل بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
+                               <h1 class="header-2 green">علم الزراعة مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من إنتاج المحاصيل بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28179,9 +28492,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم الاخشاب مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: علم الأخشاب مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">الورشة  مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من انتاج الاخشاب بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
+                                <h1 class="header-2 green">علم الأخشاب مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من إنتاج الأخشاب بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28192,9 +28505,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم الاحجار مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: علم الأحجار مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">التحجير  مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من انتاج الحجارة بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
+                                <h1 class="header-2 green">علم الأحجار مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من إنتاج الأحجار بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28205,9 +28518,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم التعدين مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: علم التعدين مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">التعدين  مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من انتاج الحديد بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
+                                <h1 class="header-2 green">علم التعدين مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من إنتاج الحديد بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28218,7 +28531,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  المحاسبة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: المحاسبة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">المحاسبة مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد  (عائدات الضرائب) بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 7)}%!</h1>
                             </div>
@@ -28231,7 +28544,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم التخزين مستوى${lvl >= 30 ? "---" : lvl + 1}</h1>
+                                        <h1>تحديث إلى: علم التخزين مستوى ${lvl >= 30 ? "---" : lvl + 1}</h1>
                                     </div>
                                 <h1 class="header-2 green">التخزين مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من سعة التخزين بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 5)}%!</h1>
                             </div>
@@ -28244,7 +28557,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الهندسة المعمارية مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الهندسة المعمارية مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">الهندسة المعمارية مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من متانة السور  ونوبات الحراسة  بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 10)}%!</h1>
                             </div>
@@ -28257,9 +28570,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  المنح الدراسية مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: المنح الدراسية مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">البعثات الخارجية مستوى ${lvl >= 30 ? "---" : lvl + 1 } تقلل منطلب الخبرة وتزيدمن الخبرة المكتسبة بمقدار ${lvl >= 30 ? "---" : ((lvl + 1))}%!</h1>
+                                <h1 class="header-2 green">المنح الدراسية مستوى ${lvl >= 30 ? "---" : lvl + 1 } تقلل متطلبات الخبرة وتزيد الخبرة المكتسبة بمقدار ${lvl >= 30 ? "---" : ((lvl + 1))}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28271,9 +28584,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  علم الصيانة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: علم الصيانة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">الترميم مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيدمن قوة ومتانة التحصينات  بمقدار  ${lvl >= 30 ? "---" : ((lvl + 1) * 100)}%!</h1>
+                                <h1 class="header-2 green">علم الصيانة مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من قوة ومتانة التحصينات  بمقدار  ${lvl >= 30 ? "---" : ((lvl + 1) * 100)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28284,9 +28597,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  المشاة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: المشاة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">المشاة مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من قوة وصلابة الفرسان المدرعين  بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
+                                <h1 class="header-2 green">المشاة مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من قوة وصلابة المشاة والمدرّعين بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28297,7 +28610,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الفروسية مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الفروسية مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">الفروسية مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من قوة وصلابة الفرسان والجواسيس  بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
                             </div>
@@ -28310,9 +28623,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الجيش مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الجيش مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">الجيش مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من قوة المقاليع ورماة النبل السهام والمنجنيق بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%</h1>
+                                <h1 class="header-2 green">الجيش مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من قوة المقاليع والرماة والمنجنيق بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28323,9 +28636,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الاستخبارات مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الاستخبارات مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">كلما زادت الاستخبارت زادت قوة الجواسيس   وتمنحنا معلومات ادق  عند ارسال جواسيس للاسطلاع</h1>
+                                <h1 class="header-2 green">كلما ارتفع مستوى الاستخبارات زادت قوة الجواسيس ومنحتك تقارير استطلاع أدق.</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28336,7 +28649,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  القيادة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: القيادة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green"> القيادة  مستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من قدرة الابطال على  التحكم وفرض السيطرة بين القوات بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
                             </div>
@@ -28349,9 +28662,9 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الامن مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الأمن مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
-                                <h1 class="header-2 green">الطب  مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من القدرة الدفاعية لدى القوات بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
+                                <h1 class="header-2 green">الأمن مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من القدرة الدفاعية لدى القوات بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%!</h1>
                             </div>
                             ${this.getReqTable(study_type, lvl)}
                         </div>`;
@@ -28362,7 +28675,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الطب مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الطب مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">الطب مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من متانة القوات وسلامتها بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 5)}%!</h1>
                             </div>
@@ -28375,7 +28688,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الدعم اللوجستى مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الدعم اللوجستي مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">اللوجستية مستوى ${lvl >= 30 ? "---" : lvl + 1 } يزيد من قوة التعبئة والدعم اللوجستى بالمواد بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 5)}%!</h1>
                             </div>
@@ -28388,7 +28701,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الملاحة مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الملاحة مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">الملاحة بمستوى ${lvl >= 30 ? "---" : lvl + 1 } تزيد من سرعة و ايقاع القوات بنسبة ${lvl >= 30 ? "---" : ((lvl + 1) * 5)}%</h1>
                             </div>
@@ -28401,7 +28714,7 @@ var edu = {
                 var box = ` <div class="study_req_tooltip">
                                 <div class="upgrade-info">
                                     <div class="header-1">
-                                        <h1>تحديث الى :  الامداد مستوى${lvl >= 30 ? "---" : lvl + 1 }</h1>
+                                        <h1>تحديث إلى: الإمداد مستوى ${lvl >= 30 ? "---" : lvl + 1 }</h1>
                                     </div>
                                 <h1 class="header-2 green">الامداد مستوى ${lvl >= 30 ? "---" : lvl + 1 } يقلل من استهلاك الغذاء بمقدار ${lvl >= 30 ? "---" : ((lvl + 1) * 3)}%</h1>
                             </div>
@@ -28517,7 +28830,7 @@ $(document).on("click", ".edu_study", function() {
     }
 
     if (typeof sLvl === undefined || !category || !study_type) {
-        alert_box.failMessage("يوجد خطاء  بالمبنى  اغلق الصفحة وافتحها مرة اخرى");
+        alert_box.failMessage("حدث خطأ في المبنى، أغلق النافذة وأعد فتحها");
         return;
     }
 
@@ -28908,7 +29221,7 @@ var Trading = {
                             <div class="fa3lia-img">
                                 <img src="images/style/sp.jpg">
                             </div>
-                            <p class="fa3lia-p">لا توجد فاعلية حالية حالياً.</p>
+                            <p class="fa3lia-p">لا توجد فعالية حالية.</p>
                         </div>
                         <div class="right-content">
                             <ul class='total' mat_table="trade-all">${all_content_unite}</ul>
@@ -29266,14 +29579,14 @@ function buyTradeMatral(index) {
 
     if (reword.type === "matrial") {
         if (Number(exchange.max_to_have) < Number(Matrial.getPlayerAmount(reword.matrial)) + Number(reword.amount) * amountToTrade) {
-            alert_box.confirmMessage("لقد تجاوزت الحد الاقصى للمواد");
+            alert_box.confirmMessage("لقد تجاوزت الحد الأقصى للمواد");
             return;
 
         }
     } else if (reword.type === "equip") {
         if (Number(exchange.max_to_have) < Number(Equipment.getPlayerAmount(reword.Equip, reword.Part, reword.lvl)) + Number(reword.amount) * amountToTrade) {
 
-            alert_box.confirmMessage("لقد تجاوزت الحد الاقصى للمعدات");
+            alert_box.confirmMessage("لقد تجاوزت الحد الأقصى للمعدات");
             return;
 
         }
@@ -29344,7 +29657,7 @@ function buyTradeMatral(index) {
 
             } else if (jsonData.state === "error_1") {
 
-                alert_box.confirmMessage("لقد استنفذت الحد اليومى المسموح من التبادل");
+                alert_box.confirmMessage("لقد استنفدت الحد اليومي المسموح من التبادل");
 
             } else if (jsonData.state === "error_2") {
 
@@ -29352,7 +29665,7 @@ function buyTradeMatral(index) {
 
             } else if (jsonData.state === "error_3") {
 
-                alert_box.confirmMessage("تم استنفاذ العدد الاقصى المسموح بالسيرفر");
+                alert_box.confirmMessage("تم استنفاد العدد الأقصى المسموح به في الخادم");
 
             } else if (jsonData.state === "error_4") {
 
@@ -29712,7 +30025,7 @@ $(document).on("click", ".battel_hero_back, #getHeroFromBattel", function() {
     var id_hero = $(this).parents(".tr").attr("id_hero");
     var id_battel = $(this).parents(".tr").attr("id_battel");
     var self_ = $(this);
-    alert_box.confirmDialog("تاكيد انسحاب البطل ", function() {
+    alert_box.confirmDialog("تأكيد انسحاب البطل", function() {
 
 
         var flag_check = false;
@@ -29735,7 +30048,7 @@ $(document).on("click", ".cansel_spy", function() {
 
     var id_spy = $(this).attr("data-id-spy");
 
-    alert_box.confirmDialog("تاكيد الغاء عملية التجسس", function() {
+    alert_box.confirmDialog("تأكيد إلغاء عملية التجسس", function() {
         var idCity = Caesar.CurrentCity.City.idCity;
         $.ajax({
 
@@ -29755,7 +30068,7 @@ $(document).on("click", ".cansel_spy", function() {
                 var JsonObject = JSON.parse(data);
 
                 Reports.change_content_SpyTask();
-                alert_box.succesMessage("تم الغاء عملبة التجسس بنجاح");
+                alert_box.succesMessage("تم إلغاء عملية التجسس بنجاح");
                 PLAYER_NOTIF.spy_task -= 1;
                 Fixed.refreshPlayerNotif();
 
@@ -30129,7 +30442,7 @@ $(document).on("click", ".fireColonizer", function() {
 
     var idCity = $(this).attr("data-id-city");
 
-    alert_box.confirmDialog("تاكيد طرد المستعمر مقابل 1 مساعدة حرية", function() {
+    alert_box.confirmDialog("تأكيد طرد المستعمر مقابل 1 مساعدة حرية", function() {
         $.ajax({
             url: `${API_URL}/api/ADominant/fireColonizer`,
             data: {
@@ -31025,7 +31338,7 @@ var WsBattel = {};
 WsBattel.started = function(battel) {
 
     if (Number(battel.id_battel) < 0) {
-        alert_box.failMessage("حدث خطاء");
+        alert_box.failMessage("حدث خطأ");
         return;
     }
 
@@ -31079,13 +31392,13 @@ WsBattel.effectedPlayer = function(battel) {
     var Unit = WorldUnit['getWorldUnit'](battel['Battel']['x_coord'], battel['Battel']['y_coord']);
     var Msg = "";
     if (WorldUnit['isArmyCapital'](Unit['ut'])) {
-        alert_box['systemChatMessage'](`<p class="round-announce">بداء <span class="red">  ${battel['Attacker']['PlayerName']} </span>بالهجوم على 
+        alert_box['systemChatMessage'](`<p class="round-announce">بدأ <span class="red">  ${battel['Attacker']['PlayerName']} </span>بالهجوم على 
                  <span class="red">  ${Caesar['World']['UnitTypeData'][Unit['ut']]['Title']} </span> ${Extract['coordDirect'](battel['Battel']['x_coord'], battel['Battel']['y_coord'])}
                    التى تسيطر عليها القوات الخاصة بك!</p>`);
     } else {
         if (WorldUnit['isCity'](Unit['ut']))
             if (Caesar['City']['getCityByCoord'](Unit['x'], Unit['y']) != null) {
-                Msg = `<div class="battel-f-ann">بداء الملك  (<span class="red">${battel['Attacker']['PlayerName']}</span>) 
+                Msg = `<div class="battel-f-ann">بدأ الملك  (<span class="red">${battel['Attacker']['PlayerName']}</span>) 
                          حملة (<span class="red"> ${Caesar['BaseData']['BattelTaskData'][battel['Battel']['task']]['Title']} </span>)  من المدينة                     
                          (<span class="span"> ${battel['Attacker']['CityName']}</span>
                          ${Extract['coordDirect'](battel['Battel']['x_city'], battel['Battel']['y_city'])}  على المدينة 
@@ -31096,9 +31409,9 @@ WsBattel.effectedPlayer = function(battel) {
                 city_profile['afterBattelFinish']();
                 playerBattels();
             } else {
-                Msg = `<div class="guild_msg">بداء الملك 
-                        (<span class="red"> ${battel['Attacker']['PlayerName']} </span>)} حملة 
-                        ('<span class="red">  ${Caesar['BaseData']['BattelTaskData'][battel['Battel']['task']]['Title']}  </span>)}
+                Msg = `<div class="guild_msg">بدأ الملك 
+                        (<span class="red">${battel['Attacker']['PlayerName']}</span>) حملة 
+                        (<span class="red">${Caesar['BaseData']['BattelTaskData'][battel['Battel']['task']]['Title']}</span>)
                          من المدينة (<span class="span">  ${battel['Attacker']['CityName']} </span> ${Extract['coordDirect'](battel['Battel']['x_city'], battel['Battel']['y_city'])})
                          على المدينة (<span class="red"> ${battel['Defender']['CityName']}  </span>   ${Extract['coordDirect'](battel['Battel']['x_coord'], battel['Battel']['y_coord'])})
                          التابعة للملك <span class="red"> ${battel['Defender']['PlayerName']} </span>. 
@@ -31150,8 +31463,8 @@ WsBattel.ended = function(data) {
 
 WsBattel.cityIsOnFire = function(data) {
 
-    alert_box.failMessage(`يبداء الان الهجوم على المدينة ${data.city_name}(${data.x_to},${data.y_to})  من [${data.x_from},${data.y_from}]`);
-    alert_box.systemChatMessage(`يبداء الان الهجوم على المدينة ${data.city_name}(${data.x_to},${data.y_to})  من [${data.x_from},${data.y_from}]`);
+    alert_box.failMessage(`يبدأ الآن الهجوم على المدينة ${data.city_name}(${data.x_to},${data.y_to})  من [${data.x_from},${data.y_from}]`);
+    alert_box.systemChatMessage(`يبدأ الآن الهجوم على المدينة ${data.city_name}(${data.x_to},${data.y_to})  من [${data.x_from},${data.y_from}]`);
     // Crafty.audio.play("war_sound");
     PLAYER_NOTIF.battel_number = Number(PLAYER_NOTIF.battel_number) + 1;
     Fixed.refreshPlayerNotif();
@@ -31162,51 +31475,46 @@ WsBattel.cityIsOnFire = function(data) {
 
 
 WsBattel.helperList = function(data) {
-
-    var enemyArray = [];
-    var allayArray = [];
-
     var enemyNames = [];
     var allayNames = [];
 
-    data.players.forEach((player, index) => {
+    if (Array.isArray(data && data.Joiners) || Array.isArray(data && data.Defender)) {
+        (data.Joiners || []).forEach(function(member) {
+            if (member && member.name) allayNames.push(escapeHtml(String(member.name)));
+        });
+        (data.Defender || []).forEach(function(member) {
+            if (member && member.name) enemyNames.push(escapeHtml(String(member.name)));
+        });
+    } else if (Array.isArray(data && data.players)) {
+        data.players.forEach(function(player) {
+            var playerName = "";
+            if (Array.isArray(data.playersName)) {
+                data.playersName.forEach(function(p) {
+                    if (p && Number(p.id_player) === Number(player.id_player)) {
+                        playerName = String(p.name || "");
+                    }
+                });
+            } else if (player && player.name) {
+                playerName = String(player.name || "");
+            }
 
-        data.playersName.forEach((p) => {
-            if (Number(p.id_player) === Number(player.id_player)) {
-                player.name = p.name;
+            if (!player || Number(player.id_player) === Number(data.attacker)) {
+                return;
+            }
+            var safePlayerName = escapeHtml(playerName);
+            if (!safePlayerName) return;
+            if (Number(player.side) === 1) {
+                enemyNames.push(safePlayerName);
+            } else if (Number(player.side) === 0) {
+                allayNames.push(safePlayerName);
             }
         });
+    }
 
-        if (Number(player.id_player) === Number(data.attacker)) {
-
-        } else if (Number(player.side) === 1) {
-            enemyArray.push(player);
-        } else if (Number(player.side) === 0) {
-            allayArray.push(player);
-        }
-
-    });
-
-    allayArray.forEach((p) => {
-        allayNames.push(p.name);
-    });
-    enemyArray.forEach((p) => {
-        enemyNames.push(p.name);
-    });
-
-    var result = {
-        allaylist: "",
-        enemyList: ""
+    return {
+        allaylist: allayNames.length > 0 ? `وذالك بمساعدة <span class="red">${allayNames.join(" , ")}</span>` : "",
+        enemyList: enemyNames.length > 0 ? ` و معاونية <span class="red">${enemyNames.join(" , ")}</span>` : ""
     };
-
-    if (allayNames.length > 0)
-        result.allaylist = join(`وذالك بمساعدة <span class="red">${allayNames.join(" , ")}</span>`);
-    if (allayNames.length > 0)
-        result.enemyList = join(` و معاونية <span class="red">${enemyNames.join(" , ")}</span>`);
-
-
-
-    return result;
 };
 
 
@@ -31364,22 +31672,34 @@ Caesar.WsLib.Chat.sendMsgImage = function(data) {
 };
 
 Caesar.WsLib.Chat.QueenPrizeSent = function(data) {
-
-    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord)
+    var payload = (data && data.data && data.xCoord === undefined) ? data.data : (data || {});
+    var Unit = (typeof WorldUnit !== "undefined" && typeof WorldUnit.getWorldUnit === "function")
+        ? WorldUnit.getWorldUnit(payload.xCoord, payload.yCoord)
+        : null;
+    var ut = Number((Unit && Unit.ut) || payload.unitType) || 0;
+    var unitMeta = (Caesar.World && Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[ut]) || {};
+    var unitTitle = escapeHtml(String(unitMeta.Title || "المملكة"));
     var msg = ` <div class="msg-unit battel-f-ann">
-                    تم فوز حلفك بـ <span class="ann-red">&nbsp;${Caesar.World.UnitTypeData[Unit.ut].Title}&nbsp;</span>  و حصلت على قائمة الهدايا (ستجد رسالة فى بريدك)
+                    تم فوز حلفك بـ <span class="ann-red">&nbsp;${unitTitle}&nbsp;</span>  و حصلت على قائمة الهدايا (ستجد رسالة فى بريدك)
                 </div>`;
     Player_profile.refreshPlayerNotif();
+    Player_profile.refreshMatrialBox();
     Chat.append(msg);
 };
 
 Caesar.WsLib.Chat.PrizeSent = function(data) {
-
-    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
+    var payload = (data && data.data && data.xCoord === undefined) ? data.data : (data || {});
+    var Unit = (typeof WorldUnit !== "undefined" && typeof WorldUnit.getWorldUnit === "function")
+        ? WorldUnit.getWorldUnit(payload.xCoord, payload.yCoord)
+        : null;
+    var ut = Number((Unit && Unit.ut) || payload.unitType) || 0;
+    var unitMeta = (Caesar.World && Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[ut]) || {};
+    var unitTitle = escapeHtml(String(unitMeta.Title || "المعلم"));
     var msg = ` <div class="msg-unit  battel-f-ann">
-                    تم وصول جوائز الى صندوقك على قائمة الهدايا بعد الفوز على<span class="ann-red">&nbsp;${Caesar.World.UnitTypeData[Unit.ut].Title}&nbsp;</span> (ستجد رسالة فى بريدك)
+                    تم وصول جوائز الى صندوقك على قائمة الهدايا بعد الفوز على<span class="ann-red">&nbsp;${unitTitle}&nbsp;</span> (ستجد رسالة فى بريدك)
                 </div>`;
     Player_profile.refreshPlayerNotif();
+    Player_profile.refreshMatrialBox();
     Chat.append(msg);
 };
 
@@ -31656,8 +31976,9 @@ Caesar.WsLib.Guild.msgSent = function(data) {
 
 
 Caesar.WsLib.Guild.PrizeSent = function(data) {
-    alert_box.systemChatMessage(`تم إرسال هدايا إلى جميع أعضاء حلف ${escapeHtml(data.GuildName)} الأن !`);
-}
+    var payload = (data && data.data && data.GuildName === undefined) ? data.data : (data || {});
+    alert_box.systemChatMessage(`تم إرسال هدايا إلى جميع أعضاء حلف ${escapeHtml(String(payload.GuildName || "---"))} الأن !`);
+};
 
 
 
@@ -31920,7 +32241,7 @@ Caesar.WsLib.Hero.Back = function(data) {
     }
     Fixed['refreshPlayerNotif']();
     city_profile['refresh_hero_view']();
-    var Msg = ` تم عودة البطل   ${HeroName}   من   ${BATTAL_TASKS[data['Task']]['ar_title']}    [ ${data['xTo']}  ,  ${data['yTo']} ] الى المدينة   ${CityName}  `;
+    var Msg = ` عاد البطل   ${HeroName}   من   ${BATTAL_TASKS[data['Task']]['ar_title']}    [ ${data['xTo']}  ,  ${data['yTo']} ] الى المدينة   ${CityName}  `;
     if (Number(data['Task']) === BATTEL_TYPES_CONST['GARRISON'])
         (Msg = ' تم ارسال البطل ' + HeroName + '  بنجاح الى [' + data['xTo'] + ',' + data['yTo'] + '] لبدء عملية الامداد');
     alert_box['systemChatMessage'](Msg);
@@ -32021,80 +32342,75 @@ Caesar.WsLib.ServerAnnounce.RepleCastleClosed = function(data) {
 
 Caesar.WsLib.ServerAnnounce.Battel = {};
 
-WsBattel.helperList = function(data) {
-
-    var enemyArray = [];
-    var allayArray = [];
-
-    var enemyNames = [];
-    var allayNames = [];
-
-    data.Joiners.forEach((player, index) => {
-        allayNames.push(player.name);
-    });
-    data.Defender.forEach((player, index) => {
-        enemyNames.push(player.name);
-    });
-
-    var result = {
-        allaylist: "",
-        enemyList: ""
-    };
-
-    if (allayNames.length > 0)
-        result.allaylist = join(`وذالك بمساعدة <span class="red">${allayNames.join(" , ")}</span>`);
-    if (allayNames.length > 0)
-        result.enemyList = join(` و معاونية <span class="red">${enemyNames.join(" , ")}</span>`);
-
-
-
-    return result;
-};
-
 Caesar.WsLib.ServerAnnounce.Battel.Win = function(data) {
-
-
     var playerNames = WsBattel.helperList(data);
+    var attackerName = escapeHtml(String((data && data.Attacker && data.Attacker.name) || ""));
+    var worldUnit = (data && data.WorldUnit) || {};
+    var ut = Number(worldUnit.ut !== undefined ? worldUnit.ut : worldUnit.t) || 0;
+    var lvl = Number(worldUnit.l) || 1;
+    var unitMeta = (Caesar.World && Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[ut]) || {};
+    var unitTitle = escapeHtml(String(unitMeta.Title || "المعلم"));
+    var prizeText = (typeof Matrial !== "undefined" && typeof Matrial.prizeToString === "function")
+        ? Matrial.prizeToString((data && data.WinPrize) || [])
+        : "";
+    var honor = Number(data && (data.honor !== undefined ? data.honor : data.Honor)) || 0;
+    var allySection = playerNames.allaylist ? ` ${playerNames.allaylist}` : "";
+    var rewardSection = prizeText
+        ? `وفى المقابل حصل على <span class="red">${prizeText}</span> وايضا <span class="red">${honor}</span> شرف`
+        : `وحصل على <span class="red">${honor}</span> شرف`;
 
     var msg = `<div class="battel-f-ann">
-                        قام <span class="red">${data.Attacker.name}</span> بهزيمة بطل النظام ${playerNames.enemyList} فى <span class="red">${Caesar.World.UnitTypeData[data.WorldUnit.ut].Title}</span> مستوى <span class="red">${data.WorldUnit.l}</span>.
-                        ${playerNames.allaylist},
-                        وفى المقابل  حصل على  <span class="red">${Matrial.prizeToString(data.WinPrize)}</span> 
-                        وايضا <span class="red">${data.honor}</span> شرف
+                        قام <span class="red">${attackerName}</span> بهزيمة بطل النظام${playerNames.enemyList} فى <span class="red">${unitTitle}</span> مستوى <span class="red">${lvl}</span>.${allySection} ${rewardSection}
                  </div>`;
     Chat.append(msg);
-
 };
 
 Caesar.WsLib.ServerAnnounce.Battel.GuildWin = function(data) {
+    var Unit = (typeof WorldUnit !== "undefined" && typeof WorldUnit.getWorldUnit === "function")
+        ? WorldUnit.getWorldUnit(data.xCoord, data.yCoord)
+        : null;
+    var ut = Number((Unit && Unit.ut) || (data && data.unitType)) || 0;
+    var unitMeta = (Caesar.World && Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[ut]) || {};
+    var unitTitle = escapeHtml(String(unitMeta.Title || "المعلم"));
+    var ux = Unit && Number.isFinite(Number(Unit.x)) ? Unit.x : Number(data && data.xCoord);
+    var uy = Unit && Number.isFinite(Number(Unit.y)) ? Unit.y : Number(data && data.yCoord);
+    var guildName = escapeHtml(String((data && data.GuildName) || "---"));
+    var playerName = escapeHtml(String((data && data.PlayerName) || ""));
 
-
-    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
-
-    var msg = `<div class="battel-f-ann">نجح حلف <span class="red">${escapeHtml(data.GuildName)}</span> بقيادة <span class="red">${data.PlayerName}</span> بالسيطرة على ${Caesar.World.UnitTypeData[Unit.ut].Title} ${Extract.coordDirect(Unit.x, Unit.y)}</div>`;
+    var msg = `<div class="battel-f-ann">نجح حلف <span class="red">${guildName}</span> بقيادة <span class="red">${playerName}</span> بالسيطرة على ${unitTitle} ${Extract.coordDirect(ux, uy)}</div>`;
     Chat.append(msg);
-
 };
 
 Caesar.WsLib.ServerAnnounce.Battel.Started = function(data) {
+    var Unit = (typeof WorldUnit !== "undefined" && typeof WorldUnit.getWorldUnit === "function")
+        ? WorldUnit.getWorldUnit(data.xCoord, data.yCoord)
+        : null;
+    var ut = Number((Unit && Unit.ut) || (data && data.unitType)) || 0;
+    var unitMeta = (Caesar.World && Caesar.World.UnitTypeData && Caesar.World.UnitTypeData[ut]) || {};
+    var unitTitle = escapeHtml(String(unitMeta.Title || "المعلم"));
+    var ux = Unit && Number.isFinite(Number(Unit.x)) ? Unit.x : Number(data && data.xCoord);
+    var uy = Unit && Number.isFinite(Number(Unit.y)) ? Unit.y : Number(data && data.yCoord);
 
-    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
-    var msg = `<div class="battel-f-ann">بداء حلف <span class="red">${escapeHtml(data.GuildName)}</span> بقيادة <span class="red">${data.PlayerName}</span> معركة ضد ${Caesar.World.UnitTypeData[Unit.ut].Title} ${Extract.coordDirect(Unit.x, Unit.y)} الان</div>`;
+    var msg = `<div class="battel-f-ann">بداء حلف <span class="red">${escapeHtml(String((data && data.GuildName) || "---"))}</span> بقيادة <span class="red">${escapeHtml(String((data && data.PlayerName) || ""))}</span> معركة ضد ${unitTitle} ${Extract.coordDirect(ux, uy)} الان</div>`;
     Chat.append(msg);
-
 };
 
 
 Caesar.WsLib.ServerAnnounce.CityColonized = function(data) {
-    var Unit = WorldUnit.getWorldUnit(data.xCoord, data.yCoord);
-    Unit.CityColonizerFlag = data.CityColonizerFlag;
-    Unit.CityColonized = true;
-    Unit.ColonizerIdGuild = data.ColonizerIdGuild;
-    Unit.ColonizerIdPlayer = data.ColonizerIdPlayer;
-    Caesar.World.Map.RefreshWorld();
-    var msg = `<div class="battel-f-ann">نجح الملك <span class="red">${data.ColonizerName}</span> فى استعمار المدينة <span class="red">${data.CityColonizedName}</span> ${Extract.coordDirect(data.xCoord, data.yCoord)} التابعة للملك <span class="red">${data.ColonizedName}</span> </div>`;
+    var Unit = (typeof WorldUnit !== "undefined" && typeof WorldUnit.getWorldUnit === "function")
+        ? WorldUnit.getWorldUnit(data.xCoord, data.yCoord)
+        : null;
+    if (Unit) {
+        Unit.CityColonizerFlag = data.CityColonizerFlag;
+        Unit.CityColonized = true;
+        Unit.ColonizerIdGuild = data.ColonizerIdGuild;
+        Unit.ColonizerIdPlayer = data.ColonizerIdPlayer;
+    }
+    if (Caesar.World && Caesar.World.Map && typeof Caesar.World.Map.RefreshWorld === "function") {
+        Caesar.World.Map.RefreshWorld();
+    }
+    var msg = `<div class="battel-f-ann">نجح الملك <span class="red">${escapeHtml(String((data && data.ColonizerName) || ""))}</span> فى استعمار المدينة <span class="red">${escapeHtml(String((data && data.CityColonizedName) || ""))}</span> ${Extract.coordDirect(data.xCoord, data.yCoord)} التابعة للملك <span class="red">${escapeHtml(String((data && data.ColonizedName) || ""))}</span> </div>`;
     Chat.append(msg);
-
 };
 
 
@@ -32148,7 +32464,7 @@ Caesar.WsLib.ServerAnnounce.ArenachallangeGuildLvlUp = function(data) {
 };
 
 Caesar.WsLib.ServerAnnounce.KingOfArenaChallange = function(data) {
-    var Msg = `<div class="battel-f-ann">تهانينا! اصبح الملك   (<span class="red">  ${data['Player']['PlayerName']}  </span>)   ملك ميدان التحدى الاول!}</div>`;
+    var Msg = `<div class="battel-f-ann">تهانينا! أصبح الملك   (<span class="red">  ${data['Player']['PlayerName']}  </span>)   ملك ميدان التحدى الاول!}</div>`;
     Chat.append(Msg);
     Caesar.ArenaChallange.getArenaData().done(function() {
         $('#SArenaField')['click']();
@@ -32156,7 +32472,7 @@ Caesar.WsLib.ServerAnnounce.KingOfArenaChallange = function(data) {
 };
 
 Caesar.WsLib.ServerAnnounce.KingOfArenaTeamChallange = function(data) {
-    var Msg = `<div class="battel-f-ann">تهانينا! اصبح الفريق   (<span class="red">  ${data.Team.TeamName}  </span>)   ملك ميدان تحدى الفرق الاول!}</div>`;
+    var Msg = `<div class="battel-f-ann">تهانينا! أصبح الفريق   (<span class="red">  ${data.Team.TeamName}  </span>)   ملك ميدان تحدى الفرق الاول!}</div>`;
     Chat.append(Msg);
     Caesar.ArenaChallange.getArenaData().done(function() {
         $('#SArenaField')['click']();
@@ -32165,7 +32481,7 @@ Caesar.WsLib.ServerAnnounce.KingOfArenaTeamChallange = function(data) {
 
 
 Caesar.WsLib.ServerAnnounce.KingOfArenaGuildChallange = function(data) {
-    var Msg = `<div class="battel-f-ann">تهانينا! اصبح حلف   (<span class="red">  ${escapeHtml(data.Guild.GuildName)}  </span>)   ملك ميدان تحدى الأحلاف الاول!}</div>`;
+    var Msg = `<div class="battel-f-ann">تهانينا! أصبح حلف   (<span class="red">  ${escapeHtml(data.Guild.GuildName)}  </span>)   ملك ميدان تحدى الأحلاف الاول!}</div>`;
     Chat.append(Msg);
     Caesar.ArenaChallange.getArenaData().done(function() {
         $('#SArenaField').click();
@@ -32567,12 +32883,13 @@ Caesar.WsLib.Base.refreshPlayerFlag = function(data) {
 };
 
 Caesar['WsLib']['Base']['DailyRest'] = function() {
-    alert_box['systemChatMessage']('تمت اعادة التعيين اليومية.');
+    alert_box['systemChatMessage']('تمت إعادة التعيين اليومية.');
 };
 Caesar.WsLib.Base.PrizeSent = function() {
     PLAYER_NOTIF.msg_diff = Number(PLAYER_NOTIF.msg_diff) + 1;
     Fixed.refreshPlayerNotif();
-    alert_box['systemChatMessage']('وصلك جوائز فى صندوقك إفحص البريد');
+    Player_profile.refreshMatrialBox();
+    alert_box['systemChatMessage']('وصلتك جوائز في صندوقك، افحص البريد.');
 };
 Caesar.WsLib.World = {};
 Caesar.WsLib.World.Fire = {};
@@ -32585,7 +32902,7 @@ Caesar.WsLib.World.ResetLvl = function(data) {
         if (!data['UnitList']['includes'](Caesar['worldAllUnits'][ii]['ut'])) continue;
         Caesar['worldAllUnits'][ii]['l'] = 0x1;
     }
-    alert_box['systemChatMessage']('تم اعادة التعين');
+    alert_box['systemChatMessage']('تمت إعادة التعيين.');
 }
 
 
@@ -33466,6 +33783,11 @@ WorldUnit.WorldUnitRank = function(x, y) {
                             : `${minutes} د ${seconds} ث`);
 
                     var baseStatusText = `الحلف المسيطر: ${guildName} | الملك: ${playerName} | مدة السيطرة: ${durationText}`;
+                    if (Number(dominance.daily_max_harvests) > 0 && Number(dominance.playerGuildId) === Number(dominance.id_guild)) {
+                        var harvestedToday = Math.max(0, Number(dominance.daily_harvest_count) || 0);
+                        var maxToday = Number(dominance.daily_max_harvests);
+                        baseStatusText += ` | غنائم اليوم: ${getArabicNumbers(harvestedToday)}/${getArabicNumbers(maxToday)}`;
+                    }
                     dominanceStatus.text(baseStatusText);
 
                     var playerGuildId = Number(dominance.playerGuildId) || 0;
@@ -33473,7 +33795,13 @@ WorldUnit.WorldUnitRank = function(x, y) {
                     if (playerGuildId > 0 && playerGuildId === dominantGuildId) {
                         var remainingSec = Math.max(0, Number(dominance.remaining_sec) || 0);
                         harvestButton.show();
-                        harvestButton.prop("disabled", !dominance.can_harvest);
+                        if (dominance.can_harvest) {
+                            harvestButton.prop("disabled", false).text("غنيمة");
+                        } else if (dominance.can_repeat_harvest) {
+                            harvestButton.prop("disabled", false).text("غنيمة إضافية");
+                        } else {
+                            harvestButton.prop("disabled", true).text(dominance.reach_daily_reap_limit ? "اكتمل الحد اليومي" : "غنيمة");
+                        }
 
                         if (remainingSec > 0) {
                             // Build countdown text helper
@@ -33486,7 +33814,7 @@ WorldUnit.WorldUnitRank = function(x, y) {
                                     : (rm > 0 ? `${rm} د ${rs} ث` : `${rs} ث`);
                             };
                             var countdown = remainingSec;
-                            dominanceStatus.text(baseStatusText + " | الغنيمة بعد: " + buildCountdownText(countdown));
+                            dominanceStatus.text(baseStatusText + " | الغنيمة المجانية بعد: " + buildCountdownText(countdown));
 
                             window[timerKey] = setInterval(function() {
                                 countdown--;
@@ -33494,7 +33822,7 @@ WorldUnit.WorldUnitRank = function(x, y) {
                                     clearInterval(window[timerKey]);
                                     window[timerKey] = null;
                                     dominanceStatus.text(baseStatusText + " | الغنيمة متاحة الآن!");
-                                    harvestButton.prop("disabled", false);
+                                    harvestButton.prop("disabled", false).text("غنيمة");
                                 } else {
                                     // Check if the status element still exists (dialog may have been closed)
                                     var statusEl = $(`.guild-dominance-status[data-x-coord="${x}"][data-y-coord="${y}"]`);
@@ -33503,7 +33831,7 @@ WorldUnit.WorldUnitRank = function(x, y) {
                                         window[timerKey] = null;
                                         return;
                                     }
-                                    statusEl.text(baseStatusText + " | الغنيمة بعد: " + buildCountdownText(countdown));
+                                    statusEl.text(baseStatusText + " | الغنيمة المجانية بعد: " + buildCountdownText(countdown));
                                 }
                             }, 1000);
                         }
@@ -33878,7 +34206,7 @@ var campDB = {
                         <div class="rank-list">
                             <div class="inner_nav">
                                 <div class="td_1 font-2" style="width: 40%">${Translate.Button.Chat.League[UserLag.language]}</div>
-                                <div class="td_1 font-2" style="width: 30%">وقت البداء</div>
+                                <div class="td_1 font-2" style="width: 30%">وقت البدء</div>
                                 <div class="td_1 font-2" style="width: 30%">وقت الانتهاء</div>
                             </div>
                             <div class="tr">
@@ -34035,7 +34363,7 @@ var campDB = {
                     <div class="right pull-R">
                         <div class="refresh_time">
                             <div class="pull-R" >
-                                <h1>وقت اعادة التعيين</h1>
+                                <h1>وقت إعادة التعيين</h1>
                                 <h2 class="${renewTime === null ? "rtl" : "time_counter rtl attack_time_reset"}" ${renewTime === null ? "" : `time-end="${renewTime / 1000}"`}>${renewTime === null ? "غير متاح" : ""}</h2>
                             </div>
                             <div class="pull-L">
@@ -34203,7 +34531,7 @@ var campDB = {
         });
         if (total_req !== "") {
             total += `<li>
-                        يستهلك${total_req} لانشاء معركة
+                        يستهلك ${total_req} لإنشاء معركة
                     </li>`;
         }
         camp_obj.JoinReq.forEach(function(el) { // هنجيب المتطلبات بتاعة  الانضمام ونحطها  فى ليست
@@ -34213,7 +34541,7 @@ var campDB = {
         });
         if (total_join_req !== "") {
             total += `<li>
-                        يستهلك${total_join_req} لانشاء معركة
+                        يستهلك ${total_join_req} للانضمام إلى المعركة
                     </li>`;
         }
         return total;
@@ -34437,7 +34765,7 @@ campDB.refreshQueAttackList = function(xCoord, yCoord) {
                                             WorldUnit.isRepelCastle(Unit.ut) ? 
                                             `<div class="inner_nav">
                                                 <div class="td_1 font-2" style="width: 40%">${Translate.Button.Chat.League[UserLag.language]}</div>
-                                                <div class="td_1 font-2" style="width: 30%">وقت البداء</div>
+                                                <div class="td_1 font-2" style="width: 30%">وقت البدء</div>
                                                 <div class="td_1 font-2" style="width: 30%">وقت الانتهاء</div>
                                             ` 
                                         : 
@@ -34758,30 +35086,47 @@ Caesar.World.WorldMapIcon.removeWorldUnitIcons = function() {
 
 
 Caesar.World.WorldMapIcon.removeUnitCoords = function() {
-    if (Caesar.GE.WorldScene.UnitCoords && Caesar.GE.WorldScene.UnitCoords.Bg) {
-        Caesar.GE.WorldScene.UnitCoords.Bg.destroy();
-        Caesar.GE.WorldScene.UnitCoords.Text.destroy();
-    }
+    var coords = Caesar.GE && Caesar.GE.WorldScene && Caesar.GE.WorldScene.UnitCoords;
+    if (!coords)
+        return;
+    if (coords.Bg && coords.Bg.scene)
+        coords.Bg.setVisible(false);
+    if (coords.Text && coords.Text.scene)
+        coords.Text.setVisible(false);
 };
 Caesar.World.WorldMapIcon.showUnitCoords = function(xCoord, yCoord) {
-
-
-    Caesar.World.WorldMapIcon.removeUnitCoords();
+    var scene = Caesar.GE && Caesar.GE.WorldScene;
+    if (!scene || !scene.add)
+        return;
 
     var x = Caesar.World.Map.posX(xCoord, yCoord) + 64;
     var y = Caesar.World.Map.posY(xCoord, yCoord) + 80;
     var z = Caesar.World.Map.posZ(xCoord, yCoord) + 15;
-    Caesar.GE.WorldScene.UnitCoords = {};
-    Caesar.GE.WorldScene.UnitCoords.Text = Caesar.GE.WorldScene.add.text(x, y, `${xCoord}  ${yCoord}`, {
-        fixedHeight: 20,
-        fontStyle: "bold",
-        fontSize: 14,
-        stroke: '#000000',
-        strokeThickness: 3
-    }).setDepth(z + 10).setOrigin(0.5, 0.5);
-    Caesar.GE.WorldScene.UnitCoords.Bg = Caesar.GE.WorldScene.add.image(x, y, "CoordHolder").setDepth(z + 9).setScale(0.8, 0.6);
+    var label = xCoord + "  " + yCoord;
+    var coords = scene.UnitCoords;
 
+    if (!coords || !coords.Text || !coords.Text.scene || !coords.Bg || !coords.Bg.scene) {
+        coords = {
+            Text: scene.add.text(x, y, label, {
+                fixedHeight: 20,
+                fontStyle: "bold",
+                fontSize: 14,
+                stroke: '#000000',
+                strokeThickness: 3
+            }).setDepth(z + 10).setOrigin(0.5, 0.5),
+            Bg: scene.add.image(x, y, "CoordHolder").setDepth(z + 9).setScale(0.8, 0.6),
+            lastLabel: label
+        };
+        scene.UnitCoords = coords;
+        return;
+    }
 
+    coords.Bg.setPosition(x, y).setDepth(z + 9).setVisible(true);
+    coords.Text.setPosition(x, y).setDepth(z + 10).setVisible(true);
+    if (coords.lastLabel !== label) {
+        coords.lastLabel = label;
+        coords.Text.setText(label);
+    }
 };
 
 Caesar.World.WorldMapIcon.tweenWorldUnitIcons = function(x, y, IconList) {
@@ -35712,17 +36057,17 @@ var CURRENT_CURSOR_COORDS;
 var GENERAL_TIMER;
 
 var unitLvlPrize = [
-    "هنا يمكنك  بناء مدينة لك ان كنت تمتلك ",
+    "هنا يمكنك بناء مدينة جديدة إذا كنت تمتلك المرتبة المطلوبة",
     "",
-    "هنا يمكن الهجوم والحصول على صبغً",
-    "هنا يمكن الهجوم والحصول على بهارات",
-    "هنا يمكن الهجوم والحصول على نبيذ",
-    "هنا يمكن الهجوم والحصول على  صوف",
-    "هنا يمكن الهجوم والحصول على حرير",
-    "هنا يمكن الهجوم والحصول على فرو",
-    "هنا يمكن الهجوم والحصول على بخور",
-    "هنا يمكن الهجوم والحصول على عاج",
-    "هنا يمكن الهجوم والحصول على جواهر"
+    "هنا يمكنك الهجوم والحصول على صبغ",
+    "هنا يمكنك الهجوم والحصول على بهارات",
+    "هنا يمكنك الهجوم والحصول على نبيذ",
+    "هنا يمكنك الهجوم والحصول على صوف",
+    "هنا يمكنك الهجوم والحصول على حرير",
+    "هنا يمكنك الهجوم والحصول على فرو",
+    "هنا يمكنك الهجوم والحصول على بخور",
+    "هنا يمكنك الهجوم والحصول على عاج",
+    "هنا يمكنك الهجوم والحصول على جواهر"
 ];
 
 var allUniteType = {
@@ -35731,7 +36076,7 @@ var allUniteType = {
         prod: "غذاء"
     },
     mountain: {
-        ar_title: " جبال",
+        ar_title: "جبال",
         prod: "حديد"
     },
     desert: {
@@ -35740,7 +36085,7 @@ var allUniteType = {
     },
     wood: {
         ar_title: "غابات",
-        prod: "غذاء"
+        prod: "أخشاب"
     },
     city: {
         ar_title: "مدينة",
@@ -35879,34 +36224,34 @@ var WorldUtil = {
 
         } else if (WorldUnit.isMonawrat(type)) { // مناورات
 
-            return ` يمكنك الحصول على هدايا قيمة م مجلس الشيوخ مثل تسريع التديب ,خبز وايضا قلادات حمراء`;
+            return "يمكنك الحصول على هدايا قيّمة من مجلس الشيوخ مثل تسريع التدريب والخبز والقلائد الحمراء.";
 
         } else if (WorldUnit.isCamp(type)) { // معسكرات
 
-            return `من هنا يتم الحصول على الشعارت لتبديلها مع مواد من صندوق المواد وايضا الحصول على معدات`;
+            return "تُكتسب من هذه المعسكرات الشعارات لتبديلها بالمواد في صندوق الموارد، كما تمنح فرصًا للحصول على المعدات.";
 
         } else if (WorldUnit.isEmpty(type)) {
 
-            return " يمكنك   بناء مدينة هنا";
+            return "يمكنك بناء مدينة جديدة هنا.";
 
         } else if (WorldUnit.isAsianSquads(type)) {
-            return " مواد بناء وترقية , رفاهيات, وهدايا قيمة يمكنك الحصول عليها من هذة المجموعات  المتمردة فى اسيا";
+            return "يمكنك الحصول على مواد بناء وترقية، ومواد رفاهية، وهدايا قيّمة من هذه الفرق المتمردة.";
         } else if (WorldUnit.isGangStar(type)) {
-            return "حزم جيوش , رفاهيات, وهدايا قيمة يمكنك الحصول عليها من هذة المجموعات المتمردة";
+            return "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من هذه العصابات المتمردة.";
         } else if (WorldUnit.isCarthagianArmies(type)) {
-            return "حزم جيوش , رفاهيات, وهدايا قيمة يمكنك الحصول عليها من هذة المجموعات المتمردة";
+            return "يمكنك الحصول على حزم جيوش، ومواد رفاهية، وهدايا قيّمة من قوات قرطاجة المتمردة.";
         } else if (WorldUnit.isArmyCapital(type)) {
-            return "حزم جيوش , موارد , خام,...ألخ  يمكن الحصول عليها من عاصمة الجيوش وذالك بسبب قوتها الجبارة";
+            return "يمكنك الحصول على حزم جيوش، وموارد، وخامات وغيرها من عاصمة الجيوش لقوتها الجبارة.";
         } else if (WorldUnit.isArena(type)) {
-            return "لتحكم العالم عليك اثبات جدارتك اولا , تحدى الملوك و قم بالفوز...";
+            return "لتحكم العالم عليك إثبات جدارتك أولًا؛ تحدَّ الملوك وحقق الفوز.";
         } else if (WorldUnit.isQueenCity(type)) {
-            return "تحدى الملكات بين الاحلاف لاثبات  الاجدر بينهم";
+            return "تحدّي الملكات بين الأحلاف لإثبات الحلف الأجدر بالسيطرة ونيل الغنائم.";
         } else if (WorldUnit.isRepelCastle(type)) {
-            return "تحدى القلاع بين الاحلاف لاثبات  الاجدر بينهم";
+            return "تحدّي القلاع بين الأحلاف لإثبات الحلف الأجدر بالسيطرة ونيل الغنائم.";
         } else if (WorldUnit.isStatueWalf(type)) {
-            return "نافس الذئاب فى وكرهم وسيكون من نصيبك جوائز قيمة";
+            return "نافس الذئاب في وكرهم وستحصل على جوائز قيّمة.";
         } else if (WorldUnit.isStatueWar(type)) {
-            return "تمثال الحرب رمز للصمود فى العصور القديمة, اذا تمكنت من هدم الاسطورة سيكون من نصيبك جوائز قيمة";
+            return "تمثال الحرب رمز للصمود في العصور القديمة؛ إذا تمكنت من هزيمته فستحصل على جوائز قيّمة.";
         }
 
 
@@ -36061,7 +36406,7 @@ var reviewBox = {
 
     descForBarray: function(type, lvl) {
         return ` <p>
-                    زيادة انتاج ${getUnitObj(type).prod} بمقدار ${getArabicNumbers(3 * lvl)}% فى مديتك
+                    زيادة إنتاج ${getUnitObj(type).prod} بمقدار ${getArabicNumbers(3 * lvl)}% في مدينتك
                </p>`;
     },
     descForCity: function(JsonData) {
@@ -36229,7 +36574,7 @@ var reviewBox = {
                                                 </div>
                                             </div>
                                             <div class="time_start">
-                                                وقت البداء: 
+                                                وقت البدء: 
                                                 <span>٤٣&nbsp;ث&nbsp;٣٨&nbsp;د&nbsp;٥&nbsp;س&nbsp; </span>
                                             </div>
                                         </div>
@@ -36670,7 +37015,7 @@ $(document).on("mouseenter", ".overMap lable, .overMap .map-dot", function(e) {
             '<div class="coords">[ ' + getArabicNumbers(x) + ' , ' + getArabicNumbers(y) + ' ]</div>' +
         '</div>' +
         '<div class="tt-title">' + (title || "نقطة على الخريطة") + lvlStr + '</div>' +
-        '<div class="tt-desc" style="color: #ffd700; font-size: 11px;">اضغط بالماوس للذهاب مباشرة</div>' +
+        '<div class="tt-desc" style="color: #ffd700; font-size: 11px;">انقر للانتقال مباشرة</div>' +
     '</div>';
     $(".map-tooltip").remove();
     $(".overMap").append(tooltip);
@@ -36951,14 +37296,35 @@ WorldUnit.prize.fetchUnitPrizes = function(unitType, callback) {
         dataType: 'json',
         success: function(res) {
             delete WorldUnit.prize._loadingTypes[unitType];
-            if (!res || res.state !== 'ok' || !Array.isArray(res.prizes)) {
+            if (!res || res.state !== 'ok' || (!Array.isArray(res.prizes) && !res.buckets)) {
                 console.error('Failed to load world unit prizes:', res);
                 return;
             }
             WorldUnit.prize._loadedTypes[unitType] = true;
-            if (!WorldUnit.prize.PrizeList.Win) WorldUnit.prize.PrizeList.Win = [];
-            for (var i = 0; i < res.prizes.length; i++) {
-                WorldUnit.prize.PrizeList.Win.push(res.prizes[i]);
+            var bucketNames = ['Win', 'Sp', 'Plunder'];
+            WorldUnit.prize.PrizeList.Lose = [];
+            if (res.buckets && typeof res.buckets === 'object') {
+                for (var b = 0; b < bucketNames.length; b++) {
+                    var bName = bucketNames[b];
+                    if (!Array.isArray(WorldUnit.prize.PrizeList[bName])) {
+                        WorldUnit.prize.PrizeList[bName] = [];
+                    }
+                    WorldUnit.prize.PrizeList[bName] = WorldUnit.prize.PrizeList[bName].filter(function(entry) {
+                        return Number(entry && entry.unitType) !== unitType;
+                    });
+                    var rows = Array.isArray(res.buckets[bName]) ? res.buckets[bName] : [];
+                    for (var i = 0; i < rows.length; i++) {
+                        WorldUnit.prize.PrizeList[bName].push(rows[i]);
+                    }
+                }
+            } else if (Array.isArray(res.prizes)) {
+                if (!WorldUnit.prize.PrizeList.Win) WorldUnit.prize.PrizeList.Win = [];
+                WorldUnit.prize.PrizeList.Win = WorldUnit.prize.PrizeList.Win.filter(function(entry) {
+                    return Number(entry && entry.unitType) !== unitType;
+                });
+                for (var i = 0; i < res.prizes.length; i++) {
+                    WorldUnit.prize.PrizeList.Win.push(res.prizes[i]);
+                }
             }
             if (typeof callback === 'function') callback();
         },
@@ -36977,11 +37343,34 @@ WorldUnit['prize']['getUnitPrize'] = function(t, l, u = 'Win') {
     t = Number(t);
     l = Number(l);
     var y = [];
+    var typeRows = [];
     var list = (WorldUnit.prize.PrizeList && WorldUnit.prize.PrizeList[u]) ? WorldUnit.prize.PrizeList[u] : [];
     for (var i = 0; i < list.length; i++) {
         var e = list[i];
-        if (Number(e.unitType) === t && Number(e.lvl) === l) {
-            y.push(e);
+        if (Number(e.unitType) === t) {
+            typeRows.push(e);
+            if (Number(e.lvl) === l) {
+                y.push(e);
+            }
+        }
+    }
+    var isScaledSpecial = (t >= 150 && t <= 155)
+        || (t >= 180 && t <= 182)
+        || (t >= 184 && t <= 186)
+        || (t >= 220 && t <= 222);
+    if (y.length === 0 && isScaledSpecial && typeRows.length > 0) {
+        var clampedLvl = Math.max(1, Number.isFinite(l) ? l : 1);
+        var fallbackLvl = Number(typeRows[0].lvl) || 1;
+        for (var j = 0; j < typeRows.length; j++) {
+            var rLvl = Number(typeRows[j].lvl) || 1;
+            if (rLvl <= clampedLvl && rLvl >= fallbackLvl) {
+                fallbackLvl = rLvl;
+            }
+        }
+        for (var k = 0; k < typeRows.length; k++) {
+            if ((Number(typeRows[k].lvl) || 1) === fallbackLvl) {
+                y.push(typeRows[k]);
+            }
         }
     }
     return y;
@@ -37305,6 +37694,7 @@ function addMapWorldFloor(el) {
     unit.floor.setDataEnabled();
     unit.floor.data.set("xCoord", realX);
     unit.floor.data.set("yCoord", realY);
+    unit.floor.data.set("isFloor", true);
     return true;
 }
 
@@ -37440,6 +37830,11 @@ Caesar.World.Map.Scroll = function(Force) {
 
 
 Caesar.World.Map.RefreshWorld = function() {
+    if (!Caesar.GE || !Caesar.GE.WorldScene || !Caesar.GE.WorldScene.children || (Caesar.GE.isSceneSleeping && Caesar.GE.isSceneSleeping(Caesar.GE.WorldScene))) {
+        Caesar.World.Map._dirtyFlags = true;
+        return;
+    }
+    Caesar.World.Map._dirtyFlags = false;
     Animation.cityFlag();
     Animation.cityColonizerFlag();
     Animation.WorldFire();
@@ -37619,7 +38014,7 @@ Caesar.World.Map.OnEmptyUnitClick = function(Unit) {
                                     <div style="background-image:url(images/world/snap-shot/empty-place.jpg)"></div>
                                 </div>
                                 <div class="required-prom">
-                                    <label>تصنيف لنبيل:</label><span class="${city_counts >= 10 || Number(Caesar.DPlayer.Player.porm) < requiredPorm ? "not_enough" : "enough" }">${city_counts >= 10 ? "الحد الأقصى للمدن" : ((Caesar.BaseData.Promotion[requiredPorm] || {}).Title || "غير متاح")}</span>
+                                    <label>تصنيف النبيل:</label><span class="${city_counts >= 10 || Number(Caesar.DPlayer.Player.porm) < requiredPorm ? "not_enough" : "enough" }">${city_counts >= 10 ? "الحد الأقصى للمدن" : ((Caesar.BaseData.Promotion[requiredPorm] || {}).Title || "غير متاح")}</span>
                                 </div>
                             </div>
                         </div>
@@ -38327,7 +38722,7 @@ $(document).on("click", "#start_battel", function() {
 
     $(this).attr("disabled", "disabled");
     var coords = `[${getArabicNumbers(battel_data.x_coord)},${getArabicNumbers(battel_data.y_coord)}]`;
-    var task = `تاكيد ${BATTAL_TASKS[battel_data.task].ar_title} ${battel_data.ar_title}`;
+    var task = `تأكيد ${BATTAL_TASKS[battel_data.task].ar_title} ${battel_data.ar_title}`;
     alert_box.confirmDialog(`${task}</br> ${coords}`, function() {
 
         battelStart();
@@ -38353,7 +38748,7 @@ function battelStart() {
 
     if (Number(Caesar.CurrentHero.Hero.in_city) !== Caesar.Hero.HeroState.HERO_IN_CITY) {
         $('.close-alert').click();
-        alert_box.failMessage('لا يمكنك ارسال بطل الى بعثة و هو فى ليس داخل المدينة');
+        alert_box.failMessage('لا يمكنك إرسال بطل إلى بعثة وهو خارج المدينة');
         return;
     }
     if (Number(Caesar.CurrentHero.Hero.id_hero) === Number(Caesar['CurrentCity']['City']['console'])) {
@@ -38363,7 +38758,7 @@ function battelStart() {
     }
     var targetWorldUnit = WorldUnit['getWorldUnit'](battel_data['x_coord'], battel_data['y_coord']);
     if (!Caesar['World']['UnitData']['isPromLvlOk'](targetWorldUnit['ut'])) {
-        alert_box['failMessage']('لا يمكنك الهجو..م تحقق من توافق الشروط');
+        alert_box['failMessage']('لا يمكنك الهجوم؛ تحقق من استيفاء الشروط');
         return;
     }
     var travelingHeroCount = 0,
@@ -38467,7 +38862,7 @@ function battelStart() {
                 } else if (response.state == "error_6") {
                     alert_box['confirmMessage'](`متطلبات الإنضمام غير مكتملة`);
                 } else if (response.state == "error_7") {
-                    alert_box['confirmMessage'](`البطل ليس لدية لياقة كافية`);
+                    alert_box['confirmMessage'](`البطل ليس لديه لياقة بدنية كافية`);
                 } else if (response.state == "error_9") {
                     alert_box['confirmMessage'](`وصل عدد الأبطال بالخارج للحد الأقصى`);
                 } else if (response.state == "error_8_1") {
@@ -39572,15 +39967,15 @@ var Guild = {
                         alert_box.succesMessage(`تم انشاء حلف ${escapeHtml(JsonObject.GuildData.GuildData.name)} بنجاح`);
 
                     } else if (JsonObject.state == "error_0")
-                        return alert_box.confirmMessage("لا يوجد إسم للحلف");
+                        return alert_box.confirmMessage("لا يوجد اسم للحلف");
                     else if (JsonObject.state == "error_1")
                         return alert_box.confirmMessage("يوجد حلف يحمل نفس الأسم");
                     else if (JsonObject.state == "error_2")
-                        return alert_box.confirmMessage("أنت بالفعل على قوة حلف أخر");
+                        return alert_box.confirmMessage("أنت بالفعل عضو في حلف آخر");
                     else if (JsonObject.state == "error_3")
                         return alert_box.confirmMessage("لا يوجد لديك موارد كافية لإنشاء حلف");
                     else if (JsonObject.state == "error_4")
-                        return alert_box.confirmMessage("حدث خطاء ما اثناء إنشاء حلف");
+                        return alert_box.confirmMessage("حدث خطأ أثناء إنشاء الحلف");
                     else {
 
                         Caesar.LBase.Error(data);
@@ -40350,7 +40745,7 @@ $(document).on("click", "#creat_guild", function() {
                         </div>
                         <div class="row-three">        
                             <div class="confim-btn">            
-                                <button id="conf_creat_guild" class="full-btn full-btn-2x  enter"  >تاكيد وانشاء</button>    
+                                <button id="conf_creat_guild" class="full-btn full-btn-2x enter">تأكيد وإنشاء</button>    
 
                             </div>    
                         </div>
@@ -40855,7 +41250,7 @@ $(document)['on']('click', '#submit-guild-relation', function() {
             } else if (JsonData['state'] == 'error_0')
                 alert_box['failMessage']('لست عضو فى الحلف');
             else if (JsonData['state'] == 'error_1')
-                alert_box['failMessage']('رتيتك فى الحلف لا تسمح');
+                alert_box['failMessage']('رتبتك في الحلف لا تسمح');
             else if (JsonData['state'] == 'error_2')
                 alert_box['failMessage']('نوع العلاقة غير صالحة')
             else
@@ -40881,7 +41276,7 @@ $(document).on("click", "#invite-g", function() {
                                     <div>               
                                         <img src="images/panner/king_name.png">       
                                     </div>       
-                                    <div id="alert-title">دعوة املك
+                                    <div id="alert-title">دعوة الملك
                                     </div>           
                                     <img src="images/btns/close_b.png" class="img-sml close-alert">  
                                 </div>  
@@ -40942,7 +41337,7 @@ $(document).on("click", "#submit-guild-invite", function() {
                 if ($("#guild-g_relation").length > 0) {
                     showInVitedMembers();
                 }
-                alert_box.succesMessage('تم ارسال الدعوة بنجح');
+                alert_box.succesMessage('تم إرسال الدعوة بنجاح');
                 Guild.getGuildData();
             } else if (JsonObject.state == "error_0")
                 alert_box.failMessage("اللاعب منضم فى حلف بالفعل");
@@ -41309,7 +41704,7 @@ $(document).on("click", ".promote-guild-member div", function() {
 
     if (parseInt(ID_PLAYER) === parseInt(id_member)) {
 
-        alert_box.confirmMessage("لا يمكنك ترقية نفسك  يا حج :D");
+        alert_box.confirmMessage("لا يمكنك ترقية نفسك.");
         return;
 
     } else if (parseInt(Caesar.DPlayer.GuildData.rank < 5)) {
@@ -41350,11 +41745,11 @@ $(document).on("click", ".promote-guild-member div", function() {
 
                 } else if (JsonObject.state === "error_6") {
 
-                    alert_box.confirmMessage(`يوجد عدد كافى من ${guild_ranks[promotion].ar_title} لتتطوير هذا العضو عليك عزل ${guild_ranks[promotion].ar_title} اخر`);
+                    alert_box.confirmMessage(`العدد الحالي من (${guild_ranks[promotion].ar_title}) مكتمل؛ لترقية هذا العضو عليك عزل عضو آخر من نفس الرتبة أولًا.`);
 
                 } else if (JsonObject.state === "error_3") {
 
-                    alert_box.confirmMessage("انت لا تملك المنصب المناسب لترقة هذا العضو");
+                    alert_box.confirmMessage("لا تملك الصلاحية المناسبة لترقية هذا العضو.");
 
                 } else {
 
@@ -41443,7 +41838,7 @@ $(document).on("click", ".mem-prize-percent", function() {
     }
 
     var content = `
-                تاكيد تعديل نسبة الجوائز للاعب </br>
+                تأكيد تعديل نسبة الجوائز للاعب </br>
                 <input id="modfie-prize-share-input" type="text" class="only_num input" value="${prize_share}" 
                     max="${Math.max(100 - Number(Caesar.Guild.GuildData.total_prize_share) + prize_share, 0)}" 
                     min="0" step="1"/>`;
@@ -41453,7 +41848,7 @@ $(document).on("click", ".mem-prize-percent", function() {
         var newVal = Number($("#modfie-prize-share-input").val());
         if (newVal > Math.max(100 - Number(Caesar.Guild.GuildData.total_prize_share) + prize_share, 0) ||
             newVal < 0) {
-            alert_box.failMessage("نسبة الجوائز غير مسموح بيها");
+            alert_box.failMessage("نسبة الجوائز غير مسموح بها");
             return;
         }
         $.ajax({
@@ -41518,7 +41913,7 @@ $(document).on("click", "#fire-guild-mamber", function() {
 
     }
 
-    alert_box.confirmDialog("تاكيد طرد اللاعب ", function() {
+    alert_box.confirmDialog("تأكيد طرد اللاعب", function() {
 
         if (rank_member === 0) {
 
@@ -41582,7 +41977,7 @@ $(document).on("click", '#get-out-guild , #leave-g', function() {
 
     }
 
-    alert_box.confirmDialog("تاكيد الخروج من الحلف", function() {
+    alert_box.confirmDialog("تأكيد الخروج من الحلف", function() {
 
         $.ajax({
 
@@ -41638,7 +42033,7 @@ $(document).on("click", "#stepdown-guild-mamber , #resignation-g", function() {
 
     }
 
-    alert_box.confirmDialog("تاكيد الاستقالة من الحلف ( ستصبح عضو عادى تاخل الحلف)", function() {
+    alert_box.confirmDialog("تأكيد الاستقالة من المنصب (ستصبح عضوًا عاديًا داخل الحلف)", function() {
 
         $.ajax({
 
@@ -41679,12 +42074,12 @@ $(document).on("click", "#destroy-g", function() {
 
     if (Number(Caesar.DPlayer.GuildData.rank) !== Guild.RANK_DATA.LEADER) {
 
-        alert_box.confirmMessage("يجب انت تكون مدير الحلف   لتتمكن من تفكيك الحلف");
+        alert_box.confirmMessage("يجب أن تكون مدير الحلف لتتمكن من تفكيكه");
         return;
 
     }
 
-    alert_box.confirmDialog("تاكيد تفكيك الحلف , اذا تم تاكيد تفكيك الحلف سيتم طرد جميع الاعضاء ولن تتمكن من  ارجاع الحلف ثانية", function() {
+    alert_box.confirmDialog("تأكيد تفكيك الحلف! إذا أكدت التفكيك فسيُطرد جميع الأعضاء ولن تتمكن من استعادة الحلف ثانيةً.", function() {
 
         $.ajax({
 
@@ -41743,7 +42138,7 @@ $(document).on("click", "#upgrade_guild", function() {
 
     if (Caesar.DPlayer.GuildData.rank < Guild.RANK_DATA.MENSTER) {
 
-        alert_box.confirmMessage("منصبك  لا يسمح لك بتتطوير الحلف");
+        alert_box.confirmMessage("رتبتك لا تسمح لك بتطوير الحلف");
         return;
 
     }
@@ -42180,6 +42575,27 @@ function renderSystemEventMessageBody(body, subject) {
         }
         if (payload.type === "hero_loyalty") {
             return renderSystemHeroLoyaltyMessage(payload, false);
+        }
+        if (payload.type === "sp_prize") {
+            var spItems = Array.isArray(payload.items) ? payload.items : [];
+            var spUnitTitle = escapeHtml(String(payload.unitTitle || "المعلم"));
+            var spGuildName = payload.guildName ? ` لصالح حلف [${escapeHtml(String(payload.guildName))}]` : "";
+            var spRows = spItems.map(function(entry) {
+                if (!entry || !entry.Item) return "";
+                var itemKey = String(entry.Item);
+                var amount = Math.max(1, Number(entry.amount) || 1);
+                var itemName = Matrial.getMatrialName(itemKey);
+                var itemImg = Matrial.image(itemKey);
+                return `<li class="system-event-message__row">
+                            <img src="${escapeHtml(itemImg)}" alt="">
+                            <span>${escapeHtml(itemName)}</span>
+                            <strong>× ${escapeHtml(getArabicNumbers(amount))}</strong>
+                        </li>`;
+            }).join("");
+            return `<div class="system-event-message">
+                        <p class="system-event-message__summary">تم إضافة هدايا ${spUnitTitle} [${escapeHtml(getArabicNumbers(Number(payload.xCoord) || 0))}، ${escapeHtml(getArabicNumbers(Number(payload.yCoord) || 0))}]${spGuildName} إلى صندوق المواد الخاص بك:</p>
+                        ${spRows ? `<ul class="system-event-message__list">${spRows}</ul>` : ""}
+                    </div>`;
         }
     }
 
@@ -45021,7 +45437,7 @@ Quest = {
 
             } else if (questPrize[iii].type === "prestige") {
 
-                prizeString += ` ${questPrize[iii].amount} * بريستيج, `;
+                prizeString += ` ${questPrize[iii].amount} * برستيج، `;
 
             } else if (questPrize[iii].type === "resource") {
 
@@ -45388,7 +45804,7 @@ function isUpgradingNow(place) {
 
 function getCityHudScale() {
     if (!window.matchMedia("(max-width: 760px), (max-height: 650px)").matches)
-        return 1;
+        return 0.80;
     if (window.innerWidth <= 460)
         return 0.65;
     return window.innerWidth <= 600 ? 0.70 : 0.78;
@@ -45399,59 +45815,26 @@ function getCityHudChatBottom() {
 }
 
 $("#UPDOWN-chat img").click(function() {
-
     if ($(this).hasClass("smalled")) {
-
         $(this).css("transform", "rotateZ(180deg)");
-        $("#chat-box").css("bottom", "0px");
+        $("#chat-box").removeClass("chat-collapsed").css("bottom", "0px");
         $(this).removeClass("smalled");
-
     } else {
-
         $(this).css("transform", "rotateZ(0deg)");
-        $("#chat-box").css("bottom", (-Math.max($("#chat-box").outerHeight() - 22, 50)) + "px");
+        $("#chat-box").addClass("chat-collapsed").css("bottom", (-Math.max($("#chat-box").outerHeight() - 2, 40)) + "px");
         $(this).addClass("smalled");
     }
-    // Crafty.audio.play("close_sound");
-});
-$("#p-provile-slider img").click(function() {
-
-    var icons = $("#godGateBtnWrapper, #helpGateBtnWrapper, #ArenaChallangeBtnWrapper, #PlayerTeamWrapper, #luck-wheel-btn");
-    if ($(this).hasClass("smalled")) {
-
-        $(this).css("transform", "rotateZ(-90deg)");
-        $("#player-profile").css("left", "0px");
-        icons.show();
-        $(this).removeClass("smalled");
-
-    } else {
-
-        $(this).css("transform", "rotateZ(90deg)");
-        $("#player-profile").css("left", (-430 * getCityHudScale()) + "px");
-        icons.hide();
-        $(this).addClass("smalled");
+    if ($("#msg-area").getNiceScroll && $("#msg-area").getNiceScroll(0)) {
+        setTimeout(function() {
+            $("#msg-area").getNiceScroll(0).resize();
+        }, 360);
     }
-    //Crafty.audio.play("close_sound");
 });
 
-$("#city-profile-slider img").click(function() {
-
-    if ($(this).hasClass("smalled")) {
-
-        $(this).css("transform", "rotateZ(90deg)");
-        $("#city-profile").css("right", "4px");
-        $("#city_col").show();
-        $(this).removeClass("smalled");
-
-    } else {
-
-        $(this).css("transform", "rotateZ(-90deg)");
-        $("#city-profile").css("right", (-470 * getCityHudScale()) + "px");
-        $("#city_col").hide();
-        $(this).addClass("smalled");
-    }
-    // Crafty.audio.play("close_sound");
-});
+// Keep Player and City bottom HUD panels permanently pinned in compact form
+$("#player-profile").css("left", "0px");
+$("#city-profile").css("right", "4px");
+$("#godGateBtnWrapper, #helpGateBtnWrapper, #ArenaChallangeBtnWrapper, #PlayerTeamWrapper, #luck-wheel-btn, #city_col").show();
 
 
 /**
@@ -45496,38 +45879,25 @@ if (!document.fullscreenElement) {
 
 
 
-document.getElementById('ToggelFullSrc').addEventListener('click', function() {
-    return;
-    if (document.fullscreenElement) {
-        document.exitFullscreen().then(function() {
-            Crafty.viewport.height = $(document).height();
-            Crafty.viewport.width = $(document).width();
-            Crafty.viewport.reload();
-        });
-        if (isMobile) {
-            $('body').css("zoom", "0.5");
-
-        }
-    } else {
-        document.documentElement.requestFullscreen().then(function() {
-            Crafty.viewport.height = $(document).height();
-            Crafty.viewport.width = $(document).width();
-            Crafty.viewport.reload();
-        });
-        if (isMobile) {
-            /*$("body").css("zoom" , "0.5");
-             $("#cr-stage *").css("zoom" , "1");*/
-            //$('#cr-stage').css("zoom" , "1");
-            //alert_box.confirmMessage($('#cr-stage').css("zoom"));
-        }
-
+document.addEventListener('fullscreenchange', function() {
+    if (Caesar.GE && typeof Caesar.GE.syncGameScale === "function") {
+        Caesar.GE.syncGameScale();
     }
+});
 
-
-    Crafty.viewport.height = $(document).height();
-    Crafty.viewport.width = $(document).width();
-
-    Crafty.viewport.reload();
+document.getElementById('ToggelFullSrc').addEventListener('click', function() {
+    var syncScale = function() {
+        if (Caesar.GE && typeof Caesar.GE.syncGameScale === "function") {
+            Caesar.GE.syncGameScale();
+        }
+    };
+    if (document.fullscreenElement) {
+        if (typeof document.exitFullscreen === "function") {
+            document.exitFullscreen().then(syncScale).catch(function() {});
+        }
+    } else if (document.documentElement && typeof document.documentElement.requestFullscreen === "function") {
+        document.documentElement.requestFullscreen().then(syncScale).catch(function() {});
+    }
 });
 
 $(document).on("click", "#ToggelSound", function() {
@@ -45696,7 +46066,7 @@ $(document).on("click", "#save-player-name-btn", function() {
     var itemKey = "change_name";
     var itemCount = Matrial.getPlayerAmount(itemKey);
     var itemData = Caesar.BaseData && Caesar.BaseData.Items && Caesar.BaseData.Items[itemKey];
-    var itemName = (itemData && itemData.name) || "تغير اسم الملك";
+    var itemName = (itemData && itemData.name) || "تغيير اسم الملك";
 
     if (itemCount <= 0) {
         alert_box.failMessage("لا تمتلك غرض " + itemName + " في صندوق المواد");
@@ -46093,7 +46463,7 @@ $(document).on("click", "#expand-chat .expand", function() {
     } else {
 
         $("#chat-area").css({
-            height: 160
+            height: ""
         });
         $("#chat-area").attr("data-width", "x");
 
@@ -46897,7 +47267,7 @@ LuckWheel.showResult = function(jsonData, showSummary) {
         alert_box.systemChatMessage("حصلت على " + jsonData.wonPrizes.length + " جوائز من دولاب الحظ");
         alert_box.confirmDialog(summaryMsg, function() {});
     } else if (showSummary && lastPrize) {
-        alert_box.systemChatMessage("لقد تحصلت على " + lastPrize.amount + " &times; " +
+        alert_box.systemChatMessage("حصلت على " + lastPrize.amount + " &times; " +
             (lastItem ? lastItem.name : lastPrize.Prize) + " من دولاب الحظ");
     }
 };
@@ -47025,7 +47395,7 @@ LuckWheel.spinWheel = function() {
                             ? Caesar.BaseData.Items[announcedPrize.Prize]
                             : null;
                         if (announcedPrize) {
-                            alert_box.systemChatMessage("لقد تحصلت على " + announcedPrize.amount + " &times; " +
+                            alert_box.systemChatMessage("حصلت على " + announcedPrize.amount + " &times; " +
                                 (announcedItem ? announcedItem.name : announcedPrize.Prize) + " من دولاب الحظ");
                         }
 
@@ -48006,7 +48376,7 @@ $(document).on('click', "#confirm-deal button", function() {
 
                 } else {
 
-                    alert_box.confirmMessage("حدث خطاء  اثناء عمل العرض");
+                    alert_box.confirmMessage("حدث خطأ أثناء إنشاء العرض");
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -48631,14 +49001,14 @@ $(document).on("click", "#statrt-transport-res button", function() {
     var yCoord = $("#transport-distin input[data-coord='y']").val();
 
     if (!xCoord || !yCoord)
-        return alert_box.failMessage("هذة الاحداثيات غير صحيحة تأكد من الاحداثيات");
+        return alert_box.failMessage("هذه الإحداثيات غير صحيحة، تأكد منها");
 
 
 
     var Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
 
     if (!Unit.idCity)
-        return alert_box.failMessage("هذة الاحداثيات ليست إحداثيات مدينة");
+        return alert_box.failMessage("هذه الإحداثيات ليست إحداثيات مدينة");
 
     var total_resource = 0;
     var resource_to_send = {
@@ -48667,16 +49037,16 @@ $(document).on("click", "#statrt-transport-res button", function() {
         alert_box.failMessage("لا يوجد غذاء كافى ");
         return;
     } else if (Number(Caesar.CurrentCity.City.wood) < resource_to_send.wood || resource_to_send.wood < 0) {
-        alert_box.failMessage("لا يوجد اخشاب كافى ");
+        alert_box.failMessage("لا توجد أخشاب كافية");
         return;
     } else if (Number(Caesar.CurrentCity.City.stone) < resource_to_send.stone || resource_to_send.stone < 0) {
-        alert_box.failMessage("لا يوجد حجارة كافى ");
+        alert_box.failMessage("لا توجد أحجار كافية");
         return;
     } else if (Number(Caesar.CurrentCity.City.metal) < resource_to_send.metal || resource_to_send.metal < 0) {
-        alert_box.failMessage("لا يوجد حديد كافى ");
+        alert_box.failMessage("لا يوجد حديد كافٍ");
         return;
     } else if (Number(Caesar.CurrentCity.City.coin) < resource_to_send.coin || resource_to_send.coin < 0) {
-        alert_box.failMessage("لا يوجد عملات كافى ");
+        alert_box.failMessage("لا توجد عملات كافية");
         return;
     }
     var self = $(this);
@@ -48769,14 +49139,14 @@ $(document).on("click", ".acce-transport-deal", function() {
     var id_trans = $(this).attr("data-id-trans");
     var self = $(this);
     if (!id_trans) {
-        alert_box.failMessage("حدث خطاء");
+        alert_box.failMessage("حدث خطأ");
     }
     if (Matrial.getPlayerAmount("shopping_car") < 1) {
-        alert_box.confirmMessage("لا يوجد لديك عربات تسوق للقيام بالعملية");
+        alert_box.confirmMessage("لا توجد لديك عربات نقل للقيام بالعملية");
         return;
     }
 
-    alert_box.confirmDialog("تاكيد استعمال 1 عربة تسوق لتسريع  عملية النقل", function() {
+    alert_box.confirmDialog("تأكيد استخدام عربة نقل واحدة لتسريع عملية النقل", function() {
 
         $.ajax({
             url: `${API_URL}/api/ACityMarketTrans/speedUpTransport`,
@@ -48801,9 +49171,9 @@ $(document).on("click", ".acce-transport-deal", function() {
                 var JsonData = JSON.parse(data);
 
                 if (JsonData.state == "error_0")
-                    return alert_box.failMessage("لقد تم نقل هذه النقله");
+                    return alert_box.failMessage("لقد تم إتمام هذه النقلة بالفعل");
                 if (JsonData.state == "error_1")
-                    return alert_box.failMessage("لقد تم تسريع هذه النقله");
+                    return alert_box.failMessage("لقد تم تسريع هذه النقلة بالفعل");
                 if (JsonData.state == "error_2")
                     return alert_box.failMessage("لا توجد عربات نقل كافية لتسريع هذه الدفعة");
 
@@ -49279,7 +49649,7 @@ $(document).on("click", "#change-city-name", function() {
     var new_name = $("#city-name-val").val();
 
     if (new_name.length < 1) {
-        alert_box.failMessage("لا يجب ان تكون اسم المدينة خالية");
+        alert_box.failMessage("لا يجوز ترك اسم المدينة فارغًا");
         return;
     }
 
@@ -49307,7 +49677,7 @@ $(document).on("click", "#change-city-name", function() {
                 if (JsonObject.City && typeof JsonObject.City === "object") {
                     Caesar.City.getCity(idCity).City = JsonObject.City;
                 }
-                alert_box.succesMessage("تم تعديل اسم الدينة بنجاح");
+                alert_box.succesMessage("تم تعديل اسم المدينة بنجاح");
                 $("#city-data .name").html(new_name);
             }
 
@@ -49324,7 +49694,7 @@ $(document).on("click", "#change-city-name", function() {
 
 $(document).on("click", "#expan-city button", function() {
 
-    alert_box.confirmDialog("تاكيد توسيع المدينة", function() {
+    alert_box.confirmDialog("تأكيد توسيع المدينة", function() {
 
         if (!Palace.isExpanable() || Caesar.CurrentCity.City.lvl > 2) {
             alert_box.failMessage("لا يمكن توسيع المدينة");
@@ -49441,7 +49811,7 @@ $(document).on("click", "#bar_list .abandon", function() {
         return;
     }
 
-    alert_box.confirmDialog("تاكيد تخلى عن البرارى", function() {
+    alert_box.confirmDialog("تأكيد التخلي عن البرية", function() {
 
         var idCity = Caesar.CurrentCity.City.id_city;
 
@@ -49628,7 +49998,7 @@ $(document).on("click", "#hero-select-list .add-city-hero-garrison", function(e)
     for (var iii in Caesar.City.getCity().Garrison) {
         if (Number(id_hero) === Caesar.City.getCity().Garrison[iii].id_hero) {
 
-            alert_box.failMessage("لا يمكنك اضافة هذا البطل </br>   ( هذا االبطل موجود بحراسة المدينة  بالفعل )");
+            alert_box.failMessage("لا يمكنك إضافة هذا البطل لأنه موجود في حراسة المدينة بالفعل.");
             self.parents(".tr").remove();
             $("#hero-select-list ol").append("<li class='tr'></li>");
             return;
@@ -49907,7 +50277,7 @@ SPY = {
             alert_box.failMessage("لا يوجد عدد كافى من الجواسيس");
             return;
         }
-        var msg = `تاكيد ارسال جواسيس الى <br/> [${x_coord} , ${y_coord}]`;
+        var msg = `تأكيد إرسال جواسيس إلى <br/> [${x_coord} , ${y_coord}]`;
         var container = `<div class="spy-wrapper">
                                 <div class="pull-L">
                                     <img src="images/items/item027.jpg" class="image">
@@ -49989,38 +50359,18 @@ $("#WorldCity").click(function() {
 
     if ($(this).attr("data-view") === "world") {
 
-        var activeWorldUnits = getWorldSceneUnits(Caesar.GE.WorldScene);
+        Caesar.GE.switchSceneView("World", "City");
 
-        Caesar.GE.WorldScene.scene.start("City");
-
-
-        if (!$.isEmptyObject(Animation.currentUnitArrow.arrow)) {
-            Animation.currentUnitArrow.arrow.destroy();
-            delete(Animation.currentUnitArrow.arrow);
+        if (Animation.currentUnitArrow && typeof Animation.currentUnitArrow.hide === "function") {
+            Animation.currentUnitArrow.hide();
         }
 
         $(this).attr("data-view", "city");
         $(this).html(Translate.Button.Chat.World[UserLag.language]);
         $("#hide-show").hide();
         //Crafty.audio.stop("bird_sound");
-        $("#smallMap-icon").fadeOut();
-        $(".nav-to-city").fadeOut();
-        setTimeout(function() {
-            activeWorldUnits.forEach(function(unit) {
-                delete unit.entite;
-                delete unit.floor;
-                clearCityFlagEntities(unit);
-                if (unit.SecondaryFlagEntite)
-                    unit.SecondaryFlagEntite.destroy();
-                if (unit.SecondaryFlagExpiryTimer)
-                    clearTimeout(unit.SecondaryFlagExpiryTimer);
-                delete unit.SecondaryFlagEntite;
-                delete unit.SecondaryFlagExpiryTimer;
-                delete unit.SecondaryFlagExpiryTimerAt;
-                delete unit.SecondaryFlagItem;
-                delete unit.UnitFire;
-            });
-        });
+        $("#smallMap-icon").hide();
+        $(".nav-to-city").hide();
 
     } else if ($(this).attr("data-view") === "city" || $(this).data("view") === "city") {
         var curCity = Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City : null;
@@ -50029,23 +50379,22 @@ $("#WorldCity").click(function() {
             $("#y_coord-input input").val(curCity.y);
         }
 
+        var enterWorldScene = function() {
+            Caesar.GE.switchSceneView("City", "World");
+        };
+
         if (!Caesar.World.Map.CityFound) {
-            Caesar.World.Map.getWorldCity().done(function() {
-                Caesar.GE.CityScene.scene.start("World");
-            });
+            Caesar.World.Map.getWorldCity().done(enterWorldScene);
         } else {
-            Caesar.GE.CityScene.scene.start("World");
+            enterWorldScene();
         }
 
         $(this).attr("data-view", "world");
         $(this).html("المدينة");
         $("#hide-show").show();
 
-        $("#smallMap-icon").fadeIn();
-        $(".nav-to-city").fadeIn();
-        setTimeout(function() {
-            Caesar.World.Map.RefreshWorld();
-        }, 500);
+        $("#smallMap-icon").show();
+        $(".nav-to-city").show();
     }
 
 });
@@ -50065,7 +50414,6 @@ $(document).on("click", "#player-city-list ul li", function() {
 
     var view = $("#WorldCity").attr("data-view");
 
-
     Caesar.City.getCityHero(id_city);
     Caesar.City.getCityBarray(id_city);
     Caesar.City.getCityHeroArmy(id_city);
@@ -50076,17 +50424,20 @@ $(document).on("click", "#player-city-list ul li", function() {
     Caesar.TimedTask.getCityJopTasks(id_city);
     Caesar.TimedTask.getCityStudyTasks(id_city);
 
+    Caesar.CurrentCity = Caesar.City.getCity(id_city);
     city_profile.refresh_resource_view();
     city_profile.refresh_hero_view();
     city_profile.refresh_army_view();
     Caesar.TimedTask.refreshListView();
-    Caesar.CurrentCity = Caesar.City.getCity(id_city);
     Caesar.City.refreshBtnList();
+    Caesar.GE.CityDirty = true;
 
     Caesar.City.getCityBuilding().done(function(data) {
 
-        if (view === "city") {
+        if (!Caesar.GE.isSceneSleeping(Caesar.GE.CityScene)) {
             fillCityWithBuilding();
+        } else {
+            Caesar.GE.CityDirty = true;
         }
 
         Caesar.City.getCityBase();
@@ -50232,6 +50583,76 @@ Animation.MinusProFontStyle = {
     strokeThickness: 3,
     color: "#a7e328"
 };
+Animation.CityAmbientSprites = Animation.CityAmbientSprites || [];
+Animation.CityAmbientTweens = Animation.CityAmbientTweens || [];
+Animation.LevelEffectSprites = Animation.LevelEffectSprites || [];
+
+Animation.clearCityAmbientEffects = function() {
+    if (Animation.CityAmbientTweens) {
+        Animation.CityAmbientTweens.forEach(function(tw) {
+            if (tw && tw.remove) tw.remove();
+        });
+    }
+    if (Animation.CityAmbientSprites) {
+        Animation.CityAmbientSprites.forEach(function(sp) {
+            if (sp && sp.destroy) sp.destroy();
+        });
+    }
+    Animation.CityAmbientTweens = [];
+    Animation.CityAmbientSprites = [];
+};
+
+Animation.clearLevelEffects = function() {
+    if (Animation.LevelEffectSprites) {
+        Animation.LevelEffectSprites.forEach(function(sp) {
+            if (sp && sp.destroy) sp.destroy();
+        });
+    }
+    Animation.LevelEffectSprites = [];
+};
+
+Animation.trackAmbientSprite = function(sprite) {
+    if (!Animation.CityAmbientSprites)
+        Animation.CityAmbientSprites = [];
+    Animation.CityAmbientSprites.push(sprite);
+    return sprite;
+};
+
+Animation.runPatrolRoute = function(scene, sprite, legs, initialIndex) {
+    if (!scene || !sprite || !legs || !legs.length)
+        return;
+    var index = initialIndex || 0;
+    var step = function() {
+        if (!sprite.scene || !scene.sys || (scene.sys.isActive && !scene.sys.isActive()))
+            return;
+        var leg = legs[index % legs.length];
+        index = (index + 1) % legs.length;
+        if (leg.anim && sprite.anims)
+            sprite.play(leg.anim, true);
+        if (leg.flipX !== undefined)
+            sprite.setFlipX(!!leg.flipX);
+        var tw = scene.tweens.add({
+            targets: sprite,
+            x: leg.x,
+            y: leg.y,
+            ease: 'Linear',
+            duration: leg.duration,
+            delay: leg.delay || 0,
+            onUpdate: function(tween, target) {
+                if (typeof leg.depthFn === "function")
+                    target.setDepth(leg.depthFn(target));
+                else
+                    target.setDepth(Math.floor(target.y) + 18);
+            },
+            onComplete: step
+        });
+        if (!Animation.CityAmbientTweens)
+            Animation.CityAmbientTweens = [];
+        Animation.CityAmbientTweens.push(tw);
+    };
+    step();
+};
+
 Animation.cityProductionRate = function() {
 
     Animation.ProductioRats.forEach(function(OneRate) {
@@ -50243,13 +50664,13 @@ Animation.cityProductionRate = function() {
     Animation.ProductioRats = [];
     Animation.ProductionTweens = [];
 
-    /* resource  in city animation*/
+    /* resource  in city animation (Call of Roma ResourceIncreashShowLayer positions) */
     const coin_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.coin_in) || 0;
     const coin_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.coin_out) || 0;
     const coin_in_ratio = parseFloat(Math.round(((coin_in - coin_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
-        BuildingOnFloor.palace.x + 0.6 * X_GRID,
-        BuildingOnFloor.palace.y + 1.85 * Y_GRID,
+        BuildingOnFloor.palace.x + 64,
+        BuildingOnFloor.palace.y + 118,
         coin_in_ratio >= 0 ? "+" + coin_in_ratio : String(coin_in_ratio),
         coin_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
@@ -50257,8 +50678,8 @@ Animation.cityProductionRate = function() {
     const food_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.food_out) || 0;
     const food_in_ratio = parseFloat(Math.round(((food_in - food_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
-        BuildingOnFloor.farm.x + 0.6 * X_GRID,
-        BuildingOnFloor.farm.y + 1.85 * Y_GRID,
+        BuildingOnFloor.farm.x + 10,
+        BuildingOnFloor.farm.y + 67,
         food_in_ratio >= 0 ? "+" + food_in_ratio : String(food_in_ratio),
         food_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
@@ -50266,24 +50687,24 @@ Animation.cityProductionRate = function() {
     const wood_out = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.wood_out) || 0;
     var wood_in_ratio = parseFloat(Math.round(((wood_in - wood_out) / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
-        BuildingOnFloor.wood.x + 0.6 * X_GRID,
-        BuildingOnFloor.wood.y + 1.85 * Y_GRID,
+        BuildingOnFloor.wood.x + 30,
+        BuildingOnFloor.wood.y + 72,
         wood_in_ratio >= 0 ? "+" + wood_in_ratio : String(wood_in_ratio),
         wood_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
     const stone_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.stone_in) || 0;
     var stone_in_ratio = parseFloat(Math.round((stone_in / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
-        BuildingOnFloor.stone.x + 0.6 * X_GRID,
-        BuildingOnFloor.stone.y + 1.85 * Y_GRID,
+        BuildingOnFloor.stone.x + 78,
+        BuildingOnFloor.stone.y + 15,
         stone_in_ratio >= 0 ? "+" + stone_in_ratio : String(stone_in_ratio),
         stone_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
     const metal_in = Number(Caesar.CurrentCity && Caesar.CurrentCity.City && Caesar.CurrentCity.City.metal_in) || 0;
     var metal_in_ratio = parseFloat(Math.round((metal_in / (30 * 60)) * 100) / 100);
     Animation.ProductioRats.push(Caesar.GE.CityScene.add.text(
-        BuildingOnFloor.mine.x + 1.6 * X_GRID,
-        BuildingOnFloor.mine.y + 2.25 * Y_GRID,
+        BuildingOnFloor.mine.x + 75,
+        BuildingOnFloor.mine.y + 75,
         metal_in_ratio >= 0 ? "+" + metal_in_ratio : String(metal_in_ratio),
         metal_in_ratio >= 0 ? Animation.PluseProFontStyle : Animation.MinusProFontStyle).setDepth(1000).setOrigin(0, 0));
 
@@ -50304,123 +50725,160 @@ Animation.cityProductionRate = function() {
 };
 
 Animation.FarmAnimation = function() {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
 
-    // Farm: 128x96 px at (0, 273), baseDepth = 350
-    // Static farmers working in the field with proportional scale (0.80)
-    Caesar.GE.CityScene.add.sprite(25, 335, "FarmLabor").setScale(0.80).setDepth(355).play("FarmLabor.A");
-    Caesar.GE.CityScene.add.sprite(55, 345, "FarmLabor").setScale(0.80).setDepth(355).playAfterDelay("FarmLabor.A", 500);
-    Caesar.GE.CityScene.add.sprite(80, 325, "FarmLabor").setScale(0.80).setDepth(355).playAfterDelay("FarmLabor.A", 250);
+    // Stationary field workers (COR RoleWorkAniLayer [16,301] + field harvesters inside wheat plots)
+    Animation.trackAmbientSprite(scene.add.sprite(16, 301, "FarmLabor").setOrigin(0, 0).setDepth(355).play("FarmLabor.A"));
+    Animation.trackAmbientSprite(scene.add.sprite(42, 336, "FarmLabor").setOrigin(0.5, 0.5).setScale(0.90).setDepth(356).playAfterDelay("FarmLabor.A", 350));
+    Animation.trackAmbientSprite(scene.add.sprite(74, 318, "FarmLabor").setOrigin(0.5, 0.5).setScale(0.90).setDepth(355).playAfterDelay("FarmLabor.A", 180));
 
-    // Moving worker carrying wheat within farm boundaries along the furrow path
-    // Path: from harvest field (35, 325) up the farm road to the granary/gate (95, 295)
-    var CarryOne = Caesar.GE.CityScene.add.sprite(35, 325, "FarmLaborCarryR").setScale(0.80).setDepth(355).playAfterDelay("FarmLaborCarryR.A", 250);
-    Caesar.GE.CityScene.tweens.add({
-        targets: CarryOne,
-        x: 95,
-        y: 295,
-        ease: 'Linear',
-        repeat: -1,
-        duration: 9000,
-        yoyo: true,
-        onUpdate: function(tween, target) {
-            target.setDepth(Math.floor(target.y) + 20);
-        },
-        onYoyo: function() {
-            CarryOne.play("noCarryWorkerD.A").setFlipX(true);
-        },
-        onRepeat: function() {
-            CarryOne.play("FarmLaborCarryR.A").setFlipX(false);
-        }
-    });
+    // Carrying grain from farm (44,324) -> outer gate road (108,372) -> main boulevard to Palace (508,168) -> return empty-handed
+    var spawnGrainCarrier = function(startX, startY, startLeg) {
+        var sp = Animation.trackAmbientSprite(scene.add.sprite(startX, startY, "FarmLaborCarryD").setOrigin(0.5, 0.9).setDepth(380));
+        var legs = [
+            { x: 108, y: 372, anim: "FarmLaborCarryD.A", duration: 2400 },
+            { x: 508, y: 168, anim: "FarmLaborCarryR.A", duration: 13500 },
+            { x: 108, y: 372, anim: "noCarryWorkerL.A", duration: 13500 },
+            { x: 44, y: 324, anim: "noCarryWorkerUL.A", duration: 2400 }
+        ];
+        Animation.runPatrolRoute(scene, sp, legs, startLeg);
+    };
+    spawnGrainCarrier(44, 324, 0);
+    spawnGrainCarrier(305, 271, 2);
 };
 
 
 Animation.StoneAnimation = function() {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
 
-    // Stone quarry: 128x96 px at (600, 5), baseDepth = 70
-    // Static miners inside quarry pit with proportional scale (0.80)
-    Caesar.GE.CityScene.add.sprite(625, 25, "StoneLabor").setDepth(75).playAfterDelay("StoneLabor.A", 250).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(645, 32, "StoneLabor").setDepth(75).playAfterDelay("StoneLabor.A", 0).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(665, 28, "StoneLabor").setDepth(75).playAfterDelay("StoneLabor.A", 150).setFlipX(true).setScale(0.80);
+    // Stationary quarry workers (COR RoleWorkAniLayer [593,8] + pit masons)
+    Animation.trackAmbientSprite(scene.add.sprite(593, 8, "StoneLabor").setOrigin(0, 0).setDepth(75).play("StoneLabor.A"));
+    Animation.trackAmbientSprite(scene.add.sprite(642, 28, "StoneLabor").setOrigin(0.5, 0.5).setScale(0.92).setDepth(76).playAfterDelay("StoneLabor.A", 220));
+    Animation.trackAmbientSprite(scene.add.sprite(665, 24, "StoneLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(76).playAfterDelay("StoneLabor.A", 120));
 
-    // Moving worker carrying stone: stays strictly within the quarry yard, NEVER entering the palace
-    // Path: from extraction pit (675, 35) down-left along quarry yard to cart loading spot (625, 60)
-    var CarryOne = Caesar.GE.CityScene.add.sprite(675, 35, "StoneLaborCarryL").setDepth(75).playAfterDelay("StoneLaborCarryL.A", 250).setScale(0.80);
-    Caesar.GE.CityScene.tweens.add({
-        targets: CarryOne,
-        x: 625,
-        y: 60,
-        ease: 'Linear',
-        repeat: -1,
-        duration: 8000,
-        yoyo: true,
-        onUpdate: function(tween, target) {
-            target.setDepth(Math.floor(target.y) + 20);
-        },
-        onYoyo: function() {
-            CarryOne.play("noCarryWorkerR.A");
-        },
-        onRepeat: function() {
-            CarryOne.play("StoneLaborCarryL.A").setFlipX(false);
-        }
-    });
+    // Quarry stone carrier along terrace behind Palace east wing (675,68) <-> (595,114)
+    var stoneCarrier = Animation.trackAmbientSprite(scene.add.sprite(675, 68, "StoneLaborCarryL").setOrigin(0.5, 0.9).setDepth(120));
+    Animation.runPatrolRoute(scene, stoneCarrier, [
+        { x: 595, y: 114, anim: "StoneLaborCarryL.A", duration: 4800, depthFn: function() { return 120; } },
+        { x: 675, y: 68, anim: "noCarryWorkerR.A", duration: 4800, depthFn: function() { return 120; } }
+    ], 0);
 };
 
 
-
 Animation.IronAnimation = function() {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
 
-    // Iron mine: 128x96 px at (810, 25), baseDepth = 90
-    Caesar.GE.CityScene.add.sprite(825, 45, "IronLabor").playAfterDelay("IronLabor.A", 0).setFlipX(true).setDepth(95).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(845, 50, "IronLabor").playAfterDelay("IronLabor.A", 100).setFlipX(true).setDepth(95).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(815, 55, "IronLabor").playAfterDelay("IronLabor.A", 200).setDepth(95).setScale(0.80);
+    // Stationary iron miners (COR RoleWorkAniLayer [854,70] + headframe miners)
+    Animation.trackAmbientSprite(scene.add.sprite(854, 70, "IronLabor").setOrigin(0, 0).setDepth(95).play("IronLabor.A"));
+    Animation.trackAmbientSprite(scene.add.sprite(826, 46, "IronLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(96).playAfterDelay("IronLabor.A", 150));
+    Animation.trackAmbientSprite(scene.add.sprite(846, 52, "IronLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(96).playAfterDelay("IronLabor.A", 300));
 
+    // Ore carrier along rocky hillside trail from Mine entrance (828,86) -> ridge (770,52) -> Quarry lane (720,28)
+    var ironCarrier = Animation.trackAmbientSprite(scene.add.sprite(828, 86, "IronLaborCarryUL").setOrigin(0.5, 0.9).setDepth(94));
+    Animation.runPatrolRoute(scene, ironCarrier, [
+        { x: 770, y: 52, anim: "IronLaborCarryUL.A", duration: 3600, depthFn: function() { return 94; } },
+        { x: 720, y: 28, anim: "IronLaborCarryUL.A", duration: 3000, depthFn: function() { return 88; } },
+        { x: 770, y: 52, anim: "noCarryWorkerD.A", duration: 3000, depthFn: function() { return 88; } },
+        { x: 828, y: 86, anim: "noCarryWorkerD.A", duration: 3600, depthFn: function() { return 94; } }
+    ], 0);
 };
 
 
 Animation.WoodAnimation = function() {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
 
-    // Sawmill: 128x96 px at (860, 148), baseDepth = 220
-    Caesar.GE.CityScene.add.sprite(875, 175, "WoodLabor").playAfterDelay("WoodLabor.A", 0).setFlipX(true).setDepth(225).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(900, 180, "WoodLabor").playAfterDelay("WoodLabor.A", 100).setFlipX(true).setDepth(225).setScale(0.80);
-    Caesar.GE.CityScene.add.sprite(865, 185, "WoodLabor").playAfterDelay("WoodLabor.A", 200).setDepth(225).setScale(0.80);
+    // Stationary woodcutters (COR RoleWorkAniLayer [907,194] + sawmill workers + crane JackAni at 860+1, 148+6)
+    Animation.trackAmbientSprite(scene.add.sprite(907, 194, "WoodLabor").setOrigin(0, 0).setDepth(225).play("WoodLabor.A"));
+    Animation.trackAmbientSprite(scene.add.sprite(872, 174, "WoodLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(225).playAfterDelay("WoodLabor.A", 140));
+    Animation.trackAmbientSprite(scene.add.sprite(862, 188, "WoodLabor").setOrigin(0.5, 0.5).setScale(0.92).setDepth(225).playAfterDelay("WoodLabor.A", 280));
+    Animation.trackAmbientSprite(scene.add.sprite(861, 154, "WoodTool").setOrigin(0, 0).setDepth(222).playAfterDelay("WoodTool.A", 100));
 
-    Caesar.GE.CityScene.add.sprite(890, 170, "WoodTool").playAfterDelay("WoodTool.A", 200).setDepth(225).setScale(0.80);
+    // Lumber carrier along sawmill access lane (868,226) <-> (815,192)
+    var woodCarrier = Animation.trackAmbientSprite(scene.add.sprite(868, 226, "WoodLaborCarryUL").setOrigin(0.5, 0.9).setDepth(244));
+    Animation.runPatrolRoute(scene, woodCarrier, [
+        { x: 815, y: 192, anim: "WoodLaborCarryUL.A", duration: 4800, depthFn: function(t) { return Math.floor(t.y) + 18; } },
+        { x: 868, y: 226, anim: "noCarryWorkerD.A", duration: 4800, depthFn: function(t) { return Math.floor(t.y) + 18; } }
+    ], 0);
+};
 
+Animation.refreshLevelEffects = function(cityLvl) {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
+    Animation.clearLevelEffects();
+    var lvl = (cityLvl !== undefined) ? Number(cityLvl) : Number(Caesar.CurrentCity && Caesar.CurrentCity.City ? Caesar.CurrentCity.City.lvl : 0);
+    // Aqueduct waterfall (Call of Roma PenstockNullahAni at 10, 63) appears on townBackground1..3 (lvl >= 1)
+    if (lvl > 0) {
+        Animation.LevelEffectSprites.push(scene.add.sprite(10, 63, "PenstockWater")
+            .setOrigin(0, 0)
+            .setDepth(15)
+            .play("PenstockWater.A"));
+    }
 };
 
 Animation.FixedCityAnimation = function() {
+    var scene = Caesar.GE && Caesar.GE.CityScene;
+    if (!scene)
+        return;
 
+    Animation.clearCityAmbientEffects();
     Animation.FarmAnimation();
     Animation.StoneAnimation();
     Animation.IronAnimation();
     Animation.WoodAnimation();
+    Animation.refreshLevelEffects();
 
-    // Citizen strolling along the authentic open diagonal avenue in front of the palace plaza
-    // Path: from palace promenade (530, 145) down-right along the open boulevard to (610, 185)
-    // Completely clear of all building footprints (under_palace_12, palace, light_house_6)
-    // Facing forward (WomanFace.A) when walking down (+Y), facing back (WomanBack.A) when walking up (-Y)
-    var Woman1 = Caesar.GE.CityScene.add.sprite(530, 145, "Woman").playAfterDelay("WomanFace.A", 150).setScale(0.80).setDepth(165);
-    Caesar.GE.CityScene.tweens.add({
-        targets: Woman1,
-        x: 610,
-        y: 185,
-        ease: 'Linear',
-        repeat: -1,
-        duration: 18000,
-        yoyo: true,
-        onUpdate: function(tween, target) {
-            target.setDepth(Math.floor(target.y) + 20);
-        },
-        onYoyo: function() {
-            Woman1.play("WomanBack.A");
-        },
-        onRepeat: function() {
-            Woman1.play("WomanFace.A");
-        }
-    });
+    // Citizen 1 strolling along wide central boulevard clear of all buildings and Palace (depth sorted)
+    var womanWalker = Animation.trackAmbientSprite(scene.add.sprite(330, 265, "Woman").setOrigin(0.5, 0.9).setDepth(285));
+    Animation.runPatrolRoute(scene, womanWalker, [
+        { x: 455, y: 202, anim: "WomanBack.A", duration: 9500 },
+        { x: 455, y: 202, anim: "WomanWave.A", duration: 2400 },
+        { x: 330, y: 265, anim: "WomanFace.A", duration: 9500 },
+        { x: 330, y: 265, anim: "WomanIdle.A", duration: 2200 }
+    ], 0);
 
-    return;
+    // Citizen 2 greeting/idling peacefully at Palace fountain plaza
+    Animation.trackAmbientSprite(scene.add.sprite(478, 174, "Woman")
+        .setOrigin(0.5, 0.9)
+        .setDepth(194)
+        .play("WomanWave.A"));
+
+    // Drifting atmosphere clouds (Call of Roma Town.cloud across city width)
+    var spawnCloud = function(startX, startY, durationMs, alphaVal) {
+        var cloud = Animation.trackAmbientSprite(scene.add.image(startX, startY, "cloud")
+            .setOrigin(0, 0)
+            .setAlpha(alphaVal)
+            .setDepth(950));
+        var moveCloud = function() {
+            if (!cloud.scene || !scene.sys || (scene.sys.isActive && !scene.sys.isActive()))
+                return;
+            var tw = scene.tweens.add({
+                targets: cloud,
+                x: 1080,
+                ease: 'Linear',
+                duration: Math.max(4000, Math.round(durationMs * (1080 - cloud.x) / 1250)),
+                onComplete: function() {
+                    if (!cloud.scene)
+                        return;
+                    cloud.x = -170;
+                    cloud.y = 20 + Math.floor(Math.random() * 220);
+                    moveCloud();
+                }
+            });
+            Animation.CityAmbientTweens.push(tw);
+        };
+        moveCloud();
+    };
+    spawnCloud(-140, 45, 42000, 0.34);
+    spawnCloud(420, 190, 54000, 0.26);
 };
 
 
@@ -50550,12 +51008,11 @@ Caesar.Animation.cityFlagProp = {
 };
 Animation.WorldFire = function() {
     Caesar.GE.WorldScene.children.list.forEach(function(El) {
-        if (!El.data)
+        if (!El.data || El.data.get("isFloor") === true)
             return;
 
         const xCoord = El.data.get("xCoord");
         const yCoord = El.data.get("yCoord");
-        const Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
         Animation.fireWorldUnit(xCoord, yCoord);
 
     });
@@ -50564,14 +51021,14 @@ Animation.WorldFire = function() {
 Animation.cityFlag = function() {
 
     Caesar.GE.WorldScene.children.list.forEach(function(El) {
-        if (!El.data)
+        if (!El.data || El.data.get("isFloor") === true)
             return;
 
         const xCoord = El.data.get("xCoord");
         const yCoord = El.data.get("yCoord");
         const Unit = WorldUnit.getWorldUnit(xCoord, yCoord);
 
-        if (!WorldUnit.isCity(Unit.ut))
+        if (!Unit || !WorldUnit.isCity(Unit.ut))
             return;
         const x = Caesar.World.Map.posX(xCoord, yCoord);
         const y = Caesar.World.Map.posY(xCoord, yCoord);
@@ -50625,7 +51082,12 @@ Animation.cityFlag = function() {
             let textX = Pos.x + 17;
             let textY = Pos.y + 4;
             if (Unit.CityFlagTextEntite) {
-                Unit.CityFlagTextEntite.setPosition(textX, textY).setText(playerFlag);
+                if (Unit.CityFlagTextEntite.x !== textX || Unit.CityFlagTextEntite.y !== textY) {
+                    Unit.CityFlagTextEntite.setPosition(textX, textY);
+                }
+                if (Unit.CityFlagTextEntite.text !== playerFlag) {
+                    Unit.CityFlagTextEntite.setText(playerFlag);
+                }
             } else {
                 Unit.CityFlagTextEntite = Caesar.GE.WorldScene.add.text(
                     textX,
@@ -51908,7 +52370,7 @@ $(document).on("click", ".cancel-buy-item-trade-center", function() {
     var id_item = $(this).data("id-item");
 
 
-    alert_box.confirmDialog("ـاكيد الغاء عرض  البيع", function() {
+    alert_box.confirmDialog("تأكيد إلغاء عرض البيع", function() {
 
         $.ajax({
             url: "api/tradeCenter.php",
@@ -51948,7 +52410,7 @@ $(document).on("click", ".cancel-buy-item-trade-center", function() {
 
                 } else if (jsonData.state === "error_2") {
 
-                    alert_box.failMessage("حدث خطاء حاول مرة اخرى");
+                    alert_box.failMessage("حدث خطأ، حاول مرة أخرى");
 
                 }
 
@@ -52298,19 +52760,19 @@ $(document).on("click", "#change-city-pro-rate", function() {
     }
     if (woodRate > 100 || woodRate < 0) {
 
-        alert_box.failMessage("معدل الغذاء كمية غير مسموحة");
+        alert_box.failMessage("معدل الخشب كمية غير مسموحة");
         return;
 
     }
     if (stoneRate > 100 || stoneRate < 0) {
 
-        alert_box.failMessage("معدل الغذاء كمية غير مسموحة");
+        alert_box.failMessage("معدل الحجر كمية غير مسموحة");
         return;
 
     }
     if (metalRate > 100 || metalRate < 0) {
 
-        alert_box.failMessage("معدل الغذاء كمية غير مسموحة");
+        alert_box.failMessage("معدل الحديد كمية غير مسموحة");
         return;
 
     }
@@ -52433,24 +52895,136 @@ $(document).on("click", "#REQUEST_ORDER", function() {
 
 });
 
-$(document).on("click", "#PLUNDE_PRIZE", function() {
+function formatHarvestResourcesText(harvested) {
+    if (!harvested || typeof harvested !== "object") return "";
+    var labels = {
+        food: "الغذاء",
+        wood: "الخشب",
+        stone: "الصخر",
+        metal: "الحديد",
+        coin: "السسترس"
+    };
+    var parts = [];
+    for (var key in labels) {
+        if (!Object.prototype.hasOwnProperty.call(labels, key)) continue;
+        var val = Number(harvested[key]) || 0;
+        if (val > 0) {
+            parts.push(`${getArabicNumbers(val)} ${labels[key]}`);
+        }
+    }
+    return parts.join("، ");
+}
 
-    var xCoord = Number($(this).attr("data-x-coord"));
-    var yCoord = Number($(this).attr("data-y-coord"));
-    var button = $(this);
-    button.prop("disabled", true);
+function buildHarvestSuccessMessage(JsonObject) {
+    var prizeList = Array.isArray(JsonObject && JsonObject.PrizeList) ? JsonObject.PrizeList : [];
+    var prizeText = prizeList.length ? Matrial.prizeToString(prizeList) : "";
+    var resText = formatHarvestResourcesText(JsonObject && JsonObject.harvested);
+    if (prizeText && resText) {
+        return `تم جمع الغنيمة: ${prizeText} | الموارد: ${resText}`;
+    }
+    if (prizeText) {
+        return `تم جمع الغنيمة: ${prizeText}`;
+    }
+    if (resText) {
+        return `تم جمع غنيمة الموارد: ${resText}`;
+    }
+    return "تم جمع غنيمة المملكة بنجاح";
+}
+
+function showRepeatPlunderModal(xCoord, yCoord, chargeInfo, onConfirm) {
+    $("#reap-charge-modal").remove();
+    var reqItem = chargeInfo.requiredItem || null;
+    var reqItemKey = reqItem ? String(reqItem.Item || "") : "";
+    var reqItemAmount = reqItem ? Math.max(1, Number(reqItem.amount) || 1) : 1;
+    var reqItemOwned = reqItem ? Math.max(0, Number(reqItem.owned) || 0) : 0;
+    var reqItemName = reqItemKey ? escapeHtml(Matrial.getMatrialName(reqItemKey)) : "";
+    var reqItemImg = reqItemKey ? escapeHtml(Matrial.image(reqItemKey)) : "";
+    var coinCost = Math.max(0, Number(chargeInfo.coin) || 0);
+    var playerGold = Math.max(0, Number(chargeInfo.playerGold) || 0);
+    var dailyChargeCount = Math.max(0, Number(chargeInfo.dailyChargeReapCount) || 0);
+    var dailyExtraLimit = Math.max(1, Number(chargeInfo.dailyExtraLimit) || 5);
+    var previewItems = Array.isArray(chargeInfo.previewItems) ? chargeInfo.previewItems : [];
+
+    var previewHtml = previewItems.map(function(row) {
+        var k = String(row.Item || "");
+        if (!k) return "";
+        var minAmt = Number(row.amount_min) || 1;
+        var maxAmt = Number(row.amount_max) || minAmt;
+        var amtLabel = minAmt === maxAmt
+            ? getArabicNumbers(minAmt)
+            : `${getArabicNumbers(minAmt)}-${getArabicNumbers(maxAmt)}`;
+        return `<li title="${escapeHtml(Matrial.getMatrialName(k))}" style="display:inline-flex;flex-direction:column;align-items:center;margin:4px;width:54px;">
+                    <div style="width:40px;height:40px;background-image:url(${escapeHtml(Matrial.image(k))});background-size:cover;border:1px solid #a98344;border-radius:3px;"></div>
+                    <span class="l-number" style="font-size:11px;margin-top:2px;">(${amtLabel})X</span>
+                </li>`;
+    }).join("");
+
+    var itemButtonHtml = reqItemKey
+        ? `<button type="button" id="confirmRepeatPlunderItem" class="full-btn full-btn-3x" ${reqItemOwned < reqItemAmount ? 'disabled="disabled"' : ''} style="margin:4px 6px;min-width:165px;">
+                ${reqItemImg ? `<img src="${reqItemImg}" style="width:16px;height:16px;vertical-align:middle;margin-left:4px;">` : ""}
+                استخدام ${reqItemName} (×${getArabicNumbers(reqItemAmount)} | لديك: ${getArabicNumbers(reqItemOwned)})
+           </button>`
+        : "";
+
+    var modalHtml = `<div id="reap-charge-modal" class="over_lay" style="z-index:9999;display:flex;align-items:center;justify-content:center;position:fixed;inset:0;background:rgba(0,0,0,0.65);">
+                        <div class="bg-general" style="width:470px;max-width:94vw;padding:14px;border-radius:6px;position:relative;">
+                            <div id="alert_head" style="position:relative;margin-bottom:10px;">
+                                <div id="alert-title">تكرار الغنيمة الإضافية</div>
+                                <img src="images/btns/close_b.png" id="closeRepeatPlunderModal" class="img-sml" style="cursor:pointer;position:absolute;left:6px;top:6px;">
+                            </div>
+                            <div style="padding:8px 12px;text-align:center;line-height:1.65;color:#f5ebd6;">
+                                <p>تم استهلاك الغنيمة المجانية اليوم. يمكنك تنفيذ غنيمة إضافية بمضاعفة مكافآت المواد (المحاولة ${getArabicNumbers(dailyChargeCount + 1)} من ${getArabicNumbers(dailyExtraLimit)}).</p>
+                                <p style="font-size:12px;color:#ffd27d;margin-top:4px;">رصيد الذهب الحالي: ${getArabicNumbers(playerGold)} | تكلفة المحاولة: ${getArabicNumbers(coinCost)} ذهب</p>
+                                ${previewHtml ? `<div style="margin-top:8px;"><div style="font-size:12px;margin-bottom:4px;">الجوائز المحتملة:</div><ul style="list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;justify-content:center;">${previewHtml}</ul></div>` : ""}
+                                <div style="margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+                                    <button type="button" id="confirmRepeatPlunderGold" class="full-btn full-btn-3x enter" ${playerGold < coinCost ? 'disabled="disabled"' : ''} style="margin:4px 6px;min-width:155px;">
+                                        دفع ${getArabicNumbers(coinCost)} ذهب
+                                    </button>
+                                    ${itemButtonHtml}
+                                    <button type="button" id="cancelRepeatPlunderModal" class="full-btn full-btn-3x" style="margin:4px 6px;">إلغاء</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+    $("body").append(modalHtml);
+
+    var closeModal = function(cancelled) {
+        $("#reap-charge-modal").remove();
+        if (cancelled) {
+            $(`#PLUNDE_PRIZE[data-x-coord="${xCoord}"][data-y-coord="${yCoord}"]`).prop("disabled", false);
+        }
+    };
+
+    $("#closeRepeatPlunderModal, #cancelRepeatPlunderModal").on("click", function() {
+        closeModal(true);
+    });
+    $("#confirmRepeatPlunderGold").on("click", function() {
+        closeModal(false);
+        onConfirm("gold");
+    });
+    $("#confirmRepeatPlunderItem").on("click", function() {
+        closeModal(false);
+        onConfirm("item");
+    });
+}
+
+function executeDominanceHarvest(xCoord, yCoord, payMethod, button) {
+    var payload = {
+        xCoord: xCoord,
+        yCoord: yCoord,
+        token: Caesar.Config.AuthToken,
+        server: Caesar.Config.idServer
+    };
+    if (payMethod) {
+        payload.payMethod = payMethod;
+    }
 
     $.ajax({
         url: `${API_URL}/api/Guild/harvestDominance`,
-        data: {
-            xCoord: xCoord,
-            yCoord: yCoord,
-            token: Caesar.Config.AuthToken,
-            server: Caesar.Config.idServer
-        },
+        data: payload,
         type: 'POST',
-        success: function(data, textStatus, jqXHR) {
-
+        success: function(data) {
             var JsonObject;
             if (typeof data === "string") {
                 if (!Caesar.LBase.isJson(data)) {
@@ -52464,14 +53038,36 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
             }
 
             if (JsonObject.state === "ok") {
-                alert_box.succesMessage("تم جمع غنيمة المملكة");
+                var prizeList = Array.isArray(JsonObject.PrizeList) ? JsonObject.PrizeList : [];
+                for (var i = 0; i < prizeList.length; i++) {
+                    Matrial.givePlayer(prizeList[i].Item, prizeList[i].amount);
+                }
+                if (JsonObject.consumedItem && JsonObject.consumedItem.Item) {
+                    Matrial.takeFrom(JsonObject.consumedItem.Item, JsonObject.consumedItem.amount || 1);
+                }
+                if (JsonObject.goldRemaining !== undefined && Caesar.DPlayer && Caesar.DPlayer.Player) {
+                    Caesar.DPlayer.Player.gold = Number(JsonObject.goldRemaining);
+                    Player_profile.refresh_view();
+                }
+                Player_profile.refreshMatrialBox();
+                alert_box.succesMessage(buildHarvestSuccessMessage(JsonObject));
                 city_profile.refresh_city_resources();
                 WorldUnit.WorldUnitRank(xCoord, yCoord);
             } else if (JsonObject.state === "not_your_guild") {
                 alert_box.confirmMessage("لست عضو فى الحلف المسيطر");
                 WorldUnit.WorldUnitRank(xCoord, yCoord);
+            } else if (JsonObject.state === "not_enough_gold") {
+                alert_box.confirmMessage(`لا يوجد لديك ذهب كافٍ (المطلوب: ${getArabicNumbers(Number(JsonObject.requiredGold) || 0)} ذهب)`);
+                button.prop("disabled", false);
+            } else if (JsonObject.state === "not_enough_items") {
+                var missingName = Matrial.getMatrialName(JsonObject.requiredItem);
+                alert_box.confirmMessage(`لا يوجد لديك عدد كافٍ من (${missingName})`);
+                button.prop("disabled", false);
+            } else if (JsonObject.state === "daily_reap_limit") {
+                alert_box.confirmMessage("لقد وصلت للحد الأقصى للغنيمة اليومية");
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
             } else if (JsonObject.state === "harvest_cooldown") {
-                alert_box.confirmMessage("لم يحن موعد الغنيمة بعد");
+                alert_box.confirmMessage("لم يحن موعد الغنيمة المجانية بعد");
                 WorldUnit.WorldUnitRank(xCoord, yCoord);
             } else if (JsonObject.state === "not_dominated") {
                 alert_box.confirmMessage("لا يوجد حلف مسيطر على هذه المملكة");
@@ -52486,14 +53082,77 @@ $(document).on("click", "#PLUNDE_PRIZE", function() {
                 alert_box.failMessage("تعذر جمع غنيمة المملكة");
                 button.prop("disabled", false);
             }
-
         },
-        error: function(data, textStatus, jqXHR) {
+        error: function(data, textStatus) {
             console.error(textStatus);
             alert_box.failMessage("تعذر الاتصال بالخادم لجمع الغنيمة");
             button.prop("disabled", false);
         }
+    });
+}
 
+$(document).on("click", "#PLUNDE_PRIZE", function() {
+
+    var xCoord = Number($(this).attr("data-x-coord"));
+    var yCoord = Number($(this).attr("data-y-coord"));
+    var button = $(this);
+    button.prop("disabled", true);
+
+    $.ajax({
+        url: `${API_URL}/api/AWorldUnit/checkReapCharge`,
+        data: {
+            xCoord: xCoord,
+            yCoord: yCoord,
+            token: Caesar.Config.AuthToken,
+            server: Caesar.Config.idServer
+        },
+        type: 'POST',
+        success: function(data) {
+            var chargeInfo;
+            if (typeof data === "string") {
+                if (!Caesar.LBase.isJson(data)) {
+                    Caesar.LBase.Error(data);
+                    button.prop("disabled", false);
+                    return;
+                }
+                chargeInfo = JSON.parse(data);
+            } else {
+                chargeInfo = data;
+            }
+
+            if (chargeInfo.state === "not_your_guild") {
+                alert_box.confirmMessage("لست عضو فى الحلف المسيطر");
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
+                return;
+            }
+            if (chargeInfo.state === "not_dominated") {
+                alert_box.confirmMessage("لا يوجد حلف مسيطر على هذه المملكة");
+                button.hide();
+                return;
+            }
+            if (chargeInfo.state === "not_logged_in") {
+                alert_box.failMessage("انتهت جلسة الدخول، أعد تسجيل الدخول");
+                button.prop("disabled", false);
+                return;
+            }
+            if (chargeInfo.reachDailyReapLimit) {
+                alert_box.confirmMessage("لقد وصلت للحد الأقصى للغنيمة اليومية");
+                WorldUnit.WorldUnitRank(xCoord, yCoord);
+                return;
+            }
+            if (chargeInfo.reapNeedPay) {
+                showRepeatPlunderModal(xCoord, yCoord, chargeInfo, function(payMethod) {
+                    executeDominanceHarvest(xCoord, yCoord, payMethod, button);
+                });
+                return;
+            }
+
+            executeDominanceHarvest(xCoord, yCoord, "", button);
+        },
+        error: function(data, textStatus) {
+            console.error(textStatus);
+            executeDominanceHarvest(xCoord, yCoord, "", button);
+        }
     });
 
 });
@@ -52775,7 +53434,7 @@ BattelField.battelModel = function(battel, list) {
                                     </button>
                                 </div>
                                 <div class="time_start">
-                                    وقت البداء: ${startTime}
+                                    وقت البدء: ${startTime}
 
                                 </div>
                             </div>
@@ -53209,7 +53868,7 @@ GodGate.askToOpenGate = function(gate) {
     }
 
 
-    alert_box.confirmDialog(`تأكيد فتح بوبة التسليح ${GodGate.data.godName["gate_" + gate]}`, function() {
+    alert_box.confirmDialog(`تأكيد فتح بوابة الآلهة (${GodGate.data.godName["gate_" + gate]})`, function() {
 
 
         $.ajax({
@@ -53334,7 +53993,7 @@ GodGate.BoxContent = function(gate) {
                         </div>
                         <div class="text-group">
                             <label>التكلفة : <span >${50 + totalLocks * 50}</span> نقطة</label>
-                            <label>لدبك : <span >${this.playerGate.GodGateData.points}</span>  نقطة </label>
+                            <label>لديك: <span>${this.playerGate.GodGateData.points}</span> نقطة</label>
                         </div>
                     </div>
                 </div>`;
@@ -53506,9 +54165,9 @@ GodGate.OpenFourthCell = function(Gate) {
                 $(".close_select_menu").trigger("click");
                 $("#alert_container .close-alert").trigger("click");
             } else if (JsonData.state == "error_0") {
-                alert_box.failMessage(`خطاء نوع البوبة`);
+                alert_box.failMessage(`نوع البوابة غير صالح`);
             } else if (JsonData.state == "error_1") {
-                alert_box.failMessage(`خطاء نوع البوبة`);
+                alert_box.failMessage(`نوع البوابة غير صالح`);
             } else if (JsonData.state == "error_2") {
                 alert_box.failMessage(`البوابة مغلقة`);
             } else if (JsonData.state == "error_3") {
@@ -53838,7 +54497,7 @@ $(document).on("click", "#OpenForthCellGG", function() {
     var matrial = ["skill_book"];
     var Gate = $(this).attr("data-gate");
 
-    alert_box.confirmDialog(`تأكيد إستعمال عدد(${Gate * 10}) من ${Matrial.getMatrialName(matrial[0])} + ${Gate * 5000} نقطة تسليح لفتح المهارة الرابعة للبوابة`, function() {
+    alert_box.confirmDialog(`تأكيد استعمال (${Gate * 10}) من ${Matrial.getMatrialName(matrial[0])} و${Gate * 5000} نقطة بوابة لفتح الخلية الرابعة`, function() {
         BoxOfMatrialToUse(matrial, "open-fourth-cell", Gate, Gate);
     });
 
@@ -53847,7 +54506,7 @@ $(document).on("click", "#OpenForthCellGG", function() {
 $(document).on("click", "#change-player-password", function() {
 
     var msg = ` <div>
-                    تاكيد تغير كلمة المرور
+                    تأكيد تغيير كلمة المرور
                 </div>
                 <div id="change-pass-input-group">
                     <input class="current-pass" type="password" placeholder="كلمة المرور الحالية"/>
@@ -53862,7 +54521,7 @@ $(document).on("click", "#change-player-password", function() {
         var conNewPassword = $("#change-pass-input-group .new-pass-con").val();
 
         if (conNewPassword !== newPassword) {
-            alert_box.failMessage("كلمة السر غير متطابقة مع كلمة التاكيد");
+            alert_box.failMessage("كلمة المرور غير متطابقة مع كلمة التأكيد");
             return;
         }
 
@@ -54254,8 +54913,6 @@ $(document).on("click", "#msg-area .msg-from  .rank-title", function() {
 
 
 Chat.append = function(message) {
-
-
     var msg = `<div class="msg-unit"  >
                             <div class="msg-body">
                                 <P>
@@ -54263,15 +54920,20 @@ Chat.append = function(message) {
                                 </P>
                             </div>
                         </div>`;
-    $("#msg-area").append(msg);
+    var chatArea = $("#msg-area");
+    chatArea.append(msg);
 
-    if ($("#msg-area").getNiceScroll(0).page.maxh - $("#msg-area").getNiceScroll(0).getScrollTop() < 5) {
-        setTimeout(function() {
-            $("#msg-area").getNiceScroll(0).doScrollTop($("#msg-area").getNiceScroll(0).getContentSize().h, 0);
-        }, 100);
+    if (typeof chatArea.getNiceScroll === "function") {
+        var scroll = chatArea.getNiceScroll(0);
+        if (scroll && scroll.page && typeof scroll.getScrollTop === "function" && typeof scroll.doScrollTop === "function") {
+            if (scroll.page.maxh - scroll.getScrollTop() < 5) {
+                setTimeout(function() {
+                    var contentSize = typeof scroll.getContentSize === "function" ? scroll.getContentSize() : null;
+                    if (contentSize) scroll.doScrollTop(contentSize.h, 0);
+                }, 100);
+            }
+        }
     }
-
-
 };
 
 
@@ -55005,7 +55667,7 @@ $(document)['on']('click', '.downEquipFromHero', function() {
     var Equip = Caesar['Equip']['getEquipUnit'](idEquip);
     var EquipData = Equipment['getData'](Equip['type'], Equip['part'], Equip['lvl']);
 
-    alert_box['confirmDialog'](`'تاكيد سحب ${ EquipData['name'] } من البطل ${ Hero['Hero']['name'] } (${ Hero['Hero']['lvl'] })'`,
+    alert_box['confirmDialog'](`تأكيد سحب ${ EquipData['name'] } من البطل ${ Hero['Hero']['name'] } (${ Hero['Hero']['lvl'] })`,
         function() {
             Caesar.Hero.getEquipOffHero(idEquip)['done'](function(data) {
                 Caesar['Contribute']['ReqSelectListContent'](idCont, ReqIndex);
@@ -55363,7 +56025,7 @@ Caesar.ArenaChallange.ArenaProfile = function() {
                                             </li>
                                             <li>فوز: ${ Caesar.ArenaChallange[ArenaFor].Arena.win || 0}</li>
                                             <li>خسارة: ${ Caesar.ArenaChallange[ArenaFor].Arena.lose || 0}</li>
-                                            <li>يطل: ${ Caesar.ArenaChallange[ArenaFor].Arena.champion || 0}</li>
+                                            <li>بطل: ${ Caesar.ArenaChallange[ArenaFor].Arena.champion || 0}</li>
                                             <li>تصنيف(الجولة): ${ Caesar.ArenaChallange[ArenaFor].Arena.rank || 0}</li>
                                         </ul>
                                     </div>
@@ -56013,7 +56675,7 @@ $(document).on('click', '#cpGoDown', function() {
 
 
 $(document).on('click', '#refreshArenaHero', function() {
-    alert_box['confirmDialog']('تاكيد تعديل ابطال الميدان', function() {
+    alert_box['confirmDialog']('تأكيد تعديل أبطال الميدان', function() {
         $('#saveArenaHero').removeAttr('disabled');
         $('#refreshArenaHero').attr('disabled', 'disabled');
     });
@@ -57168,7 +57830,7 @@ Caesar.Team.changeTeamRelationBox = function() {
     var army_content = `   <div id="alert_box" class="F_E-list">
                                     <div class="row-1"> 
                                         <input id="TeamEneFriInput" type="text" data-id-team="null" class="input">
-                                        <label class="th ellipsis">إسم الفريق</label>
+                                        <label class="th ellipsis">اسم الفريق</label>
                                         <div id="g-search_result"class="search_res">
                                             <ul> 
                                                 
@@ -57275,7 +57937,7 @@ $(document).on("click", "#CreatNewTeam", function() {
                         </div>
                         <div class="row-three">        
                             <div class="confim-btn">            
-                                <button id="ConfCreateTeam" class="full-btn full-btn-2x  enter"  >تاكيد وانشاء</button>    
+                                <button id="ConfCreateTeam" class="full-btn full-btn-2x enter">تأكيد وإنشاء</button>    
 
                             </div>    
                         </div>
@@ -57328,18 +57990,18 @@ $(document).on("click", "#ConfCreateTeam", function() {
 
                     $(".close-alert_container").trigger("click");
                     Caesar.Team.getPlayerTeam();
-                    alert_box.succesMessage(`تم انشاء فريق ${JsonObject.Team.name} بنجاح`);
+                    alert_box.succesMessage(`تم إنشاء فريق ${JsonObject.Team.name} بنجاح`);
 
                 } else if (JsonObject.state == "error_0")
-                    return alert_box.confirmMessage("لا يوجد إسم للفريق");
+                    return alert_box.confirmMessage("لا يوجد اسم للفريق");
                 else if (JsonObject.state == "error_1")
-                    return alert_box.confirmMessage("يوجد فريق يحمل نفس الأسم");
+                    return alert_box.confirmMessage("يوجد فريق يحمل الاسم نفسه");
                 else if (JsonObject.state == "error_2")
-                    return alert_box.confirmMessage("أنت بالفعل على قوة فريق أخر");
+                    return alert_box.confirmMessage("أنت بالفعل عضو في فريق آخر");
                 else if (JsonObject.state == "error_3")
                     return alert_box.confirmMessage("لا يوجد لديك موارد كافية لإنشاء فريق");
                 else if (JsonObject.state == "error_4")
-                    return alert_box.confirmMessage("حدث خطاء ما اثناء إنشاء الفريق");
+                    return alert_box.confirmMessage("حدث خطأ أثناء إنشاء الفريق");
                 else
                     Caesar.LBase.Error(data);
 
@@ -57654,7 +58316,7 @@ $(document).on('click', '#submit-team-relation', function() {
             } else if (JsonData['state'] == 'error_0')
                 alert_box['failMessage']('لست عضو فى الفريق');
             else if (JsonData['state'] == 'error_1')
-                alert_box['failMessage']('رتيتك فى الفريق لا تسمح');
+                alert_box['failMessage']('رتبتك في الفريق لا تسمح');
             else if (JsonData['state'] == 'error_2')
                 alert_box['failMessage']('نوع العلاقة غير صالحة')
             else
@@ -57674,7 +58336,7 @@ $(document).on("click", "#invite-t", function() {
                                 <div>               
                                     <img src="images/panner/king_name.png">       
                                 </div>       
-                                <div id="alert-title">دعوة املك
+                                <div id="alert-title">دعوة الملك
                                 </div>           
                                 <img src="images/btns/close_b.png" class="img-sml close-alert">  
                             </div>  
@@ -57748,7 +58410,7 @@ $(document).on("click", "#submit-team-invite", function() {
             if ($("#guild-g_relation").length > 0) {
                 showInVitedMembers();
             }
-            alert_box.succesMessage('تم ارسال الدعوة بنجح');
+            alert_box.succesMessage('تم إرسال الدعوة بنجاح');
             Caesar.Team.getPlayerTeam().done(function() {
                 $("#TeamHeaderNavBar .selected").click();
             });
@@ -57940,7 +58602,7 @@ $(document).on('click', "#resignation-t", function() {
 
 
 
-    alert_box.confirmDialog("تاكيد الإستقالة من المنصب", function() {
+    alert_box.confirmDialog("تأكيد الاستقالة من المنصب", function() {
 
         $.ajax({
             url: `https://${WS_HOST}:${WS_PORT}/api/ATeam/playerTeamResign`,
@@ -57984,7 +58646,7 @@ $(document).on("click", "#PlayerTeamLeave", function() {
 
 
 
-    alert_box.confirmDialog("تاكيد الخروج من الفريق", function() {
+    alert_box.confirmDialog("تأكيد الخروج من الفريق", function() {
 
         $.ajax({
             url: `https://${WS_HOST}:${WS_PORT}/api/ATeam/playerTeamLeave`,
@@ -58027,10 +58689,10 @@ $(document).on("click", "#PlayerTeamLeave", function() {
 $(document).on("click", "#destroy-t", function() {
 
     if (Caesar.Team.PlayerTeam.Player.rank != Caesar.Team.RANK_DATA.LEADER)
-        return alert_box.confirmMessage("يجب انت تكون مدير الفريق   لتتمكن من تفكيك الفريق");
+        return alert_box.confirmMessage("يجب أن تكون قائد الفريق لتتمكن من تفكيكه");
 
 
-    alert_box.confirmDialog("تاكيد تفكيك الفريق! , اذا تم تاكيد تفكيك الفريق سيتم طرد جميع الاعضاء ولن تتمكن من  ارجاع الفريق ثانية", function() {
+    alert_box.confirmDialog("تأكيد تفكيك الفريق! إذا أكدت التفكيك فسيُطرد جميع الأعضاء ولن تتمكن من استعادة الفريق ثانيةً.", function() {
 
         $.ajax({
 

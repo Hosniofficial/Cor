@@ -204,5 +204,6 @@ test('Animation.cityFlag renders player flag text on first creation and subseque
     assert.equal(textEntities.length, 2, 'Returning to the world map must create a fresh player flag text entity');
     assert.notEqual(unit.CityFlagTextEntite, firstTextEntity);
     assert.deepEqual(textPositions, [[147, 249], [147, 249], [147, 249]]);
-    assert.ok(clientSource.includes('clearCityFlagEntities(unit);'), 'Leaving the world scene must clear stale flag entities');
+    assert.ok(clientSource.includes('clearCityFlagEntities(Unit);'), 'Evicting world units must clear stale flag entities');
+    assert.ok(clientSource.includes('Caesar.GE.switchSceneView("World", "City")'), 'Leaving the world scene must sleep cleanly instead of destroying cached flags');
 });

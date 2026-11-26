@@ -328,7 +328,7 @@ try {
         </div>
         <div id="global-announce" data-statge="0" data-now="6000">
             <div class="wrapper">
-                <div class="text"><span class="warning">مبروك!</span>  لقد  اصبح محمد  المسيطر على  عاصمة المشاة</div>
+                <div class="text"><span class="warning">مبروك!</span> لقد أصبح القائد المسيطر على عاصمة المشاة</div>
             </div>
         </div>
         <div id="city-data">
@@ -343,11 +343,11 @@ try {
         
         <div id="godGateBtnWrapper">
             <div class="fire"></div>
-            <button title="بوبات الالهة"></button>
+            <button title="بوابات الآلهة"></button>
             <div class="fire-tail"></div>
         </div>
         <div id="helpGateBtnWrapper">
-            <button title="بوبات الالهة"></button>
+            <button title="المساهمة وتطوير المعدات"></button>
             <div class="fire-tail"></div>
         </div>
 	    <div id="ArenaChallangeBtnWrapper">
@@ -474,7 +474,7 @@ try {
                 <div id="hide-show" style="display: none">
                     <div id="nav-btn" class="flex">
                         <input type="checkbox" id="FastNav" style="margin-right: 10px;" title="انتقال سريع">
-                        <button class="full-btn full-btn-3x" style="">اذهب الى </button>
+                        <button class="full-btn full-btn-3x" style="">اذهب إلى</button>
                         
                     </div>
                     <div id="fav-btn">
@@ -500,7 +500,7 @@ try {
             <div id="drop-down-list-wrapper">
 
             </div>
-            <div style="height: 20px;"></div>
+            <div class="chat-top-spacer"></div>
             <div id="chat-area" data-width="x">
                 <div id="chat-icons">
                     <ul>

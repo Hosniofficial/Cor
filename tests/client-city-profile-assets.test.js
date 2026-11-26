@@ -282,3 +282,84 @@ test('unused CityFloor atlases are neither loaded nor shipped', () => {
         false
     );
 });
+
+test('ServerAnnounce battle and guild conquest handlers render authentic chat notices without throwing', () => {
+    const helperStart = clientSource.indexOf('WsBattel.helperList = function(data) {');
+    const helperEnd = clientSource.indexOf('\n\nWsBattel.announceHonorGained =', helperStart);
+    const announceStart = clientSource.indexOf('Caesar.WsLib.ServerAnnounce.Battel = {};');
+    const announceEnd = clientSource.indexOf('Caesar.WsLib.ServerAnnounce.newMailSent =', announceStart);
+    assert.ok(helperStart >= 0 && helperEnd > helperStart, 'WsBattel.helperList should exist');
+    assert.ok(announceStart >= 0 && announceEnd > announceStart, 'ServerAnnounce battle handlers should exist');
+
+    const appended = [];
+    const worldUnit = { ut: 180, x: 300, y: 100 };
+    const context = {
+        Caesar: {
+            WsLib: { ServerAnnounce: {} },
+            World: {
+                UnitTypeData: {
+                    180: { Title: 'الملكة الصغرى' },
+                    71: { Title: 'المعسكر البريطانى' }
+                },
+                Map: { RefreshWorld: () => {} }
+            }
+        },
+        WsBattel: {},
+        WorldUnit: { getWorldUnit: () => worldUnit },
+        Matrial: {
+            prizeToString: prizes => (prizes || []).map(p => ` x ${p.amount} ${p.Item}`).join(' , ')
+        },
+        Extract: {
+            coordDirect: (x, y) => `[${x},${y}]`
+        },
+        Chat: {
+            append: msg => appended.push(msg)
+        },
+        escapeHtml: value => String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+    };
+
+    vm.runInNewContext(
+        `${clientSource.slice(helperStart, helperEnd)}\n${clientSource.slice(announceStart, announceEnd)}`,
+        context
+    );
+
+    context.Caesar.WsLib.ServerAnnounce.Battel.GuildWin({
+        xCoord: 300,
+        yCoord: 100,
+        unitType: 180,
+        GuildName: 'حلف قيصر',
+        PlayerName: 'البطل'
+    });
+    assert.equal(appended.length, 1);
+    assert.match(appended[0], /نجح حلف .*حلف قيصر.* بقيادة .*البطل.* بالسيطرة على الملكة الصغرى \[300,100\]/);
+    assert.doesNotMatch(appended[0], /النظام الحربي|سقط في المعركة|الخسائر النهائية/);
+
+    context.Caesar.WsLib.ServerAnnounce.Battel.Win({
+        Attacker: { name: 'المهاجم' },
+        Joiners: [{ name: 'الحليف 1' }],
+        Defender: [{ name: 'المدافع 1' }],
+        WorldUnit: { ut: 71, l: 10 },
+        WinPrize: [{ Item: 'necklace_4', amount: 1 }],
+        honor: 120
+    });
+    assert.equal(appended.length, 2);
+    assert.match(appended[1], /قام .*المهاجم.* بهزيمة بطل النظام .*المدافع 1.* فى .*المعسكر البريطانى.* مستوى .*10/);
+    assert.match(appended[1], /وذالك بمساعدة .*الحليف 1/);
+
+    context.Caesar.WsLib.ServerAnnounce.CityColonized({
+        xCoord: 12,
+        yCoord: 34,
+        CityColonizerFlag: 'ROM',
+        ColonizerIdGuild: 1,
+        ColonizerIdPlayer: 2,
+        ColonizerName: 'الفاتح',
+        CityColonizedName: 'قرطاج',
+        ColonizedName: 'الخصم'
+    });
+    assert.equal(appended.length, 3);
+    assert.match(appended[2], /نجح الملك .*الفاتح.* فى استعمار المدينة .*قرطاج.* \[12,34\] التابعة للملك .*الخصم/);
+});

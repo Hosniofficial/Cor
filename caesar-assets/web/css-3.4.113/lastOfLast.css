@@ -2320,8 +2320,8 @@ body #luck-wheel-over-lay {
     }
 
     #chat-box {
-        width: min(580px, calc(100vw - 16px));
-        left: calc(50% - 18px);
+        width: min(520px, calc(100vw - 16px));
+        left: 50%;
         margin-left: 0;
         transform: translateX(-50%);
         bottom: 0;
@@ -2619,6 +2619,10 @@ body #luck-wheel-over-lay {
 }
 
 /* Fullscreen GameWindow container and Phaser canvas */
+html, body {
+    background-color: #0e0a07 !important;
+    overflow: hidden !important;
+}
 #GameWindow {
     position: fixed;
     top: 0;
@@ -2626,12 +2630,11 @@ body #luck-wheel-over-lay {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: #0e0a07;
     z-index: 0;
 }
 #GameWindow canvas {
     display: block;
-    width: 100%;
-    height: 100%;
 }
 
 #luck-wheel-btn {
@@ -3493,5 +3496,115 @@ button:disabled {
     max-width: calc(100% - 28px) !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+}
+
+/* Compact always-pinned bottom HUD (Option 2): fixed Player/City panels + compact collapsible Chat */
+#p-provile-slider,
+#city-profile-slider {
+    display: none !important;
+}
+
+.chat-top-spacer {
+    height: 8px;
+    clear: both;
+}
+
+#chat-icons ul {
+    bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+#chat-icons ul li img {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+@media (min-width: 761px) and (min-height: 651px) {
+    #player-profile {
+        left: 0px !important;
+        bottom: 0px !important;
+        transform: scale(0.80);
+        transform-origin: bottom left;
+    }
+
+    #city-profile {
+        right: 4px !important;
+        bottom: 0px !important;
+        transform: scale(0.80);
+        transform-origin: bottom right;
+    }
+
+    #city_col {
+        right: 4px !important;
+        bottom: 188px;
+        top: auto;
+        transform: scale(0.88);
+        transform-origin: bottom right;
+    }
+
+    #godGateBtnWrapper,
+    #helpGateBtnWrapper,
+    #ArenaChallangeBtnWrapper,
+    #PlayerTeamWrapper,
+    #luck-wheel-btn {
+        bottom: 184px;
+        top: auto;
+        transform: scale(0.86);
+        transform-origin: bottom left;
+    }
+
+    #godGateBtnWrapper {
+        left: 4px;
+    }
+
+    #helpGateBtnWrapper {
+        left: 60px;
+    }
+
+    #ArenaChallangeBtnWrapper {
+        left: 114px;
+    }
+
+    #PlayerTeamWrapper {
+        left: 168px;
+    }
+
+    #luck-wheel-btn {
+        left: 226px;
+    }
+
+    #chat-box {
+        width: min(520px, calc(100vw - 24px));
+        left: 50%;
+        margin-left: 0;
+        transform: translateX(-50%);
+        bottom: 0px;
+        transition: bottom 0.35s ease;
+    }
+
+    #navigator-bar {
+        height: 34px;
+        margin-top: -34px;
+    }
+
+    #UPDOWN-chat {
+        height: 42px;
+    }
+
+    #UPDOWN-chat img {
+        height: 34px;
+    }
+
+    #chat-area {
+        height: 108px;
+    }
+
+    #input-area {
+        height: 36px;
+    }
 }
 
