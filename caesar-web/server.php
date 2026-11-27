@@ -91,6 +91,8 @@ if (!$liveCity) {
     $cityCreatedAt = time();
     $db->prepare("INSERT INTO `city` (`id_player`, `x`, `y`, `name`, `lvl`, `food`, `wood`, `stone`, `metal`, `coin`, `pop`, `pop_max`, `pop_cap`, `loy`, `loy_max`, `LS`, `pop_LSS`) VALUES (?, ?, ?, ?, 0, 10000, 10000, 10000, 10000, 20000, 100, 100, 100, 100, 100, ?, ?)")->execute([$playerId, $randX, $randY, $cityName, $cityCreatedAt, $cityCreatedAt]);
     $liveCity = ['id_city' => (int)$db->lastInsertId(), 'name' => $cityName, 'x' => $randX, 'y' => $randY];
+    require_once __DIR__ . '/../caesar-api/services/CityBuildingService.php';
+    CityBuildingService::initializeCityBuildings($db, $liveCity['id_city'], true);
 }
 
 // Fetch player guild info

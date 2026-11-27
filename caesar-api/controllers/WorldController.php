@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../PlayerAuth.php';
 require_once __DIR__ . '/../services/HeroPowerService.php';
 require_once __DIR__ . '/../services/HeroDeploymentService.php';
+require_once __DIR__ . '/../services/CityBuildingService.php';
 
 class WorldController {
     public const MAX_BATTLE_PARTICIPANTS_PER_SIDE = 250;
@@ -1167,34 +1168,8 @@ class WorldController {
             $insStmt->execute([$idPlayer, $cityName, $xCoord, $yCoord, time()]);
             $newCityId = (int)$db->lastInsertId();
 
-            // 8. Insert all standard 65 city building slots with starter buildings
-            $standardPlaces = [
-                'above_palace_1', 'above_palace_2', 'above_palace_3', 'above_palace_4', 'above_palace_5', 'above_palace_6',
-                'around_wood_1', 'around_wood_2', 'around_wood_3',
-                'farm', 'wood', 'stone', 'mine', 'palace', 'wall', 'lighthouse', 'seaport',
-                'hill_1', 'hill_2', 'hill_3', 'hill_4', 'hill_5', 'hill_6', 'hill_7', 'hill_8', 'hill_9', 'hill_10', 'hill_11', 'hill_12',
-                'light_house_1', 'light_house_2', 'light_house_3', 'light_house_4', 'light_house_5', 'light_house_6', 'light_house_7', 'light_house_8', 'light_house_9', 'light_house_10',
-                'under_palace_1', 'under_palace_2', 'under_palace_3', 'under_palace_4', 'under_palace_5', 'under_palace_6', 'under_palace_7', 'under_palace_8', 'under_palace_9', 'under_palace_10', 'under_palace_11', 'under_palace_12',
-                'under_wall_1', 'under_wall_2', 'under_wall_3', 'under_wall_4', 'under_wall_5', 'under_wall_6', 'under_wall_7', 'under_wall_8', 'under_wall_9', 'under_wall_10', 'under_wall_11', 'under_wall_12'
-            ];
-
-            $starterBuildings = [
-                'palace'     => ['type' => 12, 'lvl' => 1],
-                'wall'       => ['type' => 13, 'lvl' => 0],
-                'farm'       => ['type' => 16, 'lvl' => 1],
-                'wood'       => ['type' => 15, 'lvl' => 1],
-                'stone'      => ['type' => 18, 'lvl' => 1],
-                'mine'       => ['type' => 17, 'lvl' => 1],
-                // These are map/city placeholders only; naval combat, sea transport, and lighthouse scouting are not implemented.
-                'lighthouse' => ['type' => 20, 'lvl' => 0],
-                'seaport'    => ['type' => 19, 'lvl' => 0],
-            ];
-            $bIns = $db->prepare("INSERT INTO city_building (id_city, place, type, lvl) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE type = VALUES(type), lvl = VALUES(lvl)");
-            foreach ($standardPlaces as $place) {
-                $type = $starterBuildings[$place]['type'] ?? 0;
-                $lvl  = $starterBuildings[$place]['lvl'] ?? 0;
-                $bIns->execute([$newCityId, $place, $type, $lvl]);
-            }
+            // 8. Insert standard starter city building slots (excluding disabled naval placeholders)
+            CityBuildingService::initializeCityBuildings($db, $newCityId, false);
 
             // 9. Initialize city_jop with standard 10 base jobs and 100% rates
             $db->prepare("INSERT INTO city_jop (id_city, id_player, food, wood, stone, metal, food_rate, wood_rate, stone_rate, metal_rate) 

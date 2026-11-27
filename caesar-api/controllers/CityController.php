@@ -7,6 +7,7 @@ require_once __DIR__ . '/../services/ResourceService.php';
 require_once __DIR__ . '/../services/TaskService.php';
 require_once __DIR__ . '/../services/TributaryService.php';
 require_once __DIR__ . '/../services/CityGarrisonService.php';
+require_once __DIR__ . '/../services/CityBuildingService.php';
 require_once __DIR__ . '/MarketController.php';
 
 class CityController {
@@ -378,6 +379,10 @@ class CityController {
         }
 
         if (!empty($place) && $type > 0) {
+            if (!CityBuildingService::isConstructiblePlace($place)) {
+                sendJson(['state' => 'error_building', 'msg' => 'موقع البناء غير صالح']);
+                return;
+            }
             $cStmt = $db->prepare("SELECT * FROM city WHERE id_city = ?");
             $cStmt->execute([$cityId]);
             $city = $cStmt->fetch(PDO::FETCH_ASSOC);

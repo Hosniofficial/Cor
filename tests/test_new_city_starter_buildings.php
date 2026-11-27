@@ -32,6 +32,7 @@ $testPlayerId = 99997;
 $testOriginCityId = 99997;
 $testToken = 'new_city_wall_test_token_99997';
 $createdCityId = 0;
+$freshPlayer = null;
 
 function assertNewCity(bool $condition, string $message): void {
     if (!$condition) {
@@ -45,11 +46,13 @@ function cleanupNewCityFixtures(PDO $db, int $playerId, int $originCityId, int $
     $cityIds = array_values(array_filter([$originCityId, $createdCityId], fn($id) => $id > 0));
     foreach ($cityIds as $cid) {
         $db->prepare('DELETE FROM `timed_task` WHERE `id_city` = ?')->execute([$cid]);
+        $db->prepare('DELETE FROM `city_hero` WHERE `id_city` = ?')->execute([$cid]);
         $db->prepare('DELETE FROM `city_storage` WHERE `id_city` = ?')->execute([$cid]);
         $db->prepare('DELETE FROM `city_jop` WHERE `id_city` = ?')->execute([$cid]);
         $db->prepare('DELETE FROM `city_building` WHERE `id_city` = ?')->execute([$cid]);
         $db->prepare('DELETE FROM `city` WHERE `id_city` = ?')->execute([$cid]);
     }
+    $db->prepare('DELETE FROM `player_item` WHERE `id_player` = ?')->execute([$playerId]);
     $db->prepare('DELETE FROM `player_edu` WHERE `id_player` = ?')->execute([$playerId]);
     $db->prepare('DELETE FROM `player_state` WHERE `id_player` = ?')->execute([$playerId]);
     $db->prepare('DELETE FROM `player` WHERE `id_player` = ?')->execute([$playerId]);
@@ -117,6 +120,26 @@ try {
     foreach (['farm', 'wood', 'stone', 'mine'] as $resPlace) {
         assertNewCity(($buildingsByPlace[$resPlace]['lvl'] ?? -1) === 1, "New city {$resPlace} starts at level 1");
     }
+    assertNewCity(!isset($buildingsByPlace['seaport']), 'New city omits unused seaport building slot');
+    assertNewCity(!isset($buildingsByPlace['lighthouse']), 'New city omits unused lighthouse building slot');
+    assertNewCity(count($buildingsByPlace) === count(CityBuildingService::getStandardPlaces()), 'New city initializes exact standard building slot count');
+
+    // Verify constructing any building directly onto disabled/non-existent seaport or lighthouse places is rejected
+    foreach (['seaport', 'lighthouse'] as $invalidPlace) {
+        $_REQUEST = [
+            'idCity' => $createdCityId,
+            'buildingPlace' => $invalidPlace,
+            'buildingType' => 1,
+            'token' => $testToken
+        ];
+        $invalidConstruct = null;
+        try {
+            CityController::constructNewBuilding($db);
+        } catch (NewCityTestResponse $response) {
+            $invalidConstruct = $response->data;
+        }
+        assertNewCity(($invalidConstruct['state'] ?? '') === 'error_building', "constructNewBuilding rejects invalid slot {$invalidPlace}");
+    }
 
     // Verify upgrading the wall from level 0 to level 1 works smoothly
     $_REQUEST = [
@@ -132,6 +155,21 @@ try {
     }
     assertNewCity(($upgradeResponse['state'] ?? '') === 'ok', 'Upgrading new city wall from level 0 to 1 succeeds');
     assertNewCity((int)($upgradeResponse['list'][0]['lvl_to'] ?? 0) === 1, 'Wall upgrade task targets level 1');
+
+    // Verify createFreshPlayer starter city also omits seaport and lighthouse slots
+    $freshPlayer = createFreshPlayer('FreshCityNoSeaportTester');
+    $freshStmt = $db->prepare('SELECT `place`, `type`, `lvl` FROM `city_building` WHERE `id_city` = ?');
+    $freshStmt->execute([(int)$freshPlayer['cityId']]);
+    $freshBuildings = [];
+    foreach ($freshStmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $freshBuildings[$row['place']] = ['type' => (int)$row['type'], 'lvl' => (int)$row['lvl']];
+    }
+    assertNewCity(!isset($freshBuildings['seaport']), 'Fresh player city omits unused seaport building slot');
+    assertNewCity(!isset($freshBuildings['lighthouse']), 'Fresh player city omits unused lighthouse building slot');
+    assertNewCity(($freshBuildings['light_house_1']['type'] ?? -1) === 1 && ($freshBuildings['light_house_1']['lvl'] ?? -1) === 1, 'Fresh player city initializes Cottage 1 at level 1');
 } finally {
     cleanupNewCityFixtures($db, $testPlayerId, $testOriginCityId, $createdCityId);
+    if (is_array($freshPlayer) && !empty($freshPlayer['playerId'])) {
+        cleanupNewCityFixtures($db, (int)$freshPlayer['playerId'], 0, (int)($freshPlayer['cityId'] ?? 0));
+    }
 }
