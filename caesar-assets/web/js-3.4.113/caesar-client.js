@@ -50618,12 +50618,19 @@ Animation.trackAmbientSprite = function(sprite) {
     return sprite;
 };
 
+Animation.isCitySceneAlive = function(scene, obj) {
+    if (!obj || !obj.scene || obj.active === false || !scene || !scene.sys || scene.sys.isDestroyed || !scene.tweens)
+        return false;
+    var status = scene.sys.settings && scene.sys.settings.status;
+    return typeof status !== "number" || status < 8;
+};
+
 Animation.runPatrolRoute = function(scene, sprite, legs, initialIndex) {
     if (!scene || !sprite || !legs || !legs.length)
         return;
     var index = initialIndex || 0;
     var step = function() {
-        if (!sprite.scene || !scene.sys || (scene.sys.isActive && !scene.sys.isActive()))
+        if (!Animation.isCitySceneAlive(scene, sprite))
             return;
         var leg = legs[index % legs.length];
         index = (index + 1) % legs.length;
@@ -50734,14 +50741,24 @@ Animation.FarmAnimation = function() {
     Animation.trackAmbientSprite(scene.add.sprite(42, 336, "FarmLabor").setOrigin(0.5, 0.5).setScale(0.90).setDepth(356).playAfterDelay("FarmLabor.A", 350));
     Animation.trackAmbientSprite(scene.add.sprite(74, 318, "FarmLabor").setOrigin(0.5, 0.5).setScale(0.90).setDepth(355).playAfterDelay("FarmLabor.A", 180));
 
-    // Carrying grain from farm (44,324) -> outer gate road (108,372) -> main boulevard to Palace (508,168) -> return empty-handed
+    // Carrying grain from farm (44,324) -> outer gate road (108,372) -> behind wall gate (115..265) -> main boulevard to Palace (508,168) -> return empty-handed
     var spawnGrainCarrier = function(startX, startY, startLeg) {
+        var farmDepth = function(t) {
+            if (t.x >= 115 && t.x <= 265) {
+                var wallDepth = (typeof BuildingOnFloor !== "undefined" && BuildingOnFloor.wall && typeof BuildingOnFloor.wall.depth === "number")
+                    ? BuildingOnFloor.wall.depth
+                    : 200;
+                return wallDepth - 5;
+            }
+            var base = Math.floor(t.y) + 18;
+            return (t.x < 130 && t.y >= 270) ? Math.max(base, 356) : base;
+        };
         var sp = Animation.trackAmbientSprite(scene.add.sprite(startX, startY, "FarmLaborCarryD").setOrigin(0.5, 0.9).setDepth(380));
         var legs = [
-            { x: 108, y: 372, anim: "FarmLaborCarryD.A", duration: 2400 },
-            { x: 508, y: 168, anim: "FarmLaborCarryR.A", duration: 13500 },
-            { x: 108, y: 372, anim: "noCarryWorkerL.A", duration: 13500 },
-            { x: 44, y: 324, anim: "noCarryWorkerUL.A", duration: 2400 }
+            { x: 108, y: 372, anim: "FarmLaborCarryD.A", duration: 2400, depthFn: farmDepth },
+            { x: 508, y: 168, anim: "FarmLaborCarryR.A", duration: 13500, depthFn: farmDepth },
+            { x: 108, y: 372, anim: "noCarryWorkerL.A", duration: 13500, depthFn: farmDepth },
+            { x: 44, y: 324, anim: "noCarryWorkerUL.A", duration: 2400, depthFn: farmDepth }
         ];
         Animation.runPatrolRoute(scene, sp, legs, startLeg);
     };
@@ -50779,13 +50796,24 @@ Animation.IronAnimation = function() {
     Animation.trackAmbientSprite(scene.add.sprite(826, 46, "IronLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(96).playAfterDelay("IronLabor.A", 150));
     Animation.trackAmbientSprite(scene.add.sprite(846, 52, "IronLabor").setOrigin(0.5, 0.5).setScale(0.92).setFlipX(true).setDepth(96).playAfterDelay("IronLabor.A", 300));
 
-    // Ore carrier along rocky hillside trail from Mine entrance (828,86) -> ridge (770,52) -> Quarry lane (720,28)
-    var ironCarrier = Animation.trackAmbientSprite(scene.add.sprite(828, 86, "IronLaborCarryUL").setOrigin(0.5, 0.9).setDepth(94));
+    // Ore carrier from Mine entrance (842,102) -> hillside trail (754,58) -> Palace east corridor (672,92 -> 662,138) -> Palace steps (565,168) -> return empty-handed
+    var ironDepth = function(t) {
+        if (t.x >= 740)
+            return Math.max(Math.floor(t.y) + 18, 95);
+        if (t.x >= 682 && t.y < 95)
+            return 94;
+        return Math.floor(t.y) + 18;
+    };
+    var ironCarrier = Animation.trackAmbientSprite(scene.add.sprite(842, 102, "IronLaborCarryUL").setOrigin(0.5, 0.9).setDepth(120));
     Animation.runPatrolRoute(scene, ironCarrier, [
-        { x: 770, y: 52, anim: "IronLaborCarryUL.A", duration: 3600, depthFn: function() { return 94; } },
-        { x: 720, y: 28, anim: "IronLaborCarryUL.A", duration: 3000, depthFn: function() { return 88; } },
-        { x: 770, y: 52, anim: "noCarryWorkerD.A", duration: 3000, depthFn: function() { return 88; } },
-        { x: 828, y: 86, anim: "noCarryWorkerD.A", duration: 3600, depthFn: function() { return 94; } }
+        { x: 754, y: 58, anim: "IronLaborCarryUL.A", duration: 3400, depthFn: ironDepth },
+        { x: 672, y: 92, anim: "IronLaborCarryDL.A", duration: 3100, depthFn: ironDepth },
+        { x: 662, y: 138, anim: "IronLaborCarryDL.A", duration: 1700, depthFn: ironDepth },
+        { x: 565, y: 168, anim: "IronLaborCarryDL.A", duration: 3500, depthFn: ironDepth },
+        { x: 662, y: 138, anim: "noCarryWorkerR.A", duration: 3500, depthFn: ironDepth },
+        { x: 672, y: 92, anim: "noCarryWorkerR.A", duration: 1700, depthFn: ironDepth },
+        { x: 754, y: 58, anim: "noCarryWorkerR.A", duration: 3100, depthFn: ironDepth },
+        { x: 842, y: 102, anim: "noCarryWorkerD.A", duration: 3400, depthFn: ironDepth }
     ], 0);
 };
 
@@ -50801,11 +50829,17 @@ Animation.WoodAnimation = function() {
     Animation.trackAmbientSprite(scene.add.sprite(862, 188, "WoodLabor").setOrigin(0.5, 0.5).setScale(0.92).setDepth(225).playAfterDelay("WoodLabor.A", 280));
     Animation.trackAmbientSprite(scene.add.sprite(861, 154, "WoodTool").setOrigin(0, 0).setDepth(222).playAfterDelay("WoodTool.A", 100));
 
-    // Lumber carrier along sawmill access lane (868,226) <-> (815,192)
+    // Lumber carrier along paved avenue from Sawmill (868,226) -> Palace plaza (555,172) -> return empty-handed
     var woodCarrier = Animation.trackAmbientSprite(scene.add.sprite(868, 226, "WoodLaborCarryUL").setOrigin(0.5, 0.9).setDepth(244));
     Animation.runPatrolRoute(scene, woodCarrier, [
-        { x: 815, y: 192, anim: "WoodLaborCarryUL.A", duration: 4800, depthFn: function(t) { return Math.floor(t.y) + 18; } },
-        { x: 868, y: 226, anim: "noCarryWorkerD.A", duration: 4800, depthFn: function(t) { return Math.floor(t.y) + 18; } }
+        { x: 780, y: 178, anim: "WoodLaborCarryUL.A", duration: 3400 },
+        { x: 705, y: 142, anim: "WoodLaborCarryUL.A", duration: 3000 },
+        { x: 635, y: 148, anim: "WoodLaborCarryL.A", duration: 2600 },
+        { x: 555, y: 172, anim: "WoodLaborCarryL.A", duration: 3200 },
+        { x: 635, y: 148, anim: "noCarryWorkerR.A", duration: 3200 },
+        { x: 705, y: 142, anim: "noCarryWorkerR.A", duration: 2600 },
+        { x: 780, y: 178, anim: "noCarryWorkerD.A", duration: 3000 },
+        { x: 868, y: 226, anim: "noCarryWorkerD.A", duration: 3400 }
     ], 0);
 };
 
@@ -50845,11 +50879,14 @@ Animation.FixedCityAnimation = function() {
         { x: 330, y: 265, anim: "WomanIdle.A", duration: 2200 }
     ], 0);
 
-    // Citizen 2 greeting/idling peacefully at Palace fountain plaza
-    Animation.trackAmbientSprite(scene.add.sprite(478, 174, "Woman")
-        .setOrigin(0.5, 0.9)
-        .setDepth(194)
-        .play("WomanWave.A"));
+    // Citizen 2 strolling across the Palace fountain plaza & front steps
+    var womanPlazaWalker = Animation.trackAmbientSprite(scene.add.sprite(458, 192, "Woman").setOrigin(0.5, 0.9).setDepth(210));
+    Animation.runPatrolRoute(scene, womanPlazaWalker, [
+        { x: 548, y: 166, anim: "WomanBack.A", duration: 6500 },
+        { x: 548, y: 166, anim: "WomanWave.A", duration: 2000 },
+        { x: 458, y: 192, anim: "WomanFace.A", duration: 6500 },
+        { x: 458, y: 192, anim: "WomanIdle.A", duration: 2000 }
+    ], 0);
 
     // Drifting atmosphere clouds (Call of Roma Town.cloud across city width)
     var spawnCloud = function(startX, startY, durationMs, alphaVal) {
@@ -50858,7 +50895,7 @@ Animation.FixedCityAnimation = function() {
             .setAlpha(alphaVal)
             .setDepth(950));
         var moveCloud = function() {
-            if (!cloud.scene || !scene.sys || (scene.sys.isActive && !scene.sys.isActive()))
+            if (!Animation.isCitySceneAlive(scene, cloud))
                 return;
             var tw = scene.tweens.add({
                 targets: cloud,
@@ -50866,7 +50903,7 @@ Animation.FixedCityAnimation = function() {
                 ease: 'Linear',
                 duration: Math.max(4000, Math.round(durationMs * (1080 - cloud.x) / 1250)),
                 onComplete: function() {
-                    if (!cloud.scene)
+                    if (!Animation.isCitySceneAlive(scene, cloud))
                         return;
                     cloud.x = -170;
                     cloud.y = 20 + Math.floor(Math.random() * 220);

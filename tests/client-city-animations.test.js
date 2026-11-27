@@ -571,3 +571,111 @@ test('getCityBuildingTasks refreshes city building animations when active city t
     assert.equal(refreshedAnims, 1);
     assert.equal(playerDataCalls, 1);
 });
+
+test('FixedCityAnimation and runPatrolRoute start during Phaser CREATING state, keep farm carriers above farm depth, and stop on shutdown', () => {
+    const start = clientSource.indexOf('\nAnimation = {};') + 1;
+    const end = clientSource.indexOf('\nfunction fire_attack_animation()', start);
+    assert.ok(start > 0 && end > start, 'Animation module should exist');
+
+    const scene = createMockCityScene();
+    // Simulate Phaser 3.55 Scene.create(): status CREATING (4), so sys.isActive() is false
+    scene.sys = {
+        isActive: () => false,
+        settings: { status: 4 },
+        isDestroyed: false
+    };
+
+    const context = {
+        BuildingOnFloor: {
+            palace: { x: 416, y: 12 },
+            wall: { x: 0, y: 110, depth: 200 },
+            farm: { x: 0, y: 273, depth: 350 },
+            wood: { x: 860, y: 148 },
+            stone: { x: 600, y: 5 },
+            mine: { x: 810, y: 25 }
+        },
+        X_GRID: 128,
+        Y_GRID: 64,
+        Caesar: {
+            GE: { CityScene: scene },
+            CurrentCity: { City: { lvl: 2 } }
+        }
+    };
+
+    vm.runInNewContext(clientSource.slice(start, end), context);
+
+    assert.equal(context.Animation.isCitySceneAlive(scene, scene.cityBackground), true);
+    context.Animation.FixedCityAnimation();
+
+    assert.equal(context.Animation.CityAmbientTweens.length, 9);
+    const carriers = context.Animation.CityAmbientSprites.filter(sp => sp.texture === 'FarmLaborCarryD');
+    assert.equal(carriers.length, 2);
+    assert.equal(carriers[0].currentAnim, 'FarmLaborCarryD.A');
+    assert.equal(carriers[1].currentAnim, 'noCarryWorkerL.A');
+
+    // Grain carrier stays above farm (350) inside farm plot, dips below wall (200) at gate/wall crossing, and depth-sorts on boulevard
+    const carrierTween = context.Animation.CityAmbientTweens[0];
+    assert.equal(carrierTween.cfg.targets, carriers[0]);
+    carrierTween.cfg.onUpdate(carrierTween, {
+        x: 44,
+        y: 324,
+        setDepth(d) { carriers[0].depth = d; }
+    });
+    assert.ok(carriers[0].depth > 350, 'grain carrier inside farm plot should stay above farm floor depth');
+    carrierTween.cfg.onUpdate(carrierTween, {
+        x: 185,
+        y: 332,
+        setDepth(d) { carriers[0].depth = d; }
+    });
+    assert.ok(carriers[0].depth < 200, 'grain carrier passing wall/gate must stay behind wall depth');
+    carrierTween.cfg.onUpdate(carrierTween, {
+        x: 305,
+        y: 271,
+        setDepth(d) { carriers[0].depth = d; }
+    });
+    assert.equal(carriers[0].depth, 289);
+
+    // Iron and Wood carriers reach the Palace vicinity and return to Mine/Sawmill
+    const ironCarrier = context.Animation.CityAmbientSprites.find(sp => sp.texture === 'IronLaborCarryUL');
+    const woodCarrier = context.Animation.CityAmbientSprites.find(sp => sp.texture === 'WoodLaborCarryUL');
+    const women = context.Animation.CityAmbientSprites.filter(sp => sp.texture === 'Woman');
+    assert.equal(women.length, 2);
+    assert.ok(women.every(w => scene.tweensList.some(tw => tw.cfg.targets === w)), 'both citizens should patrol');
+
+    const latestTweenFor = target => {
+        for (let i = scene.tweensList.length - 1; i >= 0; i--) {
+            if (scene.tweensList[i].cfg.targets === target) return scene.tweensList[i];
+        }
+        return null;
+    };
+    const ironInitialTw = latestTweenFor(ironCarrier);
+    ironInitialTw.cfg.onUpdate(ironInitialTw, { x: 754, y: 58, setDepth(d) { ironCarrier.depth = d; } });
+    assert.ok(ironCarrier.depth > 90, 'iron carrier on ridge must remain above stone (70) and mine (90) depth');
+    for (let step = 0; step < 4; step++) latestTweenFor(ironCarrier).triggerStep();
+    assert.ok(ironCarrier.x <= 565 && ironCarrier.y <= 175, 'iron carrier should reach Palace plaza');
+    assert.equal(ironCarrier.depth, 186);
+    for (let step = 0; step < 4; step++) latestTweenFor(ironCarrier).triggerStep();
+    assert.equal(ironCarrier.x, 842);
+    assert.equal(ironCarrier.y, 102);
+
+    for (let step = 0; step < 4; step++) latestTweenFor(woodCarrier).triggerStep();
+    assert.ok(woodCarrier.x <= 565 && woodCarrier.y <= 175, 'wood carrier should reach Palace plaza');
+    for (let step = 0; step < 4; step++) latestTweenFor(woodCarrier).triggerStep();
+    assert.equal(woodCarrier.x, 868);
+    assert.equal(woodCarrier.y, 226);
+
+    // Chaining continues while SLEEPING (status 7) and halts at SHUTDOWN (status 8) or scene destruction
+    scene.sys.settings.status = 7;
+    const countBeforeWake = scene.tweensList.length;
+    carrierTween.triggerStep();
+    assert.equal(scene.tweensList.length, countBeforeWake + 1);
+
+    scene.sys.settings.status = 8;
+    const latestTween = scene.tweensList[scene.tweensList.length - 1];
+    latestTween.triggerStep();
+    assert.equal(scene.tweensList.length, countBeforeWake + 1, 'SHUTDOWN scene must stop spawning patrol legs');
+
+    scene.sys.settings.status = 5;
+    scene.sys.isDestroyed = true;
+    assert.equal(context.Animation.isCitySceneAlive(scene, carriers[0]), false);
+});
